@@ -1,0 +1,6 @@
+- summary: |
+    Add `docs` subcommand group to generated CLIs. When a `docsUrl` is
+    configured in `generators.yml`, the CLI gains `docs`, `docs open`,
+    `docs llms [--full]`, and optionally `docs mcp` commands that surface
+    documentation resources. The `--schema` output includes a `docs` block.
+  type: feat

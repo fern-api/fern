@@ -46,4 +46,24 @@ describe("validateCustomConfig", () => {
     it("throws on non-boolean customCommands", () => {
         expect(() => validateCustomConfig({ customCommands: "yes" })).toThrow(/expected a boolean, got string/);
     });
+
+    it("accepts a string docsUrl", () => {
+        expect(validateCustomConfig({ docsUrl: "https://elevenlabs.io/docs" })).toEqual({
+            docsUrl: "https://elevenlabs.io/docs"
+        });
+    });
+
+    it("throws on non-string docsUrl", () => {
+        expect(() => validateCustomConfig({ docsUrl: 123 })).toThrow(/expected a string, got number/);
+    });
+
+    it("accepts a string docsMcpUrl", () => {
+        expect(validateCustomConfig({ docsMcpUrl: "https://mcp.example.com" })).toEqual({
+            docsMcpUrl: "https://mcp.example.com"
+        });
+    });
+
+    it("throws on non-string docsMcpUrl", () => {
+        expect(() => validateCustomConfig({ docsMcpUrl: true })).toThrow(/expected a string, got boolean/);
+    });
 });

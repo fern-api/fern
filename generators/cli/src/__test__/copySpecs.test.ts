@@ -285,4 +285,77 @@ describe("copySpecs", () => {
         expect(main).toContain("use fern_cli_sdk::auth::{BearerAuth};");
         expect(main).not.toContain("AuthCredentialSource");
     });
+
+    it("emits .docs_url() when docsUrl is provided", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            specsDir,
+            docsUrl: "https://elevenlabs.io/docs"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.docs_url("https://elevenlabs.io/docs")');
+        expect(main).not.toContain(".docs_mcp_url");
+    });
+
+    it("emits .docs_url() and .docs_mcp_url() when both are provided", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            specsDir,
+            docsUrl: "https://elevenlabs.io/docs",
+            docsMcpUrl: "https://elevenlabs.io/mcp"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.docs_url("https://elevenlabs.io/docs")');
+        expect(main).toContain('.docs_mcp_url("https://elevenlabs.io/mcp")');
+    });
+
+    it("does not emit docs calls when docsUrl is absent", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".docs_url");
+        expect(main).not.toContain(".docs_mcp_url");
+    });
 });

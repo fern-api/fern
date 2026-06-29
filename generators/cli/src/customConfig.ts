@@ -26,6 +26,20 @@ export interface FernCliCustomConfig {
      * support.
      */
     customCommands?: boolean;
+
+    /**
+     * The base URL for the API's documentation site (e.g.
+     * `https://elevenlabs.io/docs`). When set, the generated CLI
+     * includes a `docs` subcommand group and a `docs` block in
+     * `--schema` output.
+     */
+    docsUrl?: string;
+
+    /**
+     * Optional MCP server endpoint URL. When set alongside `docsUrl`,
+     * a `docs mcp` subcommand prints connection instructions.
+     */
+    docsMcpUrl?: string;
 }
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
@@ -67,6 +81,18 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.customCommands = obj.customCommands;
+    }
+    if ("docsUrl" in obj && obj.docsUrl !== undefined) {
+        if (typeof obj.docsUrl !== "string") {
+            throw new Error(`Invalid customConfig.docsUrl: expected a string, got ${typeof obj.docsUrl}.`);
+        }
+        result.docsUrl = obj.docsUrl;
+    }
+    if ("docsMcpUrl" in obj && obj.docsMcpUrl !== undefined) {
+        if (typeof obj.docsMcpUrl !== "string") {
+            throw new Error(`Invalid customConfig.docsMcpUrl: expected a string, got ${typeof obj.docsMcpUrl}.`);
+        }
+        result.docsMcpUrl = obj.docsMcpUrl;
     }
     return result;
 }

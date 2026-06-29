@@ -66,8 +66,12 @@ export async function copySpecs(args: {
     specsDir?: string;
     /** When true, emit `mod custom;` + `mod sdk;` + `custom::register(app)` in main.rs. */
     customCommands?: boolean;
+    /** Docs base URL — when set, emits `.docs_url("...")` in main.rs. */
+    docsUrl?: string;
+    /** MCP endpoint URL — when set alongside docsUrl, emits `.docs_mcp_url("...")` in main.rs. */
+    docsMcpUrl?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
+    const { outputDir, binaryName, authBindings, specsDir, customCommands, docsUrl, docsMcpUrl } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -94,7 +98,9 @@ export async function copySpecs(args: {
             binaryName,
             entries,
             authBindings,
-            customCommands: customCommands ?? false
+            customCommands: customCommands ?? false,
+            docsUrl,
+            docsMcpUrl
         })
     );
 
@@ -180,8 +186,10 @@ function renderMainRs(args: {
     entries: SpecEntry[];
     authBindings: DetectedAuthBinding[];
     customCommands: boolean;
+    docsUrl?: string;
+    docsMcpUrl?: string;
 }): string {
-    const { binaryName, entries, authBindings, customCommands } = args;
+    const { binaryName, entries, authBindings, customCommands, docsUrl, docsMcpUrl } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -236,6 +244,14 @@ function renderMainRs(args: {
     }
     // Close the binding
     lines.push("        );");
+
+    // Docs URL — emitted only when configured in generators.yml.
+    if (docsUrl != null) {
+        lines.push(`        .docs_url("${docsUrl}")`);
+        if (docsMcpUrl != null) {
+            lines.push(`        .docs_mcp_url("${docsMcpUrl}")`);
+        }
+    }
 
     if (customCommands) {
         lines.push("");

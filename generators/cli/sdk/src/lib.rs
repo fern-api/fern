@@ -13,6 +13,7 @@ pub mod binding;
 pub mod cli_args;
 pub mod completions;
 pub(crate) mod custom_commands;
+pub mod docs;
 pub mod http;
 pub mod error;
 pub mod formatter;

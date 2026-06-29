@@ -23,6 +23,7 @@ use serde_json::Value;
 use crate::auth::root_builder::AuthSchemeBuilder;
 use crate::auth::SchemeBinding;
 use crate::binding::{Binding, DispatchResult};
+use crate::docs::DocsConfig;
 use crate::error::{write_error_json, CliError, ErrorDisplayContext};
 use crate::formatter;
 use crate::hooks::HookRegistry;
@@ -111,6 +112,9 @@ pub struct CliApp {
     /// Optional base URL for per-status-code error documentation links.
     /// When set, API errors append `<base_url>/<http_status_code>` to stderr.
     error_docs_base_url: Option<String>,
+    /// Optional docs configuration. When set, the `docs` subcommand is
+    /// grafted onto the CLI and a `docs` block appears in `--schema`.
+    docs_config: Option<DocsConfig>,
 }
 
 impl CliApp {
@@ -126,6 +130,7 @@ impl CliApp {
             auth_bindings: Vec::new(),
             login_flows: Vec::new(),
             error_docs_base_url: None,
+            docs_config: None,
         }
     }
 
@@ -149,6 +154,30 @@ impl CliApp {
     /// `  → <base_url>/<status_code>` (e.g. `https://docs.example.com/errors/401`).
     pub fn error_docs_base_url(mut self, url: &str) -> Self {
         self.error_docs_base_url = Some(url.to_string());
+        self
+    }
+
+    /// Configure the `docs` subcommand with a docs base URL.
+    ///
+    /// When set, a `docs` subcommand group is grafted onto the CLI
+    /// (bare `docs` lists resources, `docs open` opens in browser,
+    /// `docs llms` prints llms.txt URL) and a `docs` block is added
+    /// to the `--schema` output.
+    ///
+    /// The `docs` command is only emitted when this method is called.
+    pub fn docs_url(mut self, url: &str) -> Self {
+        self.docs_config = Some(DocsConfig::new(url));
+        self
+    }
+
+    /// Set the optional MCP endpoint URL for the `docs mcp` subcommand.
+    ///
+    /// Must be called after [`docs_url`](Self::docs_url). If called
+    /// without a prior `docs_url`, this is a no-op.
+    pub fn docs_mcp_url(mut self, url: &str) -> Self {
+        if let Some(ref mut config) = self.docs_config {
+            config.mcp_url = Some(url.to_string());
+        }
         self
     }
 
@@ -725,6 +754,9 @@ impl CliApp {
                     wrapped.insert("sdkVariables".into(), serde_json::Value::Array(sdk_vars));
                 }
                 wrapped.insert("operations".into(), serde_json::Value::Array(ops));
+                if let Some(ref docs_config) = self.docs_config {
+                    wrapped.insert("docs".into(), crate::docs::docs_json(docs_config));
+                }
                 let output = serde_json::Value::Object(wrapped);
                 writeln!(
                     out,
@@ -882,7 +914,7 @@ impl CliApp {
             cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cc.cmd.clone());
         }
 
-        // 1c. Register `completion`, `man`, and `auth` subcommands.
+        // 1c. Register `completion`, `man`, `auth`, and optionally `docs` subcommands.
         //
         // `auth` is always grafted, even on binaries that declare no OAuth
         // flow — `auth login --with-token` is the universal credential
@@ -891,6 +923,11 @@ impl CliApp {
             .subcommand(crate::completions::completion_command())
             .subcommand(crate::man::man_command())
             .subcommand(crate::auth::login::build_auth_command());
+
+        // `docs` is only grafted when a docs URL is configured.
+        if let Some(ref docs_config) = self.docs_config {
+            cli = cli.subcommand(crate::docs::build_docs_command(docs_config));
+        }
 
         // 1d. Apply Tier 1 deferred operations (alias, hide, stability)
         // before completion/man generation so aliases appear in tab-
@@ -983,6 +1020,14 @@ impl CliApp {
                 out,
             )?;
             return Ok(PipelineOutcome::Success);
+        }
+
+        // 3b. Intercept the `docs` subcommand when configured.
+        if let Some(("docs", docs_matches)) = matches.subcommand() {
+            if let Some(ref docs_config) = self.docs_config {
+                crate::docs::dispatch_docs(docs_matches, docs_config, out)?;
+                return Ok(PipelineOutcome::Success);
+            }
         }
 
         // 4a. Check CLI-level custom commands first.
