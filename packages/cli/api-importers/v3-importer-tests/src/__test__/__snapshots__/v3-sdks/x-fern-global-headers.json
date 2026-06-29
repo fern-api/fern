@@ -1166,6 +1166,70 @@
     "type": "statusCode"
   },
   "variables": [],
+  "globalParameters": [
+    {
+      "name": {
+        "wireValue": "my-api-key",
+        "name": "api-key-alias"
+      },
+      "location": "header",
+      "valueType": {
+        "container": {
+          "optional": {
+            "primitive": {
+              "v1": "STRING",
+              "v2": {
+                "type": "string"
+              }
+            },
+            "type": "primitive"
+          },
+          "type": "optional"
+        },
+        "type": "container"
+      },
+      "optional": true,
+      "apply": "auto"
+    },
+    {
+      "name": {
+        "wireValue": "another_header",
+        "name": ""
+      },
+      "location": "header",
+      "valueType": {
+        "primitive": {
+          "v1": "STRING",
+          "v2": {
+            "type": "string"
+          }
+        },
+        "type": "primitive"
+      },
+      "optional": false,
+      "env": "MY_HEADER_ENV",
+      "apply": "auto"
+    },
+    {
+      "name": {
+        "wireValue": "version",
+        "name": "Square-Version"
+      },
+      "location": "header",
+      "valueType": {
+        "primitive": {
+          "v1": "STRING",
+          "v2": {
+            "type": "string"
+          }
+        },
+        "type": "primitive"
+      },
+      "optional": false,
+      "env": "SQUARE_VERSION",
+      "apply": "auto"
+    }
+  ],
   "serviceTypeReferenceInfo": {
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
