@@ -10166,7 +10166,7 @@ mod tests {
     }
 
     #[test]
-    fn test_no_body_synthesized_for_get() {
+    fn test_body_synthesized_for_get_with_declared_json_request() {
         use crate::openapi::discovery::SchemaRef;
         // GET operations with a request schema (unusual but legal in OpenAPI)
         // should still get the synthesis since the server may expect it.
