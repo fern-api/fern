@@ -56,7 +56,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
 ENV PNPM_HOME=/.pnpm
-ENV PATH=$PNPM_HOME:$PATH
+ENV PATH=$PNPM_HOME/bin:$PNPM_HOME:$PATH
 ARG SENTRY_DSN
 ARG SENTRY_ENVIRONMENT=production
 ARG SENTRY_RELEASE

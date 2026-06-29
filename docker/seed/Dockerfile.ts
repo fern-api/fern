@@ -29,7 +29,7 @@ FROM node:24.17.0-trixie-slim
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
 ENV PNPM_HOME=/.pnpm
-ENV PATH=$PNPM_HOME:$PATH
+ENV PATH=$PNPM_HOME/bin:$PNPM_HOME:$PATH
 
 # Apply latest Debian security updates so that grype-tracked OS package
 # vulnerabilities (perl-base, liblzma5, libgnutls30, libpam*, libc*, gpgv,
