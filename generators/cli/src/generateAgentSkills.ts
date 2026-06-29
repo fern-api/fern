@@ -213,8 +213,10 @@ function renderSkill(args: {
     authBindings: DetectedAuthBinding[];
     example: ExampleEndpoint | undefined;
 }): string {
-    const { binaryName, sdkCrateSnake, subClients, authBindings, example } = args;
+    const { binaryName, sdkCrateSnake, subClients, authBindings, example: _example } = args;
     const lines: string[] = [];
+    const visibleClients = subClients.filter((sc) => sc.typeName !== "HttpClient");
+    const clientField = visibleClients.length > 0 ? (visibleClients[0]?.fieldName ?? "resource") : "resource";
 
     // YAML frontmatter
     lines.push("---");
@@ -230,10 +232,11 @@ function renderSkill(args: {
     // Overview
     lines.push("## Overview");
     lines.push("");
-    lines.push(`The \`${binaryName}\` CLI supports user-authored custom commands that are`);
-    lines.push("compiled into the binary alongside the auto-generated API commands.");
-    lines.push("Custom commands get a fully-wired SDK client that inherits the CLI's");
-    lines.push("auth, retries, TLS, base URL, and global headers — zero configuration required.");
+    lines.push(`The \`${binaryName}\` CLI supports user-authored custom commands compiled`);
+    lines.push("into the binary alongside auto-generated API commands. Commands use");
+    lines.push("**typed arguments** (`#[derive(clap::Args)]`) and the **per-command builder**");
+    lines.push("for compile-time safety. The SDK client inherits auth, retries, TLS,");
+    lines.push("base URL, and global headers — zero configuration required.");
     lines.push("");
 
     // Architecture
@@ -244,83 +247,182 @@ function renderSkill(args: {
     lines.push(`cli/${binaryName}/sdk.rs       ← Generated bridge: client() + block_on()`);
     lines.push(`cli/${binaryName}/main.rs      ← Generated entrypoint (calls custom::register)`);
     lines.push(`${binaryName}-sdk/             ← Co-generated typed SDK crate`);
-    lines.push(`${binaryName}-types/           ← Co-generated typed model crate`);
     lines.push("```");
     lines.push("");
 
-    // Step-by-step guide
-    lines.push("## Adding a Custom Command");
+    // Typed authoring
+    lines.push("## Typed Authoring (Default)");
     lines.push("");
-    lines.push(`### 1. Edit \`cli/${binaryName}/custom.rs\``);
+    lines.push("Define arguments with `#[derive(clap::Args)]` and register via the");
+    lines.push("per-command builder. The handler receives parsed typed args + `AppContext`:");
     lines.push("");
-    lines.push("This file is protected by `.fernignore` — `fern generate` will never");
-    lines.push("overwrite it. Register commands in the `register()` function:");
+    lines.push("```rust");
+    lines.push("use fern_cli_sdk::app::CliApp;");
+    lines.push("use fern_cli_sdk::error::CliError;");
+    lines.push("use fern_cli_sdk::openapi::AppContext;");
+    lines.push("");
+    lines.push("#[derive(clap::Args)]");
+    lines.push("struct FetchArgs {");
+    lines.push("    /// Resource ID to fetch.");
+    lines.push("    id: String,");
+    lines.push("    /// Output format override.");
+    lines.push("    #[arg(long)]");
+    lines.push("    raw: bool,");
+    lines.push("}");
+    lines.push("");
+    lines.push("fn handle_fetch(args: FetchArgs, ctx: &AppContext) -> Result<(), CliError> {");
+    lines.push(`    let client = super::sdk::client(ctx)?;`);
+    lines.push("    let result = super::sdk::block_on(");
+    lines.push(`        client.${clientField}.get(&args.id),`);
+    lines.push("    )?;");
+    lines.push("    let pipeline = ctx.output_pipeline();");
+    lines.push("    pipeline.emit(&mut std::io::stdout(), &serde_json::to_value(&result).unwrap(), false, true)");
+    lines.push("        .map_err(|e| CliError::Other(e.into()))?;");
+    lines.push("    Ok(())");
+    lines.push("}");
+    lines.push("```");
     lines.push("");
 
-    // Render example with real endpoint data, but only if the sub-client
-    // field actually exists on the generated SDK client.
-    const visibleClients = subClients.filter((sc) => sc.typeName !== "HttpClient");
-    const exampleMatchesClient =
-        example != null && visibleClients.some((sc) => sc.fieldName === example.subClientField);
-    if (example != null && exampleMatchesClient) {
-        renderExampleWithEndpoint(lines, binaryName, sdkCrateSnake, example);
-    } else {
-        renderGenericExample(lines, binaryName, sdkCrateSnake, visibleClients);
-    }
+    // Per-command builder
+    lines.push("## Per-Command Builder");
+    lines.push("");
+    lines.push("Register commands in `custom.rs`'s `register()` function using the");
+    lines.push("fluent builder API:");
+    lines.push("");
+    lines.push("```rust");
+    lines.push("pub fn register(app: CliApp) -> CliApp {");
+    lines.push("    app");
+    lines.push("        .custom_typed::<FetchArgs>(\"fetch\")");
+    lines.push("        .about(\"Fetch a resource by ID\")");
+    lines.push("        .handler(handle_fetch)");
+    lines.push("        .dry_run(handle_fetch_dry_run)  // optional");
+    lines.push("        .register()");
+    lines.push("}");
+    lines.push("```");
+    lines.push("");
+    lines.push("Builder methods (all optional except `.handler()`):");
+    lines.push("");
+    lines.push("| Method | Purpose |");
+    lines.push("|--------|---------|");
+    lines.push("| `.about(\"...\")` | Help text shown in `--help` |");
+    lines.push("| `.under(&[\"ns\", \"sub\"])` | Nest under a custom namespace path |");
+    lines.push("| `.handler(fn)` | **Required.** Main handler |");
+    lines.push("| `.dry_run(fn)` | Handler for `--dry-run` (optional) |");
+    lines.push("| `.register()` | Finalize and return the `CliApp` |");
+    lines.push("");
+
+    // Nesting / namespaces
+    lines.push("## Custom-Only Nesting (Namespaces)");
+    lines.push("");
+    lines.push("Commands can be nested under custom namespace paths using `.under()`.");
+    lines.push("The path elements are custom command groups (not generated API groups):");
+    lines.push("");
+    lines.push("```rust");
+    lines.push("// Registers as: my-cli admin users list");
+    lines.push("app.custom_typed::<ListUsersArgs>(\"list\")");
+    lines.push("    .about(\"List all users\")");
+    lines.push("    .under(&[\"admin\", \"users\"])");
+    lines.push("    .handler(handle_list_users)");
+    lines.push("    .register()");
+    lines.push("```");
+    lines.push("");
+    lines.push("The namespace groups (`admin`, `admin users`) are created automatically.");
+    lines.push("Multiple commands can share a namespace path.");
+    lines.push("");
+
+    // Output cohesion
+    lines.push("## Output Cohesion (`--format`, `--quiet`)");
+    lines.push("");
+    lines.push("Route output through `ctx.output_pipeline()` so `--format` and `--quiet`");
+    lines.push("work without per-command boilerplate:");
+    lines.push("");
+    lines.push("```rust");
+    lines.push("let pipeline = ctx.output_pipeline();");
+    lines.push("pipeline.emit(&mut std::io::stdout(), &json_value, false, true)");
+    lines.push("    .map_err(|e| CliError::Other(e.into()))?;");
+    lines.push("```");
+    lines.push("");
+    lines.push("- `table` and `csv` formats assume an array-of-objects; `json`/`yaml` always work.");
+    lines.push("- A handler that doesn't use the pipeline implicitly opts out (owns its output).");
+    lines.push("- Check `ctx.is_quiet()` when emitting non-pipeline output.");
+    lines.push("");
+
+    // Dry-run safety
+    lines.push("## Dry-Run Safety");
+    lines.push("");
+    lines.push("The CLI enforces a **default-deny** dry-run model:");
+    lines.push("");
+    lines.push("- `--dry-run` with **no** `.dry_run()` handler → error before execution.");
+    lines.push("- `--dry-run` **with** a `.dry_run()` handler → runs the dry-run handler");
+    lines.push("  instead of the normal handler.");
+    lines.push("- `ctx.build_sdk_executor()` (via `super::sdk::client(ctx)?`) **refuses**");
+    lines.push("  under `--dry-run` — the SDK constructs requests opaquely and cannot preview them.");
+    lines.push("");
+    lines.push("Dry-run handlers should render a preview of what *would* happen:");
+    lines.push("");
+    lines.push("```rust");
+    lines.push("fn handle_fetch_dry_run(args: FetchArgs, ctx: &AppContext) -> Result<(), CliError> {");
+    lines.push("    // ctx.preview(method, params, body) builds a request preview with no HTTP.");
+    lines.push("    eprintln!(\"[dry-run] would fetch resource '{}'\", args.id);");
+    lines.push("    Ok(())");
+    lines.push("}");
+    lines.push("```");
+    lines.push("");
+
+    // SDK client
+    lines.push("## SDK Client");
+    lines.push("");
+    lines.push("```rust");
+    lines.push("let client = super::sdk::client(ctx)?;  // fails under --dry-run");
+    lines.push("let result = super::sdk::block_on(client.resource.method(arg))?;");
+    lines.push("```");
+    lines.push("");
 
     // Available sub-clients
-    lines.push("### 2. Available SDK Clients");
-    lines.push("");
-    lines.push(`The \`super::sdk::client(ctx)\` call returns a \`${sdkCrateSnake}::api::Client\``);
-    lines.push("with the following sub-clients:");
-    lines.push("");
     if (visibleClients.length > 0) {
-        lines.push("| Field | Type | Description |");
-        lines.push("|-------|------|-------------|");
+        lines.push("Available sub-clients:");
+        lines.push("");
+        lines.push("| Field | Type |");
+        lines.push("|-------|------|");
         for (const sc of visibleClients) {
-            lines.push(
-                `| \`client.${sc.fieldName}\` | \`${sdkCrateSnake}::api::${sc.typeName}\` | ${sc.fieldName} operations |`
-            );
+            lines.push(`| \`client.${sc.fieldName}\` | \`${sdkCrateSnake}::api::${sc.typeName}\` |`);
         }
-    } else {
-        lines.push("(Sub-clients are derived from the API spec at generation time.)");
+        lines.push("");
     }
-    lines.push("");
 
-    // Key patterns
-    lines.push("### 3. Key Patterns");
+    // Non-typed escape hatch
+    lines.push("## Non-Typed Escape Hatch");
     lines.push("");
-    lines.push("**Get the SDK client** (execution-sharing, fully authenticated):");
+    lines.push("For dynamic or generated-at-runtime commands, the non-typed API");
+    lines.push("(`command()` / `command_under()`) with raw `&ArgMatches` still works:");
+    lines.push("");
     lines.push("```rust");
-    lines.push("let client = super::sdk::client(ctx);");
+    lines.push("app.command(");
+    lines.push("    clap::Command::new(\"dynamic\")");
+    lines.push("        .about(\"A command with dynamic arguments\")");
+    lines.push("        .arg(clap::Arg::new(\"input\").required(true)),");
+    lines.push("    |matches, ctx| {");
+    lines.push("        let input = matches.get_one::<String>(\"input\").unwrap();");
+    lines.push("        // ...");
+    lines.push("        Ok(())");
+    lines.push("    },");
+    lines.push(")");
     lines.push("```");
     lines.push("");
-    lines.push("**Run an async SDK call from a sync handler:**");
-    lines.push("```rust");
-    lines.push("let result = super::sdk::block_on(");
-    lines.push("    client.some_resource.some_method(args),");
-    lines.push(")?;");
-    lines.push("```");
-    lines.push("");
-    lines.push("**Use typed models for request/response serialization:**");
-    lines.push("```rust");
-    lines.push(`use ${sdkCrateSnake}::api::*;`);
-    lines.push("```");
+    lines.push("Prefer the typed builder for new commands — it catches argument");
+    lines.push("mismatches at compile time.");
     lines.push("");
 
     // Auth
     if (authBindings.length > 0) {
-        lines.push("### 4. Authentication");
+        lines.push("## Authentication");
         lines.push("");
-        lines.push("Custom commands automatically inherit the CLI's authentication.");
-        lines.push("The following auth schemes are configured:");
+        lines.push("Custom commands automatically inherit the CLI's authentication:");
         lines.push("");
         for (const binding of authBindings) {
             const envList = binding.envVars.join("`, `");
             lines.push(`- **${binding.schemeName}** (${binding.kind}): env \`${envList}\``);
         }
-        lines.push("");
-        lines.push("No manual auth wiring is needed in custom command handlers.");
         lines.push("");
     }
 
@@ -333,113 +435,21 @@ function renderSkill(args: {
     lines.push(`| \`cli/${binaryName}/sdk.rs\` | Yes | Bridges AppContext → SDK client |`);
     lines.push(`| \`cli/${binaryName}/main.rs\` | Yes | Calls \`custom::register(app)\` |`);
     lines.push(`| \`${binaryName}-sdk/\` | Yes | Co-generated typed SDK crate |`);
-    lines.push(`| \`${binaryName}-types/\` | Yes | Co-generated typed models |`);
-    lines.push("");
-    lines.push("After running `fern generate`, your `custom.rs` is preserved. All");
-    lines.push("generated code (SDK, types, glue, main.rs) is updated to match the");
-    lines.push("latest API spec. If the SDK surface changes (renamed methods, new");
-    lines.push("sub-clients), update your `custom.rs` to match.");
     lines.push("");
 
     // Build & test
     lines.push("## Build & Test");
     lines.push("");
     lines.push("```bash");
-    lines.push("# Build the CLI (includes custom commands)");
     lines.push("cargo build");
-    lines.push("");
-    lines.push("# Run your custom command");
-    lines.push(`${binaryName} <your-command> [args]`);
-    lines.push("");
-    lines.push("# Run with verbose output for debugging");
-    lines.push(`RUST_LOG=debug ${binaryName} <your-command> [args]`);
+    lines.push(`${binaryName} hello world              # top-level custom command`);
+    lines.push(`${binaryName} admin users list --limit 5  # nested under custom namespace`);
+    lines.push(`${binaryName} fetch my-id --format json   # output cohesion`);
+    lines.push(`${binaryName} fetch my-id --dry-run       # dry-run preview`);
     lines.push("```");
     lines.push("");
 
     return lines.join("\n");
-}
-
-function renderExampleWithEndpoint(
-    lines: string[],
-    binaryName: string,
-    sdkCrateSnake: string,
-    example: ExampleEndpoint
-): void {
-    const cmdName = example.method;
-    const about = example.summary ?? `Run ${example.group} ${example.method}`;
-    const safeParams = example.pathParams.map(sanitizeIdentifier);
-    const argDefs = safeParams.map((p) => `            .arg(clap::Arg::new("${p}").required(true))`);
-    const argReads = safeParams.map(
-        (p) => `            let ${toSnake(p)} = matches.get_one::<String>("${p}").unwrap();`
-    );
-    const sdkCallArgs = safeParams.map((p) => `${toSnake(p)}`).join(", ");
-
-    lines.push("```rust");
-    lines.push(`use ${sdkCrateSnake}::api::*;`);
-    lines.push("");
-    lines.push("pub fn register(app: CliApp) -> CliApp {");
-    lines.push("    let app = app.command(");
-    lines.push(`        clap::Command::new("${cmdName}")`);
-    lines.push(`            .about("${escapeRust(about)}")`);
-    for (const argDef of argDefs) {
-        lines.push(argDef);
-    }
-    lines.push("        ,");
-    lines.push("        |matches, ctx| {");
-    for (const read of argReads) {
-        lines.push(read);
-    }
-    lines.push("            let client = super::sdk::client(ctx);");
-    lines.push("            let result = super::sdk::block_on(");
-    lines.push(`                client.${example.subClientField}.${example.sdkMethod}(${sdkCallArgs}),`);
-    lines.push("            )?;");
-    lines.push('            println!("{}", serde_json::to_string_pretty(&result).unwrap());');
-    lines.push("            Ok(())");
-    lines.push("        },");
-    lines.push("    );");
-    lines.push("    app");
-    lines.push("}");
-    lines.push("```");
-    lines.push("");
-    lines.push("Then build and test:");
-    lines.push("```bash");
-    lines.push("cargo build");
-    const exampleArgs = safeParams.map((p) => `<${p}>`).join(" ");
-    lines.push(`${binaryName} ${cmdName}${exampleArgs.length > 0 ? " " + exampleArgs : ""}`);
-    lines.push("```");
-    lines.push("");
-}
-
-function renderGenericExample(
-    lines: string[],
-    _binaryName: string,
-    sdkCrateSnake: string,
-    subClients: SubClientField[]
-): void {
-    const clientField = subClients.length > 0 ? (subClients[0]?.fieldName ?? "resource") : "resource";
-
-    lines.push("```rust");
-    lines.push(`use ${sdkCrateSnake}::api::*;`);
-    lines.push("");
-    lines.push("pub fn register(app: CliApp) -> CliApp {");
-    lines.push("    let app = app.command(");
-    lines.push('        clap::Command::new("my-command")');
-    lines.push('            .about("Description of your command")');
-    lines.push('            .arg(clap::Arg::new("id").required(true)),');
-    lines.push("        |matches, ctx| {");
-    lines.push('            let id = matches.get_one::<String>("id").unwrap();');
-    lines.push("            let client = super::sdk::client(ctx);");
-    lines.push("            let result = super::sdk::block_on(");
-    lines.push(`                client.${clientField}.get(id),`);
-    lines.push("            )?;");
-    lines.push('            println!("{}", serde_json::to_string_pretty(&result).unwrap());');
-    lines.push("            Ok(())");
-    lines.push("        },");
-    lines.push("    );");
-    lines.push("    app");
-    lines.push("}");
-    lines.push("```");
-    lines.push("");
 }
 
 function toSnake(s: string): string {

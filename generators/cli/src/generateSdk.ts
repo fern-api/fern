@@ -209,18 +209,18 @@ impl ${sdkCrateSnake}::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name} {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<${sdkCrateSnake}::api::${rootClient.name}, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = ${sdkCrateSnake}::ClientConfig::default();
     let http_client = ${sdkCrateSnake}::HttpClient::with_executor(
         adapter as Arc<dyn ${sdkCrateSnake}::RequestExecutor>,
         config.clone(),
     );
-    ${sdkCrateSnake}::api::${rootClient.name} {
+    Ok(${sdkCrateSnake}::api::${rootClient.name} {
         config,${httpClientInit}
 ${subClientInits}
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------
