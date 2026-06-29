@@ -291,6 +291,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -773,4 +774,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2290791`;
+exports[`dependencies > file dependencies 1`] = `2290821`;

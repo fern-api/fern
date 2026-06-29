@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "results": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SearchResponseResultsItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "SearchResponseResultsItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "users": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListUsersResponseUsersItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ListUsersResponseUsersItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

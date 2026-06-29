@@ -52323,6 +52323,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
     "type": "statusCode"
   },
   "variables": [],
+  "globalParameters": null,
   "serviceTypeReferenceInfo": {
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
