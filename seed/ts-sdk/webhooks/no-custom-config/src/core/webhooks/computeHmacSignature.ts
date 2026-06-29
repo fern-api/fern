@@ -1,5 +1,5 @@
 import { RUNTIME } from "../runtime/index.js";
-import { SignatureEncoding } from "./types.js";
+import type { SignatureEncoding } from "./types.js";
 
 export type HmacAlgorithm = "sha256" | "sha1" | "sha384" | "sha512";
 

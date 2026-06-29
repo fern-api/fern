@@ -382,7 +382,7 @@ export class InlineUsersClient {
         return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: response => response?.hasNextPage ?? (response?.data.users ?? []).length > 0 && (request?.limit == null || (response?.data.users ?? []).length >= request?.limit),
+            hasNextPage: response => response?.hasNextPage ?? ((response?.data.users ?? []).length > 0 && (request?.limit == null || (response?.data.users ?? []).length >= request?.limit)),
             getItems: response => response?.data.users ?? [],
             loadPage: response => { _offset += response?.data.users != null ? response.data.users.length : 1; return list(core.setObjectProperty(request, "page", _offset)); }
         });
