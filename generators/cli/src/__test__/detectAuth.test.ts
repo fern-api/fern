@@ -119,18 +119,16 @@ describe("detectAuthBindings", () => {
         );
     });
 
-    it("basic auth: IR usernameEnvVar + passwordEnvVar drive both sources", () => {
+    it("basic auth (both halves): root-level BasicAuth builder so auth status enumerates it [FER-11474]", () => {
         const bindings = detectAuthBindings({
             auth: auth(basic({ key: "BasicAuth", usernameEnvVar: "CLOSE_USER", passwordEnvVar: "CLOSE_PASS" })),
             binaryName: "close"
         });
         expect(bindings[0]?.rustCall).toBe(
-            '.auth_basic_scheme("BasicAuth", ' +
-                'AuthCredentialSource::from_env("CLOSE_USER"), ' +
-                'AuthCredentialSource::from_env("CLOSE_PASS"))'
+            '.auth(BasicAuth::new("BasicAuth").username_env("CLOSE_USER").password_env("CLOSE_PASS"))'
         );
-        expect(bindings[0]?.placement).toBe("binding");
-        expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource");
+        expect(bindings[0]?.placement).toBe("root");
+        expect(bindings[0]?.authTypeImport).toBe("BasicAuth");
     });
 
     it("basic auth with passwordOmit (Close pattern): emits auth_provider with BasicAuthProvider::username_only", () => {
@@ -169,10 +167,9 @@ describe("detectAuthBindings", () => {
             binaryName: "acme"
         });
         expect(bindings[0]?.rustCall).toBe(
-            '.auth_basic_scheme("BasicAuth", ' +
-                'AuthCredentialSource::from_env("ACME_USERNAME"), ' +
-                'AuthCredentialSource::from_env("ACME_PASSWORD"))'
+            '.auth(BasicAuth::new("BasicAuth").username_env("ACME_USERNAME").password_env("ACME_PASSWORD"))'
         );
+        expect(bindings[0]?.placement).toBe("root");
     });
 
     it("multiple schemes all produce bindings, in declared order", () => {
