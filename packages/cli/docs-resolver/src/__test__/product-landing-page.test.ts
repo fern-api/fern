@@ -1,4 +1,3 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -29,10 +28,13 @@ describe("product-level landing page in product groups", () => {
 
         const resolvedDocs = await resolver.resolve();
         const root = resolvedDocs.config.root;
-        expect(root).toBeDefined();
+
+        if (root == null) {
+            throw new Error("Failed to resolve docs root");
+        }
 
         // The root child should be a product group
-        const rootChild = root!.child;
+        const rootChild = root.child;
         expect(rootChild.type).toBe("productgroup");
 
         if (rootChild.type !== "productgroup") {
@@ -42,41 +44,41 @@ describe("product-level landing page in product groups", () => {
         // First product (Sunflower) has a landing page configured
         const sunflower = rootChild.children[0];
         expect(sunflower).toBeDefined();
-        expect(sunflower!.type).toBe("product");
+        expect(sunflower?.type).toBe("product");
 
-        if (sunflower!.type !== "product") {
+        if (sunflower?.type !== "product") {
             throw new Error("Expected product node");
         }
 
         // The product's child should be an unversioned node
-        expect(sunflower!.child.type).toBe("unversioned");
+        expect(sunflower?.child.type).toBe("unversioned");
 
-        if (sunflower!.child.type !== "unversioned") {
+        if (sunflower?.child.type !== "unversioned") {
             throw new Error("Expected unversioned child");
         }
 
         // The unversioned node should have a landing page
-        const landingPage = sunflower!.child.landingPage;
+        const landingPage = sunflower?.child.landingPage;
         expect(landingPage).toBeDefined();
-        expect(landingPage!.type).toBe("landingPage");
-        expect(landingPage!.pageId).toContain("sunflower-landing.mdx");
+        expect(landingPage?.type).toBe("landingPage");
+        expect(landingPage?.pageId).toContain("sunflower-landing.mdx");
 
         // Second product (Cactus) has no landing page configured
         const cactus = rootChild.children[1];
         expect(cactus).toBeDefined();
-        expect(cactus!.type).toBe("product");
+        expect(cactus?.type).toBe("product");
 
-        if (cactus!.type !== "product") {
+        if (cactus?.type !== "product") {
             throw new Error("Expected product node");
         }
 
-        expect(cactus!.child.type).toBe("unversioned");
+        expect(cactus?.child.type).toBe("unversioned");
 
-        if (cactus!.child.type !== "unversioned") {
+        if (cactus?.child.type !== "unversioned") {
             throw new Error("Expected unversioned child");
         }
 
         // Cactus should NOT have a landing page
-        expect(cactus!.child.landingPage).toBeUndefined();
+        expect(cactus?.child.landingPage).toBeUndefined();
     });
 });
