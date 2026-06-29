@@ -56,8 +56,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public getPropertyName(name: FernIr.Name): string {
         const snakeCase = name.snakeCase.safeName;
         if (snakeCase.startsWith("_")) {
-            // These are public fields so they should not start with an underscore.
-            //
+            if (name.originalName.startsWith("_")) {
+                // User intentionally prefixed the name with underscore (e.g. _fields, _internal).
+                // Preserve as-is for method kwargs.
+                return snakeCase;
+            }
             // The Fern CLI will automatically add the underscore in the beginning for
             // fields that start with a number so we actually expect some public fields
             // to start with an underscore that we need to strip.
@@ -66,6 +69,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             // and Python also does not allow fields to start with a number, so we need a
             // new prefix.
             return "f_" + snakeCase.substring(snakeCase.lastIndexOf("_") + 1);
+        }
+        // Restore leading underscore that was stripped by the casings generator
+        // (lodash snakeCase drops leading underscores). The user put it there intentionally.
+        if (name.originalName.startsWith("_")) {
+            return "_" + snakeCase;
         }
         return snakeCase;
     }

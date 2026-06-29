@@ -92,7 +92,7 @@ def test_endpoints_params_create_with_body_and_query() -> None:
     test_id = "endpoints.params.create_with_body_and_query.0"
     client = get_client(test_id)
     client.endpoints.params.create_with_body_and_query(
-        fields="_fields",
+        _fields="_fields",
         string="string",
     )
     verify_request_count(test_id, "POST", "/params/body-and-query", {"_fields": "_fields"}, 1)
