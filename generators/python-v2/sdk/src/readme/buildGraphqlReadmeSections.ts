@@ -122,10 +122,7 @@ function getScalarFieldNames(
     return names;
 }
 
-function isConnection(
-    typeReference: FernIr.TypeReference,
-    types: Record<string, FernIr.TypeDeclaration>
-): boolean {
+function isConnection(typeReference: FernIr.TypeReference, types: Record<string, FernIr.TypeDeclaration>): boolean {
     const object = getObjectDeclaration(typeReference, types);
     if (object == null) {
         return false;
@@ -140,12 +137,17 @@ function isConnection(
         return false;
     }
     const pageInfoWireNames = new Set(
-        [...(pageInfo.extendedProperties ?? []), ...pageInfo.properties].map((property) => propertyWireValue(property.name))
+        [...(pageInfo.extendedProperties ?? []), ...pageInfo.properties].map((property) =>
+            propertyWireValue(property.name)
+        )
     );
     return pageInfoWireNames.has("hasNextPage") && pageInfoWireNames.has("endCursor");
 }
 
-function selectionLambda(typeReference: FernIr.TypeReference | undefined, types: Record<string, FernIr.TypeDeclaration>): string {
+function selectionLambda(
+    typeReference: FernIr.TypeReference | undefined,
+    types: Record<string, FernIr.TypeDeclaration>
+): string {
     const fields = typeReference != null ? getScalarFieldNames(typeReference, types, 2) : [];
     const chain = fields.length > 0 ? fields.map((field) => `.${field}()`).join("") : ".all_()";
     return `lambda x: x${chain}`;
@@ -249,7 +251,7 @@ export function buildGraphqlReadmeSections(ir: FernIr.IntermediateRepresentation
                 "Power users can send a hand-written GraphQL document with `client.raw`, bypassing the typed " +
                     "operation surface. It reuses the SDK's auth, retries, and base URL, and returns the response " +
                     "`data` (or the full `{data, errors}` envelope with `throw_on_error=False`).",
-                'data = client.raw(\n' +
+                "data = client.raw(\n" +
                     '    "query ($id: ID!) { order(id: $id) { id } }",\n' +
                     '    variables={"id": "order-123"},\n' +
                     ")"
