@@ -1,0 +1,7 @@
+- summary: |
+    When running inside GitHub Actions, notable SDK generation events are now surfaced as
+    `::notice::` annotations in the workflow run page and appended to the step summary.
+    Annotated events include PR creation, package publication (npm, PyPI, Maven, etc.),
+    no-changes-detected, and version tagging. Previously, these details were only visible
+    in debug-level log output.
+  type: feat
