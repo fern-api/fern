@@ -429,6 +429,38 @@ pub(crate) fn multipart_has_stdin(parts: &Option<Vec<MultipartPart>>) -> bool {
     }
 }
 
+/// Returns `true` when the operation declares a JSON request body that
+/// should receive a synthesized `{}` when the user supplies no body flags.
+///
+/// The guard ensures only operations that genuinely expect a JSON payload
+/// get the fallback — binary uploads, multipart forms, form-urlencoded
+/// bodies, and operations with no declared request schema are excluded.
+///
+/// This mirrors the typed-SDK parity rule: generated typed SDKs (e.g.
+/// `anduril/lattice-sdk-javascript`) unconditionally send `body: request`
+/// with `requestType: "json"` for all-optional request types. The CLI
+/// must do the same so servers that require a parseable JSON body (even
+/// if every field is optional) don't receive an empty request and 400.
+pub(crate) fn method_expects_json_body(method: &RestMethod) -> bool {
+    // Must have a declared request schema.
+    if method.request.is_none() {
+        return false;
+    }
+    // Must use JSON encoding (excludes form-urlencoded).
+    if method.body_encoding != BodyEncoding::Json {
+        return false;
+    }
+    // Exclude binary-body operations (octet-stream uploads etc.).
+    if method.binary_request_body.is_some() {
+        return false;
+    }
+    // Exclude multipart/form-data operations.
+    if !method.multipart_fields.is_empty() {
+        return false;
+    }
+    true
+}
+
 /// Parse a `Retry-After` header value into a `Duration`.
 ///
 /// HTTP/1.1 allows two forms (RFC 7231 §7.1.3): a non-negative integer
@@ -774,6 +806,12 @@ fn parse_and_validate_inputs(
         Some(json_val)
     } else if !body_from_flags.is_empty() {
         Some(Value::Object(body_from_flags))
+    } else if method_expects_json_body(method) {
+        // Synthesize an empty `{}` for operations that declare a JSON request
+        // body when the user supplies no flags. This matches typed-SDK behavior
+        // (e.g. `streamEntities(request = {})`) and prevents servers that
+        // require a parseable JSON body from returning 400 on EOF.
+        Some(Value::Object(Map::new()))
     } else {
         None
     };
@@ -9967,6 +10005,205 @@ mod tests {
         assert!(err.to_string().contains("Required parameter 'api_key'"));
     }
 
+    // -----------------------------------------------------------------
+    // method_expects_json_body + empty-body synthesis (FER-10926)
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn test_method_expects_json_body_with_json_request() {
+        use crate::openapi::discovery::SchemaRef;
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            request: Some(SchemaRef {
+                schema_ref: Some("EntityStreamRequest".to_string()),
+                parameter_name: None,
+            }),
+            body_encoding: BodyEncoding::Json,
+            ..Default::default()
+        };
+        assert!(
+            method_expects_json_body(&method),
+            "POST with a JSON request schema should expect a JSON body"
+        );
+    }
+
+    #[test]
+    fn test_method_expects_json_body_no_request_schema() {
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            request: None,
+            body_encoding: BodyEncoding::Json,
+            ..Default::default()
+        };
+        assert!(
+            !method_expects_json_body(&method),
+            "POST with no declared request schema should NOT expect a JSON body"
+        );
+    }
+
+    #[test]
+    fn test_method_expects_json_body_form_encoded() {
+        use crate::openapi::discovery::SchemaRef;
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            request: Some(SchemaRef {
+                schema_ref: Some("LoginRequest".to_string()),
+                parameter_name: None,
+            }),
+            body_encoding: BodyEncoding::FormUrlEncoded,
+            ..Default::default()
+        };
+        assert!(
+            !method_expects_json_body(&method),
+            "form-urlencoded body should NOT get the empty JSON fallback"
+        );
+    }
+
+    #[test]
+    fn test_method_expects_json_body_binary_request() {
+        use crate::openapi::discovery::{BinaryRequestBody, SchemaRef};
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            request: Some(SchemaRef {
+                schema_ref: Some("UploadReq".to_string()),
+                parameter_name: None,
+            }),
+            body_encoding: BodyEncoding::Json,
+            binary_request_body: Some(BinaryRequestBody {
+                content_type: "application/octet-stream".to_string(),
+                flag_name: "file".to_string(),
+            }),
+            ..Default::default()
+        };
+        assert!(
+            !method_expects_json_body(&method),
+            "binary-body operations should NOT get the empty JSON fallback"
+        );
+    }
+
+    #[test]
+    fn test_method_expects_json_body_multipart() {
+        use crate::openapi::discovery::{MultipartField, SchemaRef};
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            request: Some(SchemaRef {
+                schema_ref: Some("UploadReq".to_string()),
+                parameter_name: None,
+            }),
+            body_encoding: BodyEncoding::Json,
+            multipart_fields: vec![MultipartField {
+                wire_name: "file".to_string(),
+                is_file: true,
+                required: true,
+                description: None,
+                content_type: None,
+            }],
+            ..Default::default()
+        };
+        assert!(
+            !method_expects_json_body(&method),
+            "multipart operations should NOT get the empty JSON fallback"
+        );
+    }
+
+    #[test]
+    fn test_empty_body_synthesized_for_all_optional_json_post() {
+        use crate::openapi::discovery::SchemaRef;
+        // Simulates the Anduril `stream-entities` case: POST with an
+        // all-optional JSON body, no flags supplied.
+        let schemas = HashMap::from([(
+            "EntityStreamRequest".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                // All fields optional — no `required` entries.
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            schemas,
+            ..Default::default()
+        };
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "entities/stream".to_string(),
+            request: Some(SchemaRef {
+                schema_ref: Some("EntityStreamRequest".to_string()),
+                parameter_name: None,
+            }),
+            body_encoding: BodyEncoding::Json,
+            ..Default::default()
+        };
+        let input =
+            parse_and_validate_inputs(&doc, &method, None, None, false, None, &[]).unwrap();
+        assert_eq!(
+            input.body,
+            Some(Value::Object(Map::new())),
+            "all-optional JSON body op with no flags should synthesize {{}}"
+        );
+    }
+
+    #[test]
+    fn test_no_body_synthesized_when_no_request_schema() {
+        // Operations with no declared request body should NOT get a
+        // synthesized body — they still pass through as None.
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "messages/trash".to_string(),
+            request: None,
+            ..Default::default()
+        };
+        let input =
+            parse_and_validate_inputs(&doc, &method, None, None, false, None, &[]).unwrap();
+        assert_eq!(
+            input.body, None,
+            "POST with no declared request schema should produce body=None"
+        );
+    }
+
+    #[test]
+    fn test_no_body_synthesized_for_get() {
+        use crate::openapi::discovery::SchemaRef;
+        // GET operations with a request schema (unusual but legal in OpenAPI)
+        // should still get the synthesis since the server may expect it.
+        // However, the more important contract is that the helper says true.
+        let schemas = HashMap::from([(
+            "SearchRequest".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            schemas,
+            ..Default::default()
+        };
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            path: "search".to_string(),
+            request: Some(SchemaRef {
+                schema_ref: Some("SearchRequest".to_string()),
+                parameter_name: None,
+            }),
+            body_encoding: BodyEncoding::Json,
+            ..Default::default()
+        };
+        let input =
+            parse_and_validate_inputs(&doc, &method, None, None, false, None, &[]).unwrap();
+        // Even for GET, if the spec declares a JSON body, we synthesize
+        // it — the executor's job is to be faithful to the spec.
+        assert_eq!(
+            input.body,
+            Some(Value::Object(Map::new())),
+            "GET with a declared JSON request should also synthesize {{}}"
+        );
+    }
+
     #[tokio::test]
     async fn test_build_http_request_unsupported_method() {
         let client = reqwest::Client::new();
@@ -10966,5 +11203,88 @@ fn write_http_preamble_duplicate_headers() {
     assert!(
         output.contains("set-cookie: b=2\r\n"),
         "should include second set-cookie value, got: {output}"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// FER-10926: all-optional JSON body synthesis at the HTTP layer
+// ---------------------------------------------------------------------------
+
+/// Tier-2 wire test: a streaming POST with an all-optional JSON body
+/// (mirrors the Anduril Lattice `stream-entities` symptom). Verifies
+/// that `build_http_request` produces a request with `Content-Type:
+/// application/json` and a `{}` body when `parse_and_validate_inputs`
+/// synthesizes the empty object.
+#[tokio::test]
+async fn test_all_optional_json_body_post_sends_json() {
+    use crate::openapi::discovery::{SchemaRef, StreamingConfig};
+
+    let client = reqwest::Client::new();
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "v2/entities/stream".to_string(),
+        request: Some(SchemaRef {
+            schema_ref: Some("EntityStreamRequest".to_string()),
+            parameter_name: None,
+        }),
+        body_encoding: BodyEncoding::Json,
+        streaming: Some(StreamingConfig::Json { terminator: None }),
+        ..Default::default()
+    };
+
+    // Simulate the synthesized `{}` body from parse_and_validate_inputs.
+    let input = ExecutionInput {
+        full_url: "https://api.example.com/v2/entities/stream".to_string(),
+        body: Some(serde_json::Value::Object(serde_json::Map::new())),
+        query_params: Vec::new(),
+        header_params: Vec::new(),
+        is_upload: false,
+    };
+
+    let request = build_http_request(
+        &client,
+        &method,
+        &input,
+        &crate::auth::no_auth_provider(),
+        &EndpointAuthMetadata::unspecified(),
+        &PageState::Cursor(None),
+        0,
+        &None,
+        None,
+        &None,
+        &PaginationConfig::default(),
+    )
+    .await
+    .unwrap();
+
+    let built = request.build().unwrap();
+
+    // Must carry Content-Type: application/json.
+    assert_eq!(
+        built
+            .headers()
+            .get("Content-Type")
+            .map(|v| v.to_str().unwrap()),
+        Some("application/json"),
+        "all-optional JSON body POST must set Content-Type: application/json"
+    );
+
+    // Body must be `{}` (2 bytes).
+    let body_bytes = built.body().and_then(|b| b.as_bytes()).unwrap_or(&[]);
+    assert_eq!(
+        std::str::from_utf8(body_bytes).unwrap_or(""),
+        "{}",
+        "all-optional JSON body POST must send {{}} as the body"
+    );
+
+    // Content-Length: 0 must NOT be present (the body is non-empty).
+    let cl = built
+        .headers()
+        .get("Content-Length")
+        .and_then(|v| v.to_str().ok());
+    assert_ne!(
+        cl,
+        Some("0"),
+        "non-empty JSON body must not carry Content-Length: 0"
     );
 }

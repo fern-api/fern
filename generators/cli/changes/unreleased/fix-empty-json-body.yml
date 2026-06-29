@@ -1,0 +1,7 @@
+- summary: |
+    Synthesize an empty `{}` JSON body for operations that declare an
+    all-optional JSON request body when no flags are supplied. Previously
+    these requests sent no body at all, causing servers that require a
+    parseable JSON payload (e.g. Anduril Lattice `stream-entities`) to
+    return 400.
+  type: fix
