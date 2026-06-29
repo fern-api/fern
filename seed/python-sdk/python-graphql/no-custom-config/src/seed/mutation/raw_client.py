@@ -4,11 +4,12 @@ import typing
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.graphql import GraphqlError
+from ..core.graphql import GraphqlError, build_graphql_query
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
+from ..seed.graphql_selections import PostSelection
 from ..types.create_post_input import CreatePostInput
 from ..types.post import Post
 
@@ -21,7 +22,11 @@ class RawMutationClient:
         self._client_wrapper = client_wrapper
 
     def create_post(
-        self, *, input: CreatePostInput, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        input: CreatePostInput,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Post]:
         """
         Create a post (input object argument → GraphQL variable).
@@ -29,6 +34,9 @@ class RawMutationClient:
         Parameters
         ----------
         input : CreatePostInput
+
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -38,11 +46,22 @@ class RawMutationClient:
         HttpResponse[Post]
             Create a post (input object argument → GraphQL variable).
         """
+        _graphql_query = "mutation createPost($input: CreatePostInput!) {\n  createPost(input: $input) {\n  id\n  title\n  body\n  author {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  publishedAt\n  metadata\n  themeColor\n}\n}"
+        if selection is not None:
+            _graphql_selection = PostSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="MUTATION",
+                operation_name="createPost",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$input: CreatePostInput!",
+                arguments="(input: $input)",
+            )
         _response = self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "mutation createPost($input: CreatePostInput!) {\n  createPost(input: $input) {\n  id\n  title\n  body\n  author {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  publishedAt\n  metadata\n  themeColor\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "input": convert_and_respect_annotation_metadata(
                         object_=input, annotation=CreatePostInput, direction="write"
@@ -79,7 +98,11 @@ class AsyncRawMutationClient:
         self._client_wrapper = client_wrapper
 
     async def create_post(
-        self, *, input: CreatePostInput, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        input: CreatePostInput,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Post]:
         """
         Create a post (input object argument → GraphQL variable).
@@ -87,6 +110,9 @@ class AsyncRawMutationClient:
         Parameters
         ----------
         input : CreatePostInput
+
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -96,11 +122,22 @@ class AsyncRawMutationClient:
         AsyncHttpResponse[Post]
             Create a post (input object argument → GraphQL variable).
         """
+        _graphql_query = "mutation createPost($input: CreatePostInput!) {\n  createPost(input: $input) {\n  id\n  title\n  body\n  author {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  publishedAt\n  metadata\n  themeColor\n}\n}"
+        if selection is not None:
+            _graphql_selection = PostSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="MUTATION",
+                operation_name="createPost",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$input: CreatePostInput!",
+                arguments="(input: $input)",
+            )
         _response = await self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "mutation createPost($input: CreatePostInput!) {\n  createPost(input: $input) {\n  id\n  title\n  body\n  author {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  publishedAt\n  metadata\n  themeColor\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "input": convert_and_respect_annotation_metadata(
                         object_=input, annotation=CreatePostInput, direction="write"

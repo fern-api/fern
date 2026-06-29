@@ -49,6 +49,7 @@ from fern_python.utils.name_resolver import get_name_from_wire_value, get_origin
 
 import fern.ir.resources as ir_types
 from fern_python.cli.graphql_transport import GraphqlTransportInfo, GraphqlTransportRegistry
+from fern_python.generators.sdk.client_generator.graphql_selection_generator import GraphqlSelectionGenerator
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -299,6 +300,7 @@ class EndpointFunctionGenerator:
 
         unnamed_parameters = self._get_unnamed_parameters()
         named_parameters = self._get_named_parameter_types(streaming_parameter)
+        named_parameters = self._maybe_add_graphql_selection_parameter(named_parameters)
 
         decorators = []
         if is_overloaded:
@@ -840,10 +842,32 @@ class EndpointFunctionGenerator:
         if named_parameters and len(named_parameters) > 0:
             request_options_variable_name = named_parameters[-1].name
 
-        query_literal = repr(graphql_transport.query)
+        # `_graphql_query` defaults to the baked full-selection document; when the caller passes a
+        # `selection` builder we rebuild the document from it at runtime (PRD §11.3).
+        query_variable = "_graphql_query"
+        builder_reference = self._graphql_selection_builder_reference(endpoint)
+        writer.write(f"{query_variable} = ")
+        writer.write_line(repr(graphql_transport.query))
+        if builder_reference is not None:
+            writer.write_line("if selection is not None:")
+            with writer.indent():
+                writer.write("_graphql_selection = ")
+                writer.write_reference(builder_reference)
+                writer.write_line("()")
+                writer.write_line("selection(_graphql_selection)")
+                writer.write(f"{query_variable} = ")
+                writer.write_reference(self._context.core_utilities.get_reference_to_build_graphql_query())
+                writer.write_line("(")
+                with writer.indent():
+                    writer.write_line(f"operation_type={repr(graphql_transport.operation_type)},")
+                    writer.write_line(f"operation_name={repr(graphql_transport.operation_name)},")
+                    writer.write_line("selection_set=_graphql_selection._render_selection_set(),")
+                    writer.write_line(f"variable_definitions={repr(graphql_transport.variable_definitions)},")
+                    writer.write_line(f"arguments={repr(graphql_transport.arguments)},")
+                writer.write_line(")")
 
         def write_envelope(writer: AST.NodeWriter) -> None:
-            writer.write(f'{{"query": {query_literal}, "variables": ')
+            writer.write(f'{{"query": {query_variable}, "variables": ')
             if variables is not None:
                 writer.write_node(variables)
             else:
@@ -881,6 +905,50 @@ class EndpointFunctionGenerator:
             force_multipart=False,
         )
         writer.write_node(request)
+
+    def _graphql_response_type_reference(self, endpoint: ir_types.HttpEndpoint) -> Optional[ir_types.TypeReference]:
+        if endpoint.response is None or endpoint.response.body is None:
+            return None
+        return endpoint.response.body.visit(
+            json=lambda json_response: json_response.visit(
+                response=lambda response: response.response_body_type,
+                nested_property_as_response=lambda response: response.response_body_type,
+            ),
+            file_download=lambda _: None,
+            text=lambda _: None,
+            bytes=lambda _: None,
+            streaming=lambda _: None,
+            stream_parameter=lambda _: None,
+        )
+
+    def _graphql_selection_builder_reference(self, endpoint: ir_types.HttpEndpoint) -> Optional[AST.ClassReference]:
+        response_reference = self._graphql_response_type_reference(endpoint)
+        if response_reference is None:
+            return None
+        return GraphqlSelectionGenerator(self._context).get_reference_to_builder_for_type_reference(response_reference)
+
+    def _maybe_add_graphql_selection_parameter(
+        self, named_parameters: List[AST.NamedFunctionParameter]
+    ) -> List[AST.NamedFunctionParameter]:
+        graphql_transport = GraphqlTransportRegistry.get(self._endpoint.id)
+        if graphql_transport is None or graphql_transport.is_subscription:
+            return named_parameters
+        builder_reference = self._graphql_selection_builder_reference(self._endpoint)
+        if builder_reference is None:
+            return named_parameters
+        selection_parameter = AST.NamedFunctionParameter(
+            name="selection",
+            type_hint=AST.TypeHint.optional(
+                AST.TypeHint.callable([AST.TypeHint(type=builder_reference)], AST.TypeHint.any())
+            ),
+            initializer=AST.Expression("None"),
+            docs="A field selection; omit to fetch the default selection.",
+        )
+        # Insert before the trailing request_options parameter so the "last param" logic elsewhere
+        # (which treats the final named parameter as request_options) keeps working.
+        if len(named_parameters) > 0:
+            return named_parameters[:-1] + [selection_parameter] + named_parameters[-1:]
+        return [selection_parameter]
 
     def _graphql_response_type_hint(self, endpoint: ir_types.HttpEndpoint) -> Optional[AST.TypeHint]:
         if endpoint.response is None or endpoint.response.body is None:

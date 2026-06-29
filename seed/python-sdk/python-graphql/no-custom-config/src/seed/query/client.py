@@ -4,6 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..seed.graphql_selections import PostConnectionSelection, SearchResultSelection, UserSelection
 from ..types.post_connection import PostConnection
 from ..types.search_result import SearchResult
 from ..types.user import User
@@ -28,12 +29,20 @@ class QueryClient:
         """
         return self._raw_client
 
-    def viewer(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[User]:
+    def viewer(
+        self,
+        *,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[User]:
         """
         The currently authenticated user (no arguments — exercises the no-arg selection-only call shape).
 
         Parameters
         ----------
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -52,16 +61,25 @@ class QueryClient:
         )
         client.query.viewer()
         """
-        _response = self._raw_client.viewer(request_options=request_options)
+        _response = self._raw_client.viewer(selection=selection, request_options=request_options)
         return _response.data
 
-    def user(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[User]:
+    def user(
+        self,
+        *,
+        id: str,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[User]:
         """
         Fetch a single user by id.
 
         Parameters
         ----------
         id : str
+
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -83,11 +101,15 @@ class QueryClient:
             id="id",
         )
         """
-        _response = self._raw_client.user(id=id, request_options=request_options)
+        _response = self._raw_client.user(id=id, selection=selection, request_options=request_options)
         return _response.data
 
     def search(
-        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        query: str,
+        selection: typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[SearchResult]:
         """
         Search across users and posts (union → inline fragments).
@@ -95,6 +117,9 @@ class QueryClient:
         Parameters
         ----------
         query : str
+
+        selection : typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -116,7 +141,7 @@ class QueryClient:
             query="query",
         )
         """
-        _response = self._raw_client.search(query=query, request_options=request_options)
+        _response = self._raw_client.search(query=query, selection=selection, request_options=request_options)
         return _response.data
 
     def feed(
@@ -124,6 +149,7 @@ class QueryClient:
         *,
         first: typing.Optional[int] = OMIT,
         after: typing.Optional[str] = OMIT,
+        selection: typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PostConnection:
         """
@@ -134,6 +160,9 @@ class QueryClient:
         first : typing.Optional[int]
 
         after : typing.Optional[str]
+
+        selection : typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,7 +185,9 @@ class QueryClient:
             after="after",
         )
         """
-        _response = self._raw_client.feed(first=first, after=after, request_options=request_options)
+        _response = self._raw_client.feed(
+            first=first, after=after, selection=selection, request_options=request_options
+        )
         return _response.data
 
 
@@ -175,12 +206,20 @@ class AsyncQueryClient:
         """
         return self._raw_client
 
-    async def viewer(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[User]:
+    async def viewer(
+        self,
+        *,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[User]:
         """
         The currently authenticated user (no arguments — exercises the no-arg selection-only call shape).
 
         Parameters
         ----------
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -207,16 +246,25 @@ class AsyncQueryClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.viewer(request_options=request_options)
+        _response = await self._raw_client.viewer(selection=selection, request_options=request_options)
         return _response.data
 
-    async def user(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[User]:
+    async def user(
+        self,
+        *,
+        id: str,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[User]:
         """
         Fetch a single user by id.
 
         Parameters
         ----------
         id : str
+
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -246,11 +294,15 @@ class AsyncQueryClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.user(id=id, request_options=request_options)
+        _response = await self._raw_client.user(id=id, selection=selection, request_options=request_options)
         return _response.data
 
     async def search(
-        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        query: str,
+        selection: typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[SearchResult]:
         """
         Search across users and posts (union → inline fragments).
@@ -258,6 +310,9 @@ class AsyncQueryClient:
         Parameters
         ----------
         query : str
+
+        selection : typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -287,7 +342,7 @@ class AsyncQueryClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.search(query=query, request_options=request_options)
+        _response = await self._raw_client.search(query=query, selection=selection, request_options=request_options)
         return _response.data
 
     async def feed(
@@ -295,6 +350,7 @@ class AsyncQueryClient:
         *,
         first: typing.Optional[int] = OMIT,
         after: typing.Optional[str] = OMIT,
+        selection: typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PostConnection:
         """
@@ -305,6 +361,9 @@ class AsyncQueryClient:
         first : typing.Optional[int]
 
         after : typing.Optional[str]
+
+        selection : typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -335,5 +394,7 @@ class AsyncQueryClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.feed(first=first, after=after, request_options=request_options)
+        _response = await self._raw_client.feed(
+            first=first, after=after, selection=selection, request_options=request_options
+        )
         return _response.data

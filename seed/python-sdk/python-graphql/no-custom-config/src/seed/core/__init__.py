@@ -10,7 +10,7 @@ if typing.TYPE_CHECKING:
     from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
     from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
-    from .graphql import GraphqlError
+    from .graphql import GraphqlError, GraphqlSelection, build_graphql_query
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import encode_path_param, jsonable_encoder
@@ -39,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FieldMetadata": ".serialization",
     "File": ".file",
     "GraphqlError": ".graphql",
+    "GraphqlSelection": ".graphql",
     "HttpClient": ".http_client",
     "HttpResponse": ".http_response",
     "ILogger": ".logging",
@@ -52,6 +53,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SyncClientWrapper": ".client_wrapper",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
+    "build_graphql_query": ".graphql",
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
     "create_logger": ".logging",
@@ -100,6 +102,7 @@ __all__ = [
     "FieldMetadata",
     "File",
     "GraphqlError",
+    "GraphqlSelection",
     "HttpClient",
     "HttpResponse",
     "ILogger",
@@ -113,6 +116,7 @@ __all__ = [
     "SyncClientWrapper",
     "UniversalBaseModel",
     "UniversalRootModel",
+    "build_graphql_query",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
     "create_logger",

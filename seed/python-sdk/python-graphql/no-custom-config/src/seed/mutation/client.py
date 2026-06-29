@@ -4,6 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..seed.graphql_selections import PostSelection
 from ..types.create_post_input import CreatePostInput
 from ..types.post import Post
 from .raw_client import AsyncRawMutationClient, RawMutationClient
@@ -27,13 +28,22 @@ class MutationClient:
         """
         return self._raw_client
 
-    def create_post(self, *, input: CreatePostInput, request_options: typing.Optional[RequestOptions] = None) -> Post:
+    def create_post(
+        self,
+        *,
+        input: CreatePostInput,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Post:
         """
         Create a post (input object argument → GraphQL variable).
 
         Parameters
         ----------
         input : CreatePostInput
+
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,7 +69,7 @@ class MutationClient:
             ),
         )
         """
-        _response = self._raw_client.create_post(input=input, request_options=request_options)
+        _response = self._raw_client.create_post(input=input, selection=selection, request_options=request_options)
         return _response.data
 
 
@@ -79,7 +89,11 @@ class AsyncMutationClient:
         return self._raw_client
 
     async def create_post(
-        self, *, input: CreatePostInput, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        input: CreatePostInput,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Post:
         """
         Create a post (input object argument → GraphQL variable).
@@ -87,6 +101,9 @@ class AsyncMutationClient:
         Parameters
         ----------
         input : CreatePostInput
+
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -120,5 +137,7 @@ class AsyncMutationClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_post(input=input, request_options=request_options)
+        _response = await self._raw_client.create_post(
+            input=input, selection=selection, request_options=request_options
+        )
         return _response.data

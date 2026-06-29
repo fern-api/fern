@@ -5,11 +5,16 @@
         Add GraphQL SDK generation. When an API definition includes a GraphQL schema, the
         generator now emits typed `client.query.*` and `client.mutation.*` methods that POST
         a `{query, variables}` envelope to the GraphQL endpoint (reusing the SDK's auth,
-        retries, and base URL), unwrap `data[operationName]`, and return the fully-typed
-        Pydantic model. GraphQL operation errors raise a new `GraphqlError`. Type-narrowed
-        field selection is intentionally not generated (it cannot be expressed in Python's
-        type system); the baked full selection is used. GraphQL subscriptions are not yet
-        supported and raise `NotImplementedError`.
+        retries, and base URL), unwrap `data[operationName]`, and return the typed Pydantic
+        model. GraphQL operation errors raise a new `GraphqlError`.
+
+        Field selection uses generated fluent builder classes (one `<Type>Selection` per
+        object type): pass `selection=lambda u: u.id().name().posts(lambda p: ...)` to fetch
+        exactly the fields you want as a single GraphQL document; omit it for the default
+        full selection. Precision is delivered via IDE hints + runtime validation (Python
+        cannot express TypeScript-style compile-time selection narrowing). A `raw()` escape
+        hatch on the root client sends hand-written documents. GraphQL subscriptions are not
+        yet supported and raise `NotImplementedError`.
       type: feat
   createdAt: "2026-06-29"
   irVersion: 67

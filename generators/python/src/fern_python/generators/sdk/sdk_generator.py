@@ -2,7 +2,10 @@ import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
+from fern_python.cli.graphql_transport import GraphqlTransportRegistry
+
 from .client_generator.client_generator import ClientGenerator
+from .client_generator.graphql_selection_generator import GraphqlSelectionGenerator
 from .client_generator.generated_root_client import GeneratedRootClient, RootClient
 from .client_generator.inferred_auth_token_provider_generator import InferredAuthTokenProviderGenerator
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
@@ -269,6 +272,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         self._generate_version(project=project)
+
+        if GraphqlTransportRegistry.has_any():
+            GraphqlSelectionGenerator(context=context).generate(project=project)
 
         endpoint_metadata_collector = EndpointMetadataCollector()
 

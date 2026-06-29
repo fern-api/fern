@@ -4,10 +4,11 @@ import typing
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.graphql import GraphqlError
+from ..core.graphql import GraphqlError, build_graphql_query
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..seed.graphql_selections import PostConnectionSelection, SearchResultSelection, UserSelection
 from ..types.post_connection import PostConnection
 from ..types.search_result import SearchResult
 from ..types.user import User
@@ -20,12 +21,20 @@ class RawQueryClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def viewer(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Optional[User]]:
+    def viewer(
+        self,
+        *,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Optional[User]]:
         """
         The currently authenticated user (no arguments — exercises the no-arg selection-only call shape).
 
         Parameters
         ----------
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -34,13 +43,21 @@ class RawQueryClient:
         HttpResponse[typing.Optional[User]]
             The currently authenticated user (no arguments — exercises the no-arg selection-only call shape).
         """
+        _graphql_query = "query viewer {\n  viewer {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}"
+        if selection is not None:
+            _graphql_selection = UserSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="viewer",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions=None,
+                arguments=None,
+            )
         _response = self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
-            json={
-                "query": "query viewer {\n  viewer {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}",
-                "variables": {},
-            },
+            json={"query": _graphql_query, "variables": {}},
             request_options=request_options,
         )
         if 200 <= _response.status_code < 300:
@@ -65,7 +82,11 @@ class RawQueryClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
 
     def user(
-        self, *, id: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        id: str,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Optional[User]]:
         """
         Fetch a single user by id.
@@ -73,6 +94,9 @@ class RawQueryClient:
         Parameters
         ----------
         id : str
+
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -82,11 +106,22 @@ class RawQueryClient:
         HttpResponse[typing.Optional[User]]
             Fetch a single user by id.
         """
+        _graphql_query = "query user($id: ID!) {\n  user(id: $id) {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}"
+        if selection is not None:
+            _graphql_selection = UserSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="user",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$id: ID!",
+                arguments="(id: $id)",
+            )
         _response = self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "query user($id: ID!) {\n  user(id: $id) {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "id": id,
                 },
@@ -116,7 +151,11 @@ class RawQueryClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
 
     def search(
-        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        query: str,
+        selection: typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[SearchResult]]:
         """
         Search across users and posts (union → inline fragments).
@@ -124,6 +163,9 @@ class RawQueryClient:
         Parameters
         ----------
         query : str
+
+        selection : typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -133,11 +175,22 @@ class RawQueryClient:
         HttpResponse[typing.List[SearchResult]]
             Search across users and posts (union → inline fragments).
         """
+        _graphql_query = "query search($query: String!) {\n  search(query: $query) {\n  __typename\n  ... on User {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  ... on Post {\n    id\n    title\n    body\n    author {\n      id\n      name\n      email\n      role\n      posts {\n        __typename\n      }\n      createdAt\n      legacyUsername\n    }\n    publishedAt\n    metadata\n    themeColor\n  }\n}\n}"
+        if selection is not None:
+            _graphql_selection = SearchResultSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="search",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$query: String!",
+                arguments="(query: $query)",
+            )
         _response = self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "query search($query: String!) {\n  search(query: $query) {\n  __typename\n  ... on User {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  ... on Post {\n    id\n    title\n    body\n    author {\n      id\n      name\n      email\n      role\n      posts {\n        __typename\n      }\n      createdAt\n      legacyUsername\n    }\n    publishedAt\n    metadata\n    themeColor\n  }\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "query": query,
                 },
@@ -171,6 +224,7 @@ class RawQueryClient:
         *,
         first: typing.Optional[int] = OMIT,
         after: typing.Optional[str] = OMIT,
+        selection: typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PostConnection]:
         """
@@ -182,6 +236,9 @@ class RawQueryClient:
 
         after : typing.Optional[str]
 
+        selection : typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -190,11 +247,22 @@ class RawQueryClient:
         HttpResponse[PostConnection]
             A paginated feed of posts.
         """
+        _graphql_query = "query feed($first: Int, $after: String) {\n  feed(first: $first, after: $after) {\n  edges {\n    node {\n      id\n      title\n      body\n      author {\n        id\n        name\n        email\n        role\n        createdAt\n        legacyUsername\n      }\n      publishedAt\n      metadata\n      themeColor\n    }\n    cursor\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n}\n}"
+        if selection is not None:
+            _graphql_selection = PostConnectionSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="feed",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$first: Int, $after: String",
+                arguments="(first: $first, after: $after)",
+            )
         _response = self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "query feed($first: Int, $after: String) {\n  feed(first: $first, after: $after) {\n  edges {\n    node {\n      id\n      title\n      body\n      author {\n        id\n        name\n        email\n        role\n        createdAt\n        legacyUsername\n      }\n      publishedAt\n      metadata\n      themeColor\n    }\n    cursor\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "first": first,
                     "after": after,
@@ -230,13 +298,19 @@ class AsyncRawQueryClient:
         self._client_wrapper = client_wrapper
 
     async def viewer(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Optional[User]]:
         """
         The currently authenticated user (no arguments — exercises the no-arg selection-only call shape).
 
         Parameters
         ----------
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -245,13 +319,21 @@ class AsyncRawQueryClient:
         AsyncHttpResponse[typing.Optional[User]]
             The currently authenticated user (no arguments — exercises the no-arg selection-only call shape).
         """
+        _graphql_query = "query viewer {\n  viewer {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}"
+        if selection is not None:
+            _graphql_selection = UserSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="viewer",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions=None,
+                arguments=None,
+            )
         _response = await self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
-            json={
-                "query": "query viewer {\n  viewer {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}",
-                "variables": {},
-            },
+            json={"query": _graphql_query, "variables": {}},
             request_options=request_options,
         )
         if 200 <= _response.status_code < 300:
@@ -276,7 +358,11 @@ class AsyncRawQueryClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
 
     async def user(
-        self, *, id: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        id: str,
+        selection: typing.Optional[typing.Callable[[UserSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Optional[User]]:
         """
         Fetch a single user by id.
@@ -284,6 +370,9 @@ class AsyncRawQueryClient:
         Parameters
         ----------
         id : str
+
+        selection : typing.Optional[typing.Callable[[UserSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -293,11 +382,22 @@ class AsyncRawQueryClient:
         AsyncHttpResponse[typing.Optional[User]]
             Fetch a single user by id.
         """
+        _graphql_query = "query user($id: ID!) {\n  user(id: $id) {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}"
+        if selection is not None:
+            _graphql_selection = UserSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="user",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$id: ID!",
+                arguments="(id: $id)",
+            )
         _response = await self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "query user($id: ID!) {\n  user(id: $id) {\n  id\n  name\n  email\n  role\n  posts {\n    edges {\n      node {\n        id\n        title\n        body\n        publishedAt\n        metadata\n        themeColor\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  createdAt\n  legacyUsername\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "id": id,
                 },
@@ -327,7 +427,11 @@ class AsyncRawQueryClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
 
     async def search(
-        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        query: str,
+        selection: typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[SearchResult]]:
         """
         Search across users and posts (union → inline fragments).
@@ -335,6 +439,9 @@ class AsyncRawQueryClient:
         Parameters
         ----------
         query : str
+
+        selection : typing.Optional[typing.Callable[[SearchResultSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -344,11 +451,22 @@ class AsyncRawQueryClient:
         AsyncHttpResponse[typing.List[SearchResult]]
             Search across users and posts (union → inline fragments).
         """
+        _graphql_query = "query search($query: String!) {\n  search(query: $query) {\n  __typename\n  ... on User {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  ... on Post {\n    id\n    title\n    body\n    author {\n      id\n      name\n      email\n      role\n      posts {\n        __typename\n      }\n      createdAt\n      legacyUsername\n    }\n    publishedAt\n    metadata\n    themeColor\n  }\n}\n}"
+        if selection is not None:
+            _graphql_selection = SearchResultSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="search",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$query: String!",
+                arguments="(query: $query)",
+            )
         _response = await self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "query search($query: String!) {\n  search(query: $query) {\n  __typename\n  ... on User {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  ... on Post {\n    id\n    title\n    body\n    author {\n      id\n      name\n      email\n      role\n      posts {\n        __typename\n      }\n      createdAt\n      legacyUsername\n    }\n    publishedAt\n    metadata\n    themeColor\n  }\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "query": query,
                 },
@@ -382,6 +500,7 @@ class AsyncRawQueryClient:
         *,
         first: typing.Optional[int] = OMIT,
         after: typing.Optional[str] = OMIT,
+        selection: typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PostConnection]:
         """
@@ -393,6 +512,9 @@ class AsyncRawQueryClient:
 
         after : typing.Optional[str]
 
+        selection : typing.Optional[typing.Callable[[PostConnectionSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -401,11 +523,22 @@ class AsyncRawQueryClient:
         AsyncHttpResponse[PostConnection]
             A paginated feed of posts.
         """
+        _graphql_query = "query feed($first: Int, $after: String) {\n  feed(first: $first, after: $after) {\n  edges {\n    node {\n      id\n      title\n      body\n      author {\n        id\n        name\n        email\n        role\n        createdAt\n        legacyUsername\n      }\n      publishedAt\n      metadata\n      themeColor\n    }\n    cursor\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n}\n}"
+        if selection is not None:
+            _graphql_selection = PostConnectionSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="QUERY",
+                operation_name="feed",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$first: Int, $after: String",
+                arguments="(first: $first, after: $after)",
+            )
         _response = await self._client_wrapper.httpx_client.request(
             "graphql",
             method="POST",
             json={
-                "query": "query feed($first: Int, $after: String) {\n  feed(first: $first, after: $after) {\n  edges {\n    node {\n      id\n      title\n      body\n      author {\n        id\n        name\n        email\n        role\n        createdAt\n        legacyUsername\n      }\n      publishedAt\n      metadata\n      themeColor\n    }\n    cursor\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n}\n}",
+                "query": _graphql_query,
                 "variables": {
                     "first": first,
                     "after": after,
