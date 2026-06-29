@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.19.5
+  changelogEntry:
+    - summary: |
+        Generated CLIs now register two-field HTTP Basic auth at the root level
+        (`.auth(BasicAuth::new(...))`) instead of on the `OpenApiBinding`. This
+        makes `<bin> auth status` correctly enumerate the basic scheme, which it
+        previously reported as "No auth schemes are declared" even though
+        credentials were wired and requests authenticated correctly. Request-time
+        behavior is unchanged — the root builder lowers to the same
+        `SchemeBinding::Basic` and still propagates to the binding. (FER-11474)
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 0.19.4
   changelogEntry:
     - summary: |
