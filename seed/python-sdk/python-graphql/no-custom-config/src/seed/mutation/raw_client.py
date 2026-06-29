@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..seed.graphql_selections import PostSelection
+from ..graphql_selections import PostSelection
 from ..types.create_post_input import CreatePostInput
 from ..types.post import Post
 

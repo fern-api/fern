@@ -115,7 +115,8 @@ class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
         node_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(connection.node_type)
         pager_type = AST.TypeHint(
             type=self._context.core_utilities.get_paginator_reference(is_async),
-            type_parameters=[AST.TypeParameter(node_type_hint)],
+            # SyncPager/AsyncPager are Generic[T, R] (node type, page-response type).
+            type_parameters=[AST.TypeParameter(node_type_hint), AST.TypeParameter(AST.TypeHint.any())],
         )
         forward_params: List[AST.NamedFunctionParameter] = []
         forward_names: List[str] = []

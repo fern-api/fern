@@ -8,7 +8,7 @@ from ..core.graphql import GraphqlError, build_graphql_query
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..seed.graphql_selections import PostConnectionSelection, SearchResultSelection, UserSelection
+from ..graphql_selections import PostConnectionSelection, SearchResultSelection, UserSelection
 from ..types.post_connection import PostConnection
 from ..types.search_result import SearchResult
 from ..types.user import User

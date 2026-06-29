@@ -35,7 +35,9 @@ class GraphqlSelectionGenerator:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._context.get_module_path_in_project((self.MODULE_NAME,))),
+                # Module.local resolves relative to the package root, so pass only the module name
+                # (the package prefix is added by the import system).
+                module=AST.Module.local(self.MODULE_NAME),
                 named_import=self._class_name(decl),
             ),
         )

@@ -5,7 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
-from ..seed.graphql_selections import PostConnectionSelection, SearchResultSelection, UserSelection
+from ..graphql_selections import PostConnectionSelection, SearchResultSelection, UserSelection
 from ..types.post import Post
 from ..types.post_connection import PostConnection
 from ..types.search_result import SearchResult
@@ -423,7 +423,7 @@ class QueryClientPaginate:
         *,
         first: typing.Optional[typing.Optional[int]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Post]:
+    ) -> SyncPager[Post, typing.Any]:
         def _get_page(after: typing.Optional[str]) -> typing.Any:
             _connection = self._client.feed(first=first, after=after, request_options=request_options)
             _edges = (_connection.edges if _connection is not None else None) or []
@@ -454,7 +454,7 @@ class AsyncQueryClientPaginate:
         *,
         first: typing.Optional[typing.Optional[int]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Post]:
+    ) -> AsyncPager[Post, typing.Any]:
         async def _get_page(after: typing.Optional[str]) -> typing.Any:
             _connection = await self._client.feed(first=first, after=after, request_options=request_options)
             _edges = (_connection.edges if _connection is not None else None) or []

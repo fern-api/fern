@@ -4,7 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..seed.graphql_selections import PostSelection
+from ..graphql_selections import PostSelection
 from ..types.create_post_input import CreatePostInput
 from ..types.post import Post
 from .raw_client import AsyncRawMutationClient, RawMutationClient

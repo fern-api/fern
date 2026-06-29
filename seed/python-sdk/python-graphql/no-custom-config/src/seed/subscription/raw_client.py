@@ -6,7 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.graphql import build_graphql_query, subscribe_graphql
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..seed.graphql_selections import PostSelection
+from ..graphql_selections import PostSelection
 from ..types.post import Post
 
 # this is used as the default value for optional parameters

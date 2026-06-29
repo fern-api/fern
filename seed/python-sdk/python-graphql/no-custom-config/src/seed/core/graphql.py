@@ -27,9 +27,13 @@ async def subscribe_graphql(
     ``data`` payload. Auth and other connection metadata are sent in the ``connection_init`` params
     (the standard graphql-ws auth channel). Breaking out of the iterator tears the socket down.
     """
-    import websockets  # imported lazily so SDKs without subscriptions don't require the dependency
+    # Imported dynamically so SDKs without subscriptions don't need the `websockets` dependency and
+    # so static type-checkers treat it as untyped (avoids import-not-found / Subprotocol list-item).
+    import importlib
 
-    async with websockets.connect(url, subprotocols=["graphql-transport-ws"]) as socket:  # type: ignore[attr-defined]
+    websockets = importlib.import_module("websockets")
+
+    async with websockets.connect(url, subprotocols=["graphql-transport-ws"]) as socket:
         await socket.send(json.dumps({"type": "connection_init", "payload": connection_params or {}}))
         while True:
             ack_message = json.loads(await socket.recv())

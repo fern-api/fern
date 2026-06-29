@@ -4,7 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..seed.graphql_selections import PostSelection
+from ..graphql_selections import PostSelection
 from ..types.post import Post
 from .raw_client import AsyncRawSubscriptionClient, RawSubscriptionClient
 
@@ -64,10 +64,7 @@ class SubscriptionClient:
             channel_id="channelId",
         )
         """
-        _response = self._raw_client.post_added(
-            channel_id=channel_id, selection=selection, request_options=request_options
-        )
-        return _response.data
+        raise RuntimeError("GraphQL subscriptions are only supported on the async client.")
 
 
 class AsyncSubscriptionClient:
@@ -130,7 +127,7 @@ class AsyncSubscriptionClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_added(
+        async for _event in self._raw_client.post_added(
             channel_id=channel_id, selection=selection, request_options=request_options
-        )
-        return _response.data
+        ):
+            yield _event

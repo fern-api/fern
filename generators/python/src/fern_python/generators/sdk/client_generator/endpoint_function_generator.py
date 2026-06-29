@@ -2207,6 +2207,24 @@ class EndpointFunctionGenerator:
                 )
             )
             data_attribute = "data"
+            graphql_transport = GraphqlTransportRegistry.get(self._endpoint.id)
+            if graphql_transport is not None and graphql_transport.is_subscription:
+                # The raw client's subscription is an async generator; delegate by iterating it
+                # (not `await ... .data`, which assumes an HttpResponse). Sync client is unsupported.
+                if not self._is_async:
+                    writer.write_line(
+                        'raise RuntimeError("GraphQL subscriptions are only supported on the async client.")'
+                    )
+                    return
+                writer.write_node(
+                    AST.ForStatement(
+                        target="_event",
+                        iterable=func_invocation_expr,
+                        is_async=True,
+                        body=[AST.YieldStatement(AST.Expression("_event"))],
+                    )
+                )
+                return
             if is_streaming_endpoint(self._endpoint):
                 response_variable = "r"
                 body: list[AST.AstNode] = []
