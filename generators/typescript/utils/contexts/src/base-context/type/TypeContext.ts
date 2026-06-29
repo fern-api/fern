@@ -19,6 +19,34 @@ export interface TypeContext {
         opts: { includeNullCheckIfOptional: boolean }
     ) => ts.Expression;
     getReferenceToNamedType: (typeName: FernIr.DeclaredTypeName) => Reference;
+    /** Reference to the generated `<Name>Select` GraphQL field-selection type for a named type. */
+    getReferenceToGraphqlSelectType: (typeName: FernIr.DeclaredTypeName) => Reference;
+    /**
+     * Reference to the `<Name>Select` type for the underlying named object/union of a (possibly
+     * container-wrapped) type reference, or `undefined` if it does not resolve to a named type with
+     * a Select type. Used to type the GraphQL `select` argument against an operation's return type.
+     */
+    getReferenceToGraphqlSelectTypeForReference: (typeReference: FernIr.TypeReference) => Reference | undefined;
+    /** Reference to the generated `<Name>DefaultSelection` const for a named type. */
+    getReferenceToGraphqlDefaultSelection: (typeName: FernIr.DeclaredTypeName) => Reference;
+    /**
+     * Reference to the `<Name>DefaultSelection` const for the underlying named object/union of a
+     * (possibly container-wrapped) type reference, or `undefined` if it does not resolve to a named
+     * type with a Select type. Used to default the GraphQL `selection` argument when it is omitted.
+     */
+    getReferenceToGraphqlDefaultSelectionForReference: (typeReference: FernIr.TypeReference) => Reference | undefined;
+    /**
+     * Expression referencing the generated GraphQL arg-type registry const (`GRAPHQL_ARG_TYPES`),
+     * managing the import on the current file. Used as the `registry` of the `argContext` passed to
+     * `buildGraphqlQuery`.
+     */
+    getReferenceToGraphqlArgTypes: () => ts.Expression;
+    /**
+     * GraphQL type name (arg-type registry key) for the underlying named object/union of a (possibly
+     * container-wrapped) type reference, or `undefined`. Used to derive the `rootType` for a GraphQL
+     * operation's response.
+     */
+    getGraphqlTypeNameForReference: (typeReference: FernIr.TypeReference) => string | undefined;
     resolveTypeReference: (typeReference: FernIr.TypeReference) => FernIr.ResolvedTypeReference;
     resolveTypeName: (typeName: FernIr.DeclaredTypeName) => FernIr.ResolvedTypeReference;
     getTypeDeclaration: (typeName: FernIr.DeclaredTypeName) => FernIr.TypeDeclaration;

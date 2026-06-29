@@ -138,6 +138,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             })
         );
 
+        // NOTE: GraphQL field selection is NOT part of the request wrapper. It is passed as a
+        // separate, required `selection` parameter on the generated method (see
+        // GeneratedDefaultEndpointRequest). The request wrapper contains only the operation's
+        // arguments, so for graphql operations it is byte-identical to a non-graphql wrapper.
+
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
             FernIr.HttpRequestBody._visit(requestBody, {

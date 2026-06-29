@@ -5,8 +5,18 @@ import { FileContext, GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchem
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
+import { REQUEST_OPTIONS_PARAMETER_NAME } from "../../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import { getSuccessReturnType } from "./getSuccessReturnType.js";
+import {
+    buildGraphqlEnvelope,
+    getGraphqlErrorGuardStatements,
+    getGraphqlTransport,
+    maybeCastGraphqlResultValue,
+    maybeUnwrapGraphqlResponseBody,
+    maybeWrapGraphqlResponseType,
+    maybeWrapGraphqlResultType
+} from "./graphqlResponseBody.js";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
@@ -79,10 +89,18 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     public getReturnType(context: FileContext): ts.TypeNode {
         return context.coreUtilities.fetcher.APIResponse._getReferenceToType(
-            getSuccessReturnType(this.endpoint, this.response, context, {
-                includeContentHeadersOnResponse: false,
-                streamType: this.streamType,
-                fileResponseType: this.fileResponseType
+            maybeWrapGraphqlResponseType({
+                endpoint: this.endpoint,
+                dataType: maybeWrapGraphqlResultType({
+                    endpoint: this.endpoint,
+                    successType: getSuccessReturnType(this.endpoint, this.response, context, {
+                        includeContentHeadersOnResponse: false,
+                        streamType: this.streamType,
+                        fileResponseType: this.fileResponseType
+                    }),
+                    context
+                }),
+                context
             }),
             context.endpointErrorUnion
                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
@@ -103,6 +121,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
             ),
             ts.factory.createBlock(
                 [
+                    ...this.getGraphqlErrorGuardStatements(context),
                     ts.factory.createReturnStatement(
                         ts.factory.createObjectLiteralExpression(
                             [
@@ -130,15 +149,63 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    private getOkResponseBody(context: FileContext): ts.Expression {
-        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
-        return generatedEndpointTypeSchemas.deserializeResponse(
-            ts.factory.createPropertyAccessExpression(
+    private getGraphqlErrorGuardStatements(context: FileContext): ts.Statement[] {
+        return getGraphqlErrorGuardStatements({
+            endpoint: this.endpoint,
+            referenceToRawResponseBody: ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                 context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
             ),
+            referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+            // GraphQL operation errors arrive with HTTP 200. By default they are surfaced on the
+            // `{ data, errors }` envelope (the success branch below); only when the caller opts in via
+            // `requestOptions.throwOnError` do we throw the dedicated, typed `GraphqlError`.
+            buildThrowStatements: (referenceToGraphqlBody) => [
+                ts.factory.createThrowStatement(
+                    context.coreUtilities.graphqlUtils.GraphqlError._construct({
+                        errors: ts.factory.createPropertyAccessExpression(
+                            referenceToGraphqlBody,
+                            ts.factory.createIdentifier("errors")
+                        ),
+                        data: ts.factory.createPropertyAccessExpression(
+                            referenceToGraphqlBody,
+                            ts.factory.createIdentifier("data")
+                        ),
+                        rawResponse: ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                            context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.rawResponse
+                        )
+                    })
+                )
+            ]
+        });
+    }
+
+    private getOkResponseBody(context: FileContext): ts.Expression {
+        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
+        const deserialized = generatedEndpointTypeSchemas.deserializeResponse(
+            maybeUnwrapGraphqlResponseBody({
+                endpoint: this.endpoint,
+                referenceToRawBody: ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                    context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                )
+            }),
             context
         );
+        // For GraphQL the deserialized value is the full model, but the method's declared return type is
+        // the selection-narrowed `core.Result<Model, S>`; assert it so the runtime value satisfies the
+        // narrowed type (no-op for non-GraphQL endpoints).
+        return maybeCastGraphqlResultValue({
+            endpoint: this.endpoint,
+            expression: deserialized,
+            modelType: getSuccessReturnType(this.endpoint, this.response, context, {
+                includeContentHeadersOnResponse: false,
+                streamType: this.streamType,
+                fileResponseType: this.fileResponseType
+            }),
+            context
+        });
     }
 
     private getReferenceToError(context: FileContext): ts.Expression {
@@ -160,10 +227,16 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     }
 
     private getReturnValueForOkResponse(context: FileContext): ts.Expression | undefined {
-        return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
+        // For GraphQL endpoints the success value is the `{ data, errors }` envelope; for all other
+        // endpoints it is the deserialized body directly (byte-identical output).
+        const okValue =
             this.endpoint.response?.body != null
-                ? this.getOkResponseBody(context)
-                : ts.factory.createIdentifier("undefined"),
+                ? getGraphqlTransport(this.endpoint) != null
+                    ? buildGraphqlEnvelope(this.getOkResponseBody(context))
+                    : this.getOkResponseBody(context)
+                : ts.factory.createIdentifier("undefined");
+        return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
+            okValue,
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                 context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.headers

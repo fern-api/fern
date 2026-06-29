@@ -16,6 +16,7 @@ import { CustomPaginationImpl } from "./CustomPagination.js";
 import { FetcherImpl } from "./Fetcher.js";
 import { FileUtilsImpl } from "./FileUtils.js";
 import { FormDataUtilsImpl } from "./FormDataUtils.js";
+import { GraphqlUtilsImpl } from "./GraphqlUtils.js";
 import { LoggingImpl } from "./Logging.js";
 import { PaginationImpl } from "./Pagination.js";
 import { RuntimeImpl } from "./Runtime.js";
@@ -129,6 +130,10 @@ export class CoreUtilitiesManager {
                 generateEndpointMetadata: this.generateEndpointMetadata
             }),
             fileUtils: new FileUtilsImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            graphqlUtils: new GraphqlUtilsImpl({
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
             }),

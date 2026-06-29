@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+import { OptionalKind, ParameterDeclarationStructure, TypeParameterDeclarationStructure, ts } from "ts-morph";
 import { EndpointSampleCode } from "../../commons/EndpointSampleCode.js";
 import { FileContext } from "../file-context/FileContext.js";
 
@@ -8,6 +8,11 @@ export namespace GeneratedEndpointImplementation {
     export interface EndpointSignature {
         parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
         returnTypeWithoutPromise: ts.TypeNode;
+        /**
+         * Method-level type parameters, e.g. `<S extends UserSelect>` for GraphQL operations whose
+         * result type is inferred from the caller's selection. Omitted for ordinary endpoints.
+         */
+        typeParameters?: OptionalKind<TypeParameterDeclarationStructure>[];
     }
 }
 

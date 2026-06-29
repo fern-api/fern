@@ -5,6 +5,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { template } from "lodash-es";
+import { buildGraphqlReadmeSections } from "./buildGraphqlReadmeSections.js";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
 const SdkCustomConfigSchema: typeof TypescriptCustomConfigSchema = TypescriptCustomConfigSchema;
@@ -111,7 +112,10 @@ export class ReadmeConfigBuilder {
                 ? Array.from(context.ir.readmeConfig.disabledFeatures)
                 : undefined,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
-            customSections: getCustomSections(context, this.generateSubpackageExports),
+            customSections: combineCustomSections(
+                getCustomSections(context, this.generateSubpackageExports),
+                buildGraphqlReadmeSections(context.ir)
+            ),
             features
         };
     }
@@ -139,6 +143,15 @@ export class ReadmeConfigBuilder {
             fetchSupport: this.fetchSupport
         };
     }
+}
+
+/** Merges user/IR-provided custom sections with generator-emitted ones (e.g. GraphQL feature docs). */
+function combineCustomSections(
+    base: FernGeneratorCli.CustomSection[] | undefined,
+    additional: FernGeneratorCli.CustomSection[]
+): FernGeneratorCli.CustomSection[] | undefined {
+    const combined = [...(base ?? []), ...additional];
+    return combined.length > 0 ? combined : undefined;
 }
 
 function getCustomSections(

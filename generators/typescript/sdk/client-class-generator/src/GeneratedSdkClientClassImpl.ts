@@ -24,6 +24,8 @@ import {
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
     Scope,
     StructureKind,
     TypeAliasDeclarationStructure,
@@ -45,12 +47,29 @@ import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDef
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest.js";
 import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse.js";
 import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse.js";
+import {
+    GRAPHQL_THROW_ON_ERROR_REQUEST_OPTION,
+    getGraphqlTransport,
+    isGraphqlSubscription
+} from "./endpoints/default/endpoint-response/graphqlResponseBody.js";
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation.js";
+import { detectGraphqlConnection, findNestedGraphqlConnections } from "./graphql-pagination/detectGraphqlConnection.js";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation.js";
+import { GeneratedGraphqlSubscriptionEndpointImplementation } from "./endpoints/GeneratedGraphqlSubscriptionEndpointImplementation.js";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation.js";
 import { getClientDefaultValue, isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
 import { GeneratedWrappedService } from "./GeneratedWrappedService.js";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation.js";
+
+/** Narrows a generated endpoint implementation to a GraphQL subscription. */
+function isGraphqlSubscriptionEndpoint(
+    endpoint: GeneratedEndpointImplementation
+): endpoint is GeneratedGraphqlSubscriptionEndpointImplementation {
+    return (
+        endpoint instanceof GeneratedGraphqlSubscriptionEndpointImplementation ||
+        (endpoint as Partial<GeneratedGraphqlSubscriptionEndpointImplementation>).isGraphqlSubscription === true
+    );
+}
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
@@ -115,6 +134,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly packageResolver: PackageResolver;
     private readonly requireDefaultEnvironment: boolean;
     private readonly packageId: PackageId;
+    private readonly hasGraphqlEndpoint: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly inlineFileProperties: boolean;
@@ -188,6 +208,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
         const websocketChannelId = this.package_.websocket ?? undefined;
+
+        // `throwOnError` only applies to the GraphQL query/mutation request/response path; subscriptions
+        // stream events and are not enveloped, so a subscription-only client gets no `throwOnError`.
+        this.hasGraphqlEndpoint =
+            service?.endpoints.some(
+                (endpoint) => getGraphqlTransport(endpoint) != null && !isGraphqlSubscription(endpoint)
+            ) ?? false;
 
         if (service == null) {
             this.generatedEndpointImplementations = [];
@@ -265,6 +292,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         parameterNaming
                     });
                 };
+
+                // GraphQL subscriptions stream over a WebSocket (graphql-transport-ws) rather than a
+                // single POST, so they get a dedicated implementation. Queries/mutations continue to
+                // use the default POST implementation below.
+                const graphqlTransport = getGraphqlTransport(endpoint);
+                if (graphqlTransport != null && graphqlTransport.operationType?.toUpperCase() === "SUBSCRIPTION") {
+                    const jsonResponse = endpoint.response?.body?.type === "json" ? endpoint.response.body : undefined;
+                    return new GeneratedGraphqlSubscriptionEndpointImplementation({
+                        packageId,
+                        endpoint,
+                        graphqlTransport,
+                        request: getGeneratedEndpointRequest(),
+                        response: getGeneratedEndpointResponse({ response: jsonResponse }),
+                        generatedSdkClientClass: this
+                    });
+                }
 
                 if (endpoint.response?.body == null) {
                     return getDefaultEndpointImplementation({ response: undefined });
@@ -749,6 +792,25 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
 
             const publicMethodName = this.case.camelUnsafe(endpoint.endpoint.name);
+
+            // GraphQL subscriptions return an AsyncIterableIterator synchronously (the socket opens
+            // lazily on first iteration), so they bypass the HttpResponsePromise / async public+internal
+            // method machinery used by every other endpoint.
+            if (isGraphqlSubscriptionEndpoint(endpoint)) {
+                const subscriptionMethod: MethodDeclarationStructure = {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
+                    name: publicMethodName,
+                    typeParameters: signature.typeParameters,
+                    parameters: signature.parameters,
+                    returnType: getTextOfTsNode(signature.returnTypeWithoutPromise),
+                    statements: endpoint.getStatements(context).map(getTextOfTsNode)
+                };
+                maybeAddDocsStructure(subscriptionMethod, docs);
+                serviceClass.methods.push(subscriptionMethod);
+                continue;
+            }
+
             const internalMethodName = `__${publicMethodName}`;
             const publicStatements = [
                 ts.factory.createReturnStatement(
@@ -769,6 +831,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 kind: StructureKind.Method,
                 scope: Scope.Public,
                 name: publicMethodName,
+                typeParameters: signature.typeParameters,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
                     context.coreUtilities.fetcher.HttpResponsePromise._getReferenceToType(
@@ -786,6 +849,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const internalMethod: MethodDeclarationStructure = {
                 kind: StructureKind.Method,
                 name: internalMethodName,
+                typeParameters: signature.typeParameters,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode("Promise", [
@@ -800,6 +864,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isAsync: true,
                 statements: internalResponseStatements.map(getTextOfTsNode),
                 overloads: overloads.map((overload) => ({
+                    typeParameters: overload.typeParameters,
                     parameters: overload.parameters,
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Promise", [
@@ -848,9 +913,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             serviceModule.statements.push(this.generateIdempotentRequestOptionsInterface(context));
         }
 
+        // Add the GraphQL `paginate` namespace on any client that exposes Relay-connection endpoints.
+        this.addGraphqlPaginateGetter({ serviceClass, context });
+
         // Add passthrough fetch method on root client
         if (this.isRoot) {
             this.addPassthroughFetchMethod({ serviceClass, context });
+        }
+
+        // Add the GraphQL `raw` escape hatch on the root client when the API has GraphQL query/mutation
+        // operations anywhere (they live in the query/mutation subpackages, not the root service, so this
+        // checks the whole IR rather than the root client's own endpoints).
+        if (this.isRoot && this.irHasGraphqlQueryOrMutation()) {
+            this.addGraphqlRawMethod({ serviceClass });
         }
 
         for (const wrappedService of this.generatedWrappedServices) {
@@ -985,6 +1060,281 @@ return core.makePassthroughRequest(input, init, {
         serviceClass.methods.push(fetchMethod);
     }
 
+    /**
+     * Generates the GraphQL `raw` escape hatch (PRD §6.5): `client.raw<TResult, TVariables>(query,
+     * variables, requestOptions)`. Power users who already maintain GraphQL documents send one directly
+     * and get back the same `{ data, errors }` envelope as the typed operations. It reuses the root
+     * client's passthrough `fetch` (so auth, retries, base-url resolution, headers and logging all
+     * apply) and POSTs `{ query, variables }` to the `/graphql` endpoint.
+     */
+    /** Whether any service in the IR exposes a GraphQL query/mutation operation (POST /graphql). */
+    private irHasGraphqlQueryOrMutation(): boolean {
+        for (const service of Object.values(this.intermediateRepresentation.services)) {
+            for (const endpoint of service.endpoints) {
+                if (getGraphqlTransport(endpoint) != null && !isGraphqlSubscription(endpoint)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private addGraphqlRawMethod({
+        serviceClass
+    }: {
+        serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
+    }): void {
+        const rawMethodBody = `
+const _response = await this.fetch(
+    "/graphql",
+    {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query, variables: variables ?? {} }),
+    },
+    requestOptions,
+);
+const _gqlBody = (await _response.json()) as { data?: TResult; errors?: core.GraphqlResponseError[] };
+if (requestOptions?.throwOnError === true && _gqlBody?.errors != null && _gqlBody.errors.length > 0) {
+    throw new core.GraphqlError({ errors: _gqlBody.errors, data: _gqlBody.data });
+}
+return { data: _gqlBody?.data, errors: _gqlBody?.errors };`;
+
+        const rawMethod: MethodDeclarationStructure = {
+            kind: StructureKind.Method,
+            scope: Scope.Public,
+            isAsync: true,
+            name: "raw",
+            docs: [
+                "Execute a raw GraphQL document, bypassing the typed operation surface.\n" +
+                    "Useful for power users who maintain their own GraphQL queries/mutations.\n" +
+                    "Returns the `{ data, errors }` envelope; pass `throwOnError: true` to throw `GraphqlError` on operation errors.\n\n" +
+                    "@param {string} query - The GraphQL document to execute.\n" +
+                    "@param {TVariables} variables - The GraphQL variables for the document.\n" +
+                    "@param {RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal, throwOnError)."
+            ],
+            typeParameters: [
+                { name: "TResult", default: "unknown" },
+                { name: "TVariables", default: "Record<string, unknown>" }
+            ],
+            parameters: [
+                { name: "query", type: "string" },
+                { name: "variables", type: "TVariables", hasQuestionToken: true },
+                {
+                    // Passthrough-fetch options (timeout/retries/headers/abort) plus the GraphQL
+                    // `throwOnError` opt-in. Uses the passthrough options type (rather than the client's
+                    // RequestOptions) so it stays assignable to `this.fetch`.
+                    name: "requestOptions",
+                    type: "core.PassthroughRequest.RequestOptions & { throwOnError?: boolean }",
+                    hasQuestionToken: true
+                }
+            ],
+            returnType: "Promise<core.GraphqlResponse<TResult | undefined>>",
+            statements: rawMethodBody
+        };
+
+        serviceClass.methods.push(rawMethod);
+    }
+
+    /**
+     * Generates the GraphQL `paginate` namespace (PRD §10.3) for any client exposing Relay-connection
+     * endpoints. For each such endpoint it emits `paginate.<field>(request, selection, requestOptions)`,
+     * an `AsyncIterableIterator` over the connection's nodes typed to the caller's node selection. Each
+     * method delegates to its sibling query method per page (reusing auth/base-url/fetch/envelope),
+     * passing a connection-wrapped selection and following `pageInfo.endCursor` while `hasNextPage`.
+     */
+    private addGraphqlPaginateGetter({
+        serviceClass,
+        context
+    }: {
+        serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
+        context: FileContext;
+    }): void {
+        const fieldHasAfterArg = this.makeGraphqlFieldHasAfterArg();
+        const methods: string[] = [];
+
+        for (const endpoint of this.generatedEndpointImplementations) {
+            const siblingMethodName = this.case.camelUnsafe(endpoint.endpoint.name);
+
+            // (1) Root connection: the endpoint's response IS the connection (e.g. `feed: PostConnection`).
+            const rootConnection = detectGraphqlConnection(endpoint.endpoint, this.intermediateRepresentation.types);
+            if (rootConnection != null) {
+                const requestParam = endpoint
+                    .getSignature(context)
+                    .parameters.find((parameter) => parameter.name === "request");
+                const refs = this.graphqlNodeTypeRefs(context, rootConnection.nodeType);
+                if (requestParam?.type != null && refs != null) {
+                    methods.push(
+                        this.buildGraphqlPaginateMethod({
+                            methodName: siblingMethodName,
+                            refs,
+                            paramDeclaration: `request${requestParam.hasQuestionToken === true ? "?" : ""}: ${requestParam.type}`,
+                            initialAfter: "request?.after",
+                            siblingCall: `this.${siblingMethodName}({ ...request, after }, { ${this.graphqlConnectionSelectionProps(rootConnection.nodesAccessor)} }, requestOptions)`,
+                            accessor: rootConnection.nodesAccessor,
+                            path: []
+                        })
+                    );
+                }
+            }
+
+            // (2) Nested connections reachable under a no-arg root field (e.g. `viewer.posts`).
+            for (const nested of findNestedGraphqlConnections({
+                endpoint: endpoint.endpoint,
+                types: this.intermediateRepresentation.types,
+                fieldHasAfterArg
+            })) {
+                const refs = this.graphqlNodeTypeRefs(context, nested.nodeType);
+                if (refs?.namespace == null) {
+                    continue;
+                }
+                const argsType = `${refs.namespace}.${this.case.pascalSafe(nested.parentTypeName)}${this.case.pascalUnsafe(nested.connectionFieldName)}Args`;
+                // Drill: nest `{ __args: { ...args, after }, <connSel> }` under each path segment.
+                let drill = `{ __args: { ...args, after }, ${this.graphqlConnectionSelectionProps(nested.nodesAccessor)} }`;
+                for (let i = nested.path.length - 1; i >= 0; i--) {
+                    drill = `{ ${nested.path[i]}: ${drill} }`;
+                }
+                methods.push(
+                    this.buildGraphqlPaginateMethod({
+                        methodName: siblingMethodName + nested.path.map((segment) => this.case.pascalUnsafe(segment)).join(""),
+                        refs,
+                        paramDeclaration: `args: ${argsType}`,
+                        initialAfter: "args?.after",
+                        siblingCall: `this.${siblingMethodName}(${drill}, requestOptions)`,
+                        accessor: nested.nodesAccessor,
+                        path: nested.path
+                    })
+                );
+            }
+        }
+
+        if (methods.length === 0) {
+            return;
+        }
+
+        serviceClass.getAccessors.push({
+            kind: StructureKind.GetAccessor,
+            scope: Scope.Public,
+            name: "paginate",
+            docs: [
+                "Auto-pagination helpers for this client's Relay-connection fields (root and nested). Each " +
+                    "returns an `AsyncIterableIterator` over the connection's nodes, following " +
+                    "`pageInfo.endCursor` across pages:\n\n" +
+                    "    for await (const node of client.<...>.paginate.<field>(args, selection)) { ... }"
+            ],
+            statements: `return {\n${methods.join(",\n")}\n};`
+        });
+    }
+
+    /** Resolves a node type's `Select`/`DefaultSelection`/`Result` references (+ the import namespace). */
+    private graphqlNodeTypeRefs(
+        context: FileContext,
+        nodeType: FernIr.TypeReference
+    ): { selectType: string; defaultText: string; resultType: string; namespace: string | undefined } | undefined {
+        const selectReference = context.type.getReferenceToGraphqlSelectTypeForReference(nodeType);
+        const defaultExpression = context.type
+            .getReferenceToGraphqlDefaultSelectionForReference(nodeType)
+            ?.getExpression();
+        if (selectReference == null || defaultExpression == null) {
+            return undefined;
+        }
+        const selectType = getTextOfTsNode(selectReference.getTypeNode());
+        return {
+            selectType,
+            defaultText: getTextOfTsNode(defaultExpression),
+            resultType: getTextOfTsNode(
+                context.coreUtilities.graphqlUtils.Result._getReferenceToType(
+                    context.type.getReferenceToType(nodeType).typeNode,
+                    ts.factory.createTypeReferenceNode("S")
+                )
+            ),
+            // The Select type is namespaced (e.g. `Api.PostSelect`); the sibling `<Parent><Field>Args`
+            // type lives in the same namespace, so reuse its prefix to reference it.
+            namespace: selectType.includes(".") ? selectType.split(".")[0] : undefined
+        };
+    }
+
+    /** The inner `edges`/`nodes` + `pageInfo` selection properties for a connection (no surrounding braces). */
+    private graphqlConnectionSelectionProps(accessor: "edges" | "nodes"): string {
+        return accessor === "edges"
+            ? "edges: { node: selection }, pageInfo: { hasNextPage: true, endCursor: true }"
+            : "nodes: selection, pageInfo: { hasNextPage: true, endCursor: true }";
+    }
+
+    /**
+     * Builds one `paginate.<name>` method. The connection result is selection-narrowed through a generic
+     * `S`, which TS can't statically index, so the page is read through an explicit shape (under the path,
+     * if nested) keyed to the typed node result; `paginateGraphql<...>` types the yielded nodes.
+     */
+    private buildGraphqlPaginateMethod({
+        methodName,
+        refs,
+        paramDeclaration,
+        initialAfter,
+        siblingCall,
+        accessor,
+        path
+    }: {
+        methodName: string;
+        refs: { selectType: string; defaultText: string; resultType: string };
+        paramDeclaration: string;
+        initialAfter: string;
+        siblingCall: string;
+        accessor: "edges" | "nodes";
+        path: string[];
+    }): string {
+        const pageInfoShape = "pageInfo?: { endCursor?: string; hasNextPage?: boolean }";
+        let shape =
+            accessor === "edges"
+                ? `{ edges?: ReadonlyArray<{ node: ${refs.resultType} }>; ${pageInfoShape} }`
+                : `{ nodes?: ReadonlyArray<${refs.resultType}>; ${pageInfoShape} }`;
+        for (let i = path.length - 1; i >= 0; i--) {
+            shape = `{ ${path[i]}?: ${shape} }`;
+        }
+        const pathAccess = path.map((segment) => `?.${segment}`).join("");
+        const nodesExtraction =
+            accessor === "edges" ? "(_connection?.edges ?? []).map((_edge) => _edge.node)" : "_connection?.nodes ?? []";
+
+        return `${methodName}: <S extends ${refs.selectType} = typeof ${refs.defaultText}>(
+    ${paramDeclaration},
+    selection: S = ${refs.defaultText} as S,
+    requestOptions?: ${this.serviceClassName}.RequestOptions,
+): AsyncIterableIterator<${refs.resultType}> => {
+    return core.paginateGraphql<${refs.resultType}>({
+        initialAfter: ${initialAfter},
+        fetchPage: async (after) => {
+            const _page = await ${siblingCall};
+            const _connection = (_page.data as unknown as ${shape} | undefined)${pathAccess};
+            return {
+                nodes: ${nodesExtraction},
+                endCursor: _connection?.pageInfo?.endCursor ?? undefined,
+                hasNextPage: _connection?.pageInfo?.hasNextPage ?? false,
+            };
+        },
+    });
+}`;
+    }
+
+    /** Reads `ir.graphqlFieldArguments` (structurally — the published IR may predate it) to test whether a
+     * field accepts an `after` cursor argument, gating nested auto-pagination. */
+    private makeGraphqlFieldHasAfterArg(): (parentTypeId: string, fieldWireName: string) => boolean {
+        const graphqlFieldArguments = (
+            this.intermediateRepresentation as unknown as {
+                graphqlFieldArguments?: Record<
+                    string,
+                    { fields: Record<string, Array<{ name: string | { wireValue?: string } }>> }
+                >;
+            }
+        ).graphqlFieldArguments;
+        return (parentTypeId, fieldWireName) => {
+            const args = graphqlFieldArguments?.[parentTypeId]?.fields?.[fieldWireName];
+            return (
+                args != null &&
+                args.some((arg) => (typeof arg.name === "string" ? arg.name : arg.name.wireValue) === "after")
+            );
+        };
+    }
+
     public getBaseUrl(endpoint: FernIr.HttpEndpoint, context: FileContext): ts.Expression {
         const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
 
@@ -1036,10 +1386,26 @@ return core.makePassthroughRequest(input, init, {
     }
 
     private generateRequestOptionsInterface(context: FileContext): InterfaceDeclarationStructure {
+        // For clients with GraphQL endpoints, expose a per-call `throwOnError` opt-in. GraphQL is a
+        // partial-success protocol (a 200 can carry both `data` and `errors`); by default operation
+        // errors are returned on the `{ data, errors }` envelope, but callers who prefer the legacy
+        // throw-on-error behavior can set `throwOnError: true` to throw `GraphqlError` instead.
+        const properties: OptionalKind<PropertySignatureStructure>[] = this.hasGraphqlEndpoint
+            ? [
+                  {
+                      name: GRAPHQL_THROW_ON_ERROR_REQUEST_OPTION,
+                      type: "boolean",
+                      hasQuestionToken: true,
+                      docs: [
+                          "Throw `GraphqlError` when the GraphQL response contains operation errors, instead of returning them on the `{ data, errors }` envelope. Defaults to `false`."
+                      ]
+                  }
+              ]
+            : [];
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
-            properties: [],
+            properties,
             extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseRequestOptions().getTypeNode())],
             isExported: true
         };

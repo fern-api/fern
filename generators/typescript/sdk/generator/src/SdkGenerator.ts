@@ -48,6 +48,7 @@ import { Directory, ModuleDeclaration, Project, SourceFile, SyntaxKind, ts } fro
 import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl.js";
 import { FileContextImpl } from "./contexts/FileContextImpl.js";
 import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
+import { ArgTypeDeclarationReferencer } from "./declaration-referencers/ArgTypeDeclarationReferencer.js";
 import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer.js";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer.js";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer.js";
@@ -58,6 +59,7 @@ import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/R
 import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer.js";
 import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer.js";
 import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer.js";
+import { SelectTypeDeclarationReferencer } from "./declaration-referencers/SelectTypeDeclarationReferencer.js";
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer.js";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer.js";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer.js";
@@ -66,6 +68,8 @@ import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { ArgTypeRegistryGenerator } from "./select-types/ArgTypeRegistryGenerator.js";
+import { SelectTypeGenerator } from "./select-types/SelectTypeGenerator.js";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
 import { TestGenerator } from "./test-generator/TestGenerator.js";
 import { VersionFileGenerator } from "./version/VersionFileGenerator.js";
@@ -207,6 +211,8 @@ export class SdkGenerator {
 
     private versionDeclarationReferencer: VersionDeclarationReferencer;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
+    private selectTypeDeclarationReferencer: SelectTypeDeclarationReferencer;
+    private argTypeDeclarationReferencer: ArgTypeDeclarationReferencer;
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
     private errorDeclarationReferencer: SdkErrorDeclarationReferencer;
     private sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
@@ -356,6 +362,16 @@ export class SdkGenerator {
             containingDirectory: apiDirectory,
             namespaceExport,
             consolidateTypeFiles: config.consolidateTypeFiles,
+            caseConverter
+        });
+        this.selectTypeDeclarationReferencer = new SelectTypeDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            namespaceExport,
+            caseConverter
+        });
+        this.argTypeDeclarationReferencer = new ArgTypeDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            namespaceExport,
             caseConverter
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
@@ -636,6 +652,9 @@ export class SdkGenerator {
         await this.copyAsIsFiles();
         this.generateTypeDeclarations();
         this.context.logger.debug("Generated types");
+        this.generateSelectTypeDeclarations();
+        this.generateArgTypeRegistry();
+        this.context.logger.debug("Generated GraphQL select types");
         this.generateErrorDeclarations();
         this.context.logger.debug("Generated errors");
         this.generateHandleNonStatusCodeError();
@@ -881,6 +900,81 @@ export class SdkGenerator {
                 }
             });
         }
+    }
+
+    /**
+     * Returns true when the IR contains at least one GraphQL-transport endpoint. The transport
+     * discriminant is read structurally because the compiled-against IR types may predate the
+     * `graphql` variant of `Transport`. Used to gate GraphQL-only output (the `<Name>Select`
+     * field-selection types) so REST/OpenAPI SDK output stays byte-identical.
+     */
+    private hasGraphqlEndpoints(): boolean {
+        return Object.values(this.intermediateRepresentation.services).some((service) =>
+            service.endpoints.some((endpoint) => {
+                const transport: { type?: string } | undefined = endpoint.transport;
+                return transport?.type === "graphql";
+            })
+        );
+    }
+
+    /**
+     * Generates the per-type `<Name>Select` field-selection interfaces (autocomplete + compile-time
+     * field checking for GraphQL `select` arguments). Gated on the presence of a GraphQL endpoint so
+     * non-GraphQL SDKs emit nothing new. All Select interfaces are written to a single file so they
+     * can reference each other and recurse without cross-file import management.
+     */
+    private generateSelectTypeDeclarations(): void {
+        if (!this.hasGraphqlEndpoints()) {
+            return;
+        }
+        this.withSourceFile({
+            filepath: this.selectTypeDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                // Build the generator inside the source-file run so its type context is bound to this
+                // file: rendering nested `$args` value types (enums/input objects) registers the
+                // necessary imports on this file via the imports manager.
+                const context = this.generateFileContext({ sourceFile, importsManager });
+                const selectTypeGenerator = new SelectTypeGenerator({
+                    ir: this.intermediateRepresentation,
+                    typeResolver: this.typeResolver,
+                    caseConverter: this.case,
+                    includeSerdeLayer: this.config.includeSerdeLayer,
+                    retainOriginalCasing: this.config.retainOriginalCasing,
+                    typeContext: context.type
+                });
+                const statements = selectTypeGenerator.generateStatements();
+                if (statements.length === 0) {
+                    return;
+                }
+                sourceFile.addStatements(statements);
+            }
+        });
+    }
+
+    /**
+     * Generates the GraphQL arg-type registry const (`GRAPHQL_ARG_TYPES`) consumed by
+     * `buildGraphqlQuery` to resolve nested `$args` SDL types and descend the selection by GraphQL
+     * type at runtime. Gated on the presence of a GraphQL endpoint so non-GraphQL SDKs emit nothing.
+     */
+    private generateArgTypeRegistry(): void {
+        if (!this.hasGraphqlEndpoints()) {
+            return;
+        }
+        const argTypeRegistryGenerator = new ArgTypeRegistryGenerator({
+            ir: this.intermediateRepresentation,
+            typeResolver: this.typeResolver,
+            caseConverter: this.case
+        });
+        const statement = argTypeRegistryGenerator.generateStatement();
+        if (statement == null) {
+            return;
+        }
+        this.withSourceFile({
+            filepath: this.argTypeDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile }) => {
+                sourceFile.addStatements([statement]);
+            }
+        });
     }
 
     private generateTypeSchemas(): { generated: boolean } {
@@ -1196,6 +1290,12 @@ export class SdkGenerator {
         }
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
+                return;
+            }
+
+            // Skip services with no wire test cases (e.g. GraphQL services, whose endpoints have
+            // no examples) so we don't emit an empty test file that vitest fails on.
+            if (!this.testGenerator.serviceHasWireTests(service)) {
                 return;
             }
 
@@ -2012,6 +2112,8 @@ export class SdkGenerator {
                 jsonDeclarationReferencer: this.jsonDeclarationReferencer,
                 typeResolver: this.typeResolver,
                 typeDeclarationReferencer: this.typeDeclarationReferencer,
+                selectTypeDeclarationReferencer: this.selectTypeDeclarationReferencer,
+                argTypeDeclarationReferencer: this.argTypeDeclarationReferencer,
                 typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                 typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                 errorDeclarationReferencer: this.errorDeclarationReferencer,

@@ -111,7 +111,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
         return {
             parameters,
-            returnTypeWithoutPromise: mainReturnType
+            returnTypeWithoutPromise: mainReturnType,
+            typeParameters: this.request.getTypeParameters?.(context) ?? []
         };
     }
 

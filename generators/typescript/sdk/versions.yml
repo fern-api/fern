@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.74.0
+  changelogEntry:
+    - summary: |
+        Add GraphQL SDK support. Endpoints with the `graphql` transport now send a
+        `{ query, variables }` body to `/graphql`, unwrap the `data[operationName]` response,
+        and surface GraphQL `errors[]` through the SDK's normal error channel. Wire test files
+        are skipped for GraphQL services (their endpoints have no examples). GraphQL
+        subscriptions stream over a WebSocket using the `graphql-transport-ws` subprotocol:
+        the generated method returns an `AsyncIterableIterator` consumed via
+        `for await (const event of client.x.onFoo({ ...args }))`, supporting the same args
+        and `select` field selection as queries/mutations. Requires IR >= 67.7.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
 - version: 3.73.0
   changelogEntry:
     - summary: |

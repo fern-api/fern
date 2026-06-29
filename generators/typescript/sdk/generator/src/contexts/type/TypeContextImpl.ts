@@ -18,6 +18,8 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
+import { ArgTypeDeclarationReferencer } from "../../declaration-referencers/ArgTypeDeclarationReferencer.js";
+import { SelectTypeDeclarationReferencer } from "../../declaration-referencers/SelectTypeDeclarationReferencer.js";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer.js";
 
 export declare namespace TypeContextImpl {
@@ -29,6 +31,8 @@ export declare namespace TypeContextImpl {
         exportsManager: ExportsManager;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
+        selectTypeDeclarationReferencer: SelectTypeDeclarationReferencer;
+        argTypeDeclarationReferencer: ArgTypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         treatUnknownAsAny: boolean;
@@ -50,6 +54,8 @@ export class TypeContextImpl implements TypeContext {
     private importsManager: ImportsManager;
     private exportsManager: ExportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
+    private selectTypeDeclarationReferencer: SelectTypeDeclarationReferencer;
+    private argTypeDeclarationReferencer: ArgTypeDeclarationReferencer;
     private typeReferenceToParsedTypeNodeConverter: TypeReferenceToParsedTypeNodeConverter;
     private typeReferenceToStringExpressionConverter: TypeReferenceToStringExpressionConverter;
     private typeResolver: TypeResolver;
@@ -73,6 +79,8 @@ export class TypeContextImpl implements TypeContext {
         exportsManager,
         typeResolver,
         typeDeclarationReferencer,
+        selectTypeDeclarationReferencer,
+        argTypeDeclarationReferencer,
         typeGenerator,
         typeReferenceExampleGenerator,
         treatUnknownAsAny,
@@ -94,6 +102,8 @@ export class TypeContextImpl implements TypeContext {
         this.exportsManager = exportsManager;
         this.typeResolver = typeResolver;
         this.typeDeclarationReferencer = typeDeclarationReferencer;
+        this.selectTypeDeclarationReferencer = selectTypeDeclarationReferencer;
+        this.argTypeDeclarationReferencer = argTypeDeclarationReferencer;
         this.typeGenerator = typeGenerator;
         this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -187,6 +197,160 @@ export class TypeContextImpl implements TypeContext {
                 exportsManager: this.exportsManager
             });
         }
+    }
+
+    /**
+     * Returns a reference to the generated `<Name>Select` field-selection type for a named type.
+     * Mirrors {@link getReferenceToNamedType} (same import strategy / single Select file).
+     */
+    public getReferenceToGraphqlSelectType(typeName: FernIr.DeclaredTypeName): Reference {
+        if (this.isForSnippet) {
+            return this.selectTypeDeclarationReferencer.getReferenceToType({
+                name: typeName,
+                importStrategy: {
+                    type: "fromPackage",
+                    namespaceImport: this.selectTypeDeclarationReferencer.namespaceExport,
+                    packageName: this.npmPackage?.packageName ?? "api"
+                },
+                referencedIn: this.sourceFile,
+                importsManager: this.importsManager,
+                exportsManager: this.exportsManager
+            });
+        }
+        return this.selectTypeDeclarationReferencer.getReferenceToType({
+            name: typeName,
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: this.selectTypeDeclarationReferencer.namespaceExport
+            },
+            referencedIn: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
+        });
+    }
+
+    /**
+     * Resolves a (possibly container-wrapped) type reference to the `<Name>Select` type of its
+     * underlying named object/union, or `undefined` if it does not resolve to one. Used to type the
+     * GraphQL `select` argument against the operation's return type.
+     */
+    public getReferenceToGraphqlSelectTypeForReference(typeReference: FernIr.TypeReference): Reference | undefined {
+        const named = this.resolveToNamedTypeForSelect(typeReference);
+        if (named == null) {
+            return undefined;
+        }
+        return this.getReferenceToGraphqlSelectType(named);
+    }
+
+    /**
+     * Returns a reference to the generated `<Name>DefaultSelection` const for a named type. Mirrors
+     * {@link getReferenceToGraphqlSelectType}'s import strategy (same single Select file).
+     */
+    public getReferenceToGraphqlDefaultSelection(typeName: FernIr.DeclaredTypeName): Reference {
+        if (this.isForSnippet) {
+            return this.selectTypeDeclarationReferencer.getReferenceToDefaultSelection({
+                name: typeName,
+                importStrategy: {
+                    type: "fromPackage",
+                    namespaceImport: this.selectTypeDeclarationReferencer.namespaceExport,
+                    packageName: this.npmPackage?.packageName ?? "api"
+                },
+                referencedIn: this.sourceFile,
+                importsManager: this.importsManager,
+                exportsManager: this.exportsManager
+            });
+        }
+        return this.selectTypeDeclarationReferencer.getReferenceToDefaultSelection({
+            name: typeName,
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: this.selectTypeDeclarationReferencer.namespaceExport
+            },
+            referencedIn: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
+        });
+    }
+
+    /**
+     * Resolves a (possibly container-wrapped) type reference to the `<Name>DefaultSelection` const of
+     * its underlying named object/union, or `undefined` if it does not resolve to one. Used to default
+     * the GraphQL `selection` argument (and its type parameter) when the caller omits it.
+     */
+    public getReferenceToGraphqlDefaultSelectionForReference(
+        typeReference: FernIr.TypeReference
+    ): Reference | undefined {
+        const named = this.resolveToNamedTypeForSelect(typeReference);
+        if (named == null) {
+            return undefined;
+        }
+        return this.getReferenceToGraphqlDefaultSelection(named);
+    }
+
+    /**
+     * Returns an expression referencing the generated GraphQL arg-type registry const
+     * (`GRAPHQL_ARG_TYPES`), managing the import on the current file. Used as the `registry` of the
+     * `argContext` passed to `buildGraphqlQuery` so nested `$args` resolve to GraphQL variables.
+     */
+    public getReferenceToGraphqlArgTypes(): ts.Expression {
+        const importStrategy = this.isForSnippet
+            ? ({
+                  type: "fromPackage",
+                  namespaceImport: this.argTypeDeclarationReferencer.namespaceExport,
+                  packageName: this.npmPackage?.packageName ?? "api"
+              } as const)
+            : ({ type: "fromRoot", namespaceImport: this.argTypeDeclarationReferencer.namespaceExport } as const);
+        return this.argTypeDeclarationReferencer
+            .getReferenceToArgTypes({
+                name: undefined,
+                importStrategy,
+                referencedIn: this.sourceFile,
+                importsManager: this.importsManager,
+                exportsManager: this.exportsManager
+            })
+            .getExpression();
+    }
+
+    /**
+     * Resolves a (possibly container-wrapped) type reference to the GraphQL type name (registry key)
+     * of its underlying named object/union, or `undefined`. Used to derive the `rootType` for a
+     * GraphQL operation's response when building the arg context.
+     */
+    public getGraphqlTypeNameForReference(typeReference: FernIr.TypeReference): string | undefined {
+        const named = this.resolveToNamedTypeForSelect(typeReference);
+        if (named == null) {
+            return undefined;
+        }
+        return this.case.pascalSafe(named.name);
+    }
+
+    private resolveToNamedTypeForSelect(typeReference: FernIr.TypeReference): FernIr.DeclaredTypeName | undefined {
+        return typeReference._visit<FernIr.DeclaredTypeName | undefined>({
+            container: (container) =>
+                container._visit<FernIr.DeclaredTypeName | undefined>({
+                    list: (inner) => this.resolveToNamedTypeForSelect(inner),
+                    set: (inner) => this.resolveToNamedTypeForSelect(inner),
+                    optional: (inner) => this.resolveToNamedTypeForSelect(inner),
+                    nullable: (inner) => this.resolveToNamedTypeForSelect(inner),
+                    map: () => undefined,
+                    literal: () => undefined,
+                    _other: () => undefined
+                }),
+            named: (named) => {
+                const declaration = this.typeResolver.getTypeDeclarationFromId(named.typeId);
+                return declaration.shape._visit<FernIr.DeclaredTypeName | undefined>({
+                    object: () => declaration.name,
+                    union: () => declaration.name,
+                    undiscriminatedUnion: () => declaration.name,
+                    alias: (alias) => this.resolveToNamedTypeForSelect(alias.aliasOf),
+                    enum: () => undefined,
+                    _other: () => undefined
+                });
+            },
+            primitive: () => undefined,
+            unknown: () => undefined,
+            _other: () => undefined
+        });
     }
 
     public generateForInlineUnion(typeName: FernIr.DeclaredTypeName): {

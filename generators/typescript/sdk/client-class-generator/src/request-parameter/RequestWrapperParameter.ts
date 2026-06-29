@@ -4,6 +4,7 @@ import { createNumericLiteralSafe, GetReferenceOpts } from "@fern-typescript/com
 import { FileContext, GeneratedRequestWrapper, RequestWrapperNonBodyProperty } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
+import { getGraphqlTransport } from "../endpoints/default/endpoint-response/graphqlResponseBody.js";
 import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 type DefaultNonBodyKeyName = string & {
@@ -21,10 +22,16 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         initializer?: ts.Expression;
     } {
         const isOptional = this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
+        // GraphQL operations append a required `selection` parameter after this args parameter. A
+        // parameter with a `= {}` default initializer cannot precede a required parameter under
+        // --isolatedDeclarations, so for graphql endpoints the all-optional args wrapper is emitted as a
+        // plain required parameter (no `= {}` default) instead. The args parameter is otherwise
+        // unchanged.
+        const isGraphql = getGraphqlTransport(this.endpoint) != null;
         return {
             type: context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name),
             hasQuestionToken: false,
-            initializer: isOptional ? ts.factory.createObjectLiteralExpression([], false) : undefined
+            initializer: isOptional && !isGraphql ? ts.factory.createObjectLiteralExpression([], false) : undefined
         };
     }
 

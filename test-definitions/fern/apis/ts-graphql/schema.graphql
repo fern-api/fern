@@ -1,0 +1,102 @@
+scalar DateTime
+"""Well-known JSON scalar → maps to an untyped value."""
+scalar JSON
+"""Unrecognized custom scalar → falls back to string (with a generation warning)."""
+scalar Hex
+
+type Query {
+  """The currently authenticated user (no arguments — exercises the no-arg selection-only call shape)."""
+  viewer: User
+  """Fetch a single user by id."""
+  user(id: ID!): User
+  """Search across users and posts (union → inline fragments)."""
+  search(query: String!): [SearchResult!]!
+  """A paginated feed of posts."""
+  feed(first: Int, after: String): PostConnection!
+}
+
+type Mutation {
+  """Create a post (input object argument → GraphQL variable)."""
+  createPost(input: CreatePostInput!): Post!
+}
+
+type Subscription {
+  """Stream posts as they are added to a channel."""
+  postAdded(channelId: ID!): Post!
+}
+
+input CreatePostInput {
+  title: String!
+  body: String!
+  tags: [String!]
+}
+
+type User {
+  "The user's unique identifier."
+  id: ID!
+  "The user's display name."
+  name: String!
+  "The user's email address."
+  email: String!
+  "The user's role, controlling access."
+  role: Role!
+  "Posts authored by this user, with pagination/filter/sort arguments on a nested field."
+  posts(first: Int, after: String, sortBy: PostSort, filter: PostFilter): PostConnection!
+  "When the user was created."
+  createdAt: DateTime!
+  "Legacy login handle (exercises @deprecated → language-native deprecation)."
+  legacyUsername: String! @deprecated(reason: "Use name instead.")
+}
+
+input PostFilter {
+  "Only posts published after this time."
+  publishedAfter: DateTime
+  "Only posts containing this text."
+  search: String
+}
+
+enum PostSort {
+  NEWEST
+  OLDEST
+  TITLE
+}
+
+type Post {
+  "The post's unique identifier."
+  id: ID!
+  "The post title."
+  title: String!
+  "The post body content."
+  body: String!
+  "The user who authored the post."
+  author: User!
+  "When the post was published, if it has been."
+  publishedAt: DateTime
+  "Arbitrary structured metadata (JSON scalar → untyped value)."
+  metadata: JSON
+  "Theme color (unrecognized scalar → string fallback)."
+  themeColor: Hex
+}
+
+type PostConnection {
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PostEdge {
+  node: Post!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+
+enum Role {
+  ADMIN
+  USER
+  GUEST @deprecated(reason: "Guest access has been removed.")
+}
+
+union SearchResult = User | Post

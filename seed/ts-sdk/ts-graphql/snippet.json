@@ -1,0 +1,71 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_viewer"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-graphql\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.query.viewer();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_user"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-graphql\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.query.user({\n    id: \"id\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_search"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-graphql\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.query.search({\n    query: \"query\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_feed"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-graphql\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.query.feed({\n    first: 1,\n    after: \"after\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_mutation_createPost"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-graphql\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.mutation.createPost({\n    input: {\n        title: \"title\",\n        body: \"body\",\n        tags: [\"tags\", \"tags\"]\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_subscription_postAdded"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-graphql\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nfor await (const event of client.subscription.postAdded({\n    channelId: \"channelId\"\n})) {\n    console.log(event);\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

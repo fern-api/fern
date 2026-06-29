@@ -40,6 +40,7 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
+import { ArgTypeDeclarationReferencer } from "../declaration-referencers/ArgTypeDeclarationReferencer.js";
 import { BaseClientTypeDeclarationReferencer } from "../declaration-referencers/BaseClientTypeDeclarationReferencer.js";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer.js";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer.js";
@@ -50,6 +51,7 @@ import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/
 import { SdkClientClassDeclarationReferencer } from "../declaration-referencers/SdkClientClassDeclarationReferencer.js";
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer.js";
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer.js";
+import { SelectTypeDeclarationReferencer } from "../declaration-referencers/SelectTypeDeclarationReferencer.js";
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer.js";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer.js";
 import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer.js";
@@ -96,6 +98,8 @@ export declare namespace FileContextImpl {
         typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
+        selectTypeDeclarationReferencer: SelectTypeDeclarationReferencer;
+        argTypeDeclarationReferencer: ArgTypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaGenerator: TypeSchemaGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
@@ -296,6 +300,8 @@ export class FileContextImpl implements FileContext {
             exportsManager: this.exportsManager,
             typeResolver: this.initParams.typeResolver,
             typeDeclarationReferencer: this.initParams.typeDeclarationReferencer,
+            selectTypeDeclarationReferencer: this.initParams.selectTypeDeclarationReferencer,
+            argTypeDeclarationReferencer: this.initParams.argTypeDeclarationReferencer,
             typeGenerator: this.initParams.typeGenerator,
             typeReferenceExampleGenerator: this.initParams.typeReferenceExampleGenerator,
             treatUnknownAsAny: this.initParams.treatUnknownAsAny,

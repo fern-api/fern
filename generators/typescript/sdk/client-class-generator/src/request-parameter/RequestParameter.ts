@@ -8,6 +8,12 @@ export interface RequestParameter {
     getType(context: FileContext): ts.TypeNode;
     getParameterDeclaration: (context: FileContext) => OptionalKind<ParameterDeclarationStructure>;
     getReferenceToRequestBody: (context: FileContext) => ts.Expression | undefined;
+    /**
+     * Returns a reference to a property accessed directly on the request object (e.g. `request.select`),
+     * for properties that are not destructured into local variables. Used by GraphQL endpoints to read
+     * the runtime `select` field.
+     */
+    getReferenceToRequestObjectProperty: (propertyName: string) => ts.Expression;
     getReferenceToQueryParameter: (queryParameterKey: string, context: FileContext) => ts.Expression;
     getReferenceToPathParameter: (pathParameterKey: string, context: FileContext) => ts.Expression;
     getAllQueryParameters: (context: FileContext) => FernIr.QueryParameter[];

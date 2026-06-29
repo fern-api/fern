@@ -46,6 +46,14 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         return this.case.camelUnsafe(this.sdkRequest.requestParameterName);
     }
 
+    public getReferenceToRequestObjectProperty(propertyName: string): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(this.getRequestParameterName()),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(propertyName)
+        );
+    }
+
     public abstract getType(context: FileContext): ts.TypeNode;
     public abstract getInitialStatements(context: FileContext, args: { variablesInScope: string[] }): ts.Statement[];
     public abstract getAllQueryParameters(context: FileContext): FernIr.QueryParameter[];

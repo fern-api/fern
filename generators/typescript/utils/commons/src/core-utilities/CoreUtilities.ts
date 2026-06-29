@@ -4,6 +4,7 @@ import { CustomPagination } from "./CustomPagination.js";
 import { Fetcher } from "./Fetcher.js";
 import { FileUtils } from "./FileUtils.js";
 import { FormDataUtils } from "./FormDataUtils.js";
+import { GraphqlUtils } from "./GraphqlUtils.js";
 import { Logging } from "./Logging.js";
 import { Pagination } from "./Pagination.js";
 import { Runtime } from "./Runtime.js";
@@ -27,6 +28,7 @@ export interface CoreUtilities {
     utils: Utils;
     websocket: Websocket;
     fileUtils: FileUtils;
+    graphqlUtils: GraphqlUtils;
     urlUtils: UrlUtils;
     logging: Logging;
     webhookCrypto: WebhookCrypto;
