@@ -137,45 +137,47 @@ export async function runRemoteGenerationForAPIWorkspace({
 
     const results = await Promise.all(
         generatorGroup.generators.map((generatorInvocation) =>
-            context.runInteractiveTask({ name: generatorInvocation.name }, (interactiveTaskContext) =>
-                generateOne({
-                    generatorInvocation,
-                    interactiveTaskContext,
-                    // Closed-over state + params passed through to the per-generator worker.
-                    projectConfig,
-                    organization,
-                    workspace,
-                    context,
-                    generatorGroup,
-                    version,
-                    shouldLogS3Url,
-                    token,
-                    whitelabel,
-                    replay,
-                    absolutePathToPreview,
-                    isPreview,
-                    fiddlePreview,
-                    pushPreviewBranch,
-                    mode,
-                    fernignorePath,
-                    skipFernignore,
-                    dynamicIrOnly,
-                    validateWorkspace,
-                    retryRateLimited,
-                    requireEnvVars,
-                    automationMode,
-                    autoMerge,
-                    skipIfNoDiff,
-                    verify,
-                    noReplay,
-                    disableTelemetry,
-                    automation,
-                    generatorsYmlAbsolutePath,
-                    occurrenceTracker: effectiveOccurrenceTracker,
-                    loginCommand,
-                    getSpecsTarGzBuffer,
-                    onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
-                })
+            context.runInteractiveTask(
+                { name: `${generatorInvocation.name}@${generatorInvocation.version}` },
+                (interactiveTaskContext) =>
+                    generateOne({
+                        generatorInvocation,
+                        interactiveTaskContext,
+                        // Closed-over state + params passed through to the per-generator worker.
+                        projectConfig,
+                        organization,
+                        workspace,
+                        context,
+                        generatorGroup,
+                        version,
+                        shouldLogS3Url,
+                        token,
+                        whitelabel,
+                        replay,
+                        absolutePathToPreview,
+                        isPreview,
+                        fiddlePreview,
+                        pushPreviewBranch,
+                        mode,
+                        fernignorePath,
+                        skipFernignore,
+                        dynamicIrOnly,
+                        validateWorkspace,
+                        retryRateLimited,
+                        requireEnvVars,
+                        automationMode,
+                        autoMerge,
+                        skipIfNoDiff,
+                        verify,
+                        noReplay,
+                        disableTelemetry,
+                        automation,
+                        generatorsYmlAbsolutePath,
+                        occurrenceTracker: effectiveOccurrenceTracker,
+                        loginCommand,
+                        getSpecsTarGzBuffer,
+                        onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
+                    })
             )
         )
     );

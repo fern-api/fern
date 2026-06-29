@@ -116,442 +116,449 @@ export async function runLocalGenerationForWorkspace({
     const autoVersioningCache = new AutoVersioningCache();
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
-            return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
-                const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(
-                        stringOrObject,
-                        {
-                            onError: (e) => {
-                                if (!isPreview && (requireEnvVars ?? true)) {
-                                    interactiveTaskContext.failAndThrow(e, undefined, {
-                                        code: CliError.Code.EnvironmentError
-                                    });
+            return context.runInteractiveTask(
+                { name: `${generatorInvocation.name}@${generatorInvocation.version}` },
+                async (interactiveTaskContext) => {
+                    const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
+                    const substituteEnvVars = <T>(stringOrObject: T) =>
+                        replaceEnvVariables(
+                            stringOrObject,
+                            {
+                                onError: (e) => {
+                                    if (!isPreview && (requireEnvVars ?? true)) {
+                                        interactiveTaskContext.failAndThrow(e, undefined, {
+                                            code: CliError.Code.EnvironmentError
+                                        });
+                                    }
                                 }
-                            }
-                        },
-                        { substituteAsEmpty: isPreview }
+                            },
+                            { substituteAsEmpty: isPreview }
+                        );
+
+                    generatorInvocation = substituteEnvVars(generatorInvocation);
+
+                    const fernWorkspace = await workspace.toFernWorkspace(
+                        { context },
+                        getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
+                        generatorInvocation.apiOverride?.specs
                     );
 
-                generatorInvocation = substituteEnvVars(generatorInvocation);
+                    if (validateWorkspace) {
+                        await validateAPIWorkspaceAndLogIssues({
+                            workspace: fernWorkspace,
+                            context,
+                            logWarnings: false,
+                            ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                        });
+                    }
 
-                const fernWorkspace = await workspace.toFernWorkspace(
-                    { context },
-                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
-                    generatorInvocation.apiOverride?.specs
-                );
+                    const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                        apiName: fernWorkspace.definition.rootApiFile.contents.name,
+                        organization: projectConfig.organization,
+                        generatorInvocation: generatorInvocation
+                    });
 
-                if (validateWorkspace) {
-                    await validateAPIWorkspaceAndLogIssues({
+                    const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                    version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+                    const intermediateRepresentation = generateIntermediateRepresentation({
                         workspace: fernWorkspace,
+                        audiences: generatorGroup.audiences,
+                        generationLanguage: generatorInvocation.language,
+                        keywords: generatorInvocation.keywords,
+                        smartCasing: generatorInvocation.smartCasing,
+                        exampleGeneration: {
+                            includeOptionalRequestPropertyExamples: false,
+                            disabled: generatorInvocation.disableExamples
+                        },
+                        readme: generatorInvocation.readme,
+                        version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                        packageName,
                         context,
-                        logWarnings: false,
-                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
-                    });
-                }
-
-                const dynamicGeneratorConfig = getDynamicGeneratorConfig({
-                    apiName: fernWorkspace.definition.rootApiFile.contents.name,
-                    organization: projectConfig.organization,
-                    generatorInvocation: generatorInvocation
-                });
-
-                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-                version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
-
-                const intermediateRepresentation = generateIntermediateRepresentation({
-                    workspace: fernWorkspace,
-                    audiences: generatorGroup.audiences,
-                    generationLanguage: generatorInvocation.language,
-                    keywords: generatorInvocation.keywords,
-                    smartCasing: generatorInvocation.smartCasing,
-                    exampleGeneration: {
-                        includeOptionalRequestPropertyExamples: false,
-                        disabled: generatorInvocation.disableExamples
-                    },
-                    readme: generatorInvocation.readme,
-                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
-                    packageName,
-                    context,
-                    sourceResolver: new SourceResolverImpl(context, fernWorkspace),
-                    dynamicGeneratorConfig,
-                    generationMetadata: {
-                        cliVersion: workspace.cliVersion,
-                        generatorName: generatorInvocation.name,
-                        generatorVersion: generatorInvocation.version,
-                        generatorConfig: generatorInvocation.config,
-                        originGitCommit: getOriginGitCommit(),
-                        originGitCommitIsDirty: getOriginGitCommitIsDirty(),
-                        invokedBy: detectInvocationSource(),
-                        requestedVersion: userProvidedVersion,
-                        ciProvider: detectCiProvider()
-                    }
-                });
-
-                if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    token ??= await getAccessToken();
-                    if (token == null) {
-                        interactiveTaskContext.failWithoutThrowing(
-                            "Please provide a FERN_TOKEN in your environment.",
-                            undefined,
-                            { code: CliError.Code.AuthError }
-                        );
-                        return;
-                    }
-                }
-
-                let orgBody: FernVenusApi.Organization | undefined;
-                if (token != null) {
-                    const venus = createVenusService({ token: token.value });
-                    const organization = await venus.organization.get({
-                        orgId: projectConfig.organization
-                    });
-
-                    if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
-                        interactiveTaskContext.failWithoutThrowing(
-                            `Failed to load details for organization ${projectConfig.organization}.`,
-                            undefined,
-                            { code: CliError.Code.NetworkError }
-                        );
-                        return;
-                    }
-
-                    if (organization.ok) {
-                        orgBody = organization.body;
-                    }
-                }
-
-                if (orgBody != null) {
-                    if (orgBody.isWhitelabled) {
-                        if (intermediateRepresentation.readmeConfig == null) {
-                            intermediateRepresentation.readmeConfig = emptyReadmeConfig;
+                        sourceResolver: new SourceResolverImpl(context, fernWorkspace),
+                        dynamicGeneratorConfig,
+                        generationMetadata: {
+                            cliVersion: workspace.cliVersion,
+                            generatorName: generatorInvocation.name,
+                            generatorVersion: generatorInvocation.version,
+                            generatorConfig: generatorInvocation.config,
+                            originGitCommit: getOriginGitCommit(),
+                            originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+                            invokedBy: detectInvocationSource(),
+                            requestedVersion: userProvidedVersion,
+                            ciProvider: detectCiProvider()
                         }
-                        intermediateRepresentation.readmeConfig.whiteLabel = true;
-                    }
-                    intermediateRepresentation.selfHosted = orgBody.selfHostedSdKs;
-                }
+                    });
 
-                // Set the publish config on the intermediateRepresentation if available
-                const publishConfig = getPublishConfig({
-                    generatorInvocation,
-                    org: orgBody,
-                    version,
-                    userProvidedVersion,
-                    packageName,
-                    context: interactiveTaskContext
-                });
-                if (publishConfig != null) {
-                    intermediateRepresentation.publishConfig = publishConfig;
-                }
-
-                const absolutePathToPreviewForGenerator = resolveAbsolutePathToLocalPreview(
-                    absolutePathToPreview,
-                    generatorInvocation
-                );
-
-                const absolutePathToLocalOutput =
-                    absolutePathToPreviewForGenerator ??
-                    generatorInvocation.absolutePathToLocalOutput ??
-                    AbsoluteFilePath.of(await tmp.dir().then((dir) => dir.path));
-
-                const selfhostedGithubConfig = getSelfhostedGithubConfig(
-                    generatorInvocation,
-                    absolutePathToPreviewForGenerator != null
-                );
-
-                // Validate that automatic versioning requires self-hosted GitHub configuration
-                if (version != null && isAutoVersion(version)) {
-                    if (selfhostedGithubConfig == null) {
-                        context.failAndThrow(
-                            `Automatic versioning (--version AUTO) requires a self-hosted GitHub repository configuration. ` +
-                                `Regular GitHub repositories are not supported because auto versioning needs to push changes back to the repository. ` +
-                                `Please configure your generator with self-hosted GitHub output in generators.yml. ` +
-                                `Example:\n` +
-                                `generators:\n` +
-                                `  - name: fernapi/fern-typescript-sdk\n` +
-                                `    version: latest\n` +
-                                `    github:\n` +
-                                `      uri: your-org/your-sdk-repo\n` +
-                                `      token: \${GITHUB_TOKEN}\n` +
-                                `      mode: pull-request\n`,
-                            undefined,
-                            { code: CliError.Code.ConfigError }
-                        );
-                    }
-                }
-
-                if (selfhostedGithubConfig != null) {
-                    await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
-                    await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
-
-                    // Log git environment info for debugging
-                    interactiveTaskContext.logger.debug(
-                        `Self-hosted GitHub mode: cloning ${selfhostedGithubConfig.uri} to ${absolutePathToLocalOutput}`
-                    );
-                    try {
-                        const { execSync } = await import("child_process");
-                        const gitPath = execSync("which git 2>/dev/null || echo 'not found'", {
-                            encoding: "utf-8"
-                        }).trim();
-                        const gitVersion = execSync("git --version 2>/dev/null || echo 'unknown'", {
-                            encoding: "utf-8"
-                        }).trim();
-                        interactiveTaskContext.logger.debug(
-                            `Git environment: path=${gitPath}, version=${gitVersion}, PATH=${process.env.PATH ?? "unset"}`
-                        );
-                    } catch {
-                        interactiveTaskContext.logger.debug(
-                            `Git environment: unable to determine git info, PATH=${process.env.PATH ?? "unset"}`
-                        );
+                    if (generatorInvocation.absolutePathToLocalOutput == null) {
+                        token ??= await getAccessToken();
+                        if (token == null) {
+                            interactiveTaskContext.failWithoutThrowing(
+                                "Please provide a FERN_TOKEN in your environment.",
+                                undefined,
+                                { code: CliError.Code.AuthError }
+                            );
+                            return;
+                        }
                     }
 
-                    try {
-                        const repo = await cloneRepository({
-                            githubRepository: selfhostedGithubConfig.uri,
-                            installationToken: selfhostedGithubConfig.token,
-                            targetDirectory: absolutePathToLocalOutput,
-                            timeoutMs: 30000 // 30 seconds timeout for credential/network issues
+                    let orgBody: FernVenusApi.Organization | undefined;
+                    if (token != null) {
+                        const venus = createVenusService({ token: token.value });
+                        const organization = await venus.organization.get({
+                            orgId: projectConfig.organization
                         });
 
-                        // For push, commit-and-release, and pull-request mode with a target branch,
-                        // checkout the target branch while the working tree is clean.
-                        // This prevents non-fast-forward errors that occur when trying to checkout
-                        // after files have been generated (dirty working tree).
-                        const mode = selfhostedGithubConfig.mode ?? "push";
-                        if (
-                            (mode === "push" || mode === "pull-request" || mode === "commit-and-release") &&
-                            selfhostedGithubConfig.branch != null
-                        ) {
-                            interactiveTaskContext.logger.debug(
-                                `Checking out branch ${selfhostedGithubConfig.branch} before generation`
+                        if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
+                            interactiveTaskContext.failWithoutThrowing(
+                                `Failed to load details for organization ${projectConfig.organization}.`,
+                                undefined,
+                                { code: CliError.Code.NetworkError }
                             );
-                            // For pull-request mode, the branch must exist on remote
-                            // (to match remote generation behavior)
-                            if (mode === "pull-request") {
-                                const branchExists = await repo.remoteBranchExists(selfhostedGithubConfig.branch);
-                                if (!branchExists) {
-                                    const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
-                                    interactiveTaskContext.failAndThrow(
-                                        `Branch ${selfhostedGithubConfig.branch} does not exist in repository ${parsedRepo.owner}/${parsedRepo.repo}`,
-                                        undefined,
-                                        { code: CliError.Code.ConfigError }
+                            return;
+                        }
+
+                        if (organization.ok) {
+                            orgBody = organization.body;
+                        }
+                    }
+
+                    if (orgBody != null) {
+                        if (orgBody.isWhitelabled) {
+                            if (intermediateRepresentation.readmeConfig == null) {
+                                intermediateRepresentation.readmeConfig = emptyReadmeConfig;
+                            }
+                            intermediateRepresentation.readmeConfig.whiteLabel = true;
+                        }
+                        intermediateRepresentation.selfHosted = orgBody.selfHostedSdKs;
+                    }
+
+                    // Set the publish config on the intermediateRepresentation if available
+                    const publishConfig = getPublishConfig({
+                        generatorInvocation,
+                        org: orgBody,
+                        version,
+                        userProvidedVersion,
+                        packageName,
+                        context: interactiveTaskContext
+                    });
+                    if (publishConfig != null) {
+                        intermediateRepresentation.publishConfig = publishConfig;
+                    }
+
+                    const absolutePathToPreviewForGenerator = resolveAbsolutePathToLocalPreview(
+                        absolutePathToPreview,
+                        generatorInvocation
+                    );
+
+                    const absolutePathToLocalOutput =
+                        absolutePathToPreviewForGenerator ??
+                        generatorInvocation.absolutePathToLocalOutput ??
+                        AbsoluteFilePath.of(await tmp.dir().then((dir) => dir.path));
+
+                    const selfhostedGithubConfig = getSelfhostedGithubConfig(
+                        generatorInvocation,
+                        absolutePathToPreviewForGenerator != null
+                    );
+
+                    // Validate that automatic versioning requires self-hosted GitHub configuration
+                    if (version != null && isAutoVersion(version)) {
+                        if (selfhostedGithubConfig == null) {
+                            context.failAndThrow(
+                                `Automatic versioning (--version AUTO) requires a self-hosted GitHub repository configuration. ` +
+                                    `Regular GitHub repositories are not supported because auto versioning needs to push changes back to the repository. ` +
+                                    `Please configure your generator with self-hosted GitHub output in generators.yml. ` +
+                                    `Example:\n` +
+                                    `generators:\n` +
+                                    `  - name: fernapi/fern-typescript-sdk\n` +
+                                    `    version: latest\n` +
+                                    `    github:\n` +
+                                    `      uri: your-org/your-sdk-repo\n` +
+                                    `      token: \${GITHUB_TOKEN}\n` +
+                                    `      mode: pull-request\n`,
+                                undefined,
+                                { code: CliError.Code.ConfigError }
+                            );
+                        }
+                    }
+
+                    if (selfhostedGithubConfig != null) {
+                        await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
+                        await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
+
+                        // Log git environment info for debugging
+                        interactiveTaskContext.logger.debug(
+                            `Self-hosted GitHub mode: cloning ${selfhostedGithubConfig.uri} to ${absolutePathToLocalOutput}`
+                        );
+                        try {
+                            const { execSync } = await import("child_process");
+                            const gitPath = execSync("which git 2>/dev/null || echo 'not found'", {
+                                encoding: "utf-8"
+                            }).trim();
+                            const gitVersion = execSync("git --version 2>/dev/null || echo 'unknown'", {
+                                encoding: "utf-8"
+                            }).trim();
+                            interactiveTaskContext.logger.debug(
+                                `Git environment: path=${gitPath}, version=${gitVersion}, PATH=${process.env.PATH ?? "unset"}`
+                            );
+                        } catch {
+                            interactiveTaskContext.logger.debug(
+                                `Git environment: unable to determine git info, PATH=${process.env.PATH ?? "unset"}`
+                            );
+                        }
+
+                        try {
+                            const repo = await cloneRepository({
+                                githubRepository: selfhostedGithubConfig.uri,
+                                installationToken: selfhostedGithubConfig.token,
+                                targetDirectory: absolutePathToLocalOutput,
+                                timeoutMs: 30000 // 30 seconds timeout for credential/network issues
+                            });
+
+                            // For push, commit-and-release, and pull-request mode with a target branch,
+                            // checkout the target branch while the working tree is clean.
+                            // This prevents non-fast-forward errors that occur when trying to checkout
+                            // after files have been generated (dirty working tree).
+                            const mode = selfhostedGithubConfig.mode ?? "push";
+                            if (
+                                (mode === "push" || mode === "pull-request" || mode === "commit-and-release") &&
+                                selfhostedGithubConfig.branch != null
+                            ) {
+                                interactiveTaskContext.logger.debug(
+                                    `Checking out branch ${selfhostedGithubConfig.branch} before generation`
+                                );
+                                // For pull-request mode, the branch must exist on remote
+                                // (to match remote generation behavior)
+                                if (mode === "pull-request") {
+                                    const branchExists = await repo.remoteBranchExists(selfhostedGithubConfig.branch);
+                                    if (!branchExists) {
+                                        const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+                                        interactiveTaskContext.failAndThrow(
+                                            `Branch ${selfhostedGithubConfig.branch} does not exist in repository ${parsedRepo.owner}/${parsedRepo.repo}`,
+                                            undefined,
+                                            { code: CliError.Code.ConfigError }
+                                        );
+                                    }
+                                }
+                                await repo.checkoutRemoteBranch(selfhostedGithubConfig.branch);
+                            }
+                        } catch (error) {
+                            interactiveTaskContext.failAndThrow(
+                                `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`,
+                                undefined,
+                                { code: CliError.Code.NetworkError }
+                            );
+                        }
+                    }
+
+                    let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
+                    if (generatorInvocation.raw?.snippets?.path != null) {
+                        absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                            join(workspace.absoluteFilePath, RelativeFilePath.of(generatorInvocation.raw.snippets.path))
+                        );
+                    }
+                    if (absolutePathToLocalSnippetJSON == null && selfhostedGithubConfig != null) {
+                        absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                            (await getWorkspaceTempDir()).path + "/snippet.json"
+                        );
+                    }
+
+                    // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
+                    const workspaceTempDir = await getWorkspaceTempDir();
+
+                    const {
+                        shouldCommit,
+                        autoVersioningCommitMessage,
+                        autoVersioningChangelogEntry,
+                        autoVersioningPrDescription,
+                        autoVersioningVersionBumpReason,
+                        autoVersioningVersionBump,
+                        autoVersioningNewVersion,
+                        autoVersioningPreviousVersion
+                    } = await writeFilesToDiskAndRunGenerator({
+                        organization: projectConfig.organization,
+                        absolutePathToFernConfig:
+                            workspace.generatorsConfiguration?.absolutePathToConfiguration ??
+                            projectConfig._absolutePath,
+                        workspace: fernWorkspace,
+                        generatorInvocation,
+                        absolutePathToLocalOutput,
+                        absolutePathToLocalSnippetJSON,
+                        absolutePathToLocalSnippetTemplateJSON: undefined,
+                        version,
+                        audiences: generatorGroup.audiences,
+                        workspaceTempDir,
+                        keepDocker,
+                        context: interactiveTaskContext,
+                        irVersionOverride: generatorInvocation.irVersionOverride,
+                        outputVersionOverride: version,
+                        writeUnitTests: true,
+                        generateOauthClients: orgBody?.oauthClientEnabled ?? false,
+                        generatePaginatedClients: orgBody?.paginationEnabled ?? false,
+                        includeOptionalRequestPropertyExamples: false,
+                        inspect,
+                        executionEnvironment: undefined, // This should use the Docker fallback with proper image name
+                        ir: intermediateRepresentation,
+                        whiteLabel: orgBody?.isWhitelabled ?? false,
+                        publishToRegistry,
+                        runner,
+                        ai,
+                        autoVersioningCache,
+                        absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
+                        skipFernignore,
+                        disableTelemetry,
+                        rawApiSpecs:
+                            workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
+                                ? workspace.allSpecs
+                                : undefined
+                    });
+
+                    interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
+
+                    // Run post-generation pipeline when:
+                    //   - outputting to a self-hosted GitHub repo (full replay + GitHub flow), or
+                    //   - `--verify` is set (verify-only flow; no replay, no GitHub).
+                    const githubPipelineEnabled = selfhostedGithubConfig != null && shouldCommit;
+                    const verifyOnlyPipelineEnabled = !githubPipelineEnabled && verify === true;
+                    if (githubPipelineEnabled || verifyOnlyPipelineEnabled) {
+                        const pipelineLogger: PipelineLogger = {
+                            debug: (msg) => interactiveTaskContext.logger.debug(msg),
+                            info: (msg) => interactiveTaskContext.logger.info(msg),
+                            warn: (msg) => interactiveTaskContext.logger.warn(msg),
+                            error: (msg) => interactiveTaskContext.logger.error(msg)
+                        };
+
+                        const hasBreakingChanges = autoVersioningVersionBump === "MAJOR";
+
+                        const pipeline = new PostGenerationPipeline(
+                            {
+                                outputDir: absolutePathToLocalOutput,
+                                replay: githubPipelineEnabled
+                                    ? { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false }
+                                    : undefined,
+                                verify: { enabled: verify === true, runner },
+                                github:
+                                    githubPipelineEnabled && selfhostedGithubConfig != null
+                                        ? {
+                                              enabled: true,
+                                              uri: selfhostedGithubConfig.uri,
+                                              token: selfhostedGithubConfig.token,
+                                              mode: selfhostedGithubConfig.mode ?? "push",
+                                              branch: selfhostedGithubConfig.branch,
+                                              commitMessage: autoVersioningCommitMessage,
+                                              changelogEntry: autoVersioningChangelogEntry,
+                                              prDescription: autoVersioningPrDescription,
+                                              versionBumpReason: autoVersioningVersionBumpReason,
+                                              previousVersion: autoVersioningPreviousVersion,
+                                              newVersion: autoVersioningNewVersion ?? version,
+                                              versionBump: autoVersioningVersionBump,
+                                              previewMode: selfhostedGithubConfig.previewMode,
+                                              generatorName: generatorInvocation.name,
+                                              automationMode,
+                                              autoMerge,
+                                              skipIfNoDiff,
+                                              hasBreakingChanges,
+                                              breakingChangesSummary: hasBreakingChanges
+                                                  ? autoVersioningPrDescription
+                                                  : undefined,
+                                              runId: process.env.FERN_RUN_ID,
+                                              apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
+                                          }
+                                        : undefined,
+                                cliVersion: workspace.cliVersion ?? "unknown",
+                                generatorVersions: {
+                                    [generatorInvocation.name]: generatorInvocation.version
+                                },
+                                generatorName: generatorInvocation.name
+                            },
+                            pipelineLogger
+                        );
+
+                        const pipelineStart = Date.now();
+                        const pipelineResult = await pipeline.run();
+                        const pipelineDurationMs = Date.now() - pipelineStart;
+
+                        // Log replay summary
+                        if (pipelineResult.steps.replay != null && selfhostedGithubConfig != null) {
+                            logReplaySummary(pipelineResult.steps.replay, {
+                                debug: (msg) => interactiveTaskContext.logger.debug(msg),
+                                info: (msg) => {
+                                    // Don't ANSI-color structured machine-parseable lines
+                                    // ("[replay] ..." emitted by replay-summary). Customer-friendly
+                                    // status messages stay cyan for terminal readability.
+                                    const isStructured = msg.startsWith("[replay] ") || msg.startsWith("[telemetry] ");
+                                    interactiveTaskContext.logger.info(isStructured ? msg : chalk.cyan(msg));
+                                },
+                                warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
+                                error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
+                            });
+
+                            // Telemetry: emit a single `replay` event with `action: pipeline_run`.
+                            // Wrapped in try/catch — a telemetry exception must never fail generation.
+                            // The `disableTelemetry` gate honors FERN_DISABLE_TELEMETRY (v1) and v2's
+                            // FERN_TELEMETRY_DISABLED / ~/.fernrc (which short-circuit inside the
+                            // TelemetryClient regardless).
+                            if (!disableTelemetry) {
+                                try {
+                                    const replayTelemetryProps = buildReplayTelemetryProps({
+                                        pipelineResult,
+                                        generatorName: generatorInvocation.name,
+                                        generatorVersion: generatorInvocation.version,
+                                        cliVersion: workspace.cliVersion,
+                                        repoUri: selfhostedGithubConfig.uri,
+                                        automationMode: automationMode === true,
+                                        autoMerge: autoMerge === true,
+                                        skipIfNoDiff: skipIfNoDiff === true,
+                                        hasBreakingChanges,
+                                        versionArg:
+                                            version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
+                                        versionBump: autoVersioningVersionBump,
+                                        replayConfigEnabled: replay?.enabled === true,
+                                        noReplayFlag: noReplay === true,
+                                        githubMode: selfhostedGithubConfig.mode ?? "push",
+                                        previewMode: selfhostedGithubConfig.previewMode === true,
+                                        durationMs: pipelineDurationMs
+                                    });
+                                    const propsWithOverlay = {
+                                        ...replayTelemetryProps,
+                                        surface: "cli" as const,
+                                        org_id: projectConfig.organization
+                                    };
+                                    interactiveTaskContext.instrumentPostHogEvent({
+                                        command: "replay",
+                                        properties: propsWithOverlay
+                                    });
+                                    interactiveTaskContext.logger.debug(
+                                        `[telemetry] replay event sent: ${JSON.stringify(propsWithOverlay)}`
+                                    );
+                                } catch (error) {
+                                    interactiveTaskContext.logger.debug(
+                                        `[telemetry] failed to send replay event: ${String(error)}`
                                     );
                                 }
                             }
-                            await repo.checkoutRemoteBranch(selfhostedGithubConfig.branch);
                         }
-                    } catch (error) {
-                        interactiveTaskContext.failAndThrow(
-                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`,
-                            undefined,
-                            { code: CliError.Code.NetworkError }
-                        );
-                    }
-                }
 
-                let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
-                if (generatorInvocation.raw?.snippets?.path != null) {
-                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
-                        join(workspace.absoluteFilePath, RelativeFilePath.of(generatorInvocation.raw.snippets.path))
-                    );
-                }
-                if (absolutePathToLocalSnippetJSON == null && selfhostedGithubConfig != null) {
-                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
-                        (await getWorkspaceTempDir()).path + "/snippet.json"
-                    );
-                }
+                        if (pipelineResult.steps.github?.skippedNoDiff) {
+                            interactiveTaskContext.logger.info(
+                                chalk.green("No changes detected — skipping PR creation")
+                            );
+                        }
 
-                // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
-                const workspaceTempDir = await getWorkspaceTempDir();
+                        if (pipelineResult.steps.github?.autoMergeEnabled) {
+                            interactiveTaskContext.logger.info(chalk.green("Automerge enabled on PR"));
+                        }
 
-                const {
-                    shouldCommit,
-                    autoVersioningCommitMessage,
-                    autoVersioningChangelogEntry,
-                    autoVersioningPrDescription,
-                    autoVersioningVersionBumpReason,
-                    autoVersioningVersionBump,
-                    autoVersioningNewVersion,
-                    autoVersioningPreviousVersion
-                } = await writeFilesToDiskAndRunGenerator({
-                    organization: projectConfig.organization,
-                    absolutePathToFernConfig:
-                        workspace.generatorsConfiguration?.absolutePathToConfiguration ?? projectConfig._absolutePath,
-                    workspace: fernWorkspace,
-                    generatorInvocation,
-                    absolutePathToLocalOutput,
-                    absolutePathToLocalSnippetJSON,
-                    absolutePathToLocalSnippetTemplateJSON: undefined,
-                    version,
-                    audiences: generatorGroup.audiences,
-                    workspaceTempDir,
-                    keepDocker,
-                    context: interactiveTaskContext,
-                    irVersionOverride: generatorInvocation.irVersionOverride,
-                    outputVersionOverride: version,
-                    writeUnitTests: true,
-                    generateOauthClients: orgBody?.oauthClientEnabled ?? false,
-                    generatePaginatedClients: orgBody?.paginationEnabled ?? false,
-                    includeOptionalRequestPropertyExamples: false,
-                    inspect,
-                    executionEnvironment: undefined, // This should use the Docker fallback with proper image name
-                    ir: intermediateRepresentation,
-                    whiteLabel: orgBody?.isWhitelabled ?? false,
-                    publishToRegistry,
-                    runner,
-                    ai,
-                    autoVersioningCache,
-                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
-                    skipFernignore,
-                    disableTelemetry,
-                    rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
-                            ? workspace.allSpecs
-                            : undefined
-                });
-
-                interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
-
-                // Run post-generation pipeline when:
-                //   - outputting to a self-hosted GitHub repo (full replay + GitHub flow), or
-                //   - `--verify` is set (verify-only flow; no replay, no GitHub).
-                const githubPipelineEnabled = selfhostedGithubConfig != null && shouldCommit;
-                const verifyOnlyPipelineEnabled = !githubPipelineEnabled && verify === true;
-                if (githubPipelineEnabled || verifyOnlyPipelineEnabled) {
-                    const pipelineLogger: PipelineLogger = {
-                        debug: (msg) => interactiveTaskContext.logger.debug(msg),
-                        info: (msg) => interactiveTaskContext.logger.info(msg),
-                        warn: (msg) => interactiveTaskContext.logger.warn(msg),
-                        error: (msg) => interactiveTaskContext.logger.error(msg)
-                    };
-
-                    const hasBreakingChanges = autoVersioningVersionBump === "MAJOR";
-
-                    const pipeline = new PostGenerationPipeline(
-                        {
-                            outputDir: absolutePathToLocalOutput,
-                            replay: githubPipelineEnabled
-                                ? { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false }
-                                : undefined,
-                            verify: { enabled: verify === true, runner },
-                            github:
-                                githubPipelineEnabled && selfhostedGithubConfig != null
-                                    ? {
-                                          enabled: true,
-                                          uri: selfhostedGithubConfig.uri,
-                                          token: selfhostedGithubConfig.token,
-                                          mode: selfhostedGithubConfig.mode ?? "push",
-                                          branch: selfhostedGithubConfig.branch,
-                                          commitMessage: autoVersioningCommitMessage,
-                                          changelogEntry: autoVersioningChangelogEntry,
-                                          prDescription: autoVersioningPrDescription,
-                                          versionBumpReason: autoVersioningVersionBumpReason,
-                                          previousVersion: autoVersioningPreviousVersion,
-                                          newVersion: autoVersioningNewVersion ?? version,
-                                          versionBump: autoVersioningVersionBump,
-                                          previewMode: selfhostedGithubConfig.previewMode,
-                                          generatorName: generatorInvocation.name,
-                                          automationMode,
-                                          autoMerge,
-                                          skipIfNoDiff,
-                                          hasBreakingChanges,
-                                          breakingChangesSummary: hasBreakingChanges
-                                              ? autoVersioningPrDescription
-                                              : undefined,
-                                          runId: process.env.FERN_RUN_ID,
-                                          apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
-                                      }
-                                    : undefined,
-                            cliVersion: workspace.cliVersion ?? "unknown",
-                            generatorVersions: {
-                                [generatorInvocation.name]: generatorInvocation.version
-                            },
-                            generatorName: generatorInvocation.name
-                        },
-                        pipelineLogger
-                    );
-
-                    const pipelineStart = Date.now();
-                    const pipelineResult = await pipeline.run();
-                    const pipelineDurationMs = Date.now() - pipelineStart;
-
-                    // Log replay summary
-                    if (pipelineResult.steps.replay != null && selfhostedGithubConfig != null) {
-                        logReplaySummary(pipelineResult.steps.replay, {
-                            debug: (msg) => interactiveTaskContext.logger.debug(msg),
-                            info: (msg) => {
-                                // Don't ANSI-color structured machine-parseable lines
-                                // ("[replay] ..." emitted by replay-summary). Customer-friendly
-                                // status messages stay cyan for terminal readability.
-                                const isStructured = msg.startsWith("[replay] ") || msg.startsWith("[telemetry] ");
-                                interactiveTaskContext.logger.info(isStructured ? msg : chalk.cyan(msg));
-                            },
-                            warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
-                            error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
-                        });
-
-                        // Telemetry: emit a single `replay` event with `action: pipeline_run`.
-                        // Wrapped in try/catch — a telemetry exception must never fail generation.
-                        // The `disableTelemetry` gate honors FERN_DISABLE_TELEMETRY (v1) and v2's
-                        // FERN_TELEMETRY_DISABLED / ~/.fernrc (which short-circuit inside the
-                        // TelemetryClient regardless).
-                        if (!disableTelemetry) {
-                            try {
-                                const replayTelemetryProps = buildReplayTelemetryProps({
-                                    pipelineResult,
-                                    generatorName: generatorInvocation.name,
-                                    generatorVersion: generatorInvocation.version,
-                                    cliVersion: workspace.cliVersion,
-                                    repoUri: selfhostedGithubConfig.uri,
-                                    automationMode: automationMode === true,
-                                    autoMerge: autoMerge === true,
-                                    skipIfNoDiff: skipIfNoDiff === true,
-                                    hasBreakingChanges,
-                                    versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
-                                    versionBump: autoVersioningVersionBump,
-                                    replayConfigEnabled: replay?.enabled === true,
-                                    noReplayFlag: noReplay === true,
-                                    githubMode: selfhostedGithubConfig.mode ?? "push",
-                                    previewMode: selfhostedGithubConfig.previewMode === true,
-                                    durationMs: pipelineDurationMs
-                                });
-                                const propsWithOverlay = {
-                                    ...replayTelemetryProps,
-                                    surface: "cli" as const,
-                                    org_id: projectConfig.organization
-                                };
-                                interactiveTaskContext.instrumentPostHogEvent({
-                                    command: "replay",
-                                    properties: propsWithOverlay
-                                });
-                                interactiveTaskContext.logger.debug(
-                                    `[telemetry] replay event sent: ${JSON.stringify(propsWithOverlay)}`
-                                );
-                            } catch (error) {
-                                interactiveTaskContext.logger.debug(
-                                    `[telemetry] failed to send replay event: ${String(error)}`
-                                );
-                            }
+                        if (!pipelineResult.success) {
+                            interactiveTaskContext.failAndThrow(
+                                `Post-generation pipeline failed: ${pipelineResult.errors?.join(", ")}`,
+                                undefined,
+                                { code: CliError.Code.UserError }
+                            );
                         }
                     }
-
-                    if (pipelineResult.steps.github?.skippedNoDiff) {
-                        interactiveTaskContext.logger.info(chalk.green("No changes detected — skipping PR creation"));
-                    }
-
-                    if (pipelineResult.steps.github?.autoMergeEnabled) {
-                        interactiveTaskContext.logger.info(chalk.green("Automerge enabled on PR"));
-                    }
-
-                    if (!pipelineResult.success) {
-                        interactiveTaskContext.failAndThrow(
-                            `Post-generation pipeline failed: ${pipelineResult.errors?.join(", ")}`,
-                            undefined,
-                            { code: CliError.Code.UserError }
-                        );
-                    }
                 }
-            });
+            );
         })
     );
 
