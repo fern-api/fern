@@ -1,5 +1,8 @@
 instances:
   - url: https://example.docs.buildwithfern.com
+landing-page:
+  page: Welcome
+  path: ./pages/global-landing.mdx
 products:
   - display-name: Sunflower API
     icon: fa-solid fa-sun
@@ -9,3 +12,14 @@ products:
     icon: fa-solid fa-seedling
     path: ./products/cactus.yml
     slug: cactus
+  - display-name: Rose API
+    icon: fa-solid fa-rose
+    path: ./products/rose.yml
+    slug: rose
+    versions:
+      - display-name: v2
+        path: ./products/versions/rose-v2.yml
+        slug: v2
+      - display-name: v1
+        path: ./products/versions/rose-v1.yml
+        slug: v1

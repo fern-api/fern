@@ -1,0 +1,6 @@
+landing-page:
+  page: Rose Overview
+  path: ../pages/rose-landing.mdx
+navigation:
+  - page: Rose Guide
+    path: ../pages/rose-v2-guide.mdx
