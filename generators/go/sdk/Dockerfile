@@ -38,6 +38,18 @@ RUN set -eux; \
     tar -xzf "${TARBALL}" -C "${NPM_NM}/tar" --strip-components=1; \
     cd / && rm -rf /tmp/pkg-fix /root/.npm
 
+# Patch @sigstore/core to 3.2.1 to fix GHSA-jfc7-64v2-mr8c.
+RUN set -eux; \
+    NPM_NM=/usr/local/lib/node_modules/npm/node_modules; \
+    if [ -d "${NPM_NM}/@sigstore/core" ]; then \
+        TARBALL="$(npm pack @sigstore/core@3.2.1 --silent)"; \
+        rm -rf "${NPM_NM}/@sigstore/core"; \
+        mkdir -p "${NPM_NM}/@sigstore/core"; \
+        tar -xzf "${TARBALL}" -C "${NPM_NM}/@sigstore/core" --strip-components=1; \
+        rm -f "${TARBALL}"; \
+    fi; \
+    cd / && rm -rf /tmp/pkg-fix /root/.npm
+
 COPY generators/go-v2/sdk/dist/ /dist/
 
 # Stage 2: Final Go image
