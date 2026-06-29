@@ -186,10 +186,12 @@ export async function getPreviewDocsDefinition({
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
+        context.logger.info(`[BENCHMARK] Incremental path: checking ${editedAbsoluteFilepaths.length} edited files`);
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
         let navAffectingChange = false;
+        let navAffectingReason = "";
 
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
@@ -198,6 +200,7 @@ export async function getPreviewDocsDefinition({
 
             if (!(await doesPathExist(absoluteFilePath))) {
                 navAffectingChange = true;
+                navAffectingReason = `file deleted: ${relativePath}`;
                 continue;
             }
 
@@ -206,24 +209,28 @@ export async function getPreviewDocsDefinition({
             const isNewFile = previousValue == null;
             if (isNewFile) {
                 navAffectingChange = true;
+                navAffectingReason = `new file: ${relativePath}`;
             }
 
             const currentPosition = extractFrontmatterPosition(markdown);
             const cachedPosition = frontmatterPositionCache.get(absoluteFilePath);
             if (cachedPosition !== currentPosition) {
                 navAffectingChange = true;
+                navAffectingReason = `position changed: ${relativePath}`;
             }
 
             const currentSidebarTitle = extractFrontmatterSidebarTitle(markdown);
             const cachedSidebarTitle = frontmatterSidebarTitleCache.get(absoluteFilePath);
             if (cachedSidebarTitle !== currentSidebarTitle) {
                 navAffectingChange = true;
+                navAffectingReason = `sidebar-title changed: ${relativePath}`;
             }
 
             const currentSlug = extractFrontmatterSlug(markdown);
             const cachedSlug = frontmatterSlugCache.get(absoluteFilePath);
             if (cachedSlug !== currentSlug) {
                 navAffectingChange = true;
+                navAffectingReason = `slug changed: ${relativePath}`;
             }
 
             frontmatterPositionCache.set(absoluteFilePath, currentPosition);
@@ -319,6 +326,7 @@ export async function getPreviewDocsDefinition({
         }
 
         if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {
+            context.logger.info("[BENCHMARK] Fast path taken: markdown-only, no nav change");
             // Return updated definition with preserved translation data
             return {
                 docsDefinition: previousDocsDefinition,
@@ -329,13 +337,23 @@ export async function getPreviewDocsDefinition({
                 translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions
             };
         }
+        if (!allMarkdownFiles) {
+            context.logger.info("[BENCHMARK] Fast path skipped: non-markdown files edited");
+        } else if (navAffectingChange) {
+            context.logger.info(`[BENCHMARK] Fast path skipped: ${navAffectingReason}`);
+        } else if (previousPreviewResult == null) {
+            context.logger.info("[BENCHMARK] Fast path skipped: no previous preview result");
+        }
     }
 
+    context.logger.info("[BENCHMARK] Full rebuild path taken");
     const ossWorkspaces = await filterOssWorkspaces(project);
 
     // Apply global theme if configured. Requires FERN_TOKEN env var; warns and proceeds
     // without the theme if the token is absent (common in local dev without cloud auth).
+    const themeStart = Date.now();
     const effectiveWorkspace = await applyGlobalThemeIfNeeded(docsWorkspace, project.config.organization, context);
+    context.logger.info(`[BENCHMARK] applyGlobalTheme: ${Date.now() - themeStart}ms`);
 
     const apiCollector = new ReferencedAPICollector(context);
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
@@ -367,7 +385,12 @@ export async function getPreviewDocsDefinition({
         buildTranslatedApiDefinitions: true
     });
 
+    const resolverStart = Date.now();
     const writeDocsDefinition = await resolver.resolve();
+    const resolverTime = Date.now() - resolverStart;
+    context.logger.info(`[BENCHMARK] DocsDefinitionResolver.resolve(): ${resolverTime}ms`);
+
+    const convertStart = Date.now();
     const dbDocsDefinition = convertDocsDefinitionToDb({
         writeShape: writeDocsDefinition,
         files: {}
@@ -375,6 +398,7 @@ export async function getPreviewDocsDefinition({
     const readDocsConfig = convertDbDocsConfigToRead({
         dbShape: dbDocsDefinition.config
     });
+    context.logger.info(`[BENCHMARK] convertDocsDefinition: ${Date.now() - convertStart}ms`);
 
     frontmatterPositionCache.clear();
     frontmatterSidebarTitleCache.clear();

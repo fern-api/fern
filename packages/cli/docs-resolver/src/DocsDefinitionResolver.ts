@@ -1688,6 +1688,7 @@ export class DocsDefinitionResolver {
         if (useV3Parser) {
             try {
                 openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                const v3IrStart = performance.now();
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
@@ -1695,6 +1696,9 @@ export class DocsDefinitionResolver {
                     generateV1Examples: false,
                     logWarnings: false
                 });
+                this.taskContext.logger.info(
+                    `[BENCHMARK] v3 parser IR generation: ${(performance.now() - v3IrStart).toFixed(0)}ms`
+                );
             } catch (error) {
                 openapiError = error;
             }
@@ -1733,6 +1737,7 @@ export class DocsDefinitionResolver {
             if (this.apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
+            const toFernStart = performance.now();
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
                 { context: this.taskContext },
                 {
@@ -1742,6 +1747,10 @@ export class DocsDefinitionResolver {
                     preserveSchemaIds: true
                 }
             );
+            this.taskContext.logger.info(
+                `[BENCHMARK] toFernWorkspace (v1 fallback): ${(performance.now() - toFernStart).toFixed(0)}ms`
+            );
+            const irGenStart = performance.now();
             ir = generateIntermediateRepresentation({
                 workspace,
                 audiences: item.audiences,
@@ -1759,6 +1768,9 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
+            this.taskContext.logger.info(
+                `[BENCHMARK] generateIntermediateRepresentation (v1 fallback): ${(performance.now() - irGenStart).toFixed(0)}ms`
+            );
         } else {
             // When using the v3 parser (ir != null), we still need to load the workspace
             // for dynamic snippet generation and AI example enhancement, which require
@@ -1822,6 +1834,7 @@ export class DocsDefinitionResolver {
         const tempApiDefinitionId = `__pending_api_${this.pendingApiCounter++}__`;
 
         // Create API definition WITH GraphQL operations (single full conversion)
+        const convertStart = performance.now();
         const api = convertIrToApiDefinition({
             ir,
             apiDefinitionId: tempApiDefinitionId,
@@ -1830,6 +1843,9 @@ export class DocsDefinitionResolver {
             graphqlOperations: graphqlData.operations,
             graphqlTypes: graphqlData.types
         });
+        this.taskContext.logger.info(
+            `[BENCHMARK] convertIrToApiDefinition: ${(performance.now() - convertStart).toFixed(0)}ms (endpoints: ${ir.services ? Object.values(ir.services).reduce((sum, s) => sum + s.endpoints.length, 0) : "unknown"})`
+        );
 
         const node = new ApiReferenceNodeConverter(
             item,

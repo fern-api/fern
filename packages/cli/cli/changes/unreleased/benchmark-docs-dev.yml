@@ -1,0 +1,4 @@
+- summary: |
+    Add [BENCHMARK] timing instrumentation to `fern docs dev` for profiling reload performance.
+    Logs reloadProject, IR generation, API conversion, response serialization, and fast-path decisions.
+  type: internal

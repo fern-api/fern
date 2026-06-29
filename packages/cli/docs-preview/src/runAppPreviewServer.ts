@@ -959,10 +959,17 @@ export async function runAppPreviewServer({
         void debugLogger.logCliReloadStart();
 
         try {
+            const reloadProjectStart = Date.now();
             project = await reloadProject();
+            const reloadProjectTime = Date.now() - reloadProjectStart;
+            context.logger.info(
+                `[BENCHMARK] reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`
+            );
 
             // Rebuild dependency map after reloading project
+            const depMapStart = Date.now();
             await snippetTracker.buildDependencyMap(project);
+            context.logger.info(`[BENCHMARK] buildDependencyMap: ${Date.now() - depMapStart}ms`);
 
             // Start validation in background - don't block the reload
             const validationStartTime = Date.now();
@@ -982,6 +989,9 @@ export async function runAppPreviewServer({
                 });
 
             const docsGenStartTime = Date.now();
+            context.logger.info(
+                `[BENCHMARK] getPreviewDocsDefinition starting (editedFiles: ${editedAbsoluteFilepaths?.length ?? "initial"}, hasPreview: ${previewResult != null})`
+            );
             const newPreviewResult = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
@@ -991,6 +1001,7 @@ export async function runAppPreviewServer({
                 previousPreviewResult: previewResult
             });
             const docsGenTime = Date.now() - docsGenStartTime;
+            context.logger.info(`[BENCHMARK] getPreviewDocsDefinition: ${docsGenTime}ms`);
 
             // Log CLI docs generation time
             void debugLogger.logCliDocsGeneration(docsGenTime, {
@@ -998,7 +1009,9 @@ export async function runAppPreviewServer({
             });
 
             const totalTime = Date.now() - startTime;
-            context.logger.info(`Reload completed in ${totalTime}ms`);
+            context.logger.info(
+                `[BENCHMARK] Reload completed in ${totalTime}ms (reloadProject: ${reloadProjectTime}ms, docsGen: ${docsGenTime}ms)`
+            );
 
             // Log CLI reload finish with total time and memory
             void debugLogger.logCliReloadFinish(totalTime, {
@@ -1137,7 +1150,18 @@ export async function runAppPreviewServer({
             const urlPath = requestBody?.url;
             const locale = extractLocaleFromPath(urlPath);
 
-            res.send(buildDocsLoadResponse(locale));
+            const serializeStart = Date.now();
+            const response = buildDocsLoadResponse(locale);
+            const responseJson = JSON.stringify(response);
+            const serializeTime = Date.now() - serializeStart;
+            const responseSizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
+            const apiCount = Object.keys(response.definition.apis ?? {}).length;
+            const pageCount = Object.keys(response.definition.pages ?? {}).length;
+            context.logger.info(
+                `[BENCHMARK] /load-with-url response: ${responseSizeMB}MB, serialize: ${serializeTime}ms, apis: ${apiCount}, pages: ${pageCount}`
+            );
+            res.setHeader("Content-Type", "application/json");
+            res.send(responseJson);
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
