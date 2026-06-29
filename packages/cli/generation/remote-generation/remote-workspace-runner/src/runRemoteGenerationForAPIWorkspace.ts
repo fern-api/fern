@@ -1,5 +1,6 @@
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
+import { renderGithubAnnotation, shouldEmitGithubAnnotations } from "@fern-api/cli-logger";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -9,8 +10,8 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
-
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { appendFile } from "fs/promises";
 
 import { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
@@ -393,6 +394,14 @@ async function generateOne({
                 generatorsYmlLineNumber: lineNumber
             });
         }
+
+        await emitPrUrlAnnotationAndSummary({
+            pullRequestUrl: remoteTaskHandlerResponse?.pullRequestUrl,
+            generatorName: generatorInvocation.name,
+            groupName: generatorGroup.groupName,
+            apiName: workspace.workspaceName,
+            isAutomation: automation != null
+        });
     } catch (error) {
         if (automation == null) {
             throw error;
@@ -449,5 +458,56 @@ async function generateOne({
         interactiveTaskContext.failWithoutThrowing(message, error, {
             code: resolveErrorCode(error)
         });
+    }
+}
+
+/**
+ * Emits a GitHub Actions `::notice::` annotation and (for non-automation runs) appends a line
+ * to `$GITHUB_STEP_SUMMARY` when a generator produces a PR URL. This makes the PR URL visible
+ * in the GitHub Actions run page — currently the URL is buried in debug logs and easy to miss.
+ *
+ * For automation runs (`fern automations generate`), only the annotation is emitted; the step
+ * summary table already includes PR links via {@link reportGenerateResults}.
+ *
+ * Exported for testing.
+ */
+export async function emitPrUrlAnnotationAndSummary({
+    pullRequestUrl,
+    generatorName,
+    groupName,
+    apiName,
+    isAutomation
+}: {
+    pullRequestUrl: string | undefined;
+    generatorName: string;
+    groupName: string;
+    apiName: string | undefined;
+    isAutomation: boolean;
+}): Promise<void> {
+    if (pullRequestUrl == null) {
+        return;
+    }
+    if (!shouldEmitGithubAnnotations()) {
+        return;
+    }
+    const qualifiers: string[] = [`group=${groupName}`];
+    if (apiName != null && apiName.length > 0) {
+        qualifiers.push(`api=${apiName}`);
+    }
+    const title = `${generatorName} (${qualifiers.join(", ")}) → PR created`;
+    const annotation = renderGithubAnnotation("notice", pullRequestUrl, { title });
+    if (annotation != null) {
+        process.stdout.write(annotation);
+    }
+
+    if (!isAutomation) {
+        const stepSummaryPath = process.env.GITHUB_STEP_SUMMARY;
+        if (stepSummaryPath != null && stepSummaryPath.length > 0) {
+            try {
+                await appendFile(stepSummaryPath, `🔀 **${generatorName}** → [PR](${pullRequestUrl})\n`, "utf8");
+            } catch {
+                // Best-effort — don't fail generation for a step summary write error.
+            }
+        }
     }
 }

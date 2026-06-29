@@ -1,0 +1,5 @@
+- summary: |
+    When running inside GitHub Actions, SDK generation PR URLs are now surfaced as
+    `::notice::` annotations in the workflow run page and appended to the step summary.
+    Previously, PR URLs were only visible in debug-level log output.
+  type: feat
