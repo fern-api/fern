@@ -568,13 +568,20 @@ export async function downloadBundle({
 
             const workspaceConfigPath = path.join(absolutePathToBundleFolder, "pnpm-workspace.yaml");
             if (!existsSync(workspaceConfigPath)) {
-                await writeFile(workspaceConfigPath, "onlyBuiltDependencies:\n  - esbuild\n");
+                // pnpm 10+ requires the `packages` field in pnpm-workspace.yaml
+                await writeFile(workspaceConfigPath, "packages: []\nonlyBuiltDependencies:\n  - esbuild\n");
+            } else {
+                // patch stale cached configs from previous runs that lack the `packages` field
+                const existingWorkspaceConfig = await readFile(workspaceConfigPath, "utf-8");
+                if (!existingWorkspaceConfig.includes("packages:")) {
+                    await writeFile(workspaceConfigPath, `packages: []\n${existingWorkspaceConfig}`);
+                }
             }
 
             try {
                 // install esbuild
                 logger.debug("Installing esbuild");
-                await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
+                await loggingExeca(logger, "pnpm", ["i", "-w", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 });
@@ -603,7 +610,7 @@ export async function downloadBundle({
                         try {
                             // Try installing esbuild again after upgrading corepack
                             logger.debug("Installing esbuild after upgrading corepack");
-                            await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
+                            await loggingExeca(logger, "pnpm", ["i", "-w", "esbuild"], {
                                 cwd: absolutePathToBundleFolder,
                                 doNotPipeOutput: true
                             });
