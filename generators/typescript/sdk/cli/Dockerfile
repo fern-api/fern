@@ -129,6 +129,17 @@ RUN chmod +x /tmp/tsgolint-rebuilt && \
     fi; \
     rm /tmp/tsgolint-rebuilt
 
+# Clean pnpm content-addressable store (holds the pre-built tsgolint
+# binary compiled with go1.26.2) and corepack cache. Patch pnpm's
+# bundled undici to 6.27.0 to clear CVE-2026-12151.
+RUN rm -rf /.pnpm/store /.pnpm-cache /root/.cache/node/corepack && \
+    cd /usr/local/lib/node_modules/pnpm/dist/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
+
 COPY generators/typescript/sdk/cli/dist/ /
 
 ENTRYPOINT ["node", "--enable-source-maps", "/cli.cjs"]
