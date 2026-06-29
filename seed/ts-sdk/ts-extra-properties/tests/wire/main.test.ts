@@ -4,56 +4,58 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
+    
     test("getUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-
-        const rawResponseBody = {
-            id: "id",
-            user_name: "user_name",
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-        };
-
-        server.mockEndpoint().get("/user").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.getUser();
-        expect(response).toEqual({
-            id: "id",
-            userName: "user_name",
-            createdAt: new Date("2024-01-15T09:30:00.000Z"),
-            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
-        });
-    });
-
-    test("createUser", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { user_name: "user_name" };
-        const rawResponseBody = {
-            id: "id",
-            user_name: "user_name",
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-        };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "user_name" : "user_name" , "created_at" : "2024-01-15T09:30:00Z" , "updated_at" : "2024-01-15T09:30:00Z" };
+        
         server
             .mockEndpoint()
-            .post("/user")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .get("/user").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.createUser({
-            userName: "user_name",
-        });
-        expect(response).toEqual({
-            id: "id",
-            userName: "user_name",
-            createdAt: new Date("2024-01-15T09:30:00.000Z"),
-            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
-        });
+        
+                        
+                                const response = await client.getUser();
+                                expect(response).toEqual({
+    id: "id",
+    userName: "user_name",
+    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+    updatedAt: new Date("2024-01-15T09:30:00.000Z")
+});
+                              
+                    
     });
+          
+    test("createUser", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "user_name" : "user_name" };
+        const rawResponseBody = { "id" : "id" , "user_name" : "user_name" , "created_at" : "2024-01-15T09:30:00Z" , "updated_at" : "2024-01-15T09:30:00Z" };
+        
+        server
+            .mockEndpoint()
+            .post("/user").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
+
+        
+                        
+                                const response = await client.createUser({
+    userName: "user_name"
+});
+                                expect(response).toEqual({
+    id: "id",
+    userName: "user_name",
+    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+    updatedAt: new Date("2024-01-15T09:30:00.000Z")
+});
+                              
+                    
+    });
+          
 });

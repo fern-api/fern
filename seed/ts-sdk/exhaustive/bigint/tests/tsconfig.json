@@ -4,6 +4,6 @@
         "outDir": null,
         "rootDir": ".."
     },
-    "include": ["../src", "../tests"],
+    "include": ["../src","../tests"],
     "exclude": []
 }

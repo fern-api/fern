@@ -33,8 +33,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
             for (const key in properties) {
                 if (_hasOwn.call(properties, key)) {
                     const value = properties[key as keyof Properties];
-                    additionalProperties[key] =
-                        typeof value === "function" ? (value as Function)(parsedObject.value) : value;
+                    additionalProperties[key] = typeof value === "function" ? (value as Function)(parsedObject.value) : value;
                 }
             }
 

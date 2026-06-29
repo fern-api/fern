@@ -4,22 +4,26 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
+    
     test("bulkUpdateTasks", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { updated_count: 1 };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { };
+        const rawResponseBody = { "updated_count" : 1 };
+        
         server
             .mockEndpoint()
-            .put("/task/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .put("/task/").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.bulkUpdateTasks();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.bulkUpdateTasks();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

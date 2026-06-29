@@ -8,23 +8,13 @@ import * as core from "../core/index.js";
  * Extract the signature from the "x-refund-signature" header and pass it as the signatureHeader parameter.
  */
 export class RefundProcessedWebhooksHelper {
-    public static async verifySignature(
-        requestBody: string,
-        signatureHeader: string,
-        publicKey: string,
-    ): Promise<boolean> {
+    public static async verifySignature(requestBody: string, signatureHeader: string, publicKey: string): Promise<boolean> {
         if (requestBody == null || signatureHeader == null || publicKey == null) {
             throw new Error("Missing required parameters for webhook signature verification");
         }
 
         const payload = requestBody;
 
-        return await core.verifyAsymmetricSignature({
-            payload: payload,
-            signature: signatureHeader,
-            publicKey: publicKey,
-            algorithm: "ECDSA_SHA256",
-            encoding: "hex",
-        });
+        return await core.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "ECDSA_SHA256", encoding: "hex" });
     }
 }

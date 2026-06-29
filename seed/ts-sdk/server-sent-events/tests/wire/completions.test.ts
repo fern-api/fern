@@ -4,68 +4,62 @@ import { SeedServerSentEventsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("CompletionsClient", () => {
+    
     test("stream", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { query: "foo" };
-        const rawResponseBody =
-            'event: completion\ndata: {"delta":"hello","tokens":1}\n\nevent: completion\ndata: {"delta":" world","tokens":2}\n\n';
-
+        const client = new SeedServerSentEventsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "query" : "foo" };
+        const rawResponseBody = "event: completion\ndata: {\"delta\":\"hello\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\" world\",\"tokens\":2}\n\n";
+        
         server
             .mockEndpoint()
-            .post("/stream")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .sseBody(rawResponseBody)
-            .build();
+            .post("/stream").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).sseBody(rawResponseBody)
+                .build();
 
-        const response = await client.completions.stream({
-            query: "foo",
-        });
-        const events: unknown[] = [];
-        for await (const event of response) {
-            events.push(event);
-        }
-        expect(events).toEqual([
-            {
-                delta: "hello",
-                tokens: 1,
-            },
-            {
-                delta: " world",
-                tokens: 2,
-            },
-        ]);
+        
+            const response = await client.completions.stream({
+    query: "foo"
+});
+            const events: unknown[] = [];
+            for await (const event of response) {
+                events.push(event);
+            }
+            expect(events).toEqual([ {
+    delta: "hello",
+    tokens: 1
+} , {
+    delta: " world",
+    tokens: 2
+} ]);
     });
-
+          
     test("streamWithoutTerminator", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { query: "query" };
-        const rawResponseBody = 'event: completion\ndata: {"delta":"delta","tokens":1}\n\n';
-
+        const client = new SeedServerSentEventsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "query" : "query" };
+        const rawResponseBody = "event: completion\ndata: {\"delta\":\"delta\",\"tokens\":1}\n\n";
+        
         server
             .mockEndpoint()
-            .post("/stream-no-terminator")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .sseBody(rawResponseBody)
-            .build();
+            .post("/stream-no-terminator").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).sseBody(rawResponseBody)
+                .build();
 
-        const response = await client.completions.streamWithoutTerminator({
-            query: "query",
-        });
-        const events: unknown[] = [];
-        for await (const event of response) {
-            events.push(event);
-        }
-        expect(events).toEqual([
-            {
-                delta: "delta",
-                tokens: 1,
-            },
-        ]);
+        
+            const response = await client.completions.streamWithoutTerminator({
+    query: "query"
+});
+            const events: unknown[] = [];
+            for await (const event of response) {
+                events.push(event);
+            }
+            expect(events).toEqual([ {
+    delta: "delta",
+    tokens: 1
+} ]);
     });
+          
 });

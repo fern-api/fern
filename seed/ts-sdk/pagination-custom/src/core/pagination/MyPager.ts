@@ -77,8 +77,9 @@ export class MyPager<TItem, TResponse> implements AsyncIterable<TItem> {
         }
         const response = await this.sendRequest(this.nextRequest);
         if (!response.ok) {
-            const reason =
-                response.error.reason === "status-code" ? `HTTP ${response.error.statusCode}` : response.error.reason;
+            const reason = response.error.reason === "status-code"
+                ? `HTTP ${response.error.statusCode}`
+                : response.error.reason;
             throw new Error(`Failed to fetch next page: ${reason}`);
         }
         const data = response.body;
@@ -105,8 +106,9 @@ export class MyPager<TItem, TResponse> implements AsyncIterable<TItem> {
         }
         const response = await this.sendRequest(this.previousRequest);
         if (!response.ok) {
-            const reason =
-                response.error.reason === "status-code" ? `HTTP ${response.error.statusCode}` : response.error.reason;
+            const reason = response.error.reason === "status-code"
+                ? `HTTP ${response.error.statusCode}`
+                : response.error.reason;
             throw new Error(`Failed to fetch previous page: ${reason}`);
         }
         const data = response.body;
@@ -140,13 +142,10 @@ export class MyPager<TItem, TResponse> implements AsyncIterable<TItem> {
             yield message;
         }
     }
+
 }
 
-export async function createMyPager<TItem, TResponse>({
-    sendRequest,
-    initialHttpRequest,
-    clientOptions,
-}: {
+export async function createMyPager<TItem, TResponse>({ sendRequest, initialHttpRequest, clientOptions }: {
     sendRequest: (request: Fetcher.Args) => Promise<APIResponse<TResponse, Fetcher.Error>>;
     initialHttpRequest: Fetcher.Args;
     clientOptions: NormalizedClientOptions;
@@ -154,8 +153,9 @@ export async function createMyPager<TItem, TResponse>({
 }): Promise<MyPager<TItem, TResponse>> {
     const response = await sendRequest(initialHttpRequest);
     if (!response.ok) {
-        const reason =
-            response.error.reason === "status-code" ? `HTTP ${response.error.statusCode}` : response.error.reason;
+        const reason = response.error.reason === "status-code"
+            ? `HTTP ${response.error.statusCode}`
+            : response.error.reason;
         throw new Error(`Failed to fetch initial page: ${reason}`);
     }
     const data = response.body;
@@ -169,11 +169,11 @@ export async function createMyPager<TItem, TResponse>({
         hasPreviousPage: parsed.hasPreviousPage,
         nextRequest: parsed.nextRequest,
         previousRequest: parsed.previousRequest,
-        sendRequest: sendRequest,
+        sendRequest: sendRequest
     });
 }
 
-async function parse<TItem, TResponse>(_args: {
+async function parse<TItem, TResponse>(args: {
     request: Fetcher.Args;
     data: TResponse;
     rawResponse: RawResponse;
@@ -189,6 +189,6 @@ async function parse<TItem, TResponse>(_args: {
     return {
         items: [],
         hasNextPage: false,
-        hasPreviousPage: false,
+        hasPreviousPage: false
     };
 }
