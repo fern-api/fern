@@ -340,12 +340,7 @@ export async function publishDocsViaLedger({
         orgId: organization,
         domain,
         basepath: basepath ?? "",
-<<<<<<< HEAD
         ...(basepathAware && { basepathAware: true }),
-||||||| parent of 93519b7e6 (fix(docs): forward basepathAware flag in ledger publish path and improve error messages)
-=======
-        ...(basepathAware === true && { basepathAware: true }),
->>>>>>> 93519b7e6 (fix(docs): forward basepathAware flag in ledger publish path and improve error messages)
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
