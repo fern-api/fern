@@ -1,0 +1,6 @@
+- summary: |
+    Gate CLI generator invocation with org-level `cliGeneratorsEnabled` check.
+    When Venus returns `cliGeneratorsEnabled: false`, both local and remote
+    generation paths block with a descriptive error. Fails open when Venus is
+    unreachable or the field is absent.
+  type: feat

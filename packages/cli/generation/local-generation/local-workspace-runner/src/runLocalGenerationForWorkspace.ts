@@ -222,6 +222,15 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 if (orgBody != null) {
+                    if (generatorInvocation.name === "fernapi/fern-cli-generator" && isCliGenerationDisabled(orgBody)) {
+                        interactiveTaskContext.failAndThrow(
+                            "CLI generator usage is not enabled for your organization. " +
+                                "Contact support@buildwithfern.com to request access.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                        return;
+                    }
                     if (orgBody.isWhitelabled) {
                         if (intermediateRepresentation.readmeConfig == null) {
                             intermediateRepresentation.readmeConfig = emptyReadmeConfig;
@@ -822,6 +831,20 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
+
+/**
+ * Forward-compatible check for the Venus `cliGeneratorsEnabled` org flag.
+ * The field is not yet in the SDK types but Venus SDK deserializes responses
+ * with `unrecognizedObjectKeys: "passthrough"`, so extra properties survive
+ * at runtime. Only gates when the property is explicitly `false`; absent or
+ * undefined means allowed (backwards compatible / fail-open).
+ */
+function isCliGenerationDisabled(orgBody: FernVenusApi.Organization): boolean {
+    return (
+        "cliGeneratorsEnabled" in orgBody &&
+        (orgBody as { cliGeneratorsEnabled?: boolean }).cliGeneratorsEnabled === false
+    );
+}
 
 interface SelhostedGithubConfig extends generatorsYml.GithubSelfhostedSchema {
     previewMode: boolean;

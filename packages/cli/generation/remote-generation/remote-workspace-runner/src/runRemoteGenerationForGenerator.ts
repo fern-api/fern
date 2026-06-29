@@ -20,6 +20,7 @@ import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
+import type { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
@@ -197,6 +198,18 @@ export async function runRemoteGenerationForGenerator({
         const orgResponse = await venus.organization.get({ orgId: projectConfig.organization });
 
         if (orgResponse.ok) {
+            if (
+                generatorInvocation.name === "fernapi/fern-cli-generator" &&
+                isCliGenerationDisabled(orgResponse.body)
+            ) {
+                interactiveTaskContext.failAndThrow(
+                    "CLI generator usage is not enabled for your organization. " +
+                        "Contact support@buildwithfern.com to request access.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+                return undefined;
+            }
             if (orgResponse.body.isWhitelabled) {
                 if (ir.readmeConfig == null) {
                     ir.readmeConfig = emptyReadmeConfig;
@@ -473,6 +486,20 @@ function convertToFdrApiDefinitionSources(
                 type: source.type === "protobuf" ? "proto" : source.type
             }
         ])
+    );
+}
+
+/**
+ * Forward-compatible check for the Venus `cliGeneratorsEnabled` org flag.
+ * The field is not yet in the SDK types but Venus SDK deserializes responses
+ * with `unrecognizedObjectKeys: "passthrough"`, so extra properties survive
+ * at runtime. Only gates when the property is explicitly `false`; absent or
+ * undefined means allowed (backwards compatible / fail-open).
+ */
+function isCliGenerationDisabled(orgBody: FernVenusApi.Organization): boolean {
+    return (
+        "cliGeneratorsEnabled" in orgBody &&
+        (orgBody as { cliGeneratorsEnabled?: boolean }).cliGeneratorsEnabled === false
     );
 }
 
