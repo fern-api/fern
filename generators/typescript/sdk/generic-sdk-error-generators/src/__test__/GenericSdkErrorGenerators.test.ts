@@ -27,8 +27,7 @@ function createMockFileContext() {
         },
         genericAPISdkError: {
             getReferenceToGenericAPISdkError: () => createMockReference("ApiError"),
-            getGeneratedGenericAPISdkError: () =>
-                new GeneratedGenericAPISdkErrorImpl({ errorClassName: "ApiError" })
+            getGeneratedGenericAPISdkError: () => new GeneratedGenericAPISdkErrorImpl({ errorClassName: "ApiError" })
         },
         timeoutSdkError: {
             getReferenceToTimeoutSdkError: () => createMockReference("TimeoutError")

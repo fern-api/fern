@@ -1,7 +1,14 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext, GeneratedGenericAPISdkError } from "@fern-typescript/contexts";
-import { ClassDeclaration, OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from "ts-morph";
+import {
+    ClassDeclaration,
+    OptionalKind,
+    ParameterDeclarationStructure,
+    PropertyDeclarationStructure,
+    Scope,
+    ts
+} from "ts-morph";
 
 export class GeneratedGenericAPISdkErrorImpl
     extends AbstractErrorClassGenerator<FileContext>
