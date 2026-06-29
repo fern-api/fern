@@ -83,10 +83,10 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
     rm tar-7.5.16.tgz
 
-# pnpm 11.5.3+ clears CVE-2026-55697, GHSA-fr4h-3cph-29xv, GHSA-qrv3-253h-g69c,
+# pnpm 11.8.0+ clears CVE-2026-55697, GHSA-fr4h-3cph-29xv, GHSA-qrv3-253h-g69c,
 # GHSA-72r4-9c5j-mj57, and bundles tar 7.5.16 (GHSA-vmf3-w455-68vh).
-RUN npm install -g pnpm@11.5.3 --force
-RUN corepack prepare pnpm@11.5.3
+RUN npm install -g pnpm@11.8.0 --force
+RUN corepack prepare pnpm@11.8.0
 RUN npm install -g yarn@1.22.22 --force
 RUN corepack prepare yarn@1.22.22
 
