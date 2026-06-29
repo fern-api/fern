@@ -1,0 +1,5 @@
+- summary: |
+    Remove the `valid-changelog-slug` validation rule. The docs server will
+    handle arbitrary changelog slugs directly, so the CLI no longer needs to
+    enforce an allowlist of feed-servable slug names.
+  type: fix

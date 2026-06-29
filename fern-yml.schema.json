@@ -2100,13 +2100,6 @@
                     "warn",
                     "error"
                   ]
-                },
-                "valid-changelog-slug": {
-                  "type": "string",
-                  "enum": [
-                    "warn",
-                    "error"
-                  ]
                 }
               },
               "additionalProperties": false

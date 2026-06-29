@@ -596,8 +596,7 @@ export const CheckRulesConfig = z.object({
     "valid-local-references": CheckRuleSeverity.optional(),
     "no-circular-redirects": CheckRuleSeverity.optional(),
     "valid-docs-endpoints": CheckRuleSeverity.optional(),
-    "missing-redirects": CheckRuleSeverity.optional(),
-    "valid-changelog-slug": CheckRuleSeverity.optional()
+    "missing-redirects": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({
