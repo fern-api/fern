@@ -349,7 +349,7 @@ class ParamsClient:
         self,
         *,
         string: str,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -359,7 +359,7 @@ class ParamsClient:
         ----------
         string : str
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -377,12 +377,12 @@ class ParamsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.params.create_with_body_and_query(
-            fields="_fields",
+            _fields="_fields",
             string="string",
         )
         """
         _response = self._raw_client.create_with_body_and_query(
-            string=string, fields=fields, request_options=request_options
+            string=string, _fields=_fields, request_options=request_options
         )
         return _response.data
 
@@ -390,7 +390,7 @@ class ParamsClient:
         self,
         *,
         request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -400,7 +400,7 @@ class ParamsClient:
         ----------
         request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -410,7 +410,7 @@ class ParamsClient:
         ObjectWithOptionalField
         """
         _response = self._raw_client.upload_bytes_with_query(
-            request=request, fields=fields, request_options=request_options
+            request=request, _fields=_fields, request_options=request_options
         )
         return _response.data
 
@@ -890,7 +890,7 @@ class AsyncParamsClient:
         self,
         *,
         string: str,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -900,7 +900,7 @@ class AsyncParamsClient:
         ----------
         string : str
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -923,7 +923,7 @@ class AsyncParamsClient:
 
         async def main() -> None:
             await client.endpoints.params.create_with_body_and_query(
-                fields="_fields",
+                _fields="_fields",
                 string="string",
             )
 
@@ -931,7 +931,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_with_body_and_query(
-            string=string, fields=fields, request_options=request_options
+            string=string, _fields=_fields, request_options=request_options
         )
         return _response.data
 
@@ -939,7 +939,7 @@ class AsyncParamsClient:
         self,
         *,
         request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -949,7 +949,7 @@ class AsyncParamsClient:
         ----------
         request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -959,7 +959,7 @@ class AsyncParamsClient:
         ObjectWithOptionalField
         """
         _response = await self._raw_client.upload_bytes_with_query(
-            request=request, fields=fields, request_options=request_options
+            request=request, _fields=_fields, request_options=request_options
         )
         return _response.data
 

@@ -337,7 +337,7 @@ class RawParamsClient:
             raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
     
-    def create_with_body_and_query(self, *, string: str, fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ObjectWithOptionalField]:
+    def create_with_body_and_query(self, *, string: str, _fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ObjectWithOptionalField]:
         """
         POST with referenced body + query params
         
@@ -345,7 +345,7 @@ class RawParamsClient:
         ----------
         string : str
         
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -356,7 +356,7 @@ class RawParamsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "params/body-and-query",method="POST",
-            params={"_fields": fields, }
+            params={"_fields": _fields, }
             ,
             json={
                 "string": string,
@@ -381,7 +381,7 @@ class RawParamsClient:
             raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
     
-    def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ObjectWithOptionalField]:
+    def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], _fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ObjectWithOptionalField]:
         """
         POST bytes body + query params
         
@@ -389,7 +389,7 @@ class RawParamsClient:
         ----------
         request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
         
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -400,7 +400,7 @@ class RawParamsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "params/bytes-and-query",method="POST",
-            params={"_fields": fields, }
+            params={"_fields": _fields, }
             ,
             content=request,
             request_options=request_options,omit=OMIT,
@@ -818,7 +818,7 @@ class AsyncRawParamsClient:
             raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
     
-    async def create_with_body_and_query(self, *, string: str, fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[ObjectWithOptionalField]:
+    async def create_with_body_and_query(self, *, string: str, _fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[ObjectWithOptionalField]:
         """
         POST with referenced body + query params
         
@@ -826,7 +826,7 @@ class AsyncRawParamsClient:
         ----------
         string : str
         
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -837,7 +837,7 @@ class AsyncRawParamsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "params/body-and-query",method="POST",
-            params={"_fields": fields, }
+            params={"_fields": _fields, }
             ,
             json={
                 "string": string,
@@ -862,7 +862,7 @@ class AsyncRawParamsClient:
             raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
     
-    async def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[ObjectWithOptionalField]:
+    async def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], _fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[ObjectWithOptionalField]:
         """
         POST bytes body + query params
         
@@ -870,7 +870,7 @@ class AsyncRawParamsClient:
         ----------
         request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
         
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -881,7 +881,7 @@ class AsyncRawParamsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "params/bytes-and-query",method="POST",
-            params={"_fields": fields, }
+            params={"_fields": _fields, }
             ,
             content=request,
             request_options=request_options,omit=OMIT,

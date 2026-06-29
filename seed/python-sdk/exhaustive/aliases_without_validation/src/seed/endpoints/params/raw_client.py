@@ -411,7 +411,7 @@ class RawParamsClient:
         self,
         *,
         string: str,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ObjectWithOptionalField]:
         """
@@ -421,7 +421,7 @@ class RawParamsClient:
         ----------
         string : str
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -434,7 +434,7 @@ class RawParamsClient:
             "params/body-and-query",
             method="POST",
             params={
-                "_fields": fields,
+                "_fields": _fields,
             },
             json={
                 "string": string,
@@ -465,7 +465,7 @@ class RawParamsClient:
         self,
         *,
         request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ObjectWithOptionalField]:
         """
@@ -475,7 +475,7 @@ class RawParamsClient:
         ----------
         request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -488,7 +488,7 @@ class RawParamsClient:
             "params/bytes-and-query",
             method="POST",
             params={
-                "_fields": fields,
+                "_fields": _fields,
             },
             content=request,
             request_options=request_options,
@@ -998,7 +998,7 @@ class AsyncRawParamsClient:
         self,
         *,
         string: str,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ObjectWithOptionalField]:
         """
@@ -1008,7 +1008,7 @@ class AsyncRawParamsClient:
         ----------
         string : str
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1021,7 +1021,7 @@ class AsyncRawParamsClient:
             "params/body-and-query",
             method="POST",
             params={
-                "_fields": fields,
+                "_fields": _fields,
             },
             json={
                 "string": string,
@@ -1052,7 +1052,7 @@ class AsyncRawParamsClient:
         self,
         *,
         request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ObjectWithOptionalField]:
         """
@@ -1062,7 +1062,7 @@ class AsyncRawParamsClient:
         ----------
         request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1075,7 +1075,7 @@ class AsyncRawParamsClient:
             "params/bytes-and-query",
             method="POST",
             params={
-                "_fields": fields,
+                "_fields": _fields,
             },
             content=request,
             request_options=request_options,
