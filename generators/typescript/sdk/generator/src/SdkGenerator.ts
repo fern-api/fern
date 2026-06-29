@@ -1607,7 +1607,14 @@ export class SdkGenerator {
                                       : null
                           }
                         : { type: verification.keySource.type };
-                return JSON.stringify({ ...common, keySource });
+                const payloadFormat =
+                    verification.payloadFormat != null
+                        ? {
+                              components: verification.payloadFormat.components,
+                              delimiter: verification.payloadFormat.delimiter
+                          }
+                        : null;
+                return JSON.stringify({ ...common, keySource, payloadFormat });
             }
             default:
                 return JSON.stringify({ type: "unknown" });

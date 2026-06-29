@@ -1679,6 +1679,7 @@ function inflateIr(
                     encoding: sv.encoding,
                     signaturePrefix: sv.signaturePrefix,
                     keySource: inflateAsymmetricKeySource(sv.keySource),
+                    payloadFormat: sv.payloadFormat,
                     timestamp: sv.timestamp != null ? inflateWebhookTimestampConfig(sv.timestamp) : undefined
                 });
             default:
