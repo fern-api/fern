@@ -1,0 +1,1481 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_service:TranscriptionResult": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "TranscriptionResult",
+                    "camelCase": {
+                        "unsafeName": "transcriptionResult",
+                        "safeName": "transcriptionResult"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "transcription_result",
+                        "safeName": "transcription_result"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TRANSCRIPTION_RESULT",
+                        "safeName": "TRANSCRIPTION_RESULT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TranscriptionResult",
+                        "safeName": "TranscriptionResult"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "text",
+                        "name": {
+                            "originalName": "text",
+                            "camelCase": {
+                                "unsafeName": "text",
+                                "safeName": "text"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "text",
+                                "safeName": "text"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEXT",
+                                "safeName": "TEXT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Text",
+                                "safeName": "Text"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "language",
+                        "name": {
+                            "originalName": "language",
+                            "camelCase": {
+                                "unsafeName": "language",
+                                "safeName": "language"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "language",
+                                "safeName": "language"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LANGUAGE",
+                                "safeName": "LANGUAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Language",
+                                "safeName": "Language"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_service.convertAudio": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "convertAudio",
+                    "camelCase": {
+                        "unsafeName": "convertAudio",
+                        "safeName": "convertAudio"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "convert_audio",
+                        "safeName": "convert_audio"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CONVERT_AUDIO",
+                        "safeName": "CONVERT_AUDIO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ConvertAudio",
+                        "safeName": "ConvertAudio"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/audio/convert"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ConvertAudioRequest",
+                        "camelCase": {
+                            "unsafeName": "convertAudioRequest",
+                            "safeName": "convertAudioRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "convert_audio_request",
+                            "safeName": "convert_audio_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONVERT_AUDIO_REQUEST",
+                            "safeName": "CONVERT_AUDIO_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ConvertAudioRequest",
+                            "safeName": "ConvertAudioRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "enable_logging",
+                            "name": {
+                                "originalName": "enable_logging",
+                                "camelCase": {
+                                    "unsafeName": "enableLogging",
+                                    "safeName": "enableLogging"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "enable_logging",
+                                    "safeName": "enable_logging"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENABLE_LOGGING",
+                                    "safeName": "ENABLE_LOGGING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "EnableLogging",
+                                    "safeName": "EnableLogging"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "optimize_streaming_latency",
+                            "name": {
+                                "originalName": "optimize_streaming_latency",
+                                "camelCase": {
+                                    "unsafeName": "optimizeStreamingLatency",
+                                    "safeName": "optimizeStreamingLatency"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "optimize_streaming_latency",
+                                    "safeName": "optimize_streaming_latency"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OPTIMIZE_STREAMING_LATENCY",
+                                    "safeName": "OPTIMIZE_STREAMING_LATENCY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "OptimizeStreamingLatency",
+                                    "safeName": "OptimizeStreamingLatency"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "output_format",
+                            "name": {
+                                "originalName": "output_format",
+                                "camelCase": {
+                                    "unsafeName": "outputFormat",
+                                    "safeName": "outputFormat"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "output_format",
+                                    "safeName": "output_format"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OUTPUT_FORMAT",
+                                    "safeName": "OUTPUT_FORMAT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "OutputFormat",
+                                    "safeName": "OutputFormat"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "fileUpload",
+                    "properties": [
+                        {
+                            "type": "file",
+                            "wireValue": "audio",
+                            "name": {
+                                "originalName": "audio",
+                                "camelCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO",
+                                    "safeName": "AUDIO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Audio",
+                                    "safeName": "Audio"
+                                }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "wireValue": "model_id",
+                                "name": {
+                                    "originalName": "model_id",
+                                    "camelCase": {
+                                        "unsafeName": "modelID",
+                                        "safeName": "modelID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "model_id",
+                                        "safeName": "model_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MODEL_ID",
+                                        "safeName": "MODEL_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ModelID",
+                                        "safeName": "ModelID"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "fileDownload"
+            },
+            "examples": null
+        },
+        "endpoint_service.isolateAudio": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "isolateAudio",
+                    "camelCase": {
+                        "unsafeName": "isolateAudio",
+                        "safeName": "isolateAudio"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "isolate_audio",
+                        "safeName": "isolate_audio"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISOLATE_AUDIO",
+                        "safeName": "ISOLATE_AUDIO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IsolateAudio",
+                        "safeName": "IsolateAudio"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/audio/isolate"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "IsolateAudioRequest",
+                        "camelCase": {
+                            "unsafeName": "isolateAudioRequest",
+                            "safeName": "isolateAudioRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "isolate_audio_request",
+                            "safeName": "isolate_audio_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ISOLATE_AUDIO_REQUEST",
+                            "safeName": "ISOLATE_AUDIO_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IsolateAudioRequest",
+                            "safeName": "IsolateAudioRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "fileUpload",
+                    "properties": [
+                        {
+                            "type": "file",
+                            "wireValue": "audio",
+                            "name": {
+                                "originalName": "audio",
+                                "camelCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO",
+                                    "safeName": "AUDIO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Audio",
+                                    "safeName": "Audio"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "fileDownload"
+            },
+            "examples": null
+        },
+        "endpoint_service.transcribeAudio": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "transcribeAudio",
+                    "camelCase": {
+                        "unsafeName": "transcribeAudio",
+                        "safeName": "transcribeAudio"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "transcribe_audio",
+                        "safeName": "transcribe_audio"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TRANSCRIBE_AUDIO",
+                        "safeName": "TRANSCRIBE_AUDIO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TranscribeAudio",
+                        "safeName": "TranscribeAudio"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/audio/transcribe"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "TranscribeAudioRequest",
+                        "camelCase": {
+                            "unsafeName": "transcribeAudioRequest",
+                            "safeName": "transcribeAudioRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "transcribe_audio_request",
+                            "safeName": "transcribe_audio_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TRANSCRIBE_AUDIO_REQUEST",
+                            "safeName": "TRANSCRIBE_AUDIO_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TranscribeAudioRequest",
+                            "safeName": "TranscribeAudioRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "language",
+                            "name": {
+                                "originalName": "language",
+                                "camelCase": {
+                                    "unsafeName": "language",
+                                    "safeName": "language"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "language",
+                                    "safeName": "language"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LANGUAGE",
+                                    "safeName": "LANGUAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Language",
+                                    "safeName": "Language"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "fileUpload",
+                    "properties": [
+                        {
+                            "type": "file",
+                            "wireValue": "audio",
+                            "name": {
+                                "originalName": "audio",
+                                "camelCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO",
+                                    "safeName": "AUDIO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Audio",
+                                    "safeName": "Audio"
+                                }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "wireValue": "model_id",
+                                "name": {
+                                    "originalName": "model_id",
+                                    "camelCase": {
+                                        "unsafeName": "modelID",
+                                        "safeName": "modelID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "model_id",
+                                        "safeName": "model_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MODEL_ID",
+                                        "safeName": "MODEL_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ModelID",
+                                        "safeName": "ModelID"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_service.speechToSpeech": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "speechToSpeech",
+                    "camelCase": {
+                        "unsafeName": "speechToSpeech",
+                        "safeName": "speechToSpeech"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "speech_to_speech",
+                        "safeName": "speech_to_speech"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SPEECH_TO_SPEECH",
+                        "safeName": "SPEECH_TO_SPEECH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SpeechToSpeech",
+                        "safeName": "SpeechToSpeech"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/speech-to-speech/convert"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "SpeechToSpeechBody",
+                        "camelCase": {
+                            "unsafeName": "speechToSpeechBody",
+                            "safeName": "speechToSpeechBody"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "speech_to_speech_body",
+                            "safeName": "speech_to_speech_body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SPEECH_TO_SPEECH_BODY",
+                            "safeName": "SPEECH_TO_SPEECH_BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SpeechToSpeechBody",
+                            "safeName": "SpeechToSpeechBody"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "enable_logging",
+                            "name": {
+                                "originalName": "enable_logging",
+                                "camelCase": {
+                                    "unsafeName": "enableLogging",
+                                    "safeName": "enableLogging"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "enable_logging",
+                                    "safeName": "enable_logging"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENABLE_LOGGING",
+                                    "safeName": "ENABLE_LOGGING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "EnableLogging",
+                                    "safeName": "EnableLogging"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "optimize_streaming_latency",
+                            "name": {
+                                "originalName": "optimize_streaming_latency",
+                                "camelCase": {
+                                    "unsafeName": "optimizeStreamingLatency",
+                                    "safeName": "optimizeStreamingLatency"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "optimize_streaming_latency",
+                                    "safeName": "optimize_streaming_latency"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OPTIMIZE_STREAMING_LATENCY",
+                                    "safeName": "OPTIMIZE_STREAMING_LATENCY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "OptimizeStreamingLatency",
+                                    "safeName": "OptimizeStreamingLatency"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "output_format",
+                            "name": {
+                                "originalName": "output_format",
+                                "camelCase": {
+                                    "unsafeName": "outputFormat",
+                                    "safeName": "outputFormat"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "output_format",
+                                    "safeName": "output_format"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OUTPUT_FORMAT",
+                                    "safeName": "OUTPUT_FORMAT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "OutputFormat",
+                                    "safeName": "OutputFormat"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "fileUpload",
+                    "properties": [
+                        {
+                            "type": "file",
+                            "wireValue": "audio",
+                            "name": {
+                                "originalName": "audio",
+                                "camelCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "audio",
+                                    "safeName": "audio"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO",
+                                    "safeName": "AUDIO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Audio",
+                                    "safeName": "Audio"
+                                }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "wireValue": "model_id",
+                                "name": {
+                                    "originalName": "model_id",
+                                    "camelCase": {
+                                        "unsafeName": "modelID",
+                                        "safeName": "modelID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "model_id",
+                                        "safeName": "model_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MODEL_ID",
+                                        "safeName": "MODEL_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ModelID",
+                                        "safeName": "ModelID"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "fileDownload"
+            },
+            "examples": null
+        },
+        "endpoint_service.getSpeechToSpeechSettings": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getSpeechToSpeechSettings",
+                    "camelCase": {
+                        "unsafeName": "getSpeechToSpeechSettings",
+                        "safeName": "getSpeechToSpeechSettings"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_speech_to_speech_settings",
+                        "safeName": "get_speech_to_speech_settings"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_SPEECH_TO_SPEECH_SETTINGS",
+                        "safeName": "GET_SPEECH_TO_SPEECH_SETTINGS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetSpeechToSpeechSettings",
+                        "safeName": "GetSpeechToSpeechSettings"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/speech-to-speech/settings"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "SpeechToSpeechRequest",
+                        "camelCase": {
+                            "unsafeName": "speechToSpeechRequest",
+                            "safeName": "speechToSpeechRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "speech_to_speech_request",
+                            "safeName": "speech_to_speech_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SPEECH_TO_SPEECH_REQUEST",
+                            "safeName": "SPEECH_TO_SPEECH_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SpeechToSpeechRequest",
+                            "safeName": "SpeechToSpeechRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "voice_id",
+                                "name": {
+                                    "originalName": "voice_id",
+                                    "camelCase": {
+                                        "unsafeName": "voiceID",
+                                        "safeName": "voiceID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "voice_id",
+                                        "safeName": "voice_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "VOICE_ID",
+                                        "safeName": "VOICE_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "VoiceID",
+                                        "safeName": "VoiceID"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "model_id",
+                                "name": {
+                                    "originalName": "model_id",
+                                    "camelCase": {
+                                        "unsafeName": "modelID",
+                                        "safeName": "modelID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "model_id",
+                                        "safeName": "model_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MODEL_ID",
+                                        "safeName": "MODEL_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ModelID",
+                                        "safeName": "ModelID"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_service.simple": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "simple",
+                    "camelCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SIMPLE",
+                        "safeName": "SIMPLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Simple",
+                        "safeName": "Simple"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/snippet"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}
