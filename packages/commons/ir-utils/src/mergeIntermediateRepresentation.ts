@@ -570,10 +570,11 @@ function mergeGlobalParameters(
     const merged: FernIr.GlobalParameter[] = [];
     for (const param of [...params1, ...params2]) {
         const wireValue = getWireValue(param.name);
-        if (seen.has(wireValue)) {
+        const key = `${wireValue}::${param.location}`;
+        if (seen.has(key)) {
             continue;
         }
-        seen.add(wireValue);
+        seen.add(key);
         merged.push(param);
     }
     return merged;
