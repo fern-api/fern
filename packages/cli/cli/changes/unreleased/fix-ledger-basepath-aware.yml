@@ -1,0 +1,6 @@
+- summary: |
+    Fix ledger publish path not forwarding `basepathAware` to FDR, causing
+    multi-source basepath sites (e.g. docs.nvidia.com/nemo/gym) to write
+    the manifest to the wrong S3 key. The old manifest from the last legacy
+    V2 publish was served instead of the updated ledger manifest.
+  type: fix

@@ -875,6 +875,7 @@ export async function publishDocs({
                     organization,
                     domain,
                     basepath: basePath,
+                    basepathAware: isBasepathAware,
                     previewId,
                     customDomains,
                     git: ledgerGit,
