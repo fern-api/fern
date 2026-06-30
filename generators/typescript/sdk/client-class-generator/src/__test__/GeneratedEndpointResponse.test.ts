@@ -599,7 +599,6 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 expect(text).toContain("&&");
                 // The && expression must be parenthesized to avoid TS5076
                 expect(text).toMatch(/\?\?\s*\(/);
-                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(text).toMatchSnapshot();
             });
 
