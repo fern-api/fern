@@ -92,6 +92,38 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
     }
 
+    public getMaxStreamReconnectAttemptsField(
+        classOrInterface: ast.Interface | ast.Class,
+        { optional }: OptionArgs
+    ) {
+        const type = this.Primitive.integer;
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("MaxStreamReconnectAttempts"),
+            access: ast.Access.Public,
+            get: true,
+            init: true,
+            type: optional ? type.asOptional() : type,
+            summary:
+                "The max number of reconnection attempts for streaming endpoints.\nOnly applies to SSE streams marked as resumable."
+        });
+    }
+
+    public getDisableStreamReconnectionField(
+        classOrInterface: ast.Interface | ast.Class,
+        { optional }: OptionArgs
+    ) {
+        const type = this.Primitive.boolean;
+        classOrInterface.addField({
+            origin: classOrInterface.explicit("DisableStreamReconnection"),
+            access: ast.Access.Public,
+            get: true,
+            init: true,
+            type: optional ? type.asOptional() : type,
+            summary:
+                "When true, disables automatic reconnection for streaming endpoints.\nOnly applies to SSE streams marked as resumable."
+        });
+    }
+
     public getTimeoutField(classOrInterface: ast.Interface | ast.Class, { optional, includeInitializer }: OptionArgs) {
         const type = this.System.TimeSpan;
         const configured = this.settings.defaultTimeoutInSeconds;
@@ -176,6 +208,10 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
         this.getMaxRetriesField(classOrInterface, optionArgs);
         this.getTimeoutField(classOrInterface, optionArgs);
+        if (this.context.hasResumableSseEndpoints) {
+            this.getMaxStreamReconnectAttemptsField(classOrInterface, optionArgs);
+            this.getDisableStreamReconnectionField(classOrInterface, optionArgs);
+        }
         this.getQueryParametersField(classOrInterface, {
             optional: false,
             includeInitializer: true
@@ -200,6 +236,10 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
         this.getMaxRetriesField(iface, optionArgs);
         this.getTimeoutField(iface, optionArgs);
+        if (this.context.hasResumableSseEndpoints) {
+            this.getMaxStreamReconnectAttemptsField(iface, optionArgs);
+            this.getDisableStreamReconnectionField(iface, optionArgs);
+        }
         this.getQueryParametersField(iface, {
             optional: false,
             includeInitializer: false
