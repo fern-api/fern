@@ -577,8 +577,4 @@ scripts:
             echo "Running yarn test..."
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
-allowedFailures:
-  - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
-  - pagination:no-custom-config # pre-existing: TS5076 '??' and '&&' mixed without parentheses in Client.ts
-  - pagination:page-index-semantics # pre-existing: TS5076 '??' and '&&' mixed without parentheses in Client.ts
-  - webhooks:no-custom-config # pre-existing: generation failure
+
