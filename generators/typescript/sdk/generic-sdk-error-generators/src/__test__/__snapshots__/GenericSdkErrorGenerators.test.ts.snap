@@ -83,6 +83,10 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
             this.cause = cause;
         }
     }
+
+    public get requestId(): string | undefined {
+        return this.rawResponse?.headers?.get("x-request-id") ?? undefined;
+    }
 }
 
 function buildMessage({ message, statusCode, body }: {
@@ -136,6 +140,10 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
             this.cause = cause;
         }
     }
+
+    public get requestId(): string | undefined {
+        return this.rawResponse?.headers?.get("x-request-id") ?? undefined;
+    }
 }
 
 function buildMessage({ message, statusCode, body }: {
@@ -170,40 +178,36 @@ exports[`GeneratedTimeoutSdkErrorImpl > buildConstructorArguments > wraps messag
 `;
 
 exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class 1`] = `
-"export class TimeoutError extends Error {
-    public readonly cause?: unknown;
-
+"export class TimeoutError extends ApiError {
     constructor(message: string, opts?: { cause?: unknown }) {
-        super(message);
+        super({
+            message: message,
+            cause: opts?.cause
+        });
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
 
         this.name = "TimeoutError";
-        if (opts?.cause != null) {
-            this.cause = opts.cause;
-        }
     }
 }
 "
 `;
 
 exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class with custom name 1`] = `
-"export class CustomTimeoutError extends Error {
-    public readonly cause?: unknown;
-
+"export class CustomTimeoutError extends ApiError {
     constructor(message: string, opts?: { cause?: unknown }) {
-        super(message);
+        super({
+            message: message,
+            cause: opts?.cause
+        });
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
 
         this.name = "CustomTimeoutError";
-        if (opts?.cause != null) {
-            this.cause = opts.cause;
-        }
     }
 }
 "
