@@ -186,6 +186,7 @@ export async function getPreviewDocsDefinition({
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
+        // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
         console.log(`[BENCHMARK] Incremental path: checking ${editedAbsoluteFilepaths.length} edited files`);
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
@@ -326,6 +327,7 @@ export async function getPreviewDocsDefinition({
         }
 
         if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {
+            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
             console.log("[BENCHMARK] Fast path taken: markdown-only, no nav change");
             // Return updated definition with preserved translation data
             return {
@@ -338,14 +340,18 @@ export async function getPreviewDocsDefinition({
             };
         }
         if (!allMarkdownFiles) {
+            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
             console.log("[BENCHMARK] Fast path skipped: non-markdown files edited");
         } else if (navAffectingChange) {
+            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
             console.log(`[BENCHMARK] Fast path skipped: ${navAffectingReason}`);
         } else if (previousPreviewResult == null) {
+            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
             console.log("[BENCHMARK] Fast path skipped: no previous preview result");
         }
     }
 
+    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
     console.log("[BENCHMARK] Full rebuild path taken");
     const ossWorkspaces = await filterOssWorkspaces(project);
 
@@ -353,6 +359,7 @@ export async function getPreviewDocsDefinition({
     // without the theme if the token is absent (common in local dev without cloud auth).
     const themeStart = Date.now();
     const effectiveWorkspace = await applyGlobalThemeIfNeeded(docsWorkspace, project.config.organization, context);
+    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
     console.log(`[BENCHMARK] applyGlobalTheme: ${Date.now() - themeStart}ms`);
 
     const apiCollector = new ReferencedAPICollector(context);
@@ -388,6 +395,7 @@ export async function getPreviewDocsDefinition({
     const resolverStart = Date.now();
     const writeDocsDefinition = await resolver.resolve();
     const resolverTime = Date.now() - resolverStart;
+    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
     console.log(`[BENCHMARK] DocsDefinitionResolver.resolve(): ${resolverTime}ms`);
 
     const convertStart = Date.now();
@@ -398,6 +406,7 @@ export async function getPreviewDocsDefinition({
     const readDocsConfig = convertDbDocsConfigToRead({
         dbShape: dbDocsDefinition.config
     });
+    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
     console.log(`[BENCHMARK] convertDocsDefinition: ${Date.now() - convertStart}ms`);
 
     frontmatterPositionCache.clear();
