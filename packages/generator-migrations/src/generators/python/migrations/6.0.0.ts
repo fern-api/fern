@@ -20,7 +20,7 @@ import { migrateConfig } from "@fern-api/migrations-base";
 // - If a user has explicitly configured this field, that value is preserved
 // - If the field is undefined, it is set to "legacy" for backwards compatibility
 //
-// This migration only applies to the SDK generator (`fernenterprise/fern-python-sdk`).
+// This migration only applies to the SDK generator (`fernapi/fern-python-sdk`).
 // The `retryStatusCodes` option does not exist on the pydantic-model or fastapi-server
 // generators, so those configurations are passed through unchanged.
 export const migration_6_0_0: Migration = {
@@ -28,7 +28,7 @@ export const migration_6_0_0: Migration = {
 
     migrateGeneratorConfig: ({ config }) => {
         const generatorName = "name" in config ? config.name : undefined;
-        if (generatorName !== "fernenterprise/fern-python-sdk") {
+        if (generatorName !== "fernapi/fern-python-sdk") {
             return config;
         }
 

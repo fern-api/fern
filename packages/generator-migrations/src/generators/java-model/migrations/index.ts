@@ -7,8 +7,8 @@ import { migration_1_0_0 } from "./1.0.0.js";
  *
  * This module contains migrations for configuration changes for
  * the Java Model generators:
- * - fernenterprise/fern-java-model
- * - fernenterprise/fern-java-spring
+ * - fernapi/fern-java-model
+ * - fernapi/fern-java-spring
  *
  * Each migration is defined in a separate file under this directory.
  * Migrations are automatically applied by the Fern CLI when running:

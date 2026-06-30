@@ -11,7 +11,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
         internal: {
             generators: [
                 {
-                    name: "fernenterprise/fern-postman",
+                    name: "fernapi/fern-postman",
                     version: "0.0.15",
                     output: {
                         location: "local-file-system",
@@ -19,7 +19,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
                     }
                 },
                 {
-                    name: "fernenterprise/fern-openapi",
+                    name: "fernapi/fern-openapi",
                     version: "0.0.3",
                     output: {
                         location: "local-file-system",
@@ -30,7 +30,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
                     }
                 },
                 {
-                    name: "fernenterprise/fern-java-sdk",
+                    name: "fernapi/fern-java-sdk",
                     version: "0.0.50",
                     output: {
                         location: "maven",
@@ -38,7 +38,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
                     }
                 },
                 {
-                    name: "fernenterprise/fern-typescript-sdk",
+                    name: "fernapi/fern-typescript-sdk",
                     version: "0.0.11",
                     output: {
                         location: "npm",
@@ -50,7 +50,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
         external: {
             generators: [
                 {
-                    name: "fernenterprise/fern-postman",
+                    name: "fernapi/fern-postman",
                     version: "0.0.20",
                     output: {
                         location: "local-file-system",
@@ -58,7 +58,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
                     }
                 },
                 {
-                    name: "fernenterprise/fern-openapi",
+                    name: "fernapi/fern-openapi",
                     version: "0.0.2",
                     output: {
                         location: "local-file-system",
@@ -69,7 +69,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
                     }
                 },
                 {
-                    name: "fernenterprise/fern-java-sdk",
+                    name: "fernapi/fern-java-sdk",
                     version: "0.0.81",
                     output: {
                         location: "maven",
@@ -77,7 +77,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
                     }
                 },
                 {
-                    name: "fernenterprise/fern-typescript-sdk",
+                    name: "fernapi/fern-typescript-sdk",
                     version: "0.0.14",
                     output: {
                         location: "npm",

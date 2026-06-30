@@ -64,7 +64,7 @@ export const CompatibleIrVersionsRule: Rule = {
                     } else {
                         // Normalize the generator name to add default Docker org prefix if not present
                         // This is needed because the YAML may contain shorthand names like "fern-csharp-sdk"
-                        // but the FDR API expects fully-qualified names like "fernenterprise/fern-csharp-sdk"
+                        // but the FDR API expects fully-qualified names like "fernapi/fern-csharp-sdk"
                         const normalizedInvocation = {
                             ...invocation,
                             name: addDefaultDockerOrgIfNotPresent(invocationName)

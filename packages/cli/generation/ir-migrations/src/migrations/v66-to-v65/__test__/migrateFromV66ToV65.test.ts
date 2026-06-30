@@ -911,7 +911,7 @@ describe("migrateFromV66ToV65", () => {
             const v66IR = createMinimalV66IR({
                 generationMetadata: {
                     cliVersion: "1.2.3",
-                    generatorName: "fernenterprise/fern-typescript-sdk",
+                    generatorName: "fernapi/fern-typescript-sdk",
                     generatorVersion: "4.5.6",
                     generatorConfig: { foo: "bar" },
                     originGitCommit: "deadbeef",
@@ -926,7 +926,7 @@ describe("migrateFromV66ToV65", () => {
             expect(v65IR.generationMetadata).toBeDefined();
             expect(v65IR.generationMetadata).toEqual({
                 cliVersion: "1.2.3",
-                generatorName: "fernenterprise/fern-typescript-sdk",
+                generatorName: "fernapi/fern-typescript-sdk",
                 generatorVersion: "4.5.6",
                 generatorConfig: { foo: "bar" },
                 originGitCommit: "deadbeef"

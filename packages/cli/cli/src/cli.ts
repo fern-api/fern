@@ -2958,7 +2958,7 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
  *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
  *     "generators": [
  *       {
- *         "name": "fernenterprise/fern-typescript-sdk",
+ *         "name": "fernapi/fern-typescript-sdk",
  *         "group": "ts-sdk",
  *         "api": "api",
  *         "from": "3.63.4",
@@ -3224,14 +3224,14 @@ function readBytes(stream: ReadStream): Promise<Uint8Array> {
 }
 
 /**
- * Corrects the incorrect "fern-api/" Docker org prefix to "fernenterprise/" and logs a warning.
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
  * Used for CLI arguments that accept generator names.
  */
 function warnAndCorrectIncorrectDockerOrg(generatorName: string, cliContext: CliContext): string {
     const corrected = correctIncorrectDockerOrg(generatorName);
     if (corrected !== generatorName) {
         cliContext.logger.warn(
-            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernenterprise", not "${INCORRECT_DOCKER_ORG}".`
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
         );
     }
     return corrected;

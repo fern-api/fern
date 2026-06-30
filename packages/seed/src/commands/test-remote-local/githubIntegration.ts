@@ -58,8 +58,8 @@ export async function copyGithubOutputToOutputDirectory(
 
 function getRemoteBranchFromLogs(logs: string): string | undefined {
     // Example log lines:
-    // - INFO  2025-11-15T23:49:44.180Z [api]: fernenterprise/fern-typescript-sdk Pushed branch: https://github.com/fern-api/lattice-sdk-javascript/tree/fern-bot/2025-11-15T23-49Z
-    // - INFO  2025-11-17T03:15:23.574Z [api]: fernenterprise/fern-typescript-sdk Pushed branch: https://github.com/fern-api/empty/tree/fern-bot/2025-11-17_03-15-22
+    // - INFO  2025-11-15T23:49:44.180Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/lattice-sdk-javascript/tree/fern-bot/2025-11-15T23-49Z
+    // - INFO  2025-11-17T03:15:23.574Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/empty/tree/fern-bot/2025-11-17_03-15-22
     // Look for any GitHub URL with /tree/<branch> pattern and extract the branch name
 
     const urlMatch = logs.match(GITHUB_BRANCH_URL_REGEX);

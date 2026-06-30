@@ -31,7 +31,7 @@ import { migrateConfig } from "@fern-api/migrations-base";
 // Users who did not have `use_provided_defaults: true` are unaffected by this change and
 // require no migration.
 //
-// This migration only applies to the SDK generator (`fernenterprise/fern-python-sdk`). The
+// This migration only applies to the SDK generator (`fernapi/fern-python-sdk`). The
 // `use_request_defaults` option does not exist on the pydantic-model or fastapi-server
 // generators, so those configurations are passed through unchanged.
 export const migration_4_54_4: Migration = {
@@ -42,7 +42,7 @@ export const migration_4_54_4: Migration = {
         // Custom-image generators (which use `image` instead of `name`) are user-managed
         // and are passed through unchanged.
         const generatorName = "name" in config ? config.name : undefined;
-        if (generatorName !== "fernenterprise/fern-python-sdk") {
+        if (generatorName !== "fernapi/fern-python-sdk") {
             return config;
         }
 

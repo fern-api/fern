@@ -25,7 +25,7 @@ const GITHUB_ACTIONS_ANNOTATIONS_PER_LEVEL_CAP = 10;
  *
  * Title format: `<generator> failed (group=<group>, api=<api>)`. Explicit `key=value` labels
  * disambiguate the title whenever a name contains a `/` (generator names like
- * `fernenterprise/fern-python-sdk` are common) and match the vocabulary of the step-summary table.
+ * `fernapi/fern-python-sdk` are common) and match the vocabulary of the step-summary table.
  *
  * When the failure count exceeds the runner's per-step annotation cap (see
  * {@link GITHUB_ACTIONS_ANNOTATIONS_PER_LEVEL_CAP}), we still emit one error annotation per

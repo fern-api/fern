@@ -39,7 +39,7 @@ export async function isDockerAvailable(): Promise<boolean> {
 export async function startLocalRegistry(sourceImage: string): Promise<LocalRegistry> {
     const url = `localhost:${REGISTRY_PORT}`;
     // Parse the source image to preserve its name and tag in the local registry.
-    // e.g. "fernenterprise/fern-typescript-sdk:3.60.9" → image "fernenterprise/fern-typescript-sdk", tag "3.60.9"
+    // e.g. "fernapi/fern-typescript-sdk:3.60.9" → image "fernapi/fern-typescript-sdk", tag "3.60.9"
     const [imagePart, tagPart] = sourceImage.split(":");
     const testImage = imagePart ?? sourceImage;
     const testTag = tagPart ?? "latest";

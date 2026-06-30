@@ -39,45 +39,43 @@ describe("listPreviewGroups", () => {
     describe("basic detection", () => {
         it("detects a single TypeScript node-sdk generator", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-node-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-node-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
             expect(result).toEqual([
-                { groupName: "ts-sdk", apiName: null, generator: "fernenterprise/fern-typescript-node-sdk" }
+                { groupName: "ts-sdk", apiName: null, generator: "fernapi/fern-typescript-node-sdk" }
             ]);
         });
 
         it("detects a single TypeScript browser-sdk generator", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("browser", [makeGenerator("fernenterprise/fern-typescript-browser-sdk")])
+                makeGroup("browser", [makeGenerator("fernapi/fern-typescript-browser-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
             expect(result).toEqual([
-                { groupName: "browser", apiName: null, generator: "fernenterprise/fern-typescript-browser-sdk" }
+                { groupName: "browser", apiName: null, generator: "fernapi/fern-typescript-browser-sdk" }
             ]);
         });
 
         it("detects a single TypeScript sdk generator", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("sdk", [makeGenerator("fernenterprise/fern-typescript-sdk")])
+                makeGroup("sdk", [makeGenerator("fernapi/fern-typescript-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
-            expect(result).toEqual([
-                { groupName: "sdk", apiName: null, generator: "fernenterprise/fern-typescript-sdk" }
-            ]);
+            expect(result).toEqual([{ groupName: "sdk", apiName: null, generator: "fernapi/fern-typescript-sdk" }]);
         });
     });
 
     describe("non-TypeScript generators", () => {
         it("excludes Python SDK generators", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("python", [makeGenerator("fernenterprise/fern-python-sdk")])
+                makeGroup("python", [makeGenerator("fernapi/fern-python-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
@@ -86,9 +84,7 @@ describe("listPreviewGroups", () => {
         });
 
         it("excludes Java SDK generators", () => {
-            const workspace = makeWorkspace(undefined, [
-                makeGroup("java", [makeGenerator("fernenterprise/fern-java-sdk")])
-            ]);
+            const workspace = makeWorkspace(undefined, [makeGroup("java", [makeGenerator("fernapi/fern-java-sdk")])]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
@@ -96,9 +92,7 @@ describe("listPreviewGroups", () => {
         });
 
         it("excludes Go SDK generators", () => {
-            const workspace = makeWorkspace(undefined, [
-                makeGroup("go", [makeGenerator("fernenterprise/fern-go-sdk")])
-            ]);
+            const workspace = makeWorkspace(undefined, [makeGroup("go", [makeGenerator("fernapi/fern-go-sdk")])]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
@@ -110,7 +104,7 @@ describe("listPreviewGroups", () => {
         it("excludes generators with automation.preview = false", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("ts-sdk", [
-                    makeGenerator("fernenterprise/fern-typescript-node-sdk", {
+                    makeGenerator("fernapi/fern-typescript-node-sdk", {
                         automation: { generate: true, upgrade: true, preview: false, verify: true }
                     })
                 ])
@@ -124,7 +118,7 @@ describe("listPreviewGroups", () => {
         it("includes generators with automation.preview = true", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("ts-sdk", [
-                    makeGenerator("fernenterprise/fern-typescript-node-sdk", {
+                    makeGenerator("fernapi/fern-typescript-node-sdk", {
                         automation: { generate: true, upgrade: true, preview: true, verify: true }
                     })
                 ])
@@ -141,49 +135,47 @@ describe("listPreviewGroups", () => {
         it("includes only the first TypeScript generator from a group with mixed languages", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("all-sdks", [
-                    makeGenerator("fernenterprise/fern-typescript-node-sdk"),
-                    makeGenerator("fernenterprise/fern-python-sdk"),
-                    makeGenerator("fernenterprise/fern-java-sdk")
+                    makeGenerator("fernapi/fern-typescript-node-sdk"),
+                    makeGenerator("fernapi/fern-python-sdk"),
+                    makeGenerator("fernapi/fern-java-sdk")
                 ])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
             expect(result).toEqual([
-                { groupName: "all-sdks", apiName: null, generator: "fernenterprise/fern-typescript-node-sdk" }
+                { groupName: "all-sdks", apiName: null, generator: "fernapi/fern-typescript-node-sdk" }
             ]);
         });
 
         it("deduplicates multiple TypeScript generators in the same group to one entry", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("ts", [
-                    makeGenerator("fernenterprise/fern-typescript-node-sdk"),
-                    makeGenerator("fernenterprise/fern-typescript-browser-sdk")
+                    makeGenerator("fernapi/fern-typescript-node-sdk"),
+                    makeGenerator("fernapi/fern-typescript-browser-sdk")
                 ])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
             expect(result).toHaveLength(1);
-            expect(result).toEqual([
-                { groupName: "ts", apiName: null, generator: "fernenterprise/fern-typescript-node-sdk" }
-            ]);
+            expect(result).toEqual([{ groupName: "ts", apiName: null, generator: "fernapi/fern-typescript-node-sdk" }]);
         });
 
         it("picks the first previewable generator when non-previewable ones come first", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("ts", [
-                    makeGenerator("fernenterprise/fern-typescript-node-sdk", {
+                    makeGenerator("fernapi/fern-typescript-node-sdk", {
                         automation: { generate: true, upgrade: true, preview: false, verify: true }
                     }),
-                    makeGenerator("fernenterprise/fern-typescript-browser-sdk")
+                    makeGenerator("fernapi/fern-typescript-browser-sdk")
                 ])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
             expect(result).toEqual([
-                { groupName: "ts", apiName: null, generator: "fernenterprise/fern-typescript-browser-sdk" }
+                { groupName: "ts", apiName: null, generator: "fernapi/fern-typescript-browser-sdk" }
             ]);
         });
     });
@@ -191,22 +183,22 @@ describe("listPreviewGroups", () => {
     describe("multi-API workspaces", () => {
         it("includes apiName from the workspace", () => {
             const workspace = makeWorkspace("payments", [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-node-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-node-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
             expect(result).toEqual([
-                { groupName: "ts-sdk", apiName: "payments", generator: "fernenterprise/fern-typescript-node-sdk" }
+                { groupName: "ts-sdk", apiName: "payments", generator: "fernapi/fern-typescript-node-sdk" }
             ]);
         });
 
         it("returns results from multiple workspaces", () => {
             const workspaceA = makeWorkspace("payments", [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-node-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-node-sdk")])
             ]);
             const workspaceB = makeWorkspace("users", [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-sdk")])
             ]);
 
             const result = listPreviewGroups({
@@ -215,14 +207,14 @@ describe("listPreviewGroups", () => {
             });
 
             expect(result).toEqual([
-                { groupName: "ts-sdk", apiName: "payments", generator: "fernenterprise/fern-typescript-node-sdk" },
-                { groupName: "ts-sdk", apiName: "users", generator: "fernenterprise/fern-typescript-sdk" }
+                { groupName: "ts-sdk", apiName: "payments", generator: "fernapi/fern-typescript-node-sdk" },
+                { groupName: "ts-sdk", apiName: "users", generator: "fernapi/fern-typescript-sdk" }
             ]);
         });
 
         it("uses null for apiName when workspace has no name", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-node-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-node-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
@@ -234,20 +226,20 @@ describe("listPreviewGroups", () => {
     describe("group filter", () => {
         it("filters to the specified group name", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-node-sdk")]),
-                makeGroup("browser-sdk", [makeGenerator("fernenterprise/fern-typescript-browser-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-node-sdk")]),
+                makeGroup("browser-sdk", [makeGenerator("fernapi/fern-typescript-browser-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: "ts-sdk" });
 
             expect(result).toEqual([
-                { groupName: "ts-sdk", apiName: null, generator: "fernenterprise/fern-typescript-node-sdk" }
+                { groupName: "ts-sdk", apiName: null, generator: "fernapi/fern-typescript-node-sdk" }
             ]);
         });
 
         it("returns empty array when filter matches no groups", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-node-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-node-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: "nonexistent" });
@@ -257,8 +249,8 @@ describe("listPreviewGroups", () => {
 
         it("returns all groups when filter is undefined", () => {
             const workspace = makeWorkspace(undefined, [
-                makeGroup("ts-sdk", [makeGenerator("fernenterprise/fern-typescript-node-sdk")]),
-                makeGroup("browser-sdk", [makeGenerator("fernenterprise/fern-typescript-browser-sdk")])
+                makeGroup("ts-sdk", [makeGenerator("fernapi/fern-typescript-node-sdk")]),
+                makeGroup("browser-sdk", [makeGenerator("fernapi/fern-typescript-browser-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });

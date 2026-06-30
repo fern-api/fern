@@ -7,7 +7,7 @@ export interface Target {
     name: string;
     /** The API this target is generating for (default: 'api') */
     api: string;
-    /** Resolved Docker image reference (e.g., "fernenterprise/fern-typescript-sdk") */
+    /** Resolved Docker image reference (e.g., "fernapi/fern-typescript-sdk") */
     image: string;
     /** Custom container registry URL (e.g., "ghcr.io/myorg"). When set, Docker pulls use `registry/image:version`. */
     registry: string | undefined;

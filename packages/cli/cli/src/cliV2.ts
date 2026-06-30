@@ -17,14 +17,14 @@ import { getOrganization } from "./commands/organization/getOrganization.js";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
 
 /**
- * Corrects the incorrect "fern-api/" Docker org prefix to "fernenterprise/" and logs a warning.
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
  * Used for CLI arguments that accept generator names.
  */
 function warnAndCorrectIncorrectDockerOrgV2(generatorName: string, cliContext: CliContext): string {
     const corrected = correctIncorrectDockerOrg(generatorName);
     if (corrected !== generatorName) {
         cliContext.logger.warn(
-            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernenterprise", not "${INCORRECT_DOCKER_ORG}".`
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
         );
     }
     return corrected;

@@ -185,9 +185,9 @@ export class SdkConfigConverter {
             return undefined;
         }
 
-        // If user specified an explicit image, normalize with the fernenterprise/ Docker Hub
+        // If user specified an explicit image, normalize with the fernapi/ Docker Hub
         // org prefix so that IR version resolution (which expects fully-qualified names
-        // like "fernenterprise/fern-typescript-sdk") works correctly.
+        // like "fernapi/fern-typescript-sdk") works correctly.
         if (target.image != null) {
             if (typeof target.image === "string") {
                 return {

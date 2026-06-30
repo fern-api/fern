@@ -55,7 +55,7 @@ export const TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR = "FERN_TYPE_RELOCATIONS_O
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
  */
-const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernenterprise/fern-cli-generator"]);
+const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli-generator"]);
 
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);

@@ -9,9 +9,9 @@ function makeGenerator(name: string): generatorsYml.GeneratorInvocation {
 
 describe("filterGenerators", () => {
     const generators = [
-        makeGenerator("fernenterprise/fern-typescript-node-sdk"),
-        makeGenerator("fernenterprise/fern-python-sdk"),
-        makeGenerator("fernenterprise/fern-typescript-node-sdk")
+        makeGenerator("fernapi/fern-typescript-node-sdk"),
+        makeGenerator("fernapi/fern-python-sdk"),
+        makeGenerator("fernapi/fern-typescript-node-sdk")
     ];
 
     describe("no filter", () => {
@@ -40,7 +40,7 @@ describe("filterGenerators", () => {
             expect(result.ok).toBe(true);
             if (result.ok) {
                 expect(result.generators).toHaveLength(1);
-                expect(result.generators[0]?.name).toBe("fernenterprise/fern-typescript-node-sdk");
+                expect(result.generators[0]?.name).toBe("fernapi/fern-typescript-node-sdk");
             }
         });
 
@@ -54,7 +54,7 @@ describe("filterGenerators", () => {
             expect(result.ok).toBe(true);
             if (result.ok) {
                 expect(result.generators).toHaveLength(1);
-                expect(result.generators[0]?.name).toBe("fernenterprise/fern-python-sdk");
+                expect(result.generators[0]?.name).toBe("fernapi/fern-python-sdk");
             }
         });
 
@@ -68,7 +68,7 @@ describe("filterGenerators", () => {
             expect(result.ok).toBe(true);
             if (result.ok) {
                 expect(result.generators).toHaveLength(1);
-                expect(result.generators[0]?.name).toBe("fernenterprise/fern-typescript-node-sdk");
+                expect(result.generators[0]?.name).toBe("fernapi/fern-typescript-node-sdk");
                 // Verify it's the third entry (index 2), not the first (index 0)
                 expect(result.generators[0]).toBe(generators[2]);
             }
@@ -120,14 +120,14 @@ describe("filterGenerators", () => {
             const result = filterGenerators({
                 generators,
                 generatorIndex: undefined,
-                generatorName: "fernenterprise/fern-typescript-node-sdk",
+                generatorName: "fernapi/fern-typescript-node-sdk",
                 groupName: "sdk"
             });
             expect(result.ok).toBe(true);
             if (result.ok) {
                 // Both index 0 and index 2 match
                 expect(result.generators).toHaveLength(2);
-                expect(result.generators.every((g) => g.name === "fernenterprise/fern-typescript-node-sdk")).toBe(true);
+                expect(result.generators.every((g) => g.name === "fernapi/fern-typescript-node-sdk")).toBe(true);
             }
         });
 
@@ -135,13 +135,13 @@ describe("filterGenerators", () => {
             const result = filterGenerators({
                 generators,
                 generatorIndex: undefined,
-                generatorName: "fernenterprise/fern-python-sdk",
+                generatorName: "fernapi/fern-python-sdk",
                 groupName: "sdk"
             });
             expect(result.ok).toBe(true);
             if (result.ok) {
                 expect(result.generators).toHaveLength(1);
-                expect(result.generators[0]?.name).toBe("fernenterprise/fern-python-sdk");
+                expect(result.generators[0]?.name).toBe("fernapi/fern-python-sdk");
             }
         });
 
@@ -149,13 +149,13 @@ describe("filterGenerators", () => {
             const result = filterGenerators({
                 generators,
                 generatorIndex: undefined,
-                generatorName: "fernenterprise/fern-go-sdk",
+                generatorName: "fernapi/fern-go-sdk",
                 groupName: "sdk"
             });
             expect(result.ok).toBe(false);
             if (!result.ok) {
                 expect(result.error).toContain("not found in group 'sdk'");
-                expect(result.error).toContain("fernenterprise/fern-typescript-node-sdk");
+                expect(result.error).toContain("fernapi/fern-typescript-node-sdk");
             }
         });
     });
@@ -165,14 +165,14 @@ describe("filterGenerators", () => {
             const result = filterGenerators({
                 generators,
                 generatorIndex: 1,
-                generatorName: "fernenterprise/fern-typescript-node-sdk",
+                generatorName: "fernapi/fern-typescript-node-sdk",
                 groupName: "sdk"
             });
             expect(result.ok).toBe(true);
             if (result.ok) {
                 // Index 1 is python, not typescript — index wins
                 expect(result.generators).toHaveLength(1);
-                expect(result.generators[0]?.name).toBe("fernenterprise/fern-python-sdk");
+                expect(result.generators[0]?.name).toBe("fernapi/fern-python-sdk");
             }
         });
     });
@@ -192,8 +192,8 @@ describe("parseGeneratorArg", () => {
     });
 
     it("parses generator name with slashes", () => {
-        expect(parseGeneratorArg("fernenterprise/fern-typescript-node-sdk")).toEqual({
-            generatorName: "fernenterprise/fern-typescript-node-sdk",
+        expect(parseGeneratorArg("fernapi/fern-typescript-node-sdk")).toEqual({
+            generatorName: "fernapi/fern-typescript-node-sdk",
             generatorIndex: undefined
         });
     });

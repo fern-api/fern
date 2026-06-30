@@ -16,7 +16,7 @@ function successResult(overrides: Partial<GeneratorRunResult> = {}): GeneratorRu
     return {
         apiName: "foo",
         groupName: "python-sdk",
-        generatorName: "fernenterprise/fern-python-sdk",
+        generatorName: "fernapi/fern-python-sdk",
         status: "success",
         skipReason: null,
         version: "0.1.0",
@@ -333,7 +333,7 @@ describe("renderJsonSummary", () => {
         expect(json.generators[0]).toMatchObject({
             api: "foo",
             group: "python-sdk",
-            generatorName: "fernenterprise/fern-python-sdk",
+            generatorName: "fernapi/fern-python-sdk",
             status: "success",
             skipReason: null,
             version: "0.1.0",

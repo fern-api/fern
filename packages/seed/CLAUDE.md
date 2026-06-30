@@ -92,7 +92,7 @@ it against the given config. Four things trip people up — none are obvious fro
   workspace root errors with `Detected empty API definition: fern`. (For a
   single-API workspace, the `fern/` dir itself is fine.)
 - **The target's `generators.yml` must declare the generator under a group**,
-  matched by its `image` (e.g. `fernenterprise/fern-cli-generator`). If no group
+  matched by its `image` (e.g. `fernapi/fern-cli-generator`). If no group
   references that image, seed matches nothing and silently does no work.
 
 ### Development Workflow

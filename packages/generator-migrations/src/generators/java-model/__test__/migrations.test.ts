@@ -24,7 +24,7 @@ const createBaseConfig = (
 describe("Java Model Migrations", () => {
     describe("migration_1_0_0", () => {
         it("sets old default for disable-required-property-builder-checks", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-model");
+            const config = createBaseConfig("fernapi/fern-java-model");
 
             const result = migration_1_0_0.migrateGeneratorConfig({
                 config,
@@ -37,7 +37,7 @@ describe("Java Model Migrations", () => {
         });
 
         it("preserves explicitly set field to false", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-model", {
+            const config = createBaseConfig("fernapi/fern-java-model", {
                 "disable-required-property-builder-checks": false
             });
 
@@ -52,7 +52,7 @@ describe("Java Model Migrations", () => {
         });
 
         it("preserves explicitly set field to true", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-model", {
+            const config = createBaseConfig("fernapi/fern-java-model", {
                 "disable-required-property-builder-checks": true
             });
 
@@ -67,7 +67,7 @@ describe("Java Model Migrations", () => {
         });
 
         it("preserves other config fields", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-model", {
+            const config = createBaseConfig("fernapi/fern-java-model", {
                 "wrapped-aliases": true,
                 enablePublicConstructors: false
             });
@@ -84,7 +84,7 @@ describe("Java Model Migrations", () => {
         });
 
         it("does not mutate original config", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-model", {
+            const config = createBaseConfig("fernapi/fern-java-model", {
                 enablePublicConstructors: false
             });
             const originalConfig = JSON.parse(JSON.stringify(config));
@@ -113,7 +113,7 @@ describe("Java Model Migrations", () => {
         });
 
         it("works with java-spring generator", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-spring");
+            const config = createBaseConfig("fernapi/fern-java-spring");
 
             const result = migration_1_0_0.migrateGeneratorConfig({
                 config,
@@ -151,7 +151,7 @@ describe("Java Model Migrations", () => {
     describe("edge cases", () => {
         it("handles null config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-java-model",
+                name: "fernapi/fern-java-model",
                 version: "0.9.0",
                 config: null
             };
@@ -168,7 +168,7 @@ describe("Java Model Migrations", () => {
 
         it("handles missing config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-java-model",
+                name: "fernapi/fern-java-model",
                 version: "0.9.0"
             };
 
@@ -183,7 +183,7 @@ describe("Java Model Migrations", () => {
         });
 
         it("handles config with boolean field set to false", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-model", {
+            const config = createBaseConfig("fernapi/fern-java-model", {
                 "disable-required-property-builder-checks": false
             });
 
@@ -197,7 +197,7 @@ describe("Java Model Migrations", () => {
         });
 
         it("handles nested object config fields", () => {
-            const config = createBaseConfig("fernenterprise/fern-java-model", {
+            const config = createBaseConfig("fernapi/fern-java-model", {
                 maven: {
                     groupId: "com.acme",
                     artifactId: "acme-models"
@@ -219,7 +219,7 @@ describe("Java Model Migrations", () => {
 
         it("preserves top-level config properties", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-java-model",
+                name: "fernapi/fern-java-model",
                 version: "0.9.0",
                 output: { location: "local-file-system", path: "./generated" },
                 config: {}
@@ -231,7 +231,7 @@ describe("Java Model Migrations", () => {
             });
 
             expect(result.output).toEqual({ location: "local-file-system", path: "./generated" });
-            expect(result.name).toBe("fernenterprise/fern-java-model");
+            expect(result.name).toBe("fernapi/fern-java-model");
             expect(result.version).toBe("0.9.0");
         });
     });

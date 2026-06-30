@@ -10,7 +10,7 @@ const BASE_CONTEXT = {
     publishTarget: undefined,
     noChangesDetected: undefined,
     version: undefined,
-    generatorName: "fernenterprise/fern-typescript-sdk",
+    generatorName: "fernapi/fern-typescript-sdk",
     groupName: "ts-sdk",
     apiName: undefined,
     isAutomation: false
@@ -65,7 +65,7 @@ describe("emitGenerationAnnotations", () => {
             pullRequestUrl: "https://github.com/org/repo/pull/42"
         });
         expect(stdoutSpy).toHaveBeenCalledWith(
-            "::notice title=fernenterprise/fern-typescript-sdk (group=ts-sdk) → PR created::https://github.com/org/repo/pull/42\n"
+            "::notice title=fernapi/fern-typescript-sdk (group=ts-sdk) → PR created::https://github.com/org/repo/pull/42\n"
         );
     });
 
@@ -74,12 +74,12 @@ describe("emitGenerationAnnotations", () => {
         await emitGenerationAnnotations({
             ...BASE_CONTEXT,
             pullRequestUrl: "https://github.com/org/repo/pull/42",
-            generatorName: "fernenterprise/fern-python-sdk",
+            generatorName: "fernapi/fern-python-sdk",
             groupName: "production",
             apiName: "internal"
         });
         expect(stdoutSpy).toHaveBeenCalledWith(
-            "::notice title=fernenterprise/fern-python-sdk (group=production%2C api=internal) → PR created::https://github.com/org/repo/pull/42\n"
+            "::notice title=fernapi/fern-python-sdk (group=production%2C api=internal) → PR created::https://github.com/org/repo/pull/42\n"
         );
     });
 
@@ -97,7 +97,7 @@ describe("emitGenerationAnnotations", () => {
             }
         });
         expect(stdoutSpy).toHaveBeenCalledWith(
-            "::notice title=fernenterprise/fern-typescript-sdk (group=ts-sdk) → Published to npm::1.0.0 → https://www.npmjs.com/package/@org/sdk/v/1.0.0\n"
+            "::notice title=fernapi/fern-typescript-sdk (group=ts-sdk) → Published to npm::1.0.0 → https://www.npmjs.com/package/@org/sdk/v/1.0.0\n"
         );
     });
 
@@ -105,7 +105,7 @@ describe("emitGenerationAnnotations", () => {
         process.env.GITHUB_ACTIONS = "true";
         await emitGenerationAnnotations({
             ...BASE_CONTEXT,
-            generatorName: "fernenterprise/fern-python-sdk",
+            generatorName: "fernapi/fern-python-sdk",
             groupName: "production",
             publishTarget: {
                 registry: "pypi",
@@ -115,7 +115,7 @@ describe("emitGenerationAnnotations", () => {
             }
         });
         expect(stdoutSpy).toHaveBeenCalledWith(
-            "::notice title=fernenterprise/fern-python-sdk (group=production) → Published to PyPI::0.5.2 → https://pypi.org/project/my-sdk/0.5.2/\n"
+            "::notice title=fernapi/fern-python-sdk (group=production) → Published to PyPI::0.5.2 → https://pypi.org/project/my-sdk/0.5.2/\n"
         );
     });
 
@@ -128,7 +128,7 @@ describe("emitGenerationAnnotations", () => {
             noChangesDetected: true
         });
         expect(stdoutSpy).toHaveBeenCalledWith(
-            "::notice title=fernenterprise/fern-typescript-sdk (group=ts-sdk) → No changes detected::SDK repo is already up to date\n"
+            "::notice title=fernapi/fern-typescript-sdk (group=ts-sdk) → No changes detected::SDK repo is already up to date\n"
         );
     });
 
@@ -150,7 +150,7 @@ describe("emitGenerationAnnotations", () => {
             version: "2.0.0"
         });
         expect(stdoutSpy).toHaveBeenCalledWith(
-            "::notice title=fernenterprise/fern-typescript-sdk (group=ts-sdk) → Version 2.0.0::Generated version 2.0.0\n"
+            "::notice title=fernapi/fern-typescript-sdk (group=ts-sdk) → Version 2.0.0::Generated version 2.0.0\n"
         );
     });
 
@@ -223,11 +223,9 @@ describe("emitGenerationAnnotations", () => {
                 }
             });
             const content = readFileSync(summaryPath, "utf8");
+            expect(content).toContain("🔀 **fernapi/fern-typescript-sdk** → [PR](https://github.com/org/repo/pull/42)");
             expect(content).toContain(
-                "🔀 **fernenterprise/fern-typescript-sdk** → [PR](https://github.com/org/repo/pull/42)"
-            );
-            expect(content).toContain(
-                "📦 **fernenterprise/fern-typescript-sdk** → [npm 1.0.0](https://www.npmjs.com/package/@org/sdk/v/1.0.0)"
+                "📦 **fernapi/fern-typescript-sdk** → [npm 1.0.0](https://www.npmjs.com/package/@org/sdk/v/1.0.0)"
             );
         } finally {
             try {
@@ -277,7 +275,7 @@ describe("emitGenerationAnnotations", () => {
                 isAutomation: false
             });
             const content = readFileSync(summaryPath, "utf8");
-            expect(content).toContain("✅ **fernenterprise/fern-typescript-sdk** → No changes detected");
+            expect(content).toContain("✅ **fernapi/fern-typescript-sdk** → No changes detected");
         } finally {
             try {
                 unlinkSync(summaryPath);

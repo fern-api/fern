@@ -10,7 +10,7 @@ export interface ReplayRunParams {
     generatorVersions?: Record<string, string>;
     /** Don't commit, just stage changes. Default: false */
     stageOnly?: boolean;
-    /** Generator name for namespaced tag lookup (e.g. "fernenterprise/fern-typescript-node-sdk") */
+    /** Generator name for namespaced tag lookup (e.g. "fernapi/fern-typescript-node-sdk") */
     generatorName?: string;
     /** Commit generation + update lockfile, skip patch detection/application */
     skipApplication?: boolean;

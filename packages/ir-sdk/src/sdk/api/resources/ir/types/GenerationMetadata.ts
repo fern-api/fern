@@ -9,7 +9,7 @@ import type * as FernIr from "../../../index.js";
 export interface GenerationMetadata {
     /** The version of the Fern CLI that generated this IR. */
     cliVersion: string;
-    /** The name of the generator being invoked (e.g., "fernenterprise/fern-python-sdk"). */
+    /** The name of the generator being invoked (e.g., "fernapi/fern-python-sdk"). */
     generatorName: string;
     /** The version of the generator being invoked. */
     generatorVersion: string;

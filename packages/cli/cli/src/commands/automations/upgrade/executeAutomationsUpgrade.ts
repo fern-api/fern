@@ -19,7 +19,7 @@ const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
 
 /**
  * Derives the changelog URL from a generator name.
- * Generator names follow the pattern "fernenterprise/fern-<language>-sdk[-variant]",
+ * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
  * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
  */
 export function getChangelogUrl(generatorName: string): string | undefined {
@@ -105,7 +105,7 @@ async function getCurrentCliVersion(cliContext: CliContext): Promise<string> {
  *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
  *     "generators": [
  *       {
- *         "name": "fernenterprise/fern-typescript-sdk",
+ *         "name": "fernapi/fern-typescript-sdk",
  *         "group": "ts-sdk",
  *         "api": "api",
  *         "from": "3.63.4",
@@ -281,7 +281,7 @@ async function upgradeGeneratorsForAllWorkspaces({
 
 /**
  * Strips the Docker org prefix from a generator name.
- * "fernenterprise/fern-typescript-sdk" → "typescript-sdk"
+ * "fernapi/fern-typescript-sdk" → "typescript-sdk"
  */
 export function getShortGeneratorName(name: string): string {
     return name.replace(/^fernapi\/fern-/, "");

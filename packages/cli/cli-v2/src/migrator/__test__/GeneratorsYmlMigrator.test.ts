@@ -54,7 +54,7 @@ autorelease: false
 groups:
   typescript:
     generators:
-      - name: fernenterprise/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 3.59.2
         output:
           location: npm
@@ -94,7 +94,7 @@ autorelease: false
 groups:
   dotnet:
     generators:
-      - name: fernenterprise/fern-csharp-sdk
+      - name: fernapi/fern-csharp-sdk
         version: 2.32.0
         output:
           location: nuget
@@ -125,7 +125,7 @@ groups:
             `groups:
   sdk:
     generators:
-      - name: fernenterprise/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 1.0.0
         output:
           location: local-file-system
@@ -147,7 +147,7 @@ groups:
             `groups:
   sdk:
     generators:
-      - name: fernenterprise/fern-python-sdk
+      - name: fernapi/fern-python-sdk
         version: 2.0.0
         output:
           location: local-file-system
@@ -276,7 +276,7 @@ groups: {}
             `groups:
   sdk:
     generators:
-      - name: fernenterprise/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 1.0.0
         output:
           location: npm
@@ -301,14 +301,14 @@ groups: {}
             `groups:
   ts-sdk:
     generators:
-      - name: fernenterprise/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 3.59.2
         output:
           location: local-file-system
           path: ./ts
   py-sdk:
     generators:
-      - name: fernenterprise/fern-python-sdk
+      - name: fernapi/fern-python-sdk
         version: 4.0.0
         output:
           location: local-file-system

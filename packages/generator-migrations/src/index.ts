@@ -28,39 +28,39 @@ import typescriptSdkMigrations from "./generators/typescript/migrations/index.js
  */
 export const migrations: Record<string, MigrationModule> = {
     // C# SDK
-    "fernenterprise/fern-csharp-sdk": csharpSdkMigrations,
+    "fernapi/fern-csharp-sdk": csharpSdkMigrations,
 
     // Go SDK
-    "fernenterprise/fern-go-sdk": goSdkMigrations,
-    "fernenterprise/fern-go-model": goSdkMigrations,
+    "fernapi/fern-go-sdk": goSdkMigrations,
+    "fernapi/fern-go-model": goSdkMigrations,
 
     // Java Model - both model and spring generators share the same migrations
-    "fernenterprise/fern-java-model": javaModelMigrations,
-    "fernenterprise/fern-java-spring": javaModelMigrations,
+    "fernapi/fern-java-model": javaModelMigrations,
+    "fernapi/fern-java-spring": javaModelMigrations,
 
     // Java SDK
-    "fernenterprise/fern-java-sdk": javaSdkMigrations,
+    "fernapi/fern-java-sdk": javaSdkMigrations,
 
     // Python - SDK, FastAPI, and Pydantic all share the same migrations
-    "fernenterprise/fern-python-sdk": pythonSdkMigrations,
-    "fernenterprise/fern-fastapi-server": pythonSdkMigrations,
-    "fernenterprise/fern-pydantic-model": pythonSdkMigrations,
+    "fernapi/fern-python-sdk": pythonSdkMigrations,
+    "fernapi/fern-fastapi-server": pythonSdkMigrations,
+    "fernapi/fern-pydantic-model": pythonSdkMigrations,
 
     // PHP SDK
-    "fernenterprise/fern-php-sdk": phpSdkMigrations,
+    "fernapi/fern-php-sdk": phpSdkMigrations,
 
     // Ruby SDK
-    "fernenterprise/fern-ruby-sdk": rubySdkMigrations,
+    "fernapi/fern-ruby-sdk": rubySdkMigrations,
 
     // Rust SDK
-    "fernenterprise/fern-rust-sdk": rustSdkMigrations,
+    "fernapi/fern-rust-sdk": rustSdkMigrations,
 
     // Swift SDK
-    "fernenterprise/fern-swift-sdk": swiftSdkMigrations,
+    "fernapi/fern-swift-sdk": swiftSdkMigrations,
 
     // TypeScript SDK - all variants share the same migrations
-    "fernenterprise/fern-typescript": typescriptSdkMigrations,
-    "fernenterprise/fern-typescript-sdk": typescriptSdkMigrations,
-    "fernenterprise/fern-typescript-node-sdk": typescriptSdkMigrations,
-    "fernenterprise/fern-typescript-browser-sdk": typescriptSdkMigrations
+    "fernapi/fern-typescript": typescriptSdkMigrations,
+    "fernapi/fern-typescript-sdk": typescriptSdkMigrations,
+    "fernapi/fern-typescript-node-sdk": typescriptSdkMigrations,
+    "fernapi/fern-typescript-browser-sdk": typescriptSdkMigrations
 };

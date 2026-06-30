@@ -20,7 +20,7 @@ function makeGenerator(
     overrides?: Partial<generatorsYml.GeneratorInvocation>
 ): generatorsYml.GeneratorInvocation {
     return {
-        name: "fernenterprise/fern-typescript-node-sdk",
+        name: "fernapi/fern-typescript-node-sdk",
         version: "0.57.10",
         config: {},
         outputMode,
@@ -51,9 +51,9 @@ function makeGroup(generators: generatorsYml.GeneratorInvocation[]): generatorsY
 
 describe("isNpmGenerator", () => {
     it("recognizes known TypeScript SDK generators", () => {
-        expect(isNpmGenerator("fernenterprise/fern-typescript-node-sdk")).toBe(true);
-        expect(isNpmGenerator("fernenterprise/fern-typescript-browser-sdk")).toBe(true);
-        expect(isNpmGenerator("fernenterprise/fern-typescript-sdk")).toBe(true);
+        expect(isNpmGenerator("fernapi/fern-typescript-node-sdk")).toBe(true);
+        expect(isNpmGenerator("fernapi/fern-typescript-browser-sdk")).toBe(true);
+        expect(isNpmGenerator("fernapi/fern-typescript-sdk")).toBe(true);
     });
 
     it("rejects unknown typescript generators not in the set", () => {
@@ -61,23 +61,23 @@ describe("isNpmGenerator", () => {
     });
 
     it("rejects Python generators", () => {
-        expect(isNpmGenerator("fernenterprise/fern-python-sdk")).toBe(false);
+        expect(isNpmGenerator("fernapi/fern-python-sdk")).toBe(false);
     });
 
     it("rejects Java generators", () => {
-        expect(isNpmGenerator("fernenterprise/fern-java-sdk")).toBe(false);
+        expect(isNpmGenerator("fernapi/fern-java-sdk")).toBe(false);
     });
 
     it("rejects Go generators", () => {
-        expect(isNpmGenerator("fernenterprise/fern-go-sdk")).toBe(false);
+        expect(isNpmGenerator("fernapi/fern-go-sdk")).toBe(false);
     });
 
     it("rejects Ruby generators", () => {
-        expect(isNpmGenerator("fernenterprise/fern-ruby-sdk")).toBe(false);
+        expect(isNpmGenerator("fernapi/fern-ruby-sdk")).toBe(false);
     });
 
     it("rejects C# generators", () => {
-        expect(isNpmGenerator("fernenterprise/fern-csharp-sdk")).toBe(false);
+        expect(isNpmGenerator("fernapi/fern-csharp-sdk")).toBe(false);
     });
 });
 
@@ -177,14 +177,14 @@ describe("overrideGroupOutputForDownload", () => {
 
     it("preserves other generator fields", () => {
         const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }), {
-            name: "fernenterprise/fern-typescript-sdk",
+            name: "fernapi/fern-typescript-sdk",
             version: "1.0.0"
         });
         const group = makeGroup([generator]);
 
         const result = overrideGroupOutputForDownload({ group });
 
-        expect(result.generators[0]?.name).toBe("fernenterprise/fern-typescript-sdk");
+        expect(result.generators[0]?.name).toBe("fernapi/fern-typescript-sdk");
         expect(result.generators[0]?.version).toBe("1.0.0");
     });
 

@@ -9,7 +9,7 @@ function buildResult(overrides: Partial<GeneratorRunResult> = {}): GeneratorRunR
     return {
         apiName: undefined,
         groupName: "production",
-        generatorName: "fernenterprise/fern-python-sdk",
+        generatorName: "fernapi/fern-python-sdk",
         status: "failed",
         skipReason: null,
         version: null,
@@ -108,7 +108,7 @@ describe("renderGithubAnnotationsForResults", () => {
             })
         ];
         expect(renderGithubAnnotationsForResults(results)).toBe(
-            "::error file=fern/apis/foo/generators.yml,line=42,title=fernenterprise/fern-python-sdk failed (group=production)::boom\n"
+            "::error file=fern/apis/foo/generators.yml,line=42,title=fernapi/fern-python-sdk failed (group=production)::boom\n"
         );
     });
 
@@ -121,7 +121,7 @@ describe("renderGithubAnnotationsForResults", () => {
             })
         ];
         expect(renderGithubAnnotationsForResults(results)).toBe(
-            "::error file=fern/generators.yml,title=fernenterprise/fern-python-sdk failed (group=production)::boom\n"
+            "::error file=fern/generators.yml,title=fernapi/fern-python-sdk failed (group=production)::boom\n"
         );
     });
 
@@ -136,21 +136,21 @@ describe("renderGithubAnnotationsForResults", () => {
             })
         ];
         expect(renderGithubAnnotationsForResults(results)).toBe(
-            "::error title=fernenterprise/fern-python-sdk failed (group=production)::boom\n"
+            "::error title=fernapi/fern-python-sdk failed (group=production)::boom\n"
         );
     });
 
     it("falls back to a stable message when errorMessage is null (defensive — recordFailure should always set it)", () => {
         const results = [buildResult({ errorMessage: null })];
         expect(renderGithubAnnotationsForResults(results)).toBe(
-            "::error title=fernenterprise/fern-python-sdk failed (group=production)::Generator failed\n"
+            "::error title=fernapi/fern-python-sdk failed (group=production)::Generator failed\n"
         );
     });
 
     it("encodes newlines in error messages so each failure stays one annotation", () => {
         const results = [buildResult({ errorMessage: "stack trace:\n  at foo\n  at bar" })];
         expect(renderGithubAnnotationsForResults(results)).toBe(
-            "::error title=fernenterprise/fern-python-sdk failed (group=production)::stack trace:%0A  at foo%0A  at bar\n"
+            "::error title=fernapi/fern-python-sdk failed (group=production)::stack trace:%0A  at foo%0A  at bar\n"
         );
     });
 

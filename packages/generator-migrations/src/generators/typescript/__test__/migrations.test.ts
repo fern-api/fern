@@ -16,7 +16,7 @@ const mockLogger: Logger = {
 } as unknown as Logger;
 
 const createBaseConfig = (configOverrides?: Record<string, unknown>): generatorsYml.GeneratorInvocationSchema => ({
-    name: "fernenterprise/fern-typescript-sdk",
+    name: "fernapi/fern-typescript-sdk",
     version: "0.9.0",
     config: configOverrides
 });
@@ -101,7 +101,7 @@ describe("TypeScript SDK Migrations", () => {
 
         it("handles null config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-typescript-sdk",
+                name: "fernapi/fern-typescript-sdk",
                 version: "0.9.0",
                 config: null
             };
@@ -124,7 +124,7 @@ describe("TypeScript SDK Migrations", () => {
 
         it("handles missing config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-typescript-sdk",
+                name: "fernapi/fern-typescript-sdk",
                 version: "0.9.0"
             };
 
@@ -160,7 +160,7 @@ describe("TypeScript SDK Migrations", () => {
 
         it("preserves top-level config properties", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-typescript-sdk",
+                name: "fernapi/fern-typescript-sdk",
                 version: "0.9.0",
                 output: { location: "npm" },
                 github: { repository: "owner/repo" },
@@ -174,7 +174,7 @@ describe("TypeScript SDK Migrations", () => {
 
             expect(result.output).toEqual({ location: "npm" });
             expect(result.github).toEqual({ repository: "owner/repo" });
-            expect(result.name).toBe("fernenterprise/fern-typescript-sdk");
+            expect(result.name).toBe("fernapi/fern-typescript-sdk");
             expect(result.version).toBe("0.9.0");
         });
 
@@ -482,7 +482,7 @@ describe("TypeScript SDK Migrations", () => {
 
         it("handles null config", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-typescript-sdk",
+                name: "fernapi/fern-typescript-sdk",
                 version: "3.66.0",
                 config: null
             };
@@ -497,7 +497,7 @@ describe("TypeScript SDK Migrations", () => {
 
         it("handles missing config", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-typescript-sdk",
+                name: "fernapi/fern-typescript-sdk",
                 version: "3.66.0"
             };
 
@@ -541,7 +541,7 @@ describe("TypeScript SDK Migrations", () => {
     describe("edge cases", () => {
         it("handles config with string value instead of object", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernenterprise/fern-typescript-sdk",
+                name: "fernapi/fern-typescript-sdk",
                 version: "0.9.0",
                 config: "invalid-string-config" as unknown as Record<string, unknown>
             };

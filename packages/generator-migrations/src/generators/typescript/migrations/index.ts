@@ -10,10 +10,10 @@ import { migration_4_0_0 } from "./4.0.0.js";
  *
  * This module contains migrations for configuration changes across
  * all TypeScript SDK generator variants:
- * - fernenterprise/fern-typescript
- * - fernenterprise/fern-typescript-sdk
- * - fernenterprise/fern-typescript-node-sdk
- * - fernenterprise/fern-typescript-browser-sdk
+ * - fernapi/fern-typescript
+ * - fernapi/fern-typescript-sdk
+ * - fernapi/fern-typescript-node-sdk
+ * - fernapi/fern-typescript-browser-sdk
  *
  * Each migration is defined in a separate file under this directory.
  * Migrations are automatically applied by the Fern CLI when running:

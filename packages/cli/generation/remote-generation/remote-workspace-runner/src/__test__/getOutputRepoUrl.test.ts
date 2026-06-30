@@ -11,7 +11,7 @@ import { getOutputRepoUrl } from "../automationMetadata.js";
  */
 function invocationWithOutputMode(outputMode: FernFiddle.remoteGen.OutputMode): generatorsYml.GeneratorInvocation {
     return {
-        name: "fernenterprise/test-sdk",
+        name: "fernapi/test-sdk",
         version: "1.0.0",
         config: {},
         outputMode,

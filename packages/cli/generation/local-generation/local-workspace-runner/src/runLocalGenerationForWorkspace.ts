@@ -268,7 +268,7 @@ export async function runLocalGenerationForWorkspace({
                                 `Please configure your generator with self-hosted GitHub output in generators.yml. ` +
                                 `Example:\n` +
                                 `generators:\n` +
-                                `  - name: fernenterprise/fern-typescript-sdk\n` +
+                                `  - name: fernapi/fern-typescript-sdk\n` +
                                 `    version: latest\n` +
                                 `    github:\n` +
                                 `      uri: your-org/your-sdk-repo\n` +

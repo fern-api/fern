@@ -10,7 +10,7 @@ export interface PublishSentryConfiguration {
     /**
      * Generator name used to construct the Sentry release identifier
      * (`${name}:${version}`). This should be the Docker image name
-     * without the `fernenterprise/` registry prefix (e.g. `fern-typescript-sdk`).
+     * without the `fernapi/` registry prefix (e.g. `fern-typescript-sdk`).
      * Must not contain slashes — sentry-cli rejects release names with them.
      */
     name: string;

@@ -48,7 +48,7 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
     logger.debug(`Getting latest version for ${generator} from Docker Hub`);
 
     try {
-        // Extract repository name from generator (e.g., "fernenterprise/fern-typescript-sdk" -> "fern-typescript-sdk")
+        // Extract repository name from generator (e.g., "fernapi/fern-typescript-sdk" -> "fern-typescript-sdk")
         const [namespace, repository] = generator.split("/");
         if (!namespace || !repository) {
             throw new Error(`${ERROR_INVALID_GENERATOR_NAME}: ${generator}`);

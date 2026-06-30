@@ -4,7 +4,7 @@
  * Explicit Docker image configuration with a custom container registry.
  */
 export interface GeneratorImageObjectSchema {
-    /** The Docker image name (e.g., `fernenterprise/fern-typescript-sdk`). */
+    /** The Docker image name (e.g., `fernapi/fern-typescript-sdk`). */
     name: string;
     /**
      * The container registry URL to pull the image from during local generation.

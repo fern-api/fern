@@ -218,14 +218,14 @@ describe("SDK Generate Integration", () => {
             expect(tsTarget).toBeDefined();
             expect(tsTarget?.lang).toBe("typescript");
             expect(tsTarget?.version).toBe("0.39.3");
-            expect(tsTarget?.image).toBe("fernenterprise/fern-typescript-sdk");
+            expect(tsTarget?.image).toBe("fernapi/fern-typescript-sdk");
             expect(tsTarget?.output.path).toBe("./generated/typescript");
 
             const pyTarget = sdks?.targets.find((t) => t.name === "python");
             expect(pyTarget).toBeDefined();
             expect(pyTarget?.lang).toBe("python");
             expect(pyTarget?.version).toBe("4.3.10");
-            expect(pyTarget?.image).toBe("fernenterprise/fern-python-sdk");
+            expect(pyTarget?.image).toBe("fernapi/fern-python-sdk");
         });
 
         it("filters targets by group", async () => {

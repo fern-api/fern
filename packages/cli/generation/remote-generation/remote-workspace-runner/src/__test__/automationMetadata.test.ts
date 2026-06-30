@@ -25,29 +25,29 @@ describe("findGeneratorLineNumber", () => {
         const path = writeYml(`groups:
   python-sdk:
     generators:
-      - name: fernenterprise/fern-python-sdk
+      - name: fernapi/fern-python-sdk
         version: 0.1.0
 `);
-        expect(await findGeneratorLineNumber(path, "fernenterprise/fern-python-sdk", 0)).toBe(4);
+        expect(await findGeneratorLineNumber(path, "fernapi/fern-python-sdk", 0)).toBe(4);
     });
 
     it("disambiguates duplicate generator names via occurrenceIndex", async () => {
         const path = writeYml(`groups:
   a:
     generators:
-      - name: fernenterprise/fern-python-sdk
+      - name: fernapi/fern-python-sdk
         version: 0.1.0
   b:
     generators:
-      - name: fernenterprise/fern-python-sdk
+      - name: fernapi/fern-python-sdk
         version: 0.2.0
 `);
-        expect(await findGeneratorLineNumber(path, "fernenterprise/fern-python-sdk", 0)).toBe(4);
-        expect(await findGeneratorLineNumber(path, "fernenterprise/fern-python-sdk", 1)).toBe(8);
+        expect(await findGeneratorLineNumber(path, "fernapi/fern-python-sdk", 0)).toBe(4);
+        expect(await findGeneratorLineNumber(path, "fernapi/fern-python-sdk", 1)).toBe(8);
     });
 
-    it("matches the short form when the canonicalized name has a fernenterprise/ prefix", async () => {
-        // The configuration loader prefixes first-party generators with `fernenterprise/`, but the raw
+    it("matches the short form when the canonicalized name has a fernapi/ prefix", async () => {
+        // The configuration loader prefixes first-party generators with `fernapi/`, but the raw
         // YAML commonly uses the short form. The lookup must strip the prefix to find a match.
         const path = writeYml(`groups:
   x:
@@ -55,17 +55,17 @@ describe("findGeneratorLineNumber", () => {
       - name: fern-typescript-sdk
         version: 3.0.0
 `);
-        expect(await findGeneratorLineNumber(path, "fernenterprise/fern-typescript-sdk", 0)).toBe(4);
+        expect(await findGeneratorLineNumber(path, "fernapi/fern-typescript-sdk", 0)).toBe(4);
     });
 
     it("strips surrounding quotes when comparing names", async () => {
         const path = writeYml(`groups:
   x:
     generators:
-      - name: "fernenterprise/fern-go-sdk"
+      - name: "fernapi/fern-go-sdk"
         version: 1.0.0
 `);
-        expect(await findGeneratorLineNumber(path, "fernenterprise/fern-go-sdk", 0)).toBe(4);
+        expect(await findGeneratorLineNumber(path, "fernapi/fern-go-sdk", 0)).toBe(4);
     });
 
     it("returns undefined for an unreadable path", async () => {
@@ -98,7 +98,7 @@ describe("findGeneratorLineNumber", () => {
       - name: fern-typescript-sdk  # TODO: bump major
         version: 3.0.0
 `);
-        expect(await findGeneratorLineNumber(path, "fernenterprise/fern-typescript-sdk", 0)).toBe(4);
+        expect(await findGeneratorLineNumber(path, "fernapi/fern-typescript-sdk", 0)).toBe(4);
     });
 
     it("ignores list-item `name:` values that contain disallowed characters", async () => {
