@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "sid": {
+      "type": "string"
+    },
+    "friendlyName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "sid"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
