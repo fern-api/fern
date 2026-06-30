@@ -26,6 +26,7 @@ function makeParsedPageActions(
             cursor: true,
             claudeCode: true,
             vscode: false,
+            mcp: true,
             custom: [],
             skills
         }
@@ -62,6 +63,7 @@ describe("DocsDefinitionResolver page actions skills config", () => {
                 cursor: true,
                 claudeCode: true,
                 vscode: false,
+                mcp: true,
                 custom: [],
                 skills: {
                     title: "Install agent skills",
