@@ -1,6 +1,6 @@
 # Known issue: Python GraphQL SDK circular import (Relay connections)
 
-**Status:** Open — diagnosed, not yet fixed. TypeScript is unaffected.
+**Status:** Open — diagnosed, not yet fixed. **GraphQL-converter-only bug** (not a Python-generator bug, not a `main` bug). TypeScript is unaffected.
 
 ## Symptom
 
@@ -15,17 +15,18 @@ client.query.viewer()
 #              'seed.types.post' (most likely due to a circular import)
 ```
 
-It reproduces on the `python-graphql` seed fixture (schema with a Relay
-`PostConnection`). The TypeScript `ts-graphql` SDK does **not** have this problem
-(its runtime wire test passes), so this is Python-generator-specific.
+Reproduces on the `python-graphql` seed fixture (schema with a Relay
+`PostConnection`). The TypeScript `ts-graphql` SDK does **not** have this problem.
 
 ### Why CI didn't catch it
-- `compile`, snapshot tests, and `convertIRtoJsonSchema` all check *generated text*; they never import the SDK and call it.
-- There were no GraphQL pytest tests, so `client.query` was never exercised at runtime. The hand-written runtime test that surfaced this is held out of the `python-graphql` fixture precisely because it would (correctly) fail until this is fixed.
+`compile`, snapshots, and `convertIRtoJsonSchema` all check *generated text*; none
+import the SDK and call it. There were no GraphQL pytest tests, so `client.query`
+was never exercised at runtime. The hand-written runtime test that surfaced it is
+held out of the fixture until this is fixed.
 
 ## The import cycle
 
-For a schema with a Relay connection, the generated type modules form a 4-node cycle, all via **eager module-level imports**:
+For a Relay connection, the generated type modules form a cycle via eager imports:
 
 ```
 seed/types/post.py            from .user import User            (Post.author: User)
@@ -34,13 +35,12 @@ seed/types/post_connection.py from .post_edge import PostEdge   (PostConnection.
 seed/types/post_edge.py       from .post import Post            (PostEdge.node: Post)  ← cycle closes
 ```
 
-`query/client.py` does `from ..types.post import Post`, which kicks off
-`post → user → post_connection → post_edge → post`, and `post` is still
-mid-initialization when `post_edge` imports it → `ImportError`.
+`query/client.py` does `from ..types.post import Post`, starting
+`post → user → post_connection → post_edge → post`; `post` is still initializing
+when `post_edge` imports it → `ImportError`.
 
-## Root cause (two layers)
+## Root cause — the GraphQL converter leaves `referencedTypes` empty
 
-### Layer 1 — converter leaves `referencedTypes` empty (prerequisite)
 `packages/cli/api-importers/graphql/src/ir-conversion/convertGraphQLTypes.ts`
 (`makeTypeDeclaration`) hardcodes:
 
@@ -48,47 +48,67 @@ mid-initialization when `post_edge` imports it → `ImportError`.
 referencedTypes: new Set<string>(),
 ```
 
-The normal IR pipeline computes this per declaration
+`referencedTypes` is what the Python generator uses to detect cyclic dependencies
+and emit forward references (`if TYPE_CHECKING:` + string annotation +
+`model_rebuild()`) that break the import cycle. Empty → no cycle detected → eager
+imports → crash.
+
+### Why this is GraphQL-only and never surfaced before
+The normal IR pipeline computes `referencedTypes` as the **transitive closure** of
+referenced types — `getReferencedTypesFromRawDeclaration`
 (`packages/cli/generation/ir-generator/src/converters/type-declarations/getReferencedTypesFromRawDeclaration.ts`,
-used by `convertTypeDeclaration.ts`). Generators rely on `referencedTypes` to
-detect cyclic dependencies; with it empty, the Python generator can't detect
-*any* GraphQL type cycle.
+lines ~148-173) recurses into each referenced type's declaration with a shared
+`seenTypeNames`, accumulating everything reachable. Empirically confirmed on a
+committed IR dump (e.g. `irs/generics.json` `Movie` has `referencedTypes` larger
+than its direct property refs).
 
-**Fix (necessary, but not sufficient):** compute `referencedTypes` from the shape
-— walk object properties / containers / union members and collect the named
-`typeId`s. This is a contained converter change and is **output-neutral** for the
-existing fixtures (verified: regenerating `ts-graphql` and `python-graphql` with it
-produced 0 changes), because Layer 2 below still blocks the actual deferral.
+Because it's transitive, the Python generator's existing cycle detection
+(`generators/python/src/fern_python/generators/context/pydantic_generator_context_impl.py`:
+`does_type_reference_other_type` → `do_types_reference_each_other` →
+`get_types_in_cycle_with`, consumed by `fern_aware_pydantic_model.py:163`)
+**already handles N-cycles correctly**: for the 4-cycle, `post.referenced_types`
+(transitive) contains `post_edge` and vice-versa, so they're detected as
+in-cycle and deferred. This is why every OpenAPI / Fern-definition SDK — including
+the `circular-references` / `circular-references-advanced` fixtures — works.
 
-### Layer 2 — Python generator only detects *direct 2-cycles* (the real gap)
-`generators/python/src/fern_python/generators/context/pydantic_generator_context_impl.py`:
+The GraphQL converter is the only producer that bypassed this: it set
+`referencedTypes` to an empty set instead of computing it. **So the Python
+generator is not buggy, and this is not a pre-existing `main` issue — it is purely
+our GraphQL converter producing incomplete IR.**
 
-- `does_type_reference_other_type(a, b)` → `b in a.referenced_types` (line ~259, `get_referenced_types_of_type_declaration` returns `type_declaration.referenced_types`, which is **direct**, not a transitive closure).
-- `do_types_reference_each_other(a, b)` → `a→b AND b→a` (direct only).
-- `get_types_in_cycle_with(type_id)` (consumed by `fern_aware_pydantic_model.py:163` to decide forward-ref/`TYPE_CHECKING` deferral) and `_types_with_non_union_self_referencing_dependencies` (built at lines ~56-68) therefore only catch **direct A↔B 2-cycles**.
+## The fix (converter-only, low risk)
 
-The Relay cycle is a **4-cycle with no 2-cycle inside it** (`Post→User`, `User→PostConnection`, … — no pair references each other directly), so the deferral never triggers and the imports stay eager.
+In `convertGraphQLTypes.ts`, populate `referencedTypes` with the **transitive
+closure** of each type's referenced named typeIds (matching the normal pipeline),
+not an empty set and not just direct refs:
 
-> Note: the docstring on `get_types_in_cycle_with` claims "directly or transitively," but the implementation is direct-only. This is a **general** Python-generator limitation — any N-cycle (N>2) with no embedded 2-cycle is affected. GraphQL/Relay just makes such cycles common; a hand-written Fern definition could hit it too.
+1. Build the direct-reference graph for all generated GraphQL types (walk each
+   shape's object properties / containers / union members → named `typeId`s).
+2. Compute the transitive closure per type (DFS/BFS over that graph, dedup with a
+   seen-set to handle cycles).
+3. Set each declaration's `referencedTypes` to its closure.
 
-## Proposed fix
+This belongs on the **GraphQL IR branch** (`graphql-ir-pipeline`), not a `main`
+branch — the defect is entirely in our converter. **No Python-generator change is
+needed** (the generator already breaks N-cycles given correct `referencedTypes`),
+so there is no cross-SDK blast radius.
 
-Both layers are required:
-
-1. **Converter (`convertGraphQLTypes.ts`)** — populate `referencedTypes` (direct named typeIds from the shape). Contained, low-risk, output-neutral today.
-
-2. **Python generator (`pydantic_generator_context_impl.py`)** — make cycle detection transitive. Compute strongly-connected components (or transitive reachability) over the `referenced_types` graph once at init, and have `do_types_reference_each_other` / `get_types_in_cycle_with` / the self-referencing-dependency map return true when two types are in the same SCC. Then `PostEdge.node: Post` (and the other edges) emit deferred imports (`if TYPE_CHECKING: from .post import Post` + string annotation `node: "Post"` + the existing `model_rebuild()`), breaking the import cycle.
-
-### Risk
-Layer 2 changes import structure for **every** Python SDK that contains an N-cycle, not just GraphQL. It must be validated against the full Python seed fixture suite (especially `circular-references`, `circular-references-advanced`) to confirm no regressions and that imports still resolve. This is why it should be done as a focused, separately-verified change rather than bundled into the GraphQL feature PRs.
+> Note: a prior attempt populated only *direct* referenced typeIds. That is
+> output-neutral but **insufficient** — the 4-cycle has no direct 2-cycle, so the
+> generator's detection needs the *transitive* set to see that `post` and
+> `post_edge` are mutually reachable. The closure is the key detail.
 
 ### Verification plan
-1. Apply both layers.
-2. `pnpm seed test --generator python-sdk` across all fixtures — confirm determinism (no unexpected diffs) and that the `circular-references*` fixtures still pass their wire tests.
-3. Regenerate `python-graphql`; confirm `post_edge.py` now uses `if TYPE_CHECKING` + forward-ref.
-4. Enable the held runtime test (`tests/custom/test_client.py`, fernignore-protected) that imports `from seed import SeedApi` and calls `client.query.viewer()` — it should pass.
-5. Confirm the TypeScript path is unaffected.
+1. Implement the transitive-closure computation in the converter.
+2. Regenerate `python-graphql`; confirm `post_edge.py` now uses
+   `if TYPE_CHECKING: from .post import Post` + `node: "Post"`.
+3. Run a runtime test: `from seed import SeedApi; client.query.viewer()` (mock the
+   transport with `httpx.MockTransport`) — should no longer raise `ImportError`.
+4. Confirm `ts-graphql` output is unchanged and the regular Python fixtures still
+   pass (the converter change only affects GraphQL-derived types).
 
 ## Current state
-- **TypeScript**: works; runtime wire test committed on the `graphql-sdk-pipeline` branch.
-- **Python**: the circular-import fix was reverted out of the feature branches (kept at pre-fix state) pending the focused Layer-2 generator change described above.
+- **TypeScript**: works; runtime wire test committed on `graphql-sdk-pipeline`.
+- **Python**: reverted to pre-fix state pending the converter transitive-closure
+  fix above. The held runtime test (`tests/custom/test_client.py`) is ready to
+  enable once it lands.
