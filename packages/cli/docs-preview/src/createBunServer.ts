@@ -1,5 +1,3 @@
-import { DocsV2Read } from "@fern-api/fdr-sdk";
-
 import { DebugLogger } from "./DebugLogger.js";
 
 const CORS_HEADERS = {
@@ -34,7 +32,8 @@ interface BunNamespace {
 export interface BunServerOptions {
     port: number;
     debugLogger: DebugLogger;
-    getDocsLoadResponse(locale?: string): DocsV2Read.LoadDocsForUrlResponse;
+    /** Returns the pre-serialized JSON string for the docs load response (cache-aware). */
+    getSerializedDocsLoadResponse(locale?: string): string;
     /**
      * Extracts the locale from a URL path.
      * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
@@ -57,7 +56,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath } = options;
+    const { port, debugLogger, getSerializedDocsLoadResponse, extractLocaleFromPath } = options;
 
     type WsData = { connectionId: string };
     const connections = new Map<BunServerWebSocket<WsData>, { pingInterval: NodeJS.Timeout; lastPong: number }>();
@@ -101,12 +100,12 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                 try {
                     const body = (await req.json()) as { url?: string } | undefined;
                     const locale = extractLocaleFromPath?.(body?.url);
-                    return new Response(JSON.stringify(getDocsLoadResponse(locale)), {
+                    return new Response(getSerializedDocsLoadResponse(locale), {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
                 } catch {
                     // If JSON parsing fails, just return the default response
-                    return new Response(JSON.stringify(getDocsLoadResponse()), {
+                    return new Response(getSerializedDocsLoadResponse(), {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
                 }

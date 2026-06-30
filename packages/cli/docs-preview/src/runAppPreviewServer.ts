@@ -719,6 +719,26 @@ export async function runAppPreviewServer({
     // Pre-computed translated definitions for each locale (excluding default)
     let translatedDefinitions: Map<string, DocsV1Read.DocsDefinition> = new Map();
 
+    // Cached serialized JSON responses keyed by locale ("" = no locale).
+    // Invalidated whenever previewResult or translatedDefinitions change.
+    const cachedResponseJson = new Map<string, string>();
+
+    function invalidateResponseCache(): void {
+        cachedResponseJson.clear();
+    }
+
+    function getSerializedDocsLoadResponse(locale?: string): string {
+        const cacheKey = locale ?? "";
+        const cached = cachedResponseJson.get(cacheKey);
+        if (cached != null) {
+            return cached;
+        }
+        const response = buildDocsLoadResponse(locale);
+        const json = JSON.stringify(response);
+        cachedResponseJson.set(cacheKey, json);
+        return json;
+    }
+
     // Initialize the snippet dependency tracker
     const snippetTracker = new SnippetDependencyTracker(context);
     await snippetTracker.buildDependencyMap(project);
@@ -1042,6 +1062,7 @@ export async function runAppPreviewServer({
             context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
         }
     }
+    invalidateResponseCache();
 
     // Initialize slug mappings from the initial docs definition
     if (previewResult?.docsDefinition) {
@@ -1137,7 +1158,9 @@ export async function runAppPreviewServer({
             const urlPath = requestBody?.url;
             const locale = extractLocaleFromPath(urlPath);
 
-            res.send(buildDocsLoadResponse(locale));
+            const json = getSerializedDocsLoadResponse(locale);
+            res.setHeader("Content-Type", "application/json");
+            res.send(json);
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -1156,7 +1179,7 @@ export async function runAppPreviewServer({
     const bunHandle = createBunServer({
         port: backendPort,
         debugLogger,
-        getDocsLoadResponse: buildDocsLoadResponse,
+        getSerializedDocsLoadResponse,
         extractLocaleFromPath
     });
     if (bunHandle != null) {
@@ -1355,6 +1378,7 @@ export async function runAppPreviewServer({
                         if (translatedDefinitions.size > 0) {
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
+                        invalidateResponseCache();
 
                         sendData({
                             version: 1,
