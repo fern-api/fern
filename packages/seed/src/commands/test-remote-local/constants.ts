@@ -18,18 +18,18 @@ export type OutputMode = (typeof ALL_OUTPUT_MODES)[number];
 export type GenerationMode = (typeof ALL_GENERATION_MODES)[number];
 
 export type GeneratorName =
-    | "fernapi/fern-typescript-sdk"
-    | "fernapi/fern-java-sdk"
-    | "fernapi/fern-go-sdk"
-    | "fernapi/fern-php-sdk"
-    | "fernapi/fern-python-sdk";
+    | "fernenterprise/fern-typescript-sdk"
+    | "fernenterprise/fern-java-sdk"
+    | "fernenterprise/fern-go-sdk"
+    | "fernenterprise/fern-php-sdk"
+    | "fernenterprise/fern-python-sdk";
 
 export const GeneratorNameFromNickname: Record<GeneratorNickname, GeneratorName> = {
-    "ts-sdk": "fernapi/fern-typescript-sdk",
-    "java-sdk": "fernapi/fern-java-sdk",
-    "go-sdk": "fernapi/fern-go-sdk",
-    "php-sdk": "fernapi/fern-php-sdk",
-    "python-sdk": "fernapi/fern-python-sdk"
+    "ts-sdk": "fernenterprise/fern-typescript-sdk",
+    "java-sdk": "fernenterprise/fern-java-sdk",
+    "go-sdk": "fernenterprise/fern-go-sdk",
+    "php-sdk": "fernenterprise/fern-php-sdk",
+    "python-sdk": "fernenterprise/fern-python-sdk"
 };
 
 // ============================================================================

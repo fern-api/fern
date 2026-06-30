@@ -147,7 +147,7 @@ describe("convertGeneratorsConfiguration", () => {
                     "stage:java": {
                         generators: [
                             {
-                                name: "fernapi/fern-java-sdk",
+                                name: "fernenterprise/fern-java-sdk",
                                 version: "0.8.8-rc0",
                                 config: {
                                     "package-prefix": "com.test.sdk"
@@ -191,7 +191,7 @@ describe("convertGeneratorsConfiguration", () => {
                     "stage:java": {
                         generators: [
                             {
-                                name: "fernapi/fern-java-sdk",
+                                name: "fernenterprise/fern-java-sdk",
                                 version: "0.8.8-rc0",
                                 config: {
                                     "package-prefix": "com.test.sdk"
@@ -227,7 +227,7 @@ describe("convertGeneratorsConfiguration", () => {
                     "stage:java": {
                         generators: [
                             {
-                                name: "fernapi/fern-java-sdk",
+                                name: "fernenterprise/fern-java-sdk",
                                 version: "0.8.8-rc0",
                                 config: {
                                     "package-prefix": "com.test.sdk"
@@ -280,7 +280,7 @@ describe("convertGeneratorsConfiguration", () => {
                                         "documentation-link": "https://test.com"
                                     }
                                 },
-                                name: "fernapi/fern-python-sdk",
+                                name: "fernenterprise/fern-python-sdk",
                                 version: "0.8.8-rc0",
                                 config: {
                                     "package-prefix": "com.test.sdk"
@@ -742,10 +742,10 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-typescript-sdk");
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernenterprise/fern-typescript-sdk");
         });
 
-        it("preserves full generator names with fernapi/ prefix", async () => {
+        it("preserves full generator names with fernenterprise/ prefix", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
@@ -754,7 +754,7 @@ describe("convertGeneratorsConfiguration", () => {
                         group1: {
                             generators: [
                                 {
-                                    name: "fernapi/fern-python-sdk",
+                                    name: "fernenterprise/fern-python-sdk",
                                     version: "0.0.1",
                                     output: {
                                         location: "local-file-system",
@@ -768,7 +768,7 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-python-sdk");
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernenterprise/fern-python-sdk");
         });
 
         it("preserves custom org generator names", async () => {
@@ -814,7 +814,7 @@ describe("convertGeneratorsConfiguration", () => {
                                     }
                                 },
                                 {
-                                    name: "fernapi/fern-python-sdk",
+                                    name: "fernenterprise/fern-python-sdk",
                                     version: "0.0.1",
                                     output: {
                                         location: "local-file-system",
@@ -836,8 +836,8 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-typescript-sdk");
-            expect(converted.groups[0]?.generators[1]?.name).toEqual("fernapi/fern-python-sdk");
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernenterprise/fern-typescript-sdk");
+            expect(converted.groups[0]?.generators[1]?.name).toEqual("fernenterprise/fern-python-sdk");
             expect(converted.groups[0]?.generators[2]?.name).toEqual("myorg/custom-generator");
         });
     });
@@ -1174,7 +1174,7 @@ describe("convertGeneratorsConfiguration", () => {
         });
 
         const generator = converted.groups[0]?.generators[0];
-        expect(generator?.name).toBe("fernapi/fern-typescript-sdk");
+        expect(generator?.name).toBe("fernenterprise/fern-typescript-sdk");
         expect(generator?.containerImage).toBe("ghcr.io/myorg/fern-typescript-sdk");
         expect(generator?.version).toBe("1.0.0");
     });
@@ -1188,7 +1188,7 @@ describe("convertGeneratorsConfiguration", () => {
                     group1: {
                         generators: [
                             {
-                                name: "fernapi/fern-typescript-sdk",
+                                name: "fernenterprise/fern-typescript-sdk",
                                 version: "0.30.0",
                                 output: {
                                     location: "local-file-system",
@@ -1204,7 +1204,7 @@ describe("convertGeneratorsConfiguration", () => {
 
         const generator = converted.groups[0]?.generators[0];
         expect(generator?.containerImage).toBeUndefined();
-        expect(generator?.name).toBe("fernapi/fern-typescript-sdk");
+        expect(generator?.name).toBe("fernenterprise/fern-typescript-sdk");
     });
 
     it("custom image generators are identifiable for remote generation guard", async () => {
@@ -1227,7 +1227,7 @@ describe("convertGeneratorsConfiguration", () => {
                                 }
                             },
                             {
-                                name: "fernapi/fern-python-sdk",
+                                name: "fernenterprise/fern-python-sdk",
                                 version: "0.10.0",
                                 output: {
                                     location: "local-file-system",
@@ -1244,7 +1244,7 @@ describe("convertGeneratorsConfiguration", () => {
         const generators = converted.groups[0]?.generators ?? [];
         const customImageGenerators = generators.filter((g) => g.containerImage != null);
         expect(customImageGenerators).toHaveLength(1);
-        expect(customImageGenerators[0]?.name).toBe("fernapi/fern-typescript-sdk");
+        expect(customImageGenerators[0]?.name).toBe("fernenterprise/fern-typescript-sdk");
     });
 
     it("containerImage combined with version yields correct Docker image reference", async () => {
@@ -1288,7 +1288,7 @@ describe("convertGeneratorsConfiguration", () => {
                         sdk: {
                             generators: [
                                 {
-                                    name: "fernapi/fern-typescript-sdk",
+                                    name: "fernenterprise/fern-typescript-sdk",
                                     version: "1.0.0"
                                 }
                             ]
@@ -1320,7 +1320,7 @@ describe("convertGeneratorsConfiguration", () => {
                         sdk: {
                             generators: [
                                 {
-                                    name: "fernapi/fern-typescript-sdk",
+                                    name: "fernenterprise/fern-typescript-sdk",
                                     version: "1.0.0"
                                 }
                             ]
@@ -1354,7 +1354,7 @@ describe("convertGeneratorsConfiguration", () => {
                             },
                             generators: [
                                 {
-                                    name: "fernapi/fern-typescript-sdk",
+                                    name: "fernenterprise/fern-typescript-sdk",
                                     version: "1.0.0"
                                 }
                             ]
@@ -1390,7 +1390,7 @@ describe("convertGeneratorsConfiguration", () => {
                             },
                             generators: [
                                 {
-                                    name: "fernapi/fern-typescript-sdk",
+                                    name: "fernenterprise/fern-typescript-sdk",
                                     version: "1.0.0",
                                     automation: {
                                         generate: true,
@@ -1424,14 +1424,14 @@ describe("convertGeneratorsConfiguration", () => {
                         sdk: {
                             generators: [
                                 {
-                                    name: "fernapi/fern-typescript-sdk",
+                                    name: "fernenterprise/fern-typescript-sdk",
                                     version: "1.0.0",
                                     automation: {
                                         upgrade: true
                                     }
                                 },
                                 {
-                                    name: "fernapi/fern-python-sdk",
+                                    name: "fernenterprise/fern-python-sdk",
                                     version: "1.0.0"
                                 }
                             ]

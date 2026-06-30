@@ -122,7 +122,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernenterprise/fern-typescript-sdk");
             }
         });
 
@@ -146,7 +146,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-python-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernenterprise/fern-python-sdk");
             }
         });
 
@@ -195,15 +195,15 @@ sdks:
             if (result.success) {
                 const imagesByLang = Object.fromEntries(result.config.targets.map((t: Target) => [t.lang, t.image]));
                 expect(imagesByLang).toEqual({
-                    csharp: "fernapi/fern-csharp-sdk",
-                    go: "fernapi/fern-go-sdk",
-                    java: "fernapi/fern-java-sdk",
-                    php: "fernapi/fern-php-sdk",
-                    python: "fernapi/fern-python-sdk",
-                    ruby: "fernapi/fern-ruby-sdk",
-                    rust: "fernapi/fern-rust-sdk",
-                    swift: "fernapi/fern-swift-sdk",
-                    typescript: "fernapi/fern-typescript-sdk"
+                    csharp: "fernenterprise/fern-csharp-sdk",
+                    go: "fernenterprise/fern-go-sdk",
+                    java: "fernenterprise/fern-java-sdk",
+                    php: "fernenterprise/fern-php-sdk",
+                    python: "fernenterprise/fern-python-sdk",
+                    ruby: "fernenterprise/fern-ruby-sdk",
+                    rust: "fernenterprise/fern-rust-sdk",
+                    swift: "fernenterprise/fern-swift-sdk",
+                    typescript: "fernenterprise/fern-typescript-sdk"
                 });
             }
         });
@@ -303,7 +303,7 @@ sdks:
             expect(result.success).toBe(true);
             if (result.success) {
                 expect(result.config.targets[0]?.lang).toBe("typescript");
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernenterprise/fern-typescript-sdk");
             }
         });
 
@@ -826,7 +826,7 @@ sdks:
   targets:
     my-gen:
       lang: typescript
-      image: "fernapi/fern-typescript-sdk"
+      image: "fernenterprise/fern-typescript-sdk"
       version: "1.0.0"
       output:
         path: ./sdks/ts
@@ -838,7 +838,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernenterprise/fern-typescript-sdk");
                 expect(result.config.targets[0]?.registry).toBeUndefined();
                 expect(result.config.targets[0]?.version).toBe("1.0.0");
             }
@@ -855,7 +855,7 @@ sdks:
     my-gen:
       lang: typescript
       image:
-        name: fernapi/fern-typescript-sdk
+        name: fernenterprise/fern-typescript-sdk
         registry: ghcr.io/myorg
       version: "2.0.0"
       output:
@@ -868,7 +868,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernenterprise/fern-typescript-sdk");
                 expect(result.config.targets[0]?.registry).toBe("ghcr.io/myorg");
                 expect(result.config.targets[0]?.version).toBe("2.0.0");
             }
@@ -894,7 +894,7 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.image).toBe("fernapi/fern-python-sdk");
+                expect(result.config.targets[0]?.image).toBe("fernenterprise/fern-python-sdk");
                 expect(result.config.targets[0]?.registry).toBeUndefined();
             }
         });

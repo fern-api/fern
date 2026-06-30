@@ -59,7 +59,7 @@ vi.mock("os", () => ({
 // Mock the dynamic import of the migration entry point
 // This simulates what happens when we import the installed package
 const mockMigrationsMap = {
-    "fernapi/fern-typescript-sdk": {
+    "fernenterprise/fern-typescript-sdk": {
         migrations: [
             {
                 version: "1.5.0",
@@ -67,7 +67,7 @@ const mockMigrationsMap = {
             }
         ]
     },
-    "fernapi/fern-python-sdk": {
+    "fernenterprise/fern-python-sdk": {
         migrations: [
             {
                 version: "2.0.0",
@@ -149,11 +149,11 @@ describe("Migration loader deduplication", () => {
 
         // Simulate 5 concurrent calls (like 5 workspaces in Promise.all)
         const results = await Promise.all([
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger }),
-            loadMigrationModule({ generatorName: "fernapi/fern-python-sdk", logger: mockLogger }),
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger }),
-            loadMigrationModule({ generatorName: "fernapi/fern-python-sdk", logger: mockLogger }),
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger })
+            loadMigrationModule({ generatorName: "fernenterprise/fern-typescript-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernenterprise/fern-python-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernenterprise/fern-typescript-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernenterprise/fern-python-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernenterprise/fern-typescript-sdk", logger: mockLogger })
         ]);
 
         // KEY ASSERTION: npm install should have been called exactly ONCE
@@ -188,7 +188,7 @@ describe("Migration loader deduplication", () => {
         shouldFailNpmInstall = true;
 
         await expect(
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger })
+            loadMigrationModule({ generatorName: "fernenterprise/fern-typescript-sdk", logger: mockLogger })
         ).rejects.toThrow();
 
         expect(npmInstallCallCount).toBe(1);
@@ -200,7 +200,7 @@ describe("Migration loader deduplication", () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
 
         const result = await loadMigrationModule({
-            generatorName: "fernapi/fern-typescript-sdk",
+            generatorName: "fernenterprise/fern-typescript-sdk",
             logger: mockLogger
         });
 
@@ -223,7 +223,7 @@ describe("Migration loader deduplication", () => {
         const mockLogger = createMockLogger();
 
         const result = await loadMigrationModule({
-            generatorName: "fernapi/fern-unknown-sdk",
+            generatorName: "fernenterprise/fern-unknown-sdk",
             logger: mockLogger
         });
 

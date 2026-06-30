@@ -126,7 +126,7 @@ describe("Customer config migrations (fern-demo)", () => {
 groups:
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.44.3
         output:
           location: npm
@@ -146,7 +146,7 @@ groups:
         smart-casing: true
   java-sdk:
     generators:
-      - name: fernapi/fern-java-sdk
+      - name: fernenterprise/fern-java-sdk
         version: 2.11.0
         github:
           repository: fern-demo/intercom-java-sdk
@@ -156,7 +156,7 @@ groups:
           inline-path-parameters: true
   python-sdk:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 3.10.6
         github:
           repository: fern-demo/intercom-python-sdk
@@ -206,7 +206,7 @@ groups:
 groups:
   python-cloud:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 1.4.0-rc3
         output:
           location: pypi
@@ -223,7 +223,7 @@ groups:
             use_str_enums: true
   go:
     generators:
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: 9.0.2
         config:
           importPath: github.com/sayari-analytics/sayari-go/generated/go
@@ -232,28 +232,28 @@ groups:
           path: ../generated/go
   python:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 9.0.5
         output:
           location: local-file-system
           path: ../generated/python
   postman:
     generators:
-      - name: fernapi/fern-postman
+      - name: fernenterprise/fern-postman
         version: 0.1.1-rc0
         output:
           location: local-file-system
           path: ../generated/postman
   openapi:
     generators:
-      - name: fernapi/fern-openapi
+      - name: fernenterprise/fern-openapi
         version: 0.0.28
         output:
           location: local-file-system
           path: ../generated/openapi
   java:
     generators:
-      - name: fernapi/fern-java-sdk
+      - name: fernenterprise/fern-java-sdk
         version: 0.6.1
         output:
           location: local-file-system
@@ -263,7 +263,7 @@ groups:
           mode: client
   node:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.9.0
         config:
           outputSourceFiles: true
@@ -307,7 +307,7 @@ groups:
 groups:
   js-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.9.4
         output:
           location: npm
@@ -323,7 +323,7 @@ groups:
 
   python-sdk:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 0.6.5
         output:
           location: pypi
@@ -375,7 +375,7 @@ openapi-overrides: ../openapi-overrides.yml
 groups:
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.11.4-rc2
         github:
           repository: fern-demo/carbon-typescript
@@ -413,7 +413,7 @@ groups:
             generatorsYml: `groups:
   py-sdk:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 0.11.9
         config:
           improved_imports: true
@@ -472,7 +472,7 @@ groups:
     audiences:
       - public
     generators:
-      - name: fernapi/fern-fastapi-server
+      - name: fernenterprise/fern-fastapi-server
         version: 1.0.0-rc1
         output:
           location: local-file-system
@@ -484,7 +484,7 @@ groups:
       - public
       - internal
     generators:
-      - name: fernapi/fern-fastapi-server
+      - name: fernenterprise/fern-fastapi-server
         version: 1.0.0-rc1
         output:
           location: local-file-system
@@ -495,7 +495,7 @@ groups:
     audiences:
       - hopper
     generators:
-      - name: fernapi/fern-fastapi-server
+      - name: fernenterprise/fern-fastapi-server
         version: 1.0.0-rc1
         output:
           location: local-file-system
@@ -506,7 +506,7 @@ groups:
     audiences:
       - public
     generators:
-      - name: fernapi/fern-ruby-sdk
+      - name: fernenterprise/fern-ruby-sdk
         version: 0.1.0-rc0
         github:
           repository: fern-demo/intrinsic-ruby
@@ -583,7 +583,7 @@ favicon: ./docs/assets/favicon.png
 groups:
   go-sdk:
     generators:
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: 0.18.0
         config:
           packageName: mongodb
@@ -628,7 +628,7 @@ openapi-overrides: ../openapi-overrides.yml
 groups:
   node-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.11.0
         output:
           location: npm
@@ -696,7 +696,7 @@ navbar-links:
 groups:
   local:
     generators:
-      - name: fernapi/fern-openapi
+      - name: fernenterprise/fern-openapi
         version: 0.0.30
         config:
           format: yaml
@@ -704,7 +704,7 @@ groups:
           location: local-file-system
           path: ../generated/openapi
 
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.9.5
         output:
           location: local-file-system
@@ -773,7 +773,7 @@ favicon: ./docs/assets/favicon.ico
         const postmanGen = `groups:
   postman:
     generators:
-      - name: fernapi/fern-postman
+      - name: fernenterprise/fern-postman
         version: 0.1.1-rc0
         output:
           location: local-file-system
@@ -818,7 +818,7 @@ openapi-overrides: ../openapi-overrides.yml
 groups:
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.11.0
         github:
           repository: fern-demo/cal-typescript
@@ -857,7 +857,7 @@ openapi-overrides: ../openapi-overrides.yml
 groups:
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.12.2
         github:
           repository: fern-demo/trmlabs-typescript
@@ -901,7 +901,7 @@ groups:
 groups:
   node-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.11.0
         output:
           location: npm
@@ -964,7 +964,7 @@ jobs:
 groups:
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.44.3
         output:
           location: npm
@@ -1008,7 +1008,7 @@ jobs:
 groups:
   python-cloud:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 1.4.0-rc3
         output:
           location: pypi
@@ -1022,7 +1022,7 @@ groups:
           client_class_name: "Sayari"
   go:
     generators:
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: 9.0.2
         config:
           importPath: github.com/sayari-analytics/sayari-go/generated/go

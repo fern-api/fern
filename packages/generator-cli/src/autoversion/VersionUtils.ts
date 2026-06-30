@@ -4,7 +4,7 @@ import { AutoVersioningException } from "./AutoVersioningService.js";
 
 /**
  * Maps a Fern generator name to a normalized language identifier.
- * e.g. "fernapi/fern-typescript-node-sdk" → "typescript"
+ * e.g. "fernenterprise/fern-typescript-node-sdk" → "typescript"
  */
 export function extractLanguageFromGeneratorName(generatorName: string): string {
     const name = generatorName.toLowerCase();

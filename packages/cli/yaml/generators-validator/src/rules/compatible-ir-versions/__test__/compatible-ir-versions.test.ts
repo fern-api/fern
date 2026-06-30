@@ -21,9 +21,9 @@ describe("compatible-ir-versions", () => {
                 name: "compatible-ir-version",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("generators.yml"),
-                nodePath: ["groups", "python-sdk", "generators", "0", "fernapi/fern-python-sdk"],
+                nodePath: ["groups", "python-sdk", "generators", "0", "fernenterprise/fern-python-sdk"],
                 message:
-                    "The generator fernapi/fern-python-sdk requires CLI version 0.23.0-rc4 or later (current version: 0.1.3-rc0). Please run `fern upgrade` to upgrade your CLI version and use this generator."
+                    "The generator fernenterprise/fern-python-sdk requires CLI version 0.23.0-rc4 or later (current version: 0.1.3-rc0). Please run `fern upgrade` to upgrade your CLI version and use this generator."
             }
         ];
 

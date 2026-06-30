@@ -209,11 +209,11 @@ sdks:
                 expect(result.workspace.sdks?.targets).toHaveLength(2);
 
                 const pythonTarget = result.workspace.sdks?.targets.find((t) => t.name === "python");
-                expect(pythonTarget?.image).toBe("fernapi/fern-python-sdk");
+                expect(pythonTarget?.image).toBe("fernenterprise/fern-python-sdk");
                 expect(pythonTarget?.version).toBe("1.0.0");
 
                 const tsTarget = result.workspace.sdks?.targets.find((t) => t.name === "typescript");
-                expect(tsTarget?.image).toBe("fernapi/fern-typescript-sdk");
+                expect(tsTarget?.image).toBe("fernenterprise/fern-typescript-sdk");
                 expect(tsTarget?.version).toBe("2.0.0");
             }
         });

@@ -15,7 +15,7 @@ describe("GeneratorRunCollector", () => {
         collector.recordSuccess({
             apiName: "foo",
             groupName: "python-sdk",
-            generatorName: "fernapi/fern-python-sdk",
+            generatorName: "fernenterprise/fern-python-sdk",
             version: "0.1.0",
             durationMs: 10,
             pullRequestUrl: undefined,
@@ -29,7 +29,7 @@ describe("GeneratorRunCollector", () => {
         expect(result).toMatchObject({
             apiName: "foo",
             groupName: "python-sdk",
-            generatorName: "fernapi/fern-python-sdk",
+            generatorName: "fernenterprise/fern-python-sdk",
             status: "success",
             skipReason: null,
             version: "0.1.0",
@@ -99,7 +99,7 @@ describe("GeneratorRunCollector", () => {
         collector.recordFailure({
             apiName: "foo",
             groupName: "go-sdk",
-            generatorName: "fernapi/fern-go-sdk",
+            generatorName: "fernenterprise/fern-go-sdk",
             errorMessage: "boom",
             durationMs: 5,
             outputRepoUrl: undefined,
@@ -122,7 +122,7 @@ describe("GeneratorRunCollector", () => {
         collector.recordSkipped({
             apiName: "foo",
             groupName: "internal-sdk",
-            generatorName: "fernapi/fern-typescript-node-sdk",
+            generatorName: "fernenterprise/fern-typescript-node-sdk",
             reason: "local_output",
             outputRepoUrl: undefined,
             generatorsYmlAbsolutePath: undefined,

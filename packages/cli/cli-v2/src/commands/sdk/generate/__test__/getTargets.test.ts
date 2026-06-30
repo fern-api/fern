@@ -14,7 +14,7 @@ function makeTarget(name: string, groups?: string[]): Target {
     return {
         name,
         api: "api",
-        image: `fernapi/fern-${name}-sdk`,
+        image: `fernenterprise/fern-${name}-sdk`,
         registry: undefined,
         lang: "typescript",
         version: "1.0.0",

@@ -11,7 +11,7 @@ describe("fern add", () => {
             await runFernCli(["add", generator], { cwd: pathOfDirectory, signal });
         };
 
-        await add("fernapi/fern-java-sdk");
+        await add("fernenterprise/fern-java-sdk");
         await add("fern-postman");
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).not.toBeNull();

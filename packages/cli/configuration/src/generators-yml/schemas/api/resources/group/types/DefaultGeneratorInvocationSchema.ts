@@ -4,9 +4,9 @@ import type * as GeneratorsYml from "../../../index.js";
 
 /**
  * A generator invocation that uses a well-known generator name
- * (e.g., `fernapi/fern-typescript-sdk`) and pulls from Docker Hub.
+ * (e.g., `fernenterprise/fern-typescript-sdk`) and pulls from Docker Hub.
  */
 export interface DefaultGeneratorInvocationSchema extends GeneratorsYml.BaseGeneratorInvocationSchema {
-    /** The generator name (e.g., `fernapi/fern-typescript-sdk`). */
+    /** The generator name (e.g., `fernenterprise/fern-typescript-sdk`). */
     name: string;
 }

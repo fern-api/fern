@@ -49,7 +49,7 @@ describe("loadRawGeneratorsConfiguration", () => {
             "groups:",
             "  my-group:",
             "    generators:",
-            "      - name: fernapi/fern-typescript-node-sdk",
+            "      - name: fernenterprise/fern-typescript-node-sdk",
             "        version: 0.0.1",
             "        output:",
             "          location: npm",

@@ -101,7 +101,7 @@ async function getDefaultGeneratorsConfiguration({
     apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     // Use the full name for lookups, but the shorthand name for the generated config
-    const defaultGeneratorFullName = "fernapi/fern-typescript-sdk";
+    const defaultGeneratorFullName = "fernenterprise/fern-typescript-sdk";
     const defaultGeneratorShortName = "fern-typescript-sdk";
     const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorFullName];
 

@@ -5,7 +5,7 @@ api:
 groups:
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: latest
         config:
           generateWireTests: true

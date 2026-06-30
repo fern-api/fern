@@ -92,7 +92,7 @@ describe("Migrator", () => {
             `groups:
   sdk:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 1.0.0
         output:
           location: local-file-system
@@ -521,14 +521,14 @@ groups: {}
 groups:
   staging:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 1.0.0
         output:
           location: local-file-system
           path: ./py
   production:
     generators:
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 2.0.0
         output:
           location: local-file-system

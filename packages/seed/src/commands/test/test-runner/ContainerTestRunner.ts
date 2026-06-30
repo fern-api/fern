@@ -250,7 +250,7 @@ export class ContainerTestRunner extends TestRunner {
         });
     }
 
-    /** Returns the original image string from the test config (e.g. `fernapi/fern-python-sdk:latest`). */
+    /** Returns the original image string from the test config (e.g. `fernenterprise/fern-python-sdk:latest`). */
     private getOriginalImageFromConfig(): string {
         const testConfig =
             this.runner === "podman" && this.generator.workspaceConfig.test.podman != null

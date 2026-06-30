@@ -102,7 +102,7 @@ types:
         docs: The version of the Fern CLI that generated this IR.
       generatorName:
         type: string
-        docs: The name of the generator being invoked (e.g., "fernapi/fern-python-sdk").
+        docs: The name of the generator being invoked (e.g., "fernenterprise/fern-python-sdk").
       generatorVersion:
         type: string
         docs: The version of the generator being invoked.

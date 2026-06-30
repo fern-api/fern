@@ -13,7 +13,7 @@ function makeTarget(lang: Target["lang"], overrides: Partial<Omit<Target, "lang"
     return {
         name: lang,
         api: "api",
-        image: `fernapi/fern-${lang}-sdk`,
+        image: `fernenterprise/fern-${lang}-sdk`,
         registry: undefined,
         lang,
         version: "1.0.0",

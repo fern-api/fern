@@ -66,24 +66,24 @@ export interface RawReadmeConfig extends Partial<generatorsYml.ReadmeSchema> {
  */
 const DOCKER_IMAGE_TO_LANGUAGE: Record<string, schemas.SdkTargetLanguageSchema> = {
     // Client SDKs
-    "fernapi/fern-csharp-sdk": "csharp",
-    "fernapi/fern-go-sdk": "go",
-    "fernapi/fern-java-sdk": "java",
-    "fernapi/fern-php-sdk": "php",
-    "fernapi/fern-python-sdk": "python",
-    "fernapi/fern-ruby-sdk": "ruby",
-    "fernapi/fern-rust-sdk": "rust",
-    "fernapi/fern-swift-sdk": "swift",
-    "fernapi/fern-typescript-sdk": "typescript",
+    "fernenterprise/fern-csharp-sdk": "csharp",
+    "fernenterprise/fern-go-sdk": "go",
+    "fernenterprise/fern-java-sdk": "java",
+    "fernenterprise/fern-php-sdk": "php",
+    "fernenterprise/fern-python-sdk": "python",
+    "fernenterprise/fern-ruby-sdk": "ruby",
+    "fernenterprise/fern-rust-sdk": "rust",
+    "fernenterprise/fern-swift-sdk": "swift",
+    "fernenterprise/fern-typescript-sdk": "typescript",
 
     // Server stubs
-    "fernapi/fern-typescript-express": "typescript",
-    "fernapi/fern-fastapi-server": "python",
-    "fernapi/fern-java-spring": "java",
+    "fernenterprise/fern-typescript-express": "typescript",
+    "fernenterprise/fern-fastapi-server": "python",
+    "fernenterprise/fern-java-spring": "java",
 
     // Legacy/alternative names
-    "fernapi/fern-typescript-node-sdk": "typescript",
-    "fernapi/fern-typescript-browser-sdk": "typescript"
+    "fernenterprise/fern-typescript-node-sdk": "typescript",
+    "fernenterprise/fern-typescript-browser-sdk": "typescript"
 };
 
 export interface ConvertSdkTargetsResult {

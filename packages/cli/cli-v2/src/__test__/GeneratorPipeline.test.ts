@@ -19,7 +19,7 @@ function makeTarget(overrides: Partial<Target>): Target {
     return {
         name: "test-target",
         api: "api",
-        image: "fernapi/fern-typescript-sdk",
+        image: "fernenterprise/fern-typescript-sdk",
         registry: undefined,
         lang: "typescript",
         version: "1.0.0",
@@ -94,10 +94,10 @@ describe("GeneratorPipeline", () => {
             expect(
                 buildContainerImage({
                     registry: undefined,
-                    image: "fernapi/fern-typescript-sdk",
+                    image: "fernenterprise/fern-typescript-sdk",
                     version: "2.3.4"
                 })
-            ).toBe("fernapi/fern-typescript-sdk:2.3.4");
+            ).toBe("fernenterprise/fern-typescript-sdk:2.3.4");
         });
 
         it("handles localhost registry for local testing", () => {

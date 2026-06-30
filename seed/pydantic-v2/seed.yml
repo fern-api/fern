@@ -1,10 +1,10 @@
 irVersion: v66
 displayName: Pydantic Model
-image: fernapi/fern-pydantic-model-v2
+image: fernenterprise/fern-pydantic-model-v2
 changelogLocation: ../../generators/python/pydantic/versions.yml
 test:
   docker:
-    image: fernapi/fern-pydantic-model-v2:latest
+    image: fernenterprise/fern-pydantic-model-v2:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-pydantic-model
 
 language: python

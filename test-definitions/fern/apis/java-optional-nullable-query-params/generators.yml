@@ -2,7 +2,7 @@
 groups:
   java-sdk:
     generators:
-      - name: fernapi/fern-java-sdk
+      - name: fernenterprise/fern-java-sdk
         version: latest
         output:
           location: local-file-system

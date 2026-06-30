@@ -13,7 +13,7 @@ describe("shouldSkipMissingGenerator", () => {
             expect(
                 shouldSkipMissingGenerator({
                     automation: undefined,
-                    generatorName: "fernapi/fern-python-sdk",
+                    generatorName: "fernenterprise/fern-python-sdk",
                     generatorIndex: undefined
                 })
             ).toBe(false);
@@ -32,7 +32,7 @@ describe("shouldSkipMissingGenerator", () => {
             expect(
                 shouldSkipMissingGenerator({
                     automation: automationOn,
-                    generatorName: "fernapi/fern-python-sdk",
+                    generatorName: "fernenterprise/fern-python-sdk",
                     generatorIndex: undefined
                 })
             ).toBe(true);

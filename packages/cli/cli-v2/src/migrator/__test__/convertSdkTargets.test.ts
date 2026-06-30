@@ -19,7 +19,7 @@ describe("convertSdkTargets", () => {
                 "my-sdk": {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             output: {
                                 location: "local-file-system",
@@ -48,7 +48,7 @@ describe("convertSdkTargets", () => {
                 staging: {
                     generators: [
                         {
-                            name: "fernapi/fern-python-sdk",
+                            name: "fernenterprise/fern-python-sdk",
                             version: "2.0.0",
                             output: {
                                 location: "local-file-system",
@@ -79,7 +79,7 @@ describe("convertSdkTargets", () => {
                 alpha: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             output: { location: "local-file-system", path: "./ts" }
                         }
@@ -88,7 +88,7 @@ describe("convertSdkTargets", () => {
                 beta: {
                     generators: [
                         {
-                            name: "fernapi/fern-python-sdk",
+                            name: "fernenterprise/fern-python-sdk",
                             version: "2.0.0",
                             output: { location: "local-file-system", path: "./py" }
                         }
@@ -110,7 +110,7 @@ describe("convertSdkTargets", () => {
                 staging: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             output: { location: "local-file-system", path: "./ts1" }
                         }
@@ -119,7 +119,7 @@ describe("convertSdkTargets", () => {
                 production: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "2.0.0",
                             output: { location: "local-file-system", path: "./ts2" }
                         }
@@ -164,7 +164,7 @@ describe("convertSdkTargets", () => {
                 sdk: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             config: { streamType: "sse", fetchSupport: "node-fetch" },
                             output: { location: "local-file-system", path: "./ts" }
@@ -188,7 +188,7 @@ describe("convertSdkTargets", () => {
                 sdk: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             output: {
                                 location: "npm",
@@ -217,7 +217,7 @@ describe("convertSdkTargets", () => {
                 sdk: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             output: { location: "local-file-system", path: "./ts" }
                         }
@@ -244,7 +244,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 staging: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             output: { location: "local-file-system", path: "./ts" }
                         }
@@ -270,7 +270,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 sdk: {
                     generators: [
                         {
-                            image: { name: "fernapi/fern-typescript-sdk", registry: "docker.io" },
+                            image: { name: "fernenterprise/fern-typescript-sdk", registry: "docker.io" },
                             version: "1.0.0",
                             output: { location: "local-file-system", path: "./ts" }
                         }
@@ -288,7 +288,7 @@ describe("convertSdkTargetsFromRaw", () => {
         expect(target?.image).toBeDefined();
         expect(typeof target?.image).toBe("object");
         const img = target?.image as { name: string; registry: string } | undefined;
-        expect(img?.name).toBe("fernapi/fern-typescript-sdk");
+        expect(img?.name).toBe("fernenterprise/fern-typescript-sdk");
     });
 
     it("warns when generator has no name or image", () => {
@@ -319,7 +319,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 sdk: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "1.0.0",
                             output: {
                                 git: {
@@ -354,7 +354,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 "python-sdk": {
                     generators: [
                         {
-                            name: "fernapi/fern-python-sdk",
+                            name: "fernenterprise/fern-python-sdk",
                             version: "4.64.1",
                             output: { location: "pypi", "package-name": "schematichq", token: "${PYPI_TOKEN}" },
                             metadata: { license: "MIT" },
@@ -379,7 +379,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 "java-sdk": {
                     generators: [
                         {
-                            name: "fernapi/fern-java-sdk",
+                            name: "fernenterprise/fern-java-sdk",
                             version: "3.44.6",
                             output: { location: "local-file-system", path: "./java" },
                             metadata: {
@@ -407,7 +407,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 sdk: {
                     generators: [
                         {
-                            name: "fernapi/fern-java-sdk",
+                            name: "fernenterprise/fern-java-sdk",
                             version: "3.44.6",
                             output: { location: "local-file-system", path: "./java" },
                             metadata: { "reference-url": "https://schematichq.com" }
@@ -431,7 +431,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 sdk: {
                     generators: [
                         {
-                            name: "fernapi/fern-typescript-sdk",
+                            name: "fernenterprise/fern-typescript-sdk",
                             version: "3.60.9",
                             "smart-casing": true,
                             output: { location: "local-file-system", path: "./ts" }
@@ -456,7 +456,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 "python-sdk": {
                     generators: [
                         {
-                            name: "fernapi/fern-python-sdk",
+                            name: "fernenterprise/fern-python-sdk",
                             version: "4.64.1",
                             output: { location: "pypi", "package-name": "schematichq", token: "${PYPI_TOKEN}" },
                             metadata: { license: "MIT" },
@@ -468,7 +468,7 @@ describe("convertSdkTargetsFromRaw", () => {
                 "java-sdk": {
                     generators: [
                         {
-                            name: "fernapi/fern-java-sdk",
+                            name: "fernenterprise/fern-java-sdk",
                             version: "3.44.6",
                             output: {
                                 location: "maven",

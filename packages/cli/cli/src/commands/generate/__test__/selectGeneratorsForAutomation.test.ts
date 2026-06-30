@@ -262,9 +262,9 @@ describe("buildAutomationTargeting", () => {
     });
 
     it("returns name when only name is set", () => {
-        expect(buildAutomationTargeting({ generatorIndex: undefined, generatorName: "fernapi/foo" })).toEqual({
+        expect(buildAutomationTargeting({ generatorIndex: undefined, generatorName: "fernenterprise/foo" })).toEqual({
             type: "name",
-            name: "fernapi/foo"
+            name: "fernenterprise/foo"
         });
     });
 

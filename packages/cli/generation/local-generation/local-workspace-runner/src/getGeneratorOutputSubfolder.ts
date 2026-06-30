@@ -1,6 +1,6 @@
 /**
  * Derives a filesystem-safe subfolder name from a generator name.
- * e.g. "fernapi/fern-typescript-sdk" → "fern-typescript-sdk"
+ * e.g. "fernenterprise/fern-typescript-sdk" → "fern-typescript-sdk"
  */
 export function getGeneratorOutputSubfolder(generatorName: string): string {
     const baseName = generatorName.split("/").pop() || "sdk";

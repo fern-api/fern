@@ -3,7 +3,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 3.49.0
         output:
           location: local-file-system
@@ -17,7 +17,7 @@ groups:
         smart-casing: false
   sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernenterprise/fern-typescript-node-sdk
         version: 0.51.4
         output:
           location: npm
@@ -27,7 +27,7 @@ groups:
           includeUtilsOnUnionMembers: true
           useBrandedStringAliases: true
         smart-casing: false
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 4.2.8
         output:
           location: pypi
@@ -36,7 +36,7 @@ groups:
         config:
           package_name: generatorcli
         smart-casing: false
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: 1.33.2
         github:
           repository: fern-api/generator-cli-go

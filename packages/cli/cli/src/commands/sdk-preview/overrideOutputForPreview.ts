@@ -4,9 +4,9 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 export const PREVIEW_REGISTRY_URL = process.env.FERN_PREVIEW_REGISTRY_URL ?? "https://npm.buildwithfern.com";
 
 const SUPPORTED_TYPESCRIPT_GENERATORS = new Set([
-    "fernapi/fern-typescript-node-sdk",
-    "fernapi/fern-typescript-browser-sdk",
-    "fernapi/fern-typescript-sdk"
+    "fernenterprise/fern-typescript-node-sdk",
+    "fernenterprise/fern-typescript-browser-sdk",
+    "fernenterprise/fern-typescript-sdk"
 ]);
 
 /**

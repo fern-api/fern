@@ -58,7 +58,7 @@ function emptyContext(): PipelineContext {
 }
 
 const baseConfig: VerifyStepConfig = { enabled: true };
-const generatorName = "fernapi/fern-typescript-sdk";
+const generatorName = "fernenterprise/fern-typescript-sdk";
 const generatorVersions = { [generatorName]: "3.70.2" };
 const expectedValidatorImage = `${generatorName}-validator:3.70.2`;
 

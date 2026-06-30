@@ -2,7 +2,7 @@
 groups:
   go-sdk:
     generators:
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: latest
         github:
           token: ${GITHUB_TOKEN}

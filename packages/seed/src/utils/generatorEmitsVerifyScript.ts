@@ -9,14 +9,14 @@
  * generators - add each one to this set as they ship.
  */
 const GENERATORS_EMITTING_VERIFY_SCRIPT = new Set<string>([
-    "fernapi/fern-typescript-sdk",
-    "fernapi/fern-typescript-node-sdk"
+    "fernenterprise/fern-typescript-sdk",
+    "fernenterprise/fern-typescript-node-sdk"
 ]);
 
 /**
  * Returns true when the generator identified by `dockerImageName` is known to
  * emit `.fern/verify.sh` after generation. `dockerImageName` is the repository
- * portion of the docker reference (no tag), e.g. `"fernapi/fern-typescript-sdk"`.
+ * portion of the docker reference (no tag), e.g. `"fernenterprise/fern-typescript-sdk"`.
  */
 export function generatorEmitsVerifyScript(dockerImageName: string): boolean {
     return GENERATORS_EMITTING_VERIFY_SCRIPT.has(dockerImageName);

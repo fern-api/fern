@@ -14,8 +14,8 @@ const VERIFY_SCRIPT_CONTAINER_PATH = `${CONTAINER_WORKSPACE_PATH}/${VERIFY_SCRIP
 /**
  * Runs `.fern/verify.sh` (when emitted by the generator) inside a language-specific
  * validator container. The validator image follows the convention
- * `{generatorImage}-validator:{version}` — for `fernapi/fern-typescript-sdk:3.70.2`
- * the validator is `fernapi/fern-typescript-sdk-validator:3.70.2`.
+ * `{generatorImage}-validator:{version}` — for `fernenterprise/fern-typescript-sdk:3.70.2`
+ * the validator is `fernenterprise/fern-typescript-sdk-validator:3.70.2`.
  *
  * No-ops when `.fern/verify.sh` is absent (only the TypeScript SDK generator emits
  * it today; other languages will follow up via FER-9681). When the script runs and

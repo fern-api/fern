@@ -13,6 +13,7 @@ export {
     DEFAULT_DOCKER_ORG,
     getGeneratorNameOrThrow,
     INCORRECT_DOCKER_ORG,
+    LEGACY_DOCKER_ORG,
     normalizeGeneratorName,
     removeDefaultDockerOrgIfPresent
 } from "./getGeneratorName.js";

@@ -24,9 +24,9 @@ export async function addGenerator({
     context: TaskContext;
     cliVersion: string;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
-    // Normalize the generator name for lookups (adds fernapi/ if not present)
+    // Normalize the generator name for lookups (adds fernenterprise/ if not present)
     const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
-    // Use shorthand name (without fernapi/) for writing to config
+    // Use shorthand name (without fernenterprise/) for writing to config
     const shorthandGeneratorName = removeDefaultDockerOrgIfPresent(normalizedGeneratorName);
 
     const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];

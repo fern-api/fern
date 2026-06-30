@@ -12,15 +12,15 @@ vi.mock("@fern-api/configuration-loader", () => ({
     getPathToGeneratorsConfiguration: vi.fn(),
     normalizeGeneratorName: vi.fn((name: string) => {
         if (!name.includes("/")) {
-            name = `fernapi/${name}`;
+            name = `fernenterprise/${name}`;
         }
         const knownGenerators = [
-            "fernapi/fern-typescript-sdk",
-            "fernapi/fern-python-sdk",
-            "fernapi/fern-java-sdk",
-            "fernapi/fern-java-model",
-            "fernapi/fern-csharp-sdk",
-            "fernapi/fern-go-sdk"
+            "fernenterprise/fern-typescript-sdk",
+            "fernenterprise/fern-python-sdk",
+            "fernenterprise/fern-java-sdk",
+            "fernenterprise/fern-java-model",
+            "fernenterprise/fern-csharp-sdk",
+            "fernenterprise/fern-go-sdk"
         ];
         if (knownGenerators.includes(name)) {
             return name;
@@ -30,7 +30,7 @@ vi.mock("@fern-api/configuration-loader", () => ({
     getLatestGeneratorVersion: vi.fn(),
     addDefaultDockerOrgIfNotPresent: vi.fn((name: string) => {
         if (!name.includes("/")) {
-            return `fernapi/${name}`;
+            return `fernenterprise/${name}`;
         }
         return name;
     }),
@@ -70,7 +70,7 @@ groups:
   production:
     generators:
       # This is the TypeScript SDK generator
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 1.0.0
         # Configuration section
         config:
@@ -79,7 +79,7 @@ groups:
           # Whether to use branded types
           useBrandedStringAliases: true
       # This is the Python SDK generator
-      - name: fernapi/fern-python-sdk
+      - name: fernenterprise/fern-python-sdk
         version: 2.0.0
         config:
           clientClassName: MyClient
@@ -93,7 +93,7 @@ groups:
         // Mock getLatestGeneratorVersion to return new versions
         const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
         vi.mocked(getLatestGeneratorVersion).mockImplementation(async ({ generatorName }) => {
-            if (generatorName === "fernapi/fern-typescript-sdk") {
+            if (generatorName === "fernenterprise/fern-typescript-sdk") {
                 return "1.5.0";
             }
             return undefined; // Python SDK stays at 2.0.0
@@ -103,7 +103,7 @@ groups:
         const { loadAndRunMigrations } = await import("../migrations");
         vi.mocked(loadAndRunMigrations).mockResolvedValue({
             config: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "1.5.0",
                 config: {
                     packageName: "my-sdk",
@@ -169,7 +169,7 @@ groups:
         const yamlContent = `groups:
   production:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 1.0.0
         deprecated-field: old-value
         config:
@@ -187,7 +187,7 @@ groups:
         const { loadAndRunMigrations } = await import("../migrations");
         vi.mocked(loadAndRunMigrations).mockResolvedValue({
             config: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "2.0.0",
                 config: {
                     packageName: "my-sdk"
@@ -227,7 +227,7 @@ groups:
         const yamlContent = `groups:
   production:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 1.0.0
 `;
 
@@ -242,7 +242,7 @@ groups:
         const { loadAndRunMigrations } = await import("../migrations");
         vi.mocked(loadAndRunMigrations).mockResolvedValue({
             config: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "2.0.0",
                 github: {
                     repository: "my-org/my-repo"
@@ -282,7 +282,7 @@ groups:
         const yamlContent = `groups:
   production:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 1.0.0
         output:
           location: npm
@@ -301,7 +301,7 @@ groups:
         const { loadAndRunMigrations } = await import("../migrations");
         vi.mocked(loadAndRunMigrations).mockResolvedValue({
             config: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "1.5.0",
                 output: {
                     location: "npm",

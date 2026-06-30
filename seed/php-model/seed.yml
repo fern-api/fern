@@ -1,6 +1,6 @@
 irVersion: v66
 displayName: PHP Model
-image: fernapi/fern-php-model
+image: fernenterprise/fern-php-model
 # This generator is no longer actively supported. The workspace is retained for
 # historical reference but seed tests, publishing, and builds are skipped.
 disabled: true
@@ -10,7 +10,7 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/php-model
   docker:
     file: ./generators/php/model/Dockerfile
-    image: fernapi/fern-php-model
+    image: fernenterprise/fern-php-model
     context: .
   sentry:
     name: fern-php-model
@@ -19,10 +19,10 @@ publish:
       - dir: generators/php/model/dist
 test:
   docker:
-    image: fernapi/fern-php-model:latest
+    image: fernenterprise/fern-php-model:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/php-model
   podman:
-    image: fernapi/fern-php-model:latest
+    image: fernenterprise/fern-php-model:latest
     command: pnpm turbo run podmanTagLatest --filter @fern-api/php-model
   local:
     workingDirectory: generators/php

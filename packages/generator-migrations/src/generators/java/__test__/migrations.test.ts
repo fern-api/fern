@@ -15,7 +15,7 @@ const mockLogger: Logger = {
 } as unknown as Logger;
 
 const createBaseConfig = (configOverrides?: Record<string, unknown>): generatorsYml.GeneratorInvocationSchema => ({
-    name: "fernapi/fern-java-sdk",
+    name: "fernenterprise/fern-java-sdk",
     version: "1.9.0",
     config: configOverrides
 });
@@ -354,7 +354,7 @@ describe("Java SDK Migrations", () => {
     describe("edge cases", () => {
         it("handles null config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-java-sdk",
+                name: "fernenterprise/fern-java-sdk",
                 version: "1.9.0",
                 config: null
             };
@@ -371,7 +371,7 @@ describe("Java SDK Migrations", () => {
 
         it("handles missing config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-java-sdk",
+                name: "fernenterprise/fern-java-sdk",
                 version: "1.9.0"
             };
 

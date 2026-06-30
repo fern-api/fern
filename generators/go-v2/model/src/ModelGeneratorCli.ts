@@ -44,7 +44,7 @@ export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigS
     }
 
     private generateDocs(context: ModelGeneratorContext): void {
-        // TODO: This is a temporary, in-development solution for the fernapi/fern-go-model generator.
+        // TODO: This is a temporary, in-development solution for the fernenterprise/fern-go-model generator.
         // Once all of the model generator is built out, this can safely be removed. This has no impact
         // on any user-facing functionality.
         context.project.addRawFiles(

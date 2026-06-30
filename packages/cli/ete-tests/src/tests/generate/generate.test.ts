@@ -7,7 +7,7 @@ import { runFernCli } from "../../utils/runFernCli.js";
 import { init } from "../init/init.js";
 
 // Pinned to a published TypeScript SDK generator version that has a matching
-// `fernapi/fern-typescript-sdk-validator:<version>` image on Docker Hub. The
+// `fernenterprise/fern-typescript-sdk-validator:<version>` image on Docker Hub. The
 // version `fern init` resolves via FDR predates the validator image, so
 // without this pin VerificationStep would not have an image to pull.
 const TS_SDK_GENERATOR_VERSION_WITH_VERIFY = "3.70.2";

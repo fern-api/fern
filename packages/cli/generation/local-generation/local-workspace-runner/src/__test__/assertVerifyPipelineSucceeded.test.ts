@@ -3,7 +3,7 @@ import { CliError } from "@fern-api/task-context";
 import { describe, expect, it } from "vitest";
 import { assertVerifyPipelineSucceeded } from "../assertVerifyPipelineSucceeded.js";
 
-const GENERATOR_NAME = "fernapi/fern-typescript-sdk";
+const GENERATOR_NAME = "fernenterprise/fern-typescript-sdk";
 
 function makeVerifyResult(overrides: Partial<VerificationStepResult> = {}): VerificationStepResult {
     return {
@@ -71,7 +71,9 @@ describe("assertVerifyPipelineSucceeded", () => {
         const result: PipelineResult = {
             success: false,
             steps: {},
-            errors: ["verify step error: Unable to find image 'fernapi/fern-typescript-sdk-validator:latest' locally"]
+            errors: [
+                "verify step error: Unable to find image 'fernenterprise/fern-typescript-sdk-validator:latest' locally"
+            ]
         };
 
         expect(() => assertVerifyPipelineSucceeded(result, GENERATOR_NAME)).toThrowError(CliError);

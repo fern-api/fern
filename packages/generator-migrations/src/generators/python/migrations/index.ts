@@ -9,7 +9,7 @@ import { migration_6_0_0 } from "./6.0.0.js";
  *
  * This module contains migrations for configuration changes for
  * the Python SDK generator:
- * - fernapi/fern-python-sdk
+ * - fernenterprise/fern-python-sdk
  *
  * Each migration is defined in a separate file under this directory.
  * Migrations are automatically applied by the Fern CLI when running:

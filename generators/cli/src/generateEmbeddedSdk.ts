@@ -30,7 +30,7 @@ import { mkdir, readFile, rm, unlink, writeFile } from "fs/promises";
 import path from "path";
 
 /** Name used for IR migration target resolution. */
-const RUST_SDK_GENERATOR_NAME = "fernapi/fern-rust-sdk";
+const RUST_SDK_GENERATOR_NAME = "fernenterprise/fern-rust-sdk";
 /** Version used for IR migration target resolution. */
 const RUST_SDK_GENERATOR_VERSION = "0.0.0";
 

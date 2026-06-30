@@ -49,7 +49,7 @@ const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
 
 /**
  * Derives the changelog URL from a generator name.
- * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
+ * Generator names follow the pattern "fernenterprise/fern-<language>-sdk[-variant]",
  * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
  */
 function getChangelogUrl(generatorName: string): string | undefined {
@@ -458,7 +458,7 @@ export async function upgradeGenerator({
                             )
                         );
                     }
-                    // Use normalized name for changelog lookup since the map uses fernapi/... keys
+                    // Use normalized name for changelog lookup since the map uses fernenterprise/... keys
                     const changelogUrl = getChangelogUrl(addDefaultDockerOrgIfNotPresent(upgrade.generatorName));
                     if (changelogUrl != null) {
                         cliContext.logger.info(chalk.dim(`    Changelog: ${changelogUrl}`));
@@ -535,7 +535,7 @@ export async function upgradeGenerator({
                     ? `fern generator upgrade --generator ${upgrade.generatorName} --include-major`
                     : `fern generator upgrade --include-major`;
             cliContext.logger.info(chalk.yellow(`    Run: ${upgradeCommand}`));
-            // Use normalized name for changelog lookup since the map uses fernapi/... keys
+            // Use normalized name for changelog lookup since the map uses fernenterprise/... keys
             const changelogUrl = getChangelogUrl(addDefaultDockerOrgIfNotPresent(upgrade.generatorName));
             if (changelogUrl != null) {
                 cliContext.logger.info(chalk.yellow(`    Changelog: ${changelogUrl}`));

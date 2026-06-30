@@ -1,0 +1,5 @@
+- summary: |
+    Migrate Docker Hub org from fernapi to fernenterprise. The CLI now uses
+    fernenterprise/ as the default Docker org for generator images. Existing
+    configs using fernapi/ are automatically normalized for backward compatibility.
+  type: chore

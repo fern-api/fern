@@ -2,14 +2,14 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-java-sdk
+      - name: fernenterprise/fern-java-sdk
         version: 3.8.10
         output:
           location: local-file-system
           path: ../../..
   php-sdk:
     generators:
-      - name: fernapi/fern-php-sdk
+      - name: fernenterprise/fern-php-sdk
         version: latest
         ir-version: v61
         github:
@@ -19,7 +19,7 @@ groups:
           branch: undiscriminated-union-with-response-property
   go-sdk:
     generators:
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: latest
         ir-version: v61
         github:

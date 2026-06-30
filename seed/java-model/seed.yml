@@ -4,7 +4,7 @@ displayName: Java Model
 # historical reference but seed tests, publishing, and builds are skipped.
 disabled: true
 changelogLocation: ../../generators/java/model/versions.yml
-image: fernapi/fern-java-model
+image: fernenterprise/fern-java-model
 
 buildScripts:
   compileScript:
@@ -17,21 +17,21 @@ publish:
     - ./gradlew :model:distTar
   docker:
     file: ./generators/java/model/Dockerfile
-    image: fernapi/fern-java-model
+    image: fernenterprise/fern-java-model
     context: ./generators/java/model
 test:
   docker:
-    image: fernapi/fern-java-model:latest
+    image: fernenterprise/fern-java-model:latest
     command:
       - cd generators/java
       - ./gradlew :model:distTar
-      - docker build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
+      - docker build -f model/Dockerfile -t fernenterprise/fern-java-model:latest model/
   podman:
-    image: fernapi/fern-java-model:latest
+    image: fernenterprise/fern-java-model:latest
     command:
       - cd generators/java
       - ./gradlew :model:distTar
-      - podman build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
+      - podman build -f model/Dockerfile -t fernenterprise/fern-java-model:latest model/
   local:
     workingDirectory: generators/java
     buildCommand:
@@ -45,7 +45,7 @@ language: java
 generatorType: Model
 defaultOutputMode: github
 scripts:
-  - image: fernapi/java-seed
+  - image: fernenterprise/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 fixtures:

@@ -3,7 +3,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 3.49.0
         output:
           location: local-file-system
@@ -16,7 +16,7 @@ groups:
         smart-casing: false
   sdks:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernenterprise/fern-typescript-sdk
         version: 3.49.0
         output:
           location: npm

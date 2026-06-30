@@ -11,10 +11,10 @@ describe("@fern-api/generator-migrations", () => {
 
         it("includes TypeScript SDK migration entries", () => {
             const typescriptGenerators = [
-                "fernapi/fern-typescript",
-                "fernapi/fern-typescript-sdk",
-                "fernapi/fern-typescript-node-sdk",
-                "fernapi/fern-typescript-browser-sdk"
+                "fernenterprise/fern-typescript",
+                "fernenterprise/fern-typescript-sdk",
+                "fernenterprise/fern-typescript-node-sdk",
+                "fernenterprise/fern-typescript-browser-sdk"
             ];
 
             for (const generatorName of typescriptGenerators) {
@@ -25,10 +25,10 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("all TypeScript variants share the same migration module", () => {
-            const typescriptModule1 = migrations["fernapi/fern-typescript"];
-            const typescriptModule2 = migrations["fernapi/fern-typescript-sdk"];
-            const typescriptModule3 = migrations["fernapi/fern-typescript-node-sdk"];
-            const typescriptModule4 = migrations["fernapi/fern-typescript-browser-sdk"];
+            const typescriptModule1 = migrations["fernenterprise/fern-typescript"];
+            const typescriptModule2 = migrations["fernenterprise/fern-typescript-sdk"];
+            const typescriptModule3 = migrations["fernenterprise/fern-typescript-node-sdk"];
+            const typescriptModule4 = migrations["fernenterprise/fern-typescript-browser-sdk"];
 
             expect(typescriptModule1).toBe(typescriptModule2);
             expect(typescriptModule2).toBe(typescriptModule3);
@@ -36,7 +36,7 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("TypeScript migrations have correct structure", () => {
-            const module = migrations["fernapi/fern-typescript-sdk"];
+            const module = migrations["fernenterprise/fern-typescript-sdk"];
 
             expect(module).toBeDefined();
             expect(module?.migrations).toBeDefined();
@@ -54,7 +54,7 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("TypeScript migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-typescript-sdk"];
+            const module = migrations["fernenterprise/fern-typescript-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["1.0.0", "2.0.0", "3.0.0", "4.0.0"]);
@@ -63,13 +63,13 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("C# SDK migrations", () => {
         it("includes C# SDK migration entries", () => {
-            expect(migrations["fernapi/fern-csharp-sdk"]).toBeDefined();
-            expect(migrations["fernapi/fern-csharp-sdk"]?.migrations).toBeDefined();
-            expect(Array.isArray(migrations["fernapi/fern-csharp-sdk"]?.migrations)).toBe(true);
+            expect(migrations["fernenterprise/fern-csharp-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-csharp-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernenterprise/fern-csharp-sdk"]?.migrations)).toBe(true);
         });
 
         it("C# migrations have correct structure", () => {
-            const module = migrations["fernapi/fern-csharp-sdk"];
+            const module = migrations["fernenterprise/fern-csharp-sdk"];
 
             expect(module).toBeDefined();
             expect(module?.migrations.length).toBeGreaterThan(0);
@@ -82,7 +82,7 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("C# migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-csharp-sdk"];
+            const module = migrations["fernenterprise/fern-csharp-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["1.0.0", "2.0.0", "3.0.0"]);
@@ -91,13 +91,13 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("Go SDK migrations", () => {
         it("includes Go SDK migration entries", () => {
-            expect(migrations["fernapi/fern-go-sdk"]).toBeDefined();
-            expect(migrations["fernapi/fern-go-sdk"]?.migrations).toBeDefined();
-            expect(Array.isArray(migrations["fernapi/fern-go-sdk"]?.migrations)).toBe(true);
+            expect(migrations["fernenterprise/fern-go-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-go-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernenterprise/fern-go-sdk"]?.migrations)).toBe(true);
         });
 
         it("Go SDK migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-go-sdk"];
+            const module = migrations["fernenterprise/fern-go-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["1.0.0"]);
@@ -106,13 +106,13 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("Java SDK migrations", () => {
         it("includes Java SDK migration entries", () => {
-            expect(migrations["fernapi/fern-java-sdk"]).toBeDefined();
-            expect(migrations["fernapi/fern-java-sdk"]?.migrations).toBeDefined();
-            expect(Array.isArray(migrations["fernapi/fern-java-sdk"]?.migrations)).toBe(true);
+            expect(migrations["fernenterprise/fern-java-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-java-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernenterprise/fern-java-sdk"]?.migrations)).toBe(true);
         });
 
         it("Java SDK migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-java-sdk"];
+            const module = migrations["fernenterprise/fern-java-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["2.0.0", "3.0.0", "4.0.0"]);
@@ -121,7 +121,7 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("Java Model migrations", () => {
         it("includes Java Model migration entries", () => {
-            const javaModelGenerators = ["fernapi/fern-java-model", "fernapi/fern-java-spring"];
+            const javaModelGenerators = ["fernenterprise/fern-java-model", "fernenterprise/fern-java-spring"];
 
             for (const generatorName of javaModelGenerators) {
                 expect(migrations[generatorName]).toBeDefined();
@@ -131,14 +131,14 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("Java Model and Spring share the same migration module", () => {
-            const javaModelModule = migrations["fernapi/fern-java-model"];
-            const javaSpringModule = migrations["fernapi/fern-java-spring"];
+            const javaModelModule = migrations["fernenterprise/fern-java-model"];
+            const javaSpringModule = migrations["fernenterprise/fern-java-spring"];
 
             expect(javaModelModule).toBe(javaSpringModule);
         });
 
         it("Java Model migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-java-model"];
+            const module = migrations["fernenterprise/fern-java-model"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["1.0.0"]);
@@ -148,9 +148,9 @@ describe("@fern-api/generator-migrations", () => {
     describe("Python SDK migrations", () => {
         it("includes Python SDK migration entries", () => {
             const pythonGenerators = [
-                "fernapi/fern-python-sdk",
-                "fernapi/fern-fastapi-server",
-                "fernapi/fern-pydantic-model"
+                "fernenterprise/fern-python-sdk",
+                "fernenterprise/fern-fastapi-server",
+                "fernenterprise/fern-pydantic-model"
             ];
 
             for (const generatorName of pythonGenerators) {
@@ -161,16 +161,16 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("all Python variants share the same migration module", () => {
-            const pythonSdkModule = migrations["fernapi/fern-python-sdk"];
-            const fastapiModule = migrations["fernapi/fern-fastapi-server"];
-            const pydanticModule = migrations["fernapi/fern-pydantic-model"];
+            const pythonSdkModule = migrations["fernenterprise/fern-python-sdk"];
+            const fastapiModule = migrations["fernenterprise/fern-fastapi-server"];
+            const pydanticModule = migrations["fernenterprise/fern-pydantic-model"];
 
             expect(pythonSdkModule).toBe(fastapiModule);
             expect(fastapiModule).toBe(pydanticModule);
         });
 
         it("Python migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-python-sdk"];
+            const module = migrations["fernenterprise/fern-python-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["4.0.0", "4.54.4", "6.0.0"]);
@@ -179,13 +179,13 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("PHP SDK migrations", () => {
         it("includes PHP SDK migration entries", () => {
-            expect(migrations["fernapi/fern-php-sdk"]).toBeDefined();
-            expect(migrations["fernapi/fern-php-sdk"]?.migrations).toBeDefined();
-            expect(Array.isArray(migrations["fernapi/fern-php-sdk"]?.migrations)).toBe(true);
+            expect(migrations["fernenterprise/fern-php-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-php-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernenterprise/fern-php-sdk"]?.migrations)).toBe(true);
         });
 
         it("PHP SDK migrations have correct structure", () => {
-            const module = migrations["fernapi/fern-php-sdk"];
+            const module = migrations["fernenterprise/fern-php-sdk"];
 
             expect(module).toBeDefined();
             expect(module?.migrations.length).toBeGreaterThan(0);
@@ -198,7 +198,7 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("PHP SDK migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-php-sdk"];
+            const module = migrations["fernenterprise/fern-php-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["3.0.0"]);
@@ -207,13 +207,13 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("Ruby SDK migrations", () => {
         it("includes Ruby SDK migration entries", () => {
-            expect(migrations["fernapi/fern-ruby-sdk"]).toBeDefined();
-            expect(migrations["fernapi/fern-ruby-sdk"]?.migrations).toBeDefined();
-            expect(Array.isArray(migrations["fernapi/fern-ruby-sdk"]?.migrations)).toBe(true);
+            expect(migrations["fernenterprise/fern-ruby-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-ruby-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernenterprise/fern-ruby-sdk"]?.migrations)).toBe(true);
         });
 
         it("Ruby SDK migrations have correct structure", () => {
-            const module = migrations["fernapi/fern-ruby-sdk"];
+            const module = migrations["fernenterprise/fern-ruby-sdk"];
 
             expect(module).toBeDefined();
             expect(module?.migrations.length).toBeGreaterThan(0);
@@ -226,7 +226,7 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("Ruby SDK migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-ruby-sdk"];
+            const module = migrations["fernenterprise/fern-ruby-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["2.0.0"]);
@@ -235,13 +235,13 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("Rust SDK migrations", () => {
         it("includes Rust SDK migration entries", () => {
-            expect(migrations["fernapi/fern-rust-sdk"]).toBeDefined();
-            expect(migrations["fernapi/fern-rust-sdk"]?.migrations).toBeDefined();
-            expect(Array.isArray(migrations["fernapi/fern-rust-sdk"]?.migrations)).toBe(true);
+            expect(migrations["fernenterprise/fern-rust-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-rust-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernenterprise/fern-rust-sdk"]?.migrations)).toBe(true);
         });
 
         it("Rust SDK migrations have correct structure", () => {
-            const module = migrations["fernapi/fern-rust-sdk"];
+            const module = migrations["fernenterprise/fern-rust-sdk"];
 
             expect(module).toBeDefined();
             expect(module?.migrations.length).toBeGreaterThan(0);
@@ -254,7 +254,7 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("Rust SDK migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-rust-sdk"];
+            const module = migrations["fernenterprise/fern-rust-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["1.0.0"]);
@@ -263,13 +263,13 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("Swift SDK migrations", () => {
         it("includes Swift SDK migration entries", () => {
-            expect(migrations["fernapi/fern-swift-sdk"]).toBeDefined();
-            expect(migrations["fernapi/fern-swift-sdk"]?.migrations).toBeDefined();
-            expect(Array.isArray(migrations["fernapi/fern-swift-sdk"]?.migrations)).toBe(true);
+            expect(migrations["fernenterprise/fern-swift-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-swift-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernenterprise/fern-swift-sdk"]?.migrations)).toBe(true);
         });
 
         it("Swift SDK migrations have correct structure", () => {
-            const module = migrations["fernapi/fern-swift-sdk"];
+            const module = migrations["fernenterprise/fern-swift-sdk"];
 
             expect(module).toBeDefined();
             expect(module?.migrations.length).toBeGreaterThan(0);
@@ -282,7 +282,7 @@ describe("@fern-api/generator-migrations", () => {
         });
 
         it("Swift SDK migrations are in semver order", () => {
-            const module = migrations["fernapi/fern-swift-sdk"];
+            const module = migrations["fernenterprise/fern-swift-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
             expect(versions).toEqual(["1.0.0"]);
@@ -291,7 +291,7 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
-            expect(migrations["fernapi/fern-openapi"]).toBeUndefined();
+            expect(migrations["fernenterprise/fern-openapi"]).toBeUndefined();
         });
 
         it("requires full generator name with fernapi prefix", () => {
@@ -300,13 +300,13 @@ describe("@fern-api/generator-migrations", () => {
             expect(migrations["typescript-sdk"]).toBeUndefined();
 
             // Full names should work
-            expect(migrations["fernapi/fern-typescript-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-typescript-sdk"]).toBeDefined();
         });
 
         it("is case-sensitive", () => {
-            expect(migrations["fernapi/fern-typescript-sdk"]).toBeDefined();
+            expect(migrations["fernenterprise/fern-typescript-sdk"]).toBeDefined();
             expect(migrations["FERNAPI/FERN-TYPESCRIPT-SDK"]).toBeUndefined();
-            expect(migrations["fernapi/fern-TypeScript-sdk"]).toBeUndefined();
+            expect(migrations["fernenterprise/fern-TypeScript-sdk"]).toBeUndefined();
         });
     });
 

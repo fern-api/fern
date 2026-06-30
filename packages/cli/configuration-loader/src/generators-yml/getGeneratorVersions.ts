@@ -58,7 +58,9 @@ export async function getLatestGeneratorVersion({
 // Ideally we just do a lookup that's sdk type and language, but we need to do this for now, but we're looking to keep our options
 // open when it comes to handling generators by some ID (and don't necessarily want to disallow multiple generators of the same type in the same language)
 function getGeneratorMetadataFromName(generatorName: string, context?: TaskContext): string {
-    if (generatorName.startsWith("fernapi/")) {
+    if (generatorName.startsWith("fernenterprise/")) {
+        generatorName = generatorName.replace("fernenterprise/", "");
+    } else if (generatorName.startsWith("fernapi/")) {
         generatorName = generatorName.replace("fernapi/", "");
     }
     switch (generatorName) {

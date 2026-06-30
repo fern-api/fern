@@ -1,6 +1,6 @@
 irVersion: v67
 displayName: CLI
-image: fernapi/fern-cli-generator
+image: fernenterprise/fern-cli-generator
 changelogLocation: ../../generators/cli/versions.yml
 
 buildScripts:
@@ -16,12 +16,12 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/cli-generator
   docker:
     file: ./generators/cli/Dockerfile
-    image: fernapi/fern-cli-generator
+    image: fernenterprise/fern-cli-generator
     context: ./generators/cli
 
 test:
   docker:
-    image: fernapi/fern-cli-generator:latest
+    image: fernenterprise/fern-cli-generator:latest
     command: pnpm turbo run dist:cli --filter @fern-api/rust-model && pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
   local:
     workingDirectory: generators/cli
@@ -36,7 +36,7 @@ test:
       FERN_SDK_TEMPLATE_DIR: dist/sdk
 
 scripts:
-  - image: fernapi/cli-seed
+  - image: fernenterprise/cli-seed
     commands:
       build:
         - cargo build --all-features --tests

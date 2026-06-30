@@ -225,8 +225,8 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
  * then imports the specific generator's migrations.
  *
  * @param params - Parameters object
- * @param params.generatorName - The full generator name (e.g., "fernapi/fern-typescript-sdk")
- *                               Must be normalized with fernapi/ prefix before calling this function.
+ * @param params.generatorName - The full generator name (e.g., "fernenterprise/fern-typescript-sdk")
+ *                               Must be normalized with fernenterprise/ prefix before calling this function.
  *                               Use getGeneratorNameOrThrow() or addDefaultDockerOrgIfNotPresent() from
  *                               @fern-api/configuration-loader to normalize.
  * @param params.logger - Logger for user feedback
@@ -235,7 +235,7 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
  * @example
  * ```typescript
  * const module = await loadMigrationModule({
- *   generatorName: "fernapi/fern-typescript-sdk",
+ *   generatorName: "fernenterprise/fern-typescript-sdk",
  *   logger
  * });
  * if (module) {
@@ -256,7 +256,7 @@ export async function loadMigrationModule(params: {
         }
 
         // Look up the migration module directly by generator name
-        // Note: generatorName must already be normalized with fernapi/ prefix (done in upgradeGenerator.ts)
+        // Note: generatorName must already be normalized with fernenterprise/ prefix (done in upgradeGenerator.ts)
         const module = migrationsMap[generatorName];
 
         if (module == null) {
@@ -464,7 +464,7 @@ function isValidGeneratorConfig(config: unknown): config is generatorsYml.Genera
  * @example
  * ```typescript
  * const result = await loadAndRunMigrations({
- *   generatorName: "fernapi/fern-typescript-sdk",
+ *   generatorName: "fernenterprise/fern-typescript-sdk",
  *   from: "1.0.0",
  *   to: "2.0.0",
  *   config,

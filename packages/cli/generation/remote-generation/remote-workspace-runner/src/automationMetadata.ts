@@ -31,8 +31,8 @@ export function getOutputRepoUrl(generatorInvocation: generatorsYml.GeneratorInv
  * configured twice for different outputs), `occurrenceIndex` disambiguates — callers should
  * increment it across invocations of the same name.
  *
- * Matches either the full canonicalized name (`fernapi/fern-typescript-sdk`) or the short form
- * (`fern-typescript-sdk`) the user wrote in YAML — the configuration loader adds the `fernapi/`
+ * Matches either the full canonicalized name (`fernenterprise/fern-typescript-sdk`) or the short form
+ * (`fern-typescript-sdk`) the user wrote in YAML — the configuration loader adds the `fernenterprise/`
  * prefix at parse time, but the raw file still uses whichever form the user typed.
  *
  * Returns undefined when the path isn't readable or no match is found. Callers treat an absent
@@ -50,9 +50,9 @@ export async function findGeneratorLineNumber(
         return undefined;
     }
     const candidateNames = new Set([generatorName]);
-    // `fernapi/foo` is the canonicalized form the loader produces; the raw YAML commonly has the
+    // `fernenterprise/foo` is the canonicalized form the loader produces; the raw YAML commonly has the
     // short `foo`. Match both so users who wrote either form get a working deep link.
-    const fernapiPrefix = "fernapi/";
+    const fernapiPrefix = "fernenterprise/";
     if (generatorName.startsWith(fernapiPrefix)) {
         candidateNames.add(generatorName.slice(fernapiPrefix.length));
     }

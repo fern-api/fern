@@ -22,7 +22,7 @@ const PII_FORBIDDEN_KEYS = [
 ];
 
 const BASE_INPUT = {
-    generatorName: "fernapi/fern-typescript-node-sdk",
+    generatorName: "fernenterprise/fern-typescript-node-sdk",
     generatorVersion: "2.6.3",
     cliVersion: "0.30.0",
     repoUri: "acme/sdk-typescript",
@@ -85,7 +85,7 @@ describe("buildReplayTelemetryProps", () => {
         expect(props.unresolved_patches_count).toBe(0);
         expect(props.unresolved_conflict_files_count).toBe(0);
         expect(props.duration_ms).toBe(842);
-        expect(props.generator_name).toBe("fernapi/fern-typescript-node-sdk");
+        expect(props.generator_name).toBe("fernenterprise/fern-typescript-node-sdk");
         expect(props.cli_version).toBe("0.30.0");
         expect(props.replay_config_enabled).toBe(true);
         expect(props.github_mode).toBe("pull-request");

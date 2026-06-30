@@ -9,7 +9,7 @@ import { migration_4_0_0 } from "./4.0.0.js";
  *
  * This module contains migrations for configuration changes for
  * the Java SDK generator:
- * - fernapi/fern-java-sdk
+ * - fernenterprise/fern-java-sdk
  *
  * Each migration is defined in a separate file under this directory.
  * Migrations are automatically applied by the Fern CLI when running:

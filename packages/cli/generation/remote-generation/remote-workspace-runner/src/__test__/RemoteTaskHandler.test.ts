@@ -149,10 +149,10 @@ describe("RemoteTaskHandler.processUpdate — replay PostHog emission", () => {
         // Minimal shape — the handler only reads `name`, `version`, `raw.github`,
         // `absolutePathToLocalOutput`, and `outputMode`. Everything else can be cast.
         return {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "3.66.4",
             raw: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "3.66.4",
                 github: {
                     repository: "fern-demo/fern-replay-testbed-ts-sdk",
@@ -251,7 +251,7 @@ describe("RemoteTaskHandler.processUpdate — replay PostHog emission", () => {
             patches_kept_as_user_owned: 3,
             unresolved_patches_count: 1,
             conflicts_same_line_edit: 1,
-            generator_name: "fernapi/fern-typescript-sdk",
+            generator_name: "fernenterprise/fern-typescript-sdk",
             generator_version: "3.66.4",
             cli_version: "5.12.0",
             github_mode: "pull-request",

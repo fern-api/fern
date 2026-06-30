@@ -52,7 +52,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "0.38.0-rc0"
             }
         });
@@ -92,7 +92,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "0.37.0-1-ga1ce47f"
             }
         });
@@ -131,7 +131,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "0.37.0"
             }
         });
@@ -169,7 +169,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "0.0.246-1-ga1ce47f"
             }
         });
@@ -207,7 +207,7 @@ describe("migrateIntermediateRepresentation", () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: "fernapi/fern-typescript-sdk",
+                name: "fernenterprise/fern-typescript-sdk",
                 version: "0.0.247"
             }
         });

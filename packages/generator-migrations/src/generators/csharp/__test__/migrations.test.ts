@@ -15,7 +15,7 @@ const mockLogger: Logger = {
 } as unknown as Logger;
 
 const createBaseConfig = (configOverrides?: Record<string, unknown>): generatorsYml.GeneratorInvocationSchema => ({
-    name: "fernapi/fern-csharp-sdk",
+    name: "fernenterprise/fern-csharp-sdk",
     version: "0.9.0",
     config: configOverrides
 });
@@ -366,7 +366,7 @@ describe("C# SDK Migrations", () => {
     describe("edge cases", () => {
         it("handles null config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-csharp-sdk",
+                name: "fernenterprise/fern-csharp-sdk",
                 version: "0.9.0",
                 config: null
             };
@@ -385,7 +385,7 @@ describe("C# SDK Migrations", () => {
 
         it("handles missing config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-csharp-sdk",
+                name: "fernenterprise/fern-csharp-sdk",
                 version: "0.9.0"
             };
 

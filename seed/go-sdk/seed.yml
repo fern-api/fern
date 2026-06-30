@@ -1,6 +1,6 @@
 irVersion: v66
 displayName: Go SDK
-image: fernapi/fern-go-sdk
+image: fernenterprise/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
 
 buildScripts:
@@ -32,15 +32,15 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/go-sdk
   docker:
     file: ./generators/go/sdk/Dockerfile
-    image: fernapi/fern-go-sdk
+    image: fernenterprise/fern-go-sdk
     context: .
 test:
   docker:
-    image: fernapi/fern-go-sdk:latest
-    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    image: fernenterprise/fern-go-sdk:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/sdk/Dockerfile -t fernenterprise/fern-go-sdk:latest .
   podman:
-    image: fernapi/fern-go-sdk:latest
-    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    image: fernenterprise/fern-go-sdk:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernenterprise/fern-go-sdk:latest .
   local:
     workingDirectory: generators/go
     buildCommand:
@@ -328,7 +328,7 @@ fixtures:
       customConfig:
         enableWireTests: true
 scripts:
-  - image: fernapi/go-seed:2.0.0
+  - image: fernenterprise/go-seed:2.0.0
     commands:
       build:
         - |

@@ -1,13 +1,13 @@
 irVersion: v66
 displayName: PHP SDK
-image: fernapi/fern-php-sdk
+image: fernenterprise/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
 publish:
   preBuildCommands:
     - pnpm turbo run dist:cli --filter @fern-api/php-sdk
   docker:
     file: ./generators/php/sdk/Dockerfile
-    image: fernapi/fern-php-sdk
+    image: fernenterprise/fern-php-sdk
     context: .
   sentry:
     name: fern-php-sdk
@@ -16,10 +16,10 @@ publish:
       - dir: generators/php/sdk/dist
 test:
   docker:
-    image: fernapi/fern-php-sdk:latest
+    image: fernenterprise/fern-php-sdk:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/php-sdk
   podman:
-    image: fernapi/fern-php-sdk:latest
+    image: fernenterprise/fern-php-sdk:latest
     command: pnpm turbo run podmanTagLatest --filter @fern-api/php-sdk
   local:
     workingDirectory: generators/php
@@ -172,7 +172,7 @@ fixtures:
             analyze: echo skip
             hello: echo hello
 scripts:
-  - image: fernapi/php-seed
+  - image: fernenterprise/php-seed
     commands:
       build:
         # Retry composer install up to 3 times to handle intermittent network failures

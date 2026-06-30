@@ -2,7 +2,7 @@
 groups:
   php-sdk:
     generators:
-      - name: fernapi/fern-php-sdk
+      - name: fernenterprise/fern-php-sdk
         version: latest
         ir-version: v61
         github:
@@ -12,7 +12,7 @@ groups:
           branch: empty-clients
   go-sdk:
     generators:
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: latest
         ir-version: v61
         github:

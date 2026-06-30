@@ -13,24 +13,28 @@ import {
 } from "../getGeneratorName.js";
 
 describe("addDefaultDockerOrgIfNotPresent", () => {
-    it("adds fernapi/ prefix to shorthand names", () => {
-        expect(addDefaultDockerOrgIfNotPresent("fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
+    it("adds fernenterprise/ prefix to shorthand names", () => {
+        expect(addDefaultDockerOrgIfNotPresent("fern-typescript-sdk")).toBe("fernenterprise/fern-typescript-sdk");
     });
 
-    it("adds fernapi/ prefix to other shorthand names", () => {
-        expect(addDefaultDockerOrgIfNotPresent("fern-python-sdk")).toBe("fernapi/fern-python-sdk");
-        expect(addDefaultDockerOrgIfNotPresent("fern-java-sdk")).toBe("fernapi/fern-java-sdk");
-        expect(addDefaultDockerOrgIfNotPresent("fern-go-sdk")).toBe("fernapi/fern-go-sdk");
-        expect(addDefaultDockerOrgIfNotPresent("fern-csharp-sdk")).toBe("fernapi/fern-csharp-sdk");
+    it("adds fernenterprise/ prefix to other shorthand names", () => {
+        expect(addDefaultDockerOrgIfNotPresent("fern-python-sdk")).toBe("fernenterprise/fern-python-sdk");
+        expect(addDefaultDockerOrgIfNotPresent("fern-java-sdk")).toBe("fernenterprise/fern-java-sdk");
+        expect(addDefaultDockerOrgIfNotPresent("fern-go-sdk")).toBe("fernenterprise/fern-go-sdk");
+        expect(addDefaultDockerOrgIfNotPresent("fern-csharp-sdk")).toBe("fernenterprise/fern-csharp-sdk");
     });
 
-    it("preserves fernapi/ prefix if already present", () => {
-        expect(addDefaultDockerOrgIfNotPresent("fernapi/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
+    it("preserves fernenterprise/ prefix if already present", () => {
+        expect(addDefaultDockerOrgIfNotPresent("fernenterprise/fern-typescript-sdk")).toBe(
+            "fernenterprise/fern-typescript-sdk"
+        );
     });
 
-    it("corrects deprecated fern-api/ prefix to fernapi/", () => {
-        expect(addDefaultDockerOrgIfNotPresent("fern-api/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
-        expect(addDefaultDockerOrgIfNotPresent("fern-api/fern-python-sdk")).toBe("fernapi/fern-python-sdk");
+    it("corrects deprecated fern-api/ prefix to fernenterprise/", () => {
+        expect(addDefaultDockerOrgIfNotPresent("fern-api/fern-typescript-sdk")).toBe(
+            "fernenterprise/fern-typescript-sdk"
+        );
+        expect(addDefaultDockerOrgIfNotPresent("fern-api/fern-python-sdk")).toBe("fernenterprise/fern-python-sdk");
     });
 
     it("preserves custom org prefixes", () => {
@@ -44,18 +48,18 @@ describe("addDefaultDockerOrgIfNotPresent", () => {
     });
 
     it("handles empty string", () => {
-        expect(addDefaultDockerOrgIfNotPresent("")).toBe("fernapi/");
+        expect(addDefaultDockerOrgIfNotPresent("")).toBe("fernenterprise/");
     });
 });
 
 describe("removeDefaultDockerOrgIfPresent", () => {
-    it("removes fernapi/ prefix from generator names", () => {
-        expect(removeDefaultDockerOrgIfPresent("fernapi/fern-typescript-sdk")).toBe("fern-typescript-sdk");
+    it("removes fernenterprise/ prefix from generator names", () => {
+        expect(removeDefaultDockerOrgIfPresent("fernenterprise/fern-typescript-sdk")).toBe("fern-typescript-sdk");
     });
 
-    it("removes fernapi/ prefix from other generator names", () => {
-        expect(removeDefaultDockerOrgIfPresent("fernapi/fern-python-sdk")).toBe("fern-python-sdk");
-        expect(removeDefaultDockerOrgIfPresent("fernapi/fern-java-sdk")).toBe("fern-java-sdk");
+    it("removes fernenterprise/ prefix from other generator names", () => {
+        expect(removeDefaultDockerOrgIfPresent("fernenterprise/fern-python-sdk")).toBe("fern-python-sdk");
+        expect(removeDefaultDockerOrgIfPresent("fernenterprise/fern-java-sdk")).toBe("fern-java-sdk");
     });
 
     it("preserves shorthand names without prefix", () => {
@@ -90,7 +94,7 @@ describe("roundtrip operations", () => {
     });
 
     it("remove then add returns to full name", () => {
-        const fullName = "fernapi/fern-typescript-sdk";
+        const fullName = "fernenterprise/fern-typescript-sdk";
         const shorthand = removeDefaultDockerOrgIfPresent(fullName);
         const backToFull = addDefaultDockerOrgIfNotPresent(shorthand);
         expect(backToFull).toBe(fullName);
@@ -112,7 +116,7 @@ describe("normalizeGeneratorName", () => {
     });
 
     it("normalizes full names to valid GeneratorName", () => {
-        const result = normalizeGeneratorName("fernapi/fern-typescript-sdk");
+        const result = normalizeGeneratorName("fernenterprise/fern-typescript-sdk");
         expect(result).toBe(GeneratorName.TYPESCRIPT_SDK);
     });
 
@@ -128,14 +132,14 @@ describe("normalizeGeneratorName", () => {
 
     it("handles various official generators", () => {
         expect(normalizeGeneratorName("fern-python-sdk")).toBe(GeneratorName.PYTHON_SDK);
-        expect(normalizeGeneratorName("fernapi/fern-python-sdk")).toBe(GeneratorName.PYTHON_SDK);
+        expect(normalizeGeneratorName("fernenterprise/fern-python-sdk")).toBe(GeneratorName.PYTHON_SDK);
         expect(normalizeGeneratorName("fern-java-sdk")).toBe(GeneratorName.JAVA_SDK);
-        expect(normalizeGeneratorName("fernapi/fern-java-sdk")).toBe(GeneratorName.JAVA_SDK);
+        expect(normalizeGeneratorName("fernenterprise/fern-java-sdk")).toBe(GeneratorName.JAVA_SDK);
     });
 
     it("resolves legacy alias java-model to fern-java-model", () => {
         expect(normalizeGeneratorName("java-model")).toBe(GeneratorName.JAVA_MODEL);
-        expect(normalizeGeneratorName("fernapi/java-model")).toBe(GeneratorName.JAVA_MODEL);
+        expect(normalizeGeneratorName("fernenterprise/java-model")).toBe(GeneratorName.JAVA_MODEL);
     });
 });
 
@@ -148,7 +152,7 @@ describe("getGeneratorNameOrThrow", () => {
 
     it("returns GeneratorName for valid full names", () => {
         const context = createMockTaskContext();
-        const result = getGeneratorNameOrThrow("fernapi/fern-python-sdk", context);
+        const result = getGeneratorNameOrThrow("fernenterprise/fern-python-sdk", context);
         expect(result).toBe(GeneratorName.PYTHON_SDK);
     });
 
@@ -164,8 +168,8 @@ describe("getGeneratorNameOrThrow", () => {
 });
 
 describe("DEFAULT_DOCKER_ORG constant", () => {
-    it("is set to 'fernapi'", () => {
-        expect(DEFAULT_DOCKER_ORG).toBe("fernapi");
+    it("is set to 'fernenterprise'", () => {
+        expect(DEFAULT_DOCKER_ORG).toBe("fernenterprise");
     });
 });
 
@@ -191,7 +195,7 @@ describe("edge cases and compatibility", () => {
 
     it("normalization is consistent with both input formats", () => {
         const shorthand = "fern-typescript-sdk";
-        const fullName = "fernapi/fern-typescript-sdk";
+        const fullName = "fernenterprise/fern-typescript-sdk";
         expect(normalizeGeneratorName(shorthand)).toBe(normalizeGeneratorName(fullName));
     });
 });
@@ -199,8 +203,8 @@ describe("edge cases and compatibility", () => {
 describe("real-world scenarios", () => {
     it("handles duplicate detection scenario", () => {
         // Simulates the duplicate detection in addGenerator
-        const existingGenerators = ["fern-typescript-sdk", "fernapi/fern-python-sdk", "myorg/custom"];
-        const newGenerator = "fernapi/fern-typescript-sdk";
+        const existingGenerators = ["fern-typescript-sdk", "fernenterprise/fern-python-sdk", "myorg/custom"];
+        const newGenerator = "fernenterprise/fern-typescript-sdk";
 
         const normalizedNew = addDefaultDockerOrgIfNotPresent(newGenerator);
         const isDuplicate = existingGenerators.some((gen) => addDefaultDockerOrgIfNotPresent(gen) === normalizedNew);
@@ -222,7 +226,7 @@ describe("real-world scenarios", () => {
     it("handles mixed format upgrade filter matching", () => {
         // YAML has shorthand, CLI uses full name
         const yamlGeneratorName = "fern-csharp-sdk";
-        const cliFilterArg = "fernapi/fern-csharp-sdk";
+        const cliFilterArg = "fernenterprise/fern-csharp-sdk";
 
         const normalizedYaml = addDefaultDockerOrgIfNotPresent(yamlGeneratorName);
         const normalizedFilter = addDefaultDockerOrgIfNotPresent(cliFilterArg);
@@ -244,15 +248,15 @@ describe("real-world scenarios", () => {
         const yamlName = "fern-csharp-sdk";
         const fdrApiName = addDefaultDockerOrgIfNotPresent(yamlName);
 
-        expect(fdrApiName).toBe("fernapi/fern-csharp-sdk");
+        expect(fdrApiName).toBe("fernenterprise/fern-csharp-sdk");
         expect(fdrApiName).toContain("/");
     });
 
     it("handles deprecated fern-api/ org in generators.yml", () => {
-        // User accidentally uses fern-api/ (GitHub org) instead of fernapi/ (Docker org)
+        // User accidentally uses fern-api/ (GitHub org) instead of fernenterprise/ (Docker org)
         const yamlName = "fern-api/fern-typescript-sdk";
         const normalized = addDefaultDockerOrgIfNotPresent(yamlName);
-        expect(normalized).toBe("fernapi/fern-typescript-sdk");
+        expect(normalized).toBe("fernenterprise/fern-typescript-sdk");
     });
 
     it("handles deprecated fern-api/ org in CLI --generator filter", () => {
@@ -265,14 +269,16 @@ describe("real-world scenarios", () => {
 });
 
 describe("correctIncorrectDockerOrg", () => {
-    it("corrects fern-api/ to fernapi/", () => {
-        expect(correctIncorrectDockerOrg("fern-api/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
-        expect(correctIncorrectDockerOrg("fern-api/fern-python-sdk")).toBe("fernapi/fern-python-sdk");
-        expect(correctIncorrectDockerOrg("fern-api/fern-java-sdk")).toBe("fernapi/fern-java-sdk");
+    it("corrects fern-api/ to fernenterprise/", () => {
+        expect(correctIncorrectDockerOrg("fern-api/fern-typescript-sdk")).toBe("fernenterprise/fern-typescript-sdk");
+        expect(correctIncorrectDockerOrg("fern-api/fern-python-sdk")).toBe("fernenterprise/fern-python-sdk");
+        expect(correctIncorrectDockerOrg("fern-api/fern-java-sdk")).toBe("fernenterprise/fern-java-sdk");
     });
 
-    it("does not modify fernapi/ names", () => {
-        expect(correctIncorrectDockerOrg("fernapi/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
+    it("does not modify fernenterprise/ names", () => {
+        expect(correctIncorrectDockerOrg("fernenterprise/fern-typescript-sdk")).toBe(
+            "fernenterprise/fern-typescript-sdk"
+        );
     });
 
     it("does not modify shorthand names", () => {
@@ -289,16 +295,16 @@ describe("correctIncorrectDockerOrg", () => {
 });
 
 describe("correctIncorrectDockerOrgWithWarning", () => {
-    it("corrects fern-api/ to fernapi/ and logs warning", () => {
+    it("corrects fern-api/ to fernenterprise/ and logs warning", () => {
         const context = createMockTaskContext();
         const result = correctIncorrectDockerOrgWithWarning("fern-api/fern-typescript-sdk", context);
-        expect(result).toBe("fernapi/fern-typescript-sdk");
+        expect(result).toBe("fernenterprise/fern-typescript-sdk");
     });
 
     it("does not log warning for correct names", () => {
         const context = createMockTaskContext();
-        const result = correctIncorrectDockerOrgWithWarning("fernapi/fern-typescript-sdk", context);
-        expect(result).toBe("fernapi/fern-typescript-sdk");
+        const result = correctIncorrectDockerOrgWithWarning("fernenterprise/fern-typescript-sdk", context);
+        expect(result).toBe("fernenterprise/fern-typescript-sdk");
     });
 
     it("does not log warning for shorthand names", () => {

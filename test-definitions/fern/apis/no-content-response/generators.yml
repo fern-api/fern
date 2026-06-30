@@ -5,7 +5,7 @@ api:
 groups:
   php-sdk:
     generators:
-      - name: fernapi/fern-php-sdk
+      - name: fernenterprise/fern-php-sdk
         version: latest
         ir-version: v62
         github:

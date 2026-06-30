@@ -27,7 +27,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "python-sdk",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--version",
                 "-o",
                 outputFile
@@ -52,7 +52,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "python-sdk",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--include-major"
             ],
             { cwd: directory, signal }
@@ -66,7 +66,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "python-sdk",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--version",
                 "-o",
                 outputFile
@@ -101,7 +101,7 @@ describe("fern generator upgrade", () => {
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
         await runFernCli(
-            ["generator", "upgrade", "--group", "shouldnt-upgrade", "--generator", "fernapi/fern-python-sdk"],
+            ["generator", "upgrade", "--group", "shouldnt-upgrade", "--generator", "fernenterprise/fern-python-sdk"],
             { cwd: directory, signal }
         );
 
@@ -113,7 +113,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "shouldnt-upgrade",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--version",
                 "-o",
                 outputFile
@@ -130,7 +130,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "python-sdk",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--include-major"
             ],
             { cwd: directory, signal }
@@ -144,7 +144,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "python-sdk",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--version",
                 "-o",
                 outputFileNewMajor
@@ -172,7 +172,7 @@ describe("fern generator upgrade", () => {
                         "--group",
                         "python-sdk",
                         "--generator",
-                        "fernapi/fern-python-sdk",
+                        "fernenterprise/fern-python-sdk",
                         "--version",
                         "-o",
                         outputFileNewMajor
@@ -204,7 +204,7 @@ describe("fern generator upgrade", () => {
         );
 
         expect(result.stdout).toContain("Skipped generators with autorelease disabled:");
-        expect(result.stdout).toContain("fernapi/fern-python-sdk");
+        expect(result.stdout).toContain("fernenterprise/fern-python-sdk");
         expect(result.stdout).toContain("autorelease disabled");
 
         const outputFile = join(directory, RelativeFilePath.of("version-autorelease.txt"));
@@ -215,7 +215,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "autorelease-disabled",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--version",
                 "-o",
                 outputFile
@@ -233,7 +233,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "autorelease-disabled",
                 "--generator",
-                "fernapi/fern-java-sdk",
+                "fernenterprise/fern-java-sdk",
                 "--version",
                 "-o",
                 outputFileJava
@@ -265,7 +265,7 @@ describe("fern generator upgrade", () => {
                 "--group",
                 "autorelease-disabled",
                 "--generator",
-                "fernapi/fern-python-sdk",
+                "fernenterprise/fern-python-sdk",
                 "--version",
                 "-o",
                 outputFile
@@ -283,15 +283,15 @@ describe("fern generator upgrade", () => {
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
         const result = await runFernCli(
-            ["generator", "upgrade", "--group", "shouldnt-upgrade", "--generator", "fernapi/fern-python-sdk"],
+            ["generator", "upgrade", "--group", "shouldnt-upgrade", "--generator", "fernenterprise/fern-python-sdk"],
             { cwd: directory, reject: false, signal }
         );
 
         expect(result.stdout).toContain("Major version upgrades available:");
-        expect(result.stdout).toContain("fernapi/fern-python-sdk");
+        expect(result.stdout).toContain("fernenterprise/fern-python-sdk");
         expect(result.stdout).toContain("2.16.0");
         expect(result.stdout).toContain(
-            "Run: fern generator upgrade --generator fernapi/fern-python-sdk --include-major"
+            "Run: fern generator upgrade --generator fernenterprise/fern-python-sdk --include-major"
         );
         expect(result.stdout).toContain("https://buildwithfern.com/learn/sdks/generators/python/changelog");
     }, 180_000);

@@ -7,7 +7,7 @@ import { migration_2_0_0 } from "./2.0.0.js";
  *
  * This module contains migrations for configuration changes for
  * the Ruby SDK generator:
- * - fernapi/fern-ruby-sdk
+ * - fernenterprise/fern-ruby-sdk
  *
  * Each migration is defined in a separate file under this directory.
  * Migrations are automatically applied by the Fern CLI when running:

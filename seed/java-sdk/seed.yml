@@ -1,7 +1,7 @@
 irVersion: v66
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
-image: fernapi/fern-java-sdk
+image: fernenterprise/fern-java-sdk
 
 buildScripts:
   compileScript:
@@ -15,27 +15,27 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/java-sdk
   docker:
     file: ./generators/java/sdk/Dockerfile
-    image: fernapi/fern-java-sdk
+    image: fernenterprise/fern-java-sdk
     context: .
 test:
   docker:
-    image: fernapi/fern-java-sdk:latest
+    image: fernenterprise/fern-java-sdk:latest
     context: .
     command:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - cd ../../
       - pnpm turbo run dist:cli --filter @fern-api/java-sdk
-      - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
+      - docker build -f generators/java/sdk/Dockerfile -t fernenterprise/fern-java-sdk:latest .
   podman:
-    image: fernapi/fern-java-sdk:latest
+    image: fernenterprise/fern-java-sdk:latest
     context: .
     command:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - cd ../../
       - pnpm turbo run dist:cli --filter @fern-api/java-sdk
-      - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
+      - podman build -f generators/java/sdk/Dockerfile -t fernenterprise/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
     buildCommand:
@@ -378,7 +378,7 @@ fixtures:
       skipScripts: true
 scripts:
   docker:
-    - image: fernapi/java-seed
+    - image: fernenterprise/java-seed
       commands:
         - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
   local:

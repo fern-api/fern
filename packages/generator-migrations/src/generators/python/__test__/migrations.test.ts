@@ -26,7 +26,7 @@ const createBaseConfig = (
 describe("Python SDK Migrations", () => {
     describe("migration_4_0_0", () => {
         it("sets old default for use_pydantic_field_aliases in nested config", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk");
+            const config = createBaseConfig("fernenterprise/fern-python-sdk");
 
             const result = migration_4_0_0.migrateGeneratorConfig({
                 config,
@@ -41,7 +41,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves explicitly set field to false", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_pydantic_field_aliases: false
                 }
@@ -60,7 +60,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves explicitly set field to true", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_pydantic_field_aliases: true
                 }
@@ -79,7 +79,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("creates pydantic_config object if it does not exist", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 client_class_name: "AcmeClient"
             });
 
@@ -97,7 +97,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves other pydantic_config fields", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     version: "v2",
                     frozen: true
@@ -119,7 +119,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves other top-level config fields", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 client_class_name: "AcmeClient",
                 timeout_in_seconds: 60
             });
@@ -136,7 +136,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("does not mutate original config", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 client_class_name: "AcmeClient"
             });
             const originalConfig = JSON.parse(JSON.stringify(config));
@@ -165,7 +165,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("works with fastapi-server generator", () => {
-            const config = createBaseConfig("fernapi/fern-fastapi-server");
+            const config = createBaseConfig("fernenterprise/fern-fastapi-server");
 
             const result = migration_4_0_0.migrateGeneratorConfig({
                 config,
@@ -180,7 +180,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("works with pydantic-model generator", () => {
-            const config = createBaseConfig("fernapi/fern-pydantic-model");
+            const config = createBaseConfig("fernenterprise/fern-pydantic-model");
 
             const result = migration_4_0_0.migrateGeneratorConfig({
                 config,
@@ -197,7 +197,7 @@ describe("Python SDK Migrations", () => {
 
     describe("migration_4_54_4", () => {
         it("sets use_request_defaults to 'all' when use_provided_defaults is true", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_provided_defaults: true
                 }
@@ -217,7 +217,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("does not set use_request_defaults when use_provided_defaults is false", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_provided_defaults: false
                 }
@@ -236,7 +236,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("does not set use_request_defaults when pydantic_config is missing", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 client_class_name: "AcmeClient"
             });
 
@@ -251,7 +251,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves explicitly set use_request_defaults", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_provided_defaults: true
                 },
@@ -272,7 +272,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves explicitly set use_request_defaults to 'none'", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_provided_defaults: true
                 },
@@ -293,7 +293,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves other pydantic_config fields", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_provided_defaults: true,
                     version: "v2",
@@ -317,7 +317,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves other top-level config fields", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 client_class_name: "AcmeClient",
                 timeout_in_seconds: 60,
                 pydantic_config: {
@@ -338,7 +338,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("does not mutate original config", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_provided_defaults: true
                 }
@@ -369,7 +369,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("does not modify fastapi-server generator configs", () => {
-            const config = createBaseConfig("fernapi/fern-fastapi-server", {
+            const config = createBaseConfig("fernenterprise/fern-fastapi-server", {
                 pydantic_config: {
                     use_provided_defaults: true
                 }
@@ -389,7 +389,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("does not modify pydantic-model generator configs", () => {
-            const config = createBaseConfig("fernapi/fern-pydantic-model", {
+            const config = createBaseConfig("fernenterprise/fern-pydantic-model", {
                 pydantic_config: {
                     use_provided_defaults: true
                 }
@@ -409,7 +409,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("handles null pydantic_config", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: null
             });
 
@@ -425,7 +425,7 @@ describe("Python SDK Migrations", () => {
 
         it("handles missing config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-python-sdk",
+                name: "fernenterprise/fern-python-sdk",
                 version: "4.54.3"
             };
 
@@ -488,7 +488,7 @@ describe("Python SDK Migrations", () => {
     describe("edge cases", () => {
         it("handles null config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-python-sdk",
+                name: "fernenterprise/fern-python-sdk",
                 version: "3.9.0",
                 config: null
             };
@@ -507,7 +507,7 @@ describe("Python SDK Migrations", () => {
 
         it("handles missing config field", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-python-sdk",
+                name: "fernenterprise/fern-python-sdk",
                 version: "3.9.0"
             };
 
@@ -524,7 +524,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("handles pydantic_config with explicit undefined", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: {
                     use_pydantic_field_aliases: undefined
                 }
@@ -541,7 +541,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("handles null pydantic_config", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: null
             });
 
@@ -559,7 +559,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("handles string pydantic_config (invalid type)", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 pydantic_config: "invalid-string" as unknown as Record<string, unknown>
             });
 
@@ -574,7 +574,7 @@ describe("Python SDK Migrations", () => {
 
         it("preserves top-level config properties", () => {
             const config: generatorsYml.GeneratorInvocationSchema = {
-                name: "fernapi/fern-python-sdk",
+                name: "fernenterprise/fern-python-sdk",
                 version: "3.9.0",
                 output: { location: "pypi", package_name: "acme-sdk" },
                 github: { repository: "acme/sdk" },
@@ -588,12 +588,12 @@ describe("Python SDK Migrations", () => {
 
             expect(result.output).toEqual({ location: "pypi", package_name: "acme-sdk" });
             expect(result.github).toEqual({ repository: "acme/sdk" });
-            expect(result.name).toBe("fernapi/fern-python-sdk");
+            expect(result.name).toBe("fernenterprise/fern-python-sdk");
             expect(result.version).toBe("3.9.0");
         });
 
         it("handles nested objects in config", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 extras: {
                     dev: ["pytest", "mypy"],
                     docs: ["sphinx"]
@@ -616,7 +616,7 @@ describe("Python SDK Migrations", () => {
 
     describe("migration_6_0_0", () => {
         it("sets retryStatusCodes to legacy when not configured", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk");
+            const config = createBaseConfig("fernenterprise/fern-python-sdk");
 
             const result = migration_6_0_0.migrateGeneratorConfig({
                 config,
@@ -629,7 +629,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves explicitly set retryStatusCodes to recommended", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 retryStatusCodes: "recommended"
             });
 
@@ -644,7 +644,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves explicitly set retryStatusCodes to legacy", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 retryStatusCodes: "legacy"
             });
 
@@ -659,7 +659,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("preserves other config fields", () => {
-            const config = createBaseConfig("fernapi/fern-python-sdk", {
+            const config = createBaseConfig("fernenterprise/fern-python-sdk", {
                 client_class_name: "AcmeClient",
                 timeout_in_seconds: 60
             });
@@ -677,7 +677,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("skips non-SDK generators (fastapi)", () => {
-            const config = createBaseConfig("fernapi/fern-fastapi-server");
+            const config = createBaseConfig("fernenterprise/fern-fastapi-server");
 
             const result = migration_6_0_0.migrateGeneratorConfig({
                 config,
@@ -688,7 +688,7 @@ describe("Python SDK Migrations", () => {
         });
 
         it("skips non-SDK generators (pydantic)", () => {
-            const config = createBaseConfig("fernapi/fern-pydantic-model");
+            const config = createBaseConfig("fernenterprise/fern-pydantic-model");
 
             const result = migration_6_0_0.migrateGeneratorConfig({
                 config,

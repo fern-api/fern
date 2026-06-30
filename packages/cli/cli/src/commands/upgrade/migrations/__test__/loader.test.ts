@@ -31,7 +31,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0"
         };
 
@@ -44,7 +44,7 @@ describe("runMigrations", () => {
         expect(result.migrationsApplied).toBe(2);
         expect(result.appliedVersions).toEqual(["2.0.0", "2.1.0"]);
         expect(result.config).toEqual({
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 field1: "added-by-migration-1",
@@ -55,7 +55,7 @@ describe("runMigrations", () => {
 
     it("should handle empty migrations array", () => {
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0"
         };
 
@@ -96,7 +96,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0"
         };
 
@@ -107,7 +107,7 @@ describe("runMigrations", () => {
         });
 
         expect(result.config).toEqual({
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 value: 20 // 10 * 2
@@ -129,7 +129,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 existingField: "should-be-preserved"
@@ -139,7 +139,7 @@ describe("runMigrations", () => {
         const result = runMigrations({ migrations: [migration], config: inputConfig, logger: NOOP_LOGGER });
 
         expect(result.config).toEqual({
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 existingField: "should-be-preserved",
@@ -172,7 +172,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 oldName: "value",
@@ -183,7 +183,7 @@ describe("runMigrations", () => {
         const result = runMigrations({ migrations: [migration], config: inputConfig, logger: NOOP_LOGGER });
 
         expect(result.config).toEqual({
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 newName: "value",
@@ -213,7 +213,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 deprecated: "should-be-removed",
@@ -224,7 +224,7 @@ describe("runMigrations", () => {
         const result = runMigrations({ migrations: [migration], config: inputConfig, logger: NOOP_LOGGER });
 
         expect(result.config).toEqual({
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0",
             config: {
                 kept: "should-remain"
@@ -242,7 +242,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0"
         };
 
@@ -261,7 +261,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0"
         };
 
@@ -304,7 +304,7 @@ describe("runMigrations", () => {
         };
 
         const inputConfig = {
-            name: "fernapi/fern-typescript-sdk",
+            name: "fernenterprise/fern-typescript-sdk",
             version: "1.0.0"
         };
 
@@ -330,7 +330,7 @@ describe("loadAndRunMigrations", () => {
 
             await expect(
                 loadAndRunMigrations({
-                    generatorName: "fernapi/fern-typescript-sdk",
+                    generatorName: "fernenterprise/fern-typescript-sdk",
                     from: "1.0.0",
                     to: "2.0.0",
                     config: null,
@@ -349,7 +349,7 @@ describe("loadAndRunMigrations", () => {
 
             await expect(
                 loadAndRunMigrations({
-                    generatorName: "fernapi/fern-typescript-sdk",
+                    generatorName: "fernenterprise/fern-typescript-sdk",
                     from: "1.0.0",
                     to: "2.0.0",
                     config: undefined,
@@ -368,7 +368,7 @@ describe("loadAndRunMigrations", () => {
 
             await expect(
                 loadAndRunMigrations({
-                    generatorName: "fernapi/fern-typescript-sdk",
+                    generatorName: "fernenterprise/fern-typescript-sdk",
                     from: "1.0.0",
                     to: "2.0.0",
                     config: "invalid-string-config",
@@ -387,7 +387,7 @@ describe("loadAndRunMigrations", () => {
 
             await expect(
                 loadAndRunMigrations({
-                    generatorName: "fernapi/fern-typescript-sdk",
+                    generatorName: "fernenterprise/fern-typescript-sdk",
                     from: "1.0.0",
                     to: "2.0.0",
                     config: 42,
@@ -406,7 +406,7 @@ describe("loadAndRunMigrations", () => {
 
             await expect(
                 loadAndRunMigrations({
-                    generatorName: "fernapi/fern-typescript-sdk",
+                    generatorName: "fernenterprise/fern-typescript-sdk",
                     from: "1.0.0",
                     to: "2.0.0",
                     config: { version: "1.0.0" },
@@ -425,7 +425,7 @@ describe("loadAndRunMigrations", () => {
 
             await expect(
                 loadAndRunMigrations({
-                    generatorName: "fernapi/fern-typescript-sdk",
+                    generatorName: "fernenterprise/fern-typescript-sdk",
                     from: "1.0.0",
                     to: "2.0.0",
                     config: { name: 123, version: "1.0.0" },
@@ -449,10 +449,10 @@ describe("loadAndRunMigrations", () => {
             // This will return undefined because no migration package exists,
             // but it should not reject the config
             const result = await loadAndRunMigrations({
-                generatorName: "fernapi/fern-typescript-sdk",
+                generatorName: "fernenterprise/fern-typescript-sdk",
                 from: "1.0.0",
                 to: "2.0.0",
-                config: { name: "fernapi/fern-typescript-sdk", version: "1.0.0" },
+                config: { name: "fernenterprise/fern-typescript-sdk", version: "1.0.0" },
                 logger: mockLogger as never
             });
 
@@ -471,11 +471,11 @@ describe("loadAndRunMigrations", () => {
             };
 
             const result = await loadAndRunMigrations({
-                generatorName: "fernapi/fern-typescript-sdk",
+                generatorName: "fernenterprise/fern-typescript-sdk",
                 from: "1.0.0",
                 to: "2.0.0",
                 config: {
-                    name: "fernapi/fern-typescript-sdk",
+                    name: "fernenterprise/fern-typescript-sdk",
                     version: "1.0.0",
                     config: { customField: "value" },
                     output: { location: "npm" }

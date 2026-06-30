@@ -2,7 +2,7 @@
 groups:
   java-sdk:
     generators:
-      - name: fernapi/fern-java-sdk
+      - name: fernenterprise/fern-java-sdk
         version: latest
         output:
           location: local-file-system
@@ -12,7 +12,7 @@ groups:
           package-prefix: com.nullable.optional
   java-sdk-legacy:
     generators:
-      - name: fernapi/fern-java-sdk
+      - name: fernenterprise/fern-java-sdk
         version: latest
         output:
           location: local-file-system
@@ -22,7 +22,7 @@ groups:
           package-prefix: com.nullable.optional.legacy
   java-spring:
     generators:
-      - name: fernapi/fern-java-spring
+      - name: fernenterprise/fern-java-spring
         version: latest
         output:
           location: local-file-system
@@ -32,7 +32,7 @@ groups:
           package-prefix: com.nullable.optional.spring
   java-spring-legacy:
     generators:
-      - name: fernapi/fern-java-spring
+      - name: fernenterprise/fern-java-spring
         version: latest
         output:
           location: local-file-system
@@ -42,7 +42,7 @@ groups:
           package-prefix: com.nullable.optional.spring.legacy
   php-sdk:
     generators:
-      - name: fernapi/fern-php-sdk
+      - name: fernenterprise/fern-php-sdk
         version: latest
         ir-version: v61
         github:
@@ -52,7 +52,7 @@ groups:
           branch: nullable-optional
   go-sdk:
     generators:
-      - name: fernapi/fern-go-sdk
+      - name: fernenterprise/fern-go-sdk
         version: latest
         ir-version: v61
         github:
