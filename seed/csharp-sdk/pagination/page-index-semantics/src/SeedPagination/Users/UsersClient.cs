@@ -228,6 +228,9 @@ public partial class UsersClient : IUsersClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -241,6 +244,7 @@ public partial class UsersClient : IUsersClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -330,6 +334,9 @@ public partial class UsersClient : IUsersClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -343,6 +350,7 @@ public partial class UsersClient : IUsersClient
                     Method = HttpMethod.Post,
                     Path = "/users/top-level-cursor",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -623,6 +631,9 @@ public partial class UsersClient : IUsersClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -636,6 +647,7 @@ public partial class UsersClient : IUsersClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

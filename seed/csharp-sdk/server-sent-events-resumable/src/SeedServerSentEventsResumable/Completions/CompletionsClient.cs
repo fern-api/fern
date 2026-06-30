@@ -20,43 +20,36 @@ public partial class CompletionsClient : ICompletionsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedServerSentEventsResumable.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedServerSentEventsResumable.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);
-        var request_ = new JsonRequest
-        {
-            Method = HttpMethod.Post,
-            Path = "stream",
-            Body = request,
-            Headers = _headers,
-            Options = options,
-        };
         var response = await _client
-            .SendRequestAsync(request_, cancellationToken)
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream",
+                    Body = request,
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            async global::System.Threading.Tasks.Task<SeedServerSentEventsResumable.Core.ApiResponse> ReconnectAsync(
-                string lastEventId,
-                CancellationToken ct
-            )
-            {
-                var reconnectHeaders = new Dictionary<string, string>(
-                    request_.Headers,
-                    StringComparer.OrdinalIgnoreCase
-                );
-                reconnectHeaders["Last-Event-ID"] = lastEventId;
-                return await _client
-                    .SendRequestAsync(request_ with { Headers = reconnectHeaders }, ct)
-                    .ConfigureAwait(false);
-            }
-
             return new WithRawResponse<IAsyncEnumerable<StreamedCompletion>>()
             {
-                Data = StreamAsyncBody(response, ReconnectAsync, options, cancellationToken),
+                Data = StreamAsyncBody(response, cancellationToken),
                 RawResponse = new SeedServerSentEventsResumable.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
@@ -85,26 +78,21 @@ public partial class CompletionsClient : ICompletionsClient
 
     private async IAsyncEnumerable<StreamedCompletion> StreamAsyncBody(
         ApiResponse response,
-        Func<string, CancellationToken, Task<ApiResponse>> reconnectFn,
-        RequestOptions? options,
         [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
     {
         await foreach (
-            var item in SseReconnectHelper
-                .EnumerateWithReconnectAsync(
-                    response,
-                    reconnectFn,
-                    options?.MaxStreamReconnectAttempts,
-                    options?.DisableStreamReconnection ?? false,
-                    "[[DONE]]",
-                    cancellationToken
-                )
-                .ConfigureAwait(false)
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
         )
         {
             if (!string.IsNullOrEmpty(item.Data))
             {
+                if (item.Data == "[[DONE]]")
+                {
+                    break;
+                }
                 StreamedCompletion? result;
                 try
                 {
@@ -129,6 +117,11 @@ public partial class CompletionsClient : ICompletionsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedServerSentEventsResumable.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedServerSentEventsResumable.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -142,6 +135,7 @@ public partial class CompletionsClient : ICompletionsClient
                     Method = HttpMethod.Post,
                     Path = "stream-non-resumable",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

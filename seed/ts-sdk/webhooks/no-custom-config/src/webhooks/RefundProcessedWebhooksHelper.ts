@@ -6,14 +6,19 @@ import * as core from "../core/index.js";
  * Verify an asymmetric webhook signature.
  *
  * Extract the signature from the "x-refund-signature" header and pass it as the signatureHeader parameter.
+ * The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.
+ * When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.
  */
 export class RefundProcessedWebhooksHelper {
-    public static async verifySignature(requestBody: string, signatureHeader: string, publicKey: string): Promise<boolean> {
+    public static async verifySignature(requestBody: string | Record<string, string>, signatureHeader: string, publicKey: string): Promise<boolean> {
         if (requestBody == null || signatureHeader == null || publicKey == null) {
             throw new Error("Missing required parameters for webhook signature verification");
         }
 
-        const payload = requestBody;
+        const bodyString = typeof requestBody === "string"
+            ? requestBody
+            : Object.keys(requestBody).sort().map(key => key + requestBody[key]).join("");
+        const payload = bodyString;
 
         return await core.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "ECDSA_SHA256", encoding: "hex" });
     }

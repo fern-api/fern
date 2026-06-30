@@ -20,6 +20,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExamples.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
             .Add("X-File-API-Version", request.XFileApiVersion)
             .Add(_client.Options.Headers)
@@ -33,6 +36,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format("/file/{0}", ValueConvert.ToPathParameterString(filename)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

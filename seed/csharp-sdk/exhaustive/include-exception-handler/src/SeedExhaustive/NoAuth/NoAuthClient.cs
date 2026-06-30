@@ -29,6 +29,9 @@ public partial class NoAuthClient : INoAuthClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -42,6 +45,7 @@ public partial class NoAuthClient : INoAuthClient
                             Method = HttpMethod.Post,
                             Path = "/no-auth",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },

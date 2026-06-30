@@ -137,7 +137,8 @@ describe("getSuccessReturnType", () => {
             const context = createMockContext();
             const textResponse = FernIr.HttpResponseBody.text({
                 docs: undefined,
-                v2Examples: undefined
+                v2Examples: undefined,
+                contentType: undefined
             });
             const result = getSuccessReturnType(endpoint, textResponse, context, {
                 includeContentHeadersOnResponse: false,

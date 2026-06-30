@@ -17,6 +17,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedContentTypes.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -30,6 +33,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = "",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
@@ -71,6 +75,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedContentTypes.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -84,6 +91,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format("complex/{0}", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
@@ -125,6 +133,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedContentTypes.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -138,6 +149,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format("named-mixed/{0}", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
@@ -178,6 +190,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedContentTypes.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -191,6 +206,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = "optional-merge-patch-test",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/merge-patch+json",
                     Options = options,
@@ -232,6 +248,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedContentTypes.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedContentTypes.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -245,6 +264,7 @@ public partial class ServiceClient : IServiceClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format("regular/{0}", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

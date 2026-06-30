@@ -19,6 +19,9 @@ public partial class DummyClient : IDummyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedStreaming.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedStreaming.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +35,7 @@ public partial class DummyClient : IDummyClient
                     Method = HttpMethod.Post,
                     Path = "generate",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

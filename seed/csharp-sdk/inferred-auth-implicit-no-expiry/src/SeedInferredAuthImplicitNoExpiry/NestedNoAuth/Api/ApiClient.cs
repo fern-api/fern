@@ -17,6 +17,11 @@ public partial class ApiClient : IApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedInferredAuthImplicitNoExpiry.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedInferredAuthImplicitNoExpiry.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +34,7 @@ public partial class ApiClient : IApiClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/nested-no-auth/get-something",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
