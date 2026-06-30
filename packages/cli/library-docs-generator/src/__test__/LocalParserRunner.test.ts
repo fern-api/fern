@@ -60,7 +60,7 @@ describe("runLocalParser", () => {
         // Without this command the image boots the Lambda handler instead of the CLI.
         expect(call.args).toEqual(["python", "-m", "src.cli_entrypoint"]);
         // Always the `latest` tag, and force-pulled because `latest` is mutable.
-        expect(call.imageName).toBe("fernapi/fern-python-library-docs-parser:latest");
+        expect(call.imageName).toBe("fernenterprise/fern-python-library-docs-parser:latest");
         expect(call.pull).toBe(true);
         // Python is multi-arch — run natively, no platform override.
         expect(call.platform).toBeUndefined();
@@ -88,7 +88,7 @@ describe("runLocalParser", () => {
 
         expect(ir).toEqual({ rootNamespace: { name: "acme" } });
         const call = (runContainer as Mock).mock.calls[0]?.[0];
-        expect(call.imageName).toBe("fernapi/fern-cpp-library-docs-parser:latest");
+        expect(call.imageName).toBe("fernenterprise/fern-cpp-library-docs-parser:latest");
         expect(call.pull).toBe(true);
         // The published C++ image is amd64-only — force the platform so it runs on arm64.
         expect(call.platform).toBe("linux/amd64");

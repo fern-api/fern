@@ -442,6 +442,8 @@ function convertAsymmetricSignature({
         encoding: convertSignatureEncoding(asymmetric.encoding),
         signaturePrefix: asymmetric["signature-prefix"],
         keySource: convertKeySource({ asymmetric, file }),
+        payloadFormat:
+            asymmetric["payload-format"] != null ? convertPayloadFormat(asymmetric["payload-format"]) : undefined,
         timestamp: convertTimestampConfig({ timestamp: asymmetric.timestamp, file })
     };
 }

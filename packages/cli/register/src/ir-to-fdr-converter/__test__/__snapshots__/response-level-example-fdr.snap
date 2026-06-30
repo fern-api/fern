@@ -413,6 +413,7 @@
             "userSpecifiedExamples": {
               "Add a Fern Plant_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add a Fern Plant",
                 "request": {
                   "auth": undefined,
@@ -456,6 +457,7 @@
               },
               "Add a Flowering Plant_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add a Flowering Plant",
                 "request": {
                   "auth": undefined,
@@ -500,6 +502,7 @@
               },
               "Add a Succulent_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add a Succulent",
                 "request": {
                   "auth": undefined,
@@ -543,6 +546,7 @@
               },
               "Add an Outdoor Plant_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Add an Outdoor Plant",
                 "request": {
                   "auth": undefined,
@@ -587,6 +591,7 @@
               },
               "base_plant_addPlant_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "plant_addPlant_example",
                 "request": {
                   "auth": undefined,

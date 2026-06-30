@@ -786,6 +786,7 @@
                         "url": "https://api.example.com/.well-known/jwks.json",
                         "keyIdHeader": "x-key-id"
                     },
+                    "payloadFormat": null,
                     "timestamp": {
                         "headerName": "x-payment-timestamp",
                         "format": "ISO8601",
@@ -938,6 +939,7 @@
                     "keySource": {
                         "type": "static"
                     },
+                    "payloadFormat": null,
                     "timestamp": null
                 },
                 "fileUploadPayload": null,

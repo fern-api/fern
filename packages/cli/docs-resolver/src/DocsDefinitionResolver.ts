@@ -1302,7 +1302,7 @@ export class DocsDefinitionResolver {
                     navigationConfig: tabbed,
                     parentSlug: slug
                 }),
-            versioned: (versioned) => this.toVersionedNode(versioned, slug),
+            versioned: (versioned) => this.toVersionedNode(versioned, slug, this.parsedDocsConfig.landingPage),
             productgroup: (productGroup) =>
                 this.toProductGroupNode({
                     landingPageConfig: this.parsedDocsConfig.landingPage,
@@ -1361,7 +1361,8 @@ export class DocsDefinitionResolver {
 
     private async toVersionedNode(
         versioned: docsYml.VersionedDocsNavigation,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        landingPage: docsYml.DocsNavigationItem.Page | undefined
     ): Promise<FernNavigation.V1.VersionedNode> {
         const id = this.#idgen.get("versioned");
 
@@ -1381,7 +1382,7 @@ export class DocsDefinitionResolver {
         for (let i = 0; i < versioned.versions.length; i += BATCH_SIZE) {
             const batch = versioned.versions.slice(i, i + BATCH_SIZE);
             const batchResults = await Promise.all(
-                batch.map((item, batchIdx) => this.toVersionNode(item, parentSlug, i + batchIdx === 0))
+                batch.map((item, batchIdx) => this.toVersionNode(item, parentSlug, i + batchIdx === 0, landingPage))
             );
             children.push(...batchResults);
         }
@@ -1428,7 +1429,8 @@ export class DocsDefinitionResolver {
                         type: "unversioned",
                         id: this.#idgen.get(product.product),
                         collapsed: undefined,
-                        landingPage: undefined,
+                        landingPage:
+                            product.landingPage != null ? this.toLandingPageNode(product.landingPage, slug) : undefined,
                         child: await this.convertTabbedNavigation(
                             this.#idgen.get(product.product),
                             product.navigation.items,
@@ -1441,7 +1443,8 @@ export class DocsDefinitionResolver {
                         type: "unversioned",
                         id: this.#idgen.get(product.product),
                         collapsed: undefined,
-                        landingPage: undefined,
+                        landingPage:
+                            product.landingPage != null ? this.toLandingPageNode(product.landingPage, slug) : undefined,
                         child: await this.toSidebarRootNode(
                             this.#idgen.get(product.product),
                             product.navigation.items,
@@ -1450,7 +1453,11 @@ export class DocsDefinitionResolver {
                     };
                     break;
                 case "versioned":
-                    child = await this.toVersionedNode(product.navigation, slug);
+                    child = await this.toVersionedNode(
+                        product.navigation,
+                        slug,
+                        product.landingPage ?? this.parsedDocsConfig.landingPage
+                    );
                     break;
                 default:
                     assertNever(product.navigation);
@@ -1500,7 +1507,8 @@ export class DocsDefinitionResolver {
     private async toVersionNode(
         version: docsYml.VersionInfo,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        isDefault: boolean
+        isDefault: boolean,
+        landingPage: docsYml.DocsNavigationItem.Page | undefined
     ): Promise<FernNavigation.V1.VersionNode> {
         const id = this.#idgen.get(version.version);
         const slug = parentSlug.setVersionSlug(version.slug ?? kebabCase(version.version));
@@ -1508,6 +1516,7 @@ export class DocsDefinitionResolver {
             version.navigation.type === "tabbed"
                 ? await this.convertTabbedNavigation(id, version.navigation.items, slug)
                 : await this.toSidebarRootNode(id, version.navigation.items, slug);
+        const resolvedLandingPage = version.landingPage ?? landingPage;
         return {
             type: "version",
             id,
@@ -1519,7 +1528,7 @@ export class DocsDefinitionResolver {
             // TODO: the `default` property should be deprecated, and moved to the parent `versioned` node
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
-            landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, slug) : undefined,
+            landingPage: resolvedLandingPage != null ? this.toLandingPageNode(resolvedLandingPage, slug) : undefined,
             hidden: version.hidden,
             authed: undefined,
             viewers: version.viewers,

@@ -3186,26 +3186,6 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(intermediateRepresentation.services).toBeDefined();
         expect(fdrApiDefinition.rootPackage).toBeDefined();
 
-        console.log("=== SCHEMA-LEVEL EXAMPLE TEST ===");
-        console.log("Root package endpoints:", fdrApiDefinition.rootPackage.endpoints?.length || 0);
-        console.log("Subpackages:", Object.keys(fdrApiDefinition.subpackages || {}));
-
-        let addPlantEndpoint;
-        if (fdrApiDefinition.rootPackage.endpoints && fdrApiDefinition.rootPackage.endpoints.length > 0) {
-            addPlantEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
-        } else {
-            for (const subpackage of Object.values(fdrApiDefinition.subpackages)) {
-                if (subpackage.endpoints && subpackage.endpoints.length > 0) {
-                    addPlantEndpoint = subpackage.endpoints[0];
-                    break;
-                }
-            }
-        }
-
-        console.log("Number of examples in FDR endpoint:", addPlantEndpoint?.examples?.length || 0);
-        console.log("Examples:", JSON.stringify(addPlantEndpoint?.examples, null, 2));
-        console.log("=== END SCHEMA-LEVEL EXAMPLE TEST ===");
-
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/schema-level-example-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/schema-level-example-ir.snap");
     });
@@ -3260,26 +3240,6 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         expect(intermediateRepresentation.services).toBeDefined();
         expect(fdrApiDefinition.rootPackage).toBeDefined();
-
-        console.log("=== RESPONSE-LEVEL EXAMPLE TEST ===");
-        console.log("Root package endpoints:", fdrApiDefinition.rootPackage.endpoints?.length || 0);
-        console.log("Subpackages:", Object.keys(fdrApiDefinition.subpackages || {}));
-
-        let addPlantEndpoint;
-        if (fdrApiDefinition.rootPackage.endpoints && fdrApiDefinition.rootPackage.endpoints.length > 0) {
-            addPlantEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
-        } else {
-            for (const subpackage of Object.values(fdrApiDefinition.subpackages)) {
-                if (subpackage.endpoints && subpackage.endpoints.length > 0) {
-                    addPlantEndpoint = subpackage.endpoints[0];
-                    break;
-                }
-            }
-        }
-
-        console.log("Number of examples in FDR endpoint:", addPlantEndpoint?.examples?.length || 0);
-        console.log("Examples:", JSON.stringify(addPlantEndpoint?.examples, null, 2));
-        console.log("=== END RESPONSE-LEVEL EXAMPLE TEST ===");
 
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/response-level-example-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/response-level-example-ir.snap");
@@ -3425,5 +3385,62 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(fdrApiDefinition).toBeDefined();
         expect(fdrApiDefinition.types).toBeDefined();
         expect(fdrApiDefinition.rootPackage).toBeDefined();
+    });
+
+    it("should extract per-content-type examples when multiple content types share a schema", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/multi-content-type-examples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "multi-content-type-examples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: true,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        expect(intermediateRepresentation.services).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/multi-content-type-examples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot(
+            "__snapshots__/multi-content-type-examples-ir.snap"
+        );
     });
 });

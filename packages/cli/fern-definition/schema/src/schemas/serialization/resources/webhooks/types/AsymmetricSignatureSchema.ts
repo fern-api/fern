@@ -4,6 +4,7 @@ import type * as FernDefinition from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AsymmetricAlgorithmSchema } from "./AsymmetricAlgorithmSchema.js";
+import { WebhookPayloadFormatSchema } from "./WebhookPayloadFormatSchema.js";
 import { WebhookSignatureEncodingSchema } from "./WebhookSignatureEncodingSchema.js";
 import { WebhookTimestampSchema } from "./WebhookTimestampSchema.js";
 
@@ -17,6 +18,7 @@ export const AsymmetricSignatureSchema: core.serialization.ObjectSchema<
     "signature-prefix": core.serialization.string().optional(),
     "jwks-url": core.serialization.string().optional(),
     "key-id-header": core.serialization.string().optional(),
+    "payload-format": WebhookPayloadFormatSchema.optional(),
     timestamp: WebhookTimestampSchema.optional(),
 });
 
@@ -28,6 +30,7 @@ export declare namespace AsymmetricSignatureSchema {
         "signature-prefix"?: string | null;
         "jwks-url"?: string | null;
         "key-id-header"?: string | null;
+        "payload-format"?: WebhookPayloadFormatSchema.Raw | null;
         timestamp?: WebhookTimestampSchema.Raw | null;
     }
 }

@@ -9,5 +9,6 @@ export interface AsymmetricWebhookSignatureVerification {
     signaturePrefix: string | undefined;
     jwksUrl: string | undefined;
     keyIdHeader: string | undefined;
+    payloadFormat: FernOpenapiIr.WebhookPayloadFormat | undefined;
     timestamp: FernOpenapiIr.WebhookTimestamp | undefined;
 }

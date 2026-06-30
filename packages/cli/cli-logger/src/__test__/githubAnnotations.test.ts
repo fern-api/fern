@@ -89,6 +89,19 @@ describe("renderGithubAnnotation", () => {
         expect(renderGithubAnnotation("warning", "deprecated")).toBe("::warning::deprecated\n");
     });
 
+    it("renders ::notice:: level", () => {
+        expect(renderGithubAnnotation("notice", "https://github.com/org/repo/pull/42")).toBe(
+            "::notice::https://github.com/org/repo/pull/42\n"
+        );
+    });
+
+    it("renders ::notice:: with title and file properties", () => {
+        const out = renderGithubAnnotation("notice", "https://github.com/org/repo/pull/42", {
+            title: "my-generator (group=sdk) → PR created"
+        });
+        expect(out).toBe("::notice title=my-generator (group=sdk) → PR created::https://github.com/org/repo/pull/42\n");
+    });
+
     it("formats file/line/title properties in reading order (file, line, title)", () => {
         const out = renderGithubAnnotation("error", "boom", {
             file: "fern/generators.yml",

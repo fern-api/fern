@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { AsymmetricAlgorithm } from "./AsymmetricAlgorithm.js";
 import { AsymmetricKeySource } from "./AsymmetricKeySource.js";
+import { WebhookPayloadFormat } from "./WebhookPayloadFormat.js";
 import { WebhookSignatureEncoding } from "./WebhookSignatureEncoding.js";
 import { WebhookTimestampConfig } from "./WebhookTimestampConfig.js";
 
@@ -18,6 +19,7 @@ export const AsymmetricKeySignatureVerification: core.serialization.ObjectSchema
     encoding: WebhookSignatureEncoding,
     signaturePrefix: core.serialization.string().optional(),
     keySource: AsymmetricKeySource,
+    payloadFormat: WebhookPayloadFormat.optional(),
     timestamp: WebhookTimestampConfig.optional(),
 });
 
@@ -28,6 +30,7 @@ export declare namespace AsymmetricKeySignatureVerification {
         encoding: WebhookSignatureEncoding.Raw;
         signaturePrefix?: string | null;
         keySource: AsymmetricKeySource.Raw;
+        payloadFormat?: WebhookPayloadFormat.Raw | null;
         timestamp?: WebhookTimestampConfig.Raw | null;
     }
 }
