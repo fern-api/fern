@@ -4408,6 +4408,17 @@
           ],
           "description": "Controls the \"Connect to Cursor\" button, which installs this docs site's MCP server in\nCursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set\nto `false` to hide it on those sites.\n\n@default: true"
         },
+        "mcp": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.\nWhen set to `false`, the endpoint returns 404, the MCP server URL is omitted from\n`llms.txt` and agent prompts, and the \"Connect to Claude Code\" / \"Connect to Cursor\"\nbuttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents\ndiscovering the endpoint would cause confusion.\n\n@default: true"
+        },
         "vscode": {
           "oneOf": [
             {
