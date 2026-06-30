@@ -707,19 +707,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     })
                 ]
             });
+            const optionsType = endpoint.idempotent ? this.Types.IdempotentRequestOptions : this.Types.RequestOptions;
+            const optionsParamName = endpoint.idempotent
+                ? this.names.parameters.idempotentOptions
+                : this.names.parameters.requestOptions;
             parameters.push(
                 this.csharp.parameter({
                     type: reconnectFnType,
                     name: "reconnectFn"
                 }),
                 this.csharp.parameter({
-                    type: this.csharp
-                        .classReference({
-                            name: "RequestOptions",
-                            namespace: this.context.namespaces.root
-                        })
-                        .asOptional(),
-                    name: this.names.parameters.requestOptions
+                    type: optionsType.asOptional(),
+                    name: optionsParamName
                 })
             );
         }
@@ -864,6 +863,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     });
                     const isResumable = sseChunk.resumable === true;
                     if (isResumable) {
+                        const optionsParam = endpoint.idempotent
+                            ? names.parameters.idempotentOptions
+                            : names.parameters.requestOptions;
                         // Use SseReconnectHelper for reconnectable streams
                         writer.write(`await foreach (var item in `);
                         writer.writeNode(
@@ -873,7 +875,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             })
                         );
                         writer.writeLine(
-                            `.EnumerateWithReconnectAsync(${names.variables.response}, reconnectFn, ${names.parameters.requestOptions}?.MaxStreamReconnectAttempts, ${names.parameters.requestOptions}?.DisableStreamReconnection ?? false, ${
+                            `.EnumerateWithReconnectAsync(${names.variables.response}, reconnectFn, ${optionsParam}?.MaxStreamReconnectAttempts, ${optionsParam}?.DisableStreamReconnection ?? false, ${
                                 sseChunk.terminator ? `"${sseChunk.terminator}"` : "null"
                             }, ${names.parameters.cancellationToken}).ConfigureAwait(false))`
                         );
