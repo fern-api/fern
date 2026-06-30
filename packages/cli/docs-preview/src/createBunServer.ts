@@ -34,6 +34,8 @@ export interface BunServerOptions {
     debugLogger: DebugLogger;
     /** Returns the pre-serialized JSON string for the docs load response (cache-aware). */
     getSerializedDocsLoadResponse(locale?: string): string;
+    /** Returns the current ETag value for the docs load response. */
+    getResponseETag(): string;
     /**
      * Extracts the locale from a URL path.
      * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
@@ -56,7 +58,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getSerializedDocsLoadResponse, extractLocaleFromPath } = options;
+    const { port, debugLogger, getSerializedDocsLoadResponse, getResponseETag, extractLocaleFromPath } = options;
 
     let bunLoadWithUrlRequestCount = 0;
     type WsData = { connectionId: string };
@@ -100,13 +102,26 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
             if (req.method === "POST" && url.pathname === "/v2/registry/docs/load-with-url") {
                 const requestStart = Date.now();
                 const requestNum = ++bunLoadWithUrlRequestCount;
+                const etag = getResponseETag();
+
+                // Return 304 if the client already has the current version
+                const ifNoneMatch = req.headers.get("if-none-match");
+                if (ifNoneMatch === etag) {
+                    const totalTime = Date.now() - requestStart;
+                    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
+                    console.error(
+                        `[BENCHMARK] /load-with-url (bun) #${requestNum}: 304 Not Modified, total: ${totalTime}ms`
+                    );
+                    return new Response(null, { status: 304, headers: { ETag: etag, ...CORS_HEADERS } });
+                }
+
                 try {
                     const body = (await req.json()) as { url?: string } | undefined;
                     const urlPath = body?.url;
                     const locale = extractLocaleFromPath?.(urlPath);
                     const responseJson = getSerializedDocsLoadResponse(locale);
                     const resp = new Response(responseJson, {
-                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                        headers: { "Content-Type": "application/json", ETag: etag, ...CORS_HEADERS }
                     });
                     const totalTime = Date.now() - requestStart;
                     const sizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
@@ -118,7 +133,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                 } catch {
                     // If JSON parsing fails, just return the default response
                     return new Response(getSerializedDocsLoadResponse(), {
-                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                        headers: { "Content-Type": "application/json", ETag: etag, ...CORS_HEADERS }
                     });
                 }
             }
