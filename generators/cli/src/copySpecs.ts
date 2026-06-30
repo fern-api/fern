@@ -14,6 +14,14 @@ export interface RawSpecsManifest {
     specs: RawSpecsManifestEntry[];
 }
 
+/**
+ * Characters that are safe to interpolate into a Rust `"..."` string literal.
+ * Rejects double quotes and backslashes that could break out of the literal
+ * or inject code into generated `main.rs`.
+ */
+// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally rejecting control chars in codegen output
+const SAFE_RUST_STRING_LITERAL = /^[^"\\\x00-\x1f]+$/;
+
 /** Where the local-workspace-runner mounts raw API specs inside the container. */
 export const SPECS_DIRECTORY = "/fern/specs";
 export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
@@ -230,6 +238,12 @@ function renderMainRs(args: {
     for (const entry of entries) {
         const include = `include_str!("${entry.destFilename}")`;
         if (entry.namespace != null && entry.namespace !== "") {
+            if (!SAFE_RUST_STRING_LITERAL.test(entry.namespace)) {
+                throw new Error(
+                    `Unsafe namespace "${entry.namespace}": contains characters that cannot be interpolated ` +
+                        "into a Rust string literal. Avoid double quotes, backslashes, and control characters."
+                );
+            }
             lines.push(`                .spec_under("${entry.namespace}", ${include})`);
         } else {
             lines.push(`                .spec(${include})`);
@@ -238,7 +252,7 @@ function renderMainRs(args: {
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
     }
-    if (rootGroup != null && rootGroup !== "") {
+    if (rootGroup != null) {
         lines.push(`                .command_namespace("${rootGroup}")`);
     }
     // Close the binding
