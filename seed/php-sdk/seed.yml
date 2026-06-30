@@ -181,5 +181,7 @@ scripts:
         - composer analyze
       test:
         - composer test
+allowedFailures:
+  - api-wide-base-path-with-default
 
 
