@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.ObjectMappers;
 import com.seed.anyAuth.core.RequestOptions;
+import com.seed.anyAuth.core.RetryInterceptor;
 import com.seed.anyAuth.core.SeedAnyAuthApiException;
 import com.seed.anyAuth.core.SeedAnyAuthException;
 import com.seed.anyAuth.core.SeedAnyAuthHttpResponse;
@@ -54,6 +55,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedAnyAuthHttpResponse<List<User>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -107,6 +117,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedAnyAuthHttpResponse<List<User>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

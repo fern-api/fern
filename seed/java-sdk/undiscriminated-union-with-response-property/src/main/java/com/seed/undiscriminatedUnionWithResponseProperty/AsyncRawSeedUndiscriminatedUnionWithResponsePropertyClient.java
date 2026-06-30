@@ -6,6 +6,7 @@ package com.seed.undiscriminatedUnionWithResponseProperty;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ClientOptions;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ObjectMappers;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.RequestOptions;
+import com.seed.undiscriminatedUnionWithResponseProperty.core.RetryInterceptor;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyApiException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyHttpResponse;
@@ -55,6 +56,15 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<MyUnion>> future =
                 new CompletableFuture<>();
@@ -112,6 +122,15 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<List<MyUnion>>> future =
                 new CompletableFuture<>();

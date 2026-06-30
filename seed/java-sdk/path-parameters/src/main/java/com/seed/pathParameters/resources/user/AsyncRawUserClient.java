@@ -10,6 +10,7 @@ import com.seed.pathParameters.core.MediaTypes;
 import com.seed.pathParameters.core.ObjectMappers;
 import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.core.RetryInterceptor;
 import com.seed.pathParameters.core.SeedPathParametersApiException;
 import com.seed.pathParameters.core.SeedPathParametersException;
 import com.seed.pathParameters.core.SeedPathParametersHttpResponse;
@@ -75,6 +76,15 @@ public class AsyncRawUserClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -137,6 +147,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -202,6 +221,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -273,6 +301,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<List<User>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -355,6 +392,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -443,6 +489,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

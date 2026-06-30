@@ -8,6 +8,7 @@ import com.seed.oauthClientCredentialsMandatoryAuth.core.ClientOptions;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.MediaTypes;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.ObjectMappers;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.RequestOptions;
+import com.seed.oauthClientCredentialsMandatoryAuth.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.SeedOauthClientCredentialsMandatoryAuthApiException;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.SeedOauthClientCredentialsMandatoryAuthException;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.SeedOauthClientCredentialsMandatoryAuthHttpResponse;
@@ -66,6 +67,15 @@ public class AsyncRawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedOauthClientCredentialsMandatoryAuthHttpResponse<TokenResponse>> future =
                 new CompletableFuture<>();
@@ -131,6 +141,15 @@ public class AsyncRawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedOauthClientCredentialsMandatoryAuthHttpResponse<TokenResponse>> future =
                 new CompletableFuture<>();

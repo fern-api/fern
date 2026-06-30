@@ -6,6 +6,7 @@ package com.seed.simpleApi.resources.user;
 import com.seed.simpleApi.core.ClientOptions;
 import com.seed.simpleApi.core.ObjectMappers;
 import com.seed.simpleApi.core.RequestOptions;
+import com.seed.simpleApi.core.RetryInterceptor;
 import com.seed.simpleApi.core.SeedSimpleApiApiException;
 import com.seed.simpleApi.core.SeedSimpleApiException;
 import com.seed.simpleApi.core.SeedSimpleApiHttpResponse;
@@ -52,6 +53,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedSimpleApiHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
