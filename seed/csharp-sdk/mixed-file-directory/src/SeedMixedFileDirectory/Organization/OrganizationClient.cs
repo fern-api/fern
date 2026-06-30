@@ -18,6 +18,9 @@ public partial class OrganizationClient : IOrganizationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedMixedFileDirectory.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedMixedFileDirectory.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class OrganizationClient : IOrganizationClient
                     Method = HttpMethod.Post,
                     Path = "/organizations/",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

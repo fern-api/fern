@@ -20,6 +20,9 @@ public partial class FolderClient : IFolderClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +35,7 @@ public partial class FolderClient : IFolderClient
                 {
                     Method = HttpMethod.Post,
                     Path = "",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

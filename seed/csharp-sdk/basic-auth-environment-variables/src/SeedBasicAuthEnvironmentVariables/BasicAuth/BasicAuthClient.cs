@@ -17,6 +17,11 @@ public partial class BasicAuthClient : IBasicAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedBasicAuthEnvironmentVariables.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedBasicAuthEnvironmentVariables.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +34,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                 {
                     Method = HttpMethod.Get,
                     Path = "basic-auth",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -116,6 +122,11 @@ public partial class BasicAuthClient : IBasicAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedBasicAuthEnvironmentVariables.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedBasicAuthEnvironmentVariables.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -129,6 +140,7 @@ public partial class BasicAuthClient : IBasicAuthClient
                     Method = HttpMethod.Post,
                     Path = "basic-auth",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -18,6 +18,9 @@ public partial class FileUploadExampleClient : IFileUploadExampleClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -28,6 +31,7 @@ public partial class FileUploadExampleClient : IFileUploadExampleClient
         {
             Method = HttpMethod.Post,
             Path = "upload-file",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };

@@ -18,6 +18,9 @@ public partial class MigrationClient : IMigrationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add("admin-key-header", request.AdminKeyHeader)
             .Add(_client.Options.Headers)
@@ -31,6 +34,7 @@ public partial class MigrationClient : IMigrationClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/migration-info/all",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

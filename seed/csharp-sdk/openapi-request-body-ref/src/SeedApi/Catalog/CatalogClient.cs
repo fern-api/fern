@@ -18,6 +18,9 @@ public partial class CatalogClient : ICatalogClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -28,6 +31,7 @@ public partial class CatalogClient : ICatalogClient
         {
             Method = HttpMethod.Post,
             Path = "catalog/images",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -95,6 +99,9 @@ public partial class CatalogClient : ICatalogClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -110,6 +117,7 @@ public partial class CatalogClient : ICatalogClient
                         "catalog/images/{0}",
                         ValueConvert.ToPathParameterString(request.ImageId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

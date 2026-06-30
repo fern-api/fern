@@ -27,6 +27,11 @@ public partial class SimpleClient : ISimpleClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedOauthClientCredentials.Core.QueryStringBuilder.Builder(
+                    capacity: 0
+                )
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -39,6 +44,7 @@ public partial class SimpleClient : ISimpleClient
                         {
                             Method = HttpMethod.Get,
                             Path = "/get-something",
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },

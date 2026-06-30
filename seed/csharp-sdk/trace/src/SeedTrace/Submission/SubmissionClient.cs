@@ -18,6 +18,9 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -33,6 +36,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/create-session/{0}",
                         ValueConvert.ToPathParameterString(language)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -98,6 +102,9 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -113,6 +120,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/{0}",
                         ValueConvert.ToPathParameterString(sessionId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -178,6 +186,9 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -193,6 +204,7 @@ public partial class SubmissionClient : ISubmissionClient
                         "/sessions/stop/{0}",
                         ValueConvert.ToPathParameterString(sessionId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -233,6 +245,9 @@ public partial class SubmissionClient : ISubmissionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -245,6 +260,7 @@ public partial class SubmissionClient : ISubmissionClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/sessions/execution-sessions-state",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -34,6 +34,9 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedCsharpXmlEntities.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedCsharpXmlEntities.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -46,6 +49,7 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/timezone",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
