@@ -329,7 +329,8 @@ export function createHttpEndpoint(opts?: {
         retries: undefined,
         apiPlayground: undefined,
         docs: opts?.docs,
-        availability: undefined
+        availability: undefined,
+        subtitle: undefined
     };
 }
 

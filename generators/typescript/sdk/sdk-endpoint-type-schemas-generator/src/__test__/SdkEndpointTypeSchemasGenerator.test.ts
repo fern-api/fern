@@ -749,7 +749,8 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 response: {
                     body: FernIr.HttpResponseBody.text({
                         v2Examples: undefined,
-                        docs: undefined
+                        docs: undefined,
+                        contentType: undefined
                     }),
                     statusCode: undefined,
                     isWildcardStatusCode: undefined,

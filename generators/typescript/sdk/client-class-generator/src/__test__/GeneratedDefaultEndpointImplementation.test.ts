@@ -697,7 +697,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
         it("sets responseType to text for text response endpoints", () => {
             const endpoint = createHttpEndpoint();
             endpoint.response = {
-                body: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined }),
+                body: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined, contentType: undefined }),
                 statusCode: undefined,
                 isWildcardStatusCode: undefined,
                 docs: undefined
