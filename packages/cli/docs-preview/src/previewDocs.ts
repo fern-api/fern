@@ -186,8 +186,7 @@ export async function getPreviewDocsDefinition({
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
-        // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-        console.error(`[BENCHMARK] Incremental path: checking ${editedAbsoluteFilepaths.length} edited files`);
+        context.logger.info(`[BENCHMARK] Incremental path: checking ${editedAbsoluteFilepaths.length} edited files`);
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
@@ -327,8 +326,7 @@ export async function getPreviewDocsDefinition({
         }
 
         if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {
-            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.error("[BENCHMARK] Fast path taken: markdown-only, no nav change");
+            context.logger.info("[BENCHMARK] Fast path taken: markdown-only, no nav change");
             // Return updated definition with preserved translation data
             return {
                 docsDefinition: previousDocsDefinition,
@@ -340,27 +338,22 @@ export async function getPreviewDocsDefinition({
             };
         }
         if (!allMarkdownFiles) {
-            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.error("[BENCHMARK] Fast path skipped: non-markdown files edited");
+            context.logger.info("[BENCHMARK] Fast path skipped: non-markdown files edited");
         } else if (navAffectingChange) {
-            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.error(`[BENCHMARK] Fast path skipped: ${navAffectingReason}`);
+            context.logger.info(`[BENCHMARK] Fast path skipped: ${navAffectingReason}`);
         } else if (previousPreviewResult == null) {
-            // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.error("[BENCHMARK] Fast path skipped: no previous preview result");
+            context.logger.info("[BENCHMARK] Fast path skipped: no previous preview result");
         }
     }
 
-    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-    console.error("[BENCHMARK] Full rebuild path taken");
+    context.logger.info("[BENCHMARK] Full rebuild path taken");
     const ossWorkspaces = await filterOssWorkspaces(project);
 
     // Apply global theme if configured. Requires FERN_TOKEN env var; warns and proceeds
     // without the theme if the token is absent (common in local dev without cloud auth).
     const themeStart = Date.now();
     const effectiveWorkspace = await applyGlobalThemeIfNeeded(docsWorkspace, project.config.organization, context);
-    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-    console.error(`[BENCHMARK] applyGlobalTheme: ${Date.now() - themeStart}ms`);
+    context.logger.info(`[BENCHMARK] applyGlobalTheme: ${Date.now() - themeStart}ms`);
 
     const apiCollector = new ReferencedAPICollector(context);
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
@@ -395,8 +388,7 @@ export async function getPreviewDocsDefinition({
     const resolverStart = Date.now();
     const writeDocsDefinition = await resolver.resolve();
     const resolverTime = Date.now() - resolverStart;
-    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-    console.error(`[BENCHMARK] DocsDefinitionResolver.resolve(): ${resolverTime}ms`);
+    context.logger.info(`[BENCHMARK] DocsDefinitionResolver.resolve(): ${resolverTime}ms`);
 
     const convertStart = Date.now();
     const dbDocsDefinition = convertDocsDefinitionToDb({
@@ -406,8 +398,7 @@ export async function getPreviewDocsDefinition({
     const readDocsConfig = convertDbDocsConfigToRead({
         dbShape: dbDocsDefinition.config
     });
-    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-    console.error(`[BENCHMARK] convertDocsDefinition: ${Date.now() - convertStart}ms`);
+    context.logger.info(`[BENCHMARK] convertDocsDefinition: ${Date.now() - convertStart}ms`);
 
     frontmatterPositionCache.clear();
     frontmatterSidebarTitleCache.clear();
