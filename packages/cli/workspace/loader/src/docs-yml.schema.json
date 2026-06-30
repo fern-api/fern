@@ -6100,6 +6100,17 @@
             }
           ],
           "description": "If set to true, the current product is automatically selected as a\nfacet filter, so only results from the current product are shown by\ndefault. Equivalent to the legacy `settings.default-search-filters`\nsetting, which is preserved as an alias for backwards compatibility.\n\n@default: false"
+        },
+        "prioritize-guides": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, guide/markdown pages are soft-boosted over API reference\nand parameter records in Algolia's ranking (via `optionalFilters`).\nResults from the API reference are still returned, just ranked lower\nwhen relevance is otherwise equal.\n\n@default: false"
         }
       },
       "additionalProperties": false
