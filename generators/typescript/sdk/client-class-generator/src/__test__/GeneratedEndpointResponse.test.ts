@@ -400,7 +400,11 @@ describe("GeneratedThrowingEndpointResponse", () => {
 
         it("returns string for text response", () => {
             const instance = createInstance({
-                response: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined, contentType: undefined })
+                response: FernIr.HttpResponseBody.text({
+                    docs: undefined,
+                    v2Examples: undefined,
+                    contentType: undefined
+                })
             });
             const context = createMockContext();
             const result = instance.getReturnType(context);
