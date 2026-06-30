@@ -251,6 +251,98 @@ describe("copySpecs", () => {
         expect(basicIdx).toBeGreaterThan(bindingIdx);
     });
 
+    it("emits .command_namespace() on the OpenApiBinding when rootGroup is set", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir, rootGroup: "api" });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.command_namespace("api")');
+        expect(main).toContain("OpenApiBinding::new()");
+    });
+
+    it("emits both .spec_under() and .command_namespace() when namespace and rootGroup are combined", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(path.join(specsDir, "openapi1.json"), '{"openapi":"3.0.0","info":{"title":"billing"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    { type: "openapi", specPath: path.join(specsDir, "openapi0.json"), namespace: "users" },
+                    { type: "openapi", specPath: path.join(specsDir, "openapi1.json"), namespace: "billing" }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir, rootGroup: "api" });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.spec_under("users", include_str!("openapi0.json"))');
+        expect(main).toContain('.spec_under("billing", include_str!("openapi1.json"))');
+        expect(main).toContain('.command_namespace("api")');
+        // command_namespace appears after spec_under entries
+        const lastSpecUnder = main.lastIndexOf(".spec_under(");
+        const nsIdx = main.indexOf(".command_namespace(");
+        expect(nsIdx).toBeGreaterThan(lastSpecUnder);
+    });
+
+    it("does not emit .command_namespace() when rootGroup is unset", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".command_namespace");
+    });
+
+    it("throws on namespace containing unsafe characters for Rust string interpolation", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [
+                    {
+                        type: "openapi",
+                        specPath: path.join(specsDir, "openapi0.json"),
+                        namespace: 'admin"); panic!("'
+                    }
+                ]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await expect(copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir })).rejects.toThrow(
+            /Unsafe namespace/
+        );
+    });
+
     it("only emits auth type imports when at least one binding uses them", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
