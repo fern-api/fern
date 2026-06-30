@@ -2899,6 +2899,9 @@
                 },
                 "default-filter-by-current-product": {
                   "type": "boolean"
+                },
+                "prioritize-guides": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
