@@ -1,5 +1,3 @@
-import { DocsV2Read } from "@fern-api/fdr-sdk";
-
 import { DebugLogger } from "./DebugLogger.js";
 
 const CORS_HEADERS = {
@@ -34,7 +32,8 @@ interface BunNamespace {
 export interface BunServerOptions {
     port: number;
     debugLogger: DebugLogger;
-    getDocsLoadResponse(locale?: string): DocsV2Read.LoadDocsForUrlResponse;
+    /** Returns the pre-serialized JSON string for the docs load response (cache-aware). */
+    getSerializedDocsLoadResponse(locale?: string): string;
     /**
      * Extracts the locale from a URL path.
      * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
@@ -57,7 +56,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath } = options;
+    const { port, debugLogger, getSerializedDocsLoadResponse, extractLocaleFromPath } = options;
 
     let bunLoadWithUrlRequestCount = 0;
     type WsData = { connectionId: string };
@@ -105,10 +104,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                     const body = (await req.json()) as { url?: string } | undefined;
                     const urlPath = body?.url;
                     const locale = extractLocaleFromPath?.(urlPath);
-                    const serializeStart = Date.now();
-                    const responseObj = getDocsLoadResponse(locale);
-                    const responseJson = JSON.stringify(responseObj);
-                    const serializeTime = Date.now() - serializeStart;
+                    const responseJson = getSerializedDocsLoadResponse(locale);
                     const resp = new Response(responseJson, {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
@@ -116,12 +112,12 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                     const sizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
                     // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
                     console.error(
-                        `[BENCHMARK] /load-with-url (bun) #${requestNum}: url=${urlPath ?? "(none)"}, total: ${totalTime}ms, serialize: ${serializeTime}ms, size: ${sizeMB}MB`
+                        `[BENCHMARK] /load-with-url (bun) #${requestNum}: url=${urlPath ?? "(none)"}, total: ${totalTime}ms, size: ${sizeMB}MB`
                     );
                     return resp;
                 } catch {
                     // If JSON parsing fails, just return the default response
-                    return new Response(JSON.stringify(getDocsLoadResponse()), {
+                    return new Response(getSerializedDocsLoadResponse(), {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
                 }
