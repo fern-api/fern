@@ -6,6 +6,7 @@ package com.seed.oauthClientCredentialsReference.resources.simple;
 import com.seed.oauthClientCredentialsReference.core.ClientOptions;
 import com.seed.oauthClientCredentialsReference.core.ObjectMappers;
 import com.seed.oauthClientCredentialsReference.core.RequestOptions;
+import com.seed.oauthClientCredentialsReference.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsReference.core.SeedOauthClientCredentialsReferenceApiException;
 import com.seed.oauthClientCredentialsReference.core.SeedOauthClientCredentialsReferenceException;
 import com.seed.oauthClientCredentialsReference.core.SeedOauthClientCredentialsReferenceHttpResponse;
@@ -45,6 +46,15 @@ public class RawSimpleClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

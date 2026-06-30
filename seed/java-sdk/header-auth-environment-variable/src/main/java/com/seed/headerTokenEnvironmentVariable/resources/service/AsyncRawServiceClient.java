@@ -6,6 +6,7 @@ package com.seed.headerTokenEnvironmentVariable.resources.service;
 import com.seed.headerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.headerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.headerTokenEnvironmentVariable.core.RequestOptions;
+import com.seed.headerTokenEnvironmentVariable.core.RetryInterceptor;
 import com.seed.headerTokenEnvironmentVariable.core.SeedHeaderTokenEnvironmentVariableApiException;
 import com.seed.headerTokenEnvironmentVariable.core.SeedHeaderTokenEnvironmentVariableException;
 import com.seed.headerTokenEnvironmentVariable.core.SeedHeaderTokenEnvironmentVariableHttpResponse;
@@ -57,6 +58,15 @@ public class AsyncRawServiceClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedHeaderTokenEnvironmentVariableHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

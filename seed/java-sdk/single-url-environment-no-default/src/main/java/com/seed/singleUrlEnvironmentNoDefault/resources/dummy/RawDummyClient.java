@@ -6,6 +6,7 @@ package com.seed.singleUrlEnvironmentNoDefault.resources.dummy;
 import com.seed.singleUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentNoDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentNoDefault.core.RequestOptions;
+import com.seed.singleUrlEnvironmentNoDefault.core.RetryInterceptor;
 import com.seed.singleUrlEnvironmentNoDefault.core.SeedSingleUrlEnvironmentNoDefaultApiException;
 import com.seed.singleUrlEnvironmentNoDefault.core.SeedSingleUrlEnvironmentNoDefaultException;
 import com.seed.singleUrlEnvironmentNoDefault.core.SeedSingleUrlEnvironmentNoDefaultHttpResponse;
@@ -46,6 +47,15 @@ public class RawDummyClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

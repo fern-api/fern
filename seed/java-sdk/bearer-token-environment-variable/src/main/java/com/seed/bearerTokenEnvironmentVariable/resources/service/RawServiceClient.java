@@ -6,6 +6,7 @@ package com.seed.bearerTokenEnvironmentVariable.resources.service;
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
+import com.seed.bearerTokenEnvironmentVariable.core.RetryInterceptor;
 import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableApiException;
 import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableException;
 import com.seed.bearerTokenEnvironmentVariable.core.SeedBearerTokenEnvironmentVariableHttpResponse;
@@ -52,6 +53,15 @@ public class RawServiceClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

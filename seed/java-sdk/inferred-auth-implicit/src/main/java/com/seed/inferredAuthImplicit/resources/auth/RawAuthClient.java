@@ -7,6 +7,7 @@ import com.seed.inferredAuthImplicit.core.ClientOptions;
 import com.seed.inferredAuthImplicit.core.MediaTypes;
 import com.seed.inferredAuthImplicit.core.ObjectMappers;
 import com.seed.inferredAuthImplicit.core.RequestOptions;
+import com.seed.inferredAuthImplicit.core.RetryInterceptor;
 import com.seed.inferredAuthImplicit.core.SeedInferredAuthImplicitApiException;
 import com.seed.inferredAuthImplicit.core.SeedInferredAuthImplicitException;
 import com.seed.inferredAuthImplicit.core.SeedInferredAuthImplicitHttpResponse;
@@ -62,6 +63,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -109,6 +119,15 @@ public class RawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
