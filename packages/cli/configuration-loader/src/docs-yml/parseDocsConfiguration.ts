@@ -434,6 +434,7 @@ function convertPageActions(
             claude: pageActions.options?.claude ?? true,
             cursor: pageActions.options?.cursor ?? true,
             claudeCode: pageActions.options?.claudeCode ?? true,
+            mcp: pageActions.options?.mcp ?? true,
             vscode: pageActions.options?.vscode ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)

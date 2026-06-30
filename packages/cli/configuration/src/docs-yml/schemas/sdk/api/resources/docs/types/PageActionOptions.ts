@@ -52,6 +52,16 @@ export interface PageActionOptions {
      */
     cursor?: boolean;
     /**
+     * Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.
+     * When set to `false`, the endpoint returns 404, the MCP server URL is omitted from
+     * `llms.txt` and agent prompts, and the "Connect to Claude Code" / "Connect to Cursor"
+     * buttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents
+     * discovering the endpoint would cause confusion.
+     *
+     * @default: true
+     */
+    mcp?: boolean;
+    /**
      * When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
      *
      * @default: false

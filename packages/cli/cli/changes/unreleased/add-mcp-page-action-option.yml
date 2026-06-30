@@ -1,0 +1,5 @@
+- summary: |
+    Add `mcp` option to `page-actions` in `docs.yml`. When set to `false`, the MCP server
+    endpoint is disabled, its URL is omitted from `llms.txt` and agent prompts, and the
+    "Connect to Claude Code" / "Connect to Cursor" buttons are hidden.
+  type: feat
