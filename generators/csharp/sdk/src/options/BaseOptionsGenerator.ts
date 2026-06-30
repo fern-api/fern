@@ -92,10 +92,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
     }
 
-    public getMaxStreamReconnectAttemptsField(
-        classOrInterface: ast.Interface | ast.Class,
-        { optional }: OptionArgs
-    ) {
+    public getMaxStreamReconnectAttemptsField(classOrInterface: ast.Interface | ast.Class, { optional }: OptionArgs) {
         const type = this.Primitive.integer;
         classOrInterface.addField({
             origin: classOrInterface.explicit("MaxStreamReconnectAttempts"),
@@ -108,10 +105,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
     }
 
-    public getDisableStreamReconnectionField(
-        classOrInterface: ast.Interface | ast.Class,
-        { optional }: OptionArgs
-    ) {
+    public getDisableStreamReconnectionField(classOrInterface: ast.Interface | ast.Class, { optional }: OptionArgs) {
         const type = this.Primitive.boolean;
         classOrInterface.addField({
             origin: classOrInterface.explicit("DisableStreamReconnection"),

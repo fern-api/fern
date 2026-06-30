@@ -713,10 +713,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     name: "reconnectFn"
                 }),
                 this.csharp.parameter({
-                    type: this.csharp.classReference({
-                        name: "RequestOptions",
-                        namespace: this.context.namespaces.root
-                    }).asOptional(),
+                    type: this.csharp
+                        .classReference({
+                            name: "RequestOptions",
+                            namespace: this.context.namespaces.root
+                        })
+                        .asOptional(),
                     name: this.names.parameters.requestOptions
                 })
             );
@@ -863,9 +865,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     const isResumable = sseChunk.resumable === true;
                     if (isResumable) {
                         // Use SseReconnectHelper for reconnectable streams
-                        writer.write(
-                            `await foreach (var item in `
-                        );
+                        writer.write(`await foreach (var item in `);
                         writer.writeNode(
                             context.csharp.classReference({
                                 name: "SseReconnectHelper",
