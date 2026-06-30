@@ -10,6 +10,7 @@ import {
     BundledTypescriptProject,
     CoreUtilitiesManager,
     DependencyManager,
+    DependencyType,
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
@@ -65,6 +66,7 @@ import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/W
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
+import { ReactQueryGenerator } from "./react-query/ReactQueryGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
 import { TestGenerator } from "./test-generator/TestGenerator.js";
@@ -173,6 +175,7 @@ export declare namespace SdkGenerator {
         resolveQueryParameterNameConflicts: boolean;
         maxRetries: number | undefined;
         alwaysSendAuth: boolean;
+        generateReactQueryHooks: boolean;
     }
 }
 
@@ -718,6 +721,10 @@ export class SdkGenerator {
             ...this.testGenerator.extraFiles
         };
 
+        if (this.config.generateReactQueryHooks) {
+            this.generateReactQueryHooks();
+        }
+
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
             const snippets: FernGeneratorExec.Snippets = {
@@ -801,6 +808,34 @@ export class SdkGenerator {
                   generateSubpackageExports: this.config.generateSubpackageExports,
                   subpackageExportPaths
               });
+    }
+
+    private generateReactQueryHooks(): void {
+        this.context.logger.debug("Generating React Query hooks...");
+        const reactQueryGenerator = new ReactQueryGenerator({
+            intermediateRepresentation: this.intermediateRepresentation,
+            packageResolver: this.packageResolver,
+            namespaceExport: this.namespaceExport,
+            clientClassName: this.naming.client,
+            caseConverter: this.case,
+            npmPackageName: this.npmPackage?.packageName,
+            relativePackagePath: this.relativePackagePath
+        });
+        const reactQueryFiles = reactQueryGenerator.generateFiles();
+        this.extraFiles = {
+            ...this.extraFiles,
+            ...reactQueryFiles
+        };
+        this.dependencyManager.addDependency("@tanstack/react-query", ">=5.0.0", {
+            type: DependencyType.PEER
+        });
+        this.dependencyManager.addDependency("react", ">=18.0.0", {
+            type: DependencyType.PEER
+        });
+        this.dependencyManager.addDependency("@types/react", ">=18.0.0", {
+            type: DependencyType.DEV
+        });
+        this.context.logger.debug("Generated React Query hooks");
     }
 
     private hasIdempotentEndpoints(): boolean {
