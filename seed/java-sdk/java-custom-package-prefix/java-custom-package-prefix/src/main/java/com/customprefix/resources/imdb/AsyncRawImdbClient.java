@@ -7,6 +7,7 @@ import com.customprefix.core.ClientOptions;
 import com.customprefix.core.MediaTypes;
 import com.customprefix.core.ObjectMappers;
 import com.customprefix.core.RequestOptions;
+import com.customprefix.core.RetryInterceptor;
 import com.customprefix.core.SeedApiApiException;
 import com.customprefix.core.SeedApiException;
 import com.customprefix.core.SeedApiHttpResponse;
@@ -73,6 +74,15 @@ public class AsyncRawImdbClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedApiHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -124,6 +134,15 @@ public class AsyncRawImdbClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedApiHttpResponse<Movie>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

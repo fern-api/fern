@@ -153,6 +153,7 @@
           "userSpecifiedExamples": {
             "createUserExample_Successfully created user_201": {
               "codeSamples": undefined,
+              "contentType": undefined,
               "displayName": "Successfully created user",
               "request": {
                 "auth": undefined,

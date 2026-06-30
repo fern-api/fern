@@ -33,6 +33,9 @@ public partial class SeedLicenseClient : ISeedLicenseClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedLicense.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedLicense.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -45,6 +48,7 @@ public partial class SeedLicenseClient : ISeedLicenseClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

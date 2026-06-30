@@ -27,6 +27,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     private static ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_QUERY_PARAMETERS";
+    private static ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_BODY_PROPERTIES";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
@@ -119,11 +120,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
-        // gRPC APIs don't support raw response access or additional query parameters
+        // gRPC APIs don't support raw response access, additional query parameters, or additional body properties
         if (!this.context.hasGrpcEndpoints()) {
             snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
             snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID] =
                 this.buildAdditionalQueryParametersSnippets();
+            snippets[ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID] =
+                this.buildAdditionalBodyPropertiesSnippets();
         }
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         if (this.isPaginationEnabled) {
@@ -280,6 +283,25 @@ var response = await ${this.getMethodCall(queryParameterEndpoint)}(
         AdditionalQueryParameters = new Dictionary<string, string>
         {
             { "custom_param", "custom-value" }
+        }
+    }
+);
+`)
+        );
+    }
+
+    private buildAdditionalBodyPropertiesSnippets(): string[] {
+        const bodyPropertiesEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID
+        );
+        return bodyPropertiesEndpoints.map((bodyPropertiesEndpoint) =>
+            this.writeCode(`
+var response = await ${this.getMethodCall(bodyPropertiesEndpoint)}(
+    ...,
+    new ${this.requestOptionsName} {
+        AdditionalBodyProperties = new Dictionary<string, object>
+        {
+            { "custom_field", "custom-value" }
         }
     }
 );

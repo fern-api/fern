@@ -8,6 +8,7 @@ import com.seed.basicAuth.core.ClientOptions;
 import com.seed.basicAuth.core.MediaTypes;
 import com.seed.basicAuth.core.ObjectMappers;
 import com.seed.basicAuth.core.RequestOptions;
+import com.seed.basicAuth.core.RetryInterceptor;
 import com.seed.basicAuth.core.SeedBasicAuthApiException;
 import com.seed.basicAuth.core.SeedBasicAuthException;
 import com.seed.basicAuth.core.SeedBasicAuthHttpResponse;
@@ -58,6 +59,15 @@ public class RawBasicAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -119,6 +129,15 @@ public class RawBasicAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

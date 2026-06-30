@@ -28,6 +28,9 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add("X-TEST-SERVICE-HEADER", request.XTestServiceHeader)
                     .Add("X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader)
@@ -43,6 +46,7 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
                             Method = HttpMethod.Post,
                             Path = "/test-headers/custom-header",
                             Body = request.Body,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },

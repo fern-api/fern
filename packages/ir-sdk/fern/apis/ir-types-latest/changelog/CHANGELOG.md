@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.8.0] - 2026-06-29
+
+- Feature: Add optional `payloadFormat` field to `AsymmetricKeySignatureVerification`.
+  Allows the timestamp (and other components like message-id, notification-url)
+  to be included in the data that the asymmetric signature is verified against,
+  closing a replay-protection gap where the timestamp header was unauthenticated.
+
+## [v67.7.0] - 2026-06-25
+
+- Feature: Add optional `contentType` field to `V2HttpEndpointExample`. Allows
+  endpoint-level examples to be tagged with the content type they belong to
+  (e.g. `application/json`, `application/ld+json`), enabling the docs UI to
+  filter or auto-select examples when the user switches content types.
 ## [v67.6.0] - 2026-06-23
 
 - Feature: Add optional `specVersion` field to `IntermediateRepresentation`.

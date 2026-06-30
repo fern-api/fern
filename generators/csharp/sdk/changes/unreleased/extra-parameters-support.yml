@@ -1,0 +1,6 @@
+- summary: |
+    Add support for undocumented/extra parameters: AdditionalQueryParameters from
+    RequestOptions are now applied to all endpoints (previously only endpoints with
+    defined query parameters would merge them). Also add ADDITIONAL_BODY_PROPERTIES
+    feature to README generation.
+  type: feat

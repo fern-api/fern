@@ -8,6 +8,7 @@ import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.MediaTypes;
 import com.seed.anyAuth.core.ObjectMappers;
 import com.seed.anyAuth.core.RequestOptions;
+import com.seed.anyAuth.core.RetryInterceptor;
 import com.seed.anyAuth.core.SeedAnyAuthApiException;
 import com.seed.anyAuth.core.SeedAnyAuthException;
 import com.seed.anyAuth.core.SeedAnyAuthHttpResponse;
@@ -59,6 +60,15 @@ public class RawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

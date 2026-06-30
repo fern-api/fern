@@ -216,10 +216,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string,
         serviceId: ServiceId
     ) {
-        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-        if (queryParameterCodeBlock != null) {
-            queryParameterCodeBlock.code.write(writer);
-        }
+        const queryParameterCodeBlock =
+            endpointSignatureInfo.request?.getQueryParameterCodeBlock() ??
+            this.getDefaultQueryParameterCodeBlock({ endpoint });
+        queryParameterCodeBlock.code.write(writer);
         const headerParameterCodeBlock =
             endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
             this.getDefaultHeaderParameterCodeBlock({ endpoint });
@@ -235,7 +235,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
             headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
-            queryString: queryParameterCodeBlock?.queryStringReference,
+            queryString: queryParameterCodeBlock.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -300,10 +300,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         const body = this.csharp.codeblock((writer) => {
-            const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-            if (queryParameterCodeBlock != null) {
-                queryParameterCodeBlock.code.write(writer);
-            }
+            const queryParameterCodeBlock =
+                endpointSignatureInfo.request?.getQueryParameterCodeBlock() ??
+                this.getDefaultQueryParameterCodeBlock({ endpoint });
+            queryParameterCodeBlock.code.write(writer);
             const headerParameterCodeBlock =
                 endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
                 this.getDefaultHeaderParameterCodeBlock({ endpoint });
@@ -319,7 +319,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 bodyReference: requestBodyCodeBlock?.requestBodyReference,
                 pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                 headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
-                queryString: queryParameterCodeBlock?.queryStringReference,
+                queryString: queryParameterCodeBlock.queryStringReference,
                 endpointRequest: endpointSignatureInfo.request
             });
             if (apiRequestCodeBlock.code) {
@@ -1458,10 +1458,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw GeneratorError.internalError("Internal error; a response type is required for pagination endpoints");
         }
 
-        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-        if (queryParameterCodeBlock != null) {
-            queryParameterCodeBlock.code.write(writer);
-        }
+        const queryParameterCodeBlock =
+            endpointSignatureInfo.request?.getQueryParameterCodeBlock() ??
+            this.getDefaultQueryParameterCodeBlock({ endpoint });
+        queryParameterCodeBlock.code.write(writer);
         const headerParameterCodeBlock =
             endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
             this.getDefaultHeaderParameterCodeBlock({ endpoint });
@@ -1478,7 +1478,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
             headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
-            queryString: queryParameterCodeBlock?.queryStringReference,
+            queryString: queryParameterCodeBlock.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -1778,6 +1778,31 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         } else {
             return this.names.parameters.requestOptions;
         }
+    }
+
+    /**
+     * Generates query parameter code block for endpoints without a request parameter.
+     * This ensures AdditionalQueryParameters from RequestOptions are always applied.
+     */
+    private getDefaultQueryParameterCodeBlock({ endpoint }: { endpoint: HttpEndpoint }): {
+        code: ast.CodeBlock;
+        queryStringReference: string;
+    } {
+        const requestOptionsVar = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+        const queryStringVar = "_queryString";
+
+        return {
+            code: this.csharp.codeblock((writer) => {
+                writer.write(
+                    `var ${queryStringVar} = new ${this.namespaces.qualifiedCore}.QueryStringBuilder.Builder(capacity: 0)`
+                );
+                writer.writeLine();
+                writer.write(`.MergeAdditional(${requestOptionsVar}?.AdditionalQueryParameters)`);
+                writer.writeLine();
+                writer.write(".Build();");
+            }),
+            queryStringReference: queryStringVar
+        };
     }
 
     /**

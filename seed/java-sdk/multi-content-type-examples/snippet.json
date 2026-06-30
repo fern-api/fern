@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "Plain JSON response",
+            "id": {
+                "method": "POST",
+                "path": "/clients",
+                "identifier_override": "endpoint_clients.create"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.clients.requests.ClientRequest;\nimport com.seed.api.types.Client;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.clients().create(\n            ClientRequest\n                .builder()\n                .client(\n                    Client\n                        .builder()\n                        .name(\"Acme Corp\")\n                        .email(\"contact@acme.com\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.clients.requests.ClientRequest;\nimport com.seed.api.types.Client;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.clients().create(\n            ClientRequest\n                .builder()\n                .client(\n                    Client\n                        .builder()\n                        .name(\"Acme Corp\")\n                        .email(\"contact@acme.com\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

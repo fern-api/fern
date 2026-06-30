@@ -148,6 +148,7 @@
               "header": "x-signature",
               "jwks-url": "https://api.example.com/.well-known/jwks.json",
               "key-id-header": "x-key-id",
+              "payload-format": undefined,
               "signature-prefix": "rsa=",
               "timestamp": {
                 "format": "iso8601",
@@ -179,6 +180,7 @@
               "header": "x-refund-signature",
               "jwks-url": undefined,
               "key-id-header": undefined,
+              "payload-format": undefined,
               "signature-prefix": undefined,
               "timestamp": undefined,
               "type": "asymmetric",

@@ -6,6 +6,7 @@ package com.seed.alias;
 import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.ObjectMappers;
 import com.seed.alias.core.RequestOptions;
+import com.seed.alias.core.RetryInterceptor;
 import com.seed.alias.core.SeedAliasApiException;
 import com.seed.alias.core.SeedAliasException;
 import com.seed.alias.core.SeedAliasHttpResponse;
@@ -45,6 +46,15 @@ public class RawSeedAliasClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

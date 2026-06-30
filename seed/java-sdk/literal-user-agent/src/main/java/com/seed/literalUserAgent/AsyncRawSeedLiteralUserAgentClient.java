@@ -6,6 +6,7 @@ package com.seed.literalUserAgent;
 import com.seed.literalUserAgent.core.ClientOptions;
 import com.seed.literalUserAgent.core.ObjectMappers;
 import com.seed.literalUserAgent.core.RequestOptions;
+import com.seed.literalUserAgent.core.RetryInterceptor;
 import com.seed.literalUserAgent.core.SeedLiteralUserAgentApiException;
 import com.seed.literalUserAgent.core.SeedLiteralUserAgentException;
 import com.seed.literalUserAgent.core.SeedLiteralUserAgentHttpResponse;
@@ -50,6 +51,15 @@ public class AsyncRawSeedLiteralUserAgentClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedLiteralUserAgentHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

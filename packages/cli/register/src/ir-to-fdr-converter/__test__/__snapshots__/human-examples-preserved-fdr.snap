@@ -185,6 +185,7 @@
             "userSpecifiedExamples": {
               "products_createProduct_example_201": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "products_createProduct_example",
                 "request": {
                   "auth": undefined,

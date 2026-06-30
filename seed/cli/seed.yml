@@ -188,10 +188,10 @@ allowedFailures:
   - public-object
   - query-param-name-conflict
   - query-parameters
-  - query-parameters-openapi
-  - query-parameters-openapi:github-npm
   # query-parameters-openapi:no-custom-config graduated as a regression test
   # for embedded SDK asIs template resolution (FER-11453).
+  # query-parameters-openapi and query-parameters-openapi:github-npm graduated
+  # after the fernignore cleanup logic was fixed.
   - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable

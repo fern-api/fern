@@ -6,6 +6,7 @@ package com.seed.singleUrlEnvironmentDefault.resources.dummy;
 import com.seed.singleUrlEnvironmentDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
+import com.seed.singleUrlEnvironmentDefault.core.RetryInterceptor;
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultApiException;
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultException;
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultHttpResponse;
@@ -51,6 +52,15 @@ public class AsyncRawDummyClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedSingleUrlEnvironmentDefaultHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

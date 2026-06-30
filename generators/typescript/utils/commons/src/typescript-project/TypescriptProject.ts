@@ -51,9 +51,9 @@ type COMMON_SCRIPTS = (typeof COMMON_SCRIPTS)[keyof typeof COMMON_SCRIPTS];
 const TOOL_VERSIONS = {
     BIOME: "2.4.10",
     PRETTIER: "3.8.1",
-    OXFMT: "0.54.0",
-    OXLINT: "1.69.0",
-    OXLINT_TSGOLINT: "0.23.0"
+    OXFMT: "0.57.0",
+    OXLINT: "1.72.0",
+    OXLINT_TSGOLINT: "0.24.0"
 } as const;
 
 export abstract class TypescriptProject {

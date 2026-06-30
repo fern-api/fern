@@ -7,6 +7,7 @@ import com.seed.inferredAuthExplicit.core.ClientOptions;
 import com.seed.inferredAuthExplicit.core.MediaTypes;
 import com.seed.inferredAuthExplicit.core.ObjectMappers;
 import com.seed.inferredAuthExplicit.core.RequestOptions;
+import com.seed.inferredAuthExplicit.core.RetryInterceptor;
 import com.seed.inferredAuthExplicit.core.SeedInferredAuthExplicitApiException;
 import com.seed.inferredAuthExplicit.core.SeedInferredAuthExplicitException;
 import com.seed.inferredAuthExplicit.core.SeedInferredAuthExplicitHttpResponse;
@@ -66,6 +67,15 @@ public class AsyncRawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedInferredAuthExplicitHttpResponse<TokenResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -131,6 +141,15 @@ public class AsyncRawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedInferredAuthExplicitHttpResponse<TokenResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

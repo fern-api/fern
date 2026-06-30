@@ -45,6 +45,9 @@ public partial class SeedLiteralUserAgentClient : ISeedLiteralUserAgentClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedLiteralUserAgent.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedLiteralUserAgent.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -57,6 +60,7 @@ public partial class SeedLiteralUserAgentClient : ISeedLiteralUserAgentClient
                 {
                     Method = HttpMethod.Get,
                     Path = "ping",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -416,7 +416,8 @@ describe("WebhooksHelperGenerator", () => {
                 signatureHeaderName: createWireValue("X-Signature"),
                 signaturePrefix: undefined,
                 timestamp: undefined,
-                keySource: FernIr.AsymmetricKeySource.static({})
+                keySource: FernIr.AsymmetricKeySource.static({}),
+                payloadFormat: undefined
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockFileContext();
@@ -438,7 +439,8 @@ describe("WebhooksHelperGenerator", () => {
                 keySource: FernIr.AsymmetricKeySource.jwks({
                     url: "https://example.com/.well-known/jwks.json",
                     keyIdHeader: undefined
-                })
+                }),
+                payloadFormat: undefined
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockFileContext();
@@ -460,7 +462,8 @@ describe("WebhooksHelperGenerator", () => {
                 keySource: FernIr.AsymmetricKeySource.jwks({
                     url: "https://example.com/.well-known/jwks.json",
                     keyIdHeader: createWireValue("X-Key-Id")
-                })
+                }),
+                payloadFormat: undefined
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockFileContext();
@@ -481,7 +484,8 @@ describe("WebhooksHelperGenerator", () => {
                     format: "UNIX_SECONDS",
                     tolerance: 300
                 },
-                keySource: FernIr.AsymmetricKeySource.static({})
+                keySource: FernIr.AsymmetricKeySource.static({}),
+                payloadFormat: undefined
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockFileContext();
@@ -500,7 +504,8 @@ describe("WebhooksHelperGenerator", () => {
                 signatureHeaderName: createWireValue("X-Signature"),
                 signaturePrefix: undefined,
                 timestamp: undefined,
-                keySource: FernIr.AsymmetricKeySource.static({})
+                keySource: FernIr.AsymmetricKeySource.static({}),
+                payloadFormat: undefined
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockFileContext();
@@ -508,6 +513,107 @@ describe("WebhooksHelperGenerator", () => {
             const text = context.sourceFile.getFullText();
             expect(text).toContain('"ED25519"');
             expect(text).toContain('"hex"');
+        });
+
+        it("writes asymmetric class with multi-component payload format including TIMESTAMP", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.asymmetric({
+                algorithm: "RSA_SHA256",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Signature"),
+                signaturePrefix: undefined,
+                timestamp: {
+                    headerName: createWireValue("X-Timestamp"),
+                    format: "UNIX_SECONDS",
+                    tolerance: 300
+                },
+                keySource: FernIr.AsymmetricKeySource.static({}),
+                payloadFormat: {
+                    components: ["MESSAGE_ID", "TIMESTAMP", "BODY"],
+                    delimiter: ".",
+                    bodySort: undefined
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain("messageId");
+            expect(text).toContain('[messageId, timestampHeader, requestBody].join(".")');
+            expect(text).toContain("TIMESTAMP_TOLERANCE_SECONDS");
+            expect(text).not.toContain("const payload = requestBody;");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("writes asymmetric class with BODY-only payload format", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.asymmetric({
+                algorithm: "RSA_SHA256",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                keySource: FernIr.AsymmetricKeySource.static({}),
+                payloadFormat: {
+                    components: ["BODY"],
+                    delimiter: ".",
+                    bodySort: undefined
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain("const payload = requestBody;");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("writes asymmetric class with NOTIFICATION_URL payload component", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.asymmetric({
+                algorithm: "ECDSA_SHA256",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                keySource: FernIr.AsymmetricKeySource.jwks({
+                    url: "https://example.com/.well-known/jwks.json",
+                    keyIdHeader: undefined
+                }),
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL", "BODY"],
+                    delimiter: "|",
+                    bodySort: undefined
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain("notificationUrl");
+            expect(text).toContain('[notificationUrl, requestBody].join("|")');
+            expect(text).toMatchSnapshot();
+        });
+
+        it("writes asymmetric class with ALPHABETICAL bodySort", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.asymmetric({
+                algorithm: "RSA_SHA256",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                keySource: FernIr.AsymmetricKeySource.static({}),
+                payloadFormat: {
+                    components: ["BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain("string | Record<string, string>");
+            expect(text).toContain('typeof requestBody === "string"');
+            expect(text).toContain("Object.keys(requestBody).sort()");
+            expect(text).toMatchSnapshot();
         });
     });
 
@@ -571,7 +677,8 @@ describe("WebhooksHelperGenerator", () => {
                 keySource: FernIr.AsymmetricKeySource.jwks({
                     url: "https://keys.example.com/jwks",
                     keyIdHeader: createWireValue("X-Key-Id")
-                })
+                }),
+                payloadFormat: undefined
             });
             const generator = new WebhooksHelperGenerator(verification);
             const context = createMockFileContext();

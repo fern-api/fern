@@ -6,6 +6,7 @@ package com.seed.websocket.resources.status;
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.RequestOptions;
+import com.seed.websocket.core.RetryInterceptor;
 import com.seed.websocket.core.SeedWebsocketApiException;
 import com.seed.websocket.core.SeedWebsocketException;
 import com.seed.websocket.core.SeedWebsocketHttpResponse;
@@ -51,6 +52,15 @@ public class AsyncRawStatusClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedWebsocketHttpResponse<StatusResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

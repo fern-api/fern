@@ -119,6 +119,13 @@ types:
           Prefix prepended to the signature in the header value.
           When set, the prefix is stripped before comparing signatures.
       keySource: AsymmetricKeySource
+      payloadFormat:
+        type: optional<WebhookPayloadFormat>
+        docs: |
+          Describes how the signed payload is constructed.
+          When present, the timestamp and other components are included
+          in the data that the signature is verified against.
+          When absent, defaults to body-only (components: [body]).
       timestamp: optional<WebhookTimestampConfig>
 
   AsymmetricAlgorithm:

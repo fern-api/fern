@@ -18,6 +18,11 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedOauthClientCredentials.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +36,7 @@ public partial class AuthClient : IAuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/x-www-form-urlencoded",
                     Options = options,
@@ -97,6 +103,11 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedOauthClientCredentials.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -110,6 +121,7 @@ public partial class AuthClient : IAuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/x-www-form-urlencoded",
                     Options = options,

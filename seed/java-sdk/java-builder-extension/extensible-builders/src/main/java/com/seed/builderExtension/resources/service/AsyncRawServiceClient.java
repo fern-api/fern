@@ -9,6 +9,7 @@ import com.seed.builderExtension.core.BaseClientHttpResponse;
 import com.seed.builderExtension.core.ClientOptions;
 import com.seed.builderExtension.core.ObjectMappers;
 import com.seed.builderExtension.core.RequestOptions;
+import com.seed.builderExtension.core.RetryInterceptor;
 import com.seed.builderExtension.resources.service.types.HelloResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -52,6 +53,15 @@ public class AsyncRawServiceClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<BaseClientHttpResponse<HelloResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

@@ -35,6 +35,11 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedCsharpReadonlyRequest.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedCsharpReadonlyRequest.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -48,6 +53,7 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
                     Method = HttpMethod.Post,
                     Path = "/vendors/batch",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

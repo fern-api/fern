@@ -3719,6 +3719,17 @@
               ],
               "description": "HTTP header containing the key ID for JWKS key selection."
             },
+            "payload-format": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookPayloadFormatSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Describes how the signed payload is constructed.\nDefaults to body-only (components: [body], delimiter: \"\")."
+            },
             "timestamp": {
               "oneOf": [
                 {

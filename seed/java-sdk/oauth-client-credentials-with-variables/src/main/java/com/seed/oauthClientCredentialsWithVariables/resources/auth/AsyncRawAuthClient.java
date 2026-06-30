@@ -8,6 +8,7 @@ import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.MediaTypes;
 import com.seed.oauthClientCredentialsWithVariables.core.ObjectMappers;
 import com.seed.oauthClientCredentialsWithVariables.core.RequestOptions;
+import com.seed.oauthClientCredentialsWithVariables.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesApiException;
 import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesException;
 import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesHttpResponse;
@@ -66,6 +67,15 @@ public class AsyncRawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedOauthClientCredentialsWithVariablesHttpResponse<TokenResponse>> future =
                 new CompletableFuture<>();
@@ -131,6 +141,15 @@ public class AsyncRawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedOauthClientCredentialsWithVariablesHttpResponse<TokenResponse>> future =
                 new CompletableFuture<>();

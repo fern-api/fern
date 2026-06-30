@@ -72,12 +72,14 @@ webhooks:
           currency: "USD"
 
   # Per-webhook override: Asymmetric RSA-SHA256 via JWKS endpoint with key ID header
+  # Uses payload-format with message_id + timestamp + body components
   paymentNotification:
     display-name: Payment Notification
     docs: |
       Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature
       verification with keys fetched from a JWKS endpoint, overriding the
-      document-level default.
+      document-level default. Includes payload-format with message_id, timestamp,
+      and body components joined by "." delimiter.
     method: POST
     payload: PaymentNotificationPayload
     signature:
@@ -88,6 +90,12 @@ webhooks:
       signature-prefix: "rsa="
       jwks-url: https://api.example.com/.well-known/jwks.json
       key-id-header: x-key-id
+      payload-format:
+        components:
+          - message-id
+          - timestamp
+          - body
+        delimiter: "."
       timestamp:
         header: x-payment-timestamp
         format: iso8601
@@ -99,11 +107,13 @@ webhooks:
           status: "completed"
 
   # Per-webhook override: Asymmetric ECDSA-SHA256 with static public key (no JWKS)
+  # Uses payload-format with body-only component and alphabetical body sort
   refundProcessed:
     display-name: Refund Processed
     docs: |
       Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature
       verification with a static public key, overriding the document-level default.
+      Uses body-sort: alphabetical to sort POST body parameters before signing.
     method: POST
     payload: RefundProcessedPayload
     signature:
@@ -111,6 +121,10 @@ webhooks:
       header: x-refund-signature
       asymmetric-algorithm: ecdsa-sha256
       encoding: hex
+      payload-format:
+        components:
+          - body
+        body-sort: alphabetical
     examples:
       - name: RefundProcessedExample
         payload:

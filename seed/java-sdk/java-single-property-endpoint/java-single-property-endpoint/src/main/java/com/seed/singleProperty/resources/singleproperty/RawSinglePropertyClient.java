@@ -7,6 +7,7 @@ import com.seed.singleProperty.core.ClientOptions;
 import com.seed.singleProperty.core.ObjectMappers;
 import com.seed.singleProperty.core.QueryStringMapper;
 import com.seed.singleProperty.core.RequestOptions;
+import com.seed.singleProperty.core.RetryInterceptor;
 import com.seed.singleProperty.core.SeedSinglePropertyApiException;
 import com.seed.singleProperty.core.SeedSinglePropertyException;
 import com.seed.singleProperty.core.SeedSinglePropertyHttpResponse;
@@ -64,6 +65,15 @@ public class RawSinglePropertyClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

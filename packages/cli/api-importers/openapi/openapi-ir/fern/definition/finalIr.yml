@@ -223,6 +223,7 @@ types:
       signaturePrefix: optional<string>
       jwksUrl: optional<string>
       keyIdHeader: optional<string>
+      payloadFormat: optional<WebhookPayloadFormat>
       timestamp: optional<WebhookTimestamp>
 
   WebhookSignatureAlgorithm:

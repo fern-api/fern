@@ -7,6 +7,7 @@ import com.seed.websocketAuth.core.ClientOptions;
 import com.seed.websocketAuth.core.MediaTypes;
 import com.seed.websocketAuth.core.ObjectMappers;
 import com.seed.websocketAuth.core.RequestOptions;
+import com.seed.websocketAuth.core.RetryInterceptor;
 import com.seed.websocketAuth.core.SeedWebsocketAuthApiException;
 import com.seed.websocketAuth.core.SeedWebsocketAuthException;
 import com.seed.websocketAuth.core.SeedWebsocketAuthHttpResponse;
@@ -62,6 +63,15 @@ public class RawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -109,6 +119,15 @@ public class RawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

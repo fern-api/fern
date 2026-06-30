@@ -9,6 +9,7 @@ import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.MediaTypes;
 import com.seed.unknownAsAny.core.ObjectMappers;
 import com.seed.unknownAsAny.core.RequestOptions;
+import com.seed.unknownAsAny.core.RetryInterceptor;
 import com.seed.unknownAsAny.core.SeedUnknownAsAnyApiException;
 import com.seed.unknownAsAny.core.SeedUnknownAsAnyException;
 import com.seed.unknownAsAny.core.SeedUnknownAsAnyHttpResponse;
@@ -65,6 +66,15 @@ public class AsyncRawUnknownClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -128,6 +138,15 @@ public class AsyncRawUnknownClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
