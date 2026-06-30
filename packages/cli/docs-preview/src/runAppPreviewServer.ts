@@ -1142,8 +1142,11 @@ export async function runAppPreviewServer({
     // Parse JSON body middleware for the load-with-url endpoint
     app.use(express.json());
 
+    let loadWithUrlRequestCount = 0;
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
+        const requestStart = Date.now();
+        const requestNum = ++loadWithUrlRequestCount;
         try {
             // Extract locale from the request body URL if present
             const requestBody = req.body as { url?: string } | undefined;
@@ -1157,11 +1160,12 @@ export async function runAppPreviewServer({
             const responseSizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
             const apiCount = Object.keys(response.definition.apis ?? {}).length;
             const pageCount = Object.keys(response.definition.pages ?? {}).length;
-            context.logger.info(
-                `[BENCHMARK] /load-with-url response: ${responseSizeMB}MB, serialize: ${serializeTime}ms, apis: ${apiCount}, pages: ${pageCount}`
-            );
             res.setHeader("Content-Type", "application/json");
             res.send(responseJson);
+            const totalTime = Date.now() - requestStart;
+            context.logger.info(
+                `[BENCHMARK] /load-with-url #${requestNum}: url=${urlPath ?? "(none)"}, total: ${totalTime}ms, serialize: ${serializeTime}ms, size: ${responseSizeMB}MB, apis: ${apiCount}, pages: ${pageCount}`
+            );
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);

@@ -59,6 +59,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
     const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath } = options;
 
+    let bunLoadWithUrlRequestCount = 0;
     type WsData = { connectionId: string };
     const connections = new Map<BunServerWebSocket<WsData>, { pingInterval: NodeJS.Timeout; lastPong: number }>();
 
@@ -98,12 +99,26 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
             // POST /v2/registry/docs/load-with-url
             if (req.method === "POST" && url.pathname === "/v2/registry/docs/load-with-url") {
+                const requestStart = Date.now();
+                const requestNum = ++bunLoadWithUrlRequestCount;
                 try {
                     const body = (await req.json()) as { url?: string } | undefined;
-                    const locale = extractLocaleFromPath?.(body?.url);
-                    return new Response(JSON.stringify(getDocsLoadResponse(locale)), {
+                    const urlPath = body?.url;
+                    const locale = extractLocaleFromPath?.(urlPath);
+                    const serializeStart = Date.now();
+                    const responseObj = getDocsLoadResponse(locale);
+                    const responseJson = JSON.stringify(responseObj);
+                    const serializeTime = Date.now() - serializeStart;
+                    const resp = new Response(responseJson, {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
+                    const totalTime = Date.now() - requestStart;
+                    const sizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
+                    // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
+                    console.error(
+                        `[BENCHMARK] /load-with-url (bun) #${requestNum}: url=${urlPath ?? "(none)"}, total: ${totalTime}ms, serialize: ${serializeTime}ms, size: ${sizeMB}MB`
+                    );
+                    return resp;
                 } catch {
                     // If JSON parsing fails, just return the default response
                     return new Response(JSON.stringify(getDocsLoadResponse()), {
