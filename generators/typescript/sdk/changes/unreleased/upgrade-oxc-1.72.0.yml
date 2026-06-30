@@ -1,0 +1,4 @@
+- summary: |
+    Upgrade oxc tooling: oxlint 1.69.0 → 1.72.0, oxfmt 0.54.0 → 0.57.0,
+    oxlint-tsgolint 0.23.0 → 0.24.0.
+  type: chore
