@@ -313,7 +313,8 @@ export const LayoutConfig = z.object({
 
 export const SearchSettingsConfig = z.object({
     "prioritize-current-product": z.boolean().optional(),
-    "default-filter-by-current-product": z.boolean().optional()
+    "default-filter-by-current-product": z.boolean().optional(),
+    "prioritize-guides": z.boolean().optional()
 });
 
 export const DocsSettingsConfig = z.object({

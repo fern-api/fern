@@ -1,0 +1,5 @@
+- summary: |
+    Add `settings.search.prioritize-guides` option to `docs.yml`. When enabled,
+    guide/markdown pages are soft-boosted over API reference records in search
+    results via Algolia `optionalFilters`.
+  type: feat

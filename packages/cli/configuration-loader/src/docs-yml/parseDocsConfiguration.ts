@@ -545,13 +545,15 @@ function convertSettingsConfig(
     const defaultFilterByCurrentProduct =
         (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
     const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
+    const prioritizeGuides = settings.search?.prioritizeGuides ?? false;
 
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
             prioritizeCurrentProduct,
-            defaultFilterByCurrentProduct
+            defaultFilterByCurrentProduct,
+            prioritizeGuides
         },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,

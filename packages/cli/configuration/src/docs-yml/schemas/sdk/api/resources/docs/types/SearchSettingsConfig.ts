@@ -18,4 +18,13 @@ export interface SearchSettingsConfig {
      * @default: false
      */
     defaultFilterByCurrentProduct?: boolean;
+    /**
+     * If set to true, guide/markdown pages are soft-boosted over API reference
+     * and parameter records in Algolia's ranking (via `optionalFilters`).
+     * Results from the API reference are still returned, just ranked lower
+     * when relevance is otherwise equal.
+     *
+     * @default: false
+     */
+    prioritizeGuides?: boolean;
 }
