@@ -11,7 +11,7 @@ api:
 groups:
   php-sdk:
     generators:
-      - name: fernenterprise/fern-php-sdk
+      - name: fernapi/fern-php-sdk
         version: latest
         ir-version: v61
         github:
@@ -21,7 +21,7 @@ groups:
           branch: csharp-grpc-proto-exhaustive
   go-sdk:
     generators:
-      - name: fernenterprise/fern-go-sdk
+      - name: fernapi/fern-go-sdk
         version: latest
         ir-version: v61
         github:

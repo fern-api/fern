@@ -1,15 +1,15 @@
 displayName: TypeScript SDK
 irVersion: v67
-image: fernenterprise/fern-typescript-sdk
-imageAliases: [fernenterprise/fern-typescript-node-sdk]
+image: fernapi/fern-typescript-sdk
+imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   preBuildCommands:
     - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
   docker:
     file: ./generators/typescript/sdk/cli/Dockerfile
-    image: fernenterprise/fern-typescript-sdk
-    aliases: [fernenterprise/fern-typescript-node-sdk]
+    image: fernapi/fern-typescript-sdk
+    aliases: [fernapi/fern-typescript-node-sdk]
     context: .
   sentry:
     name: fern-typescript-sdk
@@ -18,11 +18,11 @@ publish:
       - dir: generators/typescript/sdk/cli/dist
 test:
   docker:
-    image: fernenterprise/fern-typescript-sdk:latest
+    image: fernapi/fern-typescript-sdk:latest
     command:
       - pnpm turbo run dockerTagLatest --filter @fern-typescript/sdk-generator-cli
   podman:
-    image: fernenterprise/fern-typescript-sdk:latest
+    image: fernapi/fern-typescript-sdk:latest
     command:
       - pnpm turbo run podmanTagLatest --filter @fern-typescript/sdk-generator-cli
   local:
@@ -533,7 +533,7 @@ fixtures:
       customConfig: null
 
 scripts:
-  - image: fernenterprise/ts-seed
+  - image: fernapi/ts-seed
     commands:
       build:
         - |

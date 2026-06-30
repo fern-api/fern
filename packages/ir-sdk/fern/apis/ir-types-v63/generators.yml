@@ -3,7 +3,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernenterprise/fern-typescript-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 3.49.0
         output:
           location: local-file-system
@@ -19,7 +19,7 @@ groups:
     audiences:
       - dynamic
     generators:
-      - name: fernenterprise/fern-typescript-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 3.49.0
         output:
           location: npm
@@ -31,7 +31,7 @@ groups:
         smart-casing: false
   node:
     generators:
-      - name: fernenterprise/fern-typescript-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 3.49.0
         output:
           location: npm
@@ -44,7 +44,7 @@ groups:
         smart-casing: false
   java:
     generators:
-      - name: fernenterprise/fern-java-model
+      - name: fernapi/fern-java-model
         version: 1.8.5
         output:
           location: maven
@@ -56,7 +56,7 @@ groups:
         smart-casing: false
   python:
     generators:
-      - name: fernenterprise/fern-pydantic-model
+      - name: fernapi/fern-pydantic-model
         version: 1.4.2
         output:
           location: pypi
@@ -70,7 +70,7 @@ groups:
         smart-casing: false
   go:
     generators:
-      - name: fernenterprise/fern-go-model
+      - name: fernapi/fern-go-model
         version: 0.9.3
         config: {}
         github:

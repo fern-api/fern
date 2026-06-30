@@ -2,13 +2,13 @@
 groups:
   java-sdk:
     generators:
-      - name: fernenterprise/fern-java-sdk
+      - name: fernapi/fern-java-sdk
         version: latest
         config:
           use-default-request-parameter-values: true
   php-sdk:
     generators:
-      - name: fernenterprise/fern-php-sdk
+      - name: fernapi/fern-php-sdk
         version: latest
         ir-version: v61
         github:
@@ -18,7 +18,7 @@ groups:
           branch: mixed-case
   go-sdk:
     generators:
-      - name: fernenterprise/fern-go-sdk
+      - name: fernapi/fern-go-sdk
         version: latest
         ir-version: v61
         github:

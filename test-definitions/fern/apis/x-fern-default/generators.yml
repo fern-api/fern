@@ -5,7 +5,7 @@ api:
 groups:
   python-sdk:
     generators:
-      - name: fernenterprise/fern-python-sdk
+      - name: fernapi/fern-python-sdk
         version: latest
         github:
           token: ${GITHUB_TOKEN}
@@ -14,7 +14,7 @@ groups:
           branch: x-fern-default
   ts-sdk:
     generators:
-      - name: fernenterprise/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: latest
         github:
           token: ${GITHUB_TOKEN}
@@ -23,7 +23,7 @@ groups:
           branch: x-fern-default
   java-sdk:
     generators:
-      - name: fernenterprise/fern-java-sdk
+      - name: fernapi/fern-java-sdk
         version: latest
         github:
           token: ${GITHUB_TOKEN}

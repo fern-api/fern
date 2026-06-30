@@ -2,6 +2,6 @@
 groups:
   java-sdk:
     generators:
-      - name: fernenterprise/fern-java-sdk
+      - name: fernapi/fern-java-sdk
         version: latest
         ir-version: v61

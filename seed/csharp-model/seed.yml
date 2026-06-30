@@ -1,6 +1,6 @@
 irVersion: v66
 displayName: C# Model
-image: fernenterprise/fern-csharp-model
+image: fernapi/fern-csharp-model
 # This generator is no longer actively supported. The workspace is retained for
 # historical reference but seed tests, publishing, and builds are skipped.
 disabled: true
@@ -23,7 +23,7 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-model
   docker:
     file: ./generators/csharp/model/Dockerfile
-    image: fernenterprise/fern-csharp-model
+    image: fernapi/fern-csharp-model
     context: .
   sentry:
     name: fern-csharp-model
@@ -32,10 +32,10 @@ publish:
       - dir: generators/csharp/model/dist
 test:
   docker:
-    image: fernenterprise/fern-csharp-model:latest
+    image: fernapi/fern-csharp-model:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-csharp-model
   podman:
-    image: fernenterprise/fern-csharp-model:latest
+    image: fernapi/fern-csharp-model:latest
     command: pnpm turbo run podmanTagLatest --filter @fern-api/fern-csharp-model
   local:
     workingDirectory: generators/csharp
@@ -66,7 +66,7 @@ fixtures:
         enable-inline-types: true
       outputFolder: inline-types
 scripts:
-  - image: fernenterprise/csharp-seed
+  - image: fernapi/csharp-seed
     commands:
       build:
         - |
@@ -103,7 +103,7 @@ scripts:
           fi
         - |        
           # Check for .NET 10
-          # if you are getting an error from this and using docker, run `docker pull fernenterprise/csharp-seed:latest`
+          # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
           # otherwise install .NET 10 
           command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
 

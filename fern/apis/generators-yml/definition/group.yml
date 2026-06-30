@@ -76,11 +76,11 @@ types:
     extends: BaseGeneratorInvocationSchema
     docs: |
       A generator invocation that uses a well-known generator name
-      (e.g., `fernenterprise/fern-typescript-sdk`) and pulls from Docker Hub.
+      (e.g., `fernapi/fern-typescript-sdk`) and pulls from Docker Hub.
     properties:
       name:
         type: string
-        docs: The generator name (e.g., `fernenterprise/fern-typescript-sdk`).
+        docs: The generator name (e.g., `fernapi/fern-typescript-sdk`).
 
   CustomGeneratorInvocationSchema:
     extends: BaseGeneratorInvocationSchema

@@ -1,6 +1,6 @@
 displayName: C# SDK
 irVersion: v66
-image: fernenterprise/fern-csharp-sdk
+image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
 buildScripts:
@@ -31,7 +31,7 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
   docker:
     file: ./generators/csharp/sdk/Dockerfile
-    image: fernenterprise/fern-csharp-sdk
+    image: fernapi/fern-csharp-sdk
     context: .
   sentry:
     name: fern-csharp-sdk
@@ -40,10 +40,10 @@ publish:
       - dir: generators/csharp/sdk/dist
 test:
   docker:
-    image: fernenterprise/fern-csharp-sdk:latest
+    image: fernapi/fern-csharp-sdk:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-csharp-sdk
   podman:
-    image: fernenterprise/fern-csharp-sdk:latest
+    image: fernapi/fern-csharp-sdk:latest
     command: pnpm turbo run podmanTagLatest --filter @fern-api/fern-csharp-sdk
   local:
     workingDirectory: generators/csharp
@@ -56,7 +56,7 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
 scripts:
-  - image: fernenterprise/csharp-seed
+  - image: fernapi/csharp-seed
     commands:
       build:
         - |
@@ -93,7 +93,7 @@ scripts:
           fi
         - |
           # Check for .NET 10
-          # if you are getting an error from this and using docker, run `docker pull fernenterprise/csharp-seed:latest`
+          # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
           # otherwise install .NET 10
           command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
 

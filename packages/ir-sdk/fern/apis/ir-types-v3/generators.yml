@@ -3,19 +3,19 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernenterprise/fern-typescript
+      - name: fernapi/fern-typescript
         version: 0.0.197
         config:
           mode: model
         smart-casing: false
   sdks:
     generators:
-      - name: fernenterprise/java-model
+      - name: fernapi/java-model
         version: 0.0.130-2-g36322d7
         config:
           wrapped-aliases: true
         smart-casing: false
-      - name: fernenterprise/fern-pydantic-model
+      - name: fernapi/fern-pydantic-model
         version: 0.0.33-5-g3540939
         config:
           wrapped_aliases: true

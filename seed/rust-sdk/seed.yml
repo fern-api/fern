@@ -1,6 +1,6 @@
 irVersion: v66
 displayName: Rust SDK
-image: fernenterprise/fern-rust-sdk
+image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
 
 buildScripts:
@@ -18,7 +18,7 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/rust-sdk
   docker:
     file: ./generators/rust/sdk/Dockerfile
-    image: fernenterprise/fern-rust-sdk
+    image: fernapi/fern-rust-sdk
     context: .
   sentry:
     name: fern-rust-sdk
@@ -28,8 +28,8 @@ publish:
 
 test:
   docker:
-    image: fernenterprise/fern-rust-sdk:latest
-    command: pnpm turbo run dist:cli --filter @fern-api/rust-sdk && docker build -f ./generators/rust/sdk/Dockerfile -t fernenterprise/fern-rust-sdk:latest .
+    image: fernapi/fern-rust-sdk:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/rust-sdk && docker build -f ./generators/rust/sdk/Dockerfile -t fernapi/fern-rust-sdk:latest .
   local:
     workingDirectory: generators/rust
     buildCommand:

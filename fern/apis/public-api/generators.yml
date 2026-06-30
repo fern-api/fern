@@ -4,7 +4,7 @@ groups:
     audiences:
       - external
     generators:
-      - name: fernenterprise/fern-typescript-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.9.2
         output:
           location: npm
@@ -20,7 +20,7 @@ groups:
     audiences:
       - external
     generators:
-      - name: fernenterprise/fern-python-sdk
+      - name: fernapi/fern-python-sdk
         version: 0.12.1
         output:
           location: pypi
@@ -36,7 +36,7 @@ groups:
     audiences:
       - external
     generators:
-      - name: fernenterprise/fern-java-sdk
+      - name: fernapi/fern-java-sdk
         version: 0.10.1
         output:
           location: maven

@@ -1,17 +1,17 @@
 irVersion: v66
 displayName: OpenAPI
-image: fernenterprise/fern-openapi
+image: fernapi/fern-openapi
 changelogLocation: ../../generators/openapi/versions.yml
 publish:
   preBuildCommands:
     - pnpm turbo run dist:cli --filter @fern-api/openapi-generator
   docker:
     file: ./generators/openapi/Dockerfile
-    image: fernenterprise/fern-openapi
+    image: fernapi/fern-openapi
     context: ./generators/openapi
 test:
   docker:
-    image: fernenterprise/fern-openapi:latest
+    image: fernapi/fern-openapi:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/openapi-generator
   local:
     workingDirectory: generators/openapi

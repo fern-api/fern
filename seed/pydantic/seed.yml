@@ -1,6 +1,6 @@
 irVersion: v66
 displayName: Pydantic Model
-image: fernenterprise/fern-pydantic-model
+image: fernapi/fern-pydantic-model
 # This generator is no longer actively supported. The workspace is retained for
 # historical reference but seed tests, publishing, and builds are skipped.
 disabled: true
@@ -23,12 +23,12 @@ publish:
     - poetry install
   docker:
     file: ./generators/python/pydantic/Dockerfile
-    image: fernenterprise/fern-pydantic-model
+    image: fernapi/fern-pydantic-model
     context: ./generators/python
 test:
   docker:
-    image: fernenterprise/fern-pydantic-model:latest
-    command: docker build -f ./generators/python/pydantic/Dockerfile -t fernenterprise/fern-pydantic-model:latest ./generators/python
+    image: fernapi/fern-pydantic-model:latest
+    command: docker build -f ./generators/python/pydantic/Dockerfile -t fernapi/fern-pydantic-model:latest ./generators/python
 
 language: python
 generatorType: Model

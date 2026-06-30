@@ -1,6 +1,6 @@
 irVersion: v66
 displayName: Go Model
-image: fernenterprise/fern-go-model
+image: fernapi/fern-go-model
 # This generator is no longer actively supported. The workspace is retained for
 # historical reference but seed tests, publishing, and builds are skipped.
 disabled: true
@@ -23,7 +23,7 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/go-model
   docker:
     file: ./generators/go/model/Dockerfile
-    image: fernenterprise/fern-go-model
+    image: fernapi/fern-go-model
     context: .
   sentry:
     name: fern-go-model
@@ -33,11 +33,11 @@ publish:
 
 test:
   docker:
-    image: fernenterprise/fern-go-model:latest
-    command: pnpm turbo run dist:cli --filter @fern-api/go-model && docker build -f ./generators/go/model/Dockerfile -t fernenterprise/fern-go-model:latest .
+    image: fernapi/fern-go-model:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/go-model && docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
   podman:
-    image: fernenterprise/fern-go-model:latest
-    command: pnpm turbo run dist:cli --filter @fern-api/go-model && podman build -f ./generators/go/model/Dockerfile -t fernenterprise/fern-go-model:latest .
+    image: fernapi/fern-go-model:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/go-model && podman build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
 
 fixtures:
   streaming:
@@ -57,7 +57,7 @@ fixtures:
         includeLegacyClientOptions: true
 
 scripts:
-  - image: fernenterprise/go-seed:2.0.0
+  - image: fernapi/go-seed:2.0.0
     commands:
       build:
         - golangci-lint run --timeout=5m --allow-parallel-runners

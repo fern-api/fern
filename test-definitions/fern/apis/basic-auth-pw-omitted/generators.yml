@@ -2,7 +2,7 @@
 groups:
   php-sdk:
     generators:
-      - name: fernenterprise/fern-php-sdk
+      - name: fernapi/fern-php-sdk
         version: latest
         github:
           token: ${GITHUB_TOKEN}
@@ -11,7 +11,7 @@ groups:
           branch: basic-auth-pw-omitted
   go-sdk:
     generators:
-      - name: fernenterprise/fern-go-sdk
+      - name: fernapi/fern-go-sdk
         version: latest
         github:
           token: ${GITHUB_TOKEN}
@@ -20,7 +20,7 @@ groups:
           branch: basic-auth-pw-omitted
   java-sdk:
     generators:
-      - name: fernenterprise/fern-java-sdk
+      - name: fernapi/fern-java-sdk
         version: latest
         github:
           token: ${GITHUB_TOKEN}
