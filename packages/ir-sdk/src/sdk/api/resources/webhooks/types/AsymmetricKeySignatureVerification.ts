@@ -13,5 +13,12 @@ export interface AsymmetricKeySignatureVerification {
      */
     signaturePrefix: string | undefined;
     keySource: FernIr.AsymmetricKeySource;
+    /**
+     * Describes how the signed payload is constructed.
+     * When present, the timestamp and other components are included
+     * in the data that the signature is verified against.
+     * When absent, defaults to body-only (components: [body]).
+     */
+    payloadFormat: FernIr.WebhookPayloadFormat | undefined;
     timestamp: FernIr.WebhookTimestampConfig | undefined;
 }
