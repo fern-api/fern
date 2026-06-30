@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "96c1a5aa",
+            "id": {
+                "method": "GET",
+                "path": "/accounts/{accountSid}/messages/{sid}/.json",
+                "identifier_override": "endpoint_.fetchMessage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.FetchMessageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.fetchMessage(\n            \"accountSid\",\n            \"sid\",\n            FetchMessageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.FetchMessageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.fetchMessage(\n            \"accountSid\",\n            \"sid\",\n            FetchMessageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "70e3e53f",
+            "id": {
+                "method": "PUT",
+                "path": "/accounts/{accountSid}/messages/{sid}/.json",
+                "identifier_override": "endpoint_.updateMessage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdateMessageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updateMessage(\n            \"accountSid\",\n            \"sid\",\n            UpdateMessageRequest\n                .builder()\n                .body(\"body\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdateMessageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updateMessage(\n            \"accountSid\",\n            \"sid\",\n            UpdateMessageRequest\n                .builder()\n                .body(\"body\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "afa4edba",
+            "id": {
+                "method": "GET",
+                "path": "/accounts/{accountSid}/.json",
+                "identifier_override": "endpoint_.fetchAccount"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.FetchAccountRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.fetchAccount(\n            \"accountSid\",\n            FetchAccountRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.FetchAccountRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.fetchAccount(\n            \"accountSid\",\n            FetchAccountRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
