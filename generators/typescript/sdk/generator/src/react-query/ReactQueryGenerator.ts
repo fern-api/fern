@@ -49,28 +49,32 @@ export class ReactQueryGenerator {
         const files: Record<string, string> = {};
         const srcPrefix = this.relativePackagePath;
 
-        files[`${srcPrefix}/react-query/index.ts`] = this.generateIndexFile();
+        const endpoints = this.collectEndpoints();
+        const hasHooks = endpoints.length > 0;
+
+        files[`${srcPrefix}/react-query/index.ts`] = this.generateIndexFile(hasHooks);
         files[`${srcPrefix}/react-query/context.ts`] = this.generateContextFile();
         files[`${srcPrefix}/react-query/types.ts`] = this.generateTypesFile();
 
-        const endpoints = this.collectEndpoints();
-        if (endpoints.length > 0) {
+        if (hasHooks) {
             files[`${srcPrefix}/react-query/hooks.ts`] = this.generateHooksFile(endpoints);
         }
 
         return files;
     }
 
-    private generateIndexFile(): string {
+    private generateIndexFile(hasHooks: boolean): string {
         const clientName = this.clientClassName;
-        return (
+        let content =
             FILE_HEADER +
             `export { ${clientName}Provider, use${clientName}Context } from "./context.js";\n` +
             `export type { ${clientName}ProviderProps } from "./context.js";\n` +
             `export { type QueryKey } from "@tanstack/react-query";\n` +
-            `export type { QueryHookOptions, SuspenseQueryHookOptions, MutationHookOptions } from "./types.js";\n` +
-            `export * from "./hooks.js";\n`
-        );
+            `export type { QueryHookOptions, SuspenseQueryHookOptions, MutationHookOptions } from "./types.js";\n`;
+        if (hasHooks) {
+            content += `export * from "./hooks.js";\n`;
+        }
+        return content;
     }
 
     private generateContextFile(): string {
