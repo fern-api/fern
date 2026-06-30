@@ -17,6 +17,10 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedOauthClientCredentialsWithVariables.Core.QueryStringBuilder.Builder(capacity: 0)
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedOauthClientCredentialsWithVariables.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -33,6 +37,7 @@ public partial class ServiceClient : IServiceClient
                         "/service/{0}",
                         ValueConvert.ToPathParameterString(endpointParam)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

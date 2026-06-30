@@ -31,6 +31,9 @@ public partial class UnionClient : IUnionClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -44,6 +47,7 @@ public partial class UnionClient : IUnionClient
                             Method = HttpMethod.Post,
                             Path = "/union",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },

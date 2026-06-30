@@ -18,6 +18,11 @@ public partial class S3Client : IS3Client
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedMultiUrlEnvironmentNoDefault.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedMultiUrlEnvironmentNoDefault.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +37,7 @@ public partial class S3Client : IS3Client
                     Method = HttpMethod.Post,
                     Path = "/s3/presigned-url",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

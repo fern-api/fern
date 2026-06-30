@@ -18,6 +18,9 @@ public partial class SimpleClient : ISimpleClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedErrors.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedErrors.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class SimpleClient : ISimpleClient
                     Method = HttpMethod.Post,
                     Path = "foo1",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -142,6 +146,9 @@ public partial class SimpleClient : ISimpleClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedErrors.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedErrors.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -155,6 +162,7 @@ public partial class SimpleClient : ISimpleClient
                     Method = HttpMethod.Post,
                     Path = "foo2",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -278,6 +286,9 @@ public partial class SimpleClient : ISimpleClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedErrors.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedErrors.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -291,6 +302,7 @@ public partial class SimpleClient : ISimpleClient
                     Method = HttpMethod.Post,
                     Path = "foo3",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

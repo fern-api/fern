@@ -42,6 +42,9 @@ public partial class ComplexClient : IComplexClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -58,6 +61,7 @@ public partial class ComplexClient : IComplexClient
                                 ValueConvert.ToPathParameterString(index)
                             ),
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             ContentType = "application/json",
                             Options = options,

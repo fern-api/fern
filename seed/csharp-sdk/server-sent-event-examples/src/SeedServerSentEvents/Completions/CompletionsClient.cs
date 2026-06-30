@@ -20,6 +20,9 @@ public partial class CompletionsClient : ICompletionsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedServerSentEvents.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedServerSentEvents.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -33,6 +36,7 @@ public partial class CompletionsClient : ICompletionsClient
                     Method = HttpMethod.Post,
                     Path = "stream",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -131,6 +135,9 @@ public partial class CompletionsClient : ICompletionsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedServerSentEvents.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedServerSentEvents.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -144,6 +151,7 @@ public partial class CompletionsClient : ICompletionsClient
                     Method = HttpMethod.Post,
                     Path = "stream-events",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -244,6 +252,9 @@ public partial class CompletionsClient : ICompletionsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedServerSentEvents.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedServerSentEvents.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -257,6 +268,7 @@ public partial class CompletionsClient : ICompletionsClient
                     Method = HttpMethod.Post,
                     Path = "stream-events-discriminant-in-data",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -353,6 +365,9 @@ public partial class CompletionsClient : ICompletionsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedServerSentEvents.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedServerSentEvents.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -366,6 +381,7 @@ public partial class CompletionsClient : ICompletionsClient
                     Method = HttpMethod.Post,
                     Path = "stream-events-context-protocol",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
