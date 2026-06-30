@@ -94,8 +94,11 @@ export class WebhooksHelperGenerator {
     private buildAsymmetricParameters(
         config: FernIr.AsymmetricKeySignatureVerification
     ): Array<{ name: string; type: string }> {
+        const payloadFormat = config.payloadFormat;
+        const hasBodySort = payloadFormat?.bodySort != null;
+        const requestBodyType = hasBodySort ? "string | Record<string, string>" : "string";
         const params: Array<{ name: string; type: string }> = [
-            { name: "requestBody", type: "string" },
+            { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" }
         ];
 
@@ -110,6 +113,10 @@ export class WebhooksHelperGenerator {
                 break;
             default:
                 break;
+        }
+
+        if (payloadFormat != null) {
+            this.addPayloadParameters(params, payloadFormat);
         }
 
         if (config.timestamp != null) {
@@ -218,7 +225,11 @@ export class WebhooksHelperGenerator {
 
         // Payload construction
         lines.push("");
-        lines.push("const payload = requestBody;");
+        if (config.payloadFormat != null) {
+            this.addPayloadConstruction(lines, config.payloadFormat);
+        } else {
+            lines.push("const payload = requestBody;");
+        }
 
         const algorithm = this.mapAsymmetricAlgorithm(config.algorithm);
         const encoding = this.mapEncoding(config.encoding);
@@ -465,6 +476,12 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null) {
             lines.push(
                 `Extract the timestamp from the "${getWireValue(config.timestamp.headerName)}" header and pass it as the timestampHeader parameter.`
+            );
+        }
+        if (config.payloadFormat?.bodySort != null) {
+            lines.push(
+                "The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.",
+                "When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
             );
         }
         return lines.join("\n");

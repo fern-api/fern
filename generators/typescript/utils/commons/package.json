@@ -38,7 +38,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/typescript-base": "workspace:*",
-    "@fern-fern/ir-sdk": "67.2.0",
+    "@fern-fern/ir-sdk": "67.8.0",
     "decompress": "catalog:",
     "esutils": "catalog:",
     "eta": "^4.5.1",

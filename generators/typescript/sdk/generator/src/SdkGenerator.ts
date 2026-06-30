@@ -1592,7 +1592,8 @@ export class SdkGenerator {
                     ...common,
                     payloadFormat: {
                         components: verification.payloadFormat.components,
-                        delimiter: verification.payloadFormat.delimiter
+                        delimiter: verification.payloadFormat.delimiter,
+                        bodySort: verification.payloadFormat.bodySort
                     }
                 });
             case "asymmetric": {
@@ -1607,7 +1608,15 @@ export class SdkGenerator {
                                       : null
                           }
                         : { type: verification.keySource.type };
-                return JSON.stringify({ ...common, keySource });
+                const payloadFormat =
+                    verification.payloadFormat != null
+                        ? {
+                              components: verification.payloadFormat.components,
+                              delimiter: verification.payloadFormat.delimiter,
+                              bodySort: verification.payloadFormat.bodySort
+                          }
+                        : null;
+                return JSON.stringify({ ...common, keySource, payloadFormat });
             }
             default:
                 return JSON.stringify({ type: "unknown" });
