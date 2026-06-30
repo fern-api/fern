@@ -1697,9 +1697,7 @@ export class DocsDefinitionResolver {
                     logWarnings: false
                 });
                 // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-                console.log(
-                    `[BENCHMARK] v3 parser IR generation: ${(performance.now() - v3IrStart).toFixed(0)}ms`
-                );
+                console.log(`[BENCHMARK] v3 parser IR generation: ${(performance.now() - v3IrStart).toFixed(0)}ms`);
             } catch (error) {
                 openapiError = error;
             }
@@ -1749,9 +1747,7 @@ export class DocsDefinitionResolver {
                 }
             );
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(
-                `[BENCHMARK] toFernWorkspace (v1 fallback): ${(performance.now() - toFernStart).toFixed(0)}ms`
-            );
+            console.log(`[BENCHMARK] toFernWorkspace (v1 fallback): ${(performance.now() - toFernStart).toFixed(0)}ms`);
             const irGenStart = performance.now();
             ir = generateIntermediateRepresentation({
                 workspace,
