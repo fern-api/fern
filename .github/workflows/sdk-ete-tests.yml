@@ -196,8 +196,8 @@ jobs:
         run: |
           docker build \
             -f generators/php/sdk/Dockerfile \
-            -t fernenterprise/fern-php-sdk:latest \
-            --cache-from fernenterprise/fern-php-sdk:latest \
+            -t fernapi/fern-php-sdk:latest \
+            --cache-from fernapi/fern-php-sdk:latest \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             .
 
@@ -206,8 +206,8 @@ jobs:
         run: |
           docker build \
             -f generators/go/sdk/Dockerfile \
-            -t fernenterprise/fern-go-sdk:latest \
-            --cache-from fernenterprise/fern-go-sdk:latest \
+            -t fernapi/fern-go-sdk:latest \
+            --cache-from fernapi/fern-go-sdk:latest \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             .
 
