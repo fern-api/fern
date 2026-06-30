@@ -722,9 +722,17 @@ export async function runAppPreviewServer({
     // Cached serialized JSON responses keyed by locale ("" = no locale).
     // Invalidated whenever previewResult or translatedDefinitions change.
     const cachedResponseJson = new Map<string, string>();
+    // Monotonic version counter — incremented on each reload. Used as ETag value
+    // so the docs bundle can skip re-downloading the full response when unchanged.
+    let responseVersion = 0;
 
     function invalidateResponseCache(): void {
         cachedResponseJson.clear();
+        responseVersion++;
+    }
+
+    function getResponseETag(): string {
+        return `"v${responseVersion}"`;
     }
 
     function getSerializedDocsLoadResponse(locale?: string): string {
@@ -1153,6 +1161,15 @@ export async function runAppPreviewServer({
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
         try {
+            const etag = getResponseETag();
+
+            // Return 304 if the client already has the current version
+            const ifNoneMatch = req.headers["if-none-match"];
+            if (ifNoneMatch === etag) {
+                res.status(304).end();
+                return;
+            }
+
             // Extract locale from the request body URL if present
             const requestBody = req.body as { url?: string } | undefined;
             const urlPath = requestBody?.url;
@@ -1160,6 +1177,7 @@ export async function runAppPreviewServer({
 
             const json = getSerializedDocsLoadResponse(locale);
             res.setHeader("Content-Type", "application/json");
+            res.setHeader("ETag", etag);
             res.send(json);
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
@@ -1180,6 +1198,7 @@ export async function runAppPreviewServer({
         port: backendPort,
         debugLogger,
         getSerializedDocsLoadResponse,
+        getResponseETag,
         extractLocaleFromPath
     });
     if (bunHandle != null) {
