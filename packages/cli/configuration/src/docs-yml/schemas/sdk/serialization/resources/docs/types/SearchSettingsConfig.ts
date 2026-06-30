@@ -16,10 +16,7 @@ export const SearchSettingsConfig: core.serialization.ObjectSchema<
         "default-filter-by-current-product",
         core.serialization.boolean().optional(),
     ),
-    prioritizeGuides: core.serialization.property(
-        "prioritize-guides",
-        core.serialization.boolean().optional(),
-    ),
+    prioritizeGuides: core.serialization.property("prioritize-guides", core.serialization.boolean().optional()),
 });
 
 export declare namespace SearchSettingsConfig {

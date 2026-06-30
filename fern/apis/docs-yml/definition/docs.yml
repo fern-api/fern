@@ -1100,6 +1100,15 @@ types:
           setting, which is preserved as an alias for backwards compatibility.
 
           @default: false
+      prioritize-guides:
+        type: optional<boolean>
+        docs: |
+          If set to true, guide/markdown pages are soft-boosted over API reference
+          and parameter records in Algolia's ranking (via `optionalFilters`).
+          Results from the API reference are still returned, just ranked lower
+          when relevance is otherwise equal.
+
+          @default: false
 
   ThemeConfig:
     properties:
