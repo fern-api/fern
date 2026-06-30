@@ -1182,6 +1182,10 @@ export async function runAppPreviewServer({
             // Return 304 if the client already has the current version
             const ifNoneMatch = req.headers["if-none-match"];
             if (ifNoneMatch === etag) {
+                const totalTime = Date.now() - requestStart;
+                context.logger.info(
+                    `[BENCHMARK] /load-with-url #${requestNum}: 304 Not Modified, total: ${totalTime}ms`
+                );
                 res.status(304).end();
                 return;
             }
