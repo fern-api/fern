@@ -963,9 +963,7 @@ export async function runAppPreviewServer({
             project = await reloadProject();
             const reloadProjectTime = Date.now() - reloadProjectStart;
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(
-                `[BENCHMARK] reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`
-            );
+            console.log(`[BENCHMARK] reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`);
 
             // Rebuild dependency map after reloading project
             const depMapStart = Date.now();
