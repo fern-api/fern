@@ -8,6 +8,7 @@ import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.MediaTypes;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
+import com.seed.multiUrlEnvironment.core.RetryInterceptor;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentApiException;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentException;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentHttpResponse;
@@ -60,6 +61,15 @@ public class RawS3Client {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

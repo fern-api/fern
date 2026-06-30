@@ -6,6 +6,7 @@ package com.seed.license;
 import com.seed.license.core.ClientOptions;
 import com.seed.license.core.ObjectMappers;
 import com.seed.license.core.RequestOptions;
+import com.seed.license.core.RetryInterceptor;
 import com.seed.license.core.SeedLicenseApiException;
 import com.seed.license.core.SeedLicenseException;
 import com.seed.license.core.SeedLicenseHttpResponse;
@@ -49,6 +50,15 @@ public class AsyncRawSeedLicenseClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedLicenseHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

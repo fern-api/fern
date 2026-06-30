@@ -8,6 +8,7 @@ import com.seed.javaOptionalQueryParamsOverloads.core.ClientOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.ObjectMappers;
 import com.seed.javaOptionalQueryParamsOverloads.core.QueryStringMapper;
 import com.seed.javaOptionalQueryParamsOverloads.core.RequestOptions;
+import com.seed.javaOptionalQueryParamsOverloads.core.RetryInterceptor;
 import com.seed.javaOptionalQueryParamsOverloads.core.SeedJavaOptionalQueryParamsOverloadsApiException;
 import com.seed.javaOptionalQueryParamsOverloads.core.SeedJavaOptionalQueryParamsOverloadsException;
 import com.seed.javaOptionalQueryParamsOverloads.core.SeedJavaOptionalQueryParamsOverloadsHttpResponse;
@@ -94,6 +95,15 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<InsurancePolicy>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -163,6 +173,15 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -227,6 +246,15 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> future =
                 new CompletableFuture<>();

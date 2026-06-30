@@ -7,6 +7,7 @@ package com.test.sdk.resources.service;
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.ObjectMappers;
 import com.test.sdk.core.RequestOptions;
+import com.test.sdk.core.RetryInterceptor;
 import com.test.sdk.core.SeedApiApiException;
 import com.test.sdk.core.SeedApiException;
 import com.test.sdk.core.SeedApiHttpResponse;
@@ -56,6 +57,9 @@ public class AsyncRawServiceClient {
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
+      }
+      if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+        okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedApiHttpResponse<User>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {

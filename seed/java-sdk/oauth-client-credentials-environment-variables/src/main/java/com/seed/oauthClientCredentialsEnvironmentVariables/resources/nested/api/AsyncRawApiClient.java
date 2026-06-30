@@ -6,6 +6,7 @@ package com.seed.oauthClientCredentialsEnvironmentVariables.resources.nested.api
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ObjectMappers;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.RequestOptions;
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesApiException;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesException;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesHttpResponse;
@@ -51,6 +52,15 @@ public class AsyncRawApiClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedOauthClientCredentialsEnvironmentVariablesHttpResponse<Void>> future =
                 new CompletableFuture<>();

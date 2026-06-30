@@ -8,6 +8,7 @@ import com.seed.crossPackageTypeNames.core.MediaTypes;
 import com.seed.crossPackageTypeNames.core.ObjectMappers;
 import com.seed.crossPackageTypeNames.core.QueryStringMapper;
 import com.seed.crossPackageTypeNames.core.RequestOptions;
+import com.seed.crossPackageTypeNames.core.RetryInterceptor;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesApiException;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesException;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesHttpResponse;
@@ -68,6 +69,15 @@ public class AsyncRawFooClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedCrossPackageTypeNamesHttpResponse<ImportingType>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

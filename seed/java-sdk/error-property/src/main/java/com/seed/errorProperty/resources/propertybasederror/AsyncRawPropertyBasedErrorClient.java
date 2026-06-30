@@ -6,6 +6,7 @@ package com.seed.errorProperty.resources.propertybasederror;
 import com.seed.errorProperty.core.ClientOptions;
 import com.seed.errorProperty.core.ObjectMappers;
 import com.seed.errorProperty.core.RequestOptions;
+import com.seed.errorProperty.core.RetryInterceptor;
 import com.seed.errorProperty.core.SeedErrorPropertyApiException;
 import com.seed.errorProperty.core.SeedErrorPropertyException;
 import com.seed.errorProperty.core.SeedErrorPropertyHttpResponse;
@@ -56,6 +57,15 @@ public class AsyncRawPropertyBasedErrorClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedErrorPropertyHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

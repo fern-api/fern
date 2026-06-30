@@ -8,6 +8,7 @@ import com.seed.multiUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.multiUrlEnvironmentNoDefault.core.MediaTypes;
 import com.seed.multiUrlEnvironmentNoDefault.core.ObjectMappers;
 import com.seed.multiUrlEnvironmentNoDefault.core.RequestOptions;
+import com.seed.multiUrlEnvironmentNoDefault.core.RetryInterceptor;
 import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultApiException;
 import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultException;
 import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultHttpResponse;
@@ -64,6 +65,15 @@ public class AsyncRawEc2Client {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedMultiUrlEnvironmentNoDefaultHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
