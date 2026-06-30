@@ -50,6 +50,7 @@ internal static class SseReconnectHelper
         var response = initialResponse;
         var maxAttempts = maxReconnectAttempts ?? DefaultMaxReconnectAttempts;
         var reconnectAttempts = 0;
+        var isReconnectedResponse = false;
 
         while (true)
         {
@@ -109,8 +110,14 @@ internal static class SseReconnectHelper
                     .ConfigureAwait(false);
             }
 
+            if (isReconnectedResponse)
+            {
+                response.Raw?.Dispose();
+            }
+
             response = await reconnectFn(parser.LastEventId, cancellationToken)
                 .ConfigureAwait(false);
+            isReconnectedResponse = true;
         }
     }
 }
