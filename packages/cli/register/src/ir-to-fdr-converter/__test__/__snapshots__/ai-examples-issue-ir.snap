@@ -1274,6 +1274,7 @@
             "userSpecifiedExamples": {
               "addPlantExample_Successfully created plant_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Successfully created plant",
                 "request": {
                   "auth": undefined,
