@@ -5,7 +5,7 @@
     namespace names (e.g. `x-fern-sdk-group-name: _agents`) to generate private
     Python modules.
 
-    **Breaking**: APIs with underscore-prefixed query parameter names (e.g.
-    `_fields`) will see the generated method kwarg change from `fields=` to
-    `_fields=`. The new name matches the wire name and is the correct behavior.
-  type: break
+    Note: APIs with underscore-prefixed query parameter names (e.g. `_fields`)
+    will see the generated method kwarg change from `fields=` to `_fields=`.
+    The new name matches the wire name and is the correct behavior.
+  type: fix
