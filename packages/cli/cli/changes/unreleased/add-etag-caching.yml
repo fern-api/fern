@@ -1,0 +1,5 @@
+- summary: |
+    Add ETag-based HTTP caching and response serialization cache to the
+    /load-with-url endpoint in fern docs dev. Eliminates redundant 32MB
+    JSON serialization and transfer when the docs definition hasn't changed.
+  type: chore
