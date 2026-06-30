@@ -76,8 +76,10 @@ export declare namespace generateIntermediateRepresentation {
         audiences: Audiences;
         readme: generatorsYml.ReadmeSchema | undefined;
         packageName: string | undefined;
-        /** When set, used in place of packageName for the User-Agent header value. */
-        userAgentPrefix?: string;
+        /** Template for the User-Agent header value (e.g. "north-python-sdk/{version}"). */
+        userAgentTemplate?: string;
+        /** Organization name from fern.config.json, used for {organization} in user-agent template. */
+        organization?: string;
         version: string | undefined;
         context: TaskContext;
         sourceResolver: SourceResolver;
@@ -97,7 +99,8 @@ export function generateIntermediateRepresentation({
     audiences,
     readme,
     packageName,
-    userAgentPrefix,
+    userAgentTemplate,
+    organization,
     version,
     fdrApiDefinitionId,
     sourceResolver,
@@ -551,13 +554,27 @@ export function generateIntermediateRepresentation({
             language: "X-Fern-Language",
             sdkName: "X-Fern-SDK-Name",
             sdkVersion: "X-Fern-SDK-Version",
-            userAgent:
-                !hasCustomUserAgentHeader && version != null && (userAgentPrefix != null || packageName != null)
-                    ? {
-                          header: "User-Agent",
-                          value: `${userAgentPrefix ?? packageName}/${version}`
-                      }
-                    : undefined
+            userAgent: (() => {
+                if (hasCustomUserAgentHeader) {
+                    return undefined;
+                }
+                if (userAgentTemplate != null && version != null) {
+                    const vars: Record<string, string> = {
+                        version,
+                        packageName: packageName ?? "",
+                        language: generationLanguage ?? "",
+                        generatorVersion: generationMetadata?.generatorVersion ?? "",
+                        organization: organization ?? "",
+                        apiName: workspace.definition.rootApiFile.contents.name ?? ""
+                    };
+                    const value = userAgentTemplate.replace(/\{(\w+)\}/g, (_, key: string) => vars[key] ?? "");
+                    return { header: "User-Agent" as const, value };
+                }
+                if (version != null && packageName != null) {
+                    return { header: "User-Agent" as const, value: `${packageName}/${version}` };
+                }
+                return undefined;
+            })()
         }
     };
 

@@ -5,7 +5,7 @@ import {
     detectInvocationSource,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
-    getUserAgentPrefixFromGeneratorConfig
+    getUserAgentTemplateFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -163,7 +163,7 @@ export async function runRemoteGenerationForGenerator({
         }
     }
 
-    const userAgentPrefix = getUserAgentPrefixFromGeneratorConfig(generatorInvocation);
+    const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
 
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -178,7 +178,8 @@ export async function runRemoteGenerationForGenerator({
         audiences,
         readme,
         packageName,
-        userAgentPrefix,
+        userAgentTemplate,
+        organization,
         version: resolvedVersion,
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),

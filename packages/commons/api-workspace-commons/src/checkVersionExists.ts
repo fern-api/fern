@@ -52,21 +52,29 @@ export function getPackageNameFromGeneratorConfig(
 }
 
 /**
- * Resolves the user-agent prefix from the raw generator configuration.
+ * Resolves the user-agent template from the raw generator configuration.
  *
- * When set, this value is used in place of the package name when constructing
- * the `User-Agent` header value (`<prefix>/<version>`). This allows customers
- * to decouple the user-agent identity from the published package name.
+ * When set, this template is interpolated and used as the `User-Agent` header
+ * value. Supported placeholders (resolved statically at generation time):
  *
- * Lookup: `config["user-agent-prefix"]`
+ *   {packageName}      — published package name from output config
+ *   {version}          — SDK/package version
+ *   {language}         — generation language (python, typescript, go, …)
+ *   {generatorVersion} — Fern generator version
+ *   {organization}     — organization from fern.config.json
+ *   {apiName}          — API name from the root API definition
+ *
+ * Default (when absent): `{packageName}/{version}`
+ *
+ * Lookup: `config["user-agent"]`
  */
-export function getUserAgentPrefixFromGeneratorConfig(
+export function getUserAgentTemplateFromGeneratorConfig(
     generatorInvocation: generatorsYml.GeneratorInvocation
 ): string | undefined {
     if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
-        const prefix = (generatorInvocation.raw.config as { "user-agent-prefix"?: string })["user-agent-prefix"];
-        if (prefix != null) {
-            return prefix;
+        const template = (generatorInvocation.raw.config as { "user-agent"?: string })["user-agent"];
+        if (template != null) {
+            return template;
         }
     }
     return undefined;

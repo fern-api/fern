@@ -4,7 +4,7 @@ import {
     FernWorkspace,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
-    getUserAgentPrefixFromGeneratorConfig
+    getUserAgentTemplateFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
@@ -32,7 +32,8 @@ export async function getIntermediateRepresentation({
     irVersionOverride,
     version,
     packageName,
-    userAgentPrefix,
+    userAgentTemplate,
+    organization,
     sourceConfig,
     includeOptionalRequestPropertyExamples,
     ir
@@ -44,12 +45,13 @@ export async function getIntermediateRepresentation({
     irVersionOverride: string | undefined;
     version: string | undefined;
     packageName: string | undefined;
-    userAgentPrefix?: string;
+    userAgentTemplate?: string;
+    organization?: string;
     sourceConfig: SourceConfig | undefined;
     includeOptionalRequestPropertyExamples?: boolean;
     ir?: IntermediateRepresentation;
 }): Promise<getIntermediateRepresentation.Return> {
-    const resolvedUserAgentPrefix = userAgentPrefix ?? getUserAgentPrefixFromGeneratorConfig(generatorInvocation);
+    const resolvedUserAgentTemplate = userAgentTemplate ?? getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
     const intermediateRepresentation =
         ir ??
         generateIntermediateRepresentation({
@@ -65,7 +67,8 @@ export async function getIntermediateRepresentation({
             readme: generatorInvocation.readme,
             version,
             packageName,
-            userAgentPrefix: resolvedUserAgentPrefix,
+            userAgentTemplate: resolvedUserAgentTemplate,
+            organization,
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),
             generationMetadata: {
