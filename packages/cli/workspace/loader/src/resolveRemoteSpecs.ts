@@ -13,6 +13,13 @@ interface CloneTarget {
     ref: string | undefined;
 }
 
+/**
+ * Returns true if the given ref looks like a commit SHA (7-40 hex characters).
+ */
+function isCommitSha(ref: string): boolean {
+    return /^[0-9a-f]{7,40}$/i.test(ref);
+}
+
 function cloneTargetKey(target: CloneTarget): string {
     return `${target.repo}#${target.ref ?? "HEAD"}`;
 }
@@ -73,13 +80,24 @@ export async function resolveRemoteSpecs({
         const clonePath = AbsoluteFilePath.of(tmpDir.path);
 
         const git = simpleGit();
-        const cloneArgs = ["--depth", "1", "--config", "core.symlinks=false"];
-        if (target.ref != null) {
-            cloneArgs.push("--branch", target.ref);
-        }
+        const useCommitShaFlow = target.ref != null && isCommitSha(target.ref);
 
         try {
-            await git.clone(target.repo, tmpDir.path, cloneArgs);
+            if (useCommitShaFlow) {
+                // Commit SHAs cannot be used with --branch; fetch the specific commit instead
+                const ref = target.ref as string;
+                const cloneArgs = ["--config", "core.symlinks=false", "--no-checkout"];
+                await git.clone(target.repo, tmpDir.path, cloneArgs);
+                const repoGit = simpleGit(tmpDir.path);
+                await repoGit.fetch("origin", ref, { "--depth": "1" });
+                await repoGit.checkout(ref);
+            } else {
+                const cloneArgs = ["--depth", "1", "--config", "core.symlinks=false"];
+                if (target.ref != null) {
+                    cloneArgs.push("--branch", target.ref);
+                }
+                await git.clone(target.repo, tmpDir.path, cloneArgs);
+            }
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             if (
@@ -139,11 +157,15 @@ export async function resolveRemoteSpecs({
         }
 
         if (def.schema.type === "protobuf") {
+            // Resolve target relative to the cloned repo root (not the proto root)
+            const resolvedTarget =
+                def.schema.target.length > 0 ? path.resolve(clonedPath, def.schema.target) : def.schema.target;
             return {
                 ...def,
                 schema: {
                     ...def.schema,
-                    root: resolvedPath
+                    root: resolvedPath,
+                    target: resolvedTarget
                 },
                 gitSource: undefined,
                 resolvedAbsolutePath: true
