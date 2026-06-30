@@ -160,7 +160,11 @@ export async function resolveRemoteSpecs({
             // Resolve target relative to the cloned repo root (not the proto root)
             const resolvedTarget =
                 def.schema.target.length > 0 ? path.resolve(clonedPath, def.schema.target) : def.schema.target;
-            if (resolvedTarget.length > 0 && !resolvedTarget.startsWith(clonedPath + path.sep) && resolvedTarget !== clonedPath) {
+            if (
+                resolvedTarget.length > 0 &&
+                !resolvedTarget.startsWith(clonedPath + path.sep) &&
+                resolvedTarget !== clonedPath
+            ) {
                 throw new Error(
                     `Invalid proto target path '${def.schema.target}': ` +
                         `path must be relative to the repository root and cannot traverse outside it.`
