@@ -10,6 +10,11 @@ types:
       name: string
       email: string
 
+  UpdateUserRequest:
+    properties:
+      name: optional<string>
+      email: optional<string>
+
 service:
   base-path: /users
   auth: false
@@ -34,6 +39,24 @@ service:
       request: CreateUserRequest
       response: User
       docs: Create a new user
+
+    update:
+      method: PUT
+      path: /{userId}
+      path-parameters:
+        userId: string
+      request: UpdateUserRequest
+      response: User
+      docs: Update a user
+
+    patch:
+      method: PATCH
+      path: /{userId}
+      path-parameters:
+        userId: string
+      request: UpdateUserRequest
+      response: User
+      docs: Partially update a user
 
     delete:
       method: DELETE

@@ -69,6 +69,54 @@ describe("UserClient", () => {
                     
     });
           
+    test("update", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "name" : "name" , "email" : "email" };
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
+        
+        server
+            .mockEndpoint()
+            .put("/users/userId").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
+
+        
+                        
+                                const response = await client.user.update("userId", {
+    name: "name",
+    email: "email"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
+    });
+          
+    test("patch", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "name" : "name" , "email" : "email" };
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
+        
+        server
+            .mockEndpoint()
+            .patch("/users/userId").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
+
+        
+                        
+                                const response = await client.user.patch("userId", {
+    name: "name",
+    email: "email"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
+    });
+          
     test("delete", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });

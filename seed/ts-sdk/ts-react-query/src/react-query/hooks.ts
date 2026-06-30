@@ -5,6 +5,62 @@ import type { SeedApiClient } from "../index.js";
 import { useSeedApiClientContext } from "./context.js";
 import type { QueryHookOptions, SuspenseQueryHookOptions, MutationHookOptions } from "./types.js";
 
+export function useHealthCheckQueryKey(): QueryKey {
+    return ["@fern/ts-react-query", "health.check"] as const;
+}
+
+/** Health check endpoint */
+export function useHealthCheck(
+    options?: QueryHookOptions<Awaited<ReturnType<SeedApiClient["health"]["check"]>>>,
+): UseQueryResult<Awaited<ReturnType<SeedApiClient["health"]["check"]>>> {
+    const client = useSeedApiClientContext();
+    return useQuery({
+        queryKey: useHealthCheckQueryKey(),
+        queryFn: () => client.health.check(),
+        ...options,
+    });
+}
+
+/** Health check endpoint */
+export function useHealthCheckSuspense(
+    options?: SuspenseQueryHookOptions<Awaited<ReturnType<SeedApiClient["health"]["check"]>>>,
+): UseSuspenseQueryResult<Awaited<ReturnType<SeedApiClient["health"]["check"]>>> {
+    const client = useSeedApiClientContext();
+    return useSuspenseQuery({
+        queryKey: useHealthCheckQueryKey(),
+        queryFn: () => client.health.check(),
+        ...options,
+    });
+}
+
+export function useHealthDetailsQueryKey(): QueryKey {
+    return ["@fern/ts-react-query", "health.details"] as const;
+}
+
+/** Get health details */
+export function useHealthDetails(
+    options?: QueryHookOptions<Awaited<ReturnType<SeedApiClient["health"]["details"]>>>,
+): UseQueryResult<Awaited<ReturnType<SeedApiClient["health"]["details"]>>> {
+    const client = useSeedApiClientContext();
+    return useQuery({
+        queryKey: useHealthDetailsQueryKey(),
+        queryFn: () => client.health.details(),
+        ...options,
+    });
+}
+
+/** Get health details */
+export function useHealthDetailsSuspense(
+    options?: SuspenseQueryHookOptions<Awaited<ReturnType<SeedApiClient["health"]["details"]>>>,
+): UseSuspenseQueryResult<Awaited<ReturnType<SeedApiClient["health"]["details"]>>> {
+    const client = useSeedApiClientContext();
+    return useSuspenseQuery({
+        queryKey: useHealthDetailsQueryKey(),
+        queryFn: () => client.health.details(),
+        ...options,
+    });
+}
+
 export function useUserListQueryKey(): QueryKey {
     return ["@fern/ts-react-query", "user.list"] as const;
 }
@@ -71,6 +127,30 @@ export function useUserCreateMutation(
     return useMutation({
         mutationKey: ["@fern/ts-react-query", "user.create"],
         mutationFn: (args) => client.user.create(...args),
+        ...options,
+    });
+}
+
+/** Update a user */
+export function useUserUpdateMutation(
+    options?: MutationHookOptions<Awaited<ReturnType<SeedApiClient["user"]["update"]>>, Error, Parameters<SeedApiClient["user"]["update"]>>,
+): UseMutationResult<Awaited<ReturnType<SeedApiClient["user"]["update"]>>, Error, Parameters<SeedApiClient["user"]["update"]>> {
+    const client = useSeedApiClientContext();
+    return useMutation({
+        mutationKey: ["@fern/ts-react-query", "user.update"],
+        mutationFn: (args) => client.user.update(...args),
+        ...options,
+    });
+}
+
+/** Partially update a user */
+export function useUserPatchMutation(
+    options?: MutationHookOptions<Awaited<ReturnType<SeedApiClient["user"]["patch"]>>, Error, Parameters<SeedApiClient["user"]["patch"]>>,
+): UseMutationResult<Awaited<ReturnType<SeedApiClient["user"]["patch"]>>, Error, Parameters<SeedApiClient["user"]["patch"]>> {
+    const client = useSeedApiClientContext();
+    return useMutation({
+        mutationKey: ["@fern/ts-react-query", "user.patch"],
+        mutationFn: (args) => client.user.patch(...args),
         ...options,
     });
 }

@@ -3151,6 +3151,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12

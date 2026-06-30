@@ -22,6 +22,17 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./health": {
+            "import": {
+                "types": "./dist/esm/api/resources/health/exports.d.mts",
+                "default": "./dist/esm/api/resources/health/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/health/exports.d.ts",
+                "default": "./dist/cjs/api/resources/health/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/health/exports.js"
+        },
         "./user": {
             "import": {
                 "types": "./dist/esm/api/resources/user/exports.d.mts",

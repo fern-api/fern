@@ -152,6 +152,102 @@ export class UserClient {
     }
 
     /**
+     * Update a user
+     *
+     * @param {string} userId
+     * @param {SeedApi.UpdateUserRequest} request
+     * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.update("userId", {
+     *         name: "name",
+     *         email: "email"
+     *     })
+     */
+    public update(userId: string, request: SeedApi.UpdateUserRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__update(userId, request, requestOptions));
+    }
+
+    private async __update(userId: string, request: SeedApi.UpdateUserRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedApi.User>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/users/${core.url.encodePathParam(userId)}`),
+            method: "PUT",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/users/{userId}");
+    }
+
+    /**
+     * Partially update a user
+     *
+     * @param {string} userId
+     * @param {SeedApi.UpdateUserRequest} request
+     * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.patch("userId", {
+     *         name: "name",
+     *         email: "email"
+     *     })
+     */
+    public patch(userId: string, request: SeedApi.UpdateUserRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__patch(userId, request, requestOptions));
+    }
+
+    private async __patch(userId: string, request: SeedApi.UpdateUserRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedApi.User>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/users/${core.url.encodePathParam(userId)}`),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/users/{userId}");
+    }
+
+    /**
      * Delete a user
      *
      * @param {string} userId

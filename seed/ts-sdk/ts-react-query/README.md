@@ -75,9 +75,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { UserClient } from '@fern/ts-react-query/user';
+import { HealthClient } from '@fern/ts-react-query/health';
 
-const client = new UserClient({...});
+const client = new HealthClient({...});
 ```
 
 ### Additional Headers
