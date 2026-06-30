@@ -199,7 +199,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: fernapi/ts-seed
+          images: fernenterprise/ts-seed
           tags: |
             type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
             type=raw,value=latest-${{ matrix.arch }}
@@ -207,8 +207,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -248,7 +248,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: fernapi/java-seed
+          images: fernenterprise/java-seed
           tags: |
             type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
             type=raw,value=latest-${{ matrix.arch }}
@@ -256,8 +256,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -297,7 +297,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: fernapi/python-seed
+          images: fernenterprise/python-seed
           tags: |
             type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
             type=raw,value=latest-${{ matrix.arch }}
@@ -305,8 +305,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -346,7 +346,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: fernapi/csharp-seed
+          images: fernenterprise/csharp-seed
           tags: |
             type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
             type=raw,value=latest-${{ matrix.arch }}
@@ -354,8 +354,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -395,7 +395,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: fernapi/php-seed
+          images: fernenterprise/php-seed
           tags: |
             type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
             type=raw,value=latest-${{ matrix.arch }}
@@ -403,8 +403,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -444,7 +444,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: fernapi/go-seed
+          images: fernenterprise/go-seed
           tags: |
             type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
             type=raw,value=latest-${{ matrix.arch }}
@@ -452,8 +452,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -493,7 +493,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: fernapi/cli-seed
+          images: fernenterprise/cli-seed
           tags: |
             type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
             type=raw,value=latest-${{ matrix.arch }}
@@ -501,8 +501,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
@@ -527,8 +527,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build package list
         id: build-list
@@ -563,11 +563,11 @@ jobs:
           packages='${{ steps.build-list.outputs.packages }}'
           sha='${{ needs.generate-sha.outputs.sha }}'
           for package in $packages; do
-            docker buildx imagetools create -t fernapi/${package}-seed:latest \
-              fernapi/${package}-seed:latest-amd64 \
-              fernapi/${package}-seed:latest-arm64
+            docker buildx imagetools create -t fernenterprise/${package}-seed:latest \
+              fernenterprise/${package}-seed:latest-amd64 \
+              fernenterprise/${package}-seed:latest-arm64
 
-            docker buildx imagetools create -t fernapi/${package}-seed:${sha} \
-              fernapi/${package}-seed:${sha}-amd64 \
-              fernapi/${package}-seed:${sha}-arm64
+            docker buildx imagetools create -t fernenterprise/${package}-seed:${sha} \
+              fernenterprise/${package}-seed:${sha}-amd64 \
+              fernenterprise/${package}-seed:${sha}-arm64
           done

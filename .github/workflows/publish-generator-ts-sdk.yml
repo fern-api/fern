@@ -33,7 +33,7 @@ jobs:
       # Pre-flight: build the validator image locally (single-arch, no push)
       # before publishing the generator. Docker Hub has no transactional
       # multi-image publish, so this is the cheapest way to fail the job
-      # before `fernapi/fern-typescript-sdk:<version>` is pushed when the
+      # before `fernenterprise/fern-typescript-sdk:<version>` is pushed when the
       # validator Dockerfile / warm-cache is broken. The actual multi-arch
       # push happens after the generator publishes successfully below.
       - name: Pre-flight build validator image (no push)
@@ -43,7 +43,7 @@ jobs:
         run: |
           docker build \
             -f generators/typescript/sdk/validator/Dockerfile \
-            -t fernapi/fern-typescript-sdk-validator:preflight \
+            -t fernenterprise/fern-typescript-sdk-validator:preflight \
             .
 
       - name: automated publish
@@ -53,7 +53,7 @@ jobs:
           generator-name: "ts-sdk"
           version-file: "generators/typescript/sdk/versions.yml"
           fern-token: ${{ secrets.FERN_TOKEN }}
-          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          docker-pwd: ${{ secrets.FERN_DOCKERHUB_OAT }}
           sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
           sentry-dsn: ${{ secrets.SENTRY_DSN_TS_SDK }}
       - name: manual publish
@@ -64,11 +64,11 @@ jobs:
           version: ${{ inputs.version }}
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
-          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          docker-pwd: ${{ secrets.FERN_DOCKERHUB_OAT }}
           sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
           sentry-dsn: ${{ secrets.SENTRY_DSN_TS_SDK }}
 
-      # Publish the paired validator image (`fernapi/fern-typescript-sdk-validator`)
+      # Publish the paired validator image (`fernenterprise/fern-typescript-sdk-validator`)
       # with the same version tag emitted into `.fern/verify.sh` by the SDK
       # generator above. Buildx and the Docker Hub login from the
       # publish-generator composite action above persist into these steps.
@@ -100,6 +100,6 @@ jobs:
             --cache-from type=gha \
             --cache-to type=gha,mode=max \
             -f generators/typescript/sdk/validator/Dockerfile \
-            -t fernapi/fern-typescript-sdk-validator:${VERSION} \
-            -t fernapi/fern-typescript-sdk-validator:latest \
+            -t fernenterprise/fern-typescript-sdk-validator:${VERSION} \
+            -t fernenterprise/fern-typescript-sdk-validator:latest \
             .

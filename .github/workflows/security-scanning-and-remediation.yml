@@ -9,8 +9,8 @@ name: Create PRs to Remediate vulns
 #
 # 2. Grype Container Scans (matrix jobs)
 #    - create-grype-pr-generators: scans every published
-#      fernapi/fern-* generator image
-#    - create-grype-pr-seed: scans every fernapi/*-seed image
+#      fernenterprise/fern-* generator image
+#    - create-grype-pr-seed: scans every fernenterprise/*-seed image
 #    - Each entry builds the container, scans it with grype, and
 #      creates a PR if actionable vulnerabilities are found.
 #
@@ -380,11 +380,11 @@ jobs:
   # GRYPE CONTAINER VULNERABILITY SCANS
   #
   # Two matrix jobs scan every container we publish:
-  #   - create-grype-pr-generators: fernapi/fern-* generator images
+  #   - create-grype-pr-generators: fernenterprise/fern-* generator images
   #     (built via the seed `img` command, which uses each
   #     generator's `publish.docker` / `test.docker` config to
   #     run any required pre-build steps).
-  #   - create-grype-pr-seed: fernapi/*-seed images (built
+  #   - create-grype-pr-seed: fernenterprise/*-seed images (built
   #     directly from docker/seed/Dockerfile.<lang>).
   #
   # Each matrix entry runs in parallel with `fail-fast: false`
@@ -409,41 +409,41 @@ jobs:
       fail-fast: false
       matrix:
         generator:
-          - image: fernapi/fern-csharp-sdk
+          - image: fernenterprise/fern-csharp-sdk
             seed: csharp-sdk
             container: csharp-sdk
-          - image: fernapi/fern-go-sdk
+          - image: fernenterprise/fern-go-sdk
             seed: go-sdk
             container: go-sdk
-          - image: fernapi/fern-java-sdk
+          - image: fernenterprise/fern-java-sdk
             seed: java-sdk
             container: java-sdk
-          - image: fernapi/fern-openapi
+          - image: fernenterprise/fern-openapi
             seed: openapi
             container: openapi
-          - image: fernapi/fern-php-sdk
+          - image: fernenterprise/fern-php-sdk
             seed: php-sdk
             container: php-sdk
-          - image: fernapi/fern-pydantic-model-v2
+          - image: fernenterprise/fern-pydantic-model-v2
             seed: pydantic-v2
             container: pydantic-model-v2
-          - image: fernapi/fern-python-sdk
+          - image: fernenterprise/fern-python-sdk
             seed: python-sdk
             container: python-sdk
-          # Builds the fernapi/fern-ruby-sdk image (also tagged
-          # fernapi/fern-ruby-sdk-v2 via the seed config alias).
-          - image: fernapi/fern-ruby-sdk
+          # Builds the fernenterprise/fern-ruby-sdk image (also tagged
+          # fernenterprise/fern-ruby-sdk-v2 via the seed config alias).
+          - image: fernenterprise/fern-ruby-sdk
             seed: ruby-sdk-v2
             container: ruby-sdk
-          - image: fernapi/fern-rust-sdk
+          - image: fernenterprise/fern-rust-sdk
             seed: rust-sdk
             container: rust-sdk
-          - image: fernapi/fern-swift-sdk
+          - image: fernenterprise/fern-swift-sdk
             seed: swift-sdk
             container: swift-sdk
-          # Builds the fernapi/fern-typescript-sdk image (also
-          # tagged fernapi/fern-typescript-node-sdk via alias).
-          - image: fernapi/fern-typescript-sdk
+          # Builds the fernenterprise/fern-typescript-sdk image (also
+          # tagged fernenterprise/fern-typescript-node-sdk via alias).
+          - image: fernenterprise/fern-typescript-sdk
             seed: ts-sdk
             container: typescript-sdk
     steps:
@@ -546,7 +546,7 @@ jobs:
           ignored_cves: ""
 
   create-grype-pr-seed:
-    name: Run grype scan - fernapi/${{ matrix.seed.lang }}-seed
+    name: Run grype scan - fernenterprise/${{ matrix.seed.lang }}-seed
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -579,7 +579,7 @@ jobs:
 
       - name: Build container
         env:
-          IMAGE: fernapi/${{ matrix.seed.lang }}-seed:grype-scan
+          IMAGE: fernenterprise/${{ matrix.seed.lang }}-seed:grype-scan
         run: |
           docker build \
             -f docker/seed/Dockerfile.${{ matrix.seed.lang }} \
@@ -593,7 +593,7 @@ jobs:
         env:
           ECR_REGISTRY: 985111089818.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPO: dev/${{ matrix.seed.lang }}-seed
-          IMAGE: fernapi/${{ matrix.seed.lang }}-seed:grype-scan
+          IMAGE: fernenterprise/${{ matrix.seed.lang }}-seed:grype-scan
         run: |
           aws sts get-caller-identity
           aws ecr describe-repositories --repository-names "$ECR_REPO" --region us-east-1 >/dev/null 2>&1 \
@@ -609,7 +609,7 @@ jobs:
 
       - name: Run grype scan
         env:
-          IMAGE: fernapi/${{ matrix.seed.lang }}-seed:grype-scan
+          IMAGE: fernenterprise/${{ matrix.seed.lang }}-seed:grype-scan
         run: grype "docker:$IMAGE" -o json > grype-report.json
 
       - name: Upload grype scan results

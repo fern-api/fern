@@ -40,7 +40,7 @@ jobs:
           generator-name: "java-sdk"
           version-file: "generators/java/sdk/versions.yml"
           fern-token: ${{ secrets.FERN_TOKEN }}
-          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          docker-pwd: ${{ secrets.FERN_DOCKERHUB_OAT }}
       - name: manual publish
         if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: ./.github/actions/publish-generator
@@ -49,4 +49,4 @@ jobs:
           version: ${{ inputs.version }}
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
-          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          docker-pwd: ${{ secrets.FERN_DOCKERHUB_OAT }}

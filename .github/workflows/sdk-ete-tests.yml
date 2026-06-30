@@ -188,16 +188,16 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v4
         with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          username: fernenterprise
+          password: ${{ secrets.FERN_DOCKERHUB_OAT }}
 
       - name: Build PHP SDK Docker image
         if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' || github.event_name == 'push' }}
         run: |
           docker build \
             -f generators/php/sdk/Dockerfile \
-            -t fernapi/fern-php-sdk:latest \
-            --cache-from fernapi/fern-php-sdk:latest \
+            -t fernenterprise/fern-php-sdk:latest \
+            --cache-from fernenterprise/fern-php-sdk:latest \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             .
 
@@ -206,8 +206,8 @@ jobs:
         run: |
           docker build \
             -f generators/go/sdk/Dockerfile \
-            -t fernapi/fern-go-sdk:latest \
-            --cache-from fernapi/fern-go-sdk:latest \
+            -t fernenterprise/fern-go-sdk:latest \
+            --cache-from fernenterprise/fern-go-sdk:latest \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             .
 

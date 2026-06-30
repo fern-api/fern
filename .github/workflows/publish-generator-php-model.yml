@@ -37,7 +37,7 @@ jobs:
           generator-name: "php-model"
           version-file: "generators/php/model/versions.yml"
           fern-token: ${{ secrets.FERN_TOKEN }}
-          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          docker-pwd: ${{ secrets.FERN_DOCKERHUB_OAT }}
           sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
           sentry-dsn: ${{ secrets.SENTRY_DSN_PHP_SDK }}
       - name: manual publish
@@ -48,6 +48,6 @@ jobs:
           version: ${{ inputs.version }}
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
-          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          docker-pwd: ${{ secrets.FERN_DOCKERHUB_OAT }}
           sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
           sentry-dsn: ${{ secrets.SENTRY_DSN_PHP_SDK }}
