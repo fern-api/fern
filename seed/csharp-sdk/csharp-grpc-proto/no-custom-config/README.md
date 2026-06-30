@@ -16,7 +16,6 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Additional Headers](#additional-headers)
-  - [Additional Body Properties](#additional-body-properties)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -128,23 +127,6 @@ var response = await client.UserService.CreateAsync(
         AdditionalHeaders = new Dictionary<string, string?>
         {
             { "X-Custom-Header", "custom-value" }
-        }
-    }
-);
-```
-
-### Additional Body Properties
-
-If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
-This is only applied to JSON requests.
-
-```csharp
-var response = await client.UserService.CreateAsync(
-    ...,
-    new RequestOptions {
-        AdditionalBodyProperties = new Dictionary<string, object>
-        {
-            { "custom_field", "custom-value" }
         }
     }
 );
