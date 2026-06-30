@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.75.0
+  changelogEntry:
+    - summary: |
+        TimeoutError now extends the base API error class instead of Error directly,
+        so `instanceof ApiError` catches timeout errors. Added a `requestId` getter
+        to the base API error class that extracts `x-request-id` from the raw response
+        headers.
+      type: feat
+  createdAt: "2026-06-30"
+  irVersion: 67
 - version: 3.74.2
   changelogEntry:
     - summary: |
