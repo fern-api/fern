@@ -1,0 +1,3 @@
+- summary: |
+    Downgrade pinned Vitest from ^4.1.1 to ^3.2.6 to fix ERR_PACKAGE_PATH_NOT_EXPORTED crash on Node >=22.
+  type: fix

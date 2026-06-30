@@ -106,7 +106,7 @@
         "webpack": "^5.105.4",
         "ts-loader": "^9.5.4",
         "@types/ws": "^8.18.1",
-        "vitest": "^4.1.1",
+        "vitest": "^3.2.6",
         "msw": "2.11.2",
         "@types/node": "^20.0.0",
         "typescript": "~5.9.3",

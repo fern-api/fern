@@ -88,7 +88,7 @@ RUN pnpm add -g typescript@~5.9.3 \
   ts-loader@^9.5.4 \
   webpack@^5.105.4 \
   msw@2.12.14 \
-  vitest@^4.1.1
+  vitest@^3.2.6
 
 # Clean pnpm content-addressable store and corepack cache to reduce
 # image size. Patch pnpm's bundled undici to 6.27.0 to clear

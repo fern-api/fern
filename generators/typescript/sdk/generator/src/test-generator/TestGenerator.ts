@@ -262,7 +262,7 @@ export class TestGenerator {
                 });
                 break;
             case "vitest":
-                this.dependencyManager.addDependency("vitest", "^4.1.1", {
+                this.dependencyManager.addDependency("vitest", "^3.2.6", {
                     type: DependencyType.DEV
                 });
                 break;
