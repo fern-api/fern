@@ -68,12 +68,8 @@ function createIRWithService(opts: {
         endpoints: opts.endpoints,
         name: {
             fernFilepath: {
-                allParts: opts.subpackageName
-                    ? [casingsGenerator.generateName(opts.subpackageName)]
-                    : [],
-                packagePath: opts.subpackageName
-                    ? [casingsGenerator.generateName(opts.subpackageName)]
-                    : [],
+                allParts: opts.subpackageName ? [casingsGenerator.generateName(opts.subpackageName)] : [],
+                packagePath: opts.subpackageName ? [casingsGenerator.generateName(opts.subpackageName)] : [],
                 file: opts.subpackageName ? casingsGenerator.generateName(opts.subpackageName) : undefined
             }
         }
@@ -100,7 +96,8 @@ function createIRWithService(opts: {
             webhooks: undefined,
             navigationConfig: undefined,
             displayName: undefined
-        };
+            // biome-ignore lint/suspicious/noExplicitAny: minimal subpackage mock — some rarely-used fields omitted
+        } as any;
         ir.rootPackage.subpackages = [subpackageId];
     } else {
         ir.rootPackage.service = serviceId;
@@ -109,10 +106,13 @@ function createIRWithService(opts: {
     return ir;
 }
 
-function createGenerator(ir: FernIr.IntermediateRepresentation, opts?: {
-    clientClassName?: string;
-    npmPackageName?: string;
-}): ReactQueryGenerator {
+function createGenerator(
+    ir: FernIr.IntermediateRepresentation,
+    opts?: {
+        clientClassName?: string;
+        npmPackageName?: string;
+    }
+): ReactQueryGenerator {
     return new ReactQueryGenerator({
         intermediateRepresentation: ir,
         packageResolver: createMockPackageResolver(ir),
@@ -122,6 +122,14 @@ function createGenerator(ir: FernIr.IntermediateRepresentation, opts?: {
         npmPackageName: opts?.npmPackageName ?? "@fern/test-sdk",
         relativePackagePath: "src"
     });
+}
+
+function getFile(files: Record<string, string>, path: string): string {
+    const content = files[path];
+    if (content == null) {
+        throw new Error(`Expected file "${path}" to exist in generated files`);
+    }
+    return content;
 }
 
 // ─── Tests ──────────────────────────────────────────────────────────────────
@@ -287,7 +295,9 @@ describe("ReactQueryGenerator", () => {
             const files = generator.generateFiles();
             const types = files["src/react-query/types.ts"];
 
-            expect(types).toContain('Omit<\n    UseSuspenseQueryOptions<TData, TError>,\n    "queryKey" | "queryFn"\n>');
+            expect(types).toContain(
+                'Omit<\n    UseSuspenseQueryOptions<TData, TError>,\n    "queryKey" | "queryFn"\n>'
+            );
         });
 
         it("defines MutationHookOptions omitting mutationKey and mutationFn", () => {
@@ -311,7 +321,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("export function useUserList(");
             expect(hooks).toContain("export function useUserListSuspense(");
@@ -325,7 +335,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("export function useUserListQueryKey()");
             expect(hooks).toContain('return ["@fern/test-sdk", "user.list"]');
@@ -339,7 +349,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("useUserList(\n    options?:");
             expect(hooks).toContain("queryFn: () => client.user.list()");
@@ -357,7 +367,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("args: Parameters<");
             expect(hooks).toContain("queryFn: () => client.user.get(...args)");
@@ -375,7 +385,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("args: Parameters<");
             expect(hooks).toContain("queryFn: () => client.search.query(...args)");
@@ -393,7 +403,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("useUserGetQueryKey(...args: Parameters<");
             expect(hooks).toContain('"user.get", ...args]');
@@ -411,7 +421,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("/** List all users */");
         });
@@ -430,7 +440,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("export function useUserCreateMutation(");
             expect(hooks).toContain("useMutation({");
@@ -449,7 +459,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("export function useUserDeleteMutation(");
             expect(hooks).toContain("mutationFn: (args) => client.user.delete(...args)");
@@ -467,7 +477,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("export function useUserUpdateMutation(");
         });
@@ -484,7 +494,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("useUserPatchMutation(");
         });
@@ -497,7 +507,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("MutationHookOptions<");
             expect(hooks).toContain(", Error, void>");
@@ -516,7 +526,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain('Parameters<SeedApiClient["user"]["create"]>');
         });
@@ -533,7 +543,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).not.toContain("useUserCreate(");
             expect(hooks).not.toContain("useUserCreateSuspense(");
@@ -552,7 +562,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain('mutationKey: ["@fern/test-sdk", "user.create"]');
         });
@@ -578,7 +588,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             // Query hooks
             expect(hooks).toContain("useUserList(");
@@ -607,7 +617,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).not.toContain("useQuery,");
             expect(hooks).not.toContain("useSuspenseQuery");
@@ -622,7 +632,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("useQuery");
             expect(hooks).not.toContain("useMutation");
@@ -637,7 +647,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("useHealth(");
             expect(hooks).toContain("queryFn: () => client.health()");
@@ -654,7 +664,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir, { npmPackageName: "@acme/sdk" });
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain('["@acme/sdk", "user.list"]');
         });
@@ -675,7 +685,7 @@ describe("ReactQueryGenerator", () => {
                 relativePackagePath: "src"
             });
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain('["AcmeApi", "user.list"]');
         });
@@ -690,7 +700,7 @@ describe("ReactQueryGenerator", () => {
             });
             const generator = createGenerator(ir);
             const files = generator.generateFiles();
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("useHealthCheck(");
             expect(hooks).toContain("useHealthCheckSuspense(");
