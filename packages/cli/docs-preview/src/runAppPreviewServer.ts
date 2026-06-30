@@ -963,13 +963,13 @@ export async function runAppPreviewServer({
             project = await reloadProject();
             const reloadProjectTime = Date.now() - reloadProjectStart;
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(`[BENCHMARK] reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`);
+            console.error(`[BENCHMARK] reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`);
 
             // Rebuild dependency map after reloading project
             const depMapStart = Date.now();
             await snippetTracker.buildDependencyMap(project);
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(`[BENCHMARK] buildDependencyMap: ${Date.now() - depMapStart}ms`);
+            console.error(`[BENCHMARK] buildDependencyMap: ${Date.now() - depMapStart}ms`);
 
             // Start validation in background - don't block the reload
             const validationStartTime = Date.now();
@@ -990,7 +990,7 @@ export async function runAppPreviewServer({
 
             const docsGenStartTime = Date.now();
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(
+            console.error(
                 `[BENCHMARK] getPreviewDocsDefinition starting (editedFiles: ${editedAbsoluteFilepaths?.length ?? "initial"}, hasPreview: ${previewResult != null})`
             );
             const newPreviewResult = await getPreviewDocsDefinition({
@@ -1003,7 +1003,7 @@ export async function runAppPreviewServer({
             });
             const docsGenTime = Date.now() - docsGenStartTime;
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(`[BENCHMARK] getPreviewDocsDefinition: ${docsGenTime}ms`);
+            console.error(`[BENCHMARK] getPreviewDocsDefinition: ${docsGenTime}ms`);
 
             // Log CLI docs generation time
             void debugLogger.logCliDocsGeneration(docsGenTime, {
@@ -1012,7 +1012,7 @@ export async function runAppPreviewServer({
 
             const totalTime = Date.now() - startTime;
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(
+            console.error(
                 `[BENCHMARK] Reload completed in ${totalTime}ms (reloadProject: ${reloadProjectTime}ms, docsGen: ${docsGenTime}ms)`
             );
 
@@ -1161,7 +1161,7 @@ export async function runAppPreviewServer({
             const apiCount = Object.keys(response.definition.apis ?? {}).length;
             const pageCount = Object.keys(response.definition.pages ?? {}).length;
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(
+            console.error(
                 `[BENCHMARK] /load-with-url response: ${responseSizeMB}MB, serialize: ${serializeTime}ms, apis: ${apiCount}, pages: ${pageCount}`
             );
             res.setHeader("Content-Type", "application/json");

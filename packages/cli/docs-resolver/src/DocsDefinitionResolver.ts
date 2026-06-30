@@ -1697,7 +1697,7 @@ export class DocsDefinitionResolver {
                     logWarnings: false
                 });
                 // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-                console.log(`[BENCHMARK] v3 parser IR generation: ${(performance.now() - v3IrStart).toFixed(0)}ms`);
+                console.error(`[BENCHMARK] v3 parser IR generation: ${(performance.now() - v3IrStart).toFixed(0)}ms`);
             } catch (error) {
                 openapiError = error;
             }
@@ -1747,7 +1747,9 @@ export class DocsDefinitionResolver {
                 }
             );
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(`[BENCHMARK] toFernWorkspace (v1 fallback): ${(performance.now() - toFernStart).toFixed(0)}ms`);
+            console.error(
+                `[BENCHMARK] toFernWorkspace (v1 fallback): ${(performance.now() - toFernStart).toFixed(0)}ms`
+            );
             const irGenStart = performance.now();
             ir = generateIntermediateRepresentation({
                 workspace,
@@ -1767,7 +1769,7 @@ export class DocsDefinitionResolver {
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
             // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-            console.log(
+            console.error(
                 `[BENCHMARK] generateIntermediateRepresentation (v1 fallback): ${(performance.now() - irGenStart).toFixed(0)}ms`
             );
         } else {
@@ -1843,7 +1845,7 @@ export class DocsDefinitionResolver {
             graphqlTypes: graphqlData.types
         });
         // biome-ignore lint/suspicious/noConsole: temporary benchmark instrumentation
-        console.log(
+        console.error(
             `[BENCHMARK] convertIrToApiDefinition: ${(performance.now() - convertStart).toFixed(0)}ms (endpoints: ${ir.services ? Object.values(ir.services).reduce((sum, s) => sum + s.endpoints.length, 0) : "unknown"})`
         );
 
