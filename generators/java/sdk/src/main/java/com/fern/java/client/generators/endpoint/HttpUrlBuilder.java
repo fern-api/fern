@@ -288,8 +288,7 @@ public final class HttpUrlBuilder {
                         clientOptionsField.name + "." + variableGetter.name + "()", poetPathParameter.poetParam().type);
 
                 codeBlock.add(
-                        "\n.addPathSegment($L)",
-                        buildPathSegmentArg(prefixForNextParam, paramValue, suffixForParam));
+                        "\n.addPathSegment($L)", buildPathSegmentArg(prefixForNextParam, paramValue, suffixForParam));
             } else if (poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ROOT)) {
                 String originalName =
                         NameUtils.toName(poetPathParameter.irParam().getName()).getOriginalName();
@@ -300,8 +299,7 @@ public final class HttpUrlBuilder {
                         poetPathParameter.poetParam().type);
 
                 codeBlock.add(
-                        "\n.addPathSegment($L)",
-                        buildPathSegmentArg(prefixForNextParam, paramValue, suffixForParam));
+                        "\n.addPathSegment($L)", buildPathSegmentArg(prefixForNextParam, paramValue, suffixForParam));
             } else {
                 String paramName = poetPathParameter.poetParam().name;
                 if (inlinePathParams
