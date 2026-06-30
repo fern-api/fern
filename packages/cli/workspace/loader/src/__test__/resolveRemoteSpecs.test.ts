@@ -349,6 +349,8 @@ describe("resolveRemoteSpecs", () => {
 
         // Should clone without --branch
         expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
+            "--depth",
+            "1",
             "--config",
             "core.symlinks=false",
             "--no-checkout"

@@ -86,7 +86,7 @@ export async function resolveRemoteSpecs({
             if (useCommitShaFlow) {
                 // Commit SHAs cannot be used with --branch; fetch the specific commit instead
                 const ref = target.ref as string;
-                const cloneArgs = ["--config", "core.symlinks=false", "--no-checkout"];
+                const cloneArgs = ["--depth", "1", "--config", "core.symlinks=false", "--no-checkout"];
                 await git.clone(target.repo, tmpDir.path, cloneArgs);
                 const repoGit = simpleGit(tmpDir.path);
                 await repoGit.fetch("origin", ref, { "--depth": "1" });
@@ -160,6 +160,12 @@ export async function resolveRemoteSpecs({
             // Resolve target relative to the cloned repo root (not the proto root)
             const resolvedTarget =
                 def.schema.target.length > 0 ? path.resolve(clonedPath, def.schema.target) : def.schema.target;
+            if (resolvedTarget.length > 0 && !resolvedTarget.startsWith(clonedPath + path.sep) && resolvedTarget !== clonedPath) {
+                throw new Error(
+                    `Invalid proto target path '${def.schema.target}': ` +
+                        `path must be relative to the repository root and cannot traverse outside it.`
+                );
+            }
             return {
                 ...def,
                 schema: {
