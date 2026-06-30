@@ -17,10 +17,10 @@ interface VenusJwtResponse {
     expiresAt: string;
 }
 
-export class FaiExampleEnhancer {
+export class LambdaExampleEnhancer {
     private config: AIEnhancerResolvedConfig;
     private context: TaskContext;
-    private faiOrigin: string;
+    private lambdaOrigin: string;
     private venusOrigin: string;
     private token: FernToken;
     private jwtPromise: Promise<string> | undefined;
@@ -38,16 +38,16 @@ export class FaiExampleEnhancer {
         };
         this.context = context;
 
-        // Get FAI origin - throw error if not configured
-        const faiOrigin = process.env.DEFAULT_FAI_ORIGIN;
-        if (!faiOrigin) {
+        // Get Lambda origin - throw error if not configured
+        const lambdaOrigin = process.env.DEFAULT_FDR_LAMBDA_DOCS_ORIGIN;
+        if (!lambdaOrigin) {
             throw new CliError({
                 message:
-                    "DEFAULT_FAI_ORIGIN environment variable is not set. AI example enhancement requires this to be configured.",
+                    "DEFAULT_FDR_LAMBDA_DOCS_ORIGIN environment variable is not set. AI example enhancement requires this to be configured.",
                 code: CliError.Code.EnvironmentError
             });
         }
-        this.faiOrigin = faiOrigin;
+        this.lambdaOrigin = lambdaOrigin;
 
         // Get Venus origin for JWT exchange
         this.venusOrigin = process.env.DEFAULT_VENUS_ORIGIN ?? "https://venus.buildwithfern.com";
@@ -175,7 +175,7 @@ export class FaiExampleEnhancer {
         for (let attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 this.context.logger.debug(
-                    `Enhancing example for ${request.method} ${request.endpointPath} via FAI (attempt ${attempt}/${maxAttempts})`
+                    `Enhancing example for ${request.method} ${request.endpointPath} via lambda (attempt ${attempt}/${maxAttempts})`
                 );
 
                 const requestBody = {
@@ -203,7 +203,7 @@ export class FaiExampleEnhancer {
                     )}`
                 );
 
-                const response = await fetch(`${this.faiOrigin}/examples/enhance`, {
+                const response = await fetch(`${this.lambdaOrigin}/v2/registry/ai/enhance-example`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -216,7 +216,7 @@ export class FaiExampleEnhancer {
                 if (!response.ok) {
                     const errorText = await response.text();
                     throw new CliError({
-                        message: `FAI returned ${response.status}: ${errorText || response.statusText}`,
+                        message: `Lambda returned ${response.status}: ${errorText || response.statusText}`,
                         code: CliError.Code.NetworkError
                     });
                 }
