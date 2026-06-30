@@ -1696,7 +1696,7 @@ export class DocsDefinitionResolver {
                     generateV1Examples: false,
                     logWarnings: false
                 });
-                this.taskContext.logger.info(
+                console.log(
                     `[BENCHMARK] v3 parser IR generation: ${(performance.now() - v3IrStart).toFixed(0)}ms`
                 );
             } catch (error) {
@@ -1747,7 +1747,7 @@ export class DocsDefinitionResolver {
                     preserveSchemaIds: true
                 }
             );
-            this.taskContext.logger.info(
+            console.log(
                 `[BENCHMARK] toFernWorkspace (v1 fallback): ${(performance.now() - toFernStart).toFixed(0)}ms`
             );
             const irGenStart = performance.now();
@@ -1768,7 +1768,7 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
-            this.taskContext.logger.info(
+            console.log(
                 `[BENCHMARK] generateIntermediateRepresentation (v1 fallback): ${(performance.now() - irGenStart).toFixed(0)}ms`
             );
         } else {
@@ -1843,7 +1843,7 @@ export class DocsDefinitionResolver {
             graphqlOperations: graphqlData.operations,
             graphqlTypes: graphqlData.types
         });
-        this.taskContext.logger.info(
+        console.log(
             `[BENCHMARK] convertIrToApiDefinition: ${(performance.now() - convertStart).toFixed(0)}ms (endpoints: ${ir.services ? Object.values(ir.services).reduce((sum, s) => sum + s.endpoints.length, 0) : "unknown"})`
         );
 
