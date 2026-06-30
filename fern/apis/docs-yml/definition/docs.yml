@@ -1110,6 +1110,28 @@ types:
           setting, which is preserved as an alias for backwards compatibility.
 
           @default: false
+      content-categories:
+        type: optional<list<SearchContentCategory>>
+        docs: |
+          Customer-defined content categories shown as values of the search
+          "Content type" facet. A page opts into a category via its
+          `search-category` frontmatter (matching a category `key`); pages
+          without one fall back to `default-content-category`.
+      default-content-category:
+        type: optional<string>
+        docs: |
+          The category `key` applied to markdown pages that don't declare a
+          `search-category` in frontmatter. Only meaningful alongside
+          `content-categories`.
+
+  SearchContentCategory:
+    properties:
+      key:
+        type: string
+        docs: Stored on the search record and used as the facet filter value.
+      label:
+        type: string
+        docs: The label shown in the search filter UI.
 
   ThemeConfig:
     properties:

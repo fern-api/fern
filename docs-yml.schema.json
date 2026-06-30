@@ -6087,6 +6087,24 @@
       },
       "additionalProperties": false
     },
+    "docs.SearchContentCategory": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Stored on the search record and used as the facet filter value."
+        },
+        "label": {
+          "type": "string",
+          "description": "The label shown in the search filter UI."
+        }
+      },
+      "required": [
+        "key",
+        "label"
+      ],
+      "additionalProperties": false
+    },
     "docs.SearchSettingsConfig": {
       "type": "object",
       "properties": {
@@ -6111,6 +6129,31 @@
             }
           ],
           "description": "If set to true, the current product is automatically selected as a\nfacet filter, so only results from the current product are shown by\ndefault. Equivalent to the legacy `settings.default-search-filters`\nsetting, which is preserved as an alias for backwards compatibility.\n\n@default: false"
+        },
+        "content-categories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.SearchContentCategory"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Customer-defined content categories shown as values of the search\n\"Content type\" facet. A page opts into a category via its\n`search-category` frontmatter (matching a category `key`); pages\nwithout one fall back to `default-content-category`."
+        },
+        "default-content-category": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The category `key` applied to markdown pages that don't declare a\n`search-category` in frontmatter. Only meaningful alongside\n`content-categories`."
         }
       },
       "additionalProperties": false

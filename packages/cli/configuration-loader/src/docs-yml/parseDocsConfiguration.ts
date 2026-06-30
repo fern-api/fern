@@ -552,7 +552,9 @@ function convertSettingsConfig(
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
             prioritizeCurrentProduct,
-            defaultFilterByCurrentProduct
+            defaultFilterByCurrentProduct,
+            contentCategories: settings.search?.contentCategories ?? undefined,
+            defaultContentCategory: settings.search?.defaultContentCategory ?? undefined
         },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,

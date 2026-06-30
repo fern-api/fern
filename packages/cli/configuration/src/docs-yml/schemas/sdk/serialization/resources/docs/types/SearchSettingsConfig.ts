@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { SearchContentCategory } from "./SearchContentCategory.js";
 
 export const SearchSettingsConfig: core.serialization.ObjectSchema<
     serializers.SearchSettingsConfig.Raw,
@@ -16,11 +17,21 @@ export const SearchSettingsConfig: core.serialization.ObjectSchema<
         "default-filter-by-current-product",
         core.serialization.boolean().optional(),
     ),
+    contentCategories: core.serialization.property(
+        "content-categories",
+        core.serialization.list(SearchContentCategory).optional(),
+    ),
+    defaultContentCategory: core.serialization.property(
+        "default-content-category",
+        core.serialization.string().optional(),
+    ),
 });
 
 export declare namespace SearchSettingsConfig {
     export interface Raw {
         "prioritize-current-product"?: boolean | null;
         "default-filter-by-current-product"?: boolean | null;
+        "content-categories"?: SearchContentCategory.Raw[] | null;
+        "default-content-category"?: string | null;
     }
 }
