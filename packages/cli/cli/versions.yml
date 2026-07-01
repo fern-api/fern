@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.61.0
+  changelogEntry:
+    - summary: |
+        Add `user-agent` generator config option that accepts a template string for
+        the User-Agent header. Supported placeholders: `{packageName}`, `{version}`,
+        `{language}`, `{generatorVersion}`, `{organization}`, `{apiName}`. When absent,
+        defaults to `{packageName}/{version}` (current behavior, non-breaking).
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.60.0
   changelogEntry:
     - summary: |
