@@ -80,6 +80,27 @@ export function getUserAgentTemplateFromGeneratorConfig(
     return undefined;
 }
 
+/** Config keys consumed by the CLI and not forwarded to generators. */
+const CLI_ONLY_CONFIG_KEYS: ReadonlySet<string> = new Set(["user-agent"]);
+
+/**
+ * Returns a copy of the generator's custom config with CLI-only keys removed.
+ * Generators validate their config strictly; CLI-consumed keys like `user-agent`
+ * must be stripped before forwarding.
+ */
+export function stripCliConfigKeys(config: unknown): unknown {
+    if (typeof config !== "object" || config === null) {
+        return config;
+    }
+    const filtered: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(config)) {
+        if (!CLI_ONLY_CONFIG_KEYS.has(key)) {
+            filtered[key] = value;
+        }
+    }
+    return filtered;
+}
+
 // ─── Constants ──────────────────────────────────────────────────────
 
 /** Timeout for registry HTTP calls (ms). Prevents slow registries from delaying generation start. */
