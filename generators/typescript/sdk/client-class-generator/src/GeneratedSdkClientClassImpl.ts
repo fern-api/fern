@@ -709,12 +709,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                 }
             ];
-            const statements = code`
-                ${this.getCtorOptionsStatementsWithAuth(context)}
-            `;
             serviceClass.ctors.push({
                 parameters,
-                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+                statements: this.getCtorOptionsStatementsWithAuth(context).toString({
+                    dprintOptions: { indentWidth: 4 }
+                })
             });
         } else {
             serviceClass.ctors.push({

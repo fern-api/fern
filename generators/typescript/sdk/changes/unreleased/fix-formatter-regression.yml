@@ -1,0 +1,8 @@
+- summary: |
+    Fix formatter regression where biome and other globally installed tools
+    silently failed during generation. The pnpm 11 upgrade changed global
+    packages to use symlinks into the content-addressable store, but the
+    Dockerfile's cleanup step deleted the store, leaving dangling symlinks
+    for biome, prettier, oxfmt, etc. Also fix auth constructor indentation
+    caused by unnecessary code template wrapping.
+  type: fix
