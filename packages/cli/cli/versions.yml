@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.63.0
+  changelogEntry:
+    - summary: |
+        Extend dynamic IR OAuth types with custom properties and populate them in
+        DynamicSnippetsConverter, enabling dynamic snippet generators to include
+        custom OAuth token endpoint request parameters in generated code examples.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.62.2
   changelogEntry:
     - summary: |
