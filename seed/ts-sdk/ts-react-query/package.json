@@ -44,6 +44,17 @@
             },
             "default": "./dist/cjs/api/resources/user/exports.js"
         },
+        "./react-query": {
+            "import": {
+                "types": "./dist/esm/react-query/index.d.mts",
+                "default": "./dist/esm/react-query/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/index.d.ts",
+                "default": "./dist/cjs/react-query/index.js"
+            },
+            "default": "./dist/cjs/react-query/index.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
@@ -70,6 +81,14 @@
     "peerDependencies": {
         "@tanstack/react-query": ">=5.0.0",
         "react": ">=18.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@tanstack/react-query": {
+            "optional": true
+        },
+        "react": {
+            "optional": true
+        }
     },
     "devDependencies": {
         "webpack": "^5.105.4",

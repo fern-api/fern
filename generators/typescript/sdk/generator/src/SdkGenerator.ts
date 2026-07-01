@@ -192,6 +192,8 @@ export class SdkGenerator {
     private generateWebSocketClients: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
+    private extraExportPaths: string[] = [];
+    private generatedPeerDependenciesMeta: Record<string, unknown> = {};
 
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
     private readonly case: CaseConverter;
@@ -768,7 +770,10 @@ export class SdkGenerator {
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraPeerDependencies: this.config.extraPeerDependencies,
-                  extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
+                  extraPeerDependenciesMeta: {
+                      ...this.config.extraPeerDependenciesMeta,
+                      ...this.generatedPeerDependenciesMeta
+                  },
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   extraConfigs: this.config.packageJson,
@@ -781,7 +786,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  extraExportPaths: this.extraExportPaths
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -792,7 +798,10 @@ export class SdkGenerator {
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraPeerDependencies: this.config.extraPeerDependencies,
-                  extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
+                  extraPeerDependenciesMeta: {
+                      ...this.config.extraPeerDependenciesMeta,
+                      ...this.generatedPeerDependenciesMeta
+                  },
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   resolutions: {},
@@ -806,7 +815,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  extraExportPaths: this.extraExportPaths
               });
     }
 
@@ -835,6 +845,9 @@ export class SdkGenerator {
         this.dependencyManager.addDependency("@types/react", ">=18.0.0", {
             type: DependencyType.DEV
         });
+        this.extraExportPaths.push("react-query");
+        this.generatedPeerDependenciesMeta["@tanstack/react-query"] = { optional: true };
+        this.generatedPeerDependenciesMeta["react"] = { optional: true };
         this.context.logger.debug("Generated React Query hooks");
     }
 
