@@ -1,19 +1,19 @@
 # Default catch-all — keep at top so specific rules below override it.
-* @amckinney
+* @Swimburger
 
 # Catch all for generators
 
-generators/** @Swimburger @amckinney
+generators/** @Swimburger
 
 # Specific rules for generators
-generators/commons/** @Swimburger @amckinney
+generators/commons/** @Swimburger
 generators/csharp/** @Swimburger
-generators/go/** @amckinney
-generators/go-v2/** @amckinney
+generators/go/** @Swimburger
+generators/go-v2/** @Swimburger
 generators/java/** @tstanmay13
 generators/openapi/** @Swimburger
-generators/php/** @amckinney
-generators/python/** @amckinney
+generators/php/** @Swimburger
+generators/python/** @Swimburger
 generators/python-v2/** @amckinney
 generators/ruby-v2/** @iamnamananand996
 generators/rust/** @iamnamananand996
