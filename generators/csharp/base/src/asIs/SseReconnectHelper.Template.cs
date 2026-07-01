@@ -117,11 +117,10 @@ internal static class SseReconnectHelper
                 || reconnectAttempts >= maxAttempts
             )
             {
-                if (streamDropped && !disableReconnection)
+                if (streamDropped)
                 {
                     throw new IOException(
-                        "SSE stream connection lost and reconnection failed: "
-                            + "no last event ID available or max reconnect attempts reached."
+                        "SSE stream connection lost and reconnection was not attempted."
                     );
                 }
                 yield break;
