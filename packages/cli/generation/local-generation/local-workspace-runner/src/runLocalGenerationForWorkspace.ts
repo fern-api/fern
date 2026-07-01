@@ -5,7 +5,8 @@ import {
     detectInvocationSource,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
-    getPackageNameFromGeneratorConfig
+    getPackageNameFromGeneratorConfig,
+    getUserAgentTemplateFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
@@ -157,6 +158,7 @@ export async function runLocalGenerationForWorkspace({
                 });
 
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
                 const intermediateRepresentation = generateIntermediateRepresentation({
@@ -172,6 +174,8 @@ export async function runLocalGenerationForWorkspace({
                     readme: generatorInvocation.readme,
                     version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
                     packageName,
+                    userAgentTemplate,
+                    organization: projectConfig.organization,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),
                     dynamicGeneratorConfig,

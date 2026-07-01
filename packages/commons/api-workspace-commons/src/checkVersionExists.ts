@@ -51,6 +51,35 @@ export function getPackageNameFromGeneratorConfig(
     return undefined;
 }
 
+/**
+ * Resolves the user-agent template from the raw generator configuration.
+ *
+ * When set, this template is interpolated and used as the `User-Agent` header
+ * value. Supported placeholders (resolved statically at generation time):
+ *
+ *   {packageName}      — published package name from output config
+ *   {version}          — SDK/package version
+ *   {language}         — generation language (python, typescript, go, …)
+ *   {generatorVersion} — Fern generator version
+ *   {organization}     — organization from fern.config.json
+ *   {apiName}          — API name from the root API definition
+ *
+ * Default (when absent): `{packageName}/{version}`
+ *
+ * Lookup: `config["user-agent"]`
+ */
+export function getUserAgentTemplateFromGeneratorConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): string | undefined {
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const template = (generatorInvocation.raw.config as { "user-agent"?: string })["user-agent"];
+        if (template != null) {
+            return template;
+        }
+    }
+    return undefined;
+}
+
 // ─── Constants ──────────────────────────────────────────────────────
 
 /** Timeout for registry HTTP calls (ms). Prevents slow registries from delaying generation start. */
