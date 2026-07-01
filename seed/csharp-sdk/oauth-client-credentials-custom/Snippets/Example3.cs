@@ -7,8 +7,6 @@ public partial class Examples
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",
             entityId: "<entity_id>",
-            audience: "<audience>",
-            grantType: "<grant_type>",
             scope: "<scope>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

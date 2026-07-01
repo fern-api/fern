@@ -912,6 +912,9 @@ export class DynamicSnippetsConverter {
         const parameters: DynamicSnippets.NamedParameter[] = [];
         const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
         for (const customProperty of customProperties) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
             parameters.push({
                 name: this.inflateNameAndWireValue(customProperty.property.name),
                 typeReference: this.convertTypeReference(customProperty.property.valueType),
@@ -926,6 +929,9 @@ export class DynamicSnippetsConverter {
         const values: Record<string, unknown> = {};
         const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
         for (const customProperty of customProperties) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
             const wireValue = getWireValue(customProperty.property.name);
             values[wireValue] = `<${wireValue}>`;
         }
@@ -1115,4 +1121,12 @@ export class DynamicSnippetsConverter {
         }
         return requests;
     }
+}
+
+/**
+ * Literal properties are hardcoded in the request class and should not be
+ * propagated as constructor parameters or snippet values.
+ */
+function isLiteralTypeReference(typeReference: TypeReference): boolean {
+    return typeReference.type === "container" && typeReference.container.type === "literal";
 }
