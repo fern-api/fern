@@ -24,6 +24,8 @@ interface EndpointHookInfo {
     method: string;
     hasArgs: boolean;
     docs: string | undefined;
+    /** The base name without the "use" prefix, e.g. "UserList" */
+    baseName: string;
 }
 
 export class ReactQueryGenerator {
@@ -58,6 +60,8 @@ export class ReactQueryGenerator {
 
         if (hasHooks) {
             files[`${srcPrefix}/react-query/hooks.ts`] = this.generateHooksFile(endpoints);
+            files[`${srcPrefix}/react-query/options.ts`] = this.generateOptionsFile(endpoints);
+            files[`${srcPrefix}/react-query/invalidation.ts`] = this.generateInvalidationFile(endpoints);
         }
 
         return files;
@@ -73,6 +77,8 @@ export class ReactQueryGenerator {
             `export type { QueryHookOptions, SuspenseQueryHookOptions, MutationHookOptions } from "./types.js";\n`;
         if (hasHooks) {
             content += `export * from "./hooks.js";\n`;
+            content += `export * from "./options.js";\n`;
+            content += `export * from "./invalidation.js";\n`;
         }
         return content;
     }
@@ -116,6 +122,9 @@ export class ReactQueryGenerator {
             `    UseQueryOptions,\n` +
             `    UseMutationOptions,\n` +
             `    UseSuspenseQueryOptions,\n` +
+            `    UseInfiniteQueryOptions,\n` +
+            `    UseSuspenseInfiniteQueryOptions,\n` +
+            `    InfiniteData,\n` +
             `} from "@tanstack/react-query";\n` +
             `\n` +
             `export type QueryHookOptions<TData, TError = Error> = Omit<\n` +
@@ -126,6 +135,16 @@ export class ReactQueryGenerator {
             `export type SuspenseQueryHookOptions<TData, TError = Error> = Omit<\n` +
             `    UseSuspenseQueryOptions<TData, TError>,\n` +
             `    "queryKey" | "queryFn"\n` +
+            `>;\n` +
+            `\n` +
+            `export type InfiniteQueryHookOptions<TData, TError = Error, TPageParam = unknown> = Omit<\n` +
+            `    UseInfiniteQueryOptions<TData, TError, InfiniteData<TData>, readonly unknown[], TPageParam>,\n` +
+            `    "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"\n` +
+            `>;\n` +
+            `\n` +
+            `export type SuspenseInfiniteQueryHookOptions<TData, TError = Error, TPageParam = unknown> = Omit<\n` +
+            `    UseSuspenseInfiniteQueryOptions<TData, TError, InfiniteData<TData>, readonly unknown[], TPageParam>,\n` +
+            `    "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"\n` +
             `>;\n` +
             `\n` +
             `export type MutationHookOptions<TData, TError = Error, TVariables = void> = Omit<\n` +
@@ -149,8 +168,13 @@ export class ReactQueryGenerator {
             reactQueryImports.push(
                 "useQuery",
                 "useSuspenseQuery",
+                "useInfiniteQuery",
+                "useSuspenseInfiniteQuery",
                 "type UseQueryResult",
-                "type UseSuspenseQueryResult"
+                "type UseSuspenseQueryResult",
+                "type UseInfiniteQueryResult",
+                "type UseSuspenseInfiniteQueryResult",
+                "type InfiniteData"
             );
         }
         if (mutationEndpoints.length > 0) {
@@ -159,7 +183,22 @@ export class ReactQueryGenerator {
         content += `import { ${reactQueryImports.join(", ")} } from "@tanstack/react-query";\n`;
         content += `import type { ${clientName} } from "../index.js";\n`;
         content += `import { use${clientName}Context } from "./context.js";\n`;
-        content += `import type { QueryHookOptions, SuspenseQueryHookOptions, MutationHookOptions } from "./types.js";\n`;
+
+        // Import types
+        const typeImports: string[] = ["QueryHookOptions", "SuspenseQueryHookOptions"];
+        if (queryEndpoints.length > 0) {
+            typeImports.push("InfiniteQueryHookOptions", "SuspenseInfiniteQueryHookOptions");
+        }
+        if (mutationEndpoints.length > 0) {
+            typeImports.push("MutationHookOptions");
+        }
+        content += `import type { ${typeImports.join(", ")} } from "./types.js";\n`;
+
+        // Import query options factories
+        if (queryEndpoints.length > 0) {
+            const optionImports = queryEndpoints.map((e) => `${e.baseName}QueryOptions`);
+            content += `import { ${optionImports.join(", ")} } from "./options.js";\n`;
+        }
         content += `\n`;
 
         const queryKeyPrefix = this.npmPackageName ?? this.namespaceExport;
@@ -180,13 +219,13 @@ export class ReactQueryGenerator {
     }
 
     private generateQueryHook(endpoint: EndpointHookInfo, queryKeyPrefix: string, clientName: string): string {
-        const { hookName, serviceAccessPath, endpointCamelName, hasArgs, docs } = endpoint;
+        const { hookName, serviceAccessPath, endpointCamelName, hasArgs, docs, baseName } = endpoint;
 
-        const clientAccessor = this.buildClientAccessor(serviceAccessPath);
         const methodType = `${clientName}${serviceAccessPath.map((s) => `["${s}"]`).join("")}["${endpointCamelName}"]`;
         const dataType = `Awaited<ReturnType<${methodType}>>`;
 
         const queryKeyFnName = `${hookName}QueryKey`;
+        const optionsFnName = `${baseName}QueryOptions`;
 
         let content = "";
 
@@ -212,8 +251,7 @@ export class ReactQueryGenerator {
             content += `): UseQueryResult<${dataType}> {\n`;
             content += `    const client = use${clientName}Context();\n`;
             content += `    return useQuery({\n`;
-            content += `        queryKey: ${queryKeyFnName}(...args),\n`;
-            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `        ...${optionsFnName}(client, args),\n`;
             content += `        ...options,\n`;
             content += `    });\n`;
             content += `}\n\n`;
@@ -223,8 +261,7 @@ export class ReactQueryGenerator {
             content += `): UseQueryResult<${dataType}> {\n`;
             content += `    const client = use${clientName}Context();\n`;
             content += `    return useQuery({\n`;
-            content += `        queryKey: ${queryKeyFnName}(),\n`;
-            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `        ...${optionsFnName}(client),\n`;
             content += `        ...options,\n`;
             content += `    });\n`;
             content += `}\n\n`;
@@ -241,20 +278,84 @@ export class ReactQueryGenerator {
             content += `): UseSuspenseQueryResult<${dataType}> {\n`;
             content += `    const client = use${clientName}Context();\n`;
             content += `    return useSuspenseQuery({\n`;
-            content += `        queryKey: ${queryKeyFnName}(...args),\n`;
-            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `        ...${optionsFnName}(client, args),\n`;
             content += `        ...options,\n`;
             content += `    });\n`;
-            content += `}\n`;
+            content += `}\n\n`;
         } else {
             content += `export function ${hookName}Suspense(\n`;
             content += `    options?: SuspenseQueryHookOptions<${dataType}>,\n`;
             content += `): UseSuspenseQueryResult<${dataType}> {\n`;
             content += `    const client = use${clientName}Context();\n`;
             content += `    return useSuspenseQuery({\n`;
-            content += `        queryKey: ${queryKeyFnName}(),\n`;
-            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `        ...${optionsFnName}(client),\n`;
             content += `        ...options,\n`;
+            content += `    });\n`;
+            content += `}\n\n`;
+        }
+
+        // useInfiniteQuery hook
+        if (docs) {
+            content += `/** ${docs} */\n`;
+        }
+        if (hasArgs) {
+            content += `export function ${hookName}Infinite<TPageParam = unknown>(\n`;
+            content += `    args: Parameters<${methodType}>,\n`;
+            content += `    options: InfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `): UseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `    const client = use${clientName}Context();\n`;
+            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `    return useInfiniteQuery({\n`;
+            content += `        ...${optionsFnName}(client, args),\n`;
+            content += `        initialPageParam,\n`;
+            content += `        getNextPageParam,\n`;
+            content += `        ...rest,\n`;
+            content += `    });\n`;
+            content += `}\n\n`;
+        } else {
+            content += `export function ${hookName}Infinite<TPageParam = unknown>(\n`;
+            content += `    options: InfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `): UseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `    const client = use${clientName}Context();\n`;
+            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `    return useInfiniteQuery({\n`;
+            content += `        ...${optionsFnName}(client),\n`;
+            content += `        initialPageParam,\n`;
+            content += `        getNextPageParam,\n`;
+            content += `        ...rest,\n`;
+            content += `    });\n`;
+            content += `}\n\n`;
+        }
+
+        // useSuspenseInfiniteQuery hook
+        if (docs) {
+            content += `/** ${docs} */\n`;
+        }
+        if (hasArgs) {
+            content += `export function ${hookName}SuspenseInfinite<TPageParam = unknown>(\n`;
+            content += `    args: Parameters<${methodType}>,\n`;
+            content += `    options: SuspenseInfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `): UseSuspenseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `    const client = use${clientName}Context();\n`;
+            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `    return useSuspenseInfiniteQuery({\n`;
+            content += `        ...${optionsFnName}(client, args),\n`;
+            content += `        initialPageParam,\n`;
+            content += `        getNextPageParam,\n`;
+            content += `        ...rest,\n`;
+            content += `    });\n`;
+            content += `}\n`;
+        } else {
+            content += `export function ${hookName}SuspenseInfinite<TPageParam = unknown>(\n`;
+            content += `    options: SuspenseInfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `): UseSuspenseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `    const client = use${clientName}Context();\n`;
+            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `    return useSuspenseInfiniteQuery({\n`;
+            content += `        ...${optionsFnName}(client),\n`;
+            content += `        initialPageParam,\n`;
+            content += `        getNextPageParam,\n`;
+            content += `        ...rest,\n`;
             content += `    });\n`;
             content += `}\n`;
         }
@@ -296,6 +397,128 @@ export class ReactQueryGenerator {
         return content;
     }
 
+    private generateOptionsFile(endpoints: EndpointHookInfo[]): string {
+        const clientName = this.clientClassName;
+        const queryEndpoints = endpoints.filter((e) => this.isQueryMethod(e.method));
+
+        if (queryEndpoints.length === 0) {
+            return FILE_HEADER;
+        }
+
+        let content = FILE_HEADER;
+        content += `import type { ${clientName} } from "../index.js";\n`;
+        content += `\n`;
+
+        const queryKeyPrefix = this.npmPackageName ?? this.namespaceExport;
+
+        for (const endpoint of queryEndpoints) {
+            content += this.generateQueryOptionsFactory(endpoint, queryKeyPrefix, clientName);
+            content += `\n`;
+        }
+
+        return content;
+    }
+
+    private generateQueryOptionsFactory(
+        endpoint: EndpointHookInfo,
+        queryKeyPrefix: string,
+        clientName: string
+    ): string {
+        const { serviceAccessPath, endpointCamelName, hasArgs, docs, baseName } = endpoint;
+
+        const clientAccessor = this.buildClientAccessor(serviceAccessPath);
+        const methodType = `${clientName}${serviceAccessPath.map((s) => `["${s}"]`).join("")}["${endpointCamelName}"]`;
+        const dataType = `Awaited<ReturnType<${methodType}>>`;
+        const operationKey = [...serviceAccessPath, endpointCamelName].join(".");
+
+        let content = "";
+
+        if (docs) {
+            content += `/** ${docs} */\n`;
+        }
+
+        if (hasArgs) {
+            content += `export function ${baseName}QueryOptions(\n`;
+            content += `    client: ${clientName},\n`;
+            content += `    args: Parameters<${methodType}>,\n`;
+            content += `): { queryKey: readonly unknown[]; queryFn: () => Promise<${dataType}> } {\n`;
+            content += `    return {\n`;
+            content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}", ...args] as const,\n`;
+            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `    };\n`;
+            content += `}\n`;
+        } else {
+            content += `export function ${baseName}QueryOptions(\n`;
+            content += `    client: ${clientName},\n`;
+            content += `): { queryKey: readonly unknown[]; queryFn: () => Promise<${dataType}> } {\n`;
+            content += `    return {\n`;
+            content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}"] as const,\n`;
+            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `    };\n`;
+            content += `}\n`;
+        }
+
+        return content;
+    }
+
+    private generateInvalidationFile(endpoints: EndpointHookInfo[]): string {
+        const clientName = this.clientClassName;
+        const queryEndpoints = endpoints.filter((e) => this.isQueryMethod(e.method));
+
+        let content = FILE_HEADER;
+        content += `import type { QueryClient } from "@tanstack/react-query";\n`;
+        content += `\n`;
+
+        const queryKeyPrefix = this.npmPackageName ?? this.namespaceExport;
+
+        for (const endpoint of queryEndpoints) {
+            content += this.generateInvalidationHelpers(endpoint, queryKeyPrefix);
+            content += `\n`;
+        }
+
+        // Generate invalidateAll helper for all queries in this SDK
+        content += `/**\n`;
+        content += ` * Invalidate all queries for this SDK.\n`;
+        content += ` */\n`;
+        content += `export function invalidateAll${clientName}Queries(queryClient: QueryClient): Promise<void> {\n`;
+        content += `    return queryClient.invalidateQueries({\n`;
+        content += `        queryKey: ["${queryKeyPrefix}"],\n`;
+        content += `    });\n`;
+        content += `}\n`;
+
+        return content;
+    }
+
+    private generateInvalidationHelpers(endpoint: EndpointHookInfo, queryKeyPrefix: string): string {
+        const { serviceAccessPath, endpointCamelName, baseName, docs } = endpoint;
+
+        const operationKey = [...serviceAccessPath, endpointCamelName].join(".");
+
+        let content = "";
+
+        // Invalidate all cache entries for this endpoint (regardless of args)
+        if (docs) {
+            content += `/** Invalidate all ${docs.toLowerCase()} queries. */\n`;
+        }
+        content += `export function invalidateAll${baseName}Queries(queryClient: QueryClient): Promise<void> {\n`;
+        content += `    return queryClient.invalidateQueries({\n`;
+        content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}"],\n`;
+        content += `    });\n`;
+        content += `}\n\n`;
+
+        // Invalidate a specific cache entry by args
+        if (docs) {
+            content += `/** Invalidate a specific ${docs.toLowerCase()} query by its arguments. */\n`;
+        }
+        content += `export function invalidate${baseName}Query(queryClient: QueryClient, ...args: unknown[]): Promise<void> {\n`;
+        content += `    return queryClient.invalidateQueries({\n`;
+        content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}", ...args],\n`;
+        content += `    });\n`;
+        content += `}\n`;
+
+        return content;
+    }
+
     private collectEndpoints(): EndpointHookInfo[] {
         const endpoints: EndpointHookInfo[] = [];
 
@@ -313,6 +536,9 @@ export class ReactQueryGenerator {
                 const hookPrefix = serviceNameForHook
                     ? `use${serviceNameForHook}${this.capitalize(endpointCamelName)}`
                     : `use${this.capitalize(endpointCamelName)}`;
+                const baseName = serviceNameForHook
+                    ? `${serviceNameForHook}${this.capitalize(endpointCamelName)}`
+                    : this.capitalize(endpointCamelName);
 
                 const hasArgs =
                     endpoint.sdkRequest != null ||
@@ -323,6 +549,7 @@ export class ReactQueryGenerator {
                     serviceAccessPath: accessPath,
                     endpointCamelName,
                     hookName: hookPrefix,
+                    baseName,
                     method: endpoint.method,
                     hasArgs,
                     docs: endpoint.docs ?? undefined

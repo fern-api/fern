@@ -4,6 +4,9 @@ import type {
     UseQueryOptions,
     UseMutationOptions,
     UseSuspenseQueryOptions,
+    UseInfiniteQueryOptions,
+    UseSuspenseInfiniteQueryOptions,
+    InfiniteData,
 } from "@tanstack/react-query";
 
 export type QueryHookOptions<TData, TError = Error> = Omit<
@@ -14,6 +17,16 @@ export type QueryHookOptions<TData, TError = Error> = Omit<
 export type SuspenseQueryHookOptions<TData, TError = Error> = Omit<
     UseSuspenseQueryOptions<TData, TError>,
     "queryKey" | "queryFn"
+>;
+
+export type InfiniteQueryHookOptions<TData, TError = Error, TPageParam = unknown> = Omit<
+    UseInfiniteQueryOptions<TData, TError, InfiniteData<TData>, readonly unknown[], TPageParam>,
+    "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"
+>;
+
+export type SuspenseInfiniteQueryHookOptions<TData, TError = Error, TPageParam = unknown> = Omit<
+    UseSuspenseInfiniteQueryOptions<TData, TError, InfiniteData<TData>, readonly unknown[], TPageParam>,
+    "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"
 >;
 
 export type MutationHookOptions<TData, TError = Error, TVariables = void> = Omit<

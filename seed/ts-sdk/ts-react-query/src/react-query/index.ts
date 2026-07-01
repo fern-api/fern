@@ -5,3 +5,5 @@ export type { SeedApiClientProviderProps } from "./context.js";
 export { type QueryKey } from "@tanstack/react-query";
 export type { QueryHookOptions, SuspenseQueryHookOptions, MutationHookOptions } from "./types.js";
 export * from "./hooks.js";
+export * from "./options.js";
+export * from "./invalidation.js";

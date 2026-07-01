@@ -1,6 +1,8 @@
 - summary: |
     Add React Query hooks generation support via the `generateReactQueryHooks` config flag.
     When enabled, generates a `react-query/` directory with a context provider, typed hooks
-    (useQuery for GET/HEAD, useMutation for POST/PUT/DELETE/PATCH), suspense variants, and
-    query key helpers for cache management.
+    (useQuery, useSuspenseQuery, useInfiniteQuery, useSuspenseInfiniteQuery for GET/HEAD,
+    useMutation for POST/PUT/DELETE/PATCH), queryOptions factories for SSR/RSC/prefetchQuery
+    composability, cache invalidation helpers, query key helpers, and all exports available
+    via a `./react-query` package.json subexport with optional peer dependencies.
   type: feat
