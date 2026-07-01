@@ -12,6 +12,26 @@ import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 // DEFAULT_REQUEST_PARAMETER_NAME in convertHttpSdkRequest.ts).
 const REQUEST_PARAMETER_NAME = "request";
 
+// Type guards for OAuth custom properties populated by DynamicSnippetsConverter
+// but not yet reflected in published @fern-api/dynamic-ir-sdk types.
+function isOAuthWithCustomProperties(
+    auth: FernIr.dynamic.OAuth
+): auth is FernIr.dynamic.OAuth & { customProperties: FernIr.dynamic.NamedParameter[] } {
+    if (!("customProperties" in auth)) {
+        return false;
+    }
+    return Array.isArray(auth.customProperties);
+}
+
+function isOAuthValuesWithCustomProperties(
+    values: FernIr.dynamic.OAuthValues
+): values is FernIr.dynamic.OAuthValues & { customPropertyValues: Record<string, unknown> } {
+    if (!("customPropertyValues" in values)) {
+        return false;
+    }
+    return values.customPropertyValues != null && typeof values.customPropertyValues === "object";
+}
+
 export class EndpointSnippetGenerator extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
@@ -456,7 +476,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.OAuth;
         values: FernIr.dynamic.OAuthValues;
     }): NamedArgument[] {
-        return [
+        const args: NamedArgument[] = [
             {
                 name: this.context.getParameterName(auth.clientId),
                 assignment: this.csharp.Literal.string(values.clientId)
@@ -466,6 +486,24 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 assignment: this.csharp.Literal.string(values.clientSecret)
             }
         ];
+        if (isOAuthWithCustomProperties(auth)) {
+            const customPropertyValues = isOAuthValuesWithCustomProperties(values)
+                ? values.customPropertyValues
+                : undefined;
+            for (const param of auth.customProperties) {
+                const wireValue = param.name.wireValue;
+                const value = customPropertyValues?.[wireValue];
+                args.push({
+                    name: this.context.getParameterName(param.name.name),
+                    assignment: this.context.dynamicLiteralMapper.convert({
+                        typeReference: param.typeReference,
+                        value,
+                        fallbackToDefault: wireValue
+                    })
+                });
+            }
+        }
+        return args;
     }
 
     private getConstructorInferredAuthArgs({

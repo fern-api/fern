@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.9.0] - 2026-06-30
+
+- Feature: Add optional `customProperties` field to dynamic IR `OAuth` type and
+  optional `customPropertyValues` field to `OAuthValues`. Enables dynamic snippet
+  generators to include custom OAuth token endpoint request properties (beyond
+  clientId and clientSecret) in generated code examples, fixing compilation
+  failures for SDKs with custom OAuth parameters.
+
 ## [v67.8.0] - 2026-06-29
 
 - Feature: Add optional `payloadFormat` field to `AsymmetricKeySignatureVerification`.

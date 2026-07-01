@@ -1,0 +1,6 @@
+- summary: |
+    Fix dynamic snippet generation for OAuth with custom properties. The generated
+    constructor now includes custom OAuth token endpoint request parameters (e.g.
+    entityId, scp) so that snippets compile for APIs using oauth-client-credentials
+    with custom properties.
+  type: fix

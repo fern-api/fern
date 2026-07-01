@@ -24,6 +24,7 @@ import {
     HttpRequestBody,
     InferredAuthScheme,
     IntermediateRepresentation,
+    OAuthScheme,
     Literal,
     NameAndWireValueOrString,
     NamedType,
@@ -755,11 +756,14 @@ export class DynamicSnippetsConverter {
                         variable: undefined
                     }
                 });
-            case "oauth":
+            case "oauth": {
+                const customProperties = this.getOAuthCustomProperties(scheme);
                 return DynamicSnippets.Auth.oauth({
                     clientId: this.fullCasingsGenerator.generateName("clientId"),
-                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret")
+                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret"),
+                    customProperties: customProperties.length > 0 ? customProperties : undefined
                 });
+            }
             case "inferred":
                 return DynamicSnippets.Auth.inferred({
                     parameters: this.getInferredAuthParameters(scheme)
@@ -788,11 +792,15 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.AuthValues.header({
                     value: scheme.headerPlaceholder ?? "<value>"
                 });
-            case "oauth":
+            case "oauth": {
+                const customPropertyValues = this.getOAuthCustomPropertyValues(scheme);
                 return DynamicSnippets.AuthValues.oauth({
                     clientId: "<clientId>",
-                    clientSecret: "<clientSecret>"
+                    clientSecret: "<clientSecret>",
+                    customPropertyValues:
+                        Object.keys(customPropertyValues).length > 0 ? customPropertyValues : undefined
                 });
+            }
             case "inferred":
                 return DynamicSnippets.AuthValues.inferred({
                     values: this.getInferredAuthValues(scheme)
@@ -898,6 +906,30 @@ export class DynamicSnippetsConverter {
         }
 
         return properties;
+    }
+
+    private getOAuthCustomProperties(scheme: OAuthScheme): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            parameters.push({
+                name: this.inflateNameAndWireValue(customProperty.property.name),
+                typeReference: this.convertTypeReference(customProperty.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        return parameters;
+    }
+
+    private getOAuthCustomPropertyValues(scheme: OAuthScheme): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            const wireValue = getWireValue(customProperty.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        return values;
     }
 
     private convertEnvironments(environmentsConfig: EnvironmentsConfig): DynamicSnippets.EnvironmentsConfig {

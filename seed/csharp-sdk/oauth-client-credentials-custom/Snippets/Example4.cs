@@ -6,6 +6,10 @@ public partial class Examples
         var client = new SeedOauthClientCredentialsClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",
+            entityId: "<entity_id>",
+            audience: "<audience>",
+            grantType: "<grant_type>",
+            scope: "<scope>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }

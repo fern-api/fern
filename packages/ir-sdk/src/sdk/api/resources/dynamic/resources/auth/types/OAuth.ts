@@ -5,4 +5,6 @@ import type * as FernIr from "../../../../../index.js";
 export interface OAuth {
     clientId: FernIr.dynamic.Name;
     clientSecret: FernIr.dynamic.Name;
+    /** Custom properties required for the OAuth token endpoint request, beyond clientId and clientSecret. */
+    customProperties: FernIr.dynamic.NamedParameter[] | undefined;
 }
