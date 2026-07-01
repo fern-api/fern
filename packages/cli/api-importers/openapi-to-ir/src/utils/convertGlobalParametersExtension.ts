@@ -40,7 +40,11 @@ function convertLocation(
     }
 }
 
-function convertApplyMode(apply: string | undefined): FernIr.GlobalParameterApplyMode | undefined {
+function convertApplyMode(
+    apply: string | undefined,
+    breadcrumbs: string[],
+    context: AbstractConverterContext<object>
+): FernIr.GlobalParameterApplyMode | undefined {
     switch (apply) {
         case undefined:
             return undefined;
@@ -49,6 +53,10 @@ function convertApplyMode(apply: string | undefined): FernIr.GlobalParameterAppl
         case "auto":
             return FernIr.GlobalParameterApplyMode.Auto;
         default:
+            context.errorCollector.collect({
+                message: `Invalid global parameter apply mode '${apply}'; expected one of: explicit, auto`,
+                path: breadcrumbs
+            });
             return undefined;
     }
 }
@@ -93,10 +101,7 @@ function resolveBaseType(typeString: string | undefined): FernIr.TypeReference {
     }
 }
 
-function resolveTarget(
-    param: FernGlobalParametersExtension.GlobalParameterExtension,
-    location: FernIr.GlobalParameterLocation
-): string {
+function resolveTarget(param: FernGlobalParametersExtension.GlobalParameterExtension): string {
     if (param.target != null) {
         return param.target;
     }
@@ -120,12 +125,12 @@ export function convertGlobalParametersExtension({
                 wireValue: param.name
             }),
             location,
-            target: resolveTarget(param, location),
+            target: resolveTarget(param),
             valueType: resolveValueType(param.type, param.optional),
             env: param.env,
             clientDefault: convertDefaultToLiteral(param.default),
             optional: param.optional,
-            apply: convertApplyMode(param.apply),
+            apply: convertApplyMode(param.apply, [...breadcrumbs, "apply"], context),
             docs: undefined
         };
     });
