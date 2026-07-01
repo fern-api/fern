@@ -1,8 +1,0 @@
-groups:
-  csharp-sdk:
-    generators:
-      - name: fernapi/fern-csharp-sdk
-        version: 0.0.1
-        output:
-          location: local-file-system
-          path: ../generated-sdk
