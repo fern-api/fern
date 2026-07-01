@@ -36,6 +36,7 @@ import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
 import { WebSocket, WebSocketServer } from "ws";
+import { ResponseCache } from "./ResponseCache";
 import { type BunServer, createBunServer } from "./createBunServer.js";
 import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
@@ -719,24 +720,16 @@ export async function runAppPreviewServer({
     // Pre-computed translated definitions for each locale (excluding default)
     let translatedDefinitions: Map<string, DocsV1Read.DocsDefinition> = new Map();
 
-    // Cached serialized JSON responses keyed by locale ("" = no locale).
+    // Cached serialized JSON responses keyed by locale.
     // Invalidated whenever previewResult or translatedDefinitions change.
-    const cachedResponseJson = new Map<string, string>();
+    const responseCache = new ResponseCache();
 
     function invalidateResponseCache(): void {
-        cachedResponseJson.clear();
+        responseCache.invalidate();
     }
 
     function getSerializedDocsLoadResponse(locale?: string): string {
-        const cacheKey = locale ?? "";
-        const cached = cachedResponseJson.get(cacheKey);
-        if (cached != null) {
-            return cached;
-        }
-        const response = buildDocsLoadResponse(locale);
-        const json = JSON.stringify(response);
-        cachedResponseJson.set(cacheKey, json);
-        return json;
+        return responseCache.getOrSerialize(locale, () => buildDocsLoadResponse(locale));
     }
 
     // Initialize the snippet dependency tracker
