@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.60.0
+  changelogEntry:
+    - summary: |
+        Add `mcp` option to `page-actions` in `docs.yml`. When set to `false`, the MCP server
+        endpoint is disabled, its URL is omitted from `llms.txt` and agent prompts, and the
+        "Connect to Claude Code" / "Connect to Cursor" buttons are hidden.
+      type: feat
+    - summary: |
+        Add `payload-format` support for asymmetric webhook signature verification,
+        allowing the timestamp and other components to be included in the signed
+        payload. Previously, only the raw body was signed for asymmetric webhooks,
+        making the timestamp tolerance check ineffective against replay attacks.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.59.0
   changelogEntry:
     - summary: |
