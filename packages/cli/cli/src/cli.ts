@@ -839,6 +839,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Skip opening a PR / pushing when the generated output has no diff from the base branch."
+                })
+                .option("generate-tests", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Generate test files even when generating to a local file system (tests are normally only generated for GitHub output modes)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -952,7 +958,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     verify: argv.verify,
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
-                    skipIfNoDiff: argv["skip-if-no-diff"]
+                    skipIfNoDiff: argv["skip-if-no-diff"],
+                    generateTests: argv["generate-tests"]
                 });
             }
             if (argv.docs != null) {
@@ -1014,7 +1021,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 verify: argv.verify,
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
-                skipIfNoDiff: argv["skip-if-no-diff"]
+                skipIfNoDiff: argv["skip-if-no-diff"],
+                generateTests: argv["generate-tests"]
             });
         }
     );
