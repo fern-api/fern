@@ -353,6 +353,8 @@ fixtures:
     - outputFolder: default
   java-path-param-key-conflict:
     - outputFolder: default
+  java-path-parameter-suffix:
+    - outputFolder: default
   java-many-properties:
     - outputFolder: default
   java-output-directory:
