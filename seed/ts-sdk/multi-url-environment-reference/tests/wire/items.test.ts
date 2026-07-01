@@ -4,19 +4,25 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ItemsClient", () => {
+    
     test("listItems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            maxRetries: 0,
-            token: "test",
-            environment: { base: server.baseUrl, auth: server.baseUrl, upload: server.baseUrl },
-        });
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "token" : "test" , "environment" : { "base" : server.baseUrl , "auth" : server.baseUrl , "upload" : server.baseUrl } });
+        
         const rawResponseBody = "string";
+        
+        server
+            .mockEndpoint()
+            .get("/items").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        server.mockEndpoint().get("/items").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.items.listItems();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.items.listItems();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

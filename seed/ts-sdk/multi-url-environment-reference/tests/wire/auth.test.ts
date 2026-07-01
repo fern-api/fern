@@ -4,29 +4,29 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("AuthClient", () => {
+    
     test("gettoken", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            maxRetries: 0,
-            token: "test",
-            environment: { base: server.baseUrl, auth: server.baseUrl, upload: server.baseUrl },
-        });
-        const rawRequestBody = { client_id: "client_id", client_secret: "client_secret" };
-        const rawResponseBody = { access_token: "access_token" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "token" : "test" , "environment" : { "base" : server.baseUrl , "auth" : server.baseUrl , "upload" : server.baseUrl } });
+        const rawRequestBody = { "client_id" : "client_id" , "client_secret" : "client_secret" };
+        const rawResponseBody = { "access_token" : "access_token" };
+        
         server
             .mockEndpoint()
-            .post("/oauth/token")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/oauth/token").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.auth.gettoken({
-            client_id: "client_id",
-            client_secret: "client_secret",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.auth.gettoken({
+    client_id: "client_id",
+    client_secret: "client_secret"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

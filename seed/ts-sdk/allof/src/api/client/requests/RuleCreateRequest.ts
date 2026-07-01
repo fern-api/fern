@@ -16,9 +16,9 @@ export interface RuleCreateRequest {
 export namespace RuleCreateRequest {
     /** Execution context for the rule, excluding the prod environment. */
     export const ExecutionContext = {
-        Prod: "prod",
-        Staging: "staging",
-        Dev: "dev",
-    } as const;
-    export type ExecutionContext = (typeof ExecutionContext)[keyof typeof ExecutionContext];
+            Prod: "prod",
+            Staging: "staging",
+            Dev: "dev"
+        } as const;
+    export type ExecutionContext = typeof ExecutionContext[keyof typeof ExecutionContext];
 }

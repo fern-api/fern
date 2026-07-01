@@ -786,6 +786,15 @@
                         "url": "https://api.example.com/.well-known/jwks.json",
                         "keyIdHeader": "x-key-id"
                     },
+                    "payloadFormat": {
+                        "components": [
+                            "MESSAGE_ID",
+                            "TIMESTAMP",
+                            "BODY"
+                        ],
+                        "delimiter": ".",
+                        "bodySort": null
+                    },
                     "timestamp": {
                         "headerName": "x-payment-timestamp",
                         "format": "ISO8601",
@@ -899,12 +908,12 @@
                                 "status": "completed"
                             }
                         },
-                        "docs": "Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature\nverification with keys fetched from a JWKS endpoint, overriding the\ndocument-level default."
+                        "docs": "Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature\nverification with keys fetched from a JWKS endpoint, overriding the\ndocument-level default. Includes payload-format with message_id, timestamp,\nand body components joined by \".\" delimiter."
                     }
                 ],
                 "v2Examples": null,
                 "availability": null,
-                "docs": "Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature\nverification with keys fetched from a JWKS endpoint, overriding the\ndocument-level default."
+                "docs": "Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature\nverification with keys fetched from a JWKS endpoint, overriding the\ndocument-level default. Includes payload-format with message_id, timestamp,\nand body components joined by \".\" delimiter."
             },
             {
                 "id": "webhooks_.refundProcessed",
@@ -937,6 +946,13 @@
                     "signaturePrefix": null,
                     "keySource": {
                         "type": "static"
+                    },
+                    "payloadFormat": {
+                        "components": [
+                            "BODY"
+                        ],
+                        "delimiter": "",
+                        "bodySort": "ALPHABETICAL"
                     },
                     "timestamp": null
                 },
@@ -1067,12 +1083,12 @@
                                 "reason": "Customer request"
                             }
                         },
-                        "docs": "Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature\nverification with a static public key, overriding the document-level default."
+                        "docs": "Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature\nverification with a static public key, overriding the document-level default.\nUses body-sort: alphabetical to sort POST body parameters before signing."
                     }
                 ],
                 "v2Examples": null,
                 "availability": null,
-                "docs": "Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature\nverification with a static public key, overriding the document-level default."
+                "docs": "Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature\nverification with a static public key, overriding the document-level default.\nUses body-sort: alphabetical to sort POST body parameters before signing."
             }
         ]
     },

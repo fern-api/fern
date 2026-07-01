@@ -12,8 +12,8 @@ export interface CombinedEntity {
 
 export namespace CombinedEntity {
     export const Status = {
-        Active: "active",
-        Archived: "archived",
-    } as const;
-    export type Status = (typeof Status)[keyof typeof Status];
+            Active: "active",
+            Archived: "archived"
+        } as const;
+    export type Status = typeof Status[keyof typeof Status];
 }

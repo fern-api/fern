@@ -1,4 +1,5 @@
-import { type ServerSentEvent, Stream } from "../../../src/core/stream/Stream";
+
+import { Stream, ServerSentEvent } from "../../../src/core/stream/Stream";
 
 describe("Stream", () => {
     describe("JSON streaming", () => {
@@ -35,7 +36,7 @@ describe("Stream", () => {
         });
 
         it("should handle messages split across chunks", async () => {
-            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', " 2}\n"]);
+            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', ' 2}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -101,7 +102,9 @@ describe("Stream", () => {
         });
 
         it("should parse multiple SSE events", async () => {
-            const mockStream = createReadableStream(['data: {"value": 1}\ndata: {"value": 2}\ndata: {"value": 3}\n']);
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\n\ndata: {"value": 2}\n\ndata: {"value": 3}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -117,7 +120,9 @@ describe("Stream", () => {
         });
 
         it("should stop at stream terminator", async () => {
-            const mockStream = createReadableStream(['data: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n']);
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\n\ndata: [DONE]\n\ndata: {"value": 2}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -134,7 +139,7 @@ describe("Stream", () => {
 
         it("should skip lines without data prefix", async () => {
             const mockStream = createReadableStream([
-                'event: message\ndata: {"value": 1}\nid: 123\ndata: {"value": 2}\n',
+                'event: message\ndata: {"value": 1}\nid: 123\n\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -149,6 +154,82 @@ describe("Stream", () => {
 
             expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
         });
+
+        it("should capture id when it appears after data line", async () => {
+            const mockStream = createReadableStream([
+                'data: {"type":"model.message","thread_id":"main"}\nid: 2\n\ndata: {"content":"Hi","type":"model.message.delta"}\nid: 3\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([
+                { type: "model.message", thread_id: "main" },
+                { content: "Hi", type: "model.message.delta" },
+            ]);
+        });
+
+        it("should handle multiline data with id after last data line", async () => {
+            const mockStream = createReadableStream([
+                'data: {"delta":\ndata: "hello"}\nid: 42\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ delta: "hello" }]);
+        });
+
+        it("should handle id after data without trailing blank line", async () => {
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\nid: last-event\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+        });
+
+        it("should handle stream terminator with id after data", async () => {
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\nid: 1\n\ndata: [DONE]\nid: 2\n\ndata: {"value": 3}\nid: 3\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+        });
+
     });
 
     describe("SSE event-level discrimination (inject discriminator)", () => {
@@ -231,7 +312,9 @@ describe("Stream", () => {
         });
 
         it("should not inject if no event field is present", async () => {
-            const mockStream = createReadableStream(['data: {"content": "hello"}\n\n']);
+            const mockStream = createReadableStream([
+                'data: {"content": "hello"}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -247,7 +330,9 @@ describe("Stream", () => {
         });
 
         it("should handle empty JSON object", async () => {
-            const mockStream = createReadableStream(["event: heartbeat\ndata: {}\n\n"]);
+            const mockStream = createReadableStream([
+                'event: heartbeat\ndata: {}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -281,7 +366,9 @@ describe("Stream", () => {
         });
 
         it("should concatenate multiline data fields", async () => {
-            const mockStream = createReadableStream(['event: completion\ndata: {"delta":\ndata: "hello"}\n\n']);
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"delta":\ndata: "hello"}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -297,7 +384,11 @@ describe("Stream", () => {
         });
 
         it("should handle events split across chunks", async () => {
-            const mockStream = createReadableStream(["event: comple", 'tion\ndata: {"con', 'tent": "hi"}\n\n']);
+            const mockStream = createReadableStream([
+                'event: comple',
+                'tion\ndata: {"con',
+                'tent": "hi"}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -313,7 +404,9 @@ describe("Stream", () => {
         });
 
         it("should handle last event without trailing blank line", async () => {
-            const mockStream = createReadableStream(['event: completion\ndata: {"content": "hi"}\n']);
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"content": "hi"}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -350,7 +443,9 @@ describe("Stream", () => {
         });
 
         it("should inject empty string discriminator when event field is present but empty", async () => {
-            const mockStream = createReadableStream(['event: \ndata: {"content": "hello"}\n\n']);
+            const mockStream = createReadableStream([
+                'event: \ndata: {"content": "hello"}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -369,7 +464,7 @@ describe("Stream", () => {
     describe("withMetadata()", () => {
         it("should yield ServerSentEvent with per-event id and retry", async () => {
             const mockStream = createReadableStream([
-                'id: evt-1\nretry: 5000\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
+                'id: evt-1\nretry: 5000\ndata: {"value": 1}\n\nid: evt-2\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -389,7 +484,9 @@ describe("Stream", () => {
         });
 
         it("should persist id across events per SSE spec", async () => {
-            const mockStream = createReadableStream(['id: evt-1\ndata: {"value": 1}\ndata: {"value": 2}\n']);
+            const mockStream = createReadableStream([
+                'id: evt-1\ndata: {"value": 1}\n\ndata: {"value": 2}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -409,7 +506,7 @@ describe("Stream", () => {
 
         it("should ignore id field containing null character", async () => {
             const mockStream = createReadableStream([
-                'id: valid\ndata: {"value": 1}\nid: bad\0id\ndata: {"value": 2}\n',
+                'id: valid\ndata: {"value": 1}\n\nid: bad\0id\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -427,7 +524,9 @@ describe("Stream", () => {
         });
 
         it("should ignore retry field with non-integer value", async () => {
-            const mockStream = createReadableStream(['retry: abc\ndata: {"value": 1}\n']);
+            const mockStream = createReadableStream([
+                'retry: abc\ndata: {"value": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -495,12 +594,14 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([{ data: { value: 1 }, id: undefined, retry: undefined, event: undefined }]);
+            expect(events).toEqual([
+                { data: { value: 1 }, id: undefined, retry: undefined, event: undefined },
+            ]);
         });
 
         it("should stop at stream terminator via withMetadata (non-discriminator)", async () => {
             const mockStream = createReadableStream([
-                'id: evt-1\ndata: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n',
+                'id: evt-1\ndata: {"value": 1}\n\ndata: [DONE]\n\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -513,7 +614,9 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([{ data: { value: 1 }, id: "evt-1", retry: undefined, event: undefined }]);
+            expect(events).toEqual([
+                { data: { value: 1 }, id: "evt-1", retry: undefined, event: undefined },
+            ]);
         });
 
         it("should stop at stream terminator via withMetadata (discriminator)", async () => {
@@ -537,7 +640,9 @@ describe("Stream", () => {
         });
 
         it("should reject retry with decimal value", async () => {
-            const mockStream = createReadableStream(['retry: 3.5\ndata: {"value": 1}\n']);
+            const mockStream = createReadableStream([
+                'retry: 3.5\ndata: {"value": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -553,7 +658,9 @@ describe("Stream", () => {
         });
 
         it("should accept retry value of zero", async () => {
-            const mockStream = createReadableStream(['retry: 0\ndata: {"value": 1}\n']);
+            const mockStream = createReadableStream([
+                'retry: 0\ndata: {"value": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -569,7 +676,9 @@ describe("Stream", () => {
         });
 
         it("should set empty string id when id field has no value", async () => {
-            const mockStream = createReadableStream(['id:\ndata: {"value": 1}\n']);
+            const mockStream = createReadableStream([
+                'id:\ndata: {"value": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -585,7 +694,9 @@ describe("Stream", () => {
         });
 
         it("should yield undefined event field for non-discriminator SSE even with event lines", async () => {
-            const mockStream = createReadableStream(['event: completion\nid: evt-1\ndata: {"value": 1}\n']);
+            const mockStream = createReadableStream([
+                'event: completion\nid: evt-1\ndata: {"value": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -603,7 +714,12 @@ describe("Stream", () => {
         });
 
         it("should preserve metadata across chunked data", async () => {
-            const mockStream = createReadableStream(["id: ev", "t-1\nretry: 30", '00\ndata: {"val', 'ue": 1}\n']);
+            const mockStream = createReadableStream([
+                'id: ev',
+                't-1\nretry: 30',
+                '00\ndata: {"val',
+                'ue": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -615,7 +731,9 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([{ data: { value: 1 }, id: "evt-1", retry: 3000, event: undefined }]);
+            expect(events).toEqual([
+                { data: { value: 1 }, id: "evt-1", retry: 3000, event: undefined },
+            ]);
         });
 
         it("should update id between events in discriminator path", async () => {
@@ -658,8 +776,145 @@ describe("Stream", () => {
             ]);
         });
 
+        it("should capture id after data line (customer scenario)", async () => {
+            const mockStream = createReadableStream([
+                'data: {"type":"model.message","thread_id":"main","created_at":"2026-06-26T06:58:53.649Z","id":"01kw1bjtjg1702sn5tf5esqwbm"}\nid: 2\n\ndata: {"content":"Hi","type":"model.message.delta","id":"01kw1bjtjg1702sn5tf5esqwbm","thread_id":"main","created_at":"2026-06-26T06:58:59.691Z"}\nid: 3\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                {
+                    data: { type: "model.message", thread_id: "main", created_at: "2026-06-26T06:58:53.649Z", id: "01kw1bjtjg1702sn5tf5esqwbm" },
+                    id: "2",
+                    retry: undefined,
+                    event: undefined,
+                },
+                {
+                    data: { content: "Hi", type: "model.message.delta", id: "01kw1bjtjg1702sn5tf5esqwbm", thread_id: "main", created_at: "2026-06-26T06:58:59.691Z" },
+                    id: "3",
+                    retry: undefined,
+                    event: undefined,
+                },
+            ]);
+        });
+
+        it("should capture retry after data line", async () => {
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\nretry: 5000\n\ndata: {"value": 2}\nretry: 3000\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { value: 1 }, id: undefined, retry: 5000, event: undefined },
+                { data: { value: 2 }, id: undefined, retry: 3000, event: undefined },
+            ]);
+        });
+
+        it("should capture both id and retry after data line", async () => {
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\nid: evt-1\nretry: 2000\n\ndata: {"value": 2}\nid: evt-2\nretry: 4000\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { value: 1 }, id: "evt-1", retry: 2000, event: undefined },
+                { data: { value: 2 }, id: "evt-2", retry: 4000, event: undefined },
+            ]);
+        });
+
+        it("should handle chunked boundary splitting data and id lines", async () => {
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\n',
+                'id: chunked-',
+                'id\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { value: 1 }, id: "chunked-id", retry: undefined, event: undefined },
+            ]);
+        });
+
+        it("should handle multiline data followed by id", async () => {
+            const mockStream = createReadableStream([
+                'data: {"delta":\ndata: "hello"}\nid: multi-42\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { delta: "hello" }, id: "multi-42", retry: undefined, event: undefined },
+            ]);
+        });
+
+        it("should handle mixed id ordering across events", async () => {
+            const mockStream = createReadableStream([
+                'id: before-data\ndata: {"n": 1}\n\ndata: {"n": 2}\nid: after-data\n\ndata: {"n": 3}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.id).toBe("before-data");
+            expect(events[1]?.id).toBe("after-data");
+            expect(events[2]?.id).toBe("after-data");
+        });
+
         it("should not affect default iteration which still yields T", async () => {
-            const mockStream = createReadableStream(['id: evt-1\nretry: 3000\ndata: {"value": 1}\n']);
+            const mockStream = createReadableStream([
+                'id: evt-1\nretry: 3000\ndata: {"value": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -712,7 +967,10 @@ describe("Stream", () => {
 
         it("should handle binary data chunks", async () => {
             const encoder = new TextEncoder();
-            const mockStream = createReadableStream([encoder.encode('{"val'), encoder.encode('ue": 1}\n')]);
+            const mockStream = createReadableStream([
+                encoder.encode('{"val'),
+                encoder.encode('ue": 1}\n'),
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -822,7 +1080,7 @@ describe("Stream", () => {
         });
 
         it("should handle stream with only whitespace", async () => {
-            const mockStream = createReadableStream(["   \n\n\t\n   "]);
+            const mockStream = createReadableStream(['   \n\n\t\n   ']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -857,6 +1115,7 @@ describe("Stream", () => {
 
 // Helper function to create a ReadableStream from string chunks
 function createReadableStream(chunks: (string | Uint8Array)[]): ReadableStream {
+
     // For standard type, return ReadableStream
     let index = 0;
     return new ReadableStream({
@@ -869,4 +1128,5 @@ function createReadableStream(chunks: (string | Uint8Array)[]): ReadableStream {
             }
         },
     });
+
 }

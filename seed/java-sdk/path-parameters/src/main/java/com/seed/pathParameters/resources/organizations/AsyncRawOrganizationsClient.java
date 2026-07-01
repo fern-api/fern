@@ -8,6 +8,7 @@ import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.ObjectMappers;
 import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.core.RetryInterceptor;
 import com.seed.pathParameters.core.SeedPathParametersApiException;
 import com.seed.pathParameters.core.SeedPathParametersException;
 import com.seed.pathParameters.core.SeedPathParametersHttpResponse;
@@ -60,6 +61,15 @@ public class AsyncRawOrganizationsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<Organization>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -131,6 +141,15 @@ public class AsyncRawOrganizationsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -205,6 +224,15 @@ public class AsyncRawOrganizationsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

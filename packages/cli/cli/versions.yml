@@ -1,4 +1,194 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.63.0
+  changelogEntry:
+    - summary: |
+        Extend dynamic IR OAuth types with custom properties and populate them in
+        DynamicSnippetsConverter, enabling dynamic snippet generators to include
+        custom OAuth token endpoint request parameters in generated code examples.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.2
+  changelogEntry:
+    - summary: |
+        Strip CLI-only config keys (e.g. `user-agent`) from the custom config
+        before forwarding to generator containers, preventing strict validation
+        errors in generators that reject unknown keys.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.1
+  changelogEntry:
+    - summary: |
+        Fix float primitive types rendering as 'double' in documentation. Float types now correctly render as 'float'.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.0
+  changelogEntry:
+    - summary: |
+        Add `--generate-tests` flag to `fern generate` to enable test file generation
+        even when outputting to a local file system. Previously, tests were only generated
+        for GitHub output modes.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.61.0
+  changelogEntry:
+    - summary: |
+        Add `user-agent` generator config option that accepts a template string for
+        the User-Agent header. Supported placeholders: `{packageName}`, `{version}`,
+        `{language}`, `{generatorVersion}`, `{organization}`, `{apiName}`. When absent,
+        defaults to `{packageName}/{version}` (current behavior, non-breaking).
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.60.0
+  changelogEntry:
+    - summary: |
+        Add `mcp` option to `page-actions` in `docs.yml`. When set to `false`, the MCP server
+        endpoint is disabled, its URL is omitted from `llms.txt` and agent prompts, and the
+        "Connect to Claude Code" / "Connect to Cursor" buttons are hidden.
+      type: feat
+    - summary: |
+        Add `payload-format` support for asymmetric webhook signature verification,
+        allowing the timestamp and other components to be included in the signed
+        payload. Previously, only the raw body was signed for asymmetric webhooks,
+        making the timestamp tolerance check ineffective against replay attacks.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.59.0
+  changelogEntry:
+    - summary: |
+        Extract per-content-type OpenAPI examples into endpoint-level v2Examples
+        tagged with their content type. When an operation declares multiple content
+        types (e.g. application/json and application/ld+json) with distinct examples,
+        the importer now elevates those examples so docs can display the correct
+        example body when the user switches content types.
+      type: feat
+  createdAt: "2026-06-30"
+  irVersion: 67
+- version: 5.58.0
+  changelogEntry:
+    - summary: |
+        Fix product-level landing pages being dropped for unversioned products within a product group, and propagate top-level landing page to versioned navigation nodes as a fallback.
+      type: fix
+    - summary: |
+        Revert AI example enhancement routing from FAI back to fdr-lambda-docs.
+      type: internal
+  createdAt: "2026-06-30"
+  irVersion: 67
+- version: 5.57.0
+  changelogEntry:
+    - summary: |
+        When running inside GitHub Actions, notable SDK generation events are now surfaced as
+        `::notice::` annotations in the workflow run page and appended to the step summary.
+        Annotated events include PR creation, package publication (npm, PyPI, Maven, etc.),
+        no-changes-detected, and version tagging. Previously, these details were only visible
+        in debug-level log output.
+      type: feat
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 5.56.4
+  changelogEntry:
+    - summary: |
+        Fix remote generation CLI hanging indefinitely when S3 download stalls.
+        Added connection timeout (60s) and overall download timeout (5 min) to
+        both downloadZipForTask and downloadAndExtractZipToDirectory, so the CLI
+        fails with a clear error instead of blocking forever.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 5.56.3
+  changelogEntry:
+    - summary: |
+        Fix ledger publish path not forwarding the `basepathAware` flag for
+        multi-source docs sites, causing the manifest to be written to the
+        wrong storage key. Affected sites served stale content from the last
+        legacy publish instead of the updated ledger manifest.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 5.56.2
+  changelogEntry:
+    - summary: |
+        Migrate library docs parser Docker images from `fernapi` to `fernenterprise` registry.
+      type: chore
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 5.56.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` failing with pnpm 10+ due to missing `packages` field
+        in generated `pnpm-workspace.yaml` and missing `-w` flag on `pnpm i esbuild`.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 5.56.0
+  changelogEntry:
+    - summary: |
+        Add `disambiguate-request-names` setting to control whether generated request
+        wrapper names that collide with component schema names are renamed from
+        "*Request" to "*Body". Defaults to true (current behavior). A CLI migration
+        for version 4.106.1 is included to explicitly set the flag to false for
+        projects that existed before disambiguation was introduced, preserving their
+        original "*Request" names.
+      type: feat
+  createdAt: "2026-06-28"
+  irVersion: 67
+- version: 5.55.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` hot-reload for pages referenced outside the fern/ directory.
+        Previously, only changes to files inside the fern/ folder triggered preview refreshes.
+        Now, external directories containing referenced docs pages are also watched.
+      type: fix
+  createdAt: "2026-06-27"
+  irVersion: 67
+- version: 5.55.1
+  changelogEntry:
+    - summary: |
+        Fix `--instance` flag silently publishing to the wrong docs instance when the provided URL does not match any configured instance. Previously the CLI would fall back to the first configured instance; now it fails with an error listing available instances.
+      type: fix
+    - summary: |
+        Replace sed-based magic version replacement with pure Node.js implementation
+        in local generation mode. Fixes "illegal byte sequence" errors on binary files
+        and eliminates platform-specific behavior.
+      type: fix
+    - summary: |
+        Fix a 500 (PruneEmptyError) in localized docs when a translated OpenAPI spec changed a
+        structural identifier (e.g. an OpenAPI tag name, which derives subpackage and endpoint ids)
+        relative to the default-locale spec. API-reference navigation nodes are now matched to the
+        translated definition by a stable locator (HTTP method + path) in addition to id, so localized
+        sidebar titles still apply and the renderer can resolve the served API. When a node cannot be
+        matched at all, the affected API falls back to the default-locale definition with a warning
+        instead of crashing.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 5.55.0
+  changelogEntry:
+    - summary: |
+        Default docs deploy mode is now "ledger", enabling faster incremental deployments
+        and faster first-time page renders for uncached pages. To take advantage of this,
+        bump the `version` field in your `fern/fern.config.json` to this release or
+        later — the CLI auto-redirects to the pinned version, so older pins will not pick
+        up the new default. You can also bump the version in one click from the Fern
+        dashboard. To revert back to the legacy flow, add `FERN_DOCS_DEPLOY_MODE: legacy`
+        to the `env` section of your GitHub Actions workflow. Legacy deploys will be
+        removed in a future version of the CLI.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 5.54.0
+  changelogEntry:
+    - summary: |
+        Detect `api-key: OIDC` in NuGet output config and pass OIDC marker to
+        the C# generator for Trusted Publishing workflow generation.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
 - version: 5.53.1
   changelogEntry:
     - summary: |

@@ -4,151 +4,162 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
+    
     test("searchRuleTypes", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "paging" : { "next" : "next" , "previous" : "previous" } , "results" : [ { "id" : "id" , "name" : "name" , "description" : "description" } ] };
+        
+        server
+            .mockEndpoint()
+            .get("/rule-types").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = {
-            paging: { next: "next", previous: "previous" },
-            results: [{ id: "id", name: "name", description: "description" }],
-        };
-
-        server.mockEndpoint().get("/rule-types").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.searchRuleTypes();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.searchRuleTypes();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("createRule", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { name: "name", executionContext: "prod" };
-        const rawResponseBody = {
-            createdBy: "createdBy",
-            createdDateTime: "2024-01-15T09:30:00Z",
-            modifiedBy: "modifiedBy",
-            modifiedDateTime: "2024-01-15T09:30:00Z",
-            id: "id",
-            name: "name",
-            status: "active",
-            executionContext: "prod",
-        };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "name" : "name" , "executionContext" : "prod" };
+        const rawResponseBody = { "createdBy" : "createdBy" , "createdDateTime" : "2024-01-15T09:30:00Z" , "modifiedBy" : "modifiedBy" , "modifiedDateTime" : "2024-01-15T09:30:00Z" , "id" : "id" , "name" : "name" , "status" : "active" , "executionContext" : "prod" };
+        
         server
             .mockEndpoint()
-            .post("/rules")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/rules").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.createRule({
-            name: "name",
-            executionContext: "prod",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.createRule({
+    name: "name",
+    executionContext: "prod"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("listUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "paging" : { "next" : "next" , "previous" : "previous" } , "results" : [ { "id" : "id" , "email" : "email" } ] };
+        
+        server
+            .mockEndpoint()
+            .get("/users").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = {
-            paging: { next: "next", previous: "previous" },
-            results: [{ id: "id", email: "email" }],
-        };
-
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.listUsers();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.listUsers();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("getEntity", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "summary" : "summary" , "status" : "active" };
+        
+        server
+            .mockEndpoint()
+            .get("/entities").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = { id: "id", name: "name", summary: "summary", status: "active" };
-
-        server.mockEndpoint().get("/entities").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.getEntity();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.getEntity();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("getOrganization", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "metadata" : { "region" : "region" , "domain" : "domain" } , "name" : "name" };
+        
+        server
+            .mockEndpoint()
+            .get("/organizations").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = { id: "id", metadata: { region: "region", domain: "domain" }, name: "name" };
-
-        server.mockEndpoint().get("/organizations").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.getOrganization();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.getOrganization();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("createPlant", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {
-            species: "species",
-            family: "family",
-            genus: "genus",
-            commonName: "commonName",
-            wateringFrequency: "daily",
-            sunExposure: "full",
-        };
-        const rawResponseBody = { species: "species", family: "family", genus: "genus" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "species" : "species" , "family" : "family" , "genus" : "genus" , "commonName" : "commonName" , "wateringFrequency" : "daily" , "sunExposure" : "full" };
+        const rawResponseBody = { "species" : "species" , "family" : "family" , "genus" : "genus" };
+        
         server
             .mockEndpoint()
-            .post("/plants")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/plants").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.createPlant({
-            species: "species",
-            family: "family",
-            genus: "genus",
-            commonName: "commonName",
-            wateringFrequency: "daily",
-            sunExposure: "full",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.createPlant({
+    species: "species",
+    family: "family",
+    genus: "genus",
+    commonName: "commonName",
+    wateringFrequency: "daily",
+    sunExposure: "full"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("createTree", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { id: "id", treeName: "treeName", treeSpecies: "treeSpecies" };
-        const rawResponseBody = {
-            id: "id",
-            treeName: "treeName",
-            treeDescription: "treeDescription",
-            treeSpecies: "treeSpecies",
-            heightInFeet: 1.1,
-            plantedDate: "2023-01-15",
-        };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "id" : "id" , "treeName" : "treeName" , "treeSpecies" : "treeSpecies" };
+        const rawResponseBody = { "id" : "id" , "treeName" : "treeName" , "treeDescription" : "treeDescription" , "treeSpecies" : "treeSpecies" , "heightInFeet" : 1.1 , "plantedDate" : "2023-01-15" };
+        
         server
             .mockEndpoint()
-            .post("/trees")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/trees").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.createTree({
-            id: "id",
-            treeName: "treeName",
-            treeSpecies: "treeSpecies",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.createTree({
+    id: "id",
+    treeName: "treeName",
+    treeSpecies: "treeSpecies"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

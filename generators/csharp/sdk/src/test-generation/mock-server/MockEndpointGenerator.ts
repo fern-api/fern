@@ -1,5 +1,5 @@
 import { GeneratorError, getWireValue } from "@fern-api/base-generator";
-import { ast, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
@@ -100,16 +100,16 @@ export class MockEndpointGenerator extends WithGeneration {
                         const encodedKey = percentEncodeQueryKey(getWireValue(parameter.name));
                         // WireMock.Net splits comma-delimited query values into separate array
                         // entries, so pass all values in a single WithParam call.
-                        const paramValues = maybeParameterValue
-                            .split(",")
-                            .map((v) => `"${v.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`);
+                        const paramValues = maybeParameterValue.split(",").map((v) => `"${escapeForCSharpString(v)}"`);
                         writer.write(`.WithParam("${encodedKey}", ${paramValues.join(", ")})`);
                     }
                 }
                 for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
                     const maybeHeaderValue = this.exampleToQueryOrHeaderValue(header);
                     if (maybeHeaderValue != null) {
-                        writer.write(`.WithHeader("${getWireValue(header.name)}", "${maybeHeaderValue}")`);
+                        writer.write(
+                            `.WithHeader("${getWireValue(header.name)}", "${escapeForCSharpString(maybeHeaderValue)}")`
+                        );
                     }
                 }
                 // Add auth header matching for endpoints that require authentication.
@@ -124,12 +124,14 @@ export class MockEndpointGenerator extends WithGeneration {
                                 const username = this.case.screamingSnakeSafe(scheme.username);
                                 const password = this.case.screamingSnakeSafe(scheme.password);
                                 const encoded = Buffer.from(`${username}:${password}`).toString("base64");
-                                writer.write(`.WithHeader("Authorization", "Basic ${encoded}")`);
+                                writer.write(`.WithHeader("Authorization", "Basic ${escapeForCSharpString(encoded)}")`);
                                 break;
                             }
                             case "bearer": {
                                 const tokenValue = this.case.screamingSnakeSafe(scheme.token);
-                                writer.write(`.WithHeader("Authorization", "Bearer ${tokenValue}")`);
+                                writer.write(
+                                    `.WithHeader("Authorization", "Bearer ${escapeForCSharpString(tokenValue)}")`
+                                );
                                 break;
                             }
                             case "header": {
@@ -139,7 +141,7 @@ export class MockEndpointGenerator extends WithGeneration {
                                 if (headerName && headerValue) {
                                     const prefix = scheme.prefix;
                                     const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
-                                    writer.write(`.WithHeader("${headerName}", "${fullValue}")`);
+                                    writer.write(`.WithHeader("${headerName}", "${escapeForCSharpString(fullValue)}")`);
                                 }
                                 break;
                             }
@@ -147,7 +149,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     }
                 }
                 if (requestContentType) {
-                    writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
+                    writer.write(`.WithHeader("Content-Type", "${escapeForCSharpString(requestContentType)}")`);
                 }
 
                 writer.write(
@@ -205,7 +207,7 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     private escapeForCSharpStringLiteral(value: string): string {
-        return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+        return escapeForCSharpString(value);
     }
 
     /*

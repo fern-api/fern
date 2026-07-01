@@ -55,6 +55,9 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExamples.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -68,6 +71,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -133,6 +137,9 @@ public partial class SeedExamplesClient : ISeedExamplesClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExamples.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -146,6 +153,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

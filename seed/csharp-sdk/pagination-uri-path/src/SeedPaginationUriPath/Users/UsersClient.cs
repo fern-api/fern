@@ -19,6 +19,9 @@ public partial class UsersClient : IUsersClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPaginationUriPath.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPaginationUriPath.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class UsersClient : IUsersClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/users/uri",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -99,6 +103,9 @@ public partial class UsersClient : IUsersClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPaginationUriPath.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPaginationUriPath.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -111,6 +118,7 @@ public partial class UsersClient : IUsersClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/users/path",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -141,6 +141,14 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     shouldInferDiscriminatedUnionBaseProperties: boolean;
+
+    /**
+     * If true, disambiguate generated request wrapper names that collide with
+     * component schema names by replacing the "Request" suffix with "Body".
+     * If false, keep the original "Request" suffix regardless of collisions.
+     * Defaults to true.
+     */
+    disambiguateRequestNames: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -180,7 +188,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     inferForwardCompatible: false,
     coerceConstsTo: "enums-coerceable-to-literals",
     respectByteFormat: false,
-    shouldInferDiscriminatedUnionBaseProperties: false
+    shouldInferDiscriminatedUnionBaseProperties: false,
+    disambiguateRequestNames: true
 };
 
 function mergeOptions<T extends object>(params: {

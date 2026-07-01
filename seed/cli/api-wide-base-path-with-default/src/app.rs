@@ -23,7 +23,7 @@ use serde_json::Value;
 use crate::auth::root_builder::AuthSchemeBuilder;
 use crate::auth::SchemeBinding;
 use crate::binding::{Binding, DispatchResult};
-use crate::error::{write_error_json, CliError};
+use crate::error::{write_error_json, CliError, ErrorDisplayContext};
 use crate::formatter;
 use crate::hooks::HookRegistry;
 use crate::stability::Stability;
@@ -108,6 +108,9 @@ pub struct CliApp {
     /// Login flows declared for this CLI. Each populates one auth
     /// scheme's keyring entry on `<bin> auth login`. See ADR-0007.
     login_flows: Vec<crate::auth::login::DynLoginFlow>,
+    /// Optional base URL for per-status-code error documentation links.
+    /// When set, API errors append `<base_url>/<http_status_code>` to stderr.
+    error_docs_base_url: Option<String>,
 }
 
 impl CliApp {
@@ -122,6 +125,7 @@ impl CliApp {
             cli_commands: Vec::new(),
             auth_bindings: Vec::new(),
             login_flows: Vec::new(),
+            error_docs_base_url: None,
         }
     }
 
@@ -136,6 +140,15 @@ impl CliApp {
     /// Set the top-level `--help` description for this CLI.
     pub fn description(mut self, d: &str) -> Self {
         self.description = Some(d.to_string());
+        self
+    }
+
+    /// Set the base URL for per-status-code error documentation links.
+    ///
+    /// When set, API errors (HTTP status codes) append a docs URL to stderr:
+    /// `  → <base_url>/<status_code>` (e.g. `https://docs.example.com/errors/401`).
+    pub fn error_docs_base_url(mut self, url: &str) -> Self {
+        self.error_docs_base_url = Some(url.to_string());
         self
     }
 
@@ -568,6 +581,10 @@ impl CliApp {
         // wiring (ADR-0008 § precedence).
         crate::auth::login::inject_keyring_sources(&self.name, &mut self.auth_bindings);
 
+        // Wire on-disk token caching into OAuth2 providers that were
+        // constructed without a cache (i.e. via `root_builder`).
+        crate::auth::login::inject_oauth2_caches(&self.name, &mut self.auth_bindings);
+
         if !self.auth_bindings.is_empty() {
             for binding in &mut self.bindings {
                 binding.set_root_auth(&self.auth_bindings);
@@ -589,11 +606,24 @@ impl CliApp {
     /// **NO SINGLE-BINDING SHORTCUT.** Every execution path goes through
     /// the full dispatch pipeline regardless of binding count.
     async fn run_inner<W: std::io::Write>(&self, args: Vec<std::ffi::OsString>, out: &mut W) -> i32 {
+        let str_args: Vec<String> = args.iter()
+            .filter_map(|a| a.to_str().map(String::from))
+            .collect();
+        let subcommand_path = crate::cli_args::extract_subcommand_path(&str_args);
+        let help_hint = if subcommand_path.is_empty() {
+            format!("{} --help", self.name)
+        } else {
+            format!("{} {} --help", self.name, subcommand_path.join(" "))
+        };
+        let ctx = ErrorDisplayContext {
+            docs_base_url: self.error_docs_base_url.clone(),
+            help_hint: Some(help_hint),
+        };
         match self.dispatch_pipeline(args, out).await {
             Ok(PipelineOutcome::Success) => 0,
             Ok(PipelineOutcome::HelpShown) => 0,
             Err(err) => {
-                write_error_json(&err, out);
+                write_error_json(&err, out, Some(&ctx));
                 err.exit_code()
             }
         }
@@ -660,7 +690,19 @@ impl CliApp {
                                 ops.extend(os.iter().cloned());
                             }
                         }
-                        Ok(Some(other)) => ops.push(other),
+                        // Bindings are contracted to return either a bare
+                        // array of operations OR a `{sdkVariables?,
+                        // operations}` object at empty path. Any other
+                        // shape (scalar, null, object missing both keys)
+                        // is a binding bug — log a warn and skip rather
+                        // than silently injecting a non-operation value
+                        // into the aggregated `operations` array. Mirrors
+                        // the principle the `Err` arm just below establishes:
+                        // one malformed binding must not corrupt the root view.
+                        Ok(Some(other)) => tracing::warn!(
+                            "--schema: binding `{}` returned non-array, non-object value at empty path; skipping: {other}",
+                            binding.name()
+                        ),
                         Ok(None) => {}
                         Err(e) => tracing::warn!(
                             "--schema: binding `{}` errored: {e}",
@@ -668,14 +710,22 @@ impl CliApp {
                         ),
                     }
                 }
-                let output = if any_sdk_vars {
-                    serde_json::json!({
-                        "sdkVariables": sdk_vars,
-                        "operations": ops,
-                    })
-                } else {
-                    serde_json::Value::Array(ops)
-                };
+                // Per ADR-0006: always wrap the empty-path result with
+                // `globalFlags` (CLI harness affordances available on
+                // every op). Single-binding CLIs that had a bare-array
+                // root before now also get the wrapped shape. SDK
+                // variables surface only when at least one binding
+                // declared any.
+                let mut wrapped = serde_json::Map::new();
+                wrapped.insert(
+                    "globalFlags".into(),
+                    serde_json::Value::Array(global_flags()),
+                );
+                if any_sdk_vars {
+                    wrapped.insert("sdkVariables".into(), serde_json::Value::Array(sdk_vars));
+                }
+                wrapped.insert("operations".into(), serde_json::Value::Array(ops));
+                let output = serde_json::Value::Object(wrapped);
                 writeln!(
                     out,
                     "{}",
@@ -713,6 +763,54 @@ impl CliApp {
             )));
         }
 
+        // 0c. --spec / --spec-raw: emit embedded OpenAPI spec(s) and exit.
+        // Root-only (not path-scoped). Multi-binding CLIs emit a YAML
+        // stream (---delimited, one document per binding).
+        let wants_spec = crate::cli_args::wants_spec(&str_args);
+        let wants_spec_raw = crate::cli_args::wants_spec_raw(&str_args);
+        if wants_spec || wants_spec_raw {
+            let raw = wants_spec_raw;
+            let mut documents: Vec<String> = Vec::new();
+            for binding in &self.bindings {
+                match binding.spec_document(raw) {
+                    Ok(Some(yaml)) => documents.push(yaml),
+                    Ok(None) => {}
+                    Err(e) => {
+                        let flag = if raw { "--spec-raw" } else { "--spec" };
+                        tracing::warn!(
+                            "{flag}: binding `{}` errored: {e}",
+                            binding.name()
+                        );
+                    }
+                }
+            }
+
+            if documents.is_empty() {
+                let flag = if raw { "--spec-raw" } else { "--spec" };
+                return Err(CliError::Discovery(format!(
+                    "{flag}: no binding has an embedded API spec"
+                )));
+            }
+
+            let output = if documents.len() == 1 {
+                documents.into_iter().next().unwrap()
+            } else {
+                let mut output = documents[0].clone();
+                for doc in &documents[1..] {
+                    if !output.ends_with('\n') {
+                        output.push('\n');
+                    }
+                    output.push_str("---\n");
+                    output.push_str(doc);
+                }
+                output
+            };
+
+            write!(out, "{output}")
+                .map_err(|e| CliError::Other(e.into()))?;
+            return Ok(PipelineOutcome::Success);
+        }
+
         // 1. Build merged command tree from all bindings.
         let mut cli = clap::Command::new(self.name.clone())
             .version(env!("CARGO_PKG_VERSION"))
@@ -729,7 +827,7 @@ impl CliApp {
             .arg(
                 clap::Arg::new("format")
                     .long("format")
-                    .help("Output format: json, table, yaml, csv. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var.")
+                    .help("Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON); arrays are flattened. http emits the full HTTP response (status line + headers + body) like curl -i (OpenAPI only).")
                     .value_name("FORMAT")
                     .global(true),
             )
@@ -748,6 +846,21 @@ impl CliApp {
                 clap::Arg::new("schema")
                     .long("schema")
                     .help("Print machine-readable JSON schema for this scope (agent-facing counterpart to --help)")
+                    .action(clap::ArgAction::SetTrue)
+                    .global(true),
+            )
+            // Discoverability only — intercepted pre-clap like --schema.
+            .arg(
+                clap::Arg::new("spec")
+                    .long("spec")
+                    .help("Print the effective OpenAPI spec (source + overlays + overrides merged) to stdout")
+                    .action(clap::ArgAction::SetTrue)
+                    .global(true),
+            )
+            .arg(
+                clap::Arg::new("spec-raw")
+                    .long("spec-raw")
+                    .help("Print the byte-exact embedded source OpenAPI spec(s) to stdout")
                     .action(clap::ArgAction::SetTrue)
                     .global(true),
             );
@@ -922,6 +1035,10 @@ impl CliApp {
                 Ok(PipelineOutcome::Success)
             }
             Err(err) => {
+                // Raw sentinel: bytes already on stdout, skip hooks.
+                if err.is_raw_sentinel() {
+                    return Err(err);
+                }
                 // Run recover_error chain.
                 if self.hooks.has_recover_error() {
                     match self.hooks.run_recover_error(err, &op_path).await {
@@ -994,6 +1111,8 @@ fn graft_merged_subtree(
         "format".to_string(),
         "base-url".to_string(),
         "schema".to_string(),
+        "spec".to_string(),
+        "spec-raw".to_string(),
         "help".to_string(),
         "version".to_string(),
     ]
@@ -1243,6 +1362,55 @@ fn deduplicate_after_help(sections: &[String]) -> String {
         }
     }
     blocks.join("\n\n")
+}
+
+/// Static description of every CLI-level affordance the harness exposes
+/// on every operation, surfaced under the root `--schema` output's
+/// `globalFlags` key per ADR-0006. Per-op flags (`--page-all`,
+/// `--output PATH`) are NOT in this list — those surface via per-op
+/// capability hints (`paginable`, `binaryResponse`).
+fn global_flags() -> Vec<serde_json::Value> {
+    vec![
+        serde_json::json!({
+            "flag": "--schema",
+            "description": "Emit the machine-readable command surface as JSON (agent-facing counterpart to --help)",
+        }),
+        serde_json::json!({
+            "flag": "--dry-run",
+            "description": "Validate the request locally without sending it to the API",
+        }),
+        serde_json::json!({
+            "flag": "--format",
+            "valueName": "FORMAT",
+            "description": "Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped",
+        }),
+        serde_json::json!({
+            "flag": "--base-url",
+            "valueName": "URL",
+            "description": "Override the API base URL (e.g. for testing against a mock server)",
+        }),
+        serde_json::json!({
+            "flag": "--quiet",
+            "description": "Suppress stdout output on success (errors still go to stderr)",
+        }),
+        serde_json::json!({
+            "flag": "--debug",
+            "description": "Dump HTTP request and response to stderr",
+        }),
+        serde_json::json!({
+            "flag": "--query",
+            "valueName": "EXPR",
+            "description": "JMESPath expression applied to the response before formatting. For streaming responses, events whose projection is null are suppressed (use as a per-event filter).",
+        }),
+        serde_json::json!({
+            "flag": "--spec",
+            "description": "Print the effective OpenAPI spec (source + overlays + overrides merged) to stdout",
+        }),
+        serde_json::json!({
+            "flag": "--spec-raw",
+            "description": "Print the byte-exact embedded source OpenAPI spec(s) to stdout",
+        }),
+    ]
 }
 
 // ── Tests ───────────────────────────────────────────────────────────

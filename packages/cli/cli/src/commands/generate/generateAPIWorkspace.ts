@@ -53,6 +53,7 @@ export async function generateWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    generateTests,
     automation
 }: {
     organization: string;
@@ -86,6 +87,7 @@ export async function generateWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    generateTests?: boolean;
     /**
      * When provided, this call runs in fan-out automation mode: iterate every group (ignoring
      * `default-group`), silently skip generators opted out of automation, and route per-generator
@@ -174,6 +176,7 @@ export async function generateWorkspace({
                         automationMode,
                         autoMerge,
                         skipIfNoDiff,
+                        generateTests,
                         verify,
                         disableTelemetry: isTelemetryDisabled()
                     });

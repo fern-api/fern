@@ -33087,6 +33087,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "url": "https://api.example.com/.well-known/jwks.json",
                         "keyIdHeader": "x-key-id"
                     },
+                    "payloadFormat": null,
                     "timestamp": {
                         "headerName": "x-payment-timestamp",
                         "format": "ISO8601",
@@ -33134,6 +33135,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     "keySource": {
                         "type": "static"
                     },
+                    "payloadFormat": null,
                     "timestamp": null
                 },
                 "fileUploadPayload": null,

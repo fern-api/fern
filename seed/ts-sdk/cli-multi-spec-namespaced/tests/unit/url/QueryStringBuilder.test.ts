@@ -97,7 +97,10 @@ describe("QueryStringBuilder", () => {
 
     describe("chaining", () => {
         it("chains multiple add() calls", () => {
-            const qs = queryBuilder().add("limit", 10).add("offset", 20).build();
+            const qs = queryBuilder()
+                .add("limit", 10)
+                .add("offset", 20)
+                .build();
             expect(qs).toBe("limit=10&offset=20");
         });
 
@@ -123,12 +126,16 @@ describe("QueryStringBuilder", () => {
 
     describe("addMany()", () => {
         it("adds all params from a record", () => {
-            const qs = queryBuilder().addMany({ limit: 10, offset: 20, name: "test" }).build();
+            const qs = queryBuilder()
+                .addMany({ limit: 10, offset: 20, name: "test" })
+                .build();
             expect(qs).toBe("limit=10&offset=20&name=test");
         });
 
         it("skips null and undefined values", () => {
-            const qs = queryBuilder().addMany({ a: "1", b: null, c: undefined, d: "4" }).build();
+            const qs = queryBuilder()
+                .addMany({ a: "1", b: null, c: undefined, d: "4" })
+                .build();
             expect(qs).toBe("a=1&d=4");
         });
 
@@ -139,7 +146,10 @@ describe("QueryStringBuilder", () => {
 
         it("works with comma-style override after addMany", () => {
             const params = { limit: 10, tags: ["a", "b"], active: true };
-            const qs = queryBuilder().addMany(params).add("tags", params.tags, { style: "comma" }).build();
+            const qs = queryBuilder()
+                .addMany(params)
+                .add("tags", params.tags, { style: "comma" })
+                .build();
             expect(qs).toBe("limit=10&tags=a,b&active=true");
         });
 
@@ -153,27 +163,42 @@ describe("QueryStringBuilder", () => {
 
     describe("mergeAdditional()", () => {
         it("appends additional params", () => {
-            const qs = queryBuilder().add("limit", 10).mergeAdditional({ extra: "value" }).build();
+            const qs = queryBuilder()
+                .add("limit", 10)
+                .mergeAdditional({ extra: "value" })
+                .build();
             expect(qs).toBe("limit=10&extra=value");
         });
 
         it("overrides existing keys (last-write-wins)", () => {
-            const qs = queryBuilder().add("limit", 10).mergeAdditional({ limit: 20 }).build();
+            const qs = queryBuilder()
+                .add("limit", 10)
+                .mergeAdditional({ limit: 20 })
+                .build();
             expect(qs).toBe("limit=20");
         });
 
         it("handles undefined additional params", () => {
-            const qs = queryBuilder().add("limit", 10).mergeAdditional(undefined).build();
+            const qs = queryBuilder()
+                .add("limit", 10)
+                .mergeAdditional(undefined)
+                .build();
             expect(qs).toBe("limit=10");
         });
 
         it("skips undefined values in additional params", () => {
-            const qs = queryBuilder().add("limit", 10).mergeAdditional({ extra: undefined }).build();
+            const qs = queryBuilder()
+                .add("limit", 10)
+                .mergeAdditional({ extra: undefined })
+                .build();
             expect(qs).toBe("limit=10");
         });
 
         it("skips null values in additional params", () => {
-            const qs = queryBuilder().add("limit", 10).mergeAdditional({ extra: null }).build();
+            const qs = queryBuilder()
+                .add("limit", 10)
+                .mergeAdditional({ extra: null })
+                .build();
             expect(qs).toBe("limit=10");
         });
 
@@ -220,7 +245,7 @@ describe("QueryStringBuilder", () => {
                 excludeUser: "excludeUser",
                 filter: "filter",
                 tags: ["tags"],
-                optionalTags: undefined,
+                optionalTags: undefined
             };
             const qs = queryBuilder()
                 .addMany(params)

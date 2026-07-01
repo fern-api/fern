@@ -7,11 +7,11 @@ export interface SeedApiEnvironmentUrls {
 }
 
 export const SeedApiEnvironment = {
-    Production: {
-        base: "https://api.example.com/2.0",
-        auth: "https://auth.example.com/oauth2",
-        upload: "https://upload.example.com/2.0",
-    },
-} as const;
+        Production: {
+            base: "https://api.example.com/2.0",
+            auth: "https://auth.example.com/oauth2",
+            upload: "https://upload.example.com/2.0"
+        },
+    } as const;
 
 export type SeedApiEnvironment = typeof SeedApiEnvironment.Production;

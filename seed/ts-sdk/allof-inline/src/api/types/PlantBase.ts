@@ -14,10 +14,10 @@ export interface PlantBase {
 
 export namespace PlantBase {
     export const WateringFrequency = {
-        Daily: "daily",
-        Weekly: "weekly",
-        Biweekly: "biweekly",
-        Monthly: "monthly",
-    } as const;
-    export type WateringFrequency = (typeof WateringFrequency)[keyof typeof WateringFrequency];
+            Daily: "daily",
+            Weekly: "weekly",
+            Biweekly: "biweekly",
+            Monthly: "monthly"
+        } as const;
+    export type WateringFrequency = typeof WateringFrequency[keyof typeof WateringFrequency];
 }

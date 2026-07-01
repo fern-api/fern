@@ -3,13 +3,14 @@
 import { OrganizationsClient } from "./api/resources/organizations/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedPathParametersClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedPathParametersClient {
@@ -18,6 +19,7 @@ export class SeedPathParametersClient {
     protected _user: UserClient | undefined;
 
     constructor(options: SeedPathParametersClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -39,23 +41,16 @@ export class SeedPathParametersClient {
      * @param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).
      * @returns {Promise<Response>} A standard Response object.
      */
-    public async fetch(
-        input: Request | string | URL,
-        init?: RequestInit,
-        requestOptions?: core.PassthroughRequest.RequestOptions,
-    ): Promise<Response> {
-        return core.makePassthroughRequest(
-            input,
-            init,
-            {
-                baseUrl: this._options.baseUrl ?? this._options.environment,
-                headers: this._options.headers,
-                timeoutInSeconds: this._options.timeoutInSeconds,
-                maxRetries: this._options.maxRetries,
-                fetch: this._options.fetch,
-                logging: this._options.logging,
-            },
-            requestOptions,
-        );
+    public async fetch(input: Request | string | URL, init?: RequestInit, requestOptions?: core.PassthroughRequest.RequestOptions): Promise<Response> {
+
+        return core.makePassthroughRequest(input, init, {
+            baseUrl: this._options.baseUrl ?? this._options.environment,
+            headers: this._options.headers,
+            timeoutInSeconds: this._options.timeoutInSeconds,
+            maxRetries: this._options.maxRetries,
+            fetch: this._options.fetch,
+            logging: this._options.logging,
+            
+        }, requestOptions);
     }
 }

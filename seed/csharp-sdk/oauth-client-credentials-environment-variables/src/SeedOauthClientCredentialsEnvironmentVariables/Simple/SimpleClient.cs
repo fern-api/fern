@@ -16,6 +16,12 @@ public partial class SimpleClient : ISimpleClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedOauthClientCredentialsEnvironmentVariables.Core.QueryStringBuilder.Builder(
+                capacity: 0
+            )
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedOauthClientCredentialsEnvironmentVariables.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -29,6 +35,7 @@ public partial class SimpleClient : ISimpleClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/get-something",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

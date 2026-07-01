@@ -4,19 +4,25 @@ import { SeedBearerTokenEnvironmentVariableClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ServiceClient", () => {
+    
     test("getWithBearerToken", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBearerTokenEnvironmentVariableClient({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: server.baseUrl,
-        });
-
+        const client = new SeedBearerTokenEnvironmentVariableClient({ "maxRetries" : 0 , "apiKey" : "test" , "environment" : server.baseUrl });
+        
         const rawResponseBody = "string";
+        
+        server
+            .mockEndpoint()
+            .get("/apiKey").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        server.mockEndpoint().get("/apiKey").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.service.getWithBearerToken();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.service.getWithBearerToken();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

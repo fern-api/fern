@@ -10,6 +10,8 @@ export interface Stream {
             parse: ts.Expression;
             eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
             signal: ts.Expression;
+            reconnectionEnabled?: ts.Expression;
+            maxReconnectionAttempts?: ts.Expression;
         }) => ts.Expression;
         _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
     };
@@ -32,6 +34,7 @@ export declare namespace Stream {
         type: "sse";
         streamTerminator?: ts.Expression;
         eventDiscriminator?: ts.Expression;
+        resumable?: ts.Expression;
     }
 
     export interface MessageEventShape {
@@ -63,12 +66,16 @@ export class StreamImpl extends CoreUtility implements Stream {
                     stream,
                     parse,
                     eventShape,
-                    signal
+                    signal,
+                    reconnectionEnabled,
+                    maxReconnectionAttempts
                 }: {
                     stream: ts.Expression;
                     parse: ts.Expression;
                     eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
                     signal: ts.Expression;
+                    reconnectionEnabled?: ts.Expression;
+                    maxReconnectionAttempts?: ts.Expression;
                 }): ts.Expression => {
                     const eventShapeProperties: ts.ObjectLiteralElementLike[] = [];
                     if (eventShape.type === "sse") {
@@ -94,6 +101,14 @@ export class StreamImpl extends CoreUtility implements Stream {
                                 )
                             );
                         }
+                        if (eventShape.resumable != null) {
+                            eventShapeProperties.push(
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("resumable"),
+                                    eventShape.resumable
+                                )
+                            );
+                        }
                     } else if (eventShape.type === "json") {
                         eventShapeProperties.push(
                             ts.factory.createPropertyAssignment(
@@ -108,19 +123,33 @@ export class StreamImpl extends CoreUtility implements Stream {
                             )
                         );
                     }
-                    return ts.factory.createNewExpression(Stream.getExpression(), undefined, [
-                        ts.factory.createObjectLiteralExpression(
-                            [
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("stream"), stream),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("signal"), signal),
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier("eventShape"),
-                                    ts.factory.createObjectLiteralExpression(eventShapeProperties, true)
-                                )
-                            ],
-                            true
+                    const constructorProperties: ts.ObjectLiteralElementLike[] = [
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("stream"), stream),
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("signal"), signal),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("eventShape"),
+                            ts.factory.createObjectLiteralExpression(eventShapeProperties, true)
                         )
+                    ];
+                    if (reconnectionEnabled != null) {
+                        constructorProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("reconnectionEnabled"),
+                                reconnectionEnabled
+                            )
+                        );
+                    }
+                    if (maxReconnectionAttempts != null) {
+                        constructorProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("maxReconnectionAttempts"),
+                                maxReconnectionAttempts
+                            )
+                        );
+                    }
+                    return ts.factory.createNewExpression(Stream.getExpression(), undefined, [
+                        ts.factory.createObjectLiteralExpression(constructorProperties, true)
                     ]);
                 }
         ),

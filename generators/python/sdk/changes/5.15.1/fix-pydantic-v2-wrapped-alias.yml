@@ -1,0 +1,6 @@
+- summary: |
+    Fix pydantic-v2 WrappedAliasGenerator producing invalid Python: add missing
+    `self` parameter to getter methods, use correct return type instead of
+    hardcoded `UUID`, quote forward-reference return types in builder methods,
+    and add missing `return` statement in builder method bodies.
+  type: fix

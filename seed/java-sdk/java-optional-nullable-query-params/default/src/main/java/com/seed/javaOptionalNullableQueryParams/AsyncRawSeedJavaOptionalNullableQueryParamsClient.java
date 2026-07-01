@@ -7,6 +7,7 @@ import com.seed.javaOptionalNullableQueryParams.core.ClientOptions;
 import com.seed.javaOptionalNullableQueryParams.core.ObjectMappers;
 import com.seed.javaOptionalNullableQueryParams.core.QueryStringMapper;
 import com.seed.javaOptionalNullableQueryParams.core.RequestOptions;
+import com.seed.javaOptionalNullableQueryParams.core.RetryInterceptor;
 import com.seed.javaOptionalNullableQueryParams.core.SeedJavaOptionalNullableQueryParamsApiException;
 import com.seed.javaOptionalNullableQueryParams.core.SeedJavaOptionalNullableQueryParamsException;
 import com.seed.javaOptionalNullableQueryParams.core.SeedJavaOptionalNullableQueryParamsHttpResponse;
@@ -101,6 +102,15 @@ public class AsyncRawSeedJavaOptionalNullableQueryParamsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse>> future =
                 new CompletableFuture<>();

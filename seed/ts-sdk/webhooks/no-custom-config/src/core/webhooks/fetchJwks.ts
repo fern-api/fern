@@ -83,8 +83,8 @@ function constructRsaPem(nBase64Url: string, eBase64Url: string): string {
             // OID for rsaEncryption (1.2.840.113549.1.1.1)
             0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01,
             // NULL
-            0x05, 0x00,
-        ]),
+            0x05, 0x00
+        ])
     );
     const spki = asn1Sequence(concatBytes([algorithmIdentifier, bitString]));
 
@@ -181,7 +181,7 @@ export async function fetchJwks(args: FetchJwksArgs): Promise<string> {
         throw new Error(
             args.keyId != null
                 ? `No key found with kid "${args.keyId}" in JWKS at ${args.url}`
-                : `No keys found in JWKS at ${args.url}`,
+                : `No keys found in JWKS at ${args.url}`
         );
     }
 

@@ -1,5 +1,5 @@
 from pydantic import RootModel
-from .types.parent import Parent
+from .parent import Parent
 from dt import datetime
 from core.datetime_utils import serialize_datetime
 
@@ -7,12 +7,12 @@ from core.datetime_utils import serialize_datetime
 class AliasType(RootModel[Parent]):
     root: Parent
 
-    def get_as_parent() -> UUID:
+    def get_as_parent(self) -> Parent:
         return self.root
 
     @staticmethod
-    def from_parent(value: Parent) -> AliasType:
-        AliasType(root=value)
+    def from_parent(value: Parent) -> "AliasType":
+        return AliasType(root=value)
 
     class Config:
         frozen = True

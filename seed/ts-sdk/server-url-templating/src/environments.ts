@@ -6,10 +6,10 @@ export interface SeedApiEnvironmentUrls {
 }
 
 export const SeedApiEnvironment = {
-    RegionalApiServer: {
-        base: "https://api.example.com/v1",
-        auth: "https://auth.example.com",
-    },
-} as const;
+        RegionalApiServer: {
+            base: "https://api.example.com/v1",
+            auth: "https://auth.example.com"
+        },
+    } as const;
 
 export type SeedApiEnvironment = typeof SeedApiEnvironment.RegionalApiServer;

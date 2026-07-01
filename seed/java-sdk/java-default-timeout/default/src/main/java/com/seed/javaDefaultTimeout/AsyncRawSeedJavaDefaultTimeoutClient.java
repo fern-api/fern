@@ -6,6 +6,7 @@ package com.seed.javaDefaultTimeout;
 import com.seed.javaDefaultTimeout.core.ClientOptions;
 import com.seed.javaDefaultTimeout.core.ObjectMappers;
 import com.seed.javaDefaultTimeout.core.RequestOptions;
+import com.seed.javaDefaultTimeout.core.RetryInterceptor;
 import com.seed.javaDefaultTimeout.core.SeedJavaDefaultTimeoutApiException;
 import com.seed.javaDefaultTimeout.core.SeedJavaDefaultTimeoutException;
 import com.seed.javaDefaultTimeout.core.SeedJavaDefaultTimeoutHttpResponse;
@@ -51,6 +52,15 @@ public class AsyncRawSeedJavaDefaultTimeoutClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedJavaDefaultTimeoutHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

@@ -7,6 +7,7 @@ import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.ObjectMappers;
 import com.seed.nurseryApi.core.QueryStringMapper;
 import com.seed.nurseryApi.core.RequestOptions;
+import com.seed.nurseryApi.core.RetryInterceptor;
 import com.seed.nurseryApi.core.SeedNurseryApiApiException;
 import com.seed.nurseryApi.core.SeedNurseryApiException;
 import com.seed.nurseryApi.core.SeedNurseryApiHttpResponse;
@@ -49,6 +50,15 @@ public class RawPackageClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

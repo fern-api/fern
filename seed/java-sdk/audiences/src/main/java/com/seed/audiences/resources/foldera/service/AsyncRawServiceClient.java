@@ -7,6 +7,7 @@ import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.ObjectMappers;
 import com.seed.audiences.core.QueryStringMapper;
 import com.seed.audiences.core.RequestOptions;
+import com.seed.audiences.core.RetryInterceptor;
 import com.seed.audiences.core.SeedAudiencesApiException;
 import com.seed.audiences.core.SeedAudiencesException;
 import com.seed.audiences.core.SeedAudiencesHttpResponse;
@@ -55,6 +56,15 @@ public class AsyncRawServiceClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedAudiencesHttpResponse<Response>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

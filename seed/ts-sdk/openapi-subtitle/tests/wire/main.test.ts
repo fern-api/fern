@@ -4,29 +4,47 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
+    
     test("listPlants", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = [ { "id" : "id" , "name" : "name" , "species" : "species" } ];
+        
+        server
+            .mockEndpoint()
+            .get("/plants").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = [{ id: "id", name: "name", species: "species" }];
-
-        server.mockEndpoint().get("/plants").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.listPlants();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.listPlants();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("getPlant", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "species" : "species" };
+        
+        server
+            .mockEndpoint()
+            .get("/plants/plantId").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = { id: "id", name: "name", species: "species" };
-
-        server.mockEndpoint().get("/plants/plantId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.getPlant({
-            plantId: "plantId",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.getPlant({
+    plantId: "plantId"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

@@ -4,24 +4,28 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("TeamMemberClient", () => {
+    
     test("updateTeamMember", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { id: "id", given_name: "given_name", family_name: "family_name" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { };
+        const rawResponseBody = { "id" : "id" , "given_name" : "given_name" , "family_name" : "family_name" };
+        
         server
             .mockEndpoint()
-            .put("/team-members/team_member_id")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .put("/team-members/team_member_id").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.teamMember.updateTeamMember({
-            team_member_id: "team_member_id",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.teamMember.updateTeamMember({
+    team_member_id: "team_member_id"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

@@ -148,6 +148,7 @@
           "userSpecifiedExamples": {
             "base_getRates_example_200": {
               "codeSamples": undefined,
+              "contentType": undefined,
               "displayName": "getRates_example",
               "request": {
                 "auth": undefined,

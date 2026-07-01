@@ -4,17 +4,27 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("UsersClient", () => {
+    
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "deleted_at" : { "key" : "value" } };
+        
+        server
+            .mockEndpoint()
+            .get("/users/id").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = { id: "id", name: "name", deleted_at: { key: "value" } };
-
-        server.mockEndpoint().get("/users/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.users.get({
-            id: "id",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.users.get({
+    id: "id"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

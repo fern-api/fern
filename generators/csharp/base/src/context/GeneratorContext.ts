@@ -342,6 +342,39 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         );
     }
 
+    /**
+     * Checks if the API has any resumable SSE streaming endpoints.
+     * @returns True if the API has any SSE endpoints with `resumable: true`.
+     */
+    public get hasResumableSseEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.endpointHasResumableSseResult(endpoint))
+        );
+    }
+
+    /**
+     * Checks if the endpoint has a resumable SSE streaming result.
+     */
+    public endpointHasResumableSseResult(endpoint: HttpEndpoint): boolean {
+        return (
+            endpoint.response?.body?._visit({
+                streaming: (svc) =>
+                    svc._visit({
+                        json: () => false,
+                        text: () => false,
+                        sse: (sseChunk) => sseChunk.resumable === true,
+                        _other: () => false
+                    }),
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => false,
+                _other: () => false
+            }) ?? false
+        );
+    }
+
     public getWebsocketChannel(name?: string) {
         return name ? this.ir.websocketChannels?.[name] : undefined;
     }

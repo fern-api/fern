@@ -13,9 +13,9 @@ export interface CompletionFullResponse {
 export namespace CompletionFullResponse {
     /** Why generation stopped. */
     export const FinishReason = {
-        Complete: "complete",
-        Length: "length",
-        Error: "error",
-    } as const;
-    export type FinishReason = (typeof FinishReason)[keyof typeof FinishReason];
+            Complete: "complete",
+            Length: "length",
+            Error: "error"
+        } as const;
+    export type FinishReason = typeof FinishReason[keyof typeof FinishReason];
 }

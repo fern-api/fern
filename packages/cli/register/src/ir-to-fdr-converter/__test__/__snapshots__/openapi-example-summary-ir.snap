@@ -167,6 +167,7 @@
             "userSpecifiedExamples": {
               "base_Paginated Payment List_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Paginated Payment List",
                 "request": {
                   "auth": undefined,
@@ -370,6 +371,7 @@
             "userSpecifiedExamples": {
               "Apple Pay Payment_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Apple Pay Payment",
                 "request": {
                   "auth": undefined,
@@ -404,6 +406,7 @@
               },
               "Card Payment_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Card Payment",
                 "request": {
                   "auth": undefined,
@@ -438,6 +441,7 @@
               },
               "base_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Payment Response",
                 "request": {
                   "auth": undefined,

@@ -34,7 +34,6 @@ pnpm test
 ```
 
 Run specific test types:
-
 - `pnpm test:unit` - Run unit tests
 - `pnpm test:wire` - Run wire/integration tests
 
@@ -67,7 +66,6 @@ pnpm run check:fix
 ### Generated Files
 
 The following directories contain generated code:
-
 - `src/api/` - API client classes and types
 - `src/serialization/` - Serialization/deserialization logic
 - Most TypeScript files in `src/`
@@ -98,7 +96,6 @@ If you want to change how code is generated for all users of this SDK:
 4. Submit a pull request with your changes to the generator
 
 This approach is best for:
-
 - Bug fixes in generated code
 - New features that would benefit all users
 - Improvements to code generation patterns

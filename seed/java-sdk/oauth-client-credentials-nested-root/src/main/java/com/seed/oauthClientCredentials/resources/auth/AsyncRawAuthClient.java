@@ -8,6 +8,7 @@ import com.seed.oauthClientCredentials.core.ClientOptions;
 import com.seed.oauthClientCredentials.core.MediaTypes;
 import com.seed.oauthClientCredentials.core.ObjectMappers;
 import com.seed.oauthClientCredentials.core.RequestOptions;
+import com.seed.oauthClientCredentials.core.RetryInterceptor;
 import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsApiException;
 import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsException;
 import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsHttpResponse;
@@ -64,6 +65,15 @@ public class AsyncRawAuthClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedOauthClientCredentialsHttpResponse<TokenResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

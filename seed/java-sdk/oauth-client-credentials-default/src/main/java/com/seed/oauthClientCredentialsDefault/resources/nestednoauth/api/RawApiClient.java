@@ -6,6 +6,7 @@ package com.seed.oauthClientCredentialsDefault.resources.nestednoauth.api;
 import com.seed.oauthClientCredentialsDefault.core.ClientOptions;
 import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
+import com.seed.oauthClientCredentialsDefault.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultApiException;
 import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultException;
 import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultHttpResponse;
@@ -46,6 +47,15 @@ public class RawApiClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

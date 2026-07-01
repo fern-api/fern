@@ -19,6 +19,9 @@ public partial class SyspropClient : ISyspropClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -35,6 +38,7 @@ public partial class SyspropClient : ISyspropClient
                         ValueConvert.ToPathParameterString(language),
                         ValueConvert.ToPathParameterString(numWarmInstances)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -73,6 +77,9 @@ public partial class SyspropClient : ISyspropClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -85,6 +92,7 @@ public partial class SyspropClient : ISyspropClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/sysprop/num-warm-instances",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

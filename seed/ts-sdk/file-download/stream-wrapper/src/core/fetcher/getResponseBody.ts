@@ -3,6 +3,7 @@ import { getBinaryResponse } from "./BinaryResponse.js";
 
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper.js";
 
+
 // Pins the upstream Response so undici's FinalizationRegistry can't GC it and cancel the body stream.
 function retainResponse(target: object, response: Response): void {
     Object.defineProperty(target, "__fern_response_ref", {
@@ -33,7 +34,7 @@ export async function getResponseBody(response: Response, responseType?: string)
             }
             retainResponse(response.body, response);
             return response.body;
-        case "streaming": {
+        case "streaming":
             if (response.body == null) {
                 return {
                     ok: false,
@@ -43,12 +44,11 @@ export async function getResponseBody(response: Response, responseType?: string)
                     },
                 };
             }
-
+            
             const wrapper = await chooseStreamWrapper(response.body);
             retainResponse(wrapper, response);
             return wrapper;
-        }
-
+            
         case "text":
             return await response.text();
     }

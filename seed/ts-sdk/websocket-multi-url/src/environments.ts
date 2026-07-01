@@ -6,16 +6,14 @@ export interface SeedWebsocketMultiUrlEnvironmentUrls {
 }
 
 export const SeedWebsocketMultiUrlEnvironment = {
-    Production: {
-        rest: "https://api.production.com",
-        wss: "wss://ws.production.com",
-    },
-    Staging: {
-        rest: "https://api.staging.com",
-        wss: "wss://ws.staging.com",
-    },
-} as const;
+        Production: {
+            rest: "https://api.production.com",
+            wss: "wss://ws.production.com"
+        },
+        Staging: {
+            rest: "https://api.staging.com",
+            wss: "wss://ws.staging.com"
+        },
+    } as const;
 
-export type SeedWebsocketMultiUrlEnvironment =
-    | typeof SeedWebsocketMultiUrlEnvironment.Production
-    | typeof SeedWebsocketMultiUrlEnvironment.Staging;
+export type SeedWebsocketMultiUrlEnvironment = typeof SeedWebsocketMultiUrlEnvironment.Production | typeof SeedWebsocketMultiUrlEnvironment.Staging;

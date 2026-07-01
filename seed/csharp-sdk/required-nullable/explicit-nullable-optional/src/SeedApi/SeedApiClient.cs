@@ -124,6 +124,9 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add("X-Idempotency-Key", request.XIdempotencyKey)
             .Add(_client.Options.Headers)
@@ -138,6 +141,7 @@ public partial class SeedApiClient : ISeedApiClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format("foo/{0}", ValueConvert.ToPathParameterString(id)),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

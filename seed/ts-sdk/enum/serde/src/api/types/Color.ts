@@ -5,7 +5,7 @@
  *     SeedEnum.Color.Red
  */
 export const Color = {
-    Red: "red",
-    Blue: "blue",
-} as const;
-export type Color = (typeof Color)[keyof typeof Color];
+        Red: "red",
+        Blue: "blue"
+    } as const;
+export type Color = typeof Color[keyof typeof Color];

@@ -20,6 +20,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApiWideBasePath.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApiWideBasePath.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -38,6 +41,7 @@ public partial class ServiceClient : IServiceClient
                         ValueConvert.ToPathParameterString(endpointParam),
                         ValueConvert.ToPathParameterString(resourceParam)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

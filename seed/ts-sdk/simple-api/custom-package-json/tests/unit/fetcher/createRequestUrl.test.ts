@@ -77,7 +77,7 @@ describe("Test createRequestUrl", () => {
                 undefinedValue: undefined,
                 emptyString: "",
             },
-            expected: "https://api.example.com?valid=value&nullValue=&emptyString=",
+            expected: "https://api.example.com?valid=value&emptyString=",
         },
         {
             description: "should handle deeply nested objects",
@@ -162,6 +162,8 @@ describe("Test createRequestUrl", () => {
     });
 
     it("should default to repeat format for arrays", () => {
-        expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe("https://api.example.com?items=a&items=b");
+        expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe(
+            "https://api.example.com?items=a&items=b"
+        );
     });
 });

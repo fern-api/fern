@@ -8,11 +8,11 @@
  *     SeedObjectsWithImports.FileInfo.Directory
  */
 export const FileInfo = {
-    /**
+        /**
      * A regular file (e.g. foo.txt). */
     Regular: "REGULAR",
-    /**
+        /**
      * A directory (e.g. foo/). */
-    Directory: "DIRECTORY",
-} as const;
-export type FileInfo = (typeof FileInfo)[keyof typeof FileInfo];
+    Directory: "DIRECTORY"
+    } as const;
+export type FileInfo = typeof FileInfo[keyof typeof FileInfo];

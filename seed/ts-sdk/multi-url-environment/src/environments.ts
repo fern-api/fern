@@ -6,16 +6,14 @@ export interface SeedMultiUrlEnvironmentEnvironmentUrls {
 }
 
 export const SeedMultiUrlEnvironmentEnvironment = {
-    Production: {
-        ec2: "https://ec2.aws.com",
-        s3: "https://s3.aws.com",
-    },
-    Staging: {
-        ec2: "https://staging.ec2.aws.com",
-        s3: "https://staging.s3.aws.com",
-    },
-} as const;
+        Production: {
+            ec2: "https://ec2.aws.com",
+            s3: "https://s3.aws.com"
+        },
+        Staging: {
+            ec2: "https://staging.ec2.aws.com",
+            s3: "https://staging.s3.aws.com"
+        },
+    } as const;
 
-export type SeedMultiUrlEnvironmentEnvironment =
-    | typeof SeedMultiUrlEnvironmentEnvironment.Production
-    | typeof SeedMultiUrlEnvironmentEnvironment.Staging;
+export type SeedMultiUrlEnvironmentEnvironment = typeof SeedMultiUrlEnvironmentEnvironment.Production | typeof SeedMultiUrlEnvironmentEnvironment.Staging;

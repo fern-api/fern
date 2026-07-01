@@ -18,6 +18,9 @@ public partial class V1Client : IV1Client
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -30,6 +33,7 @@ public partial class V1Client : IV1Client
                 {
                     Method = HttpMethod.Get,
                     Path = "users",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

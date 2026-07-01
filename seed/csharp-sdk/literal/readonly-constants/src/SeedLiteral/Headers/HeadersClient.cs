@@ -18,6 +18,9 @@ public partial class HeadersClient : IHeadersClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedLiteral.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedLiteral.Core.HeadersBuilder.Builder()
             .Add("X-Endpoint-Version", request.EndpointVersion)
             .Add("X-Async", request.Async)
@@ -33,6 +36,7 @@ public partial class HeadersClient : IHeadersClient
                     Method = HttpMethod.Post,
                     Path = "headers",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

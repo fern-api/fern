@@ -48,12 +48,14 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     go mod vendor && \
     make static EXTRA_LDFLAGS="-s -w" && \
     cp runc /overlay/usr/local/bin/runc
+ARG REKOR_VERSION=1.5.2
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
     go get golang.org/x/net@v${XNET_VERSION} \
            golang.org/x/crypto@v${XCRYPTO_VERSION} \
            golang.org/x/sys@v${XSYS_VERSION} \
            github.com/containerd/containerd/v2@v${CONTAINERD_VERSION} \
+           github.com/sigstore/rekor@v${REKOR_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \

@@ -8,6 +8,7 @@ import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.MediaTypes;
 import com.seed.multiLineDocs.core.ObjectMappers;
 import com.seed.multiLineDocs.core.RequestOptions;
+import com.seed.multiLineDocs.core.RetryInterceptor;
 import com.seed.multiLineDocs.core.SeedMultiLineDocsApiException;
 import com.seed.multiLineDocs.core.SeedMultiLineDocsException;
 import com.seed.multiLineDocs.core.SeedMultiLineDocsHttpResponse;
@@ -64,6 +65,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedMultiLineDocsHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -132,6 +142,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedMultiLineDocsHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

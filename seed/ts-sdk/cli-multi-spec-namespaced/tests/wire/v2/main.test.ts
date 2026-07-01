@@ -4,15 +4,25 @@ import { SeedApiClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("V2Client", () => {
+    
     test("listUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, token: "test", apiKey: "test", environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "token" : "test" , "apiKey" : "test" , "environment" : server.baseUrl });
+        
+        const rawResponseBody = [ { "id" : "id" , "profile" : { "email" : "email" , "displayName" : "displayName" } } ];
+        
+        server
+            .mockEndpoint()
+            .get("/users").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = [{ id: "id", profile: { email: "email", displayName: "displayName" } }];
-
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.v2.listUsers();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.v2.listUsers();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

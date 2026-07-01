@@ -374,6 +374,7 @@ export const PageActionOptions = z.object({
     chatgpt: z.boolean().optional(),
     claude: z.boolean().optional(),
     cursor: z.boolean().optional(),
+    mcp: z.boolean().optional(),
     vscode: z.boolean().optional(),
     custom: z.array(CustomPageAction).optional()
 });

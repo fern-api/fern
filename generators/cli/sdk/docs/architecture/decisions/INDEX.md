@@ -398,14 +398,21 @@ the listed risk materializes). Listed in rough priority order.
 
 ### D-AF. `@file` resolution in JSON body inputs (Stainless parity)
 
-- **Where documented today:** [FER-10436](https://linear.app/buildwithfern/issue/FER-10436); [PR #164](https://github.com/fern-api/cli-sdk/pull/164); [PR #201](https://github.com/fern-api/cli-sdk/pull/201); [`ARCHITECTURE.md` §8.23](../ARCHITECTURE.md#823-file-resolution-in-body-inputs).
+- **Where documented today:** [FER-10436](https://linear.app/buildwithfern/issue/FER-10436); [PR #164](https://github.com/fern-api/cli-sdk/pull/164); [PR #201](https://github.com/fern-api/cli-sdk/pull/201); [FER-10532](https://linear.app/buildwithfern/issue/FER-10532); [PR #202](https://github.com/fern-api/cli-sdk/pull/202); [`ARCHITECTURE.md` §8.23](../ARCHITECTURE.md#823-file-resolution-in-body-inputs).
 - **Driver:** Stainless parity — users expect `@<path>` to embed file
   contents in body flags, matching the Stainless CLI convention.
 - **Implementation:** `resolve_file_refs()` / `strip_or_escape_at()` in
-  `src/openapi/executor.rs`. `@<path>` reads and embeds (UTF-8 → string,
-  binary → base64). `\@` escapes. Works at all `@`-aware sites including
-  object-shorthand JSON and `--json` whole-body. Blocking I/O wrapped in
-  `block_in_place`.
+  `src/openapi/executor.rs`. Three modes: `@<path>` auto-sniffs encoding
+  (UTF-8 → string, binary → base64); `@file://<path>` requires valid
+  UTF-8 or errors; `@data://<path>` always base64-encodes. `\@` escapes
+  at all prefixes. Works at all `@`-aware sites including object-shorthand
+  JSON and `--json` whole-body. Blocking I/O wrapped in `block_in_place`.
+  Dry-run JSON exposes `binary_body.source.mode` for encoding auditability.
+- **Update (2026-06-18):** [PR #202](https://github.com/fern-api/cli-sdk/pull/202)
+  added `@file://` and `@data://` explicit-mode URI prefixes, completing
+  Stainless parity ([FER-10532](https://linear.app/buildwithfern/issue/FER-10532)).
+  Under an explicit scheme, `-` is a literal filename (not stdin sentinel),
+  preserving retry semantics for explicit paths.
 - **Why this should be promoted:** The `@file` semantics are user-facing
   and documented in Stainless’s public docs. Changing behavior silently
   breaks copy-pasted examples.
@@ -423,6 +430,55 @@ the listed risk materializes). Listed in rough priority order.
 - **Why this should be promoted:** Union handling affects the wire format
   of every operation using the pattern. A regression silently sends arrays
   where scalars are expected (or vice versa).
+
+### D-AH. `--query` JMESPath filtering (reversal of earlier out-of-scope stance)
+
+- **Where documented today:** [FER-10533](https://linear.app/buildwithfern/issue/FER-10533); [PR #197](https://github.com/fern-api/cli-sdk/pull/197); [`ARCHITECTURE.md` §8.28](../ARCHITECTURE.md#828-query-jmespath-response-filtering).
+- **Driver:** Stainless CLI ships `--query`; customers expected parity.
+  `DESIGN.md` (line 162) previously listed JMESPath as "out of scope
+  (we offer `--jq` instead)" — the team reversed this after field
+  feedback showed `--jq` requires a `jq` install that agent environments
+  often lack.
+- **Implementation:** `jmespath = "0.3"` dependency. Expression compiled
+  once via `jmespath::compile()`, applied per-page/event in
+  `OutputPipeline`. Null results suppressed for streaming (acts as a
+  per-event filter).
+- **Reversal note:** Overrides the earlier "out of scope" position in
+  `DESIGN.md`. `--jq` remains available as a power-user alternative.
+- **Why this should be promoted:** The `--query` flag is user-facing,
+  documented, and changes the output contract for every command. A
+  regression silently returns unfiltered data.
+
+### D-AI. `--format raw` bypasses JSON parsing (`RawSentinel` pattern)
+
+- **Where documented today:** [PR #199](https://github.com/fern-api/cli-sdk/pull/199); `src/formatter.rs` (`OutputFormat::Raw`); `src/error.rs` (`CliError::RawSentinel`); [`ARCHITECTURE.md` §8.27](../ARCHITECTURE.md#827-format-raw-and-format-jsonl).
+- **Driver:** Some APIs return non-JSON bodies (binary, HTML, plain text).
+  The existing JSON-first pipeline would fail or corrupt these. `--format
+  raw` gives agents and users a zero-transformation passthrough.
+- **Implementation:** `OutputFormat::Raw` short-circuits the executor's
+  response path: body bytes stream directly to stdout without
+  `serde_json::from_slice`. Error responses write the error body to
+  stdout and return `CliError::RawSentinel { code }` — a sentinel
+  variant that skips the JSON error envelope because bytes are already
+  on stdout.
+- **Why this should be promoted:** The `RawSentinel` pattern changes the
+  error contract — stdout may contain non-JSON when `--format raw` is
+  active. Downstream consumers parsing stdout as JSON must be aware.
+
+### D-AJ. External pager is explicit-only (`--page-all` + TTY + `!--no-pager`)
+
+- **Where documented today:** [FER-9858](https://linear.app/buildwithfern/issue/FER-9858); [PR #200](https://github.com/fern-api/cli-sdk/pull/200); `src/pager.rs`; [`ARCHITECTURE.md` §8.30](../ARCHITECTURE.md#830-external-pager-support).
+- **Driver:** Paginated output can be thousands of lines. An external
+  pager (`less`) gives humans scrollable output, but must never activate
+  for piped/agent use — agents expect raw stdout.
+- **Implementation:** `PagerConfig::from_env()` resolves
+  `$<BINARY>_PAGER` > `$PAGER` > platform default. `spawn_pager()`
+  only spawns when `--page-all && stdout.is_terminal() && !--no-pager`.
+  Wired into both OpenAPI and GraphQL pagination loops.
+- **Why this should be promoted:** The pager interacts with TTY
+  detection, which is the same mechanism that selects the default output
+  format (D-AE). A regression that spawns the pager in piped mode would
+  block agent scripts waiting for stdin.
 
 ---
 

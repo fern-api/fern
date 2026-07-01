@@ -60,6 +60,12 @@ features:
     description: |
       If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
+  - id: ADDITIONAL_BODY_PROPERTIES
+    advanced: true
+    description: |
+      If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
+      This is only applied to JSON requests.
+
   - id: FORWARD_COMPATIBLE_ENUMS
     advanced: true
     description: |

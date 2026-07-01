@@ -4,4 +4,5 @@
  * @example
  *     {}
  */
-export type GetUserSpecificsRequest = {};
+export interface GetUserSpecificsRequest {
+}

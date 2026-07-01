@@ -11,12 +11,11 @@ import type { LibraryLanguage } from "./orchestrate.js";
 
 /**
  * Docker images that parse library source into library-docs IR. These mirror
- * the parsers that run server-side for the remote (FDR) generation path, and
- * follow the `fernapi/fern-*` Docker Hub convention used by the SDK generators.
+ * the parsers that run server-side for the remote (FDR) generation path.
  */
 const PARSER_IMAGES: Record<LibraryLanguage, string> = {
-    PYTHON: "fernapi/fern-python-library-docs-parser",
-    CPP: "fernapi/fern-cpp-library-docs-parser"
+    PYTHON: "fernenterprise/fern-python-library-docs-parser",
+    CPP: "fernenterprise/fern-cpp-library-docs-parser"
 };
 
 /**

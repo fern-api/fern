@@ -54,7 +54,22 @@ class RawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         def _iter():
-                            _event_source = EventSource(_response)
+                            _event_source = EventSource(
+                                _response,
+                                resumable=True,
+                                stream_reconnection_enabled=request_options.get(
+                                    "stream_reconnection_enabled",
+                                    self._client_wrapper.get_stream_reconnection_enabled(),
+                                )
+                                if request_options is not None
+                                else self._client_wrapper.get_stream_reconnection_enabled(),
+                                max_stream_reconnection_attempts=request_options.get(
+                                    "max_stream_reconnection_attempts",
+                                    self._client_wrapper.get_max_stream_reconnection_attempts(),
+                                )
+                                if request_options is not None
+                                else self._client_wrapper.get_max_stream_reconnection_attempts(),
+                            )
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
@@ -205,7 +220,22 @@ class AsyncRawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         async def _iter():
-                            _event_source = EventSource(_response)
+                            _event_source = EventSource(
+                                _response,
+                                resumable=True,
+                                stream_reconnection_enabled=request_options.get(
+                                    "stream_reconnection_enabled",
+                                    self._client_wrapper.get_stream_reconnection_enabled(),
+                                )
+                                if request_options is not None
+                                else self._client_wrapper.get_stream_reconnection_enabled(),
+                                max_stream_reconnection_attempts=request_options.get(
+                                    "max_stream_reconnection_attempts",
+                                    self._client_wrapper.get_max_stream_reconnection_attempts(),
+                                )
+                                if request_options is not None
+                                else self._client_wrapper.get_max_stream_reconnection_attempts(),
+                            )
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return

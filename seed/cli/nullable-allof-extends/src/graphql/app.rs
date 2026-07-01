@@ -296,6 +296,7 @@ impl AppContext {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
+            query: None,
         };
 
         // Programmatic execution from custom command handlers honors the
@@ -461,7 +462,10 @@ pub(crate) fn collect_params_from_flags(
     Ok(params)
 }
 
-pub(crate) fn build_pagination_config(matches: &clap::ArgMatches) -> executor::PaginationConfig {
+pub(crate) fn build_pagination_config(
+    matches: &clap::ArgMatches,
+    cli_name: &str,
+) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
         page_limit: matches
@@ -472,6 +476,8 @@ pub(crate) fn build_pagination_config(matches: &clap::ArgMatches) -> executor::P
             .get_one::<u64>("page-delay")
             .copied()
             .unwrap_or(100),
+        no_pager: matches.get_flag("no-pager"),
+        cli_name: cli_name.to_string(),
     }
 }
 

@@ -8,6 +8,7 @@ import com.seed.aliasExtends.core.ClientOptions;
 import com.seed.aliasExtends.core.MediaTypes;
 import com.seed.aliasExtends.core.ObjectMappers;
 import com.seed.aliasExtends.core.RequestOptions;
+import com.seed.aliasExtends.core.RetryInterceptor;
 import com.seed.aliasExtends.core.SeedAliasExtendsApiException;
 import com.seed.aliasExtends.core.SeedAliasExtendsException;
 import com.seed.aliasExtends.core.SeedAliasExtendsHttpResponse;
@@ -64,6 +65,15 @@ public class AsyncRawSeedAliasExtendsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedAliasExtendsHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

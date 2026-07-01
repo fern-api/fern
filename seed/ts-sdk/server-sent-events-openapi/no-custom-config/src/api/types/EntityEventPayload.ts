@@ -8,10 +8,10 @@ export interface EntityEventPayload {
 
 export namespace EntityEventPayload {
     export const EventType = {
-        Created: "CREATED",
-        Updated: "UPDATED",
-        Deleted: "DELETED",
-        Preexisting: "PREEXISTING",
-    } as const;
-    export type EventType = (typeof EventType)[keyof typeof EventType];
+            Created: "CREATED",
+            Updated: "UPDATED",
+            Deleted: "DELETED",
+            Preexisting: "PREEXISTING"
+        } as const;
+    export type EventType = typeof EventType[keyof typeof EventType];
 }

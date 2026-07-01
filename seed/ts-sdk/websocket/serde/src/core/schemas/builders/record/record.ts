@@ -56,7 +56,12 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
     };
 }
 
-export function partialRecord<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
+export function partialRecord<
+    RawKey extends string | number,
+    RawValue,
+    ParsedValue,
+    ParsedKey extends string | number,
+>(
     keySchema: Schema<RawKey, ParsedKey>,
     valueSchema: Schema<RawValue, ParsedValue>,
 ): PartialRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> {

@@ -6,6 +6,7 @@ package com.seed.crossPackageTypeNames.resources.folderd.service;
 import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.ObjectMappers;
 import com.seed.crossPackageTypeNames.core.RequestOptions;
+import com.seed.crossPackageTypeNames.core.RetryInterceptor;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesApiException;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesException;
 import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesHttpResponse;
@@ -46,6 +47,15 @@ public class RawServiceClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (okhttp3.Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

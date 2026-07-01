@@ -17,6 +17,9 @@ public partial class MultipartFormClient : IMultipartFormClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -27,6 +30,7 @@ public partial class MultipartFormClient : IMultipartFormClient
         {
             Method = HttpMethod.Post,
             Path = "multipart",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };

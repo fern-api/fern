@@ -2,8 +2,8 @@
 
 /** Execution environment for a rule. */
 export const RuleExecutionContext = {
-    Prod: "prod",
-    Staging: "staging",
-    Dev: "dev",
-} as const;
-export type RuleExecutionContext = (typeof RuleExecutionContext)[keyof typeof RuleExecutionContext];
+        Prod: "prod",
+        Staging: "staging",
+        Dev: "dev"
+    } as const;
+export type RuleExecutionContext = typeof RuleExecutionContext[keyof typeof RuleExecutionContext];

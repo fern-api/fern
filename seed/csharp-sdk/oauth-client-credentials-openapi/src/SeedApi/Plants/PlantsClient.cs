@@ -17,6 +17,9 @@ public partial class PlantsClient : IPlantsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +32,7 @@ public partial class PlantsClient : IPlantsClient
                 {
                     Method = HttpMethod.Get,
                     Path = "plants",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -94,6 +98,9 @@ public partial class PlantsClient : IPlantsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -109,6 +116,7 @@ public partial class PlantsClient : IPlantsClient
                         "plants/{0}",
                         ValueConvert.ToPathParameterString(request.PlantId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -8,6 +8,7 @@ import com.seed.extraProperties.core.ClientOptions;
 import com.seed.extraProperties.core.MediaTypes;
 import com.seed.extraProperties.core.ObjectMappers;
 import com.seed.extraProperties.core.RequestOptions;
+import com.seed.extraProperties.core.RetryInterceptor;
 import com.seed.extraProperties.core.SeedExtraPropertiesApiException;
 import com.seed.extraProperties.core.SeedExtraPropertiesException;
 import com.seed.extraProperties.core.SeedExtraPropertiesHttpResponse;
@@ -64,6 +65,15 @@ public class AsyncRawUserClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedExtraPropertiesHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

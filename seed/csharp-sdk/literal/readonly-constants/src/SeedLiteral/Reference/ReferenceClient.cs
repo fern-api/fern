@@ -18,6 +18,9 @@ public partial class ReferenceClient : IReferenceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedLiteral.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedLiteral.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class ReferenceClient : IReferenceClient
                     Method = HttpMethod.Post,
                     Path = "reference",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

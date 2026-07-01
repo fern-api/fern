@@ -5,32 +5,30 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockCustomAuth } from "./mockAuth";
 
 describe("IdentityClient", () => {
+    
     test("getToken", async () => {
-        const server = mockServerPool.createServer();
-        mockCustomAuth(server);
+        const server = mockServerPool.createServer();mockCustomAuth(server);
 
-        const client = new SeedApiClient({
-            maxRetries: 0,
-            clientId: "username",
-            clientSecret: "password",
-            environment: server.baseUrl,
-        });
-        const rawRequestBody = { username: "username", password: "password" };
-        const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "clientId" : "username" , "clientSecret" : "password" , "environment" : server.baseUrl });
+        const rawRequestBody = { "username" : "username" , "password" : "password" };
+        const rawResponseBody = { "access_token" : "access_token" , "expires_in" : 1 , "refresh_token" : "refresh_token" };
+        
         server
             .mockEndpoint()
-            .post("/identity/token")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/identity/token").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.identity.getToken({
-            username: "username",
-            password: "password",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.identity.getToken({
+    username: "username",
+    password: "password"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

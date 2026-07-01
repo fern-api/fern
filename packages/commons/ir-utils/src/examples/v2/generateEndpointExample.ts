@@ -74,6 +74,7 @@ function maybeCreateAndStoreExample({
     if (!exampleStore.has(key)) {
         const example: V2HttpEndpointExample = {
             displayName,
+            contentType: undefined,
             request,
             response,
             codeSamples: undefined

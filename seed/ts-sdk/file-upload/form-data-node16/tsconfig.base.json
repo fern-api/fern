@@ -12,6 +12,8 @@
         "isolatedModules": true,
         "isolatedDeclarations": true
     },
-    "include": ["src"],
+    "include": [
+        "src"
+    ],
     "exclude": []
 }

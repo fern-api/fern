@@ -2,8 +2,8 @@
  * Controls which docs deployment backend the CLI writes to.
  *
  * Set via FERN_DOCS_DEPLOY_MODE environment variable:
- *   - "legacy"  (default) — existing startDocsRegister / finishDocsRegister flow only.
- *   - "ledger"            — docs-ledger only (fast, incremental).
+ *   - "ledger"  (default) — docs-ledger only (fast, incremental).
+ *   - "legacy"            — existing startDocsRegister / finishDocsRegister flow (opt-in).
  *
  * Self-hosted deployments (FERN_SELF_HOSTED=true) always use legacy mode because
  * the self-hosted FDR does not expose ledger endpoints or S3 infrastructure.
@@ -18,16 +18,16 @@ export function getDocsDeployMode(): DocsDeployMode {
     }
     const raw = process.env.FERN_DOCS_DEPLOY_MODE?.toLowerCase().trim();
     if (raw == null || raw === "") {
-        return "legacy";
+        return "ledger";
     }
     if (isValidMode(raw)) {
         return raw;
     }
     // biome-ignore lint/suspicious/noConsole: intentional user-facing warning for invalid env var
     console.warn(
-        `[fern] Unrecognized FERN_DOCS_DEPLOY_MODE="${raw}" — falling back to "legacy". Valid values: legacy, ledger.`
+        `[fern] Unrecognized FERN_DOCS_DEPLOY_MODE="${raw}" — falling back to "ledger". Valid values: ledger, legacy.`
     );
-    return "legacy";
+    return "ledger";
 }
 
 function isValidMode(value: string): value is DocsDeployMode {

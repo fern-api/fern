@@ -97,12 +97,18 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
+    const maybeInstance =
+        instanceUrl != null ? instances.find((instance) => instance.url === instanceUrl) : instances[0];
 
     if (maybeInstance == null) {
-        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`, undefined, {
-            code: CliError.Code.ConfigError
-        });
+        const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
+        context.failAndThrow(
+            instanceUrl != null
+                ? `No docs instance found matching '${instanceUrl}'.\n\nAvailable instances:\n${available}`
+                : `No docs instance found. Failed to register.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
         return;
     }
 

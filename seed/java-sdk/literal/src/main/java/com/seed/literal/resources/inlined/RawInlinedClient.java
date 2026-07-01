@@ -8,6 +8,7 @@ import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.MediaTypes;
 import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.RequestOptions;
+import com.seed.literal.core.RetryInterceptor;
 import com.seed.literal.core.SeedLiteralApiException;
 import com.seed.literal.core.SeedLiteralException;
 import com.seed.literal.core.SeedLiteralHttpResponse;
@@ -60,6 +61,15 @@ public class RawInlinedClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();

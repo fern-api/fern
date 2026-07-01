@@ -216,7 +216,9 @@ client.folder.service.endpoint
 <dd>
 
 ```ruby
-client.folder.service.unknown_request
+client.folder.service.unknown_request(request: {
+  key: "value"
+})
 ```
 </dd>
 </dl>

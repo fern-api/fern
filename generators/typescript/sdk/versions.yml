@@ -1,4 +1,124 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.75.1
+  changelogEntry:
+    - summary: |
+        Fix asymmetric webhook signature verification to support `payload-format`
+        configuration. When `payload-format.components` includes `timestamp`, the
+        timestamp header value is now included in the data verified by the asymmetric
+        signature, closing a replay-protection gap where the timestamp was
+        unauthenticated.
+      type: fix
+    - summary: |
+        Use `IterableIterator<T>` instead of `HeadersIterator<T>` in the generated `Headers.ts` shim.
+        `HeadersIterator` was added in TypeScript 5.6; the previous annotations broke compilation on TS < 5.6.
+      type: fix
+    - summary: |
+        Upgrade oxc tooling: oxlint 1.69.0 → 1.72.0, oxfmt 0.54.0 → 0.57.0,
+        oxlint-tsgolint 0.23.0 → 0.24.0.
+      type: chore
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 3.75.0
+  changelogEntry:
+    - summary: |
+        TimeoutError now extends the base API error class instead of Error directly,
+        so `instanceof ApiError` catches timeout errors. Added a `requestId` getter
+        to the base API error class that extracts `x-request-id` from the raw response
+        headers.
+      type: feat
+  createdAt: "2026-06-30"
+  irVersion: 67
+- version: 3.74.2
+  changelogEntry:
+    - summary: |
+        Remove the tsgolint rebuild-from-source Docker stage. The published
+        oxlint-tsgolint 0.23.0 binaries are now used directly, eliminating the
+        golang image pull, typescript-go submodule clone, and Go compilation
+        that made Dockerfile builds slow. The two Go stdlib CVEs previously
+        addressed by the rebuild (CVE-2026-42507 net/textproto, CVE-2026-27145
+        crypto/x509) are not exercisable by a linting binary; they will clear
+        automatically when tsgolint ships a release built with go1.26.4+.
+      type: chore
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 3.74.1
+  changelogEntry:
+    - summary: |
+        Fix TS5076 compilation error in generated pagination code when both
+        `hasNextPage` and `step` are configured on offset pagination. The
+        `??` and `&&` operators were mixed without parentheses.
+      type: fix
+    - summary: |
+        Fix TS1484 compilation error in generated webhook code by using
+        `import type` for `SignatureEncoding` to satisfy `verbatimModuleSyntax`.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 3.74.0
+  changelogEntry:
+    - summary: |
+        Support `resumable` flag in SSE streaming endpoints. When an endpoint has
+        `x-fern-streaming.resumable: true`, the generated SDK now includes `resumable: true`
+        in the stream event shape, plumbing the flag through to the runtime for use by
+        reconnection logic. Adds `stream: { reconnectionEnabled, maxReconnectionAttempts }`
+        request options for runtime control of reconnection behavior.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.4
+  changelogEntry:
+    - summary: |
+        Treat null values identically to undefined when serializing query string
+        parameters. Previously, null values in objects and arrays were serialized as
+        empty strings (e.g. `key=`); they are now omitted from the query string,
+        matching the existing behavior for undefined values and the
+        QueryStringBuilder API.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.3
+  changelogEntry:
+    - summary: |
+        Fix SSE event parsing to buffer data and yield on blank lines per the SSE spec.
+        Previously, the parser yielded events immediately on `data:` lines, causing
+        `id:` and `retry:` fields that follow the `data:` line to be missed or
+        associated with the wrong event.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.2
+  changelogEntry:
+    - summary: |
+        Fix a request-wrapper collision when an inlined path parameter (`inlinePathParameters: true`)
+        shares its property name with an inlined request-body property (e.g. a `{idType}` path
+        parameter and an `idType` body field). Previously the generated interface emitted a duplicate
+        member and the client destructured the path parameter out of the request, dropping the body
+        property from the payload. The colliding property is now emitted once and used for both the
+        URL path and the request body.
+      type: fix
+    - summary: |
+        Fix a naming collision in generated wire tests when the configured client class
+        name (`naming.client`) matches the error namespace export. Previously the client
+        class import and the error namespace import shared a single binding, which shadowed
+        each other and made error references (e.g. `Client.namespace.SomeError`) unresolvable.
+        The error namespace is now imported under an alternate alias when a collision is detected.
+        The same collision also produced a duplicate identifier in the root `index.ts` (the client
+        class re-export clashed with `export * as <name> from "./api/index.js"`); the colliding root
+        client re-export is now omitted (the client remains importable from `./Client.js`).
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing to parse when a header example value contains
+        special characters (e.g. double quotes or backticks). Header values in the
+        generated mock-server `.header(...)` calls are now emitted as properly escaped
+        string literals via `JSON.stringify`, instead of being interpolated raw into a
+        double-quoted string.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 3.73.0
   changelogEntry:
     - summary: |

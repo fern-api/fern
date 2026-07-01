@@ -18,6 +18,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class ProblemClient : IProblemClient
                     Method = HttpMethod.Post,
                     Path = "/problem-crud/create",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -97,6 +101,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -113,6 +120,7 @@ public partial class ProblemClient : IProblemClient
                         ValueConvert.ToPathParameterString(problemId)
                     ),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -178,6 +186,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -193,6 +204,7 @@ public partial class ProblemClient : IProblemClient
                         "/problem-crud/delete/{0}",
                         ValueConvert.ToPathParameterString(problemId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -234,6 +246,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -247,6 +262,7 @@ public partial class ProblemClient : IProblemClient
                     Method = HttpMethod.Post,
                     Path = "/problem-crud/default-starter-files",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

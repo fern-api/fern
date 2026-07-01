@@ -7,6 +7,7 @@ import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.ObjectMappers;
 import com.seed.fileDownload.core.RequestOptions;
 import com.seed.fileDownload.core.ResponseBodyInputStream;
+import com.seed.fileDownload.core.RetryInterceptor;
 import com.seed.fileDownload.core.SeedFileDownloadApiException;
 import com.seed.fileDownload.core.SeedFileDownloadException;
 import com.seed.fileDownload.core.SeedFileDownloadHttpResponse;
@@ -52,6 +53,15 @@ public class AsyncRawServiceClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedFileDownloadHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -102,6 +112,15 @@ public class AsyncRawServiceClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         CompletableFuture<SeedFileDownloadHttpResponse<InputStream>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {

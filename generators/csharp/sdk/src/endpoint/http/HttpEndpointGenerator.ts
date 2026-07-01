@@ -216,10 +216,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string,
         serviceId: ServiceId
     ) {
-        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-        if (queryParameterCodeBlock != null) {
-            queryParameterCodeBlock.code.write(writer);
-        }
+        const queryParameterCodeBlock =
+            endpointSignatureInfo.request?.getQueryParameterCodeBlock() ??
+            this.getDefaultQueryParameterCodeBlock({ endpoint });
+        queryParameterCodeBlock.code.write(writer);
         const headerParameterCodeBlock =
             endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
             this.getDefaultHeaderParameterCodeBlock({ endpoint });
@@ -235,7 +235,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
             headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
-            queryString: queryParameterCodeBlock?.queryStringReference,
+            queryString: queryParameterCodeBlock.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -300,10 +300,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         const body = this.csharp.codeblock((writer) => {
-            const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-            if (queryParameterCodeBlock != null) {
-                queryParameterCodeBlock.code.write(writer);
-            }
+            const queryParameterCodeBlock =
+                endpointSignatureInfo.request?.getQueryParameterCodeBlock() ??
+                this.getDefaultQueryParameterCodeBlock({ endpoint });
+            queryParameterCodeBlock.code.write(writer);
             const headerParameterCodeBlock =
                 endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
                 this.getDefaultHeaderParameterCodeBlock({ endpoint });
@@ -319,26 +319,51 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 bodyReference: requestBodyCodeBlock?.requestBodyReference,
                 pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                 headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
-                queryString: queryParameterCodeBlock?.queryStringReference,
+                queryString: queryParameterCodeBlock.queryStringReference,
                 endpointRequest: endpointSignatureInfo.request
             });
             if (apiRequestCodeBlock.code) {
                 writer.writeNode(apiRequestCodeBlock.code);
             }
 
-            // Call SendRequestAsync with await
-            writer.write(`var ${this.names.variables.response} = `);
-            writer.writeNode(
-                rawClient.sendRequestWithRequestWrapper({
-                    request: apiRequestCodeBlock.requestReference,
-                    clientReference: rawClientReference
-                })
-            );
+            const isResumable = this.context.endpointHasResumableSseResult(endpoint);
+            const requestVarName = "request_";
+
+            if (isResumable) {
+                // Store the request in a variable so it can be reused in the reconnect function
+                writer.write(`var ${requestVarName} = `);
+                writer.writeNode(apiRequestCodeBlock.requestReference);
+                writer.writeSemicolonIfLastCharacterIsNot();
+                writer.writeLine();
+
+                // Call SendRequestAsync with the stored request variable
+                writer.write(`var ${this.names.variables.response} = `);
+                writer.writeNode(
+                    rawClient.sendRequestWithRequestWrapper({
+                        request: this.csharp.codeblock(requestVarName),
+                        clientReference: rawClientReference
+                    })
+                );
+            } else {
+                // Call SendRequestAsync with await
+                writer.write(`var ${this.names.variables.response} = `);
+                writer.writeNode(
+                    rawClient.sendRequestWithRequestWrapper({
+                        request: apiRequestCodeBlock.requestReference,
+                        clientReference: rawClientReference
+                    })
+                );
+            }
             writer.writeSemicolonIfLastCharacterIsNot();
             writer.writeLine();
 
             // Generate success and error handling that returns WithRawResponse<T>
-            this.writeWithRawResponseSuccessAndErrorHandling(endpoint, writer);
+            this.writeWithRawResponseSuccessAndErrorHandling(
+                endpoint,
+                writer,
+                isResumable ? requestVarName : undefined,
+                isResumable ? rawClientReference : undefined
+            );
         });
 
         cls.addMethod({
@@ -385,7 +410,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private writeWithRawResponseSuccessAndErrorHandling(endpoint: HttpEndpoint, writer: Writer) {
+    private writeWithRawResponseSuccessAndErrorHandling(
+        endpoint: HttpEndpoint,
+        writer: Writer,
+        requestVarName?: string,
+        rawClientReference?: string
+    ) {
         // Generate success and error handling that returns WithRawResponse<T>
         // This is used inside the local async function for WithRawResponseTask methods
 
@@ -493,8 +523,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(";");
                 },
                 bytes: () => this.context.logger.error("Bytes not supported"),
-                streaming: () => this.writeStreamingWithRawResponseReturn(endpoint, writer),
-                streamParameter: () => this.writeStreamingWithRawResponseReturn(endpoint, writer),
+                streaming: () =>
+                    this.writeStreamingWithRawResponseReturn(endpoint, writer, requestVarName, rawClientReference),
+                streamParameter: () =>
+                    this.writeStreamingWithRawResponseReturn(endpoint, writer, requestVarName, rawClientReference),
                 _other: () => undefined
             });
         } else if (endpoint.method === FernIr.HttpMethod.Head) {
@@ -574,12 +606,39 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
      * Emits the `return new WithRawResponse<IAsyncEnumerable<T>>() { Data = <BodyMethod>(...), RawResponse = ... };`
      * statement used by streaming endpoint Core methods.
      */
-    private writeStreamingWithRawResponseReturn(endpoint: HttpEndpoint, writer: Writer) {
+    private writeStreamingWithRawResponseReturn(
+        endpoint: HttpEndpoint,
+        writer: Writer,
+        requestVarName?: string,
+        rawClientReference?: string
+    ) {
         const elementType = getStreamElementType(this.context, endpoint);
         if (elementType == null) {
             this.context.logger.error("Streaming endpoint missing element type");
             return;
         }
+        const isResumable = this.context.endpointHasResumableSseResult(endpoint);
+        const optionsParam = endpoint.idempotent
+            ? this.names.parameters.idempotentOptions
+            : this.names.parameters.requestOptions;
+
+        // For resumable SSE endpoints, emit the reconnect function
+        if (isResumable && requestVarName && rawClientReference) {
+            writer.writeLine(
+                `async global::System.Threading.Tasks.Task<${this.context.namespaces.core}.ApiResponse> ReconnectAsync(string lastEventId, CancellationToken ct)`
+            );
+            writer.pushScope();
+            writer.writeLine(
+                `var reconnectHeaders = new Dictionary<string, string>(${requestVarName}.Headers, StringComparer.OrdinalIgnoreCase);`
+            );
+            writer.writeLine(`reconnectHeaders["Last-Event-ID"] = lastEventId;`);
+            writer.writeTextStatement(
+                `return await ${rawClientReference}.SendRequestAsync(${requestVarName} with { Headers = reconnectHeaders }, ct).ConfigureAwait(false)`
+            );
+            writer.popScope();
+            writer.writeLine();
+        }
+
         writer.write("return new ");
         writer.writeNode(
             this.csharp.classReference({
@@ -590,9 +649,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         );
         writer.writeLine("()");
         writer.pushScope();
-        writer.writeLine(
-            `Data = ${this.getStreamBodyMethodName(endpoint)}(${this.names.variables.response}, ${this.names.parameters.cancellationToken}),`
-        );
+        if (isResumable) {
+            writer.writeLine(
+                `Data = ${this.getStreamBodyMethodName(endpoint)}(${this.names.variables.response}, ReconnectAsync, ${optionsParam}, ${this.names.parameters.cancellationToken}),`
+            );
+        } else {
+            writer.writeLine(
+                `Data = ${this.getStreamBodyMethodName(endpoint)}(${this.names.variables.response}, ${this.names.parameters.cancellationToken}),`
+            );
+        }
         writer.write("RawResponse = ");
         this.writeRawResponseInit(writer);
         writer.popScope(); // Close WithRawResponse{}
@@ -617,14 +682,46 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (elementType == null) {
             return;
         }
+        const isResumable = this.context.endpointHasResumableSseResult(endpoint);
         const returnType = this.System.Collections.Generic.IAsyncEnumerable(elementType);
+        const apiResponseType = this.csharp.classReference({
+            name: "ApiResponse",
+            namespace: this.context.namespaces.core
+        });
         const responseParameter = this.csharp.parameter({
-            type: this.csharp.classReference({
-                name: "ApiResponse",
-                namespace: this.context.namespaces.core
-            }),
+            type: apiResponseType,
             name: this.names.variables.response
         });
+        const parameters: ast.Parameter[] = [responseParameter];
+        if (isResumable) {
+            const reconnectFnType = this.csharp.classReference({
+                name: "Func",
+                namespace: "System",
+                generics: [
+                    this.Primitive.string,
+                    this.System.Threading.CancellationToken,
+                    this.csharp.classReference({
+                        name: "Task",
+                        namespace: "System.Threading.Tasks",
+                        generics: [apiResponseType]
+                    })
+                ]
+            });
+            const optionsType = endpoint.idempotent ? this.Types.IdempotentRequestOptions : this.Types.RequestOptions;
+            const optionsParamName = endpoint.idempotent
+                ? this.names.parameters.idempotentOptions
+                : this.names.parameters.requestOptions;
+            parameters.push(
+                this.csharp.parameter({
+                    type: reconnectFnType,
+                    name: "reconnectFn"
+                }),
+                this.csharp.parameter({
+                    type: optionsType.asOptional(),
+                    name: optionsParamName
+                })
+            );
+        }
         const cancellationTokenParameter = this.csharp.parameter({
             type: this.System.Threading.CancellationToken,
             name: this.names.parameters.cancellationToken,
@@ -638,6 +735,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 })
             ]
         });
+        parameters.push(cancellationTokenParameter);
         const body = this.csharp.codeblock((writer) => {
             this.writeStreamingIteratorBody(endpoint, writer);
         });
@@ -645,7 +743,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             name: this.getStreamBodyMethodName(endpoint),
             access: ast.Access.Private,
             isAsync: true,
-            parameters: [responseParameter, cancellationTokenParameter],
+            parameters,
             return_: returnType,
             body: this.wrapWithExceptionHandler({ body, returnType })
         });
@@ -763,29 +861,62 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     const payloadType = context.csharpTypeMapper.convert({
                         reference: sseChunk.payload
                     });
-                    writer.write(`await foreach (var item in `);
-                    writer.writeNode(context.System.Net.ServerSentEvents.SseParser);
-                    writer.writeLine(
-                        `.Create(await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()).EnumerateAsync(${names.parameters.cancellationToken}))`
-                    );
-                    writer.pushScope();
-                    writer.writeLine("if( !string.IsNullOrEmpty(item.Data))");
-                    writer.pushScope();
-                    if (sseChunk.terminator) {
-                        writer.writeLine(`if( item.Data == "${sseChunk.terminator}")`);
+                    const isResumable = sseChunk.resumable === true;
+                    if (isResumable) {
+                        const optionsParam = endpoint.idempotent
+                            ? names.parameters.idempotentOptions
+                            : names.parameters.requestOptions;
+                        // Use SseReconnectHelper for reconnectable streams
+                        writer.write(`await foreach (var item in `);
+                        writer.writeNode(
+                            context.csharp.classReference({
+                                name: "SseReconnectHelper",
+                                namespace: context.namespaces.core
+                            })
+                        );
+                        writer.writeLine(
+                            `.EnumerateWithReconnectAsync(${names.variables.response}, reconnectFn, ${optionsParam}?.MaxStreamReconnectAttempts, ${optionsParam}?.DisableStreamReconnection ?? false, ${
+                                sseChunk.terminator ? `"${sseChunk.terminator}"` : "null"
+                            }, ${names.parameters.cancellationToken}).ConfigureAwait(false))`
+                        );
                         writer.pushScope();
-                        writer.writeTextStatement("break");
-                        writer.popScope();
+                        writer.writeLine("if( !string.IsNullOrEmpty(item.Data))");
+                        writer.pushScope();
+                        deserializeJsonChunk(
+                            payloadType,
+                            context.generation.Types.JsonUtils,
+                            context.generation.Types.BaseException,
+                            "item.Data",
+                            true
+                        );
+                        writer.popScope(); // close if data non-empty
+                        writer.popScope(); // close await foreach
+                    } else {
+                        // Non-resumable SSE: use SseParser directly
+                        writer.write(`await foreach (var item in `);
+                        writer.writeNode(context.System.Net.ServerSentEvents.SseParser);
+                        writer.writeLine(
+                            `.Create(await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()).EnumerateAsync(${names.parameters.cancellationToken}))`
+                        );
+                        writer.pushScope();
+                        writer.writeLine("if( !string.IsNullOrEmpty(item.Data))");
+                        writer.pushScope();
+                        if (sseChunk.terminator) {
+                            writer.writeLine(`if( item.Data == "${sseChunk.terminator}")`);
+                            writer.pushScope();
+                            writer.writeTextStatement("break");
+                            writer.popScope();
+                        }
+                        deserializeJsonChunk(
+                            payloadType,
+                            context.generation.Types.JsonUtils,
+                            context.generation.Types.BaseException,
+                            "item.Data",
+                            true
+                        );
+                        writer.popScope(); // close if data non-empty
+                        writer.popScope(); // close await foreach
                     }
-                    deserializeJsonChunk(
-                        payloadType,
-                        context.generation.Types.JsonUtils,
-                        context.generation.Types.BaseException,
-                        "item.Data",
-                        true
-                    );
-                    writer.popScope(); // close if data non-empty
-                    writer.popScope(); // close await foreach
                 },
                 _other: () => {
                     writer.writeTextStatement("yield break");
@@ -1458,10 +1589,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw GeneratorError.internalError("Internal error; a response type is required for pagination endpoints");
         }
 
-        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
-        if (queryParameterCodeBlock != null) {
-            queryParameterCodeBlock.code.write(writer);
-        }
+        const queryParameterCodeBlock =
+            endpointSignatureInfo.request?.getQueryParameterCodeBlock() ??
+            this.getDefaultQueryParameterCodeBlock({ endpoint });
+        queryParameterCodeBlock.code.write(writer);
         const headerParameterCodeBlock =
             endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
             this.getDefaultHeaderParameterCodeBlock({ endpoint });
@@ -1478,7 +1609,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
             headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
-            queryString: queryParameterCodeBlock?.queryStringReference,
+            queryString: queryParameterCodeBlock.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -1778,6 +1909,31 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         } else {
             return this.names.parameters.requestOptions;
         }
+    }
+
+    /**
+     * Generates query parameter code block for endpoints without a request parameter.
+     * This ensures AdditionalQueryParameters from RequestOptions are always applied.
+     */
+    private getDefaultQueryParameterCodeBlock({ endpoint }: { endpoint: HttpEndpoint }): {
+        code: ast.CodeBlock;
+        queryStringReference: string;
+    } {
+        const requestOptionsVar = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+        const queryStringVar = "_queryString";
+
+        return {
+            code: this.csharp.codeblock((writer) => {
+                writer.write(
+                    `var ${queryStringVar} = new ${this.namespaces.qualifiedCore}.QueryStringBuilder.Builder(capacity: 0)`
+                );
+                writer.writeLine();
+                writer.write(`.MergeAdditional(${requestOptionsVar}?.AdditionalQueryParameters)`);
+                writer.writeLine();
+                writer.write(".Build();");
+            }),
+            queryStringReference: queryStringVar
+        };
     }
 
     /**
