@@ -233,10 +233,12 @@ export class ReactQueryGenerator {
         for (const endpoint of endpoints) {
             let current = root;
             for (const segment of endpoint.serviceAccessPath) {
-                if (!current.children.has(segment)) {
-                    current.children.set(segment, { endpoints: [], children: new Map() });
+                let child = current.children.get(segment);
+                if (child == null) {
+                    child = { endpoints: [], children: new Map() };
+                    current.children.set(segment, child);
                 }
-                current = current.children.get(segment)!;
+                current = child;
             }
             current.endpoints.push(endpoint);
         }
