@@ -103,7 +103,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getPathParamsForRequestWrapper(context: FileContext): FernIr.PathParameter[] {
-        if (!this.shouldInlinePathParameters(context)) {
+        const inlinePP = this.shouldInlinePathParameters(context);
+        if (!inlinePP) {
             return [];
         }
 
@@ -112,7 +113,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             return [];
         }
 
-        return [...this.service.pathParameters, ...this.endpoint.pathParameters];
+        // Use allPathParameters to include ancestor service path parameters,
+        // filtering out Root params which are handled by the client class.
+        return this.endpoint.allPathParameters.filter(
+            (param) => param.location !== FernIr.PathParameterLocation.Root
+        );
     }
 
     public writeToFile(context: FileContext): void {

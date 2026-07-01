@@ -361,13 +361,14 @@ describe("GeneratedRequestWrapperImpl", () => {
         });
 
         it("generates interface with inlined path parameters", () => {
-            const servicePathParam = createPathParameter("organizationId", "ROOT");
+            const servicePathParam = createPathParameter("organizationId", "SERVICE");
             const endpointPathParam = createPathParameter("plantId", "ENDPOINT");
             const init = createDefaultInit({
                 shouldInlinePathParameters: true,
                 service: createHttpService({ pathParameters: [servicePathParam] }),
                 endpoint: createHttpEndpoint({
                     pathParameters: [endpointPathParam],
+                    allPathParameters: [servicePathParam, endpointPathParam],
                     sdkRequest: createSdkRequestWrapper()
                 })
             });
@@ -571,7 +572,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                     createInlinedRequestBodyProperty("sunlightHours", OPTIONAL_INT_TYPE)
                 ]
             });
-            const servicePathParam = createPathParameter("gardenId", "ROOT");
+            const servicePathParam = createPathParameter("gardenId", "SERVICE");
             const endpointPathParam = createPathParameter("plantId", "ENDPOINT");
             const init = createDefaultInit({
                 shouldInlinePathParameters: true,
@@ -581,6 +582,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                 }),
                 endpoint: createHttpEndpoint({
                     pathParameters: [endpointPathParam],
+                    allPathParameters: [servicePathParam, endpointPathParam],
                     queryParameters: [
                         createQueryParameter("page", OPTIONAL_INT_TYPE),
                         createQueryParameter("limit", OPTIONAL_INT_TYPE)
@@ -1913,6 +1915,47 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(keys).toHaveLength(2);
             expect(keys[0]?.originalParameter?.type).toBe("file");
             expect(keys[1]?.originalParameter?.type).toBe("query");
+        });
+
+        it("includes ancestor service path parameters via allPathParameters", () => {
+            const ancestorParam = createPathParameter("accountSid", "SERVICE");
+            const endpointParam = createPathParameter("callSid", "ENDPOINT");
+            const init = createDefaultInit({
+                shouldInlinePathParameters: true,
+                endpoint: createHttpEndpoint({
+                    pathParameters: [endpointParam],
+                    allPathParameters: [ancestorParam, endpointParam],
+                    queryParameters: [createQueryParameter("name", STRING_TYPE)],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({ shouldInlinePathParameters: true });
+            const keys = wrapper.getNonBodyKeysWithData(context);
+            expect(keys).toHaveLength(3);
+            expect(keys[0]?.originalParameter?.type).toBe("path");
+            expect(keys[0]?.propertyName).toBe("accountSid");
+            expect(keys[1]?.originalParameter?.type).toBe("path");
+            expect(keys[1]?.propertyName).toBe("callSid");
+            expect(keys[2]?.originalParameter?.type).toBe("query");
+        });
+
+        it("excludes root path parameters from request wrapper", () => {
+            const rootParam = createPathParameter("version", "ROOT");
+            const serviceParam = createPathParameter("accountSid", "SERVICE");
+            const init = createDefaultInit({
+                shouldInlinePathParameters: true,
+                endpoint: createHttpEndpoint({
+                    allPathParameters: [rootParam, serviceParam],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({ shouldInlinePathParameters: true });
+            const keys = wrapper.getNonBodyKeysWithData(context);
+            expect(keys).toHaveLength(1);
+            expect(keys[0]?.originalParameter?.type).toBe("path");
+            expect(keys[0]?.propertyName).toBe("accountSid");
         });
 
         it("excludes file property keys when inlineFileProperties=false", () => {

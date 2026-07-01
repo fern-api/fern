@@ -546,6 +546,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
             const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)];
 
+            // Build request statements to populate path parameter aliases needed for
+            // the initial URL computation below (getReferenceToPathParameter uses aliases
+            // set during getInitialStatements).
+            statements.push(...this.request.getBuildRequestStatements(context));
+
             // For path pagination, store the base URL for combining with the path later
             if (paginationInfo.type === "path") {
                 statements.push(

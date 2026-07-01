@@ -52,14 +52,15 @@ export function buildUrl({
                 throw new Error("Could not locate path parameter: " + part.pathParameter);
             }
 
+            const computedShouldInline =
+                forceInlinePathParameters || context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest);
             let referenceToPathParameterValue = getReferenceToPathParameter({
                 pathParameter,
                 generatedClientClass,
                 retainOriginalCasing,
                 parameterNaming,
                 caseConverter: context.case,
-                shouldInlinePathParameters:
-                    forceInlinePathParameters || context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
+                shouldInlinePathParameters: computedShouldInline,
                 getReferenceToPathParameterVariableFromRequest
             });
 

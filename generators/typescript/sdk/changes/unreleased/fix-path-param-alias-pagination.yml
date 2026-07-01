@@ -1,0 +1,5 @@
+- summary: |
+    Fix "Could not locate alias" error for path parameters on endpoints with
+    URI/path pagination. The pagination code path now populates request wrapper
+    aliases before referencing path parameters in the initial URL.
+  type: fix

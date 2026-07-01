@@ -228,7 +228,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyProperty);
         const alias = this.nonBodyKeyAliases[defaultName];
         if (alias == null) {
-            throw new Error("Could not locate alias for: " + defaultName);
+            throw new Error(`Could not locate alias for: ${defaultName}`);
         }
         return alias;
     }

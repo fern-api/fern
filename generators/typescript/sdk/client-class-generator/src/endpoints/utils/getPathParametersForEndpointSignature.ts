@@ -4,7 +4,6 @@ import { FileContext } from "@fern-typescript/contexts";
 import { getNonVariablePathParameters } from "./getNonVariablePathParameters.js";
 
 export function getPathParametersForEndpointSignature({
-    service,
     endpoint,
     context
 }: {
@@ -15,5 +14,7 @@ export function getPathParametersForEndpointSignature({
     const shouldInlinePathParameters = context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest);
     return shouldInlinePathParameters
         ? []
-        : getNonVariablePathParameters([...service.pathParameters, ...endpoint.pathParameters]);
+        : getNonVariablePathParameters(
+              endpoint.allPathParameters.filter((p) => p.location !== FernIr.PathParameterLocation.Root)
+          );
 }
