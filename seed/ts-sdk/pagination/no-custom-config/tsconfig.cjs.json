@@ -4,8 +4,6 @@
         "module": "CommonJS",
         "outDir": "dist/cjs"
     },
-    "include": [
-        "src"
-    ],
+    "include": ["src"],
     "exclude": []
 }

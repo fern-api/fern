@@ -1,6 +1,4 @@
-
-import { Readable } from "stream";
-
+import type { Readable } from "stream";
 
 import { fromJson } from "../json.js";
 import { RUNTIME } from "../runtime/index.js";
@@ -10,9 +8,9 @@ export declare namespace Stream {
         /**
          * The HTTP response stream to read from.
          */
-        
+
         stream: Readable | ReadableStream;
-        
+
         /**
          * The event shape to use for parsing the stream data.
          */
@@ -59,9 +57,8 @@ const ID_PREFIX = "id:";
 const RETRY_PREFIX = "retry:";
 
 export class Stream<T> implements AsyncIterable<T> {
-    
     private stream: Readable | ReadableStream;
-    
+
     private parse: (val: unknown) => Promise<T>;
     /**
      * The prefix to use for each message. For example,
@@ -80,7 +77,14 @@ export class Stream<T> implements AsyncIterable<T> {
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
-    constructor({ stream, parse, eventShape, signal, reconnectionEnabled, maxReconnectionAttempts }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
+    constructor({
+        stream,
+        parse,
+        eventShape,
+        signal,
+        reconnectionEnabled,
+        maxReconnectionAttempts,
+    }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
         if (eventShape.type === "sse") {
@@ -251,7 +255,7 @@ export class Stream<T> implements AsyncIterable<T> {
         return {
             async *[Symbol.asyncIterator]() {
                 yield* self.iterMessages();
-            }
+            },
         };
     }
 
@@ -320,6 +324,6 @@ export function readableStreamAsyncIterable<T>(stream: any): AsyncIterableIterat
         },
         [Symbol.asyncIterator]() {
             return this;
-        }
+        },
     };
 }

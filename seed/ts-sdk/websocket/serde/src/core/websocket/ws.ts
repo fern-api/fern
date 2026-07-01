@@ -182,7 +182,9 @@ export class ReconnectingWebSocket {
         if (this._ws) {
             return this._ws.readyState as ReconnectingWebSocket.ReadyState;
         }
-        return this._options.startClosed ? ReconnectingWebSocket.ReadyState.CLOSED : ReconnectingWebSocket.ReadyState.CONNECTING;
+        return this._options.startClosed
+            ? ReconnectingWebSocket.ReadyState.CLOSED
+            : ReconnectingWebSocket.ReadyState.CONNECTING;
     }
 
     /**

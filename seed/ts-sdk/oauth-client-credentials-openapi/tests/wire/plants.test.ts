@@ -5,49 +5,43 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockCustomAuth } from "./mockAuth";
 
 describe("PlantsClient", () => {
-    
     test("list", async () => {
-        const server = mockServerPool.createServer();mockCustomAuth(server);
+        const server = mockServerPool.createServer();
+        mockCustomAuth(server);
 
-        const client = new SeedApiClient({ "maxRetries" : 0 , "clientId" : "username" , "clientSecret" : "password" , "environment" : server.baseUrl });
-        
-        const rawResponseBody = [ { "id" : "id" , "name" : "name" , "species" : "species" } ];
-        
-        server
-            .mockEndpoint()
-            .get("/plants").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+        const client = new SeedApiClient({
+            maxRetries: 0,
+            clientId: "username",
+            clientSecret: "password",
+            environment: server.baseUrl,
+        });
 
-        
-                        
-                                const response = await client.plants.list();
-                                expect(response).toEqual(rawResponseBody);
-                              
-                    
+        const rawResponseBody = [{ id: "id", name: "name", species: "species" }];
+
+        server.mockEndpoint().get("/plants").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.plants.list();
+        expect(response).toEqual(rawResponseBody);
     });
-          
+
     test("get", async () => {
-        const server = mockServerPool.createServer();mockCustomAuth(server);
+        const server = mockServerPool.createServer();
+        mockCustomAuth(server);
 
-        const client = new SeedApiClient({ "maxRetries" : 0 , "clientId" : "username" , "clientSecret" : "password" , "environment" : server.baseUrl });
-        
-        const rawResponseBody = { "id" : "id" , "name" : "name" , "species" : "species" };
-        
-        server
-            .mockEndpoint()
-            .get("/plants/plantId").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+        const client = new SeedApiClient({
+            maxRetries: 0,
+            clientId: "username",
+            clientSecret: "password",
+            environment: server.baseUrl,
+        });
 
-        
-                        
-                                const response = await client.plants.get({
-    plantId: "plantId"
-});
-                                expect(response).toEqual(rawResponseBody);
-                              
-                    
+        const rawResponseBody = { id: "id", name: "name", species: "species" };
+
+        server.mockEndpoint().get("/plants/plantId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.plants.get({
+            plantId: "plantId",
+        });
+        expect(response).toEqual(rawResponseBody);
     });
-          
 });
