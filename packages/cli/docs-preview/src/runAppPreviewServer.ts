@@ -982,14 +982,14 @@ export async function runAppPreviewServer({
             const reloadProjectStart = Date.now();
             project = await reloadProject();
             const reloadProjectTime = Date.now() - reloadProjectStart;
-            context.logger.info(
-                `[BENCHMARK] reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`
+            context.logger.debug(
+                `reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`
             );
 
             // Rebuild dependency map after reloading project
             const depMapStart = Date.now();
             await snippetTracker.buildDependencyMap(project);
-            context.logger.info(`[BENCHMARK] buildDependencyMap: ${Date.now() - depMapStart}ms`);
+            context.logger.debug(`buildDependencyMap: ${Date.now() - depMapStart}ms`);
 
             // Start validation in background - don't block the reload
             const validationStartTime = Date.now();
@@ -1009,8 +1009,8 @@ export async function runAppPreviewServer({
                 });
 
             const docsGenStartTime = Date.now();
-            context.logger.info(
-                `[BENCHMARK] getPreviewDocsDefinition starting (editedFiles: ${editedAbsoluteFilepaths?.length ?? "initial"}, hasPreview: ${previewResult != null})`
+            context.logger.debug(
+                `getPreviewDocsDefinition starting (editedFiles: ${editedAbsoluteFilepaths?.length ?? "initial"}, hasPreview: ${previewResult != null})`
             );
             const newPreviewResult = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
@@ -1021,7 +1021,7 @@ export async function runAppPreviewServer({
                 previousPreviewResult: previewResult
             });
             const docsGenTime = Date.now() - docsGenStartTime;
-            context.logger.info(`[BENCHMARK] getPreviewDocsDefinition: ${docsGenTime}ms`);
+            context.logger.debug(`getPreviewDocsDefinition: ${docsGenTime}ms`);
 
             // Log CLI docs generation time
             void debugLogger.logCliDocsGeneration(docsGenTime, {
@@ -1030,7 +1030,7 @@ export async function runAppPreviewServer({
 
             const totalTime = Date.now() - startTime;
             context.logger.info(
-                `[BENCHMARK] Reload completed in ${totalTime}ms (reloadProject: ${reloadProjectTime}ms, docsGen: ${docsGenTime}ms)`
+                `Reload completed in ${totalTime}ms (reloadProject: ${reloadProjectTime}ms, docsGen: ${docsGenTime}ms)`
             );
 
             // Log CLI reload finish with total time and memory
@@ -1075,8 +1075,6 @@ export async function runAppPreviewServer({
             context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
         }
     }
-    invalidateResponseCache();
-
     // Initialize slug mappings from the initial docs definition
     if (previewResult?.docsDefinition) {
         slugTracker.initialize(previewResult.docsDefinition);
@@ -1163,11 +1161,8 @@ export async function runAppPreviewServer({
     // Parse JSON body middleware for the load-with-url endpoint
     app.use(express.json());
 
-    let loadWithUrlRequestCount = 0;
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
-        const requestStart = Date.now();
-        const requestNum = ++loadWithUrlRequestCount;
         try {
             // Extract locale from the request body URL if present
             const requestBody = req.body as { url?: string } | undefined;
@@ -1175,13 +1170,10 @@ export async function runAppPreviewServer({
             const locale = extractLocaleFromPath(urlPath);
 
             const json = getSerializedDocsLoadResponse(locale);
+            // Content-Type set explicitly because `json` is a pre-serialized string;
+            // res.send(string) would otherwise default to text/html.
             res.setHeader("Content-Type", "application/json");
             res.send(json);
-            const totalTime = Date.now() - requestStart;
-            const responseSizeMB = (json.length / (1024 * 1024)).toFixed(2);
-            context.logger.info(
-                `[BENCHMARK] /load-with-url #${requestNum}: url=${urlPath ?? "(none)"}, total: ${totalTime}ms, size: ${responseSizeMB}MB`
-            );
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
