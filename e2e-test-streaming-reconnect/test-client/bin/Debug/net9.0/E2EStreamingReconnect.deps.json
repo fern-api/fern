@@ -1,0 +1,92 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "E2EStreamingReconnect/1.0.0": {
+        "dependencies": {
+          "SeedServerSentEventsResumable": "0.0.1"
+        },
+        "runtime": {
+          "E2EStreamingReconnect.dll": {}
+        }
+      },
+      "OneOf/3.0.271": {
+        "runtime": {
+          "lib/netstandard2.0/OneOf.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "OneOf.Extended/3.0.271": {
+        "dependencies": {
+          "OneOf": "3.0.271"
+        },
+        "runtime": {
+          "lib/netstandard1.3/OneOf.Extended.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "System.Net.ServerSentEvents/9.0.14": {
+        "runtime": {
+          "lib/net9.0/System.Net.ServerSentEvents.dll": {
+            "assemblyVersion": "9.0.0.14",
+            "fileVersion": "9.0.1426.11910"
+          }
+        }
+      },
+      "SeedServerSentEventsResumable/0.0.1": {
+        "dependencies": {
+          "OneOf": "3.0.271",
+          "OneOf.Extended": "3.0.271",
+          "System.Net.ServerSentEvents": "9.0.14"
+        },
+        "runtime": {
+          "SeedServerSentEventsResumable.dll": {
+            "assemblyVersion": "0.0.1.0",
+            "fileVersion": "0.0.1.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "E2EStreamingReconnect/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "OneOf/3.0.271": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pqpqeK8xQGggExhr4tesVgJkjdn+9HQAO0QgrYV2hFjE3y90okzk1kQMntMiUOGfV7FrCUfKPaVvPBD4IANqKg==",
+      "path": "oneof/3.0.271",
+      "hashPath": "oneof.3.0.271.nupkg.sha512"
+    },
+    "OneOf.Extended/3.0.271": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-brfuTRgtka/LPsctuZ5MGOrm7jOWteJFg8aAJOBbGA0UOQ/owKJhefOOxs/5AlJCf+ZP/dnGyNMRLWN6Y4jV8g==",
+      "path": "oneof.extended/3.0.271",
+      "hashPath": "oneof.extended.3.0.271.nupkg.sha512"
+    },
+    "System.Net.ServerSentEvents/9.0.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-b43SeoVE5G3M5APa7LsHCKS33YX42EP22TzxRMwnaB/mhCbOtFhuZ4vkkURD7+1uGEzIXOqwHHrO4+8G9uKdyw==",
+      "path": "system.net.serversentevents/9.0.14",
+      "hashPath": "system.net.serversentevents.9.0.14.nupkg.sha512"
+    },
+    "SeedServerSentEventsResumable/0.0.1": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
