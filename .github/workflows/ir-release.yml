@@ -8,6 +8,10 @@ on:
     paths:
       - "packages/ir-sdk/fern/apis/ir-types-latest/VERSION"
 
+permissions: # Required for OIDC
+  id-token: write
+  contents: read
+
 env:
   DO_NOT_TRACK: "1"
 
