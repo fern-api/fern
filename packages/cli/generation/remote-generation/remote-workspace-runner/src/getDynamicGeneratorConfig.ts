@@ -1,3 +1,4 @@
+import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { dynamic } from "@fern-api/ir-sdk";
@@ -17,7 +18,7 @@ export function getDynamicGeneratorConfig({
     return {
         apiName,
         organization,
-        customConfig: generatorInvocation.config,
+        customConfig: stripCliConfigKeys(generatorInvocation.config),
         outputConfig: outputConfig ?? dynamic.GeneratorOutputConfig.local()
     };
 }
