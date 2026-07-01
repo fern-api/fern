@@ -20,12 +20,14 @@ export declare namespace ReactQueryGenerator {
 interface EndpointHookInfo {
     serviceAccessPath: string[];
     endpointCamelName: string;
-    hookName: string;
     method: string;
     hasArgs: boolean;
     docs: string | undefined;
-    /** The base name without the "use" prefix, e.g. "UserList" */
-    baseName: string;
+}
+
+interface NamespaceNode {
+    endpoints: EndpointHookInfo[];
+    children: Map<string, NamespaceNode>;
 }
 
 export class ReactQueryGenerator {
@@ -60,11 +62,20 @@ export class ReactQueryGenerator {
 
         if (hasHooks) {
             files[`${srcPrefix}/react-query/hooks.ts`] = this.generateHooksFile(endpoints);
-            files[`${srcPrefix}/react-query/options.ts`] = this.generateOptionsFile(endpoints);
-            files[`${srcPrefix}/react-query/invalidation.ts`] = this.generateInvalidationFile(endpoints);
         }
 
         return files;
+    }
+
+    private getNamespaceName(): string {
+        const name = this.clientClassName;
+        // SeedApiClient -> seedApi, AcmeClient -> acme, MyApiClient -> myApi
+        const withoutClient = name.endsWith("Client") ? name.slice(0, -"Client".length) : name;
+        return withoutClient.charAt(0).toLowerCase() + withoutClient.slice(1);
+    }
+
+    private getQueryKeyPrefix(): string {
+        return this.npmPackageName ?? this.namespaceExport;
     }
 
     private generateIndexFile(hasHooks: boolean): string {
@@ -74,11 +85,9 @@ export class ReactQueryGenerator {
             `export { ${clientName}Provider, use${clientName}Context } from "./context.js";\n` +
             `export type { ${clientName}ProviderProps } from "./context.js";\n` +
             `export { type QueryKey } from "@tanstack/react-query";\n` +
-            `export type { QueryHookOptions, SuspenseQueryHookOptions, MutationHookOptions } from "./types.js";\n`;
+            `export type { QueryHookOptions, SuspenseQueryHookOptions, InfiniteQueryHookOptions, SuspenseInfiniteQueryHookOptions, MutationHookOptions } from "./types.js";\n`;
         if (hasHooks) {
-            content += `export * from "./hooks.js";\n`;
-            content += `export * from "./options.js";\n`;
-            content += `export * from "./invalidation.js";\n`;
+            content += `export { ${this.getNamespaceName()} } from "./hooks.js";\n`;
         }
         return content;
     }
@@ -156,6 +165,9 @@ export class ReactQueryGenerator {
 
     private generateHooksFile(endpoints: EndpointHookInfo[]): string {
         const clientName = this.clientClassName;
+        const queryKeyPrefix = this.getQueryKeyPrefix();
+        const namespaceName = this.getNamespaceName();
+
         const queryEndpoints = endpoints.filter((e) => this.isQueryMethod(e.method));
         const mutationEndpoints = endpoints.filter((e) => !this.isQueryMethod(e.method));
 
@@ -163,7 +175,6 @@ export class ReactQueryGenerator {
 
         // Imports
         const reactQueryImports: string[] = [];
-        reactQueryImports.push("type QueryKey");
         if (queryEndpoints.length > 0) {
             reactQueryImports.push(
                 "useQuery",
@@ -174,348 +185,331 @@ export class ReactQueryGenerator {
                 "type UseSuspenseQueryResult",
                 "type UseInfiniteQueryResult",
                 "type UseSuspenseInfiniteQueryResult",
-                "type InfiniteData"
+                "type InfiniteData",
+                "type QueryKey",
+                "type QueryClient"
             );
         }
         if (mutationEndpoints.length > 0) {
             reactQueryImports.push("useMutation", "type UseMutationResult");
+            // QueryClient might not be imported yet (no query endpoints)
+            if (queryEndpoints.length === 0) {
+                reactQueryImports.push("type QueryClient");
+            }
         }
         content += `import { ${reactQueryImports.join(", ")} } from "@tanstack/react-query";\n`;
         content += `import type { ${clientName} } from "../index.js";\n`;
         content += `import { use${clientName}Context } from "./context.js";\n`;
 
         // Import types
-        const typeImports: string[] = ["QueryHookOptions", "SuspenseQueryHookOptions"];
+        const typeImports: string[] = [];
         if (queryEndpoints.length > 0) {
-            typeImports.push("InfiniteQueryHookOptions", "SuspenseInfiniteQueryHookOptions");
+            typeImports.push(
+                "QueryHookOptions",
+                "SuspenseQueryHookOptions",
+                "InfiniteQueryHookOptions",
+                "SuspenseInfiniteQueryHookOptions"
+            );
         }
         if (mutationEndpoints.length > 0) {
             typeImports.push("MutationHookOptions");
         }
         content += `import type { ${typeImports.join(", ")} } from "./types.js";\n`;
 
-        // Import query options factories
-        if (queryEndpoints.length > 0) {
-            const optionImports = queryEndpoints.map((e) => `${e.baseName}QueryOptions`);
-            content += `import { ${optionImports.join(", ")} } from "./options.js";\n`;
-        }
         content += `\n`;
 
-        const queryKeyPrefix = this.npmPackageName ?? this.namespaceExport;
-
-        // Generate query hooks
-        for (const endpoint of queryEndpoints) {
-            content += this.generateQueryHook(endpoint, queryKeyPrefix, clientName);
-            content += `\n`;
-        }
-
-        // Generate mutation hooks
-        for (const endpoint of mutationEndpoints) {
-            content += this.generateMutationHook(endpoint, queryKeyPrefix, clientName);
-            content += `\n`;
-        }
+        // Build tree and generate namespace object
+        const tree = this.buildEndpointTree(endpoints);
+        content += `export const ${namespaceName} = `;
+        content += this.generateNamespaceObject(tree, queryKeyPrefix, clientName, [], 0);
+        content += `;\n`;
 
         return content;
     }
 
-    private generateQueryHook(endpoint: EndpointHookInfo, queryKeyPrefix: string, clientName: string): string {
-        const { hookName, serviceAccessPath, endpointCamelName, hasArgs, docs, baseName } = endpoint;
+    private buildEndpointTree(endpoints: EndpointHookInfo[]): NamespaceNode {
+        const root: NamespaceNode = { endpoints: [], children: new Map() };
 
-        const methodType = `${clientName}${serviceAccessPath.map((s) => `["${s}"]`).join("")}["${endpointCamelName}"]`;
-        const dataType = `Awaited<ReturnType<${methodType}>>`;
-
-        const queryKeyFnName = `${hookName}QueryKey`;
-        const optionsFnName = `${baseName}QueryOptions`;
-
-        let content = "";
-
-        // Query key function
-        if (hasArgs) {
-            content += `export function ${queryKeyFnName}(...args: Parameters<${methodType}>): QueryKey {\n`;
-            content += `    return ["${queryKeyPrefix}", "${[...serviceAccessPath, endpointCamelName].join(".")}", ...args] as const;\n`;
-            content += `}\n\n`;
-        } else {
-            content += `export function ${queryKeyFnName}(): QueryKey {\n`;
-            content += `    return ["${queryKeyPrefix}", "${[...serviceAccessPath, endpointCamelName].join(".")}"] as const;\n`;
-            content += `}\n\n`;
+        for (const endpoint of endpoints) {
+            let current = root;
+            for (const segment of endpoint.serviceAccessPath) {
+                if (!current.children.has(segment)) {
+                    current.children.set(segment, { endpoints: [], children: new Map() });
+                }
+                current = current.children.get(segment)!;
+            }
+            current.endpoints.push(endpoint);
         }
 
-        // useQuery hook
-        if (docs) {
-            content += `/** ${docs} */\n`;
-        }
-        if (hasArgs) {
-            content += `export function ${hookName}(\n`;
-            content += `    args: Parameters<${methodType}>,\n`;
-            content += `    options?: QueryHookOptions<${dataType}>,\n`;
-            content += `): UseQueryResult<${dataType}> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    return useQuery({\n`;
-            content += `        ...${optionsFnName}(client, args),\n`;
-            content += `        ...options,\n`;
-            content += `    });\n`;
-            content += `}\n\n`;
-        } else {
-            content += `export function ${hookName}(\n`;
-            content += `    options?: QueryHookOptions<${dataType}>,\n`;
-            content += `): UseQueryResult<${dataType}> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    return useQuery({\n`;
-            content += `        ...${optionsFnName}(client),\n`;
-            content += `        ...options,\n`;
-            content += `    });\n`;
-            content += `}\n\n`;
+        return root;
+    }
+
+    private generateNamespaceObject(
+        node: NamespaceNode,
+        queryKeyPrefix: string,
+        clientName: string,
+        path: string[],
+        depth: number
+    ): string {
+        const indent = "    ".repeat(depth);
+        const innerIndent = "    ".repeat(depth + 1);
+
+        let content = "{\n";
+
+        // Generate endpoint entries
+        for (const endpoint of node.endpoints) {
+            if (endpoint.docs) {
+                content += `${innerIndent}/** ${endpoint.docs} */\n`;
+            }
+            content += `${innerIndent}${endpoint.endpointCamelName}: `;
+            content += this.generateEndpointNode(endpoint, queryKeyPrefix, clientName, path, depth + 1);
+            content += `,\n`;
         }
 
-        // useSuspenseQuery hook
-        if (docs) {
-            content += `/** ${docs} */\n`;
-        }
-        if (hasArgs) {
-            content += `export function ${hookName}Suspense(\n`;
-            content += `    args: Parameters<${methodType}>,\n`;
-            content += `    options?: SuspenseQueryHookOptions<${dataType}>,\n`;
-            content += `): UseSuspenseQueryResult<${dataType}> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    return useSuspenseQuery({\n`;
-            content += `        ...${optionsFnName}(client, args),\n`;
-            content += `        ...options,\n`;
-            content += `    });\n`;
-            content += `}\n\n`;
-        } else {
-            content += `export function ${hookName}Suspense(\n`;
-            content += `    options?: SuspenseQueryHookOptions<${dataType}>,\n`;
-            content += `): UseSuspenseQueryResult<${dataType}> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    return useSuspenseQuery({\n`;
-            content += `        ...${optionsFnName}(client),\n`;
-            content += `        ...options,\n`;
-            content += `    });\n`;
-            content += `}\n\n`;
+        // Generate child service namespaces
+        for (const [name, child] of node.children) {
+            content += `${innerIndent}${name}: `;
+            content += this.generateNamespaceObject(child, queryKeyPrefix, clientName, [...path, name], depth + 1);
+            content += `,\n`;
         }
 
-        // useInfiniteQuery hook
-        if (docs) {
-            content += `/** ${docs} */\n`;
-        }
-        if (hasArgs) {
-            content += `export function ${hookName}Infinite<TPageParam = unknown>(\n`;
-            content += `    args: Parameters<${methodType}>,\n`;
-            content += `    options: InfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
-            content += `): UseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
-            content += `    return useInfiniteQuery({\n`;
-            content += `        ...${optionsFnName}(client, args),\n`;
-            content += `        initialPageParam,\n`;
-            content += `        getNextPageParam,\n`;
-            content += `        ...rest,\n`;
-            content += `    });\n`;
-            content += `}\n\n`;
-        } else {
-            content += `export function ${hookName}Infinite<TPageParam = unknown>(\n`;
-            content += `    options: InfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
-            content += `): UseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
-            content += `    return useInfiniteQuery({\n`;
-            content += `        ...${optionsFnName}(client),\n`;
-            content += `        initialPageParam,\n`;
-            content += `        getNextPageParam,\n`;
-            content += `        ...rest,\n`;
-            content += `    });\n`;
-            content += `}\n\n`;
-        }
+        // Generate invalidate method at this level
+        const queryKeyParts = [queryKeyPrefix, ...path].map((p) => `"${p}"`).join(", ");
+        content += `${innerIndent}invalidate(queryClient: QueryClient): Promise<void> {\n`;
+        content += `${innerIndent}    return queryClient.invalidateQueries({ queryKey: [${queryKeyParts}] });\n`;
+        content += `${innerIndent}},\n`;
 
-        // useSuspenseInfiniteQuery hook
-        if (docs) {
-            content += `/** ${docs} */\n`;
-        }
-        if (hasArgs) {
-            content += `export function ${hookName}SuspenseInfinite<TPageParam = unknown>(\n`;
-            content += `    args: Parameters<${methodType}>,\n`;
-            content += `    options: SuspenseInfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
-            content += `): UseSuspenseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
-            content += `    return useSuspenseInfiniteQuery({\n`;
-            content += `        ...${optionsFnName}(client, args),\n`;
-            content += `        initialPageParam,\n`;
-            content += `        getNextPageParam,\n`;
-            content += `        ...rest,\n`;
-            content += `    });\n`;
-            content += `}\n`;
-        } else {
-            content += `export function ${hookName}SuspenseInfinite<TPageParam = unknown>(\n`;
-            content += `    options: SuspenseInfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
-            content += `): UseSuspenseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
-            content += `    const client = use${clientName}Context();\n`;
-            content += `    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
-            content += `    return useSuspenseInfiniteQuery({\n`;
-            content += `        ...${optionsFnName}(client),\n`;
-            content += `        initialPageParam,\n`;
-            content += `        getNextPageParam,\n`;
-            content += `        ...rest,\n`;
-            content += `    });\n`;
-            content += `}\n`;
-        }
-
+        content += `${indent}}`;
         return content;
     }
 
-    private generateMutationHook(endpoint: EndpointHookInfo, queryKeyPrefix: string, clientName: string): string {
-        const { hookName, serviceAccessPath, endpointCamelName, hasArgs, docs } = endpoint;
-
-        const clientAccessor = this.buildClientAccessor(serviceAccessPath);
-        const methodType = `${clientName}${serviceAccessPath.map((s) => `["${s}"]`).join("")}["${endpointCamelName}"]`;
-        const dataType = `Awaited<ReturnType<${methodType}>>`;
-        const variablesType = hasArgs ? `Parameters<${methodType}>` : "void";
-
-        let content = "";
-
-        if (docs) {
-            content += `/** ${docs} */\n`;
-        }
-
-        content += `export function ${hookName}Mutation(\n`;
-        content += `    options?: MutationHookOptions<${dataType}, Error, ${variablesType}>,\n`;
-        content += `): UseMutationResult<${dataType}, Error, ${variablesType}> {\n`;
-        content += `    const client = use${clientName}Context();\n`;
-        content += `    return useMutation({\n`;
-        content += `        mutationKey: ["${queryKeyPrefix}", "${[...serviceAccessPath, endpointCamelName].join(".")}"],\n`;
-
-        if (hasArgs) {
-            content += `        mutationFn: (args) => client${clientAccessor}.${endpointCamelName}(...args),\n`;
-        } else {
-            content += `        mutationFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
-        }
-
-        content += `        ...options,\n`;
-        content += `    });\n`;
-        content += `}\n`;
-
-        return content;
-    }
-
-    private generateOptionsFile(endpoints: EndpointHookInfo[]): string {
-        const clientName = this.clientClassName;
-        const queryEndpoints = endpoints.filter((e) => this.isQueryMethod(e.method));
-
-        if (queryEndpoints.length === 0) {
-            return FILE_HEADER;
-        }
-
-        let content = FILE_HEADER;
-        content += `import type { ${clientName} } from "../index.js";\n`;
-        content += `\n`;
-
-        const queryKeyPrefix = this.npmPackageName ?? this.namespaceExport;
-
-        for (const endpoint of queryEndpoints) {
-            content += this.generateQueryOptionsFactory(endpoint, queryKeyPrefix, clientName);
-            content += `\n`;
-        }
-
-        return content;
-    }
-
-    private generateQueryOptionsFactory(
+    private generateEndpointNode(
         endpoint: EndpointHookInfo,
         queryKeyPrefix: string,
-        clientName: string
+        clientName: string,
+        servicePath: string[],
+        depth: number
     ): string {
-        const { serviceAccessPath, endpointCamelName, hasArgs, docs, baseName } = endpoint;
-
-        const clientAccessor = this.buildClientAccessor(serviceAccessPath);
-        const methodType = `${clientName}${serviceAccessPath.map((s) => `["${s}"]`).join("")}["${endpointCamelName}"]`;
-        const dataType = `Awaited<ReturnType<${methodType}>>`;
-        const operationKey = [...serviceAccessPath, endpointCamelName].join(".");
-
-        let content = "";
-
-        if (docs) {
-            content += `/** ${docs} */\n`;
+        if (this.isQueryMethod(endpoint.method)) {
+            return this.generateQueryEndpointNode(endpoint, queryKeyPrefix, clientName, servicePath, depth);
         }
+        return this.generateMutationEndpointNode(endpoint, queryKeyPrefix, clientName, servicePath, depth);
+    }
+
+    private generateQueryEndpointNode(
+        endpoint: EndpointHookInfo,
+        queryKeyPrefix: string,
+        clientName: string,
+        servicePath: string[],
+        depth: number
+    ): string {
+        const { endpointCamelName, hasArgs } = endpoint;
+        const indent = "    ".repeat(depth);
+        const innerIndent = "    ".repeat(depth + 1);
+
+        const clientAccessor = this.buildClientAccessor(servicePath);
+        const methodType = `${clientName}${servicePath.map((s) => `["${s}"]`).join("")}["${endpointCamelName}"]`;
+        const dataType = `Awaited<ReturnType<${methodType}>>`;
+        const queryKeyParts = [queryKeyPrefix, ...servicePath, endpointCamelName].map((p) => `"${p}"`).join(", ");
+
+        let content = "{\n";
+
+        // useQuery
+        if (hasArgs) {
+            content += `${innerIndent}useQuery(\n`;
+            content += `${innerIndent}    args: Parameters<${methodType}>,\n`;
+            content += `${innerIndent}    options?: QueryHookOptions<${dataType}>,\n`;
+            content += `${innerIndent}): UseQueryResult<${dataType}> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    return useQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}, ...args] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `${innerIndent}        ...options,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        } else {
+            content += `${innerIndent}useQuery(\n`;
+            content += `${innerIndent}    options?: QueryHookOptions<${dataType}>,\n`;
+            content += `${innerIndent}): UseQueryResult<${dataType}> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    return useQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `${innerIndent}        ...options,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        }
+
+        // useSuspenseQuery
+        if (hasArgs) {
+            content += `${innerIndent}useSuspenseQuery(\n`;
+            content += `${innerIndent}    args: Parameters<${methodType}>,\n`;
+            content += `${innerIndent}    options?: SuspenseQueryHookOptions<${dataType}>,\n`;
+            content += `${innerIndent}): UseSuspenseQueryResult<${dataType}> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    return useSuspenseQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}, ...args] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `${innerIndent}        ...options,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        } else {
+            content += `${innerIndent}useSuspenseQuery(\n`;
+            content += `${innerIndent}    options?: SuspenseQueryHookOptions<${dataType}>,\n`;
+            content += `${innerIndent}): UseSuspenseQueryResult<${dataType}> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    return useSuspenseQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `${innerIndent}        ...options,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        }
+
+        // useInfiniteQuery
+        if (hasArgs) {
+            content += `${innerIndent}useInfiniteQuery<TPageParam = unknown>(\n`;
+            content += `${innerIndent}    args: Parameters<${methodType}>,\n`;
+            content += `${innerIndent}    options: InfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `${innerIndent}): UseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `${innerIndent}    return useInfiniteQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}, ...args] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `${innerIndent}        initialPageParam,\n`;
+            content += `${innerIndent}        getNextPageParam,\n`;
+            content += `${innerIndent}        ...rest,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        } else {
+            content += `${innerIndent}useInfiniteQuery<TPageParam = unknown>(\n`;
+            content += `${innerIndent}    options: InfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `${innerIndent}): UseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `${innerIndent}    return useInfiniteQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `${innerIndent}        initialPageParam,\n`;
+            content += `${innerIndent}        getNextPageParam,\n`;
+            content += `${innerIndent}        ...rest,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        }
+
+        // useSuspenseInfiniteQuery
+        if (hasArgs) {
+            content += `${innerIndent}useSuspenseInfiniteQuery<TPageParam = unknown>(\n`;
+            content += `${innerIndent}    args: Parameters<${methodType}>,\n`;
+            content += `${innerIndent}    options: SuspenseInfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `${innerIndent}): UseSuspenseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `${innerIndent}    return useSuspenseInfiniteQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}, ...args] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `${innerIndent}        initialPageParam,\n`;
+            content += `${innerIndent}        getNextPageParam,\n`;
+            content += `${innerIndent}        ...rest,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        } else {
+            content += `${innerIndent}useSuspenseInfiniteQuery<TPageParam = unknown>(\n`;
+            content += `${innerIndent}    options: SuspenseInfiniteQueryHookOptions<${dataType}, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: ${dataType}, allPages: ${dataType}[]) => TPageParam | undefined },\n`;
+            content += `${innerIndent}): UseSuspenseInfiniteQueryResult<InfiniteData<${dataType}>> {\n`;
+            content += `${innerIndent}    const client = use${clientName}Context();\n`;
+            content += `${innerIndent}    const { initialPageParam, getNextPageParam, ...rest } = options;\n`;
+            content += `${innerIndent}    return useSuspenseInfiniteQuery({\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `${innerIndent}        initialPageParam,\n`;
+            content += `${innerIndent}        getNextPageParam,\n`;
+            content += `${innerIndent}        ...rest,\n`;
+            content += `${innerIndent}    });\n`;
+            content += `${innerIndent}},\n`;
+        }
+
+        // getQueryKey
+        if (hasArgs) {
+            content += `${innerIndent}getQueryKey(...args: Parameters<${methodType}>): QueryKey {\n`;
+            content += `${innerIndent}    return [${queryKeyParts}, ...args] as const;\n`;
+            content += `${innerIndent}},\n`;
+        } else {
+            content += `${innerIndent}getQueryKey(): QueryKey {\n`;
+            content += `${innerIndent}    return [${queryKeyParts}] as const;\n`;
+            content += `${innerIndent}},\n`;
+        }
+
+        // getQueryOptions (framework-agnostic, for SSR/RSC/prefetch)
+        if (hasArgs) {
+            content += `${innerIndent}getQueryOptions(\n`;
+            content += `${innerIndent}    client: ${clientName},\n`;
+            content += `${innerIndent}    args: Parameters<${methodType}>,\n`;
+            content += `${innerIndent}): { queryKey: readonly unknown[]; queryFn: () => Promise<${dataType}> } {\n`;
+            content += `${innerIndent}    return {\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}, ...args] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
+            content += `${innerIndent}    };\n`;
+            content += `${innerIndent}},\n`;
+        } else {
+            content += `${innerIndent}getQueryOptions(\n`;
+            content += `${innerIndent}    client: ${clientName},\n`;
+            content += `${innerIndent}): { queryKey: readonly unknown[]; queryFn: () => Promise<${dataType}> } {\n`;
+            content += `${innerIndent}    return {\n`;
+            content += `${innerIndent}        queryKey: [${queryKeyParts}] as const,\n`;
+            content += `${innerIndent}        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
+            content += `${innerIndent}    };\n`;
+            content += `${innerIndent}},\n`;
+        }
+
+        // invalidate (uses prefix matching — works with or without args)
+        content += `${innerIndent}invalidate(queryClient: QueryClient, ...args: unknown[]): Promise<void> {\n`;
+        content += `${innerIndent}    return queryClient.invalidateQueries({ queryKey: [${queryKeyParts}, ...args] });\n`;
+        content += `${innerIndent}},\n`;
+
+        content += `${indent}}`;
+        return content;
+    }
+
+    private generateMutationEndpointNode(
+        endpoint: EndpointHookInfo,
+        queryKeyPrefix: string,
+        clientName: string,
+        servicePath: string[],
+        depth: number
+    ): string {
+        const { endpointCamelName, hasArgs } = endpoint;
+        const indent = "    ".repeat(depth);
+        const innerIndent = "    ".repeat(depth + 1);
+
+        const clientAccessor = this.buildClientAccessor(servicePath);
+        const methodType = `${clientName}${servicePath.map((s) => `["${s}"]`).join("")}["${endpointCamelName}"]`;
+        const dataType = `Awaited<ReturnType<${methodType}>>`;
+        const variablesType = hasArgs ? `Parameters<${methodType}>` : "void";
+        const queryKeyParts = [queryKeyPrefix, ...servicePath, endpointCamelName].map((p) => `"${p}"`).join(", ");
+
+        let content = "{\n";
+
+        // useMutation
+        content += `${innerIndent}useMutation(\n`;
+        content += `${innerIndent}    options?: MutationHookOptions<${dataType}, Error, ${variablesType}>,\n`;
+        content += `${innerIndent}): UseMutationResult<${dataType}, Error, ${variablesType}> {\n`;
+        content += `${innerIndent}    const client = use${clientName}Context();\n`;
+        content += `${innerIndent}    return useMutation({\n`;
+        content += `${innerIndent}        mutationKey: [${queryKeyParts}] as const,\n`;
 
         if (hasArgs) {
-            content += `export function ${baseName}QueryOptions(\n`;
-            content += `    client: ${clientName},\n`;
-            content += `    args: Parameters<${methodType}>,\n`;
-            content += `): { queryKey: readonly unknown[]; queryFn: () => Promise<${dataType}> } {\n`;
-            content += `    return {\n`;
-            content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}", ...args] as const,\n`;
-            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(...args),\n`;
-            content += `    };\n`;
-            content += `}\n`;
+            content += `${innerIndent}        mutationFn: (args) => client${clientAccessor}.${endpointCamelName}(...args),\n`;
         } else {
-            content += `export function ${baseName}QueryOptions(\n`;
-            content += `    client: ${clientName},\n`;
-            content += `): { queryKey: readonly unknown[]; queryFn: () => Promise<${dataType}> } {\n`;
-            content += `    return {\n`;
-            content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}"] as const,\n`;
-            content += `        queryFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
-            content += `    };\n`;
-            content += `}\n`;
+            content += `${innerIndent}        mutationFn: () => client${clientAccessor}.${endpointCamelName}(),\n`;
         }
 
-        return content;
-    }
+        content += `${innerIndent}        ...options,\n`;
+        content += `${innerIndent}    });\n`;
+        content += `${innerIndent}},\n`;
 
-    private generateInvalidationFile(endpoints: EndpointHookInfo[]): string {
-        const clientName = this.clientClassName;
-        const queryEndpoints = endpoints.filter((e) => this.isQueryMethod(e.method));
-
-        let content = FILE_HEADER;
-        content += `import type { QueryClient } from "@tanstack/react-query";\n`;
-        content += `\n`;
-
-        const queryKeyPrefix = this.npmPackageName ?? this.namespaceExport;
-
-        for (const endpoint of queryEndpoints) {
-            content += this.generateInvalidationHelpers(endpoint, queryKeyPrefix);
-            content += `\n`;
-        }
-
-        // Generate invalidateAll helper for all queries in this SDK
-        content += `/**\n`;
-        content += ` * Invalidate all queries for this SDK.\n`;
-        content += ` */\n`;
-        content += `export function invalidateAll${clientName}Queries(queryClient: QueryClient): Promise<void> {\n`;
-        content += `    return queryClient.invalidateQueries({\n`;
-        content += `        queryKey: ["${queryKeyPrefix}"],\n`;
-        content += `    });\n`;
-        content += `}\n`;
-
-        return content;
-    }
-
-    private generateInvalidationHelpers(endpoint: EndpointHookInfo, queryKeyPrefix: string): string {
-        const { serviceAccessPath, endpointCamelName, baseName, docs } = endpoint;
-
-        const operationKey = [...serviceAccessPath, endpointCamelName].join(".");
-
-        let content = "";
-
-        // Invalidate all cache entries for this endpoint (regardless of args)
-        if (docs) {
-            content += `/** Invalidate all ${docs.toLowerCase()} queries. */\n`;
-        }
-        content += `export function invalidateAll${baseName}Queries(queryClient: QueryClient): Promise<void> {\n`;
-        content += `    return queryClient.invalidateQueries({\n`;
-        content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}"],\n`;
-        content += `    });\n`;
-        content += `}\n\n`;
-
-        // Invalidate a specific cache entry by args
-        if (docs) {
-            content += `/** Invalidate a specific ${docs.toLowerCase()} query by its arguments. */\n`;
-        }
-        content += `export function invalidate${baseName}Query(queryClient: QueryClient, ...args: unknown[]): Promise<void> {\n`;
-        content += `    return queryClient.invalidateQueries({\n`;
-        content += `        queryKey: ["${queryKeyPrefix}", "${operationKey}", ...args],\n`;
-        content += `    });\n`;
-        content += `}\n`;
-
+        content += `${indent}}`;
         return content;
     }
 
@@ -529,16 +523,9 @@ export class ReactQueryGenerator {
             }
 
             const accessPath = this.getServiceAccessPath(packageId);
-            const serviceNameForHook = this.getServiceNameForHook(packageId);
 
             for (const endpoint of service.endpoints) {
                 const endpointCamelName = this.case.camelUnsafe(endpoint.name);
-                const hookPrefix = serviceNameForHook
-                    ? `use${serviceNameForHook}${this.capitalize(endpointCamelName)}`
-                    : `use${this.capitalize(endpointCamelName)}`;
-                const baseName = serviceNameForHook
-                    ? `${serviceNameForHook}${this.capitalize(endpointCamelName)}`
-                    : this.capitalize(endpointCamelName);
 
                 const hasArgs =
                     endpoint.sdkRequest != null ||
@@ -548,8 +535,6 @@ export class ReactQueryGenerator {
                 endpoints.push({
                     serviceAccessPath: accessPath,
                     endpointCamelName,
-                    hookName: hookPrefix,
-                    baseName,
                     method: endpoint.method,
                     hasArgs,
                     docs: endpoint.docs ?? undefined
@@ -575,14 +560,6 @@ export class ReactQueryGenerator {
         return subpackage.fernFilepath.allParts.map((part) => this.case.camelUnsafe(part));
     }
 
-    private getServiceNameForHook(packageId: PackageId): string {
-        if (packageId.isRoot) {
-            return "";
-        }
-        const path = this.getServiceAccessPath(packageId);
-        return path.map((p) => this.capitalize(p)).join("");
-    }
-
     private buildClientAccessor(accessPath: string[]): string {
         if (accessPath.length === 0) {
             return "";
@@ -595,9 +572,5 @@ export class ReactQueryGenerator {
             { isRoot: true },
             ...Object.keys(this.ir.subpackages).map((subpackageId): PackageId => ({ isRoot: false, subpackageId }))
         ];
-    }
-
-    private capitalize(str: string): string {
-        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }
