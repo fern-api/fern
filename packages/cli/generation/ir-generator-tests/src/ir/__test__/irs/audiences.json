@@ -516,6 +516,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "sharedTypes": [
             "type_webhooks:User"
