@@ -7,7 +7,7 @@ public partial class Examples
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",
             entityId: "<entity_id>",
-            scope: "<scope>",
+            scp: "<scp>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }

@@ -912,12 +912,21 @@ export class DynamicSnippetsConverter {
         const parameters: DynamicSnippets.NamedParameter[] = [];
         const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
         for (const customProperty of customProperties) {
-            if (isLiteralTypeReference(customProperty.property.valueType)) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
                 continue;
             }
             parameters.push({
                 name: this.inflateNameAndWireValue(customProperty.property.name),
                 typeReference: this.convertTypeReference(customProperty.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            parameters.push({
+                name: this.inflateNameAndWireValue(scopes.property.name),
+                typeReference: this.convertTypeReference(scopes.property.valueType),
                 propertyAccess: undefined,
                 variable: undefined
             });
@@ -929,10 +938,15 @@ export class DynamicSnippetsConverter {
         const values: Record<string, unknown> = {};
         const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
         for (const customProperty of customProperties) {
-            if (isLiteralTypeReference(customProperty.property.valueType)) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
                 continue;
             }
             const wireValue = getWireValue(customProperty.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            const wireValue = getWireValue(scopes.property.name);
             values[wireValue] = `<${wireValue}>`;
         }
         return values;
@@ -1124,9 +1138,13 @@ export class DynamicSnippetsConverter {
 }
 
 /**
- * Literal properties are hardcoded in the request class and should not be
- * propagated as constructor parameters or snippet values.
+ * Literal and optional properties should not be propagated as constructor
+ * parameters or snippet values. Literals are hardcoded in the request class,
+ * and optional properties are not included as required constructor parameters.
  */
-function isLiteralTypeReference(typeReference: TypeReference): boolean {
-    return typeReference.type === "container" && typeReference.container.type === "literal";
+function isExcludedOAuthProperty(typeReference: TypeReference): boolean {
+    if (typeReference.type !== "container") {
+        return false;
+    }
+    return typeReference.container.type === "literal" || typeReference.container.type === "optional";
 }
