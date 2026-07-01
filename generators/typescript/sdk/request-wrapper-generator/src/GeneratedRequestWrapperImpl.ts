@@ -115,9 +115,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         // Use allPathParameters to include ancestor service path parameters,
         // filtering out Root params which are handled by the client class.
-        return this.endpoint.allPathParameters.filter(
-            (param) => param.location !== FernIr.PathParameterLocation.Root
-        );
+        return this.endpoint.allPathParameters.filter((param) => param.location !== FernIr.PathParameterLocation.Root);
     }
 
     public writeToFile(context: FileContext): void {
