@@ -50,6 +50,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String AUTH_CLIENT_NAME = "authClient";
     private static final String GET_TOKEN_REQUEST_NAME = "getTokenRequest";
     private static final String EXPIRES_AT_FIELD_NAME = "expiresAt";
+    private static final String TOKEN_LOCK_FIELD_NAME = "tokenLock";
     private static final String BUFFER_IN_MINUTES_CONSTANT_NAME = "BUFFER_IN_MINUTES";
     private static final String EXPIRES_IN_SECONDS_PARAMETER_NAME = "expiresInSeconds";
 
@@ -167,22 +168,43 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         Optional<ResponseProperty> expiryResponseProperty =
                 clientCredentials.getTokenEndpoint().getResponseProperties().getExpiresIn();
         boolean refreshRequired = expiryResponseProperty.isPresent();
+        String tokenPrefixWithSpace = clientCredentials.getTokenPrefix().orElse("Bearer") + " ";
+        // This supplier is a singleton shared across all request threads (registered via
+        // builder.addHeader), so accessToken/expiresAt are volatile and refreshed under tokenLock.
+        // A cache hit takes the lock-free fast path (a volatile snapshot read); only an expired or
+        // absent token enters the synchronized block, where a double-check ensures exactly one thread
+        // performs the token request (single-flight). Fields are written only after fetchToken()
+        // returns, so a failed refresh leaves any prior token intact.
+        CodeBlock refreshNeededPredicate = refreshRequired
+                ? CodeBlock.builder()
+                        .add(
+                                "if ($L == null || $L.isBefore($T.now()))",
+                                ACCESS_TOKEN_FIELD_NAME,
+                                EXPIRES_AT_FIELD_NAME,
+                                Instant.class)
+                        .build()
+                : CodeBlock.builder()
+                        .add("if ($L == null)", ACCESS_TOKEN_FIELD_NAME)
+                        .build();
         MethodSpec.Builder getMethodSpecBuilder = MethodSpec.methodBuilder(GET_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .returns(String.class)
-                .beginControlFlow(
-                        refreshRequired
-                                ? CodeBlock.builder()
-                                        .add(
-                                                "if ($L == null || $L.isBefore($T.now()))",
-                                                ACCESS_TOKEN_FIELD_NAME,
-                                                EXPIRES_AT_FIELD_NAME,
-                                                Instant.class)
-                                        .build()
-                                : CodeBlock.builder()
-                                        .add("if ($L == null)", ACCESS_TOKEN_FIELD_NAME)
-                                        .build())
+                .addStatement("$T cachedToken = this.$L", String.class, ACCESS_TOKEN_FIELD_NAME);
+        if (refreshRequired) {
+            getMethodSpecBuilder
+                    .addStatement("$T cachedExpiresAt = this.$L", Instant.class, EXPIRES_AT_FIELD_NAME)
+                    .beginControlFlow(
+                            "if (cachedToken != null && cachedExpiresAt != null && !cachedExpiresAt.isBefore($T.now()))",
+                            Instant.class);
+        } else {
+            getMethodSpecBuilder.beginControlFlow("if (cachedToken != null)");
+        }
+        getMethodSpecBuilder
+                .addStatement("return $S + cachedToken", tokenPrefixWithSpace)
+                .endControlFlow()
+                .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
+                .beginControlFlow(refreshNeededPredicate)
                 .addStatement("$T authResponse = $L()", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME);
 
         if (isAccessTokenOptional) {
@@ -226,10 +248,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
         getMethodSpecBuilder
                 .endControlFlow()
-                .addStatement(
-                        "return $S + $L",
-                        clientCredentials.getTokenPrefix().orElse("Bearer") + " ",
-                        ACCESS_TOKEN_FIELD_NAME);
+                .addStatement("return $S + $L", tokenPrefixWithSpace, ACCESS_TOKEN_FIELD_NAME)
+                .endControlFlow();
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, CLIENT_ID_FIELD_NAME)
@@ -270,7 +290,11 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         oauthTypeSpecBuilder
                 .addField(FieldSpec.builder(authClientClassName, AUTH_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .build())
-                .addField(FieldSpec.builder(String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE)
+                .addField(FieldSpec.builder(Object.class, TOKEN_LOCK_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                        .initializer("new $T()", Object.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
                         .build())
                 .addMethod(constructorBuilder.build())
                 .addMethod(buildFetchTokenMethod(
@@ -283,7 +307,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addMethod(getMethodSpecBuilder.build());
         if (refreshRequired) {
             oauthTypeSpecBuilder
-                    .addField(FieldSpec.builder(Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE)
+                    .addField(FieldSpec.builder(
+                                    Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
                             .build())
                     .addField(FieldSpec.builder(
                                     long.class,
