@@ -6,8 +6,7 @@
     "use_request_defaults": "all"
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
+  "invokedBy": "manual",
   "requestedVersion": "0.0.1",
-  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

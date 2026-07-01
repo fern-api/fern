@@ -132,9 +132,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
@@ -353,9 +351,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
