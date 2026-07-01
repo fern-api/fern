@@ -1,0 +1,440 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:Iso8601Date": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Iso8601Date",
+                    "camelCase": {
+                        "unsafeName": "iso8601Date",
+                        "safeName": "iso8601Date"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "iso8601date",
+                        "safeName": "iso8601date"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISO8601DATE",
+                        "safeName": "ISO8601DATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Iso8601Date",
+                        "safeName": "Iso8601Date"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "DATE"
+            }
+        },
+        "type_:Iso8601DateNullable": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Iso8601DateNullable",
+                    "camelCase": {
+                        "unsafeName": "iso8601DateNullable",
+                        "safeName": "iso8601DateNullable"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "iso8601date_nullable",
+                        "safeName": "iso8601date_nullable"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISO8601DATE_NULLABLE",
+                        "safeName": "ISO8601DATE_NULLABLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Iso8601DateNullable",
+                        "safeName": "Iso8601DateNullable"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "primitive",
+                    "value": "DATE"
+                }
+            }
+        },
+        "type_:Iso8601DateTimeNullable": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "Iso8601DateTimeNullable",
+                    "camelCase": {
+                        "unsafeName": "iso8601DateTimeNullable",
+                        "safeName": "iso8601DateTimeNullable"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "iso8601date_time_nullable",
+                        "safeName": "iso8601date_time_nullable"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISO8601DATE_TIME_NULLABLE",
+                        "safeName": "ISO8601DATE_TIME_NULLABLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Iso8601DateTimeNullable",
+                        "safeName": "Iso8601DateTimeNullable"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "primitive",
+                    "value": "DATE_TIME"
+                }
+            }
+        },
+        "type_:NullableString": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableString",
+                    "camelCase": {
+                        "unsafeName": "nullableString",
+                        "safeName": "nullableString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_string",
+                        "safeName": "nullable_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_STRING",
+                        "safeName": "NULLABLE_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableString",
+                        "safeName": "NullableString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "nullable",
+                "value": {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            }
+        },
+        "type_:Report": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Report",
+                    "camelCase": {
+                        "unsafeName": "report",
+                        "safeName": "report"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "report",
+                        "safeName": "report"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REPORT",
+                        "safeName": "REPORT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Report",
+                        "safeName": "Report"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "created_date",
+                        "name": {
+                            "originalName": "created_date",
+                            "camelCase": {
+                                "unsafeName": "createdDate",
+                                "safeName": "createdDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "created_date",
+                                "safeName": "created_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CREATED_DATE",
+                                "safeName": "CREATED_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CreatedDate",
+                                "safeName": "CreatedDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:Iso8601Date"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "fraud_date",
+                        "name": {
+                            "originalName": "fraud_date",
+                            "camelCase": {
+                                "unsafeName": "fraudDate",
+                                "safeName": "fraudDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "fraud_date",
+                                "safeName": "fraud_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FRAUD_DATE",
+                                "safeName": "FRAUD_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FraudDate",
+                                "safeName": "FraudDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:Iso8601DateNullable"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "resolved_date",
+                        "name": {
+                            "originalName": "resolved_date",
+                            "camelCase": {
+                                "unsafeName": "resolvedDate",
+                                "safeName": "resolvedDate"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "resolved_date",
+                                "safeName": "resolved_date"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RESOLVED_DATE",
+                                "safeName": "RESOLVED_DATE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ResolvedDate",
+                                "safeName": "ResolvedDate"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:Iso8601DateTimeNullable"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:NullableString"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "title",
+                        "name": {
+                            "originalName": "title",
+                            "camelCase": {
+                                "unsafeName": "title",
+                                "safeName": "title"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "title",
+                                "safeName": "title"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TITLE",
+                                "safeName": "TITLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Title",
+                                "safeName": "Title"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_reports.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "reports",
+                            "camelCase": {
+                                "unsafeName": "reports",
+                                "safeName": "reports"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "reports",
+                                "safeName": "reports"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REPORTS",
+                                "safeName": "REPORTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Reports",
+                                "safeName": "Reports"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "reports",
+                        "camelCase": {
+                            "unsafeName": "reports",
+                            "safeName": "reports"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "reports",
+                            "safeName": "reports"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REPORTS",
+                            "safeName": "REPORTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Reports",
+                            "safeName": "Reports"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/reports"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Report"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}
