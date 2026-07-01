@@ -1,3 +1,4 @@
+using global::System.IO;
 using global::System.Net.ServerSentEvents;
 using global::System.Runtime.CompilerServices;
 
@@ -63,23 +64,52 @@ internal static class SseReconnectHelper
                 .ConfigureAwait(false);
             var parser = SseParser.Create(stream);
             var terminatorReached = false;
+            var streamDropped = false;
 
-            await foreach (
-                var item in parser.EnumerateAsync(cancellationToken).ConfigureAwait(false)
-            )
+            var enumerator = parser
+                .EnumerateAsync(cancellationToken)
+                .GetAsyncEnumerator(cancellationToken);
+            try
             {
-                if (
-                    terminator != null
-                    && !string.IsNullOrEmpty(item.Data)
-                    && item.Data == terminator
-                )
+                while (true)
                 {
-                    terminatorReached = true;
-                    break;
-                }
+                    bool hasNext;
+                    try
+                    {
+                        hasNext = await enumerator
+                            .MoveNextAsync()
+                            .ConfigureAwait(false);
+                    }
+                    catch (IOException)
+                    {
+                        streamDropped = true;
+                        break;
+                    }
 
-                yield return item;
-                reconnectAttempts = 0;
+                    if (!hasNext)
+                    {
+                        break;
+                    }
+
+                    var item = enumerator.Current;
+
+                    if (
+                        terminator != null
+                        && !string.IsNullOrEmpty(item.Data)
+                        && item.Data == terminator
+                    )
+                    {
+                        terminatorReached = true;
+                        break;
+                    }
+
+                    yield return item;
+                    reconnectAttempts = 0;
+                }
+            }
+            finally
+            {
+                await enumerator.DisposeAsync().ConfigureAwait(false);
             }
 
             if (terminatorReached)
@@ -93,6 +123,13 @@ internal static class SseReconnectHelper
                 || reconnectAttempts >= maxAttempts
             )
             {
+                if (streamDropped && !disableReconnection)
+                {
+                    throw new IOException(
+                        "SSE stream connection lost and reconnection failed: "
+                            + "no last event ID available or max reconnect attempts reached."
+                    );
+                }
                 yield break;
             }
 
