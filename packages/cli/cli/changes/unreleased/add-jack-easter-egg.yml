@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a hidden `fern jack` easter egg that animates Jack, the office
+    labradoodle, sprinting across the terminal chasing a ball. 🎾
+  type: chore

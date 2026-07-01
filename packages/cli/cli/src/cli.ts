@@ -82,6 +82,7 @@ import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/g
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
+import { runJack } from "./commands/jack/jack.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
@@ -299,6 +300,8 @@ async function tryRunCli(cliContext: CliContext) {
 
     addProtocGenFernCommand(cli, cliContext);
     addInstallDependenciesCommand(cli, cliContext);
+
+    addJackCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -1687,6 +1690,19 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 port: argv.port
             });
+        }
+    );
+}
+
+// Easter egg: Jack is the office labradoodle. `false` keeps the command hidden
+// from `fern --help`, so you have to know he's in here to find him. 🐾
+function addJackCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "jack",
+        false,
+        (yargs) => yargs,
+        async () => {
+            await runJack(cliContext);
         }
     );
 }
