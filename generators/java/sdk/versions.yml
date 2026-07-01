@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.11.0
+  changelogEntry:
+    - summary: |
+        Fix URL building for paths with non-slash-separated suffixes (e.g.,
+        `/{Sid}.json`). The suffix is now correctly concatenated with the path
+        parameter value instead of being added as a separate path segment,
+        which previously caused an extra `/` before the suffix.
+      type: fix
+    - summary: |
+        Add per-request `maxRetries` override on `RequestOptions`. A non-null
+        per-request value overrides the client-wide `ClientOptions.maxRetries`;
+        when unset, behavior is unchanged. Mirrors the existing per-request
+        `timeout` override pattern and matches the behavior of the TypeScript,
+        Python, Go, C#, PHP, Rust, and Swift SDKs.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
 - version: 4.10.19
   changelogEntry:
     - summary: |
