@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.63.1
+  changelogEntry:
+    - summary: |
+        Prevent --version AUTO from embedding literal 'AUTO' in generated SDK code during remote generation. The magic placeholder is now substituted before IR generation in the remote path, matching the local generation fix.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.63.0
   changelogEntry:
     - summary: |
