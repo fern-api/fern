@@ -49,8 +49,9 @@ export class ReactQueryGenerator {
         this.relativePackagePath = args.relativePackagePath;
     }
 
-    public generateFiles(): Record<string, string> {
+    public generateFiles(): { files: Record<string, string>; serviceExportPaths: string[] } {
         const files: Record<string, string> = {};
+        const serviceExportPaths: string[] = [];
         const srcPrefix = this.relativePackagePath;
 
         const endpoints = this.collectEndpoints();
@@ -61,10 +62,23 @@ export class ReactQueryGenerator {
         files[`${srcPrefix}/react-query/types.ts`] = this.generateTypesFile();
 
         if (hasHooks) {
-            files[`${srcPrefix}/react-query/hooks.ts`] = this.generateHooksFile(endpoints);
+            const tree = this.buildEndpointTree(endpoints);
+
+            // Generate per-service files for each top-level service
+            for (const [serviceName, serviceNode] of tree.children) {
+                files[`${srcPrefix}/react-query/${serviceName}/index.ts`] = this.generateServiceFile(
+                    serviceName,
+                    serviceNode,
+                    [serviceName]
+                );
+                serviceExportPaths.push(`react-query/${serviceName}`);
+            }
+
+            // Generate main hooks file that imports from per-service files
+            files[`${srcPrefix}/react-query/hooks.ts`] = this.generateMainHooksFile(tree);
         }
 
-        return files;
+        return { files, serviceExportPaths };
     }
 
     private getNamespaceName(): string {
@@ -163,18 +177,15 @@ export class ReactQueryGenerator {
         );
     }
 
-    private generateHooksFile(endpoints: EndpointHookInfo[]): string {
-        const clientName = this.clientClassName;
-        const queryKeyPrefix = this.getQueryKeyPrefix();
-        const namespaceName = this.getNamespaceName();
-
-        const queryEndpoints = endpoints.filter((e) => this.isQueryMethod(e.method));
-        const mutationEndpoints = endpoints.filter((e) => !this.isQueryMethod(e.method));
-
-        let content = FILE_HEADER;
-
-        // Imports
+    private generateHookImports(
+        queryEndpoints: EndpointHookInfo[],
+        mutationEndpoints: EndpointHookInfo[],
+        clientName: string,
+        isServiceFile: boolean
+    ): string {
+        let content = "";
         const reactQueryImports: string[] = [];
+
         if (queryEndpoints.length > 0) {
             reactQueryImports.push(
                 "useQuery",
@@ -192,16 +203,19 @@ export class ReactQueryGenerator {
         }
         if (mutationEndpoints.length > 0) {
             reactQueryImports.push("useMutation", "type UseMutationResult");
-            // QueryClient might not be imported yet (no query endpoints)
             if (queryEndpoints.length === 0) {
                 reactQueryImports.push("type QueryClient");
             }
         }
         content += `import { ${reactQueryImports.join(", ")} } from "@tanstack/react-query";\n`;
-        content += `import type { ${clientName} } from "../index.js";\n`;
-        content += `import { use${clientName}Context } from "./context.js";\n`;
 
-        // Import types
+        const clientImportPath = isServiceFile ? "../../index.js" : "../index.js";
+        const contextImportPath = isServiceFile ? "../context.js" : "./context.js";
+        const typesImportPath = isServiceFile ? "../types.js" : "./types.js";
+
+        content += `import type { ${clientName} } from "${clientImportPath}";\n`;
+        content += `import { use${clientName}Context } from "${contextImportPath}";\n`;
+
         const typeImports: string[] = [];
         if (queryEndpoints.length > 0) {
             typeImports.push(
@@ -214,15 +228,95 @@ export class ReactQueryGenerator {
         if (mutationEndpoints.length > 0) {
             typeImports.push("MutationHookOptions");
         }
-        content += `import type { ${typeImports.join(", ")} } from "./types.js";\n`;
+        content += `import type { ${typeImports.join(", ")} } from "${typesImportPath}";\n`;
+
+        return content;
+    }
+
+    private generateServiceFile(serviceName: string, node: NamespaceNode, path: string[]): string {
+        const clientName = this.clientClassName;
+        const queryKeyPrefix = this.getQueryKeyPrefix();
+
+        const allEndpoints = this.collectEndpointsFromNode(node);
+        const queryEndpoints = allEndpoints.filter((e) => this.isQueryMethod(e.method));
+        const mutationEndpoints = allEndpoints.filter((e) => !this.isQueryMethod(e.method));
+
+        let content = FILE_HEADER;
+        content += this.generateHookImports(queryEndpoints, mutationEndpoints, clientName, true);
+        content += `\n`;
+        content += `export const ${serviceName} = `;
+        content += this.generateNamespaceObject(node, queryKeyPrefix, clientName, path, 0);
+        content += `;\n`;
+
+        return content;
+    }
+
+    private generateMainHooksFile(tree: NamespaceNode): string {
+        const clientName = this.clientClassName;
+        const queryKeyPrefix = this.getQueryKeyPrefix();
+        const namespaceName = this.getNamespaceName();
+
+        const serviceNames = [...tree.children.keys()];
+        const rootEndpoints = tree.endpoints;
+        const rootQueryEndpoints = rootEndpoints.filter((e) => this.isQueryMethod(e.method));
+        const rootMutationEndpoints = rootEndpoints.filter((e) => !this.isQueryMethod(e.method));
+        const hasRootEndpoints = rootEndpoints.length > 0;
+
+        let content = FILE_HEADER;
+
+        // Import per-service namespaces
+        for (const serviceName of serviceNames) {
+            content += `import { ${serviceName} } from "./${serviceName}/index.js";\n`;
+        }
+
+        if (hasRootEndpoints) {
+            content += this.generateHookImports(rootQueryEndpoints, rootMutationEndpoints, clientName, false);
+        } else {
+            content += `import { type QueryClient } from "@tanstack/react-query";\n`;
+        }
 
         content += `\n`;
 
-        // Build tree and generate namespace object
-        const tree = this.buildEndpointTree(endpoints);
-        content += `export const ${namespaceName} = `;
-        content += this.generateNamespaceObject(tree, queryKeyPrefix, clientName, [], 0);
-        content += `;\n`;
+        // Build explicit type annotation for --isolatedDeclarations compatibility
+        content += `export const ${namespaceName}: {\n`;
+        for (const endpoint of rootEndpoints) {
+            if (endpoint.docs) {
+                content += `    /** ${endpoint.docs} */\n`;
+            }
+            const returnType = `Awaited<ReturnType<${clientName}["${endpoint.endpointCamelName}"]>>`;
+            if (this.isQueryMethod(endpoint.method)) {
+                content += `    ${endpoint.endpointCamelName}: Record<string, unknown>;\n`;
+            } else {
+                content += `    ${endpoint.endpointCamelName}: Record<string, unknown>;\n`;
+            }
+        }
+        for (const serviceName of serviceNames) {
+            content += `    ${serviceName}: typeof import("./${serviceName}/index.js").${serviceName};\n`;
+        }
+        content += `    invalidate(queryClient: QueryClient): Promise<void>;\n`;
+        content += `} = {\n`;
+
+        // Root-level endpoints (generated inline)
+        for (const endpoint of rootEndpoints) {
+            if (endpoint.docs) {
+                content += `    /** ${endpoint.docs} */\n`;
+            }
+            content += `    ${endpoint.endpointCamelName}: `;
+            content += this.generateEndpointNode(endpoint, queryKeyPrefix, clientName, [], 1);
+            content += `,\n`;
+        }
+
+        // Service namespaces
+        for (const serviceName of serviceNames) {
+            content += `    ${serviceName}: ${serviceName},\n`;
+        }
+
+        // Root-level invalidate
+        content += `    invalidate(queryClient: QueryClient): Promise<void> {\n`;
+        content += `        return queryClient.invalidateQueries({ queryKey: ["${queryKeyPrefix}"] });\n`;
+        content += `    },\n`;
+
+        content += `};\n`;
 
         return content;
     }
@@ -244,6 +338,14 @@ export class ReactQueryGenerator {
         }
 
         return root;
+    }
+
+    private collectEndpointsFromNode(node: NamespaceNode): EndpointHookInfo[] {
+        const endpoints = [...node.endpoints];
+        for (const child of node.children.values()) {
+            endpoints.push(...this.collectEndpointsFromNode(child));
+        }
+        return endpoints;
     }
 
     private generateNamespaceObject(

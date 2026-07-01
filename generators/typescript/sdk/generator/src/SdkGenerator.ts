@@ -831,7 +831,7 @@ export class SdkGenerator {
             npmPackageName: this.npmPackage?.packageName,
             relativePackagePath: this.relativePackagePath
         });
-        const reactQueryFiles = reactQueryGenerator.generateFiles();
+        const { files: reactQueryFiles, serviceExportPaths } = reactQueryGenerator.generateFiles();
         this.extraFiles = {
             ...this.extraFiles,
             ...reactQueryFiles
@@ -846,6 +846,9 @@ export class SdkGenerator {
             type: DependencyType.DEV
         });
         this.extraExportPaths.push("react-query");
+        for (const servicePath of serviceExportPaths) {
+            this.extraExportPaths.push(servicePath);
+        }
         this.generatedPeerDependenciesMeta["@tanstack/react-query"] = { optional: true };
         this.generatedPeerDependenciesMeta["react"] = { optional: true };
         this.context.logger.debug("Generated React Query hooks");

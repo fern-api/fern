@@ -55,6 +55,28 @@
             },
             "default": "./dist/cjs/react-query/index.js"
         },
+        "./react-query/health": {
+            "import": {
+                "types": "./dist/esm/react-query/health/index.d.mts",
+                "default": "./dist/esm/react-query/health/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/health/index.d.ts",
+                "default": "./dist/cjs/react-query/health/index.js"
+            },
+            "default": "./dist/cjs/react-query/health/index.js"
+        },
+        "./react-query/user": {
+            "import": {
+                "types": "./dist/esm/react-query/user/index.d.mts",
+                "default": "./dist/esm/react-query/user/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/user/index.d.ts",
+                "default": "./dist/cjs/react-query/user/index.js"
+            },
+            "default": "./dist/cjs/react-query/user/index.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
