@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.62.1
+  changelogEntry:
+    - summary: |
+        Fix float primitive types rendering as 'double' in documentation. Float types now correctly render as 'float'.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.62.0
   changelogEntry:
     - summary: |
