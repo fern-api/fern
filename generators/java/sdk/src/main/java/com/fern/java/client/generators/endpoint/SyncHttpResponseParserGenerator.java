@@ -274,9 +274,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
         httpResponseBuilder
                 .beginControlFlow("catch ($T e)", JsonProcessingException.class)
                 .addStatement(
-                        "throw new $T($S + e.getMessage(), e)",
-                        baseErrorClassName,
-                        "Failed to deserialize response: ")
+                        "throw new $T($S + e.getMessage(), e)", baseErrorClassName, "Failed to deserialize response: ")
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
