@@ -4,6 +4,7 @@
 
 package com.fern.sdk.resources.endpoints.pagination;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.QueryStringMapper;
@@ -101,6 +102,9 @@ public class RawPaginationClient {
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
         throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+      }
+      catch (JsonProcessingException e) {
+        throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
       }
       catch (IOException e) {
         throw new SeedExhaustiveException("Network error executing HTTP request", e);
