@@ -982,9 +982,7 @@ export async function runAppPreviewServer({
             const reloadProjectStart = Date.now();
             project = await reloadProject();
             const reloadProjectTime = Date.now() - reloadProjectStart;
-            context.logger.debug(
-                `reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`
-            );
+            context.logger.debug(`reloadProject: ${reloadProjectTime}ms (APIs: ${project.apiWorkspaces.length})`);
 
             // Rebuild dependency map after reloading project
             const depMapStart = Date.now();
