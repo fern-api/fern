@@ -64,6 +64,7 @@ export async function runLocalGenerationForWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    generateTests,
     verify,
     disableTelemetry
 }: {
@@ -90,6 +91,7 @@ export async function runLocalGenerationForWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    generateTests?: boolean;
     disableTelemetry?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
@@ -242,7 +244,8 @@ export async function runLocalGenerationForWorkspace({
                     version,
                     userProvidedVersion,
                     packageName,
-                    context: interactiveTaskContext
+                    context: interactiveTaskContext,
+                    generateTests
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -590,7 +593,8 @@ function getPublishConfig({
     version,
     userProvidedVersion,
     packageName,
-    context
+    context,
+    generateTests
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
@@ -598,6 +602,7 @@ function getPublishConfig({
     userProvidedVersion?: string;
     packageName?: string;
     context: TaskContext;
+    generateTests?: boolean;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         const parsed = parseRepository(generatorInvocation.raw.github.uri);
@@ -734,7 +739,7 @@ function getPublishConfig({
         }
 
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: org?.selfHostedSdKs ?? false,
+            generateFullProject: generateTests || org?.selfHostedSdKs || false,
             publishTarget
         });
     }
@@ -742,7 +747,7 @@ function getPublishConfig({
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => {
             return FernIr.PublishingConfig.filesystem({
-                generateFullProject: org?.selfHostedSdKs ?? false,
+                generateFullProject: generateTests || org?.selfHostedSdKs || false,
                 publishTarget: undefined
             });
         },
