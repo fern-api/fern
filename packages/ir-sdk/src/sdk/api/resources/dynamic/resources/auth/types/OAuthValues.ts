@@ -3,4 +3,6 @@
 export interface OAuthValues {
     clientId: string;
     clientSecret: string;
+    /** Map of wire values to their example values for custom OAuth properties. */
+    customPropertyValues: Record<string, unknown> | undefined;
 }
