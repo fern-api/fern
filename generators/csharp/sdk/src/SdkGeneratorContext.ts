@@ -207,6 +207,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
+        if (this.hasResumableSseEndpoints) {
+            files.push(AsIsFiles.SseReconnectHelper);
+        }
         if (this.hasPagination()) {
             files.push(AsIsFiles.Page);
             files.push(AsIsFiles.Pager);
