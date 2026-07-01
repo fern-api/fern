@@ -53,6 +53,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -477,6 +478,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -1093,6 +1095,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -15691,6 +15694,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -16174,6 +16178,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -17155,6 +17160,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_nested": [
@@ -18063,6 +18069,7 @@ exports[`ir > {"name":"packages"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -19485,6 +19492,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -20707,6 +20715,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "sharedTypes": [
             "type_commons:Internal"
@@ -22618,6 +22627,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "sharedTypes": [
             "type_commons:Type"
@@ -28565,6 +28575,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
@@ -31431,6 +31442,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -32190,6 +32202,7 @@ exports[`ir > {"name":"variables"} 1`] = `
             "docs": "I am a variable"
         }
     ],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -32936,6 +32949,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
