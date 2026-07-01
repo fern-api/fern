@@ -6,7 +6,7 @@ export class SeedPropertyAccessTimeoutError extends errors.SeedPropertyAccessErr
     constructor(message: string, opts?: { cause?: unknown }) {
         super({
             message: message,
-            cause: opts?.cause
+            cause: opts?.cause,
         });
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {

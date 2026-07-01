@@ -14,7 +14,13 @@ const SIGNATURE_PREFIX = "rsa=";
  * Extract the timestamp from the "x-payment-timestamp" header and pass it as the timestampHeader parameter.
  */
 export class PaymentNotificationWebhooksHelper {
-    public static async verifySignature(requestBody: string, signatureHeader: string, keyIdHeader: string | undefined, messageId: string, timestampHeader: string): Promise<boolean> {
+    public static async verifySignature(
+        requestBody: string,
+        signatureHeader: string,
+        keyIdHeader: string | undefined,
+        messageId: string,
+        timestampHeader: string,
+    ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null) {
             throw new Error("Missing required parameters for webhook signature verification");
         }
@@ -38,8 +44,17 @@ export class PaymentNotificationWebhooksHelper {
 
         const payload = [messageId, timestampHeader, requestBody].join(".");
 
-        const resolvedKey = await await core.fetchJwks({ url: "https://api.example.com/.well-known/jwks.json", keyId: keyIdHeader });
+        const resolvedKey = await await core.fetchJwks({
+            url: "https://api.example.com/.well-known/jwks.json",
+            keyId: keyIdHeader,
+        });
 
-        return await core.verifyAsymmetricSignature({ payload: payload, signature: sig, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
+        return await core.verifyAsymmetricSignature({
+            payload: payload,
+            signature: sig,
+            publicKey: resolvedKey,
+            algorithm: "RSA_SHA256",
+            encoding: "base64",
+        });
     }
 }

@@ -74,9 +74,7 @@ class SeedBearerTokenEnvironmentVariable:
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         version: typing.Optional[str] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if api_key is None:
             raise ApiError(
@@ -191,9 +189,7 @@ class AsyncSeedBearerTokenEnvironmentVariable:
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         version: typing.Optional[str] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if api_key is None:
             raise ApiError(

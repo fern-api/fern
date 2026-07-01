@@ -1,0 +1,239 @@
+{
+  "apiName": "Float Primitive Type Test API",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/measurements",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "temperature": 1.1,
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "temperature": 1.1,
+              },
+            },
+            "responseBody": {
+              "humidity": 1.1,
+              "pressure": 1.1,
+              "temperature": 1.1,
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "humidity": 1.1,
+                "pressure": 1.1,
+                "temperature": 1.1,
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "createMeasurement",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create a measurement",
+        "originalEndpointId": "endpoint_.createMeasurement",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/measurements",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Measurement",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "Measurement",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Success",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Measurement",
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Measurement",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+        "subtitle": undefined,
+      },
+    ],
+    "graphqlOperations": [],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "Measurement",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Measurement": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Measurement",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Temperature reading in Celsius",
+            "key": "temperature",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "description": undefined,
+                "name": "float",
+                "type": "scalar",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Pressure reading in hPa",
+            "key": "pressure",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "double",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Relative humidity percentage",
+            "key": "humidity",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "description": undefined,
+                  "name": "float",
+                  "type": "scalar",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

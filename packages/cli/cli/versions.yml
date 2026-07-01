@@ -1,4 +1,70 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.63.1
+  changelogEntry:
+    - summary: |
+        Prevent --version AUTO from embedding literal 'AUTO' in generated SDK code during remote generation. The magic placeholder is now substituted before IR generation in the remote path, matching the local generation fix.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.63.0
+  changelogEntry:
+    - summary: |
+        Extend dynamic IR OAuth types with custom properties and populate them in
+        DynamicSnippetsConverter, enabling dynamic snippet generators to include
+        custom OAuth token endpoint request parameters in generated code examples.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.2
+  changelogEntry:
+    - summary: |
+        Strip CLI-only config keys (e.g. `user-agent`) from the custom config
+        before forwarding to generator containers, preventing strict validation
+        errors in generators that reject unknown keys.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.1
+  changelogEntry:
+    - summary: |
+        Fix float primitive types rendering as 'double' in documentation. Float types now correctly render as 'float'.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.0
+  changelogEntry:
+    - summary: |
+        Add `--generate-tests` flag to `fern generate` to enable test file generation
+        even when outputting to a local file system. Previously, tests were only generated
+        for GitHub output modes.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.61.0
+  changelogEntry:
+    - summary: |
+        Add `user-agent` generator config option that accepts a template string for
+        the User-Agent header. Supported placeholders: `{packageName}`, `{version}`,
+        `{language}`, `{generatorVersion}`, `{organization}`, `{apiName}`. When absent,
+        defaults to `{packageName}/{version}` (current behavior, non-breaking).
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.60.0
+  changelogEntry:
+    - summary: |
+        Add `mcp` option to `page-actions` in `docs.yml`. When set to `false`, the MCP server
+        endpoint is disabled, its URL is omitted from `llms.txt` and agent prompts, and the
+        "Connect to Claude Code" / "Connect to Cursor" buttons are hidden.
+      type: feat
+    - summary: |
+        Add `payload-format` support for asymmetric webhook signature verification,
+        allowing the timestamp and other components to be included in the signed
+        payload. Previously, only the raw body was signed for asymmetric webhooks,
+        making the timestamp tolerance check ineffective against replay attacks.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.59.0
   changelogEntry:
     - summary: |

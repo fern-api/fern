@@ -1,0 +1,6 @@
+- summary: |
+    Add opt-in SSE stream reconnection for resumable endpoints.
+    When an SSE endpoint is marked as resumable, the generated SDK
+    automatically reconnects using the Last-Event-ID header.
+    New RequestOptions fields: MaxStreamReconnectAttempts, DisableStreamReconnection.
+  type: feat

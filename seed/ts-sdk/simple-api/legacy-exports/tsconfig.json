@@ -13,8 +13,6 @@
         "isolatedDeclarations": true,
         "module": "CommonJS"
     },
-    "include": [
-        "src"
-    ],
+    "include": ["src"],
     "exclude": []
 }

@@ -75,6 +75,8 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
   circular-references-advanced:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models

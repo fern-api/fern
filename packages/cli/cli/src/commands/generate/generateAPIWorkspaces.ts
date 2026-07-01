@@ -49,6 +49,7 @@ export async function generateAPIWorkspaces({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    generateTests,
     automation
 }: {
     project: Project;
@@ -79,6 +80,7 @@ export async function generateAPIWorkspaces({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    generateTests?: boolean;
     /**
      * When provided, this call runs in fan-out automation mode (see {@link AutomationRunOptions}).
      */
@@ -183,6 +185,7 @@ export async function generateAPIWorkspaces({
                     automationMode,
                     autoMerge,
                     skipIfNoDiff,
+                    generateTests,
                     automation
                 });
             });
