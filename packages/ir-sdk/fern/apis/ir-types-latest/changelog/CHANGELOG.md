@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.10.0] - 2026-07-01
+
+- Feature: Add optional `globalParameters` field to `IntermediateRepresentation`.
+  Introduces `GlobalParameter`, `GlobalParameterLocation`, `GlobalParameterApplyMode`,
+  and `GlobalParameterId` types. Enables the new `x-fern-global-parameters` OpenAPI
+  extension which lets users declare global defaults for request body, query, header,
+  and path fields — set once at the SDK client / CLI config level and injected at the
+  declared wire location, with per-call values winning. Subsumes the header-only
+  semantics of `x-fern-global-headers` and the path-only semantics of
+  `x-fern-sdk-variables`.
+
 ## [v67.9.0] - 2026-06-30
 
 - Feature: Add optional `customProperties` field to dynamic IR `OAuth` type and

@@ -16,6 +16,7 @@ import { Constants } from "../../constants/types/Constants.js";
 import { DynamicIntermediateRepresentation } from "../../dynamic/resources/ir/types/DynamicIntermediateRepresentation.js";
 import { EnvironmentsConfig } from "../../environment/types/EnvironmentsConfig.js";
 import { ErrorDeclaration } from "../../errors/types/ErrorDeclaration.js";
+import { GlobalParameter } from "../../globalParameters/types/GlobalParameter.js";
 import { HttpHeader } from "../../http/types/HttpHeader.js";
 import { HttpPath } from "../../http/types/HttpPath.js";
 import { HttpService } from "../../http/types/HttpService.js";
@@ -63,6 +64,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     errorDiscriminationStrategy: ErrorDiscriminationStrategy,
     sdkConfig: SdkConfig,
     variables: core.serialization.list(VariableDeclaration),
+    globalParameters: core.serialization.list(GlobalParameter).optional(),
     serviceTypeReferenceInfo: ServiceTypeReferenceInfo,
     readmeConfig: ReadmeConfig.optional(),
     sourceConfig: SourceConfig.optional(),
@@ -100,6 +102,7 @@ export declare namespace IntermediateRepresentation {
         errorDiscriminationStrategy: ErrorDiscriminationStrategy.Raw;
         sdkConfig: SdkConfig.Raw;
         variables: VariableDeclaration.Raw[];
+        globalParameters?: GlobalParameter.Raw[] | null;
         serviceTypeReferenceInfo: ServiceTypeReferenceInfo.Raw;
         readmeConfig?: ReadmeConfig.Raw | null;
         sourceConfig?: SourceConfig.Raw | null;

@@ -11,8 +11,10 @@ import {
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
+import { FernGlobalParametersExtension } from "../extensions/x-fern-global-parameters.js";
 import { convertGlobalHeaderOverrides } from "../utils/convertGlobalHeaderOverrides.js";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension.js";
+import { convertGlobalParametersExtension } from "../utils/convertGlobalParametersExtension.js";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1.js";
 import { WebhookConverter } from "./paths/operations/WebhookConverter.js";
 import { PathConverter } from "./paths/PathConverter.js";
@@ -48,6 +50,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.convertSecuritySchemes();
 
         this.convertGlobalHeaders();
+
+        this.convertGlobalParameters();
 
         this.convertBasePath();
 
@@ -96,6 +100,22 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             this.addGlobalHeadersToIr(globalHeaders);
             this.context.setGlobalHeaders(globalHeaders);
+        }
+    }
+
+    private convertGlobalParameters(): void {
+        const globalParametersExtension = new FernGlobalParametersExtension({
+            breadcrumbs: ["x-fern-global-parameters"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const convertedGlobalParameters = globalParametersExtension.convert();
+        if (convertedGlobalParameters != null) {
+            const globalParameters = convertGlobalParametersExtension({
+                globalParameters: convertedGlobalParameters,
+                context: this.context
+            });
+            this.ir.globalParameters = globalParameters;
         }
     }
 

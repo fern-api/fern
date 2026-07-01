@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Test x-fern-global-parameters extension
+  version: 1.0.0
+x-fern-global-parameters:
+  - name: currency
+    in: body
+    target: config.currency
+    env: CHANNEL3_CURRENCY
+    default: USD
+    optional: true
+    apply: auto
+  - name: language
+    in: query
+    env: CHANNEL3_LANGUAGE
+    optional: true
+  - name: x-custom-header
+    in: header
+    env: CUSTOM_HEADER
+    optional: false
+  - name: region
+    in: path
+    target: regionId
+    env: CHANNEL3_REGION
+    default: us
+    apply: explicit
+paths:
+  "/v1/products/{regionId}/search":
+    post:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: search
+      operationId: searchProducts
+      parameters:
+        - in: path
+          name: regionId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                config:
+                  type: object
+                  properties:
+                    currency:
+                      type: string
+                    limit:
+                      type: integer
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+  "/v1/products/{regionId}/{productId}":
+    get:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: get
+      operationId: getProduct
+      parameters:
+        - in: path
+          name: regionId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: productId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
