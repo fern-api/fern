@@ -4,9 +4,7 @@ const DEFAULT_MAX_RETRIES = 2;
 const JITTER_FACTOR = 0.2; // 20% random jitter
 
 function isRetryableStatusCode(statusCode: number): boolean {
-
     return [408, 429].includes(statusCode) || statusCode >= 500;
-
 }
 
 function addPositiveJitter(delay: number): number {

@@ -13,20 +13,20 @@ describe("requestWithRetries", () => {
         Math.random = vi.fn(() => 0.5);
 
         vi.useFakeTimers({
-        	toFake: [
-        		"setTimeout",
-        		"clearTimeout",
-        		"setInterval",
-        		"clearInterval",
-        		"setImmediate",
-        		"clearImmediate",
-        		"Date",
-        		"performance",
-        		"requestAnimationFrame",
-        		"cancelAnimationFrame",
-        		"requestIdleCallback",
-        		"cancelIdleCallback"
-        	]
+            toFake: [
+                "setTimeout",
+                "clearTimeout",
+                "setInterval",
+                "clearInterval",
+                "setImmediate",
+                "clearImmediate",
+                "Date",
+                "performance",
+                "requestAnimationFrame",
+                "cancelAnimationFrame",
+                "requestIdleCallback",
+                "cancelIdleCallback",
+            ],
         });
     });
 

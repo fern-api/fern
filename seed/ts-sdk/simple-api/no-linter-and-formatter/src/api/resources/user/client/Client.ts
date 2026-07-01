@@ -21,9 +21,7 @@ export class UserClient {
 
     constructor(options: UserClient.Options) {
 
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
