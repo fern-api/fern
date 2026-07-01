@@ -277,24 +277,19 @@ export class ReactQueryGenerator {
 
         content += `\n`;
 
-        // Build explicit type annotation for --isolatedDeclarations compatibility
-        content += `export const ${namespaceName}: {\n`;
-        for (const endpoint of rootEndpoints) {
-            if (endpoint.docs) {
-                content += `    /** ${endpoint.docs} */\n`;
+        if (serviceNames.length > 0) {
+            // Explicit type annotation required for --isolatedDeclarations compatibility
+            // when importing service namespace objects from per-service files.
+            content += `export const ${namespaceName}: {\n`;
+            for (const serviceName of serviceNames) {
+                content += `    ${serviceName}: typeof import("./${serviceName}/index.js").${serviceName};\n`;
             }
-            const returnType = `Awaited<ReturnType<${clientName}["${endpoint.endpointCamelName}"]>>`;
-            if (this.isQueryMethod(endpoint.method)) {
-                content += `    ${endpoint.endpointCamelName}: Record<string, unknown>;\n`;
-            } else {
-                content += `    ${endpoint.endpointCamelName}: Record<string, unknown>;\n`;
-            }
+            content += `    invalidate(queryClient: QueryClient): Promise<void>;\n`;
+            content += `} = {\n`;
+        } else {
+            // No service imports — inline content is fully inferable without annotation
+            content += `export const ${namespaceName} = {\n`;
         }
-        for (const serviceName of serviceNames) {
-            content += `    ${serviceName}: typeof import("./${serviceName}/index.js").${serviceName};\n`;
-        }
-        content += `    invalidate(queryClient: QueryClient): Promise<void>;\n`;
-        content += `} = {\n`;
 
         // Root-level endpoints (generated inline)
         for (const endpoint of rootEndpoints) {
