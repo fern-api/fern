@@ -24,6 +24,22 @@ function getFieldPath(operation: APIV1Read.GraphQlOperation): string[] | undefin
     return (operation as { fieldPath?: string[] }).fieldPath;
 }
 
+/**
+ * The stable identifier used to match an operation against a field-path group. Operations
+ * always carry a `name` (the GraphQL field name); the `id` fallback only guards against a
+ * malformed definition where `name` is absent.
+ */
+function getOperationName(operation: APIV1Read.GraphQlOperation): string {
+    return operation.name ?? operation.id;
+}
+
+/**
+ * The GraphQL member of {@link FernNavigation.V1.ApiPackageChild}. Derived from the union so
+ * the shared node-builder ({@link ApiReferenceNodeConverter.buildGraphqlChildNode}) stays in
+ * sync if the fdr-sdk node shape changes.
+ */
+type GraphqlChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "graphql" }>;
+
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -717,26 +733,21 @@ export class ApiReferenceNodeConverter {
                     ? parentSlug.append(endpointItem.slug)
                     : parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
 
-            return {
+            return this.#buildGraphqlChildNode({
                 id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
-                type: "graphql" as const,
-                collapsed: undefined,
                 operationType: graphqlOperation.operationType,
                 graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
-                graphqlOperationIds: undefined,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: convertDocsAvailability(endpointItem.availability ?? parentAvailability),
                 title:
                     endpointItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
                 slug: operationSlug.get(),
+                availability: endpointItem.availability ?? parentAvailability,
                 icon: this.resolveIconFileId(endpointItem.icon),
                 hidden: this.hideChildren || endpointItem.hidden,
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
-                authed: undefined,
                 viewers: endpointItem.viewers,
                 orphaned: endpointItem.orphaned,
                 featureFlags: endpointItem.featureFlags
-            };
+            });
         }
 
         this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint);
@@ -870,25 +881,18 @@ export class ApiReferenceNodeConverter {
                 ? parentSlug.append(operationItem.slug)
                 : parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
 
-        return {
+        return this.#buildGraphqlChildNode({
             id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
-            type: "graphql" as const,
-            collapsed: undefined,
             operationType: graphqlOperation.operationType,
             graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
-            graphqlOperationIds: undefined,
-            apiDefinitionId: this.apiDefinitionId,
-            availability: convertDocsAvailability(operationItem.availability ?? parentAvailability),
             title: operationItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
             slug: operationSlug.get(),
-            icon: undefined,
+            availability: operationItem.availability ?? parentAvailability,
             hidden: this.hideChildren || operationItem.hidden,
-            playground: undefined,
-            authed: undefined,
             viewers: operationItem.viewers,
             orphaned: operationItem.orphaned,
             featureFlags: operationItem.featureFlags
-        };
+        });
     }
 
     // Step 2
@@ -1303,6 +1307,61 @@ export class ApiReferenceNodeConverter {
         return sections;
     }
 
+    // Single source of truth for constructing a GraphQL navigation child node. Callers pass
+    // the fields that vary; the fixed shape (type, apiDefinitionId, authed, ...) and the
+    // availability conversion live here. Optional fields left unset serialize as `undefined`,
+    // matching the previous inline literals exactly — `hidden` is passed explicitly by every
+    // caller so its original value (which may be `undefined`) is preserved verbatim.
+    #buildGraphqlChildNode({
+        id,
+        operationType,
+        graphqlOperationId,
+        graphqlOperationIds,
+        title,
+        slug,
+        availability,
+        hidden,
+        icon,
+        playground,
+        viewers,
+        orphaned,
+        featureFlags
+    }: {
+        id: GraphqlChildNode["id"];
+        operationType: GraphqlChildNode["operationType"];
+        graphqlOperationId: GraphqlChildNode["graphqlOperationId"];
+        graphqlOperationIds?: GraphqlChildNode["graphqlOperationIds"];
+        title: GraphqlChildNode["title"];
+        slug: GraphqlChildNode["slug"];
+        availability: docsYml.RawSchemas.Availability | undefined;
+        hidden: GraphqlChildNode["hidden"];
+        icon?: GraphqlChildNode["icon"];
+        playground?: GraphqlChildNode["playground"];
+        viewers?: GraphqlChildNode["viewers"];
+        orphaned?: GraphqlChildNode["orphaned"];
+        featureFlags?: GraphqlChildNode["featureFlags"];
+    }): GraphqlChildNode {
+        return {
+            id,
+            type: "graphql",
+            collapsed: undefined,
+            operationType,
+            graphqlOperationId,
+            graphqlOperationIds,
+            apiDefinitionId: this.apiDefinitionId,
+            availability: convertDocsAvailability(availability),
+            title,
+            slug,
+            icon,
+            hidden,
+            playground,
+            authed: undefined,
+            viewers,
+            orphaned,
+            featureFlags
+        };
+    }
+
     #buildFieldPathGroupedChildren(
         operations: APIV1Read.GraphQlOperation[],
         parentSlug: FernNavigation.V1.SlugGenerator,
@@ -1341,7 +1400,7 @@ export class ApiReferenceNodeConverter {
         const parentOpsByGroup = new Map<string, APIV1Read.GraphQlOperation>();
         for (const entry of insertionOrder) {
             if (entry.type === "flat") {
-                const name = entry.operation.name ?? entry.operation.id;
+                const name = getOperationName(entry.operation);
                 if (groupedByParent.has(name) && getFieldPath(entry.operation) == null) {
                     parentOpsByGroup.set(name, entry.operation);
                 }
@@ -1352,13 +1411,12 @@ export class ApiReferenceNodeConverter {
 
         for (const entry of insertionOrder) {
             if (entry.type === "flat") {
+                const leafName = getOperationName(entry.operation);
                 // Skip parent operations that were absorbed into a group above.
-                const name = entry.operation.name ?? entry.operation.id;
-                if (parentOpsByGroup.has(name)) {
+                if (parentOpsByGroup.has(leafName)) {
                     continue;
                 }
                 const fieldPath = getFieldPath(entry.operation);
-                const leafName = entry.operation.name ?? entry.operation.id;
                 let operationSlug = parentSlug;
                 // Nest fieldPath segments as URL path components so that namespaced
                 // slugs (e.g. /mutations/account/create) never collide with top-level
@@ -1370,25 +1428,17 @@ export class ApiReferenceNodeConverter {
                     }
                 }
                 operationSlug = operationSlug.append(kebabCase(leafName));
-                children.push({
-                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${entry.operation.id}`),
-                    type: "graphql" as const,
-                    collapsed: undefined,
-                    operationType: entry.operation.operationType,
-                    graphqlOperationId: APIV1Read.GraphQlOperationId(entry.operation.id),
-                    graphqlOperationIds: undefined,
-                    apiDefinitionId: this.apiDefinitionId,
-                    availability: convertDocsAvailability(parentAvailability),
-                    title: entry.operation.displayName ?? entry.operation.name ?? entry.operation.id,
-                    slug: operationSlug.get(),
-                    icon: undefined,
-                    hidden: this.hideChildren,
-                    playground: undefined,
-                    authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined,
-                    featureFlags: undefined
-                });
+                children.push(
+                    this.#buildGraphqlChildNode({
+                        id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${entry.operation.id}`),
+                        operationType: entry.operation.operationType,
+                        graphqlOperationId: APIV1Read.GraphQlOperationId(entry.operation.id),
+                        title: entry.operation.displayName ?? entry.operation.name ?? entry.operation.id,
+                        slug: operationSlug.get(),
+                        availability: parentAvailability,
+                        hidden: this.hideChildren
+                    })
+                );
             } else {
                 // Render the parent field as a single sidebar entry. If a parent
                 // operation exists (returnType points at the namespace type), use it
@@ -1401,25 +1451,18 @@ export class ApiReferenceNodeConverter {
                     continue;
                 }
                 const fieldSlug = parentSlug.append(kebabCase(entry.parentField));
-                children.push({
-                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${representativeOp.id}`),
-                    type: "graphql" as const,
-                    collapsed: undefined,
-                    operationType: representativeOp.operationType,
-                    graphqlOperationId: APIV1Read.GraphQlOperationId(representativeOp.id),
-                    graphqlOperationIds: groupOps.map((op) => APIV1Read.GraphQlOperationId(op.id)),
-                    apiDefinitionId: this.apiDefinitionId,
-                    availability: convertDocsAvailability(parentAvailability),
-                    title: entry.parentField,
-                    slug: fieldSlug.get(),
-                    icon: undefined,
-                    hidden: this.hideChildren,
-                    playground: undefined,
-                    authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined,
-                    featureFlags: undefined
-                });
+                children.push(
+                    this.#buildGraphqlChildNode({
+                        id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${representativeOp.id}`),
+                        operationType: representativeOp.operationType,
+                        graphqlOperationId: APIV1Read.GraphQlOperationId(representativeOp.id),
+                        graphqlOperationIds: groupOps.map((op) => APIV1Read.GraphQlOperationId(op.id)),
+                        title: entry.parentField,
+                        slug: fieldSlug.get(),
+                        availability: parentAvailability,
+                        hidden: this.hideChildren
+                    })
+                );
             }
         }
 

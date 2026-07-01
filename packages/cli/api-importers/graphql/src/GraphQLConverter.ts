@@ -288,6 +288,15 @@ export class GraphQLConverter {
         }
     }
 
+    // Builds an operation id of the form `<operationType>_<segments joined by ".">`.
+    // Flat (top-level) ids use a single segment; namespaced ids include the full field
+    // path so that fields sharing a leaf name across namespaces resolve to distinct ids.
+    // resolveOperationIds falls back from the flat id to the namespaced id on collision,
+    // so both must be produced with this same format for that fallback to line up.
+    private buildOperationId(operationType: FdrAPI.api.v1.register.GraphQlOperationType, segments: string[]): string {
+        return `${operationType.toLowerCase()}_${segments.join(".")}`;
+    }
+
     private convertOperations(
         type: GraphQLObjectType,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
@@ -307,7 +316,7 @@ export class GraphQLConverter {
                 // sidebar and each mutation's example request wraps itself in the
                 // parent field (e.g. mutation { account { create(...) } }).
                 if (operationType === "QUERY") {
-                    const parentFlatId = `${operationType.toLowerCase()}_${fieldName}`;
+                    const parentFlatId = this.buildOperationId(operationType, [fieldName]);
                     pending.push({
                         flatId: parentFlatId,
                         namespacedId: parentFlatId,
@@ -316,7 +325,7 @@ export class GraphQLConverter {
                 }
                 this.convertNamespaceOperations(returnRawType, operationType, pending, [fieldName]);
             } else {
-                const flatId = `${operationType.toLowerCase()}_${fieldName}`;
+                const flatId = this.buildOperationId(operationType, [fieldName]);
                 pending.push({
                     flatId,
                     namespacedId: flatId,
@@ -334,8 +343,8 @@ export class GraphQLConverter {
     ): void {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const flatId = `${operationType.toLowerCase()}_${fieldName}`;
-            const namespacedId = `${operationType.toLowerCase()}_${[...fieldPath, fieldName].join(".")}`;
+            const flatId = this.buildOperationId(operationType, [fieldName]);
+            const namespacedId = this.buildOperationId(operationType, [...fieldPath, fieldName]);
             pending.push({
                 flatId,
                 namespacedId,
