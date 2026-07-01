@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add `rootGroup` custom config field. When set in `generators.yml`,
+        emits `.command_namespace("<rootGroup>")` on the generated
+        `OpenApiBinding`, mounting all spec-derived commands under a
+        configurable namespace prefix (e.g. `cli api users list` instead of
+        `cli users list`). Requires cli-sdk >= 0.19.0.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 0.20.0
   changelogEntry:
     - summary: |
