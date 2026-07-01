@@ -1,0 +1,3 @@
+- summary: |
+    Fix float primitive types rendering as 'double' in documentation. Float types now correctly render as 'float'.
+  type: fix
