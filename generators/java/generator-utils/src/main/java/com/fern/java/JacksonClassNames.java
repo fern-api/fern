@@ -5,9 +5,9 @@ import com.squareup.javapoet.ClassName;
 /**
  * Provides the correct Jackson class names based on the configured Jackson version.
  *
- * Jackson 3 relocated most packages from {@code com.fasterxml.jackson} to {@code tools.jackson},
- * except for annotations which remain at {@code com.fasterxml.jackson.annotation}.
- * Jackson 3 also integrated Jdk8Module and JavaTimeModule into core databind.
+ * <p>Jackson 3 relocated most packages from {@code com.fasterxml.jackson} to {@code tools.jackson}, except for
+ * annotations which remain at {@code com.fasterxml.jackson.annotation}. Jackson 3 also integrated Jdk8Module and
+ * JavaTimeModule into core databind.
  */
 public final class JacksonClassNames {
 
@@ -124,8 +124,8 @@ public final class JacksonClassNames {
     }
 
     /**
-     * Transforms resource template contents by replacing Jackson 2 package names
-     * with Jackson 3 package names when Jackson 3 is configured.
+     * Transforms resource template contents by replacing Jackson 2 package names with Jackson 3 package names when
+     * Jackson 3 is configured.
      */
     public String transformResourceContents(String contents) {
         if (!useJackson3) {
@@ -136,10 +136,8 @@ public final class JacksonClassNames {
         result = result.replace("com.fasterxml.jackson.databind", "tools.jackson.databind");
         result = result.replace("com.fasterxml.jackson.core", "tools.jackson.core");
         // Remove Jdk8Module and JavaTimeModule imports and registrations (built into Jackson 3)
-        result = result.replace(
-                "import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;\n", "");
-        result = result.replace(
-                "import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;\n", "");
+        result = result.replace("import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;\n", "");
+        result = result.replace("import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;\n", "");
         return result;
     }
 }

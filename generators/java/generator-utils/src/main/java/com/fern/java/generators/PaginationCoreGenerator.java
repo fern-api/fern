@@ -177,9 +177,7 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                             }
                         }
 
-                        contents = generatorContext
-                                .getJacksonClassNames()
-                                .transformResourceContents(contents);
+                        contents = generatorContext.getJacksonClassNames().transformResourceContents(contents);
 
                         return GeneratedResourcesJavaFile.builder()
                                 .className(generatorContext

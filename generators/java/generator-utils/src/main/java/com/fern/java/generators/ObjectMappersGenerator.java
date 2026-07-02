@@ -16,17 +16,11 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.JacksonClassNames;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -49,9 +43,8 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedObjectMapper generateFile() {
         JacksonClassNames jackson = generatorContext.getJacksonClassNames();
-        CodeBlock.Builder initBuilder = CodeBlock.builder()
-                .add("$T.builder()\n", jackson.jsonMapper())
-                .indent();
+        CodeBlock.Builder initBuilder =
+                CodeBlock.builder().add("$T.builder()\n", jackson.jsonMapper()).indent();
 
         if (!jackson.isJackson3()) {
             initBuilder

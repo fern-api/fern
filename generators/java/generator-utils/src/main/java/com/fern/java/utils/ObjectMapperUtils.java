@@ -5,7 +5,6 @@ import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -32,8 +31,7 @@ public final class ObjectMapperUtils {
                 typeReferenceBlock = CodeBlock.of(
                         "new $T() {}",
                         ParameterizedTypeName.get(
-                                context.getJacksonClassNames().typeReference(),
-                                dataVariableTypeName));
+                                context.getJacksonClassNames().typeReference(), dataVariableTypeName));
             } else {
                 typeReferenceBlock = CodeBlock.of("$T.class", dataVariableTypeName);
             }

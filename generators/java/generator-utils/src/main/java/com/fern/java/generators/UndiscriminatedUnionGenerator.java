@@ -17,7 +17,6 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.java.JacksonClassNames;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.commons.TypeId;
@@ -32,6 +31,7 @@ import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionMember;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.JacksonClassNames;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
