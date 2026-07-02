@@ -13595,7 +13595,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
         }
     },
     "variables": [],
-    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
