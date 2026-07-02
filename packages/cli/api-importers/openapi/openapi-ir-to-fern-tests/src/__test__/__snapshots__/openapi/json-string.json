@@ -56,4 +56,5 @@ error-discrimination:
 display-name: Test `json-string` example
 ",
   },
+  "specVersion": "1.0.0",
 }

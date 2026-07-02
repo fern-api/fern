@@ -812,7 +812,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                         docs: undefined,
                         availability: undefined,
                         v2Examples: undefined,
-                        clientDefault: undefined
+                        clientDefault: undefined,
+                        defaultValue: undefined
                     }
                 ],
                 authRequirement: "ALL",
@@ -897,6 +898,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             docs: undefined,
                                             availability: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -908,6 +910,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             docs: undefined,
                                             availability: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -923,6 +926,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             docs: undefined,
                                             availability: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },

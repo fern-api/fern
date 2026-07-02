@@ -42,10 +42,13 @@ export class SdkErrorContextImpl implements SdkErrorContext {
         this.errorResolver = errorResolver;
     }
 
-    public getReferenceToError(errorName: FernIr.DeclaredErrorName): Reference {
+    public getReferenceToError(errorName: FernIr.DeclaredErrorName, opts?: { namespaceImport?: string }): Reference {
         return this.errorDeclarationReferencer.getReferenceToError({
             name: errorName,
-            importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: opts?.namespaceImport ?? this.errorDeclarationReferencer.namespaceExport
+            },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             exportsManager: this.exportsManager

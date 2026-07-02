@@ -25,6 +25,8 @@ export class Writer extends AbstractWriter {
 
     /* Import statements */
     protected imports: Set<PackageName> = new Set();
+    /* Maps an imported simple class name to the package that claimed it */
+    protected importedSimpleNames: Map<string, string> = new Map();
 
     constructor({ packageName, customConfig, formatter }: Writer.Args) {
         super();
@@ -38,6 +40,30 @@ export class Writer extends AbstractWriter {
      */
     public addImport(packageName: string): void {
         this.imports.add(packageName);
+    }
+
+    /**
+     * Records a reference to a class and determines how it should be written.
+     *
+     * The first class to claim a given simple name is imported and can be
+     * referenced unqualified. Any later class that shares the same simple name
+     * but lives in a different package cannot be imported (it would clash), so
+     * the caller must write it using its fully-qualified name instead.
+     */
+    public addReference({ name, packageName }: { name: string; packageName: string }): {
+        shouldFullyQualify: boolean;
+    } {
+        const claimedBy = this.importedSimpleNames.get(name);
+        if (claimedBy == null) {
+            this.importedSimpleNames.set(name, packageName);
+            this.imports.add(`${packageName}.${name}`);
+            return { shouldFullyQualify: false };
+        }
+        if (claimedBy === packageName) {
+            this.imports.add(`${packageName}.${name}`);
+            return { shouldFullyQualify: false };
+        }
+        return { shouldFullyQualify: true };
     }
 
     /**

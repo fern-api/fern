@@ -1,0 +1,5 @@
+- summary: |
+    Fix `pyproject.toml` distribution name for github-output SDKs without a PyPI publish target
+    to prefer `config.package_name` over the organization name. Also use `output_mode.version`
+    instead of hardcoding `0.0.0`.
+  type: fix

@@ -77,28 +77,26 @@ public class Example5 {
                                         .tenantId("tenantId")
                                         .build())
                                 .build()))
-                        .nullableArray(Optional.of(Arrays.asList("nullableArray", "nullableArray")))
+                        .nullableArray(Arrays.asList("nullableArray", "nullableArray"))
                         .optionalArray(Optional.of(Arrays.asList("optionalArray", "optionalArray")))
-                        .optionalNullableArray(
-                                Optional.of(Arrays.asList("optionalNullableArray", "optionalNullableArray")))
-                        .nullableListOfNullables(Optional.of(Arrays.asList(
-                                Optional.of("nullableListOfNullables"), Optional.of("nullableListOfNullables"))))
-                        .nullableMapOfNullables(new HashMap<String, Optional<Address>>() {
+                        .optionalNullableArray(Arrays.asList("optionalNullableArray", "optionalNullableArray"))
+                        .nullableListOfNullables(Arrays.asList("nullableListOfNullables", "nullableListOfNullables"))
+                        .nullableMapOfNullables(new HashMap<String, Address>() {
                             {
                                 put(
                                         "nullableMapOfNullables",
-                                        Optional.of(Address.builder()
+                                        Address.builder()
                                                 .street("street")
                                                 .zipCode("zipCode")
-                                                .city(Optional.of("city"))
+                                                .city("city")
                                                 .state(Optional.of("state"))
                                                 .country(Optional.of("country"))
-                                                .buildingId(Optional.of("buildingId"))
+                                                .buildingId("buildingId")
                                                 .tenantId(Optional.of("tenantId"))
-                                                .build()));
+                                                .build());
                             }
                         })
-                        .nullableListOfUnions(Optional.of(Arrays.asList(
+                        .nullableListOfUnions(Arrays.asList(
                                 NotificationMethod.email(EmailNotification.builder()
                                         .emailAddress("emailAddress")
                                         .subject("subject")
@@ -108,7 +106,7 @@ public class Example5 {
                                         .emailAddress("emailAddress")
                                         .subject("subject")
                                         .htmlContent("htmlContent")
-                                        .build()))))
+                                        .build())))
                         .optionalMapOfEnums(new HashMap<String, UserRole>() {
                             {
                                 put("optionalMapOfEnums", UserRole.ADMIN);

@@ -41,6 +41,7 @@ export const AsIsFiles = {
     QueryStringBuilder: "QueryStringBuilder.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
     RawClient: "RawClient.Template.cs",
+    SseReconnectHelper: "SseReconnectHelper.Template.cs",
     RawResponse: "RawResponse.Template.cs",
     ResponseHeaders: "ResponseHeaders.Template.cs",
     StreamRequest: "StreamRequest.Template.cs",

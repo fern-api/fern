@@ -1,3 +1,4 @@
+import semver from "semver";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RegistryInfo } from "../computeSemanticVersion.js";
 import {
@@ -10,7 +11,8 @@ import {
     getLatestVersionFromPypi,
     getLatestVersionFromRubyGems,
     getRegistryInfoFromOutputMode,
-    getVersionFromMetadataJson
+    getVersionFromMetadataJson,
+    selectHighestVersion
 } from "../computeSemanticVersion.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────
@@ -965,5 +967,44 @@ describe("getVersionFromMetadataJson", () => {
 
         const version = await getVersionFromMetadataJson("owner/repo");
         expect(version).toBeUndefined();
+    });
+});
+
+describe("selectHighestVersion", () => {
+    it("returns the highest version across sources", () => {
+        expect(selectHighestVersion(["0.0.199", "1.2.3", "5.0.0"])).toBe("5.0.0");
+    });
+
+    it("prefers metadata version over a stale registry version (5.0.0 over 0.0.199)", () => {
+        // Regression test: when auto-versioning has recorded 5.0.0 in .fern/metadata.json
+        // but the registry still reports a stale 0.0.199, the bump must be based on 5.0.0
+        // (-> 5.0.1) rather than the stale registry value (-> 0.0.200).
+        const registryVersion = "0.0.199";
+        const releaseVersion = undefined;
+        const metadataVersion = "5.0.0";
+
+        const highest = selectHighestVersion([registryVersion, releaseVersion, metadataVersion]);
+        expect(highest).toBe("5.0.0");
+        expect(highest != null && semver.inc(highest, "patch")).toBe("5.0.1");
+    });
+
+    it("ignores null and undefined candidates", () => {
+        expect(selectHighestVersion([undefined, "2.0.0", undefined])).toBe("2.0.0");
+    });
+
+    it("tolerates a leading v prefix and preserves the original string", () => {
+        expect(selectHighestVersion(["1.0.0", "v2.0.0"])).toBe("v2.0.0");
+    });
+
+    it("ignores invalid semver candidates", () => {
+        expect(selectHighestVersion(["not-a-version", "", "3.1.4"])).toBe("3.1.4");
+    });
+
+    it("returns undefined when no candidate is valid semver", () => {
+        expect(selectHighestVersion([undefined, "", "garbage"])).toBeUndefined();
+    });
+
+    it("compares prerelease versions below their release", () => {
+        expect(selectHighestVersion(["1.0.0-rc.1", "1.0.0"])).toBe("1.0.0");
     });
 });

@@ -18,6 +18,10 @@ class SeedExhaustiveError extends Error {
             this.cause = cause;
         }
     }
+    get requestId() {
+        var _a, _b, _c;
+        return (_c = (_b = (_a = this.rawResponse) === null || _a === void 0 ? void 0 : _a.headers) === null || _b === void 0 ? void 0 : _b.get("x-request-id")) !== null && _c !== void 0 ? _c : undefined;
+    }
 }
 exports.SeedExhaustiveError = SeedExhaustiveError;
 function buildMessage({ message, statusCode, body, }) {

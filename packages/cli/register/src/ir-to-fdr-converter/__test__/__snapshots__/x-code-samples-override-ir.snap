@@ -265,6 +265,7 @@ puts user.name",
                     "name": "Ruby SDK (Fern)",
                   },
                 ],
+                "contentType": undefined,
                 "displayName": undefined,
                 "request": {
                   "auth": undefined,
@@ -358,6 +359,7 @@ puts user.name",
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "getUser_Response_200": {

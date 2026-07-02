@@ -67,17 +67,17 @@ public record UnionWithNoProperties
             : throw new global::System.Exception("UnionWithNoProperties.Type is not 'foo'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
-    public object AsEmpty() =>
+    public object? AsEmpty() =>
         IsEmpty
             ? Value!
             : throw new global::System.Exception("UnionWithNoProperties.Type is not 'empty'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
-        Func<object, T> onEmpty,
+        Func<object?, T> onEmpty,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -91,7 +91,7 @@ public record UnionWithNoProperties
 
     public void Visit(
         Action<SeedUnions.Foo> onFoo,
-        Action<object> onEmpty,
+        Action<object?> onEmpty,
         Action<string, object?> onUnknown_
     )
     {
@@ -124,7 +124,7 @@ public record UnionWithNoProperties
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsEmpty(out object? value)
     {
@@ -185,7 +185,7 @@ public record UnionWithNoProperties
             {
                 "foo" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "empty" => new { },
+                "empty" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new UnionWithNoProperties(discriminator, value);
@@ -255,8 +255,8 @@ public record UnionWithNoProperties
     [Serializable]
     public record Empty
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

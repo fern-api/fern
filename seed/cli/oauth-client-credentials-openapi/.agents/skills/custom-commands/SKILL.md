@@ -16,7 +16,7 @@ auth, retries, TLS, base URL, and global headers — zero configuration required
 
 ```
 cli/oauth-client-credentials-openapi/custom.rs    ← Your command handlers (protected by .fernignore)
-cli/oauth-client-credentials-openapi/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
+cli/oauth-client-credentials-openapi/sdk.rs       ← Generated bridge: client() + block_on()
 cli/oauth-client-credentials-openapi/main.rs      ← Generated entrypoint (calls custom::register)
 oauth-client-credentials-openapi-sdk/             ← Co-generated typed SDK crate
 oauth-client-credentials-openapi-types/           ← Co-generated typed model crate
@@ -40,8 +40,8 @@ pub fn register(app: CliApp) -> CliApp {
         ,
         |matches, ctx| {
             let plant_id = matches.get_one::<String>("plantId").unwrap();
-            let client = super::sdk_glue::sdk_client(ctx);
-            let result = super::sdk_glue::block_on(
+            let client = super::sdk::client(ctx);
+            let result = super::sdk::block_on(
                 client.plants.get(plant_id),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
@@ -60,7 +60,7 @@ oauth-client-credentials-openapi get <plantId>
 
 ### 2. Available SDK Clients
 
-The `sdk_glue::sdk_client(ctx)` call returns a `oauth_client_credentials_openapi_sdk::api::Client`
+The `super::sdk::client(ctx)` call returns a `oauth_client_credentials_openapi_sdk::api::Client`
 with the following sub-clients:
 
 | Field | Type | Description |
@@ -72,12 +72,12 @@ with the following sub-clients:
 
 **Get the SDK client** (execution-sharing, fully authenticated):
 ```rust
-let client = super::sdk_glue::sdk_client(ctx);
+let client = super::sdk::client(ctx);
 ```
 
 **Run an async SDK call from a sync handler:**
 ```rust
-let result = super::sdk_glue::block_on(
+let result = super::sdk::block_on(
     client.some_resource.some_method(args),
 )?;
 ```
@@ -92,7 +92,7 @@ use oauth_client_credentials_openapi_sdk::api::*;
 | File | Regenerated? | Notes |
 |------|-------------|-------|
 | `cli/oauth-client-credentials-openapi/custom.rs` | **No** | Protected by `.fernignore` |
-| `cli/oauth-client-credentials-openapi/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
+| `cli/oauth-client-credentials-openapi/sdk.rs` | Yes | Bridges AppContext → SDK client |
 | `cli/oauth-client-credentials-openapi/main.rs` | Yes | Calls `custom::register(app)` |
 | `oauth-client-credentials-openapi-sdk/` | Yes | Co-generated typed SDK crate |
 | `oauth-client-credentials-openapi-types/` | Yes | Co-generated typed models |

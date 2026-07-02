@@ -71,6 +71,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -147,6 +159,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -223,6 +247,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -298,6 +334,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -372,6 +420,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -447,6 +507,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -522,6 +594,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -602,6 +686,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -692,6 +788,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -778,6 +886,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -875,6 +995,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -946,6 +1078,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -1021,6 +1165,18 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

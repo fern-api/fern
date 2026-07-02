@@ -498,6 +498,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/params/body-and-query",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.createWithBodyAndQuery"
+            },
+            "snippet": {
+                "sync_client": "from seed import Exhaustive\n\nclient = Exhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.create_with_body_and_query(\n    fields=\"_fields\",\n    string=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncExhaustive\n\nclient = AsyncExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.params.create_with_body_and_query(\n        fields=\"_fields\",\n        string=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/params/path-bool/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"

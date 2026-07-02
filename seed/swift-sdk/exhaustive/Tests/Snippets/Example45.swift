@@ -8,6 +8,6 @@ enum Example45 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.primitive.getAndReturnString(request: "string")
+        _ = try await client.endpoints.params.getWithPathAndErrors(param: "param")
     }
 }

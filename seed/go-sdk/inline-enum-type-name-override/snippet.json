@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/load",
+                "method": "POST",
+                "identifier_override": "endpoint_reporting.load"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/inline-enum-type-name-override/fern\"\n\tfernclient \"github.com/inline-enum-type-name-override/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Reporting.Load(\n\tcontext.TODO(),\n\t\u0026fern.LoadRequest{},\n)\n"
+            }
+        }
+    ]
+}

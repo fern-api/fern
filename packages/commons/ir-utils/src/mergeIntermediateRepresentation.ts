@@ -18,6 +18,7 @@ export function mergeIntermediateRepresentation(
         apiName: ir1.apiName,
         basePath: ir1.basePath,
         selfHosted: ir1.selfHosted && ir2.selfHosted,
+        specVersion: ir1.specVersion ?? ir2.specVersion,
         apiDisplayName: ir1.apiDisplayName ?? ir2.apiDisplayName,
         apiDocs: ir1.apiDocs ?? ir2.apiDocs,
         auth: {

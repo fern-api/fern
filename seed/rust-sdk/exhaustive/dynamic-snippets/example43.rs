@@ -11,6 +11,6 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_path_and_errors(&"param".to_string(), None)
+        .get_with_boolean_path(true, None)
         .await;
 }

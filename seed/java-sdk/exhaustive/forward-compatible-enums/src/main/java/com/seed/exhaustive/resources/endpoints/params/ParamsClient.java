@@ -5,12 +5,15 @@ package com.seed.exhaustive.resources.endpoints.params;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.seed.exhaustive.resources.endpoints.params.requests.UploadBytesWithQuery;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.InputStream;
 
@@ -169,6 +172,63 @@ public class ParamsClient {
      */
     public ObjectWithRequiredField uploadWithPath(String param, byte[] request, RequestOptions requestOptions) {
         return this.rawClient.uploadWithPath(param, request, requestOptions).body();
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public ObjectWithOptionalField createWithBodyAndQuery(ObjectWithRequiredField body) {
+        return this.rawClient.createWithBodyAndQuery(body).body();
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public ObjectWithOptionalField createWithBodyAndQuery(ObjectWithRequiredField body, RequestOptions requestOptions) {
+        return this.rawClient.createWithBodyAndQuery(body, requestOptions).body();
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public ObjectWithOptionalField createWithBodyAndQuery(CreateWithBodyAndQuery request) {
+        return this.rawClient.createWithBodyAndQuery(request).body();
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public ObjectWithOptionalField createWithBodyAndQuery(
+            CreateWithBodyAndQuery request, RequestOptions requestOptions) {
+        return this.rawClient.createWithBodyAndQuery(request, requestOptions).body();
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public ObjectWithOptionalField uploadBytesWithQuery(byte[] body) {
+        return this.rawClient.uploadBytesWithQuery(body).body();
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public ObjectWithOptionalField uploadBytesWithQuery(byte[] body, RequestOptions requestOptions) {
+        return this.rawClient.uploadBytesWithQuery(body, requestOptions).body();
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public ObjectWithOptionalField uploadBytesWithQuery(UploadBytesWithQuery request) {
+        return this.rawClient.uploadBytesWithQuery(request).body();
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public ObjectWithOptionalField uploadBytesWithQuery(UploadBytesWithQuery request, RequestOptions requestOptions) {
+        return this.rawClient.uploadBytesWithQuery(request, requestOptions).body();
     }
 
     /**

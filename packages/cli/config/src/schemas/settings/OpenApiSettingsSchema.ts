@@ -92,7 +92,15 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * so SDKs can expose them directly on the union type without casting.
      * Defaults to false.
      */
-    inferDiscriminatedUnionBaseProperties: z.boolean().optional()
+    inferDiscriminatedUnionBaseProperties: z.boolean().optional(),
+
+    /**
+     * If true, disambiguate generated request wrapper names that collide with
+     * component schema names by replacing the "Request" suffix with "Body".
+     * If false, keep the original "Request" suffix regardless of collisions.
+     * Defaults to true.
+     */
+    "disambiguate-request-names": z.boolean().optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

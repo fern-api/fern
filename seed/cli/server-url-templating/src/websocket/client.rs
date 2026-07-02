@@ -8,7 +8,6 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use futures_util::{SinkExt, StreamExt};
-use secrecy::ExposeSecret;
 use serde_json::Value;
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::sync::mpsc;
@@ -16,7 +15,6 @@ use tokio_tungstenite::tungstenite::client::IntoClientRequest;
 use tokio_tungstenite::tungstenite::http::HeaderValue;
 use tokio_tungstenite::tungstenite::protocol::{frame::coding::CloseCode, CloseFrame, Message};
 
-use crate::auth::AuthCredentialSource;
 use crate::error::CliError;
 use crate::formatter::OutputPipeline;
 use crate::http::HttpConfig;
@@ -24,17 +22,56 @@ use crate::http::HttpConfig;
 use super::auth::WsAuth;
 use super::error::{classify_close_frame, map_handshake_error, map_stream_error};
 
+/// Disposition the autoresponder returns for an inbound frame.
+///
+/// Splits the two cases that the older `Option<Value>` return type
+/// collapsed into one (`Some(Value)` meant "reply with `Value` and elide
+/// emit"). A frame the responder wants to capture but for which it has
+/// nothing to send back used to require returning a benign empty object
+/// `{}` — which was written to the wire on every captured frame. The
+/// dedicated [`ResponderAction::Suppress`] variant elides emit without
+/// sending anything.
+#[derive(Debug, Clone)]
+pub enum ResponderAction {
+    /// Send `Value` as an outbound text frame **and** elide the inbound
+    /// frame from stdout. Used for app-level ping/pong.
+    Reply(Value),
+    /// Elide the inbound frame from stdout, send nothing. Used when the
+    /// caller is buffering frames for later assembly (e.g. streamed
+    /// agent responses).
+    Suppress,
+}
+
 /// Inbound-frame autoresponder.
 ///
-/// Called once per inbound JSON frame. Returning `Some(reply)` causes the
-/// client to (a) send `reply` as an outbound text frame and (b) **elide**
-/// the inbound frame from stdout — useful for application-level ping/pong
-/// where the inbound is protocol overhead, not user-visible payload.
-/// Returning `None` lets the inbound flow through to
-/// [`OutputPipeline::emit`].
+/// Called once per inbound JSON frame. The returned [`ResponderAction`]
+/// controls what happens to the frame:
 ///
-/// Ship via [`elevenlabs_convai_ping_pong`] for the canonical ElevenLabs
-/// shape; write your own closure for Deepgram / AssemblyAI / OpenAI.
+/// - `Some(ResponderAction::Reply(v))` — send `v` as an outbound text
+///   frame and elide the inbound frame from stdout. Useful for
+///   application-level ping/pong where the inbound is protocol
+///   overhead, not user-visible payload.
+/// - `Some(ResponderAction::Suppress)` — elide the inbound frame from
+///   stdout, send nothing. Useful when the caller is buffering frames
+///   for later assembly (e.g. streamed agent responses printed once
+///   the turn completes).
+/// - `None` — let the inbound flow through to [`OutputPipeline::emit`].
+///
+/// Customer code defines the closure — application-level keepalive shapes
+/// are API-specific (`{"type":"ping"}` vs `{"event":"ping"}` vs binary
+/// frames) and have no cross-API standard. A minimal example:
+///
+/// ```ignore
+/// use std::sync::Arc;
+/// use fern_cli_sdk::websocket::{AutoResponder, ResponderAction};
+/// let responder: AutoResponder = Arc::new(|frame| {
+///     if frame.get("type")?.as_str()? == "ping" {
+///         Some(ResponderAction::Reply(serde_json::json!({"type": "pong"})))
+///     } else {
+///         None
+///     }
+/// });
+/// ```
 ///
 /// # Stateful autoresponders
 ///
@@ -56,7 +93,7 @@ use super::error::{classify_close_frame, map_handshake_error, map_stream_error};
 /// Naïve `let mut n = 0; Arc::new(move |f| { n += 1; ... })` fails to
 /// compile — the compiler error points at the closure body, not the
 /// trait bound, which is easy to misread.
-pub type AutoResponder = Arc<dyn Fn(&Value) -> Option<Value> + Send + Sync>;
+pub type AutoResponder = Arc<dyn Fn(&Value) -> Option<ResponderAction> + Send + Sync>;
 
 /// Configuration for a single WS connection.
 pub struct WsConfig {
@@ -106,123 +143,6 @@ impl WsConfig {
             strip_audio_keys: Vec::new(),
             abnormal_close_hint: super::error::ABNORMAL_CLOSE_HINT.to_string(),
         }
-    }
-
-    // -------- Per-API constructors -----------------------------------------
-    //
-    // These bake in the right auth shape, autoresponder, audio-strip keys,
-    // and abnormal-close hint for each supported API. They're plain
-    // convenience — every field stays `pub`, so power users can
-    // post-mutate. Adding a constructor for a new API costs ~10 lines.
-
-    /// Config preset for ElevenLabs conversational AI
-    /// (`wss://api.elevenlabs.io/v1/convai/conversation?agent_id=...`).
-    ///
-    /// Bakes in:
-    /// - `xi-api-key: <api_key>` header auth
-    /// - the canonical app-level ping/pong [`elevenlabs_convai_ping_pong`]
-    ///   autoresponder
-    /// - `strip_audio_keys = ["audio_base_64"]` (terminal-friendly)
-    /// - the ElevenLabs-flavoured `abnormal_close_hint`
-    pub fn elevenlabs_convai(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::Header("xi-api-key".into(), api_key);
-        cfg.auto_responder = Some(elevenlabs_convai_ping_pong());
-        cfg.strip_audio_keys = vec!["audio_base_64".into()];
-        cfg.abnormal_close_hint = super::error::ELEVENLABS_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for ElevenLabs TTS stream-input
-    /// (`wss://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream-input?...`).
-    ///
-    /// Bakes in:
-    /// - `WsAuth::FirstMessage("xi_api_key", ...)` — merged into the BOS frame
-    /// - `strip_audio_keys = ["audio"]` (TTS-shaped audio field)
-    /// - the ElevenLabs-flavoured `abnormal_close_hint`
-    pub fn elevenlabs_tts(url: impl Into<String>, api_key: AuthCredentialSource) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::FirstMessage("xi_api_key".into(), api_key);
-        cfg.strip_audio_keys = vec!["audio".into()];
-        cfg.abnormal_close_hint = super::error::ELEVENLABS_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for OpenAI Realtime
-    /// (`wss://api.openai.com/v1/realtime?model=...`).
-    ///
-    /// Bakes in:
-    /// - both required headers: `Authorization: Bearer <api_key>` AND
-    ///   `OpenAI-Beta: realtime=v1` (via [`WsAuth::Headers`])
-    /// - `strip_audio_keys = ["delta"]` — base64 audio lives under
-    ///   `response.audio.delta` and `response.audio.done`
-    /// - the OpenAI-Realtime-flavoured `abnormal_close_hint` (calls out
-    ///   the 30-minute session cap as the most common abnormal close)
-    pub fn openai_realtime(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::Headers(vec![
-            (
-                "Authorization".into(),
-                // Prefix-prepending closure: WsAuth::bearer's helper
-                // lives in auth.rs but we recreate the moral equivalent
-                // here so the constructor is a single-call surface.
-                AuthCredentialSource::closure(move || {
-                    api_key.resolve().map(|s| {
-                        format!("Bearer {}", s.expose_secret())
-                    })
-                }),
-            ),
-            (
-                "OpenAI-Beta".into(),
-                AuthCredentialSource::literal("realtime=v1"),
-            ),
-        ]);
-        cfg.strip_audio_keys = vec!["delta".into()];
-        cfg.abnormal_close_hint = super::error::OPENAI_REALTIME_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for Deepgram realtime listen
-    /// (`wss://api.deepgram.com/v1/listen?encoding=...&sample_rate=...`).
-    ///
-    /// Bakes in:
-    /// - `Authorization: Token <api_key>` (via [`WsAuth::token`])
-    /// - the Deepgram-flavoured `abnormal_close_hint`
-    ///
-    /// Customers using this preset typically drive `send_binary(...)`
-    /// from their own audio-capture loop (cpal mic, file reader) and
-    /// send `{"type":"KeepAlive"}` text frames on a 3-8s timer.
-    pub fn deepgram_listen(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::token(api_key);
-        cfg.abnormal_close_hint = super::error::DEEPGRAM_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for AssemblyAI v3 Universal-Streaming
-    /// (`wss://streaming.assemblyai.com/v3/ws?sample_rate=...&format_turns=...`).
-    ///
-    /// Bakes in:
-    /// - `Authorization: <api_key>` (raw — NO `Bearer ` / `Token ` prefix,
-    ///   per AssemblyAI's v3 spec)
-    /// - the AssemblyAI-flavoured `abnormal_close_hint`
-    pub fn assemblyai_v3(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::Header("Authorization".into(), api_key);
-        cfg.abnormal_close_hint = super::error::ASSEMBLYAI_CLOSE_HINT.to_string();
-        cfg
     }
 }
 
@@ -641,22 +561,33 @@ async fn handle_inbound(
                 }
             };
 
-            // Autoresponder first: if it claims the frame, send the reply
-            // and elide. No emit.
+            // Autoresponder first: if it claims the frame, dispatch on
+            // the requested action and elide emit either way.
             if let Some(responder) = auto_responder {
-                if let Some(reply) = responder(&value) {
-                    let reply_text = match serde_json::to_string(&reply) {
-                        Ok(s) => s,
-                        Err(e) => {
-                            return FrameDisposition::Stop(Err(CliError::Other(
-                                anyhow::anyhow!("autoresponder produced unserializable JSON: {e}"),
+                match responder(&value) {
+                    Some(ResponderAction::Reply(reply)) => {
+                        let reply_text = match serde_json::to_string(&reply) {
+                            Ok(s) => s,
+                            Err(e) => {
+                                return FrameDisposition::Stop(Err(CliError::Other(
+                                    anyhow::anyhow!(
+                                        "autoresponder produced unserializable JSON: {e}"
+                                    ),
+                                )));
+                            }
+                        };
+                        if let Err(e) = sink.send(Message::Text(reply_text)).await {
+                            return FrameDisposition::Stop(Err(map_stream_error(
+                                e,
+                                abnormal_hint,
                             )));
                         }
-                    };
-                    if let Err(e) = sink.send(Message::Text(reply_text)).await {
-                        return FrameDisposition::Stop(Err(map_stream_error(e, abnormal_hint)));
+                        return FrameDisposition::Continue;
                     }
-                    return FrameDisposition::Continue;
+                    Some(ResponderAction::Suppress) => {
+                        return FrameDisposition::Continue;
+                    }
+                    None => {}
                 }
             }
 
@@ -751,74 +682,9 @@ fn truncate(s: &str, max: usize) -> String {
     }
 }
 
-/// Canonical ElevenLabs convai/TTS ping/pong autoresponder.
-///
-/// Matches inbound frames of the shape
-/// `{"type":"ping","ping_event":{"event_id":<int>}}` and replies with
-/// `{"type":"pong","event_id":<same int>}`. Other inbound frames are
-/// passed through to the output pipeline.
-///
-/// Spec'd at `fern/apis/convai/asyncapi.yml:162-175`. Required: missing
-/// pong replies trip a 20-second inactivity timeout server-side.
-pub fn elevenlabs_convai_ping_pong() -> AutoResponder {
-    Arc::new(|frame: &Value| -> Option<Value> {
-        if frame.get("type").and_then(|v| v.as_str()) != Some("ping") {
-            return None;
-        }
-        // ElevenLabs spec: `/ping_event/event_id` is an integer. If we
-        // see a ping without it, *warn loudly* — falling through to
-        // emit-and-no-pong would silently let the 20-second server
-        // inactivity timeout fire, producing a misleading "missed
-        // ping/pong" abnormal-close error whose root cause is a parser
-        // miss, not a missing reply.
-        match frame.pointer("/ping_event/event_id").and_then(|v| v.as_i64()) {
-            Some(event_id) => Some(serde_json::json!({
-                "type": "pong",
-                "event_id": event_id,
-            })),
-            None => {
-                eprintln!(
-                    "warning: ElevenLabs ping frame has no integer \
-                     `ping_event.event_id` — cannot construct a valid \
-                     pong; frame will be emitted instead. If the API \
-                     changed the ping shape, write a custom AutoResponder."
-                );
-                None
-            }
-        }
-    })
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn elevenlabs_preset_matches_canonical_ping() {
-        let responder = elevenlabs_convai_ping_pong();
-        let ping = serde_json::json!({
-            "type": "ping",
-            "ping_event": {"event_id": 12345, "ping_ms": 50},
-        });
-        let pong = responder(&ping).expect("ping should be matched");
-        assert_eq!(pong, serde_json::json!({"type": "pong", "event_id": 12345}));
-    }
-
-    #[test]
-    fn elevenlabs_preset_ignores_non_ping() {
-        let responder = elevenlabs_convai_ping_pong();
-        let other = serde_json::json!({"type": "agent_response", "text": "hello"});
-        assert!(responder(&other).is_none());
-    }
-
-    #[test]
-    fn elevenlabs_preset_returns_none_when_event_id_missing() {
-        let responder = elevenlabs_convai_ping_pong();
-        let malformed = serde_json::json!({"type": "ping"});
-        // Without an event_id we can't construct a meaningful pong; fall
-        // through to the emit path rather than send garbage.
-        assert!(responder(&malformed).is_none());
-    }
 
     #[test]
     fn strip_keys_removes_top_level_and_nested() {

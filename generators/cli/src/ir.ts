@@ -21,7 +21,8 @@ export interface IrSummary {
 }
 
 /**
- * Read the IR file at `irFilepath` and return the narrow summary.
+ * Parse the IR file and return the `IrSummary` slice the CLI
+ * generator needs for binary identity and auth wiring.
  *
  * Goes through the IR SDK's serialization layer rather than picking
  * fields off raw `JSON.parse` output, so consumers get fully
@@ -37,7 +38,7 @@ export interface IrSummary {
  * structure doesn't match the SDK's schema at all. The orchestrator
  * catches and surfaces these to the user.
  */
-export async function readIrSummary(irFilepath: string): Promise<IrSummary> {
+export async function readIr(irFilepath: string): Promise<IrSummary> {
     const raw = await readFile(irFilepath, "utf-8");
     const json: unknown = JSON.parse(raw);
 
@@ -51,8 +52,10 @@ export async function readIrSummary(irFilepath: string): Promise<IrSummary> {
         throw new Error(`Failed to parse IR from ${irFilepath}: ${JSON.stringify(parsed.errors, null, 4)}`);
     }
 
+    const ir = parsed.value;
+
     return {
-        apiDisplayName: parsed.value.apiDisplayName,
-        auth: { schemes: parsed.value.auth.schemes }
+        apiDisplayName: ir.apiDisplayName,
+        auth: { schemes: ir.auth.schemes }
     };
 }

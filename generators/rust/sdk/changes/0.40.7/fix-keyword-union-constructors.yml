@@ -1,0 +1,6 @@
+- summary: |
+    Escape Rust reserved keywords (`static`, `override`, etc.) in generated
+    union variant constructor function names using `r#` raw identifier syntax.
+    Also skip generating the catch-all `unknown()` constructor when a union
+    already has a variant named "unknown" to avoid duplicate definitions.
+  type: fix

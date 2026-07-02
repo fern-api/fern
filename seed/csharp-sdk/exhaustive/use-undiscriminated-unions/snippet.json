@@ -460,6 +460,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params/body-and-query",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.createWithBodyAndQuery"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.CreateWithBodyAndQueryAsync(\n    new CreateWithBodyAndQuery\n    {\n        Fields = \"_fields\",\n        Body = new ObjectWithRequiredField { String = \"string\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/params/path-bool/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"

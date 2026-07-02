@@ -10,6 +10,10 @@ export declare namespace DynamicLiteralMapper {
         value: unknown;
         as?: ConvertedAs;
         fallbackToDefault?: string;
+        // When true, literal values are emitted even if `generateLiterals` is enabled.
+        // Used for literals rendered as required method arguments (e.g. path parameters),
+        // which the SDK always requires regardless of the `generateLiterals` setting.
+        forceLiteral?: boolean;
     }
 
     // Identifies what the type is being converted as, which sometimes influences how
@@ -50,7 +54,12 @@ export class DynamicLiteralMapper extends WithGeneration {
             case "literal":
                 return this.convertLiteral({
                     literal: args.typeReference.value,
-                    value: args.value
+                    // Only fall back to a deterministic default for literals that must always be
+                    // emitted (e.g. required path parameters); otherwise omitted literals (such as
+                    // literal headers) should remain unset.
+                    fallbackToDefault: args.forceLiteral ? args.fallbackToDefault : undefined,
+                    value: args.value,
+                    forceLiteral: args.forceLiteral
                 });
             case "map":
                 return this.convertMap({
@@ -74,13 +83,15 @@ export class DynamicLiteralMapper extends WithGeneration {
                 return this.convert({
                     typeReference: args.typeReference.value,
                     value: args.value,
-                    as: args.as
+                    as: args.as,
+                    forceLiteral: args.forceLiteral
                 });
             case "optional":
                 return this.convert({
                     typeReference: args.typeReference.value,
                     value: args.value,
-                    as: args.as
+                    as: args.as,
+                    forceLiteral: args.forceLiteral
                 });
             case "primitive":
                 return this.convertPrimitive({
@@ -134,15 +145,19 @@ export class DynamicLiteralMapper extends WithGeneration {
     private convertLiteral({
         literal,
         value,
-        fallbackToDefault
+        fallbackToDefault,
+        forceLiteral
     }: {
         literal: FernIr.dynamic.LiteralType;
         value: unknown;
         fallbackToDefault?: string;
+        forceLiteral?: boolean;
     }): ast.Literal {
         // When generateLiterals is enabled, inline literal properties use `= new()`
         // default initializers in the C# model and must not be set in the snippet.
-        if (this.settings.generateLiterals) {
+        // Literals rendered as required method arguments (e.g. path parameters) are
+        // always required by the SDK, so they must still be emitted.
+        if (this.settings.generateLiterals && !forceLiteral) {
             return this.csharp.Literal.nop();
         }
         switch (literal.type) {

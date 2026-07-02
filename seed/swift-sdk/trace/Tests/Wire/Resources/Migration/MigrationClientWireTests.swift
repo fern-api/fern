@@ -29,11 +29,11 @@ import Trace
         let expectedResponse = [
             Migration(
                 name: "name",
-                status: .running
+                status: MigrationStatus.running
             ),
             Migration(
                 name: "name",
-                status: .running
+                status: MigrationStatus.running
             )
         ]
         let response = try await client.migration.getAttemptedMigrations(

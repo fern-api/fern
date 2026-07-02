@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/clients",
+                "method": "POST",
+                "identifier_override": "endpoint_clients.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/multi-content-type-examples/fern\"\n\tfernclient \"github.com/multi-content-type-examples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Clients.Create(\n\tcontext.TODO(),\n\t\u0026fern.ClientRequest{\n\t\tClient: \u0026fern.Client{\n\t\t\tName:  \"Acme Corp\",\n\t\t\tEmail: \"contact@acme.com\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

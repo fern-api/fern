@@ -30,7 +30,7 @@ public final class PlaylistClient: Sendable {
     /// - Parameter multiLineDocs: I'm a multiline
     /// description
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getPlaylists(serviceParam: String, limit: Int? = nil, otherField: String, multiLineDocs: String, optionalMultipleField: String? = nil, multipleField: String, requestOptions: RequestOptions? = nil) async throws -> [Playlist] {
+    public func getPlaylists(serviceParam: String, limit: Int? = nil, otherField: String, multiLineDocs: String, optionalMultipleField: [String]? = nil, multipleField: [String], requestOptions: RequestOptions? = nil) async throws -> [Playlist] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/v2/playlist/\(serviceParam)/all",
@@ -38,8 +38,8 @@ public final class PlaylistClient: Sendable {
                 "limit": limit.map { .int($0) }, 
                 "otherField": .string(otherField), 
                 "multiLineDocs": .string(multiLineDocs), 
-                "optionalMultipleField": optionalMultipleField.map { .string($0) }, 
-                "multipleField": .string(multipleField)
+                "optionalMultipleField": optionalMultipleField.map { .stringArray($0) }, 
+                "multipleField": .stringArray(multipleField)
             ],
             requestOptions: requestOptions,
             responseType: [Playlist].self

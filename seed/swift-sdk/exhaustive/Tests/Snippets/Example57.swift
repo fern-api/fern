@@ -8,6 +8,6 @@ enum Example57 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.urls.noEndingSlash()
+        _ = try await client.endpoints.urls.withMixedCase()
     }
 }

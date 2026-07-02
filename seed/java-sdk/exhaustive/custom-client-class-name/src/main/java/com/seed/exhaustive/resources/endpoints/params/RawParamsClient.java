@@ -13,14 +13,18 @@ import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.QueryStringMapper;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.RetryInterceptor;
+import com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.seed.exhaustive.resources.endpoints.params.requests.UploadBytesWithQuery;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -72,6 +76,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -82,6 +95,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -118,6 +133,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -128,6 +152,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -163,6 +189,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -172,6 +207,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -208,6 +245,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -217,6 +263,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -254,6 +302,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -263,6 +320,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -300,6 +359,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -309,6 +377,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -353,6 +423,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -363,6 +442,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -408,6 +489,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -418,6 +508,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -455,6 +547,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -466,6 +567,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -484,6 +587,177 @@ public class RawParamsClient {
     public BestHttpResponse<ObjectWithRequiredField> uploadWithPath(
             String param, byte[] request, RequestOptions requestOptions) {
         return uploadWithPath(param, new ByteArrayInputStream(request), requestOptions);
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> createWithBodyAndQuery(ObjectWithRequiredField body) {
+        return createWithBodyAndQuery(
+                CreateWithBodyAndQuery.builder().body(body).build());
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> createWithBodyAndQuery(
+            ObjectWithRequiredField body, RequestOptions requestOptions) {
+        return createWithBodyAndQuery(
+                CreateWithBodyAndQuery.builder().body(body).build(), requestOptions);
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> createWithBodyAndQuery(CreateWithBodyAndQuery request) {
+        return createWithBodyAndQuery(request, null);
+    }
+
+    /**
+     * POST with referenced body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> createWithBodyAndQuery(
+            CreateWithBodyAndQuery request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("body-and-query");
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "_fields", request.getFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new BestHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new BestApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> uploadBytesWithQuery(byte[] body) {
+        return uploadBytesWithQuery(UploadBytesWithQuery.builder().body(body).build());
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> uploadBytesWithQuery(byte[] body, RequestOptions requestOptions) {
+        return uploadBytesWithQuery(UploadBytesWithQuery.builder().body(body).build(), requestOptions);
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> uploadBytesWithQuery(UploadBytesWithQuery request) {
+        return uploadBytesWithQuery(request, null);
+    }
+
+    /**
+     * POST bytes body + query params
+     */
+    public BestHttpResponse<ObjectWithOptionalField> uploadBytesWithQuery(
+            UploadBytesWithQuery request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("bytes-and-query");
+        if (request.getFields().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "_fields", request.getFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new BestHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new BestApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new BestException("Network error executing HTTP request", e);
+        }
     }
 
     /**
@@ -517,6 +791,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -527,6 +810,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -563,6 +848,15 @@ public class RawParamsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -582,6 +876,8 @@ public class RawParamsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }

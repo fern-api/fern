@@ -23,6 +23,7 @@ export * from "./BackgroundImageThemedConfig.js";
 export * from "./BodyThemeConfig.js";
 export * from "./ChangelogConfiguration.js";
 export * from "./ChangelogFolderRelativePath.js";
+export * from "./ChangelogLayout.js";
 export * from "./CheckConfig.js";
 export * from "./CheckRuleSeverity.js";
 export * from "./CheckRulesConfig.js";

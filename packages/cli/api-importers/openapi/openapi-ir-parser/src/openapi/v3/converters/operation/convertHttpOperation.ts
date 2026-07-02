@@ -468,6 +468,10 @@ function getDisambiguatedRequestName({
         : requestBreadcrumbs;
     const computedName = getGeneratedTypeName(nameBreadcrumbs, context.options.preserveSchemaIds);
 
+    if (!context.options.disambiguateRequestNames) {
+        return computedName;
+    }
+
     const componentSchemas = context.document.components?.schemas;
     if (componentSchemas == null) {
         return computedName;

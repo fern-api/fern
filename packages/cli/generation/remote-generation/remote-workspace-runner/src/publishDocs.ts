@@ -8,6 +8,7 @@ import {
     applyTranslatedFrontmatterToNavTree,
     applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
+    findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
@@ -67,11 +68,16 @@ import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
+import { retryWithBackoff } from "./retryWithBackoff.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
+
+const REGISTER_MAX_RETRIES = 3;
+const REGISTER_BASE_DELAY_MS = 1_000;
+const REGISTER_JITTER_FACTOR = 0.5;
 
 /**
  * Sanitizes a preview ID to be valid in a DNS subdomain label.
@@ -445,13 +451,24 @@ export async function publishDocs({
                 }
             }
 
+            const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
+
             let response;
             try {
-                response = await fdr.api.register.registerApiDefinition({
-                    orgId: CjsFdrSdk.OrgId(organization),
-                    apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
-                    definition: apiDefinition,
-                    dynamicIRs: dynamicIRsByLanguage
+                response = await retryWithBackoff({
+                    fn: () =>
+                        fdr.api.register.registerApiDefinition({
+                            orgId: CjsFdrSdk.OrgId(organization),
+                            apiId: CjsFdrSdk.ApiId(effectiveApiName),
+                            definition: apiDefinition,
+                            dynamicIRs: dynamicIRsByLanguage
+                        }),
+                    maxRetries: REGISTER_MAX_RETRIES,
+                    baseDelayMs: REGISTER_BASE_DELAY_MS,
+                    jitterFactor: REGISTER_JITTER_FACTOR,
+                    isRetryable: isTransientError,
+                    logger: context.logger,
+                    label: `registerApiDefinition failed for ${effectiveApiName}`
                 });
             } catch (error) {
                 const errorDetails = extractErrorDetails(error);
@@ -845,6 +862,7 @@ export async function publishDocs({
                     fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    editThisPage,
                     resolver
                 });
                 if (deployMode === "ledger") {
@@ -857,6 +875,7 @@ export async function publishDocs({
                     organization,
                     domain,
                     basepath: basePath,
+                    basepathAware: isBasepathAware,
                     previewId,
                     customDomains,
                     git: ledgerGit,
@@ -868,6 +887,7 @@ export async function publishDocs({
                     fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    editThisPage,
                     resolver
                 });
                 context.logger.info(
@@ -1108,6 +1128,34 @@ export async function publishDocs({
                                     translatedApisForTitles[baseApiId] = translatedRead;
                                 }
                             }
+
+                            // A translated spec that drifts from the base — a changed OpenAPI tag
+                            // name (which derives subpackage/endpoint ids), a missing/added
+                            // endpoint, or a changed path — produces an API whose nav nodes can't
+                            // all be resolved against it. Repointing the nav at such a definition
+                            // would make the docs renderer fail to resolve a node and 500. For those
+                            // APIs we keep the nav pointed at the base (default-locale) definition,
+                            // but still localize the sidebar titles we can match by locator.
+                            const incompatibleApiIds = findIncompatibleTranslatedApiIds(
+                                updatedRoot,
+                                baseApisForTitles,
+                                translatedApisForTitles
+                            );
+                            if (incompatibleApiIds.size > 0) {
+                                context.logger.warn(
+                                    `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for ` +
+                                        `locale "${locale}" diverge from the default-locale spec (e.g. changed OpenAPI ` +
+                                        `tag names, operationIds, or paths, or a missing/added endpoint), so they can't ` +
+                                        `be fully matched to the navigation tree. Serving the default-locale API for ` +
+                                        `those (localized sidebar titles are still applied where they can be matched). ` +
+                                        `For fully localized API reference content, translate only human-readable text ` +
+                                        `and keep tag names/operationIds/paths identical to the base spec.`
+                                );
+                            }
+                            const rewritableApiIds = new Set(
+                                Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
+                            );
+
                             // Work on a deep clone before the in-place id rewrite below, since
                             // locales run concurrently off the shared base nav tree. Title
                             // patching already clones, so only clone explicitly when it's skipped.
@@ -1116,10 +1164,16 @@ export async function publishDocs({
                                     ? applyTranslatedApiTitlesToNavTree(
                                           updatedRoot,
                                           baseApisForTitles,
-                                          translatedApisForTitles
+                                          translatedApisForTitles,
+                                          { rewritableApiIds }
                                       )
                                     : structuredClone(updatedRoot);
                             for (const [baseApiId, translatedApiId] of localeApiIdMap) {
+                                // Keep the base apiDefinitionId for incompatible APIs so the nav
+                                // resolves against the base definition instead of the divergent one.
+                                if (incompatibleApiIds.has(baseApiId)) {
+                                    continue;
+                                }
                                 updateApiDefinitionIdInTree(updatedRoot, baseApiId, translatedApiId);
                             }
                         }
@@ -1973,6 +2027,22 @@ function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string
         requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
         styleInstructions
     };
+}
+
+/**
+ * Returns true when the error looks transient and is worth retrying
+ * (no HTTP status, 429, or 5xx). Fails fast on client errors like
+ * 400 (bad request), 401 (auth), 403 (forbidden).
+ */
+function isTransientError(error: unknown): boolean {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+    const status = (errorObj?.statusCode ?? content?.statusCode) as number | undefined;
+
+    if (status == null) {
+        return true;
+    }
+    return status === 429 || status >= 500;
 }
 
 /**

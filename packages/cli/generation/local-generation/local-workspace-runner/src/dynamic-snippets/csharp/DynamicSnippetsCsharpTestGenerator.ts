@@ -1,5 +1,5 @@
 import { Style } from "@fern-api/browser-compatible-base-generator";
-import { Config, DynamicSnippetsGenerator } from "@fern-api/csharp-dynamic-snippets";
+import { buildSnippetTestGeneratorConfig, Config, DynamicSnippetsGenerator } from "@fern-api/csharp-dynamic-snippets";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -46,7 +46,9 @@ export class DynamicSnippetsCsharpTestGenerator {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             // biome-ignore lint/suspicious/noExplicitAny: workaround for version incompatibility - see note above
             ir: convertIr(this.ir) as unknown as any,
-            config: this.generatorConfig
+            // Snippet tests compile against the generated SDK, so their snippets must use the
+            // internal client class name — docs-only overrides are stripped here.
+            config: buildSnippetTestGeneratorConfig(this.generatorConfig)
         });
     }
 

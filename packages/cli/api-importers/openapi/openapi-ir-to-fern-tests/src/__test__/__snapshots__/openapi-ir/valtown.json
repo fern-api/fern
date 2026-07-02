@@ -1,4 +1,5 @@
 {
+  "specVersion": "1",
   "title": "Val Town API",
   "description": "Val Town’s public API\n\nOpenAPI JSON endpoint:\n\nhttps://api.val.town/openapi.json",
   "servers": [

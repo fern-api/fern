@@ -1,10 +1,10 @@
-FROM node:24.16-alpine3.23
+FROM node:24.17-alpine3.23
 
 RUN apk update && apk upgrade --no-cache && apk --no-cache add curl
 
 # Patch npm's bundled picomatch@4.0.3 -> 4.0.4 (GHSA-c2c7-rcm5-vvqj,
 # GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.6
-# (GHSA-jxxr-4gwj-5jf2) in node:24.16's bundled npm 11.12.1.
+# (GHSA-jxxr-4gwj-5jf2) in node:24.17's bundled npm 11.12.1.
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/picomatch \
       /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
@@ -26,6 +26,19 @@ RUN for dir in \
         tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
         rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
       fi; \
     done
 

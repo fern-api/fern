@@ -128,4 +128,5 @@ default-environment: production
 default-url: Base
 ",
   },
+  "specVersion": undefined,
 }

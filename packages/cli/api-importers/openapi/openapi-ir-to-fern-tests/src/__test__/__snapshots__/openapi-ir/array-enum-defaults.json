@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Array enum defaults",
   "description": "Regression fixture for FER-9790. Verifies that OpenAPI `default` values on\narrays (including arrays of enums) are surfaced through the\nOpenAPI-IR -> Fern Definition pipeline so that docs can render\n`Defaults to [...]` metadata. Covers query parameters with\n`allow-multiple: true` plus inlined body properties.\n",
   "servers": [],

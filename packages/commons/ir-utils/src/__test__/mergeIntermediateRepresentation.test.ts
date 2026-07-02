@@ -31,6 +31,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
     return {
         fdrApiDefinitionId: undefined,
         apiVersion: undefined,
+        specVersion: undefined,
         apiName: "test-api",
         apiDisplayName: undefined,
         apiDocs: undefined,

@@ -525,7 +525,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">getMetadata</a>(xApiVersion: String, shallow: Bool?, tag: String?, requestOptions: RequestOptions?) -> MetadataType</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">getMetadata</a>(xApiVersion: String, shallow: Bool?, tag: [String]?, requestOptions: RequestOptions?) -> MetadataType</code></summary>
 <dl>
 <dd>
 
@@ -546,7 +546,10 @@ private func main() async throws {
 
     _ = try await client.service.getMetadata(
         xApiVersion: "0.0.1",
-        shallow: false
+        shallow: false,
+        tag: [
+            "development"
+        ]
     )
 }
 
@@ -581,7 +584,7 @@ try await main()
 <dl>
 <dd>
 
-**tag:** `String?` 
+**tag:** `[String]?` 
     
 </dd>
 </dl>

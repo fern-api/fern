@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix OAuth client-credentials providers when the token endpoint request body has
+    required properties beyond the client id and secret (e.g. a scopes mapping or
+    other custom fields). Those required, non-literal properties are now surfaced on
+    the client-credentials options and forwarded to the token request, so the
+    generated provider compiles and sends a complete request.
+  type: fix

@@ -14,6 +14,14 @@ export interface RawSpecsManifest {
     specs: RawSpecsManifestEntry[];
 }
 
+/**
+ * Characters that are safe to interpolate into a Rust `"..."` string literal.
+ * Rejects double quotes and backslashes that could break out of the literal
+ * or inject code into generated `main.rs`.
+ */
+// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally rejecting control chars in codegen output
+const SAFE_RUST_STRING_LITERAL = /^[^"\\\x00-\x1f]+$/;
+
 /** Where the local-workspace-runner mounts raw API specs inside the container. */
 export const SPECS_DIRECTORY = "/fern/specs";
 export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
@@ -64,10 +72,12 @@ export async function copySpecs(args: {
     binaryName: string;
     authBindings: DetectedAuthBinding[];
     specsDir?: string;
-    /** When true, emit `mod custom;` + `mod sdk_glue;` + `custom::register(app)` in main.rs. */
+    /** When true, emit `mod custom;` + `mod sdk;` + `custom::register(app)` in main.rs. */
     customCommands?: boolean;
+    /** When set, emit `.command_namespace("<rootGroup>")` on the OpenApiBinding chain. */
+    rootGroup?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
+    const { outputDir, binaryName, authBindings, specsDir, customCommands, rootGroup } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -94,7 +104,8 @@ export async function copySpecs(args: {
             binaryName,
             entries,
             authBindings,
-            customCommands: customCommands ?? false
+            customCommands: customCommands ?? false,
+            rootGroup
         })
     );
 
@@ -138,9 +149,9 @@ function renderCustomRsWithSdk(sdkCrate: string): string {
         "//! The generated `main.rs` calls `custom::register(app)` at",
         "//! startup, composing your commands into the CLI at compile time.",
         "//!",
-        "//! Each handler receives an `AppContext`. Use `sdk_glue::sdk_client(ctx)`",
+        "//! Each handler receives an `AppContext`. Use `super::sdk::client(ctx)`",
         "//! to get a fully-wired SDK client that inherits the CLI's auth,",
-        "//! retries, TLS, and global headers. Use `sdk_glue::block_on(future)`",
+        "//! retries, TLS, and global headers. Use `super::sdk::block_on(future)`",
         "//! to run async SDK calls from synchronous handler context.",
         `//! Types are available via \`${sdkCrate}::api::*\`.`,
         "",
@@ -161,8 +172,8 @@ function renderCustomRsWithSdk(sdkCrate: string): string {
         '    //         .arg(clap::Arg::new("plant-id").required(true)),',
         "    //     |matches, ctx| {",
         '    //         let plant_id = matches.get_one::<String>("plant-id").unwrap();',
-        "    //         let client = super::sdk_glue::sdk_client(ctx);",
-        "    //         let plant = super::sdk_glue::block_on(",
+        "    //         let client = super::sdk::client(ctx);",
+        "    //         let plant = super::sdk::block_on(",
         "    //             client.plants.get_plant(plant_id, None),",
         "    //         )?;",
         '    //         println!("{}", serde_json::to_string_pretty(&plant).unwrap());',
@@ -180,8 +191,9 @@ function renderMainRs(args: {
     entries: SpecEntry[];
     authBindings: DetectedAuthBinding[];
     customCommands: boolean;
+    rootGroup?: string;
 }): string {
-    const { binaryName, entries, authBindings, customCommands } = args;
+    const { binaryName, entries, authBindings, customCommands, rootGroup } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -209,7 +221,7 @@ function renderMainRs(args: {
 
     if (customCommands) {
         lines.push("mod custom;");
-        lines.push("mod sdk_glue;");
+        lines.push("mod sdk;");
         lines.push("");
     }
 
@@ -226,6 +238,12 @@ function renderMainRs(args: {
     for (const entry of entries) {
         const include = `include_str!("${entry.destFilename}")`;
         if (entry.namespace != null && entry.namespace !== "") {
+            if (!SAFE_RUST_STRING_LITERAL.test(entry.namespace)) {
+                throw new Error(
+                    `Unsafe namespace "${entry.namespace}": contains characters that cannot be interpolated ` +
+                        "into a Rust string literal. Avoid double quotes, backslashes, and control characters."
+                );
+            }
             lines.push(`                .spec_under("${entry.namespace}", ${include})`);
         } else {
             lines.push(`                .spec(${include})`);
@@ -233,6 +251,9 @@ function renderMainRs(args: {
     }
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
+    }
+    if (rootGroup != null) {
+        lines.push(`                .command_namespace("${rootGroup}")`);
     }
     // Close the binding
     lines.push("        );");

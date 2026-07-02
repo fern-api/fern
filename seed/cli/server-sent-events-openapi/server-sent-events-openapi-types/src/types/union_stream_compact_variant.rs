@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+#[allow(unused_imports)]
 use super::*;
 
 /// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.

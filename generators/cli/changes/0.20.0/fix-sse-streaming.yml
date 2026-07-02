@@ -1,0 +1,5 @@
+- summary: |
+    Auto-detect `text/event-stream` responses and stream SSE events to stdout
+    in real time, even when the OpenAPI spec omits `x-fern-streaming`. Previously
+    these responses fell through to the binary handler, causing errors or hangs.
+  type: feat

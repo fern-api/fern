@@ -277,6 +277,7 @@ func main() {
                     "name": "Go SDK",
                   },
                 ],
+                "contentType": undefined,
                 "displayName": "getUserExample",
                 "request": {
                   "auth": undefined,
@@ -371,6 +372,7 @@ func main() {
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "getUser_Response_200": {

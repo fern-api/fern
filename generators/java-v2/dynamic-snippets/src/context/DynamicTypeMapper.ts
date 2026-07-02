@@ -36,9 +36,31 @@ export class DynamicTypeMapper {
                 }
                 return this.convertNamed({ named });
             }
-            case "optional":
+            case "optional": {
+                const inner = args.typeReference.value;
+                // collapse-optional-nullable: optional<nullable<X>> / optional<optional<X>> collapse to OptionalNullable<X>.
+                if (this.context.usesOptionalNullable() && (inner.type === "nullable" || inner.type === "optional")) {
+                    return java.Type.generic(this.context.getOptionalNullableClassReference(), [
+                        this.convert({ typeReference: inner.value })
+                    ]);
+                }
+                return java.Type.optional(this.convert({ typeReference: inner }));
+            }
             case "nullable": {
-                return java.Type.optional(this.convert({ typeReference: args.typeReference.value }));
+                const inner = args.typeReference.value;
+                // use-nullable-annotation: nullable<X> is rendered as the raw type X (annotated `@Nullable`).
+                if (this.context.usesNullableAnnotation()) {
+                    return this.convert({ typeReference: inner });
+                }
+                // collapse-optional-nullable: nullable<X> is rendered as OptionalNullable<X>;
+                // nullable<optional<X>> / nullable<nullable<X>> collapse into a single OptionalNullable<X>.
+                if (this.context.usesOptionalNullable()) {
+                    const collapsed = inner.type === "optional" || inner.type === "nullable" ? inner.value : inner;
+                    return java.Type.generic(this.context.getOptionalNullableClassReference(), [
+                        this.convert({ typeReference: collapsed })
+                    ]);
+                }
+                return java.Type.optional(this.convert({ typeReference: inner }));
             }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });

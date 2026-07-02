@@ -1,0 +1,3 @@
+rootProject.name = 'multi-content-type-examples'
+
+include 'sample-app'

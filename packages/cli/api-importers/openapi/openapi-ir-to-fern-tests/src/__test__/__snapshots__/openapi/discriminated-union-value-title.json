@@ -166,4 +166,5 @@ error-discrimination:
 display-name: Test spec for `description` settings defined in anyOf.
 ",
   },
+  "specVersion": "1.0.0",
 }

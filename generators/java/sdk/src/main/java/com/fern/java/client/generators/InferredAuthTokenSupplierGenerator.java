@@ -19,8 +19,12 @@ import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.generators.endpoint.PaginationPathUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.NameUtils;
@@ -265,8 +269,21 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
                 @Override
                 public Void visitReference(com.fern.ir.model.http.HttpRequestBodyReference reference) {
-                    // For referenced types, we would need to resolve the type
-                    // For now, skip - most inferred auth uses inline bodies
+                    reference
+                            .getRequestBodyType()
+                            .visit(new PaginationPathUtils.TypeReferenceResolver(clientGeneratorContext))
+                            .map(TypeDeclaration::getShape)
+                            .flatMap(shape -> shape.getObject())
+                            .ifPresent(objectDeclaration -> {
+                                for (ObjectProperty prop : resolvedObjectProperties(objectDeclaration)) {
+                                    String fieldName = NameUtils.getName(prop.getName())
+                                            .getCamelCase()
+                                            .getUnsafeName();
+                                    Optional<Literal> literal = extractLiteral(prop.getValueType());
+                                    boolean isOptional = isOptionalType(prop.getValueType());
+                                    properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
+                                }
+                            });
                     return null;
                 }
 
@@ -288,6 +305,18 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
 
         return properties;
+    }
+
+    /**
+     * Returns the object's extended (inherited) properties followed by its own properties, matching the order in which
+     * the model generator stages them in the builder (see {@code ObjectTypeSpecGenerator}, which adds interface
+     * properties before the type's own properties).
+     */
+    private List<ObjectProperty> resolvedObjectProperties(ObjectTypeDeclaration objectDeclaration) {
+        List<ObjectProperty> resolved = new ArrayList<>();
+        objectDeclaration.getExtendedProperties().stream().flatMap(List::stream).forEach(resolved::add);
+        resolved.addAll(objectDeclaration.getProperties());
+        return resolved;
     }
 
     /** Extracts a literal value from a TypeReference if present. */

@@ -469,22 +469,28 @@ export class EndpointSnippetGenerator {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
-        return this.context
-            .getExampleObjectProperties({
-                parameters: namedParameters,
-                snippetObject: snippet.pathParameters ?? {}
-            })
-            .map((parameter) => {
-                return swift.functionArgument({
-                    label: parameter.name.name.camelCase.unsafeName,
-                    // Generated Swift SDKs declare every path parameter as `String` in
-                    // the endpoint method signature (the value is interpolated into the
-                    // URL string), so render non-string primitive literals as their
-                    // String representation here to keep the rendered snippet's
-                    // argument type compatible with the SDK signature.
-                    value: this.renderPathParameterValueAsSwiftString({ value: parameter.value })
-                });
-            });
+        return (
+            this.context
+                // Path parameters are always required arguments on the generated endpoint
+                // method, so synthesize a placeholder (e.g. `<endpointParam>`) for any whose
+                // value is absent from the example. This notably covers path parameters bound
+                // to API-level variables, whose example values are not carried per-endpoint.
+                .associateByWireValueOrDefault({
+                    parameters: namedParameters,
+                    values: snippet.pathParameters ?? {}
+                })
+                .map((parameter) => {
+                    return swift.functionArgument({
+                        label: parameter.name.name.camelCase.unsafeName,
+                        // Generated Swift SDKs declare every path parameter as `String` in
+                        // the endpoint method signature (the value is interpolated into the
+                        // URL string), so render non-string primitive literals as their
+                        // String representation here to keep the rendered snippet's
+                        // argument type compatible with the SDK signature.
+                        value: this.renderPathParameterValueAsSwiftString({ value: parameter.value })
+                    });
+                })
+        );
     }
 
     private renderPathParameterValueAsSwiftString({ value }: { value: unknown }): swift.Expression {

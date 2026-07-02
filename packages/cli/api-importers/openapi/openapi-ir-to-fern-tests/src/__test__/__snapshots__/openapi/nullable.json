@@ -389,4 +389,5 @@ error-discrimination:
 display-name: Nullable Properties API
 ",
   },
+  "specVersion": "1.0.0",
 }

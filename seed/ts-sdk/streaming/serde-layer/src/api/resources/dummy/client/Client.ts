@@ -77,6 +77,11 @@ export class DummyClient {
                         type: "json",
                         messageTerminator: "\n",
                     },
+                    reconnectionEnabled:
+                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
+                    maxReconnectionAttempts:
+                        requestOptions?.stream?.maxReconnectionAttempts ??
+                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };

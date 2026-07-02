@@ -17,6 +17,8 @@ public final class RequestOptions {
 
   private final TimeUnit timeoutTimeUnit;
 
+  private final Optional<Integer> maxRetries;
+
   private final Map<String, String> headers;
 
   private final Map<String, Supplier<String>> headerSuppliers;
@@ -26,10 +28,12 @@ public final class RequestOptions {
   private final Map<String, Supplier<String>> queryParameterSuppliers;
 
   private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit,
-      Map<String, String> headers, Map<String, Supplier<String>> headerSuppliers,
-      Map<String, String> queryParameters, Map<String, Supplier<String>> queryParameterSuppliers) {
+      Optional<Integer> maxRetries, Map<String, String> headers,
+      Map<String, Supplier<String>> headerSuppliers, Map<String, String> queryParameters,
+      Map<String, Supplier<String>> queryParameterSuppliers) {
     this.timeout = timeout;
     this.timeoutTimeUnit = timeoutTimeUnit;
+    this.maxRetries = maxRetries;
     this.headers = headers;
     this.headerSuppliers = headerSuppliers;
     this.queryParameters = queryParameters;
@@ -42,6 +46,10 @@ public final class RequestOptions {
 
   public TimeUnit getTimeoutTimeUnit() {
     return timeoutTimeUnit;
+  }
+
+  public Optional<Integer> getMaxRetries() {
+    return maxRetries;
   }
 
   public Map<String, String> getHeaders() {
@@ -70,6 +78,8 @@ public final class RequestOptions {
 
     private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
 
+    private Optional<Integer> maxRetries = Optional.empty();
+
     private final Map<String, String> headers = new HashMap<>();
 
     private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
@@ -86,6 +96,11 @@ public final class RequestOptions {
     public Builder timeout(Integer timeout, TimeUnit timeoutTimeUnit) {
       this.timeout = Optional.of(timeout);
       this.timeoutTimeUnit = timeoutTimeUnit;
+      return this;
+    }
+
+    public Builder maxRetries(Integer maxRetries) {
+      this.maxRetries = Optional.of(maxRetries);
       return this;
     }
 
@@ -110,7 +125,7 @@ public final class RequestOptions {
     }
 
     public RequestOptions build() {
-      return new RequestOptions(timeout, timeoutTimeUnit, headers, headerSuppliers, queryParameters, queryParameterSuppliers);
+      return new RequestOptions(timeout, timeoutTimeUnit, maxRetries, headers, headerSuppliers, queryParameters, queryParameterSuppliers);
     }
   }
 }

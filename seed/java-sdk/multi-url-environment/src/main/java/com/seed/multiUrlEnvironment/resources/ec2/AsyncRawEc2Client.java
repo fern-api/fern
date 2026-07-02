@@ -8,6 +8,7 @@ import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.MediaTypes;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
+import com.seed.multiUrlEnvironment.core.RetryInterceptor;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentApiException;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentException;
 import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentHttpResponse;
@@ -64,6 +65,15 @@ public class AsyncRawEc2Client {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedMultiUrlEnvironmentHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -78,6 +88,9 @@ public class AsyncRawEc2Client {
                     future.completeExceptionally(new SeedMultiUrlEnvironmentApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedMultiUrlEnvironmentException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedMultiUrlEnvironmentException("Network error executing HTTP request", e));

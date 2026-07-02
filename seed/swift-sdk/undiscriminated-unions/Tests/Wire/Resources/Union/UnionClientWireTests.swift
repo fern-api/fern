@@ -47,10 +47,10 @@ import UndiscriminatedUnions
         )
         let expectedResponse = [
             Key.keyType(
-                .name
+                KeyType.name
             ): "exampleName", 
             Key.keyType(
-                .value
+                KeyType.value
             ): "exampleValue", 
             Key.default(
                 .default
@@ -77,7 +77,7 @@ import UndiscriminatedUnions
         )
         let expectedResponse = [
             Key.keyType(
-                .name
+                KeyType.name
             ): "string"
         ]
         let response = try await client.union.getMetadata(requestOptions: RequestOptions(additionalHeaders: stub.headers))

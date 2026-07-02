@@ -4,7 +4,7 @@ using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
 
-namespace SeedTrace.Test.Core;
+namespace SeedTrace.Test_.Core;
 
 [TestFixture]
 public class WithRawResponseTests

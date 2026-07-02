@@ -3,9 +3,11 @@
  */
 package com.seed.inferredAuthImplicit.resources.simple;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.inferredAuthImplicit.core.ClientOptions;
 import com.seed.inferredAuthImplicit.core.ObjectMappers;
 import com.seed.inferredAuthImplicit.core.RequestOptions;
+import com.seed.inferredAuthImplicit.core.RetryInterceptor;
 import com.seed.inferredAuthImplicit.core.SeedInferredAuthImplicitApiException;
 import com.seed.inferredAuthImplicit.core.SeedInferredAuthImplicitException;
 import com.seed.inferredAuthImplicit.core.SeedInferredAuthImplicitHttpResponse;
@@ -46,6 +48,15 @@ public class RawSimpleClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -55,6 +66,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedInferredAuthImplicitApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedInferredAuthImplicitException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedInferredAuthImplicitException("Network error executing HTTP request", e);
         }

@@ -122,7 +122,6 @@ public final class SearchPoliciesRequest {
 
         /**
          * <p>Required search query</p>
-         * <p>Required search query</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

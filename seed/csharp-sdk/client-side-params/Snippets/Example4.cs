@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Service.GetUserByIdAsync(
-            "userId",
-            new GetUserRequest {
+            userId: "userId",
+            request: new GetUserRequest {
                 Fields = "fields",
                 IncludeFields = true
             }

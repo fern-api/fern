@@ -115,4 +115,5 @@ idempotency-headers:
     name: idempotencyKey
 ",
   },
+  "specVersion": "1.0.0",
 }

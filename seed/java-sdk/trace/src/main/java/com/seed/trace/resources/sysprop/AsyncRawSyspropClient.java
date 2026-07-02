@@ -3,10 +3,12 @@
  */
 package com.seed.trace.resources.sysprop;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
 import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.core.SeedTraceHttpResponse;
@@ -58,6 +60,15 @@ public class AsyncRawSyspropClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -72,6 +83,9 @@ public class AsyncRawSyspropClient {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
                 }
@@ -110,6 +124,15 @@ public class AsyncRawSyspropClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedTraceHttpResponse<Map<Language, Integer>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -127,6 +150,9 @@ public class AsyncRawSyspropClient {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
                 }

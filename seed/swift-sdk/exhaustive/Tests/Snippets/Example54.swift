@@ -8,6 +8,6 @@ enum Example54 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.put.add(id: "id")
+        _ = try await client.endpoints.primitive.getAndReturnBase64(request: "SGVsbG8gd29ybGQh")
     }
 }

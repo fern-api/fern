@@ -253,6 +253,60 @@ impl ParamsClient {
             .await
     }
 
+    /// POST with referenced body + query params
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn create_with_body_and_query(
+        &self,
+        request: &CreateWithBodyAndQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithOptionalField, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/params/body-and-query",
+                Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?),
+                QueryBuilder::new()
+                    .string("_fields", request.fields.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    /// POST bytes body + query params
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn upload_bytes_with_query(
+        &self,
+        request: &UploadBytesWithQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithOptionalField, ApiError> {
+        self.http_client
+            .execute_bytes_request(
+                Method::POST,
+                "/params/bytes-and-query",
+                Some(request.body.to_vec()),
+                QueryBuilder::new()
+                    .string("_fields", request.fields.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     /// GET with boolean path param
     ///
     /// # Arguments

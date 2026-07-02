@@ -7,6 +7,7 @@
 // Public API — building blocks
 pub mod app;
 pub mod arg_source;
+pub mod asyncapi;
 pub mod auth;
 pub mod binding;
 pub mod cli_args;
@@ -19,6 +20,7 @@ pub mod graphql;
 pub mod hooks;
 pub mod man;
 pub mod openapi;
+pub mod pager;
 pub mod stability;
 pub mod validate;
 pub mod sdk_executor;
@@ -28,6 +30,7 @@ pub mod websocket;
 pub use auth::{ApiKeyAuth, BasicAuth, BearerAuth, OAuth2Auth, OAuth2Grant, OAuth2TokenProvider, TokenCache};
 
 // Internal modules
+pub(crate) mod debug;
 pub(crate) mod early_intercept;
 pub(crate) mod logging;
 pub(crate) mod output;

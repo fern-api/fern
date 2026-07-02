@@ -40,7 +40,7 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func getUsername(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: [String: String], optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func getUsername(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: [String: String], optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: [User], filter: [String], longParam: Int64, bigIntParam: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .get,
             path: "/user",
@@ -58,7 +58,7 @@ public final class UserClient: Sendable {
                 "nestedUser": .unknown(nestedUser), 
                 "optionalUser": optionalUser.map { .unknown($0) }, 
                 "excludeUser": .unknown(excludeUser), 
-                "filter": .string(filter), 
+                "filter": .stringArray(filter), 
                 "longParam": .int64(longParam), 
                 "bigIntParam": .string(bigIntParam)
             ],

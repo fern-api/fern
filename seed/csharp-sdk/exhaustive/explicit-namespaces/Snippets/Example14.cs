@@ -13,8 +13,8 @@ public partial class Examples
         );
 
         await client.Endpoints.HttpMethods.TestPatchAsync(
-            "id",
-            new ObjectWithOptionalField {
+            id: "id",
+            request: new ObjectWithOptionalField {
                 String = "string",
                 Integer = 1,
                 Long = 1000000L,

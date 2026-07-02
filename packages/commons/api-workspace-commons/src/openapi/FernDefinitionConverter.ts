@@ -156,7 +156,8 @@ export class FernDefinitionConverter {
                 }
             },
             packageMarkers: {},
-            importedDefinitions: {}
+            importedDefinitions: {},
+            specVersion: ir.specVersion ?? undefined
         };
     }
 }

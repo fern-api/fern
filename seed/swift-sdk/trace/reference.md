@@ -1230,7 +1230,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getPlaylists</a>(serviceParam: String, limit: Int?, otherField: String, multiLineDocs: String, optionalMultipleField: String?, multipleField: String, requestOptions: RequestOptions?) -> [Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getPlaylists</a>(serviceParam: String, limit: Int?, otherField: String, multiLineDocs: String, optionalMultipleField: [String]?, multipleField: [String], requestOptions: RequestOptions?) -> [Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1267,7 +1267,13 @@ private func main() async throws {
         serviceParam: "1",
         limit: 1,
         otherField: "otherField",
-        multiLineDocs: "multiLineDocs"
+        multiLineDocs: "multiLineDocs",
+        optionalMultipleField: [
+            "optionalMultipleField"
+        ],
+        multipleField: [
+            "multipleField"
+        ]
     )
 }
 
@@ -1321,7 +1327,7 @@ description
 <dl>
 <dd>
 
-**optionalMultipleField:** `String?` 
+**optionalMultipleField:** `[String]?` 
     
 </dd>
 </dl>
@@ -1329,7 +1335,7 @@ description
 <dl>
 <dd>
 
-**multipleField:** `String` 
+**multipleField:** `[String]` 
     
 </dd>
 </dl>

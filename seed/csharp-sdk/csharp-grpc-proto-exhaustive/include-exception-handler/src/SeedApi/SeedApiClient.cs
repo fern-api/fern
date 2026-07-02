@@ -52,6 +52,9 @@ public partial class SeedApiClient : ISeedApiClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -64,6 +67,7 @@ public partial class SeedApiClient : ISeedApiClient
                         {
                             Method = HttpMethod.Post,
                             Path = "foo",
+                            QueryString = _queryString,
                             Headers = _headers,
                             Options = options,
                         },

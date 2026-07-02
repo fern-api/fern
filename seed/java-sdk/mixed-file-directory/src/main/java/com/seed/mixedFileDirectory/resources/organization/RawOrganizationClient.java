@@ -8,6 +8,7 @@ import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.MediaTypes;
 import com.seed.mixedFileDirectory.core.ObjectMappers;
 import com.seed.mixedFileDirectory.core.RequestOptions;
+import com.seed.mixedFileDirectory.core.RetryInterceptor;
 import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
 import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryException;
 import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryHttpResponse;
@@ -67,6 +68,15 @@ public class RawOrganizationClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -77,6 +87,8 @@ public class RawOrganizationClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMixedFileDirectoryApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedMixedFileDirectoryException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedMixedFileDirectoryException("Network error executing HTTP request", e);
         }

@@ -29,7 +29,15 @@ import Audiences
                 ))
             ))
         )
-        let response = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.folderA.service.getDirectThread(
+            ids: [
+                "ids"
+            ],
+            tags: [
+                "tags"
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

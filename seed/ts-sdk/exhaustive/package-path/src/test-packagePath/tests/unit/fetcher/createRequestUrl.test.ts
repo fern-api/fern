@@ -77,7 +77,7 @@ describe("Test createRequestUrl", () => {
                 undefinedValue: undefined,
                 emptyString: "",
             },
-            expected: "https://api.example.com?valid=value&nullValue=&emptyString=",
+            expected: "https://api.example.com?valid=value&emptyString=",
         },
         {
             description: "should handle deeply nested objects",

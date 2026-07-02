@@ -110,6 +110,28 @@ service:
             body:
               string: "uploaded"
 
+    createWithBodyAndQuery:
+      docs: POST with referenced body + query params
+      path: /body-and-query
+      method: POST
+      request:
+        name: CreateWithBodyAndQuery
+        body: objects.ObjectWithRequiredField
+        query-parameters:
+          _fields: optional<string>
+      response: objects.ObjectWithOptionalField
+
+    uploadBytesWithQuery:
+      docs: POST bytes body + query params
+      path: /bytes-and-query
+      method: POST
+      request:
+        name: UploadBytesWithQuery
+        body: bytes
+        query-parameters:
+          _fields: optional<string>
+      response: objects.ObjectWithOptionalField
+
     getWithBooleanPath:
       docs: GET with boolean path param
       path: /path-bool/{param}

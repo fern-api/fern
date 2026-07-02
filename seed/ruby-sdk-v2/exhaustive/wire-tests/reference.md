@@ -1261,7 +1261,9 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_unknown_field
+client.endpoints.object.get_and_return_with_unknown_field(unknown: {
+  "$ref" => "https://example.com/schema"
+})
 ```
 </dd>
 </dl>
@@ -1309,7 +1311,9 @@ client.endpoints.object.get_and_return_with_unknown_field
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_documented_unknown_type
+client.endpoints.object.get_and_return_with_documented_unknown_type(documented_unknown_type: {
+  key: "value"
+})
 ```
 </dd>
 </dl>
@@ -1357,7 +1361,11 @@ client.endpoints.object.get_and_return_with_documented_unknown_type
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {})
+client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {
+  string: {
+    key: "value"
+  }
+})
 ```
 </dd>
 </dl>
@@ -2278,6 +2286,79 @@ client.endpoints.params.upload_with_path(param: "upload-path")
 <dd>
 
 **param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">create_with_body_and_query</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.params.create_with_body_and_query(
+  fields: "_fields",
+  string: "string"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -3313,7 +3394,9 @@ POST request with no auth
 <dd>
 
 ```ruby
-client.no_auth.post_with_no_auth
+client.no_auth.post_with_no_auth(request: {
+  key: "value"
+})
 ```
 </dd>
 </dl>

@@ -175,7 +175,20 @@ fn describe_binding_sources(binding: &SchemeBinding) -> String {
                 describe_credential_source(password),
             )
         }
-        SchemeBinding::Custom(_) => "custom auth provider".to_string(),
+        SchemeBinding::Custom(provider) => {
+            let hints = provider.credential_hints();
+            if hints.is_empty() {
+                "custom auth provider".to_string()
+            } else {
+                // credential_hints() uses "environment variable"; normalise
+                // to the shorter "env var" used by describe_credential_source.
+                hints
+                    .iter()
+                    .map(|h| h.replace("environment variable", "env var"))
+                    .collect::<Vec<_>>()
+                    .join(" / ")
+            }
+        }
     }
 }
 
@@ -192,6 +205,9 @@ fn describe_credential_source(src: &AuthCredentialSource) -> String {
             .map(describe_credential_source)
             .collect::<Vec<_>>()
             .join(" / "),
+        AuthCredentialSource::Keyring { service, account } => {
+            format!("keyring {service}:{account}")
+        }
         AuthCredentialSource::Missing => "(unbound)".to_string(),
     }
 }
@@ -889,13 +905,30 @@ mod tests {
     }
 
     #[test]
-    fn render_auth_help_section_marks_custom_provider_opaque() {
+    fn render_auth_help_section_marks_hintless_custom_provider_opaque() {
         let bindings = vec![(
             "x".to_string(),
             SchemeBinding::Custom(crate::auth::test_helpers::bearer("x", "tok")),
         )];
         let out = render_auth_help_section(&bindings).unwrap();
         assert!(out.contains("custom auth provider"));
+    }
+
+    #[test]
+    fn render_auth_help_section_shows_custom_provider_credential_hints() {
+        use crate::auth::schemes::BasicAuthProvider;
+        let provider: DynAuthProvider = Arc::new(BasicAuthProvider::username_only(
+            "ApiKeyAuth",
+            AuthCredentialSource::from_env("CLOSE_API_KEY"),
+        ));
+        let bindings = vec![(
+            "ApiKeyAuth".to_string(),
+            SchemeBinding::Custom(provider),
+        )];
+        let out = render_auth_help_section(&bindings).unwrap();
+        assert!(out.contains("CLOSE_API_KEY env var"), "should show env var name with short label, got: {out}");
+        assert!(!out.contains("environment variable"), "should use 'env var' not 'environment variable', got: {out}");
+        assert!(!out.contains("custom auth provider"), "should not show opaque label, got: {out}");
     }
 
     #[tokio::test]

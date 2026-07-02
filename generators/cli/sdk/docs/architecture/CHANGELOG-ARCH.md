@@ -22,6 +22,232 @@ rather than user-facing changes.
 
 ## [Unreleased]
 
+### 2026-06-22 → 2026-06-26
+
+**10 merged PRs** in window · **7 with architectural impact** · **3 new implicit decisions** surfaced (D-AH, D-AI, D-AJ) · **0 reversals to existing entries** (D-AH reverses an out-of-scope stance in DESIGN.md, not a prior INDEX.md entry) · **0 out-of-band signals**
+
+> [source: GitHub] PRs #197, #198, #199, #200, #206, #209 (arch refresh — skipped), #210, #211, #212, #213, #214 · [source: Linear] FER-10533 (Done), FER-9858 (Done), FER-11379 (Done), FER-11380 (Done), FER-11381 (Done), FER-11348 (Done), FER-10538 (Done) · [source: Slack] unavailable (not connected) · [source: Notion] unavailable (401)
+
+#### Shape changes
+
+- **New building block: `src/pager.rs` — external pager support
+  (PR #200, FER-9858, D-AJ).** Adds `PagerConfig` (env-var resolution:
+  `$<BINARY>_PAGER` > `$PAGER` > platform default) and `spawn_pager()`
+  / `PagerHandle` for piping paginated output through `less`/`more`.
+  Activation triple-gated: `--page-all && TTY && !--no-pager`. Wired
+  into both OpenAPI and GraphQL pagination loops.
+  Touches `src/pager.rs` (new), `src/openapi/executor.rs`,
+  `src/graphql/executor.rs`, `src/openapi/commands.rs`,
+  `src/graphql/commands.rs`.
+  Sources: [FER-9858](https://linear.app/buildwithfern/issue/FER-9858),
+  [PR #200](https://github.com/fern-api/cli-sdk/pull/200).
+
+- **`--debug` HTTP dump extended to GraphQL path (PR #210, FER-11380).**
+  `src/debug.rs` gains `dump_graphql_request()` — a GraphQL-aware
+  variant that shows the raw query text (not JSON-escaped) and
+  pretty-prints redacted variables. Wired in
+  `src/graphql/executor.rs`. Completes the `--debug` coverage across
+  both protocol paths (OpenAPI landed in PR #206, FER-11379).
+  Sources: [FER-11380](https://linear.app/buildwithfern/issue/FER-11380),
+  [PR #210](https://github.com/fern-api/cli-sdk/pull/210),
+  [FER-11379](https://linear.app/buildwithfern/issue/FER-11379),
+  [PR #206](https://github.com/fern-api/cli-sdk/pull/206).
+
+#### Cross-cutting concept changes
+
+- **Rich stderr error display (PR #212, FER-11381).** `write_error_json()`
+  in `src/error.rs` now emits color-coded `error[category]:` labels
+  (api/auth/validation/discovery), optional docs-URL link for API errors
+  (`ErrorDisplayContext.docs_base_url → <base>/<status_code>`), and
+  `Try \`<cmd> --help\`` hint for validation errors. All output sanitized
+  via `sanitize_for_terminal()`. Does not change the JSON-on-stdout
+  contract.
+  Sources: [FER-11381](https://linear.app/buildwithfern/issue/FER-11381),
+  [PR #212](https://github.com/fern-api/cli-sdk/pull/212).
+
+- **`--format raw` and `--format jsonl` output formats (PR #199).**
+  `OutputFormat::Raw` bypasses JSON parsing: response bytes stream to
+  stdout; error responses use the new `CliError::RawSentinel` sentinel
+  to skip the JSON error envelope (bytes already on stdout).
+  `OutputFormat::Jsonl` (alias `ndjson`) renders each top-level array
+  element as a single-line JSON object.
+  Sources: [PR #199](https://github.com/fern-api/cli-sdk/pull/199).
+
+- **`--query` JMESPath response filtering (PR #197, FER-10533, D-AH).**
+  Global `--query` flag applies a JMESPath expression to every response
+  before formatting. Works with all `--format` variants and paginated /
+  streaming responses (null results suppressed as a per-event filter).
+  New dependency: `jmespath = "0.3"`. Reverses earlier out-of-scope
+  stance in `DESIGN.md`.
+  Sources: [FER-10533](https://linear.app/buildwithfern/issue/FER-10533),
+  [PR #197](https://github.com/fern-api/cli-sdk/pull/197).
+
+- **`--format http` output format (PR #214, FER-11348).** Renders the
+  full HTTP response envelope (status line, headers, blank line, body)
+  in standard HTTP/1.1 message format. OpenAPI path only.
+  Sources: [FER-11348](https://linear.app/buildwithfern/issue/FER-11348),
+  [PR #214](https://github.com/fern-api/cli-sdk/pull/214).
+
+#### New implicit decisions
+
+- **D-AH** — `--query` JMESPath filtering (reversal of DESIGN.md
+  out-of-scope). [PR #197](https://github.com/fern-api/cli-sdk/pull/197),
+  [FER-10533](https://linear.app/buildwithfern/issue/FER-10533).
+- **D-AI** — `--format raw` bypasses JSON parsing (`RawSentinel`
+  pattern). [PR #199](https://github.com/fern-api/cli-sdk/pull/199).
+- **D-AJ** — External pager is explicit-only (`--page-all` + TTY +
+  `!--no-pager`). [PR #200](https://github.com/fern-api/cli-sdk/pull/200),
+  [FER-9858](https://linear.app/buildwithfern/issue/FER-9858).
+
+#### Risk surface changes
+
+- **§11 #10 — `jmespath` crate staleness.** `jmespath = "0.3"` last
+  published 2021; unmaintained. No known CVEs but may block future Rust
+  edition / MSRV bumps. [PR #197](https://github.com/fern-api/cli-sdk/pull/197).
+
+#### No architectural impact (3 PRs)
+
+- PR #211 — AssemblyAI demo script fix
+- PR #213 — Auth help display for custom providers (bug fix)
+- PR #198 — YAML output formatting fix (FER-10538, cosmetic)
+
+---
+
+### 2026-06-18 → 2026-06-22
+
+**2 merged PRs** in window · **1 with architectural impact** · **0 new implicit decisions** · **0 reversals** · **0 out-of-band signals**
+
+> [source: GitHub] PRs #202, #204 (arch refresh — skipped) · [source: Linear] unavailable (401) · [source: Slack] unavailable (timeout) · [source: Notion] unavailable (401)
+
+#### Cross-cutting concept changes
+
+- **Explicit-mode `@file://` and `@data://` URI prefixes for file
+  references (PR #202, FER-10532).** Extends the auto-mode `@<path>`
+  baseline (D-AF) with two opt-in encoding schemes from Stainless
+  parity: `@file://<path>` requires valid UTF-8 or errors with a hint
+  at `@data://`; `@data://<path>` always base64-encodes even for UTF-8
+  input. Both work at every existing `@`-aware site (binary body,
+  multipart, object-shorthand JSON, `--json` whole-body). Under an
+  explicit scheme, `-` is a literal filename — only auto-mode `@-`
+  remains the stdin sentinel, preserving retry semantics. Dry-run JSON
+  now reports `binary_body.source.mode` (`"auto"` / `"text"` / `"data"`)
+  for agent auditability. 13 new unit tests + 21 new wire tests.
+  Touches `src/openapi/executor.rs` (+552), `src/openapi/app.rs`,
+  `src/openapi/binding.rs`.
+  Sources: [FER-10532](https://linear.app/buildwithfern/issue/FER-10532),
+  [PR #202](https://github.com/fern-api/cli-sdk/pull/202).
+
+---
+
+### 2026-06-11 → 2026-06-18
+
+**8 merged PRs** in window · **7 with architectural impact** · **5 new implicit decisions** surfaced (D-AC, D-AD, D-AE, D-AF, D-AG) · **2 new formal ADRs** (ADR-0007, ADR-0008) · **0 reversals** · **2 out-of-band signals**
+
+> [source: GitHub] PRs #167, #191, #142, #143, #188, #189, #164, #201 · [source: Linear] FER-9856 (Done), FER-10543 (Done), FER-10541 (Done), FER-10436 (Done), FER-9853 (Done), FER-10504 (In Progress, PR merged) · [source: Slack] #project-cli-generator — CLI generator independence discussion, `--help` default-to-JSON discussion · [source: Notion] unavailable (401)
+
+#### Shape changes
+
+- **AsyncAPI lands as third protocol path with cross-binding deep-merge
+  composition (PR #167, D-AC).** Adds `src/asyncapi/` (parser, discovery,
+  overlay, commands, executor, binding) — peers of `src/openapi/` and
+  `src/graphql/`, following the no-shared-abstractions rule from
+  `AGENTS.md`. `CliApp`'s binding resolution upgraded from last-wins to
+  deep subtree merging with up-front leaf-collision detection
+  (`CliError::Validation`). ElevenLabs convai demo exercises REST +
+  WebSocket composition under a single binary.
+  Touches `src/app.rs` (+818), `src/asyncapi/**` (new), `src/websocket/**`.
+  Sources: [PR #167](https://github.com/fern-api/cli-sdk/pull/167).
+
+- **First-class OAuth login support — `auth login` / `auth logout` /
+  `auth status` always grafted (PR #191, FER-9856, ADR-0007, ADR-0008,
+  D-AD).** Three flow types: PKCE (loopback), device-code (RFC 8628),
+  token-paste (`--with-token`). OS keyring via `keyring-rs` with file
+  fallback (`~/.config/<cli>/auth-keyring.json`, 0600). Credential
+  precedence: CLI flag > env var > keyring > file. `auth status` discloses
+  shadowing; 401/403 errors name the active credential source.
+  New modules: `src/auth/login.rs`, `src/auth/oauth_login.rs`,
+  `src/auth/oauth_common.rs`, `src/auth/keyring_store.rs`.
+  Sources: [FER-9856](https://linear.app/buildwithfern/issue/FER-9856),
+  [PR #191](https://github.com/fern-api/cli-sdk/pull/191),
+  [ADR-0007](../../adr/0007-login-flows-one-shot-per-binary.md),
+  [ADR-0008](../../adr/0008-credential-precedence-and-storage-fallback.md).
+
+- **`oneOf [T, array<T>]` union recognition with `$ref` chain resolution
+  (PR #188, D-AG).** `recognize_scalar_or_array_union()` detects unions for
+  any scalar type T (string, integer, number, boolean). `resolve_ref_chain()`
+  follows `$ref → $ref → … → terminal` up to 8 levels. Wire serialization:
+  single value → scalar, multiple values or JSON-array literal → array.
+  `--schema` renders union params as `oneOf`.
+  Touches `src/openapi/parser.rs`, `src/openapi/discovery.rs`,
+  `src/openapi/executor.rs`, `src/openapi/commands.rs`.
+  Sources: [PR #188](https://github.com/fern-api/cli-sdk/pull/188).
+
+#### Cross-cutting concept changes
+
+- **TTY-aware default output + `<NAME>_OUTPUT` env var (PR #143,
+  FER-10543, FER-10541, D-AE).** Default format resolves with precedence:
+  `--format` flag > `<NAME>_OUTPUT` env var > TTY-aware default (table
+  when stdout is interactive, JSON when piped). Invalid env values fall
+  through. New `resolve_default_format()` helper in `src/formatter.rs`.
+  Touches `src/formatter.rs`, `src/app.rs`.
+  Sources: [FER-10543](https://linear.app/buildwithfern/issue/FER-10543),
+  [FER-10541](https://linear.app/buildwithfern/issue/FER-10541),
+  [PR #143](https://github.com/fern-api/cli-sdk/pull/143).
+
+- **GraphQL retry config parity (PR #142, FER-10504).** GraphQL executor
+  now takes a `retry_policy: &RetryPolicy` parameter instead of
+  hardcoding the default. `--no-retry` flag honored on the GraphQL path.
+  Reuses shared `src/http.rs` retry infrastructure — no import from
+  `src/openapi/`.
+  Touches `src/graphql/executor.rs`, `src/graphql/binding.rs`,
+  `src/graphql/app.rs`.
+  Sources: [FER-10504](https://linear.app/buildwithfern/issue/FER-10504),
+  [PR #142](https://github.com/fern-api/cli-sdk/pull/142).
+
+- **`@file` resolution in object-shorthand JSON + `\@` escape
+  (PR #164, PR #201, FER-10436, D-AF).** `--profile '{"pic":"@./abe.jpg"}'`
+  reads the file and embeds contents (UTF-8 as string, binary as base64).
+  `\@literal` escapes at every `@`-aware site uniformly. PR #201 extends
+  `@file` resolution to `--json` whole-body path and wraps blocking I/O in
+  `tokio::task::block_in_place`.
+  Touches `src/openapi/executor.rs`, `src/openapi/app.rs`,
+  `src/openapi/binding.rs`.
+  Sources: [FER-10436](https://linear.app/buildwithfern/issue/FER-10436),
+  [PR #164](https://github.com/fern-api/cli-sdk/pull/164),
+  [PR #201](https://github.com/fern-api/cli-sdk/pull/201).
+
+#### Risk surface changes
+
+- **RFC 3986 path encoding fix — stop percent-encoding `.` and `~`
+  (PR #189).** `encode_path_segment` no longer encodes RFC 3986 §2.3
+  unreserved characters. WHATWG dot-segment defense moved from encoding
+  to rejection in `render_path_template` (`CliError::Validation` for bare
+  `.`/`..` segments). `validate_resource_name` extended to reject
+  single-dot segments.
+  Touches `src/validate.rs`, `src/openapi/executor.rs`.
+  Sources: [PR #189](https://github.com/fern-api/cli-sdk/pull/189).
+
+#### Out-of-band signals
+
+- **CLI generator independence discussion (no corresponding cli-sdk PR).**
+  Slack thread in #project-cli-generator debated whether to bundle Rust
+  SDK types in the CLI for custom command ergonomics. Consensus leaning
+  toward co-generation (bundle SDK for free, composable codegen parts)
+  rather than keeping CLI independent and forcing a separate Rust SDK
+  purchase. References [FER-11194](https://linear.app/buildwithfern/issue/FER-11194).
+  Sources: [Slack #project-cli-generator](https://buildwithfern.slack.com/archives/C0B2EM4Q3TN/p1781558883754209).
+
+- **`--help` default-to-JSON for agents discussion (no corresponding
+  cli-sdk PR).** Thread explored whether `--help` should emit JSON by
+  default for agent-first CLIs. Team noted `--schema` flag already serves
+  this purpose; larger "agent vs human mode" concept tracked in
+  [FER-11139](https://linear.app/buildwithfern/issue/FER-11139). Existing
+  TTY-aware logic in `src/formatter.rs` already distinguishes interactive
+  vs piped contexts.
+  Sources: [Slack #project-cli-generator](https://buildwithfern.slack.com/archives/C0B2EM4Q3TN/p1781539581371829).
+
+---
+
 ### 2026-06-08 → 2026-06-11
 
 **6 merged PRs** in window · **4 with architectural impact** · **2 new implicit decisions** surfaced (D-AA, D-AB) · **0 reversals** · **1 out-of-band signal**
@@ -171,6 +397,50 @@ rather than user-facing changes.
   No code change in cli-sdk, but the naming decision (FER-11039) may
   eventually affect the binary-name generation logic.
   Sources: [Slack thread](https://buildwithfern.slack.com/archives/C0B2EM4Q3TN/p1780538086515969).
+
+### 2026-06-05
+
+#### Shape changes
+
+- **AsyncAPI 2.6 code-generation path added (`src/asyncapi/`) (ACP-2.1).**
+  A self-contained third protocol module joins `src/openapi/` and
+  `src/graphql/`, following the same no-shared-abstractions rule. Ships:
+  `discovery.rs` (`AsyncApiDescription`, `Channel`, `Operation`, `Message`,
+  `Server`, `Info`, `ChannelParameter`), `parser.rs` (YAML/JSON → discovery
+  types; rejects non-`2.6.x` versions and non-WebSocket protocols with
+  `CliError::Validation`; extracts single-`$ref` and `oneOf:` message refs),
+  and `overlay.rs` (structural duplicate of `src/openapi/overlay.rs` — same
+  `OverlayAction`/`OverlayDocument`/JSONPath/deep-merge semantics). Verified
+  against the bundled ElevenLabs spec (AsyncAPI 2.6.0, `AgentMessages`
+  channel, 31 component messages). No executor yet — that is a follow-on ACP
+  task. Command-builder (`commands.rs`) added in ACP-2.2 (see below).
+  Touches `src/asyncapi/`, `src/lib.rs`.
+  Sources: [ACP-2.1](https://linear.app/buildwithfern/issue/ACP-2.1).
+
+- **AsyncAPI `clap` command-builder added (`src/asyncapi/commands.rs`) (ACP-2.2).**
+  `build_cli(&AsyncApiDescription) -> clap::Command` walks channels, groups
+  them by `x-fern-sdk-group-name` into a nested `GroupNode` tree, derives leaf
+  command names from `x-fern-sdk-method-name` (falling back to kebab-cased
+  channel name), and attaches channel-parameter flags plus an optional
+  `--message` flag from the operation's message schema. Nested groups merge
+  correctly (shared intermediate nodes collapse). Verified by 8 unit tests
+  covering grouping, nesting, flag generation, and fallback naming.
+  Touches `src/asyncapi/commands.rs`, `src/asyncapi/mod.rs`.
+  Sources: [ACP-2.2](https://linear.app/buildwithfern/issue/ACP-2.2).
+
+- **Deep subtree merge + up-front leaf-collision detection (ACP-1.1).** `CliApp`
+  now deep-merges every binding's command subtree into a single root before
+  dispatch instead of appending top-level groups independently. Two bindings
+  that share a common top-level group (e.g., `convai`) but contribute disjoint
+  leaf paths (`convai agents list` vs. `convai conversations get`) merge
+  correctly. Full leaf-path collisions (two bindings claiming the identical full
+  path) surface immediately as `CliError::Validation` listing every conflict —
+  replacing the prior silent last-registered-wins behavior. Binding dispatch
+  switches from first-segment matching (`resolve_binding_for_path`) to
+  exact leaf-path lookup (`resolve_binding_for_leaf` over a `LeafMap`).
+  Additive only; the public `CliApp` builder API is unchanged.
+  Touches `src/app.rs`.
+  Sources: [ACP-1.1](https://linear.app/buildwithfern/issue/ACP-1.1).
 
 ### 2026-06-02 → 2026-06-03
 
@@ -677,6 +947,6 @@ see [`automation/README.md`](./automation/README.md) for activation
 steps. Manual invocation works today via the `devin run` command in
 that file.
 
-<!-- last-run: 2026-06-11T01:00:00Z -->
+<!-- last-run: 2026-06-26T16:06:00Z -->
 <!-- The marker above is consumed by the automation playbook to compute
      the next run's window. Each successful run updates it. -->

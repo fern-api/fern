@@ -264,13 +264,25 @@ export class TypeLiteral extends AstNode {
         writer.writeLine("{");
         writer.indent();
         for (const entry of entries) {
-            entry.key.write(writer);
+            this.writeObjectKey({ writer, key: entry.key });
             writer.write(": ");
             entry.value.write(writer);
             writer.writeLine(",");
         }
         writer.dedent();
         writer.write("}");
+    }
+
+    private writeObjectKey({ writer, key }: { writer: Writer; key: TypeLiteral }): void {
+        const internal = key.internalType;
+        // Emit valid identifier string keys bare (e.g. `foo: `) to match typed
+        // object properties; anything else (non-identifier strings, numbers)
+        // falls back to the literal's own rendering (e.g. a quoted string).
+        if (internal.type === "string" && isValidIdentifier(internal.value)) {
+            writer.write(internal.value);
+            return;
+        }
+        key.write(writer);
     }
 
     private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
@@ -435,13 +447,22 @@ export class TypeLiteral extends AstNode {
         writer.writeLine("{");
         writer.indent();
         for (const [key, val] of entries) {
-            writer.write(`${key}: `);
+            if (isValidIdentifier(key)) {
+                writer.write(`${key}: `);
+            } else {
+                writer.writeNode(TypeLiteral.string(key));
+                writer.write(": ");
+            }
             writer.writeNode(TypeLiteral.unknown(val));
             writer.writeLine(",");
         }
         writer.dedent();
         writer.write("}");
     }
+}
+
+function isValidIdentifier(value: string): boolean {
+    return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(value);
 }
 
 function filterNopObjectFields({ fields }: { fields: ObjectField[] }): ObjectField[] {

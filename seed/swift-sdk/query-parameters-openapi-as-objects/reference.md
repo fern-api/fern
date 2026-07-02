@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Date?, keyValue: [String: String]?, optionalString: String?, nestedUser: NestedUser?, optionalUser: User?, excludeUser: User?, filter: String?, tags: String?, optionalTags: String?, neighbor: SearchRequestNeighbor?, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User]?, optionalDeadline: Date?, keyValue: [String: String]?, optionalString: String?, nestedUser: NestedUser?, optionalUser: User?, excludeUser: [User]?, filter: [String]?, tags: [String]?, optionalTags: [String]?, neighbor: SearchRequestNeighbor?, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -31,6 +31,15 @@ private func main() async throws {
                 "tags"
             ]
         ),
+        userList: [
+            User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            )
+        ],
         optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         keyValue: [
             "keyValue": "keyValue"
@@ -53,6 +62,24 @@ private func main() async throws {
                 "tags"
             ]
         ),
+        excludeUser: [
+            User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            )
+        ],
+        filter: [
+            "filter"
+        ],
+        tags: [
+            "tags"
+        ],
+        optionalTags: [
+            "optionalTags"
+        ],
         neighbor: SearchRequestNeighbor.user(
             User(
                 name: "name",
@@ -137,7 +164,7 @@ try await main()
 <dl>
 <dd>
 
-**userList:** `User?` 
+**userList:** `[User]?` 
     
 </dd>
 </dl>
@@ -185,7 +212,7 @@ try await main()
 <dl>
 <dd>
 
-**excludeUser:** `User?` 
+**excludeUser:** `[User]?` 
     
 </dd>
 </dl>
@@ -193,7 +220,7 @@ try await main()
 <dl>
 <dd>
 
-**filter:** `String?` 
+**filter:** `[String]?` 
     
 </dd>
 </dl>
@@ -201,7 +228,7 @@ try await main()
 <dl>
 <dd>
 
-**tags:** `String?` — List of tags. Serialized as a comma-separated list.
+**tags:** `[String]?` — List of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>
@@ -209,7 +236,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalTags:** `String?` — Optional list of tags. Serialized as a comma-separated list.
+**optionalTags:** `[String]?` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>

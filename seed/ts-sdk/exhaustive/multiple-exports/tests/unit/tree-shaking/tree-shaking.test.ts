@@ -2,15 +2,22 @@ import { describe, it, expect } from "vitest";
 import webpack from "webpack";
 import path from "path";
 import fs from "fs";
-import os from "os";
 
 const PKG_ROOT = path.resolve(__dirname, "../../..");
 
 function bundle(entryCode: string): Promise<number> {
     return new Promise((resolve, reject) => {
-        const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "tree-shake-test-"));
+        // Create the temporary entry inside the package's `src` directory so that it
+        // falls under the `rootDir`/`include` of the SDK's tsconfig (which ts-loader
+        // uses). Writing it to the OS temp dir trips TS6059 ("not under rootDir").
+        const tmpDir = fs.mkdtempSync(path.join(PKG_ROOT, "src", "tree-shake-test-"));
         const entryFile = path.join(tmpDir, "entry.ts");
         fs.writeFileSync(entryFile, entryCode);
+
+        // The temp dir lives under `src/`, which is included by the SDK's tsconfig.
+        // Always remove it (success or failure) so an orphaned entry can't pollute
+        // subsequent TypeScript compilations or get accidentally committed.
+        const cleanup = () => fs.rmSync(tmpDir, { recursive: true, force: true });
 
         const compiler = webpack({
             mode: "production",
@@ -60,19 +67,21 @@ function bundle(entryCode: string): Promise<number> {
 
         compiler.run((err, stats) => {
             if (err) {
+                cleanup();
                 reject(err);
                 return;
             }
             if (stats?.hasErrors()) {
-                reject(new Error(stats.compilation.errors.map((e) => e.message).join("\n")));
+                const error = new Error(stats.compilation.errors.map((e) => e.message).join("\n"));
+                cleanup();
+                reject(error);
                 return;
             }
 
             const bundlePath = path.join(tmpDir, "bundle.js");
             const size = fs.statSync(bundlePath).size;
 
-            // Clean up
-            fs.rmSync(tmpDir, { recursive: true, force: true });
+            cleanup();
 
             resolve(size);
         });

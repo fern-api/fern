@@ -317,4 +317,5 @@ error-discrimination:
 display-name: Readonly Endpoint Response API
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -63,6 +63,7 @@ type Config struct {
 	InlineFileProperties         bool
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
+	DedupeUnionBaseProperties    bool
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
@@ -178,7 +179,7 @@ func run(fn GeneratorFunc) (retErr error) {
 	if err := writeFiles(coordinator, config.Writer, config.Module, files); err != nil {
 		return err
 	}
-	
+
 	// Run the go-v2 SDK generator after files are written to disk, but only for client mode.
 	// This ensures all files (including internal/caller.go and other templated files)
 	// are available on disk before the go-v2 generator tries to read them.
@@ -187,7 +188,7 @@ func run(fn GeneratorFunc) (retErr error) {
 			return err
 		}
 	}
-	
+
 	return nil
 }
 
@@ -236,6 +237,7 @@ func newConfig(configFilename string) (*Config, error) {
 		EnableExplicitNull:           *customConfig.EnableExplicitNull,
 		UseReaderForBytesRequest:     *customConfig.UseReaderForBytesRequest,
 		GettersPassByValue:           *customConfig.GettersPassByValue,
+		DedupeUnionBaseProperties:    *customConfig.DedupeUnionBaseProperties,
 		ExportAllRequestsAtRoot:      *customConfig.ExportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     *customConfig.OmitEmptyRequestWrappers,
 		OmitFernHeaders:              *customConfig.OmitFernHeaders,
@@ -302,6 +304,7 @@ type customConfig struct {
 	AlwaysSendRequiredProperties *bool         `json:"alwaysSendRequiredProperties,omitempty"`
 	UseReaderForBytesRequest     *bool         `json:"useReaderForBytesRequest,omitempty"`
 	GettersPassByValue           *bool         `json:"gettersPassByValue,omitempty"`
+	DedupeUnionBaseProperties    *bool         `json:"dedupeUnionBaseProperties,omitempty"`
 	ExportAllRequestsAtRoot      *bool         `json:"exportAllRequestsAtRoot,omitempty"`
 	OmitEmptyRequestWrappers     *bool         `json:"omitEmptyRequestWrappers,omitempty"`
 	OmitFernHeaders              *bool         `json:"omitFernHeaders,omitempty"`
@@ -517,6 +520,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	if customConfig.GettersPassByValue == nil {
 		customConfig.GettersPassByValue = gospec.Ptr(false)
 	}
+	if customConfig.DedupeUnionBaseProperties == nil {
+		customConfig.DedupeUnionBaseProperties = gospec.Ptr(false)
+	}
 	if customConfig.ExportAllRequestsAtRoot == nil {
 		customConfig.ExportAllRequestsAtRoot = gospec.Ptr(false)
 	}
@@ -583,6 +589,6 @@ func runGoV2Generator(coordinator *coordinator.Client) error {
 		generatorexec.LogLevelDebug,
 		"Successfully completed go-v2 SDK generator",
 	)
-	
+
 	return nil
 }

@@ -11,6 +11,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.Random;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 
 public class RetryInterceptor implements Interceptor {
@@ -28,17 +29,24 @@ public class RetryInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Response response = chain.proceed(chain.request());
+        Request request = chain.request();
+        int effectiveMaxRetries = resolveMaxRetries(request);
+        Response response = chain.proceed(request);
 
         if (shouldRetry(response.code())) {
-            return retryChain(response, chain);
+            return retryChain(response, chain, effectiveMaxRetries);
         }
 
         return response;
     }
 
-    private Response retryChain(Response response, Chain chain) throws IOException {
-        ExponentialBackoff backoff = new ExponentialBackoff(this.maxRetries);
+    private int resolveMaxRetries(Request request) {
+        MaxRetriesOverride override = request.tag(MaxRetriesOverride.class);
+        return override != null ? override.getValue() : this.maxRetries;
+    }
+
+    private Response retryChain(Response response, Chain chain, int maxRetries) throws IOException {
+        ExponentialBackoff backoff = new ExponentialBackoff(maxRetries);
         Optional<Duration> nextBackoff = backoff.nextBackoff(response);
         while (nextBackoff.isPresent()) {
             try {
@@ -156,6 +164,23 @@ public class RetryInterceptor implements Interceptor {
 
     private static boolean shouldRetry(int statusCode) {
         return statusCode == 408 || statusCode == 429 || statusCode >= 500;
+    }
+
+    /**
+     * Per-request override carried on the OkHttp {@link Request} as a tag.
+     * When present, the interceptor uses this value instead of the client-wide
+     * {@code maxRetries} configured at construction time.
+     */
+    public static final class MaxRetriesOverride {
+        private final int value;
+
+        public MaxRetriesOverride(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
     private final class ExponentialBackoff {

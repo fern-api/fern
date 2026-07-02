@@ -24,9 +24,13 @@ enum Example19 {
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             )
         ))
     }

@@ -5,6 +5,23 @@ enum Example7 {
     static func snippet() async throws {
         let client = EnumClient(baseURL: "https://api.fern.com")
 
-        _ = try await client.queryParam.sendList()
+        _ = try await client.queryParam.sendList(
+            operand: [
+                .greaterThan
+            ],
+            maybeOperand: [
+                .greaterThan
+            ],
+            operandOrColor: [
+                ColorOrOperand.color(
+                    .red
+                )
+            ],
+            maybeOperandOrColor: [
+                ColorOrOperand.color(
+                    .red
+                )
+            ]
+        )
     }
 }

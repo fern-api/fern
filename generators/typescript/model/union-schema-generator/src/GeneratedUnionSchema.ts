@@ -207,26 +207,26 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         }
 
         if (this.hasBaseInterface(context)) {
+            let baseSchema: Zurg.ObjectSchema = context.coreUtilities.zurg.object(
+                this.getEffectiveBaseProperties(context).map((baseProperty) => ({
+                    key: {
+                        raw: getWireValue(baseProperty.name),
+                        parsed: this.getGeneratedUnion(context).getBasePropertyKey(getWireValue(baseProperty.name))
+                    },
+                    value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType)
+                }))
+            );
+            for (const extension of this.shape?.extends ?? []) {
+                baseSchema = baseSchema.extend(
+                    context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true })
+                );
+            }
             context.sourceFile.addVariableStatement({
                 declarationKind: VariableDeclarationKind.Const,
                 declarations: [
                     {
                         name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
-                        initializer: getTextOfTsNode(
-                            context.coreUtilities.zurg
-                                .object(
-                                    this.getEffectiveBaseProperties(context).map((baseProperty) => ({
-                                        key: {
-                                            raw: getWireValue(baseProperty.name),
-                                            parsed: this.getGeneratedUnion(context).getBasePropertyKey(
-                                                getWireValue(baseProperty.name)
-                                            )
-                                        },
-                                        value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType)
-                                    }))
-                                )
-                                .toExpression()
-                        )
+                        initializer: getTextOfTsNode(baseSchema.toExpression())
                     }
                 ]
             });

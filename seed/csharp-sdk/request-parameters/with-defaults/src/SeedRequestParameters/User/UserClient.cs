@@ -132,6 +132,9 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedRequestParameters.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedRequestParameters.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -145,6 +148,7 @@ public partial class UserClient : IUserClient
                     Method = HttpMethod.Post,
                     Path = "/user/username-optional",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -197,7 +201,7 @@ public partial class UserClient : IUserClient
             .Add("optionalString", request.OptionalString)
             .AddDeepObject("nestedUser", request.NestedUser)
             .AddDeepObject("optionalUser", request.OptionalUser)
-            .AddDeepObject("excludeUser", request.ExcludeUser)
+            .Add("excludeUser", request.ExcludeUser)
             .Add("filter", request.Filter)
             .Add("longParam", request.LongParam)
             .Add("bigIntParam", request.BigIntParam)

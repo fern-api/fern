@@ -409,6 +409,7 @@ export function generateIr({
             context,
             document: openApi
         }),
+        specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
         basePath: (() => {
             const parsed = getFernBasePath(openApi);
             return parsed?.basePath;

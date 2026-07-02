@@ -9,6 +9,7 @@ import com.seed.javaStreamingAcceptHeader.core.MediaTypes;
 import com.seed.javaStreamingAcceptHeader.core.ObjectMappers;
 import com.seed.javaStreamingAcceptHeader.core.RequestOptions;
 import com.seed.javaStreamingAcceptHeader.core.ResponseBodyReader;
+import com.seed.javaStreamingAcceptHeader.core.RetryInterceptor;
 import com.seed.javaStreamingAcceptHeader.core.SeedJavaStreamingAcceptHeaderApiException;
 import com.seed.javaStreamingAcceptHeader.core.SeedJavaStreamingAcceptHeaderException;
 import com.seed.javaStreamingAcceptHeader.core.SeedJavaStreamingAcceptHeaderHttpResponse;
@@ -71,6 +72,15 @@ public class AsyncRawDummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         CompletableFuture<SeedJavaStreamingAcceptHeaderHttpResponse<Iterable<StreamResponse>>> future =
                 new CompletableFuture<>();
@@ -100,6 +110,9 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedJavaStreamingAcceptHeaderApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaStreamingAcceptHeaderException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedJavaStreamingAcceptHeaderException("Network error executing HTTP request", e));
@@ -148,6 +161,15 @@ public class AsyncRawDummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedJavaStreamingAcceptHeaderHttpResponse<StreamResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -174,6 +196,9 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedJavaStreamingAcceptHeaderApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaStreamingAcceptHeaderException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedJavaStreamingAcceptHeaderException("Network error executing HTTP request", e));

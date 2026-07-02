@@ -9,6 +9,7 @@ import com.seed.serverSentEventsResumable.core.MediaTypes;
 import com.seed.serverSentEventsResumable.core.ObjectMappers;
 import com.seed.serverSentEventsResumable.core.RequestOptions;
 import com.seed.serverSentEventsResumable.core.ResponseBodyReader;
+import com.seed.serverSentEventsResumable.core.RetryInterceptor;
 import com.seed.serverSentEventsResumable.core.SeedServerSentEventsResumableApiException;
 import com.seed.serverSentEventsResumable.core.SeedServerSentEventsResumableException;
 import com.seed.serverSentEventsResumable.core.SeedServerSentEventsResumableHttpResponse;
@@ -65,6 +66,15 @@ public class RawCompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         try {
             Response response = client.newCall(okhttpRequest).execute();
@@ -78,6 +88,8 @@ public class RawCompletionsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedServerSentEventsResumableApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsResumableException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedServerSentEventsResumableException("Network error executing HTTP request", e);
         }
@@ -115,6 +127,15 @@ public class RawCompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         try {
             Response response = client.newCall(okhttpRequest).execute();
@@ -128,6 +149,8 @@ public class RawCompletionsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedServerSentEventsResumableApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsResumableException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedServerSentEventsResumableException("Network error executing HTTP request", e);
         }

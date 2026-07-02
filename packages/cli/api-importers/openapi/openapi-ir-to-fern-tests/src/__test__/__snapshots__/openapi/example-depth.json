@@ -116,4 +116,5 @@ error-discrimination:
 display-name: Tree API
 ",
   },
+  "specVersion": "1.0.0",
 }

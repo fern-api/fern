@@ -199,4 +199,5 @@ error-discrimination:
 display-name: Test API
 ",
   },
+  "specVersion": "1.0.0",
 }

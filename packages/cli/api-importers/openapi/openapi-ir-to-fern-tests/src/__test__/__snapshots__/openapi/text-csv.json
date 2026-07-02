@@ -68,4 +68,5 @@ error-discrimination:
 display-name: Test text/csv response handling.
 ",
   },
+  "specVersion": "1.0.0",
 }

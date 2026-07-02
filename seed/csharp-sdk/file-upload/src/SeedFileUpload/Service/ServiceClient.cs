@@ -18,6 +18,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -28,6 +31,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -85,6 +89,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -95,6 +102,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/just-file",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -250,6 +258,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -260,6 +271,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/with-content-type",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -307,6 +319,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -317,6 +332,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/with-form-encoding",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -363,6 +379,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -373,6 +392,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -443,6 +463,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -453,6 +476,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/optional-args",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -524,6 +548,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -534,6 +561,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/inline-type",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -601,6 +629,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -611,6 +642,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/with-json-property",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -678,6 +710,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -688,6 +723,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/with-ref-body",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };
@@ -758,6 +794,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -770,6 +809,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Post,
                     Path = "/snippet",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -809,6 +849,9 @@ public partial class ServiceClient : IServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedFileUpload.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedFileUpload.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -819,6 +862,7 @@ public partial class ServiceClient : IServiceClient
         {
             Method = HttpMethod.Post,
             Path = "/with-literal-enum",
+            QueryString = _queryString,
             Headers = _headers,
             Options = options,
         };

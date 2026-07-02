@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Service.GetClientAsync(
-            "clientId",
-            new GetClientRequest {
+            clientId: "clientId",
+            request: new GetClientRequest {
                 Fields = "fields",
                 IncludeFields = true
             }

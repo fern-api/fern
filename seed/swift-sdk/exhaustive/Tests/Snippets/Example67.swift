@@ -8,10 +8,6 @@ enum Example67 {
             token: "<token>"
         )
 
-        _ = try await client.reqWithHeaders.getWithCustomHeader(
-            xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-            xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-            request: "string"
-        )
+        _ = try await client.noReqBody.postWithNoRequestBody()
     }
 }

@@ -6,12 +6,15 @@ package com.fern.sdk.resources.endpoints.params;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.resources.endpoints.params.requests.CreateWithBodyAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePath;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
 import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.fern.sdk.resources.endpoints.params.requests.UploadBytesWithQuery;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.io.InputStream;
 import java.lang.String;
@@ -198,6 +201,69 @@ public class AsyncParamsClient {
   public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param, byte[] request,
       RequestOptions requestOptions) {
     return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with referenced body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(
+      ObjectWithRequiredField body) {
+    return this.rawClient.createWithBodyAndQuery(body).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with referenced body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(
+      ObjectWithRequiredField body, RequestOptions requestOptions) {
+    return this.rawClient.createWithBodyAndQuery(body, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with referenced body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(
+      CreateWithBodyAndQuery request) {
+    return this.rawClient.createWithBodyAndQuery(request).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with referenced body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> createWithBodyAndQuery(
+      CreateWithBodyAndQuery request, RequestOptions requestOptions) {
+    return this.rawClient.createWithBodyAndQuery(request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(byte[] body) {
+    return this.rawClient.uploadBytesWithQuery(body).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(byte[] body,
+      RequestOptions requestOptions) {
+    return this.rawClient.uploadBytesWithQuery(body, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(
+      UploadBytesWithQuery request) {
+    return this.rawClient.uploadBytesWithQuery(request).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes body + query params
+   */
+  public CompletableFuture<ObjectWithOptionalField> uploadBytesWithQuery(
+      UploadBytesWithQuery request, RequestOptions requestOptions) {
+    return this.rawClient.uploadBytesWithQuery(request, requestOptions).thenApply(response -> response.body());
   }
 
   /**

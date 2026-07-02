@@ -15,8 +15,8 @@ public class Example11 {
                 .updateTags(
                         "userId",
                         UpdateTagsRequest.builder()
+                                .tags(OptionalNullable.of(Arrays.asList("tags", "tags")))
                                 .labels(OptionalNullable.of(Arrays.asList("labels", "labels")))
-                                .tags(Optional.of(Arrays.asList("tags", "tags")))
                                 .categories(Optional.of(Arrays.asList("categories", "categories")))
                                 .build());
     }

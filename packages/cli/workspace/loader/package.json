@@ -43,6 +43,8 @@
     "@fern-api/task-context": "workspace:*",
     "chalk": "catalog:",
     "js-yaml": "catalog:",
+    "simple-git": "catalog:",
+    "tmp-promise": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

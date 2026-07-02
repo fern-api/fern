@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -115,6 +116,8 @@ public final class PathPage {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new __API_EXCEPTION__(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new __BASE_EXCEPTION__("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new __BASE_EXCEPTION__("Network error executing HTTP request", e);
         }

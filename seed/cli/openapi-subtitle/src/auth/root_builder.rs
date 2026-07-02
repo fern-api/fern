@@ -20,8 +20,12 @@
 //!     .run();
 //! ```
 
+use std::sync::Arc;
+
 use super::builder::SchemeBinding;
 use super::credential::AuthCredentialSource;
+use super::oauth2::{MisconfiguredOAuth2Provider, OAuth2Grant, OAuth2TokenProvider};
+use super::provider::DynAuthProvider;
 
 /// Trait implemented by all typed auth builders. Converts the builder
 /// into the `(scheme_name, SchemeBinding)` pair used by the auth
@@ -335,26 +339,97 @@ impl OAuth2Auth {
 
 impl AuthSchemeBuilder for OAuth2Auth {
     fn into_binding(self) -> (String, SchemeBinding) {
-        // For OAuth2, the primary credential used for request auth is the
-        // access token (either static or obtained via client-credentials).
-        // The SchemeBinding::Token holds the access token source. The
-        // client_id/secret/refresh_token/token_url are consumed by the
-        // OAuth2TokenProvider at a higher level — this binding just declares
-        // "this scheme's credential is a bearer token sourced from X".
+        // A static access token bypasses the OAuth flow entirely — surface it
+        // as a plain bearer Token binding (lowered to a BearerAuthProvider).
+        if !matches!(self.access_token, AuthCredentialSource::Missing) {
+            return (self.name, SchemeBinding::Token(self.access_token));
+        }
+
+        // No static token: actually wire the client-credentials / refresh-token
+        // flow so the CLI obtains a token and authenticates — rather than
+        // silently sending unauthenticated requests (FER-10745). The previous
+        // behavior collapsed to `Token(Missing)`, which lowered to a bearer
+        // provider with no credential and no Authorization header.
         //
-        // If an access_token_env is set, use it directly (static token).
-        // Otherwise, fall through to Missing — the binding's build_auth_provider
-        // will detect the OAuth2 scheme type and construct an OAuth2TokenProvider
-        // using client_id, client_secret, and token_url.
-        let source = if matches!(self.access_token, AuthCredentialSource::Missing) {
-            // No static access token — token must be obtained via OAuth flow.
-            // Use a chain: access_token first (in case set at runtime), then Missing.
-            AuthCredentialSource::Missing
-        } else {
-            self.access_token
+        // `OAuth2Grant` reads credentials from environment variables at refresh
+        // time, so we need the env-var *names* behind the client_id /
+        // client_secret / refresh_token sources. Non-env sources can't feed
+        // that grant; we treat them (and any missing token_url) as incomplete
+        // config and fail fast at request time instead of authenticating
+        // silently.
+        let provider: DynAuthProvider = match (
+            self.token_url.as_deref(),
+            self.client_id.env_var_name(),
+            self.client_secret.env_var_name(),
+        ) {
+            (Some(token_url), Some(client_id_env), Some(client_secret_env)) => {
+                let grant = match self.refresh_token.env_var_name() {
+                    Some(refresh_token_env) => OAuth2Grant::RefreshToken {
+                        client_id_env: client_id_env.to_string(),
+                        client_secret_env: client_secret_env.to_string(),
+                        refresh_token_env: refresh_token_env.to_string(),
+                    },
+                    None if matches!(self.refresh_token, AuthCredentialSource::Missing) => {
+                        OAuth2Grant::ClientCredentials {
+                            client_id_env: client_id_env.to_string(),
+                            client_secret_env: client_secret_env.to_string(),
+                            scope: None,
+                        }
+                    }
+                    None => {
+                        // Non-env refresh token source (literal, file, closure,
+                        // etc.) — OAuth2Grant can't consume it. Fail fast.
+                        return (
+                            self.name.clone(),
+                            SchemeBinding::Custom(Arc::new(MisconfiguredOAuth2Provider::new(
+                                self.name,
+                                "refresh_token configured via non-env source; \
+                                 OAuth2Grant only supports env-var credentials"
+                                    .to_string(),
+                            ))),
+                        );
+                    }
+                };
+                Arc::new(OAuth2TokenProvider::new(
+                    self.name.clone(),
+                    token_url.to_string(),
+                    grant,
+                ))
+            }
+            _ => Arc::new(MisconfiguredOAuth2Provider::new(
+                self.name.clone(),
+                oauth2_missing_config_reason(
+                    self.token_url.is_some(),
+                    self.client_id.env_var_name().is_some(),
+                    self.client_secret.env_var_name().is_some(),
+                ),
+            )),
         };
-        (self.name, SchemeBinding::Token(source))
+
+        (self.name, SchemeBinding::Custom(provider))
     }
+}
+
+/// Build a human-readable reason listing which pieces of OAuth2
+/// client-credentials config are missing, for the fail-fast provider's error
+/// message. The env-var checks are `true` only when the corresponding source
+/// is an `Env` source (the only kind `OAuth2Grant` can read).
+fn oauth2_missing_config_reason(
+    has_token_url: bool,
+    has_client_id_env: bool,
+    has_client_secret_env: bool,
+) -> String {
+    let mut missing = Vec::new();
+    if !has_token_url {
+        missing.push("token_url");
+    }
+    if !has_client_id_env {
+        missing.push("client_id (env-var source)");
+    }
+    if !has_client_secret_env {
+        missing.push("client_secret (env-var source)");
+    }
+    format!("missing OAuth2 config: {}", missing.join(", "))
 }
 
 #[cfg(test)]
@@ -405,14 +480,76 @@ mod tests {
         assert!(matches!(binding, SchemeBinding::Token(AuthCredentialSource::Env(ref e)) if e == "MY_ACCESS_TOKEN"));
     }
 
+    // FER-10745: without a static access token, the client-credentials flow
+    // must actually be wired (a Custom OAuth2 provider), NOT collapsed to a
+    // credential-less bearer that silently sends unauthenticated requests.
     #[test]
-    fn oauth2_auth_without_static_token_is_missing() {
+    fn oauth2_auth_client_credentials_wires_oauth_provider() {
         let (name, binding) = OAuth2Auth::new("OAuth2Security")
             .client_id_env("CLIENT_ID")
             .client_secret_env("CLIENT_SECRET")
             .token_url("https://auth.example.com/token")
             .into_binding();
         assert_eq!(name, "OAuth2Security");
-        assert!(matches!(binding, SchemeBinding::Token(AuthCredentialSource::Missing)));
+        let SchemeBinding::Custom(provider) = binding else {
+            panic!("client-credentials OAuth2 should lower to a Custom provider");
+        };
+        // The wired provider reads the configured client-cred env vars.
+        let hints = provider.credential_hints().join(" ");
+        assert!(hints.contains("CLIENT_ID"), "hints: {hints}");
+        assert!(hints.contains("CLIENT_SECRET"), "hints: {hints}");
+    }
+
+    #[test]
+    fn oauth2_auth_refresh_token_wires_oauth_provider() {
+        let (_, binding) = OAuth2Auth::new("OAuth2Security")
+            .client_id_env("CLIENT_ID")
+            .client_secret_env("CLIENT_SECRET")
+            .refresh_token_env("REFRESH_TOKEN")
+            .token_url("https://auth.example.com/token")
+            .into_binding();
+        let SchemeBinding::Custom(provider) = binding else {
+            panic!("refresh-token OAuth2 should lower to a Custom provider");
+        };
+        let hints = provider.credential_hints().join(" ");
+        assert!(hints.contains("REFRESH_TOKEN"), "hints: {hints}");
+    }
+
+    // FER-10745: incomplete config (no token_url / non-env creds) must fail
+    // fast — selected by composition (has_credentials == true) so it errors
+    // loudly rather than being skipped into a silent unauthenticated request.
+    #[test]
+    fn oauth2_auth_incomplete_config_fails_fast_not_silent() {
+        let (_, binding) = OAuth2Auth::new("OAuth2Security")
+            .client_id_env("CLIENT_ID")
+            .client_secret_env("CLIENT_SECRET")
+            // no token_url
+            .into_binding();
+        let SchemeBinding::Custom(provider) = binding else {
+            panic!("incomplete OAuth2 should still lower to a Custom provider");
+        };
+        assert!(
+            provider.has_credentials(),
+            "must be selected (not skipped) so the misconfig surfaces loudly",
+        );
+    }
+
+    // Non-env refresh_token source must fail fast rather than silently
+    // falling back to client-credentials grant.
+    #[test]
+    fn oauth2_auth_non_env_refresh_token_fails_fast() {
+        let (_, binding) = OAuth2Auth::new("OAuth2Security")
+            .client_id_env("CLIENT_ID")
+            .client_secret_env("CLIENT_SECRET")
+            .refresh_token_source(AuthCredentialSource::literal("my-refresh-token"))
+            .token_url("https://auth.example.com/token")
+            .into_binding();
+        let SchemeBinding::Custom(provider) = binding else {
+            panic!("non-env refresh token should lower to a Custom provider");
+        };
+        assert!(
+            provider.has_credentials(),
+            "must be selected (not skipped) so the misconfig surfaces loudly",
+        );
     }
 }

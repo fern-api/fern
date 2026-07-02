@@ -164,6 +164,31 @@ export class OperationConverter extends AbstractOperationConverter {
             }
         }
 
+        // When there are still no endpoint-level examples but multiple content types
+        // have per-body v2Examples (from native OAS per-mediaType examples on bodies
+        // WITH schemas), elevate them to endpoint-level examples tagged with their
+        // content type. This enables docs to display per-content-type examples.
+        // Only fires for multi-content-type endpoints; single-content-type endpoints
+        // are handled by the normal v1→v2 example synthesis pipeline.
+        if (
+            Object.keys(fernExamples.examples).length === 0 &&
+            Object.keys(fernExamples.streamExamples).length === 0 &&
+            convertedRequestBodies != null &&
+            convertedRequestBodies.length > 1
+        ) {
+            const perContentTypeExamples = this.synthesizeEndpointExamplesFromPerContentTypeRequestBodies({
+                convertedRequestBodies,
+                httpPath: path,
+                httpMethod,
+                baseUrl
+            });
+            if (perContentTypeExamples != null) {
+                for (const [name, example] of Object.entries(perContentTypeExamples)) {
+                    fernExamples.examples[name] = example;
+                }
+            }
+        }
+
         const endpointLevelSecuritySchemes = new Set<string>(
             this.operation.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
         );
@@ -817,6 +842,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 if (resolvedValue != null) {
                     result[name] = {
                         displayName: undefined,
+                        contentType: undefined,
                         request: {
                             docs: undefined,
                             endpoint: {
@@ -883,6 +909,129 @@ export class OperationConverter extends AbstractOperationConverter {
         return undefined;
     }
 
+    /**
+     * Synthesizes endpoint-level v2Examples from per-content-type request body
+     * examples that have already been extracted by the RequestBodyConverter.
+     *
+     * This handles the case where multiple content types (e.g. application/json
+     * and application/ld+json) reference the same schema but have distinct
+     * per-content-type examples. The RequestBodyConverter correctly extracts
+     * these into each body's v2Examples, but they need to be elevated to
+     * endpoint-level examples (tagged with contentType) for docs rendering.
+     */
+    private synthesizeEndpointExamplesFromPerContentTypeRequestBodies({
+        convertedRequestBodies,
+        httpPath,
+        httpMethod,
+        baseUrl
+    }: {
+        convertedRequestBodies: { requestBody: FernIr.HttpRequestBody }[];
+        httpPath: HttpPath;
+        httpMethod: FernIr.HttpMethod;
+        baseUrl: string | undefined;
+    }): Record<string, FernIr.V2HttpEndpointExample> | undefined {
+        const result: Record<string, FernIr.V2HttpEndpointExample> = {};
+        const responseExamplesByContentType = this.extractNativeResponseExamplesByContentType();
+
+        for (const convertedBody of convertedRequestBodies) {
+            const body = convertedBody.requestBody;
+            const bodyContentType = body.contentType;
+            const bodyV2Examples = body.v2Examples;
+
+            if (bodyV2Examples == null) {
+                continue;
+            }
+
+            const userExamples = bodyV2Examples.userSpecifiedExamples;
+            if (Object.keys(userExamples).length === 0) {
+                continue;
+            }
+
+            // Find a matching response example for this content type
+            const matchedResponse =
+                bodyContentType != null ? responseExamplesByContentType.get(bodyContentType) : undefined;
+
+            for (const [exampleName, exampleValue] of Object.entries(userExamples)) {
+                // Use a unique key that includes the content type to avoid collisions
+                const key =
+                    convertedRequestBodies.length > 1 && bodyContentType != null
+                        ? `${exampleName} (${bodyContentType})`
+                        : exampleName;
+
+                result[key] = {
+                    displayName: convertedRequestBodies.length > 1 ? key : undefined,
+                    contentType: bodyContentType ?? undefined,
+                    request: {
+                        docs: undefined,
+                        endpoint: {
+                            method: httpMethod,
+                            path: this.buildExamplePath(httpPath, {})
+                        },
+                        baseUrl: undefined,
+                        environment: baseUrl,
+                        auth: undefined,
+                        pathParameters: {},
+                        queryParameters: {},
+                        headers: {},
+                        requestBody: exampleValue
+                    },
+                    response: matchedResponse ?? this.extractNativeResponseExample() ?? undefined,
+                    codeSamples: undefined
+                };
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
+    }
+
+    /**
+     * Extracts native response examples grouped by content type from the
+     * operation's successful (2xx) responses. Used by
+     * synthesizeEndpointExamplesFromPerContentTypeRequestBodies to match
+     * response examples to their corresponding request content types.
+     */
+    private extractNativeResponseExamplesByContentType(): Map<string, FernIr.V2HttpEndpointResponse> {
+        const responsesByContentType = new Map<string, FernIr.V2HttpEndpointResponse>();
+        if (this.operation.responses == null) {
+            return responsesByContentType;
+        }
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                continue;
+            }
+            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                schemaOrReference: response,
+                breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
+            });
+            if (resolvedResponse?.content == null) {
+                continue;
+            }
+            for (const [responseContentType, responseMediaType] of Object.entries(resolvedResponse.content)) {
+                if (responsesByContentType.has(responseContentType)) {
+                    continue;
+                }
+                const namedExamples = this.context.getNamedExamplesFromMediaTypeObject({
+                    mediaTypeObject: responseMediaType,
+                    breadcrumbs: [...this.breadcrumbs, "responses", statusCode],
+                    defaultExampleName: "Example"
+                });
+                for (const [, example] of namedExamples) {
+                    const resolvedValue = this.context.resolveExampleWithValue(example);
+                    if (resolvedValue != null) {
+                        responsesByContentType.set(responseContentType, {
+                            docs: undefined,
+                            statusCode: statusCodeNum,
+                            body: FernIr.V2HttpEndpointResponseBody.json(resolvedValue)
+                        });
+                        break;
+                    }
+                }
+            }
+        }
+        return responsesByContentType;
+    }
+
     private convertStreamConditionExamples({
         httpPath,
         httpMethod,
@@ -935,6 +1084,7 @@ export class OperationConverter extends AbstractOperationConverter {
                     this.getExampleName({ example, exampleIndex }),
                     {
                         displayName: undefined,
+                        contentType: undefined,
                         request:
                             example.request != null ||
                             example["path-parameters"] != null ||

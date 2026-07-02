@@ -540,13 +540,20 @@ export class UnionGenerator {
             // callers can wrap a raw JSON payload (the `#[non_exhaustive]` enum attribute
             // prevents direct construction outside the crate).
             if (this.isForwardCompatible()) {
-                if (needsNewline) {
-                    writer.newLine();
-                }
-                writer.writeBlock(`pub fn ${UNKNOWN_CONSTRUCTOR_NAME}(value: serde_json::Value) -> Self`, () => {
-                    writer.writeLine(`Self::${UNKNOWN_VARIANT_NAME}(value)`);
+                // Check if any user-defined variant already produces a constructor named "unknown"
+                // to avoid duplicate method definitions.
+                const hasUnknownVariant = this.unionTypeDeclaration.types.some((ut) => {
+                    return this.context.case.snakeUnsafe(ut.discriminantValue) === UNKNOWN_CONSTRUCTOR_NAME;
                 });
-                needsNewline = true;
+                if (!hasUnknownVariant) {
+                    if (needsNewline) {
+                        writer.newLine();
+                    }
+                    writer.writeBlock(`pub fn ${UNKNOWN_CONSTRUCTOR_NAME}(value: serde_json::Value) -> Self`, () => {
+                        writer.writeLine(`Self::${UNKNOWN_VARIANT_NAME}(value)`);
+                    });
+                    needsNewline = true;
+                }
             }
 
             // Generate getter methods for base properties
@@ -587,7 +594,7 @@ export class UnionGenerator {
     private generateVariantConstructor(writer: rust.Writer, unionType: FernIr.SingleUnionType): void {
         const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
-        const constructorName = this.context.case.snakeUnsafe(unionType.discriminantValue);
+        const constructorName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(unionType.discriminantValue));
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
         unionType.shape._visit({

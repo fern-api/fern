@@ -255,4 +255,5 @@ error-discrimination:
 display-name: Test extension `x-fern-sdk-group-name` alongside `x-fern-streaming`.
 ",
   },
+  "specVersion": "1.0.0",
 }

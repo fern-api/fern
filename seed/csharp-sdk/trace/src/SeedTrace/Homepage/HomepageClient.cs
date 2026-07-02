@@ -17,6 +17,9 @@ public partial class HomepageClient : IHomepageClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +32,7 @@ public partial class HomepageClient : IHomepageClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/homepage-problems",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -94,6 +98,9 @@ public partial class HomepageClient : IHomepageClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -107,6 +114,7 @@ public partial class HomepageClient : IHomepageClient
                     Method = HttpMethod.Post,
                     Path = "/homepage-problems",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

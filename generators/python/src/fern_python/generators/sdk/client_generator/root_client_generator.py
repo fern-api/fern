@@ -84,6 +84,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     MAX_RETRIES_CONSTRUCTOR_PARAMETER_NAME = "max_retries"
 
+    STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_NAME = "stream_reconnection_enabled"
+    STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. "
+        "Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value."
+    )
+
+    MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_NAME = "max_stream_reconnection_attempts"
+    MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_DOCS = (
+        "The maximum number of reconnection attempts for resumable streaming endpoints. "
+        "Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value."
+    )
+
     _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
         "base_url",
         "environment",
@@ -802,6 +814,22 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
         parameters.append(
             RootClientConstructorParameter(
+                constructor_parameter_name=self.STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
+                docs=self.STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=self.MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
+                docs=self.MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
                 constructor_parameter_name=self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
                 type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
                 docs="Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.",
@@ -1047,9 +1075,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 if isinstance(self._context.custom_config.timeout_in_seconds, int)
                                 else AST.Expression(AST.TypeHint.none())
                             ),
-                            right=AST.Expression(
-                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}.timeout.read"
-                            ),
+                            right=AST.Expression(AST.TypeHint.none()),
                             test=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
                             ),
@@ -1675,6 +1701,20 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             (
                 ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME,
                 AST.Expression(max_retries_local_variable),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.STREAM_RECONNECTION_ENABLED_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.STREAM_RECONNECTION_ENABLED_CONSTRUCTOR_PARAMETER_NAME),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_CONSTRUCTOR_PARAMETER_NAME),
             )
         )
 

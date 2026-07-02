@@ -62,6 +62,30 @@ public partial class RequestOptions : IRequestOptions
     }
 
     /// <summary>
+    /// The max number of reconnection attempts for streaming endpoints.
+    /// Only applies to SSE streams marked as resumable.
+    /// </summary>
+    public int? MaxStreamReconnectAttempts { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
+
+    /// <summary>
+    /// When true, disables automatic reconnection for streaming endpoints.
+    /// Only applies to SSE streams marked as resumable.
+    /// </summary>
+    public bool? DisableStreamReconnection { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
+
+    /// <summary>
     /// Additional query parameters sent with the request.
     /// </summary>
     public IEnumerable<KeyValuePair<string, string>> AdditionalQueryParameters { get;

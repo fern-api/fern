@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Service.GetResourceAsync(
-            "resourceId",
-            new GetResourceRequest {
+            resourceId: "resourceId",
+            request: new GetResourceRequest {
                 IncludeMetadata = true,
                 Format = "json"
             }

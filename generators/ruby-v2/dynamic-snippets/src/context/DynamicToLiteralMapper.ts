@@ -62,7 +62,7 @@ export class DynamicTypeLiteralMapper {
             case "set":
                 return this.convertSet({ set: args.typeReference.value, value: args.value });
             case "unknown":
-                return ruby.TypeLiteral.nop();
+                return ruby.TypeLiteral.unknown(args.value);
             default:
                 assertNever(args.typeReference);
         }

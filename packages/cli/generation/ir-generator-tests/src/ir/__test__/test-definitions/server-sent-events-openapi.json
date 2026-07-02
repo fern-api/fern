@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "0.1.0",
     "apiName": "api",
     "apiDisplayName": "server-sent-events-openapi",
     "apiDocs": null,

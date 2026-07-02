@@ -385,4 +385,5 @@ error-discrimination:
 display-name: Circular References Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

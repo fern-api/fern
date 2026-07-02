@@ -13,6 +13,8 @@ export interface FernDefinition {
     namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
     importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
+    /** The document version from OpenAPI `info.version`, preserved as-is. */
+    specVersion?: string;
 }
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {

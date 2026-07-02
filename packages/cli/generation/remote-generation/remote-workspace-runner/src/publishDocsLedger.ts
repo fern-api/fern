@@ -1,6 +1,7 @@
 import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
+    findIncompatibleTranslatedApiIds,
     type TranslatedApiSpec
 } from "@fern-api/docs-resolver";
 import {
@@ -121,6 +122,7 @@ export function buildLedgerInput({
     apiDefinitions,
     fileManifest,
     fileIdToPath,
+    editThisPage,
     locale = "en"
 }: {
     docsDefinition: DocsDefinition;
@@ -135,6 +137,8 @@ export function buildLedgerInput({
      * path-based references (e.g. `ImageRef { path, width, height }`).
      */
     fileIdToPath?: Map<string, string>;
+    /** Raw edit-this-page config from docs.yml, forwarded to LedgerConfig. */
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Locale to stamp on segments. Defaults to "en". */
     locale?: string;
 }): { localeEntry: LocaleEntry; blobs: Map<string, Buffer> } {
@@ -175,7 +179,8 @@ export function buildLedgerInput({
     const ledgerConfig = mapDocsConfigToLedgerConfig({
         docsConfig: docsDefinition.config,
         fileManifest,
-        fileIdToPath
+        fileIdToPath,
+        editThisPage
     });
 
     // API manifest: serialize all API definitions as a single JSON blob.
@@ -251,6 +256,7 @@ export async function publishDocsViaLedger({
     organization,
     domain,
     basepath,
+    basepathAware,
     previewId,
     customDomains,
     git,
@@ -262,12 +268,15 @@ export async function publishDocsViaLedger({
     fileManifest,
     filePaths,
     fileIdToPath,
+    editThisPage,
     resolver
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
     domain: string;
     basepath: string | undefined;
+    /** When true, store the manifest at a basepath-scoped S3 key so multiple sites can coexist on one host. */
+    basepathAware?: boolean;
     previewId: string | undefined;
     customDomains?: string[];
     git?: DocsPublishGitInput;
@@ -280,6 +289,8 @@ export async function publishDocsViaLedger({
     /** Hash → absolute file path for lazy on-demand reads during upload. */
     filePaths?: Map<string, AbsoluteFilePath>;
     fileIdToPath?: Map<string, string>;
+    /** Raw edit-this-page config from docs.yml. */
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
 }): Promise<LedgerPublishResult> {
@@ -292,7 +303,8 @@ export async function publishDocsViaLedger({
         git,
         apiDefinitions,
         fileManifest,
-        fileIdToPath
+        fileIdToPath,
+        editThisPage
     });
 
     const builtTranslations = await buildAllTranslationInputs({
@@ -301,6 +313,7 @@ export async function publishDocsViaLedger({
         apiDefinitions,
         fileManifest,
         fileIdToPath,
+        editThisPage,
         resolver,
         context
     });
@@ -327,6 +340,7 @@ export async function publishDocsViaLedger({
         orgId: organization,
         domain,
         basepath: basepath ?? "",
+        ...(basepathAware && { basepathAware: true }),
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
@@ -488,7 +502,7 @@ async function uploadBlobWithRetry(
 
 // ── Translation build helpers ──────────────────────────────────────────
 
-interface BuiltTranslation {
+export interface BuiltTranslation {
     locale: string;
     localePages: Record<string, string>;
     translatedDefinition: DocsDefinition;
@@ -576,12 +590,13 @@ export function buildLocaleApiDefinitions({
  * returned promise rejects — callers should let the error propagate to
  * abort the entire publish.
  */
-async function buildAllTranslationInputs({
+export async function buildAllTranslationInputs({
     docsDefinition,
     git,
     apiDefinitions,
     fileManifest,
     fileIdToPath,
+    editThisPage,
     resolver,
     context
 }: {
@@ -590,6 +605,7 @@ async function buildAllTranslationInputs({
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
     fileIdToPath?: Map<string, string>;
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     resolver?: DocsDefinitionResolver;
     context: TaskContext;
 }): Promise<BuiltTranslation[]> {
@@ -661,11 +677,48 @@ async function buildAllTranslationInputs({
                             }
                         }
                     }
+
+                    // A translated spec that drifts from the base — a changed OpenAPI tag name
+                    // (which derives subpackage/endpoint ids), a missing/added endpoint, or a
+                    // changed path — produces an API whose nav nodes can't all be resolved
+                    // against it. Serving it would make the docs renderer fail to resolve a
+                    // node and 500. For those APIs we serve the base (default-locale) definition
+                    // and keep the base nav ids, but still localize the sidebar titles we can
+                    // match by locator.
+                    const incompatibleApiIds = findIncompatibleTranslatedApiIds(
+                        translatedDefinition.config.root,
+                        baseReadApis,
+                        translatedApisForTitles
+                    );
+                    if (incompatibleApiIds.size > 0) {
+                        context.logger.warn(
+                            `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for locale ` +
+                                `"${locale}" diverge from the default-locale spec (e.g. changed OpenAPI tag names, ` +
+                                `operationIds, or paths, or a missing/added endpoint), so they can't be fully matched ` +
+                                `to the navigation tree. Serving the default-locale API for those (localized sidebar ` +
+                                `titles are still applied where they can be matched). For fully localized API reference ` +
+                                `content, translate only human-readable text and keep tag names/operationIds/paths ` +
+                                `identical to the base spec.`
+                        );
+                        for (const apiId of incompatibleApiIds) {
+                            // Serve the base definition (with base ids) for the drifted API so
+                            // the nav nodes still resolve; titles are localized below.
+                            const baseDef = apiDefinitions.get(apiId);
+                            if (baseDef != null) {
+                                localeApiDefinitions.set(apiId, baseDef);
+                            }
+                        }
+                    }
+                    const rewritableApiIds = new Set(
+                        Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
+                    );
+
                     if (Object.keys(translatedApisForTitles).length > 0) {
                         translatedDefinition.config.root = applyTranslatedApiTitlesToNavTree(
                             translatedDefinition.config.root,
                             baseReadApis,
-                            translatedApisForTitles
+                            translatedApisForTitles,
+                            { rewritableApiIds }
                         );
                     }
                 }
@@ -677,6 +730,7 @@ async function buildAllTranslationInputs({
                 apiDefinitions: localeApiDefinitions,
                 fileManifest,
                 fileIdToPath,
+                editThisPage,
                 locale
             });
 

@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Response Precedence Edge Cases",
   "servers": [],
   "websocketServers": [],

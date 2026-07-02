@@ -9,13 +9,13 @@ RUN apk add --no-cache curl && \
 # go1.26.4 so the embedded stdlib clears vulnerability scanners. The
 # containerd/runc rebuild also picks up dependency bumps from the v2.3.x line.
 FROM golang:1.26.4-alpine3.23 AS overlay-binaries
-ARG CONTAINERD_VERSION=2.3.1
-ARG RUNC_VERSION=1.3.5
+ARG CONTAINERD_VERSION=2.3.2
+ARG RUNC_VERSION=1.3.6
 ARG MOBY_VERSION=29.5.2
 ARG DOCKER_CLI_VERSION=29.5.2
 ARG XNET_VERSION=0.55.0
-ARG XCRYPTO_VERSION=0.52.0
-ARG XSYS_VERSION=0.45.0
+ARG XCRYPTO_VERSION=0.53.0
+ARG XSYS_VERSION=0.46.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.4
@@ -48,12 +48,14 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     go mod vendor && \
     make static EXTRA_LDFLAGS="-s -w" && \
     cp runc /overlay/usr/local/bin/runc
+ARG REKOR_VERSION=1.5.2
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
     go get golang.org/x/net@v${XNET_VERSION} \
            golang.org/x/crypto@v${XCRYPTO_VERSION} \
            golang.org/x/sys@v${XSYS_VERSION} \
            github.com/containerd/containerd/v2@v${CONTAINERD_VERSION} \
+           github.com/sigstore/rekor@v${REKOR_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \

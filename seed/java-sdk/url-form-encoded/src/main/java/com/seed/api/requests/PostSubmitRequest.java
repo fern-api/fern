@@ -120,7 +120,6 @@ public final class PostSubmitRequest {
 
         /**
          * <p>The user's username</p>
-         * <p>The user's username</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -131,7 +130,6 @@ public final class PostSubmitRequest {
         }
 
         /**
-         * <p>The user's email address</p>
          * <p>The user's email address</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

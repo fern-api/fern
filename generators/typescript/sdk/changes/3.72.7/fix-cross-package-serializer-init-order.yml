@@ -1,0 +1,8 @@
+- summary: |
+    Fixed a runtime error in the serialization layer when a type references a
+    same-named type in another package. Such references are now wrapped with
+    `lazy()`/`lazyObject()` so they are resolved through the `serializers`
+    namespace barrel after all modules have initialized, instead of being read
+    eagerly during module load (which could throw "Cannot read properties of
+    undefined").
+  type: fix

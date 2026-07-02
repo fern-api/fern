@@ -278,10 +278,10 @@ public record VariableValue
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nullValue'.</exception>
-    public object AsNullValue() =>
+    public object? AsNullValue() =>
         IsNullValue
             ? Value!
             : throw new global::System.Exception("VariableValue.Type is not 'nullValue'");
@@ -297,7 +297,7 @@ public record VariableValue
         Func<SeedTrace.BinaryTreeValue, T> onBinaryTreeValue,
         Func<SeedTrace.SinglyLinkedListValue, T> onSinglyLinkedListValue,
         Func<SeedTrace.DoublyLinkedListValue, T> onDoublyLinkedListValue,
-        Func<object, T> onNullValue,
+        Func<object?, T> onNullValue,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -329,7 +329,7 @@ public record VariableValue
         Action<SeedTrace.BinaryTreeValue> onBinaryTreeValue,
         Action<SeedTrace.SinglyLinkedListValue> onSinglyLinkedListValue,
         Action<SeedTrace.DoublyLinkedListValue> onDoublyLinkedListValue,
-        Action<object> onNullValue,
+        Action<object?> onNullValue,
         Action<string, object?> onUnknown_
     )
     {
@@ -515,7 +515,7 @@ public record VariableValue
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsNullValue(out object? value)
     {
@@ -621,7 +621,7 @@ public record VariableValue
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.DoublyLinkedListValue"
                         ),
-                "nullValue" => new { },
+                "nullValue" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new VariableValue(discriminator, value);
@@ -884,8 +884,8 @@ public record VariableValue
     [Serializable]
     public record NullValue
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

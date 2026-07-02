@@ -200,6 +200,7 @@ puts user.name",
                   "name": "Ruby SDK (Fern)",
                 },
               ],
+              "contentType": undefined,
               "displayName": undefined,
               "request": {
                 "auth": undefined,

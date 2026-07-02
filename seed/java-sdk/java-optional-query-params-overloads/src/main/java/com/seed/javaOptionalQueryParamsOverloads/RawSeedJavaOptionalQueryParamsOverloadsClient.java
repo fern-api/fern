@@ -3,11 +3,13 @@
  */
 package com.seed.javaOptionalQueryParamsOverloads;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.javaOptionalQueryParamsOverloads.core.ClientOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.ObjectMappers;
 import com.seed.javaOptionalQueryParamsOverloads.core.QueryStringMapper;
 import com.seed.javaOptionalQueryParamsOverloads.core.RequestOptions;
+import com.seed.javaOptionalQueryParamsOverloads.core.RetryInterceptor;
 import com.seed.javaOptionalQueryParamsOverloads.core.SeedJavaOptionalQueryParamsOverloadsApiException;
 import com.seed.javaOptionalQueryParamsOverloads.core.SeedJavaOptionalQueryParamsOverloadsException;
 import com.seed.javaOptionalQueryParamsOverloads.core.SeedJavaOptionalQueryParamsOverloadsHttpResponse;
@@ -89,6 +91,15 @@ public class RawSeedJavaOptionalQueryParamsOverloadsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -99,6 +110,9 @@ public class RawSeedJavaOptionalQueryParamsOverloadsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaOptionalQueryParamsOverloadsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaOptionalQueryParamsOverloadsException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaOptionalQueryParamsOverloadsException("Network error executing HTTP request", e);
         }
@@ -141,6 +155,15 @@ public class RawSeedJavaOptionalQueryParamsOverloadsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -153,6 +176,9 @@ public class RawSeedJavaOptionalQueryParamsOverloadsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaOptionalQueryParamsOverloadsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaOptionalQueryParamsOverloadsException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaOptionalQueryParamsOverloadsException("Network error executing HTTP request", e);
         }
@@ -189,6 +215,15 @@ public class RawSeedJavaOptionalQueryParamsOverloadsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -201,6 +236,9 @@ public class RawSeedJavaOptionalQueryParamsOverloadsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaOptionalQueryParamsOverloadsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaOptionalQueryParamsOverloadsException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaOptionalQueryParamsOverloadsException("Network error executing HTTP request", e);
         }

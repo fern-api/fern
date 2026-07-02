@@ -395,6 +395,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                     FernIr.StreamingResponse.sse({
                         payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         terminator: undefined,
+                        resumable: undefined,
                         docs: undefined,
                         v2Examples: undefined
                     })
@@ -417,6 +418,7 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                     streamResponse: FernIr.StreamingResponse.sse({
                         payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         terminator: undefined,
+                        resumable: undefined,
                         docs: undefined,
                         v2Examples: undefined
                     }),

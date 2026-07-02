@@ -118,6 +118,7 @@ function createInlinedRequestProperty(
         valueType,
         docs: undefined,
         availability: undefined,
+        defaultValue: undefined,
         v2Examples: undefined,
         propertyAccess: undefined
     };

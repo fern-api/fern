@@ -43,6 +43,9 @@ public partial class Contoso : IContoso
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new global::Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -56,6 +59,7 @@ public partial class Contoso : IContoso
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -121,6 +125,9 @@ public partial class Contoso : IContoso
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new global::Contoso.Net.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -134,6 +141,7 @@ public partial class Contoso : IContoso
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

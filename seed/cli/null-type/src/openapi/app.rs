@@ -997,6 +997,78 @@ impl CliApp {
         Ok(doc)
     }
 
+    /// Return embedded spec(s) as a YAML string.
+    ///
+    /// - `raw == true` → byte-exact `SpecEntry.yaml` for each entry.
+    /// - `raw == false` → effective spec with overlays + overrides merged
+    ///   (same pipeline as `build_doc`, but stops before parsing to
+    ///   `RestDescription` to preserve full OpenAPI fidelity).
+    ///
+    /// Multi-spec binaries emit a YAML stream (`---`-delimited).
+    pub(crate) fn spec_yaml(&self, raw: bool) -> Result<Option<String>, crate::error::CliError> {
+        if self.specs.is_empty() {
+            return Ok(None);
+        }
+
+        let mut documents: Vec<String> = Vec::new();
+
+        for entry in &self.specs {
+            if raw {
+                documents.push(entry.yaml.clone());
+            } else {
+                // Reproduce the overlay + override merge from build_doc,
+                // stopping before parsing to RestDescription.
+                let effective = crate::openapi::overlay::apply_overlays_to_spec(
+                    &entry.yaml,
+                    &entry.overlays,
+                )?;
+
+                if entry.overrides.is_empty() {
+                    documents.push(effective);
+                } else {
+                    let mut value: serde_yaml::Value =
+                        serde_yaml::from_str(&effective).map_err(|e| {
+                            crate::error::CliError::Discovery(format!(
+                                "Failed to parse OpenAPI spec: {e}"
+                            ))
+                        })?;
+                    for ovr in &entry.overrides {
+                        let override_value: serde_yaml::Value =
+                            serde_yaml::from_str(ovr).map_err(|e| {
+                                crate::error::CliError::Discovery(format!(
+                                    "Failed to parse overrides YAML: {e}"
+                                ))
+                            })?;
+                        value = crate::openapi::deep_merge_yaml(value, override_value);
+                    }
+                    let merged = serde_yaml::to_string(&value).map_err(|e| {
+                        crate::error::CliError::Discovery(format!(
+                            "Failed to serialize merged spec: {e}"
+                        ))
+                    })?;
+                    documents.push(merged);
+                }
+            }
+        }
+
+        // Join as a YAML stream with document separators.
+        let yaml = if documents.len() == 1 {
+            documents.into_iter().next().unwrap()
+        } else {
+            let mut yaml = documents[0].clone();
+            for doc in &documents[1..] {
+                if !yaml.ends_with('\n') {
+                    yaml.push('\n');
+                }
+                yaml.push_str("---\n");
+                yaml.push_str(doc);
+            }
+            yaml
+        };
+
+        Ok(Some(yaml))
+    }
+
     /// Shorthand for `auth_scheme(name, AuthCredentialSource::from_env(env))`.
     /// Covers the 80% case — most callers bind a scheme to one env var.
     ///
@@ -1326,6 +1398,14 @@ impl CliApp {
             }
         }
 
+        cli = cli.arg(
+            clap::Arg::new("debug")
+                .long("debug")
+                .action(clap::ArgAction::SetTrue)
+                .global(true)
+                .help("Dump HTTP request and response to stderr")
+        );
+
         // Compose the root --help footer. Preserves the section order
         // from the old run_async path: global headers → auth → env vars.
         let existing_after_help = cli.get_after_help().map(|s| s.to_string());
@@ -1489,11 +1569,14 @@ pub struct AppContext {
     /// Whether `--quiet` was passed on the command line. Threaded into
     /// `OutputPipeline` by [`AppContext::execute`] so custom commands
     /// honor the flag.
-    quiet: bool,
+    pub(crate) quiet: bool,
     /// Base URL override resolved from `--base-url` / `{NAME}_BASE_URL`.
     /// Threaded into `invoke()` so custom command handlers respect the
     /// override the same way direct CLI dispatch does.
-    base_url_override: Option<String>,
+    pub(crate) base_url_override: Option<String>,
+    /// Whether `--debug` was passed on the command line. Stored for
+    /// use by the executor (DBO-1.3) to dump HTTP traffic to stderr.
+    pub(crate) debug: bool,
 }
 
 impl AppContext {
@@ -1507,6 +1590,7 @@ impl AppContext {
             entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
             quiet: false,
             base_url_override: None,
+            debug: false,
         }
     }
 
@@ -1517,6 +1601,11 @@ impl AppContext {
 
     pub(crate) fn with_base_url_override(mut self, base_url_override: Option<String>) -> Self {
         self.base_url_override = base_url_override;
+        self
+    }
+
+    pub(crate) fn with_debug(mut self, debug: bool) -> Self {
+        self.debug = debug;
         self
     }
 
@@ -1609,12 +1698,15 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let pipeline = formatter::OutputPipeline {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
+            query: None,
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
 
@@ -1661,6 +1753,7 @@ impl AppContext {
                 // streaming default; only the CLI front-end exposes the
                 // opt-in buffered toggle.
                 false,
+                self.debug,
                 &extra_headers,
             ))
         })
@@ -1695,6 +1788,8 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
@@ -1732,6 +1827,9 @@ impl AppContext {
                 // buffered semantics so the captured value mirrors the
                 // unary-response shape callers already handle.
                 true,
+                // Programmatic callers (invoke) never use the debug dump —
+                // debug mode is a CLI-only surface.
+                false,
                 &extra_headers,
             ))
         })?;
@@ -2116,11 +2214,24 @@ pub(crate) fn collect_multipart_parts(
                 });
                 continue;
             }
-            let stripped = executor::strip_or_escape_at(raw);
-            let stripped_ref: &str = stripped.as_ref();
-            if stripped_ref != "-" {
+            // Validate the inner filesystem path — the same string the executor
+            // will eventually pass to `tokio::fs::read`. `parse_at_ref` strips
+            // the `@`, `@file://`, or `@data://` prefix so an adversarial
+            // `@file://evil\x00path` is rejected before disk I/O regardless of
+            // which encoding mode was requested (FER-10532). Stdin is only the
+            // `Auto`-mode `-` sentinel; an explicit-scheme `-` is a literal
+            // filename and still gets validated.
+            let (inner, mode) = match executor::parse_at_ref(raw) {
+                executor::AtRef::File { path, mode } => (path, mode),
+                executor::AtRef::Plain(s) => (std::borrow::Cow::Borrowed(s), executor::AtMode::Auto),
+                // `\@literal` was handled above; reachable only as a defensive
+                // fallback if the escape branch is ever skipped.
+                executor::AtRef::Escaped(_) => continue,
+            };
+            let is_stdin = mode == executor::AtMode::Auto && inner.as_ref() == "-";
+            if !is_stdin {
                 crate::output::reject_dangerous_chars(
-                    stripped_ref,
+                    inner.as_ref(),
                     &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
                 )?;
             }
@@ -2148,6 +2259,7 @@ pub(crate) fn collect_multipart_parts(
 pub(crate) fn build_pagination_config(
     matches: &clap::ArgMatches,
     doc: &RestDescription,
+    cli_name: &str,
 ) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
@@ -2167,6 +2279,8 @@ pub(crate) fn build_pagination_config(
             .pagination_token_response_path
             .clone()
             .unwrap_or_else(|| "nextPageToken".to_string()),
+        no_pager: matches.get_flag("no-pager"),
+        cli_name: cli_name.to_string(),
     }
 }
 
@@ -2479,7 +2593,7 @@ mod tests {
         // must be flagged as colliding so the global registration site
         // can skip them with a warning instead of letting clap panic.
         // Cover the names that are most likely to be picked accidentally.
-        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json"] {
+        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json", "debug"] {
             assert!(
                 sdk_variable_collides_with_builtin(builtin),
                 "expected '{builtin}' to collide with a built-in flag",
@@ -3562,13 +3676,18 @@ paths:
                     .long("page-delay")
                     .value_parser(clap::value_parser!(u64)),
             )
+            .arg(
+                clap::Arg::new("no-pager")
+                    .long("no-pager")
+                    .action(clap::ArgAction::SetTrue),
+            )
     }
 
     #[test]
     fn test_build_pagination_config_defaults() {
         let doc = RestDescription::default();
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert!(!config.page_all);
         assert_eq!(config.page_limit, 10);
         assert_eq!(config.page_delay_ms, 100);
@@ -3584,7 +3703,7 @@ paths:
             ..Default::default()
         };
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert_eq!(config.token_query_param, "cursor");
         assert_eq!(config.token_response_path, "meta.next_cursor");
     }

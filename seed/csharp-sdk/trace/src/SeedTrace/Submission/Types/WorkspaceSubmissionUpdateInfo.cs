@@ -148,10 +148,10 @@ public record WorkspaceSubmissionUpdateInfo
             : throw new global::System.Exception("WorkspaceSubmissionUpdateInfo.Type is not 'ran'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
-    public object AsStopped() =>
+    public object? AsStopped() =>
         IsStopped
             ? Value!
             : throw new global::System.Exception(
@@ -159,10 +159,10 @@ public record WorkspaceSubmissionUpdateInfo
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'traced'.</exception>
-    public object AsTraced() =>
+    public object? AsTraced() =>
         IsTraced
             ? Value!
             : throw new global::System.Exception(
@@ -192,10 +192,10 @@ public record WorkspaceSubmissionUpdateInfo
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'finished'.</exception>
-    public object AsFinished() =>
+    public object? AsFinished() =>
         IsFinished
             ? Value!
             : throw new global::System.Exception(
@@ -205,11 +205,11 @@ public record WorkspaceSubmissionUpdateInfo
     public T Match<T>(
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
         Func<SeedTrace.WorkspaceRunDetails, T> onRan,
-        Func<object, T> onStopped,
-        Func<object, T> onTraced,
+        Func<object?, T> onStopped,
+        Func<object?, T> onTraced,
         Func<SeedTrace.WorkspaceTracedUpdate, T> onTracedV2,
         Func<SeedTrace.ErrorInfo, T> onErrored,
-        Func<object, T> onFinished,
+        Func<object?, T> onFinished,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -229,11 +229,11 @@ public record WorkspaceSubmissionUpdateInfo
     public void Visit(
         Action<SeedTrace.RunningSubmissionState> onRunning,
         Action<SeedTrace.WorkspaceRunDetails> onRan,
-        Action<object> onStopped,
-        Action<object> onTraced,
+        Action<object?> onStopped,
+        Action<object?> onTraced,
         Action<SeedTrace.WorkspaceTracedUpdate> onTracedV2,
         Action<SeedTrace.ErrorInfo> onErrored,
-        Action<object> onFinished,
+        Action<object?> onFinished,
         Action<string, object?> onUnknown_
     )
     {
@@ -295,7 +295,7 @@ public record WorkspaceSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsStopped(out object? value)
     {
@@ -309,7 +309,7 @@ public record WorkspaceSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsTraced(out object? value)
     {
@@ -351,7 +351,7 @@ public record WorkspaceSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsFinished(out object? value)
     {
@@ -431,8 +431,8 @@ public record WorkspaceSubmissionUpdateInfo
                 "ran" => jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceRunDetails?>(
                     options
                 ) ?? throw new JsonException("Failed to deserialize SeedTrace.WorkspaceRunDetails"),
-                "stopped" => new { },
-                "traced" => new { },
+                "stopped" => null,
+                "traced" => null,
                 "tracedV2" =>
                     jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceTracedUpdate?>(options)
                         ?? throw new JsonException(
@@ -440,7 +440,7 @@ public record WorkspaceSubmissionUpdateInfo
                         ),
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
-                "finished" => new { },
+                "finished" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new WorkspaceSubmissionUpdateInfo(discriminator, value);
@@ -542,9 +542,9 @@ public record WorkspaceSubmissionUpdateInfo
     [Serializable]
     public record Stopped
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -553,9 +553,9 @@ public record WorkspaceSubmissionUpdateInfo
     [Serializable]
     public record Traced
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -604,8 +604,8 @@ public record WorkspaceSubmissionUpdateInfo
     [Serializable]
     public record Finished
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

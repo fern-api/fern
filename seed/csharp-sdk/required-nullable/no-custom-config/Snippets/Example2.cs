@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.UpdateFooAsync(
-            "id",
-            new UpdateFooRequest {
+            id: "id",
+            request: new UpdateFooRequest {
                 XIdempotencyKey = "X-Idempotency-Key",
                 NullableText = "nullable_text",
                 NullableNumber = 1.1,

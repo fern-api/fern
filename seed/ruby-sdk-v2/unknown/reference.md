@@ -13,7 +13,9 @@
 <dd>
 
 ```ruby
-client.unknown.post
+client.unknown.post(request: {
+  key: "value"
+})
 ```
 </dd>
 </dl>
@@ -61,7 +63,9 @@ client.unknown.post
 <dd>
 
 ```ruby
-client.unknown.post_object
+client.unknown.post_object(unknown: {
+  key: "value"
+})
 ```
 </dd>
 </dl>

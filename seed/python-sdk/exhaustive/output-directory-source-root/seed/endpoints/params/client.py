@@ -5,6 +5,7 @@ from ...core.client_wrapper import SyncClientWrapper
 from .raw_client import RawParamsClient
 from ...core.request_options import RequestOptions
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...core.client_wrapper import AsyncClientWrapper
 from .raw_client import AsyncRawParamsClient
 # this is used as the default value for optional parameters
@@ -312,6 +313,59 @@ class ParamsClient:
         )
         """
         _response = self._raw_client.upload_with_path(param, request=request, request_options=request_options)
+        return _response.data
+    
+    def create_with_body_and_query(self, *, string: str, fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> ObjectWithOptionalField:
+        """
+        POST with referenced body + query params
+        
+        Parameters
+        ----------
+        string : str
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ObjectWithOptionalField
+        
+        Examples
+        --------
+        from seed import SeedExhaustive
+        
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.create_with_body_and_query(
+            fields="_fields",
+            string="string",
+        )
+        """
+        _response = self._raw_client.create_with_body_and_query(string=string, fields=fields, request_options=request_options)
+        return _response.data
+    
+    def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> ObjectWithOptionalField:
+        """
+        POST bytes body + query params
+        
+        Parameters
+        ----------
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ObjectWithOptionalField
+        """
+        _response = self._raw_client.upload_bytes_with_query(request=request, fields=fields, request_options=request_options)
         return _response.data
     
     def get_with_boolean_path(self, param: bool, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -748,6 +802,67 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.upload_with_path(param, request=request, request_options=request_options)
+        return _response.data
+    
+    async def create_with_body_and_query(self, *, string: str, fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> ObjectWithOptionalField:
+        """
+        POST with referenced body + query params
+        
+        Parameters
+        ----------
+        string : str
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ObjectWithOptionalField
+        
+        Examples
+        --------
+        import asyncio
+        
+        from seed import AsyncSeedExhaustive
+        
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        
+        
+        async def main() -> None:
+            await client.endpoints.params.create_with_body_and_query(
+                fields="_fields",
+                string="string",
+            )
+        
+        
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_with_body_and_query(string=string, fields=fields, request_options=request_options)
+        return _response.data
+    
+    async def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> ObjectWithOptionalField:
+        """
+        POST bytes body + query params
+        
+        Parameters
+        ----------
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ObjectWithOptionalField
+        """
+        _response = await self._raw_client.upload_bytes_with_query(request=request, fields=fields, request_options=request_options)
         return _response.data
     
     async def get_with_boolean_path(self, param: bool, *, request_options: typing.Optional[RequestOptions] = None) -> str:

@@ -47,6 +47,7 @@ export function parse({
 }): OpenApiIntermediateRepresentation {
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
+        specVersion: undefined,
         title: undefined,
         description: undefined,
         basePath: undefined,
@@ -379,6 +380,7 @@ function merge(
     if (!shouldGroupEnvironments) {
         return {
             apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+            specVersion: ir1.specVersion ?? ir2.specVersion,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
             basePath: ir1.basePath ?? ir2.basePath,
@@ -539,6 +541,7 @@ function merge(
         // Return with grouped servers and endpoints
         return {
             apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+            specVersion: ir1.specVersion ?? ir2.specVersion,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
             basePath: ir1.basePath ?? ir2.basePath,
@@ -600,6 +603,7 @@ function merge(
     // When not grouping, just concatenate without modification
     return {
         apiVersion: ir1.apiVersion ?? ir2.apiVersion,
+        specVersion: ir1.specVersion ?? ir2.specVersion,
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,

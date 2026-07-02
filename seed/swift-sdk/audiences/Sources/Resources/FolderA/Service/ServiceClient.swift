@@ -7,13 +7,13 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getDirectThread(ids: String, tags: String, requestOptions: RequestOptions? = nil) async throws -> Response {
+    public func getDirectThread(ids: [String], tags: [String], requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .get,
             path: "/",
             queryParams: [
-                "ids": .string(ids), 
-                "tags": .string(tags)
+                "ids": .stringArray(ids), 
+                "tags": .stringArray(tags)
             ],
             requestOptions: requestOptions,
             responseType: Response.self

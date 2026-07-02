@@ -1,0 +1,13 @@
+{
+  "oneOf": [
+    {
+      "type": "string",
+      "format": "date-time"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "A date-time in ISO 8601 format, or null.",
+  "definitions": {}
+}

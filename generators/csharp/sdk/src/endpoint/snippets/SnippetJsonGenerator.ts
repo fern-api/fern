@@ -7,6 +7,7 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 import urlJoin from "url-join";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { isPagerPagination } from "../utils/isPagerPagination.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
 export class SnippetJsonGenerator extends WithGeneration {
@@ -56,7 +57,10 @@ export class SnippetJsonGenerator extends WithGeneration {
         const endpoints: FernGeneratorExec.Endpoint[] = await Promise.all(
             Object.values(this.context.ir.services).flatMap((service) =>
                 service.endpoints.map(async (httpEndpoint) => {
-                    const isPager = isPaginationEnabled && httpEndpoint.pagination != null;
+                    const isPager =
+                        isPaginationEnabled &&
+                        httpEndpoint.pagination != null &&
+                        isPagerPagination(httpEndpoint.pagination);
                     const isStreaming =
                         httpEndpoint.response?.body?._visit({
                             streaming: () => true,

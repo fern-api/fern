@@ -95,16 +95,30 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .visit(new RequestPropertyToNameVisitor())
                         .getName())
                 .getCamelCase()
-                .getUnsafeName();
+                .getSafeName();
         String clientSecretPropertyName = NameUtils.toName(requestProperties
                         .getClientSecret()
                         .getProperty()
                         .visit(new RequestPropertyToNameVisitor())
                         .getName())
                 .getCamelCase()
-                .getUnsafeName();
+                .getSafeName();
 
         List<Map.Entry<String, String>> customPropertiesWithNames = new ArrayList<>();
+        // The scopes request property (if mapped) is a required property on the token request and
+        // must be set on the staged builder, ordered before the remaining custom properties.
+        if (requestProperties.getScopes().isPresent()
+                && !isLiteralProperty(requestProperties.getScopes().get())) {
+            String scopesPropName = NameUtils.toName(requestProperties
+                            .getScopes()
+                            .get()
+                            .getProperty()
+                            .visit(new RequestPropertyToNameVisitor())
+                            .getName())
+                    .getCamelCase()
+                    .getSafeName();
+            customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(scopesPropName, scopesPropName));
+        }
         if (requestProperties.getCustomProperties().isPresent()) {
             for (RequestProperty customProp :
                     requestProperties.getCustomProperties().get()) {
@@ -117,14 +131,14 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                 .visit(new RequestPropertyToNameVisitor())
                                 .getName())
                         .getCamelCase()
-                        .getUnsafeName();
+                        .getSafeName();
                 customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(propName, propName));
             }
         }
 
         for (var header : httpEndpoint.getHeaders()) {
             String headerName =
-                    NameUtils.getName(header.getName()).getCamelCase().getUnsafeName();
+                    NameUtils.getName(header.getName()).getCamelCase().getSafeName();
             customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(headerName, headerName));
         }
 

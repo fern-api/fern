@@ -138,4 +138,5 @@ error-discrimination:
 display-name: Test vnd.fern.user+json;version=1 and /application-json
 ",
   },
+  "specVersion": "1.0.0",
 }

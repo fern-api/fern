@@ -424,6 +424,17 @@
         },
         {
             "id": {
+                "path": "/params/body-and-query",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.createWithBodyAndQuery"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.createWithBodyAndQuery({\n    _fields: \"_fields\",\n    string: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/params/path-bool/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"

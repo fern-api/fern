@@ -17,6 +17,9 @@ public partial class HeadersClient : IHeadersClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedEnum.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
             .Add("operand", request.Operand)
             .Add("maybeOperand", request.MaybeOperand)
@@ -33,6 +36,7 @@ public partial class HeadersClient : IHeadersClient
                 {
                     Method = HttpMethod.Post,
                     Path = "headers",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

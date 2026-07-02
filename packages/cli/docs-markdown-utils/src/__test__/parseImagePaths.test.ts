@@ -108,21 +108,21 @@ describe("parseImagePaths", () => {
         const page = '---\nimage: { type: "url", value: "https://someurl.com" }\n---';
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: https://someurl.com\n---");
     });
 
     it("should parse url from frontmatter yaml", () => {
         const page = '---\nimage:\n  type: url\n  value: "https://someurl.com"\n---';
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: https://someurl.com\n---");
     });
 
     it("should parse url from frontmatter text", () => {
         const page = '---\nimage: "https://someurl.com"\n---';
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: 'https://someurl.com'\n---");
+        expect(result.markdown.trim()).toEqual("---\nimage:\n  type: url\n  value: https://someurl.com\n---");
     });
 
     it("should parse images from frontmatter text", () => {
@@ -139,7 +139,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown.trim()).toEqual(
-            "---\n'og:image':\n  type: fileId\n  value: /Volume/git/fern/my/docs/folder/path/to/image.png\n---"
+            "---\nog:image:\n  type: fileId\n  value: /Volume/git/fern/my/docs/folder/path/to/image.png\n---"
         );
     });
 
@@ -167,7 +167,7 @@ describe("parseImagePaths", () => {
           "---
           logo:
             type: url
-            value: 'https://someurl.com'
+            value: https://someurl.com
           ---"
         `
         );
@@ -1140,7 +1140,8 @@ describe("consistency between AST and streaming parsers", () => {
         it("should preserve quoted leading-zero title through parse+stringify round-trip", () => {
             const page = "---\ntitle: '001999'\ndescription: test\n---\nBody content";
             const result = parseImagePaths(page, PATHS);
-            expect(result.markdown).toContain('"001999"');
+            // js-yaml v4 correctly single-quotes leading-zero strings
+            expect(result.markdown).toMatch(/title: '001999'/);
             expect(result.markdown).not.toMatch(/title: 001999\n/);
         });
 
@@ -1156,12 +1157,13 @@ describe("consistency between AST and streaming parsers", () => {
             expect(result.markdown).toMatch(/title: '000000'/);
         });
 
-        it("should preserve non-octal leading-zero titles that js-yaml would leave unquoted", () => {
+        it("should preserve non-octal leading-zero titles that js-yaml v4 quotes correctly", () => {
             const nonOctalCases = ["009999", "001599", "002996", "002997", "002998"];
             for (const val of nonOctalCases) {
                 const page = `---\ntitle: '${val}'\ndescription: test\n---\nBody content`;
                 const result = parseImagePaths(page, PATHS);
-                expect(result.markdown).toContain(`"${val}"`);
+                // js-yaml v4 correctly quotes these with single quotes
+                expect(result.markdown).toMatch(new RegExp(`title: '${val}'`));
                 expect(result.markdown).not.toMatch(new RegExp(`title: ${val}\n`));
             }
         });

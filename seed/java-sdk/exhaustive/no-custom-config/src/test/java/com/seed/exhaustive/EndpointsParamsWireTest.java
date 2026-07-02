@@ -3,12 +3,15 @@ package com.seed.exhaustive;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.util.Arrays;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -293,6 +296,109 @@ public class EndpointsParamsWireTest {
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
         String expectedResponseBody = "" + "\"string\"";
+        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
+        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
+            String discriminator = null;
+            if (actualResponseNode.has("type"))
+                discriminator = actualResponseNode.get("type").asText();
+            else if (actualResponseNode.has("_type"))
+                discriminator = actualResponseNode.get("_type").asText();
+            else if (actualResponseNode.has("kind"))
+                discriminator = actualResponseNode.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualResponseNode.isNull()) {
+            Assertions.assertTrue(
+                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
+                    "response should be a valid JSON value");
+        }
+
+        if (actualResponseNode.isArray()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
+        }
+        if (actualResponseNode.isObject()) {
+            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
+        }
+    }
+
+    @Test
+    public void testCreateWithBodyAndQuery() throws Exception {
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"string\":\"string\",\"integer\":1,\"long\":1000000,\"double\":1.1,\"bool\":true,\"datetime\":\"2024-01-15T09:30:00Z\",\"date\":\"2023-01-15\",\"uuid\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\"base64\":\"SGVsbG8gd29ybGQh\",\"list\":[\"list\",\"list\"],\"set\":[\"set\"],\"map\":{\"1\":\"map\"},\"bigint\":\"1000000\"}"));
+        ObjectWithOptionalField response = client.endpoints()
+                .params()
+                .createWithBodyAndQuery(CreateWithBodyAndQuery.builder()
+                        .body(ObjectWithRequiredField.builder().string("string").build())
+                        .fields("_fields")
+                        .build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "" + "{\n" + "  \"string\": \"string\"\n" + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        String actualResponseJson = objectMapper.writeValueAsString(response);
+        String expectedResponseBody = ""
+                + "{\n"
+                + "  \"string\": \"string\",\n"
+                + "  \"integer\": 1,\n"
+                + "  \"long\": 1000000,\n"
+                + "  \"double\": 1.1,\n"
+                + "  \"bool\": true,\n"
+                + "  \"datetime\": \"2024-01-15T09:30:00Z\",\n"
+                + "  \"date\": \"2023-01-15\",\n"
+                + "  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n"
+                + "  \"base64\": \"SGVsbG8gd29ybGQh\",\n"
+                + "  \"list\": [\n"
+                + "    \"list\",\n"
+                + "    \"list\"\n"
+                + "  ],\n"
+                + "  \"set\": [\n"
+                + "    \"set\"\n"
+                + "  ],\n"
+                + "  \"map\": {\n"
+                + "    \"1\": \"map\"\n"
+                + "  },\n"
+                + "  \"bigint\": \"1000000\"\n"
+                + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(

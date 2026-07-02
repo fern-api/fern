@@ -247,7 +247,7 @@ catalog:
   turbo: ^2.9.14
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
-  undici: ^6.24.0
+  undici: ^6.27.0
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
@@ -277,3 +277,6 @@ overrides:
   esbuild: ^0.28.1
   yauzl: ^3.2.1
   "@opentelemetry/core": ">=2.8.0"
+  js-yaml: ">=4.2.0"
+patchedDependencies:
+  gray-matter@4.0.3: patches/gray-matter@4.0.3.patch

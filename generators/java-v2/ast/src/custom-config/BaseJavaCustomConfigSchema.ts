@@ -25,7 +25,14 @@ export const BaseJavaCustomConfigSchema = z.object({
     "enable-extensible-builders": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
     "enable-wire-tests": z.boolean().default(false),
+
+    // Nullable/optional representation options (mutually exclusive):
+    //   collapse-optional-nullable: optional<nullable<T>> (and standalone nullable<T>) collapses to
+    //     a single OptionalNullable<T> wrapper.
+    //   use-nullable-annotation: nullable<T> is emitted as the raw type T annotated with @Nullable
+    //     (no Optional wrapper). Mirrors v1 behaviour when the Java @Nullable annotation is preferred.
     "collapse-optional-nullable": z.boolean().optional(),
+    "use-nullable-annotation": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
     "offset-semantics": z.enum(["item-index", "page-index"]).optional(),

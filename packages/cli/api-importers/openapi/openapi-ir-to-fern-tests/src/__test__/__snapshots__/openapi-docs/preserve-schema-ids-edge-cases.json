@@ -153,4 +153,5 @@ error-discrimination:
 display-name: Preserve Schema IDs Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

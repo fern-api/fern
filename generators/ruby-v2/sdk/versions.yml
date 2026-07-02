@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.13.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets silently dropping values with unknown type references
+        (e.g. additionalProperties, free-form objects). Previously returned nop,
+        now properly serializes the raw value as a Ruby literal.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
 - version: 1.13.1
   changelogEntry:
     - summary: |

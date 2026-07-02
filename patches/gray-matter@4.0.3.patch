@@ -1,0 +1,15 @@
+diff --git a/lib/engines.js b/lib/engines.js
+index 38f993db06cf364191ac635a6590c2d29303297d..bba7b012fb901eb37498cb953a34cfdc44098fd7 100644
+--- a/lib/engines.js
++++ b/lib/engines.js
+@@ -13,8 +13,8 @@ const engines = exports = module.exports;
+  */
+ 
+ engines.yaml = {
+-  parse: yaml.safeLoad.bind(yaml),
+-  stringify: yaml.safeDump.bind(yaml)
++  parse: (yaml.load || yaml.safeLoad).bind(yaml),
++  stringify: (yaml.dump || yaml.safeDump).bind(yaml)
+ };
+ 
+ /**

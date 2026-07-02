@@ -19,7 +19,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as AudiencesError {
@@ -49,7 +57,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as AudiencesError {
@@ -79,7 +95,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as AudiencesError {
@@ -111,7 +135,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as AudiencesError {
@@ -141,7 +173,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as AudiencesError {
@@ -173,7 +213,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as AudiencesError {
@@ -203,7 +251,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as AudiencesError {

@@ -96,9 +96,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 ? `${baseReference}.IsDefined ? ${baseReference}.Value : null`
                 : baseReference;
 
+        // Multi-value query parameters (allowMultiple=true) are repeated as flat key=value pairs
+        // (one per element), so they use Add() even when the element type is complex. Deep-object
+        // notation only applies to a single complex object value.
         const isComplexType = this.isComplexType(query.valueType);
 
-        if (isComplexType) {
+        if (isComplexType && !query.allowMultiple) {
             writer.write(`.AddDeepObject("${getWireValue(query.name)}", ${queryParameterReference})`);
         } else {
             writer.write(`.Add("${getWireValue(query.name)}", ${queryParameterReference})`);

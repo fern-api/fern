@@ -27,6 +27,7 @@ type Config struct {
 	InlineFileProperties         bool
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
+	DedupeUnionBaseProperties    bool
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
@@ -75,6 +76,7 @@ func NewConfig(
 	inlineFileProperties bool,
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
+	dedupeUnionBaseProperties bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
 	omitFernHeaders bool,
@@ -108,6 +110,7 @@ func NewConfig(
 		InlineFileProperties:         inlineFileProperties,
 		UseReaderForBytesRequest:     useReaderForBytesRequest,
 		GettersPassByValue:           gettersPassByValue,
+		DedupeUnionBaseProperties:    dedupeUnionBaseProperties,
 		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     omitEmptyRequestWrappers,
 		OmitFernHeaders:              omitFernHeaders,

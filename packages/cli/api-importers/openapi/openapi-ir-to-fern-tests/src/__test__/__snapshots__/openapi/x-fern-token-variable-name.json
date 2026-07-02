@@ -174,4 +174,5 @@ headers:
     name: apiKey
 ",
   },
+  "specVersion": "1.0.0",
 }

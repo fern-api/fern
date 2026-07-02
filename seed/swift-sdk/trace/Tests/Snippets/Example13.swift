@@ -12,7 +12,13 @@ enum Example13 {
             serviceParam: "1",
             limit: 1,
             otherField: "otherField",
-            multiLineDocs: "multiLineDocs"
+            multiLineDocs: "multiLineDocs",
+            optionalMultipleField: [
+                "optionalMultipleField"
+            ],
+            multipleField: [
+                "multipleField"
+            ]
         )
     }
 }

@@ -19,6 +19,9 @@ public partial class WidgetsClient : IWidgetsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -35,6 +38,7 @@ public partial class WidgetsClient : IWidgetsClient
                         ValueConvert.ToPathParameterString(apiVersion ?? "v1beta")
                     ),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -95,7 +99,7 @@ public partial class WidgetsClient : IWidgetsClient
     }
 
     /// <example><code>
-    /// await client.Widgets.CreateAsync("v1beta", new Widget { Name = "name" });
+    /// await client.Widgets.CreateAsync(new Widget { Name = "name" }, "v1beta");
     /// </code></example>
     public WithRawResponseTask<Widget> CreateAsync(
         Widget request,

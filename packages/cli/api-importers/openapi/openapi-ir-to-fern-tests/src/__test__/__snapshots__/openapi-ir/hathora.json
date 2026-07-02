@@ -1,4 +1,5 @@
 {
+  "specVersion": "0.0.1",
   "title": "Hathora Cloud API",
   "servers": [
     {

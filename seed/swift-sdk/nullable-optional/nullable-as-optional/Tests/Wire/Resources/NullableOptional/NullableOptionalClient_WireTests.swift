@@ -498,12 +498,12 @@ import NullableOptional
         )
         let expectedResponse = ComplexProfile(
             id: "id",
-            nullableRole: Nullable<UserRole>.value(.admin),
-            optionalRole: Optional(.admin),
-            optionalNullableRole: Optional(Nullable<UserRole>.value(.admin)),
-            nullableStatus: Nullable<UserStatus>.value(.active),
-            optionalStatus: Optional(.active),
-            optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
+            nullableRole: Nullable<UserRole>.value(UserRole.admin),
+            optionalRole: Optional(UserRole.admin),
+            optionalNullableRole: Optional(Nullable<UserRole>.value(UserRole.admin)),
+            nullableStatus: Nullable<UserStatus>.value(UserStatus.active),
+            optionalStatus: Optional(UserStatus.active),
+            optionalNullableStatus: Optional(Nullable<UserStatus>.value(UserStatus.active)),
             nullableNotification: Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -628,7 +628,7 @@ import NullableOptional
                 )
             ]),
             optionalMapOfEnums: Optional([
-                "optionalMapOfEnums": .admin
+                "optionalMapOfEnums": UserRole.admin
             ])
         )
         let response = try await client.nullableOptional.createComplexProfile(
@@ -872,12 +872,12 @@ import NullableOptional
         )
         let expectedResponse = ComplexProfile(
             id: "id",
-            nullableRole: Nullable<UserRole>.value(.admin),
-            optionalRole: Optional(.admin),
-            optionalNullableRole: Optional(Nullable<UserRole>.value(.admin)),
-            nullableStatus: Nullable<UserStatus>.value(.active),
-            optionalStatus: Optional(.active),
-            optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
+            nullableRole: Nullable<UserRole>.value(UserRole.admin),
+            optionalRole: Optional(UserRole.admin),
+            optionalNullableRole: Optional(Nullable<UserRole>.value(UserRole.admin)),
+            nullableStatus: Nullable<UserStatus>.value(UserStatus.active),
+            optionalStatus: Optional(UserStatus.active),
+            optionalNullableStatus: Optional(Nullable<UserStatus>.value(UserStatus.active)),
             nullableNotification: Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -1002,7 +1002,7 @@ import NullableOptional
                 )
             ]),
             optionalMapOfEnums: Optional([
-                "optionalMapOfEnums": .admin
+                "optionalMapOfEnums": UserRole.admin
             ])
         )
         let response = try await client.nullableOptional.getComplexProfile(
@@ -1133,12 +1133,12 @@ import NullableOptional
         )
         let expectedResponse = ComplexProfile(
             id: "id",
-            nullableRole: Nullable<UserRole>.value(.admin),
-            optionalRole: Optional(.admin),
-            optionalNullableRole: Optional(Nullable<UserRole>.value(.admin)),
-            nullableStatus: Nullable<UserStatus>.value(.active),
-            optionalStatus: Optional(.active),
-            optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
+            nullableRole: Nullable<UserRole>.value(UserRole.admin),
+            optionalRole: Optional(UserRole.admin),
+            optionalNullableRole: Optional(Nullable<UserRole>.value(UserRole.admin)),
+            nullableStatus: Nullable<UserStatus>.value(UserStatus.active),
+            optionalStatus: Optional(UserStatus.active),
+            optionalNullableStatus: Optional(Nullable<UserStatus>.value(UserStatus.active)),
             nullableNotification: Nullable<NotificationMethod>.value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -1263,7 +1263,7 @@ import NullableOptional
                 )
             ]),
             optionalMapOfEnums: Optional([
-                "optionalMapOfEnums": .admin
+                "optionalMapOfEnums": UserRole.admin
             ])
         )
         let response = try await client.nullableOptional.updateComplexProfile(
@@ -1384,8 +1384,8 @@ import NullableOptional
                 nullableString: Nullable<String>.value("nullableString"),
                 optionalString: Optional("optionalString"),
                 optionalNullableString: Optional(Nullable<String>.value("optionalNullableString")),
-                nullableEnum: Nullable<UserRole>.value(.admin),
-                optionalEnum: Optional(.active),
+                nullableEnum: Nullable<UserRole>.value(UserRole.admin),
+                optionalEnum: Optional(UserStatus.active),
                 nullableUnion: Nullable<NotificationMethod>.value(NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",

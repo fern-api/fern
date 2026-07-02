@@ -3,9 +3,11 @@
  */
 package com.seed.headerTokenEnvironmentVariable.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.headerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.headerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.headerTokenEnvironmentVariable.core.RequestOptions;
+import com.seed.headerTokenEnvironmentVariable.core.RetryInterceptor;
 import com.seed.headerTokenEnvironmentVariable.core.SeedHeaderTokenEnvironmentVariableApiException;
 import com.seed.headerTokenEnvironmentVariable.core.SeedHeaderTokenEnvironmentVariableException;
 import com.seed.headerTokenEnvironmentVariable.core.SeedHeaderTokenEnvironmentVariableHttpResponse;
@@ -58,6 +60,15 @@ public class AsyncRawServiceClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedHeaderTokenEnvironmentVariableHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -73,6 +84,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedHeaderTokenEnvironmentVariableApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedHeaderTokenEnvironmentVariableException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedHeaderTokenEnvironmentVariableException("Network error executing HTTP request", e));

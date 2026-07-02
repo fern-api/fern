@@ -86,6 +86,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_plantOrders": {
       "displayName": undefined,

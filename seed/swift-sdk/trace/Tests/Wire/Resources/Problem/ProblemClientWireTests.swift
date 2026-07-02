@@ -242,7 +242,7 @@ import Trace
         )
         let expectedResponse = GetDefaultStarterFilesResponse(
             files: [
-                .java: ProblemFiles(
+                Language.java: ProblemFiles(
                     solutionFile: FileInfo(
                         filename: "filename",
                         contents: "contents"

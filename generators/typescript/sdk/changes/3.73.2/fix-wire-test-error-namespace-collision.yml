@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a naming collision in generated wire tests when the configured client class
+    name (`naming.client`) matches the error namespace export. Previously the client
+    class import and the error namespace import shared a single binding, which shadowed
+    each other and made error references (e.g. `Client.namespace.SomeError`) unresolvable.
+    The error namespace is now imported under an alternate alias when a collision is detected.
+    The same collision also produced a duplicate identifier in the root `index.ts` (the client
+    class re-export clashed with `export * as <name> from "./api/index.js"`); the colliding root
+    client re-export is now omitted (the client remains importable from `./Client.js`).
+  type: fix

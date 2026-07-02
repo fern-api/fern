@@ -122,7 +122,6 @@ public final class PagingCursors {
 
         /**
          * <p>Cursor for the next page of results.</p>
-         * <p>Cursor for the next page of results.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

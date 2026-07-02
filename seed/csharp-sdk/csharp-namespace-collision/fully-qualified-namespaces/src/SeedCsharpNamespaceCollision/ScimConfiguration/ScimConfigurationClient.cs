@@ -17,6 +17,9 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +32,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/scim-configuration",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -94,6 +98,9 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -107,6 +114,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                     Method = HttpMethod.Post,
                     Path = "/scim-configuration/tokens",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -171,6 +179,9 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -183,6 +194,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/scim-configuration/users",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

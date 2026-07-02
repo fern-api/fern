@@ -13,7 +13,11 @@
 <dd>
 
 ```ruby
-client.optional.send_optional_body(request: {})
+client.optional.send_optional_body(request: {
+  string: {
+    key: "value"
+  }
+})
 ```
 </dd>
 </dl>

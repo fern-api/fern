@@ -114,10 +114,10 @@ public record SubmissionResponse
     public bool IsTerminated => Type == "terminated";
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'serverInitialized', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'serverInitialized', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'serverInitialized'.</exception>
-    public object AsServerInitialized() =>
+    public object? AsServerInitialized() =>
         IsServerInitialized
             ? Value!
             : throw new global::System.Exception(
@@ -136,10 +136,10 @@ public record SubmissionResponse
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'workspaceInitialized', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'workspaceInitialized', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'workspaceInitialized'.</exception>
-    public object AsWorkspaceInitialized() =>
+    public object? AsWorkspaceInitialized() =>
         IsWorkspaceInitialized
             ? Value!
             : throw new global::System.Exception(
@@ -176,9 +176,9 @@ public record SubmissionResponse
             : throw new global::System.Exception("SubmissionResponse.Type is not 'terminated'");
 
     public T Match<T>(
-        Func<object, T> onServerInitialized,
+        Func<object?, T> onServerInitialized,
         Func<string, T> onProblemInitialized,
-        Func<object, T> onWorkspaceInitialized,
+        Func<object?, T> onWorkspaceInitialized,
         Func<SeedTrace.ExceptionInfo, T> onServerErrored,
         Func<SeedTrace.CodeExecutionUpdate, T> onCodeExecutionUpdate,
         Func<SeedTrace.TerminatedResponse, T> onTerminated,
@@ -198,9 +198,9 @@ public record SubmissionResponse
     }
 
     public void Visit(
-        Action<object> onServerInitialized,
+        Action<object?> onServerInitialized,
         Action<string> onProblemInitialized,
-        Action<object> onWorkspaceInitialized,
+        Action<object?> onWorkspaceInitialized,
         Action<SeedTrace.ExceptionInfo> onServerErrored,
         Action<SeedTrace.CodeExecutionUpdate> onCodeExecutionUpdate,
         Action<SeedTrace.TerminatedResponse> onTerminated,
@@ -234,7 +234,7 @@ public record SubmissionResponse
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsServerInitialized(out object? value)
     {
@@ -262,7 +262,7 @@ public record SubmissionResponse
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsWorkspaceInitialized(out object? value)
     {
@@ -374,10 +374,10 @@ public record SubmissionResponse
 
             var value = discriminator switch
             {
-                "serverInitialized" => new { },
+                "serverInitialized" => null,
                 "problemInitialized" => json.GetProperty("value").Deserialize<string?>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
-                "workspaceInitialized" => new { },
+                "workspaceInitialized" => null,
                 "serverErrored" => jsonWithoutDiscriminator.Deserialize<SeedTrace.ExceptionInfo?>(
                     options
                 ) ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
@@ -449,9 +449,9 @@ public record SubmissionResponse
     [Serializable]
     public record ServerInitialized
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -479,9 +479,9 @@ public record SubmissionResponse
     [Serializable]
     public record WorkspaceInitialized
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>

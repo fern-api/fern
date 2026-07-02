@@ -357,6 +357,12 @@ export class ExampleValidator {
             return false;
         }
 
+        // If the schema declares `patternProperties`, treat unknown keys as allowed rather than
+        // unexpected. We don't compile or match the patterns themselves.
+        if (this.schemaHasPatternProperties(schema)) {
+            return false;
+        }
+
         const exampleObj = example as Record<string, unknown>;
         const definedProperties = this.collectAllPropertyKeys(schema);
 
@@ -420,6 +426,36 @@ export class ExampleValidator {
         }
 
         return propertyKeys;
+    }
+
+    /**
+     * Returns true if the schema declares any `patternProperties`, including via allOf, oneOf,
+     * and anyOf compositions. The patterns themselves are intentionally not compiled or matched.
+     */
+    private schemaHasPatternProperties(schema: OpenAPIV3_1.SchemaObject, visited: Set<string> = new Set()): boolean {
+        const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
+        if (patternProperties && typeof patternProperties === "object" && Object.keys(patternProperties).length > 0) {
+            return true;
+        }
+
+        for (const subSchema of [...(schema.allOf ?? []), ...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: [],
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    if (this.schemaHasPatternProperties(resolved, visited)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

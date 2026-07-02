@@ -18,6 +18,11 @@ public partial class AuthClient : IAuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedInferredAuthImplicitApiKey.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedInferredAuthImplicitApiKey.Core.HeadersBuilder.Builder()
             .Add("X-Api-Key", request.ApiKey)
             .Add(_client.Options.Headers)
@@ -31,6 +36,7 @@ public partial class AuthClient : IAuthClient
                 {
                     Method = HttpMethod.Post,
                     Path = "/token",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

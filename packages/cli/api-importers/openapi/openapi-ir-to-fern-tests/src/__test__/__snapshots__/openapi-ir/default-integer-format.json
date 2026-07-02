@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Default Integer Format Test API",
   "description": "Test API for validating defaultIntegerFormat feature with int64 default",
   "servers": [],

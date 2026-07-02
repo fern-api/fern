@@ -19,82 +19,22 @@
 //! `Handle::current().block_on()`. This is safe because `CliApp::run`
 //! creates a multi-threaded tokio runtime.
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::sync::OnceLock;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 use secrecy::{ExposeSecret, SecretString};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
+use crate::auth::oauth_common::{
+    atomic_write, config_dir, now_epoch, parse_oauth_error_message, token_http_client,
+    truncate_body, TokenBundle, TokenSuccessBody, EXPIRY_BUFFER_SECS,
+};
 use crate::auth::provider::{AuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
 
 // ---------------------------------------------------------------------------
-// Token response parsing
-// ---------------------------------------------------------------------------
-
-#[derive(Deserialize)]
-struct TokenSuccessBody {
-    access_token: String,
-    refresh_token: Option<String>,
-    expires_in: Option<u64>,
-}
-
-#[derive(Deserialize)]
-struct TokenErrorBody {
-    error: Option<String>,
-    #[serde(rename = "error_description")]
-    error_description: Option<String>,
-}
-
-fn parse_oauth_error_json(body: &str) -> Option<String> {
-    let err: TokenErrorBody = serde_json::from_str(body).ok()?;
-    match (err.error, err.error_description) {
-        (Some(e), Some(d)) => Some(format!("{e}: {d}")),
-        (Some(e), None) => Some(e),
-        (None, Some(d)) => Some(d),
-        (None, None) => None,
-    }
-}
-
-fn truncate_body_for_error(body: &str) -> String {
-    const MAX: usize = 512;
-    let char_count = body.chars().count();
-    if char_count <= MAX {
-        body.to_string()
-    } else {
-        let truncated: String = body.chars().take(MAX).collect();
-        format!("{truncated}…")
-    }
-}
-
-fn token_http_client() -> Result<reqwest::Client, CliError> {
-    reqwest::Client::builder()
-        .build()
-        .map_err(|e| CliError::Auth(format!("Failed to build HTTP client for OAuth2: {e}")))
-}
-
-fn now_epoch_secs() -> u64 {
-    SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap_or_default()
-        .as_secs()
-}
-
-// ---------------------------------------------------------------------------
 // On-disk token cache
 // ---------------------------------------------------------------------------
-
-/// A single cached token entry, keyed by token_url in the JSON map.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-struct CachedToken {
-    access_token: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    refresh_token: Option<String>,
-    /// Epoch seconds when the access token expires. `None` = no expiry known.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expires_at: Option<u64>,
-}
 
 /// On-disk credential store at `~/.config/<cli_name>/credentials.json`.
 ///
@@ -108,23 +48,22 @@ struct CachedToken {
 ///   }
 /// }
 /// ```
+///
+/// Coexists with the newer `FileKeyringStore` (`auth-keyring.json` in the
+/// same directory) — same shape, distinct file. Login-flow providers use
+/// the keyring store; legacy `OAuth2TokenProvider` callers (e.g. `xero`)
+/// continue to use this cache via `.with_cache(...)`.
 #[derive(Debug, Clone)]
 pub struct TokenCache {
     path: PathBuf,
 }
 
-/// Buffer subtracted from `expires_in` before writing `expires_at`,
-/// so we refresh before the token actually expires. 2 minutes matches
-/// the TS SDK's BUFFER_IN_MINUTES constant.
-const EXPIRY_BUFFER_SECS: u64 = 120;
-
-type TokenMap = std::collections::HashMap<String, CachedToken>;
+type TokenMap = std::collections::HashMap<String, TokenBundle>;
 
 impl TokenCache {
     /// Build a cache path at `~/.config/<cli_name>/credentials.json`.
     pub fn for_cli(cli_name: &str) -> Option<Self> {
-        let home = home_dir()?;
-        let dir = config_dir(&home);
+        let dir = config_dir()?;
         Some(Self {
             path: dir.join(cli_name).join("credentials.json"),
         })
@@ -162,11 +101,11 @@ impl TokenCache {
     }
 
     /// Load a non-expired cached token for the given token_url.
-    fn load(&self, token_url: &str) -> Option<CachedToken> {
+    fn load(&self, token_url: &str) -> Option<TokenBundle> {
         let map = self.read_map();
         let entry = map.get(token_url)?;
         if let Some(expires_at) = entry.expires_at {
-            if now_epoch_secs() >= expires_at {
+            if now_epoch() >= expires_at {
                 return None;
             }
         }
@@ -184,13 +123,13 @@ impl TokenCache {
         let mut map = self.read_map();
         let expires_at = expires_in.map(|ei| {
             let buffered = ei.saturating_sub(EXPIRY_BUFFER_SECS);
-            now_epoch_secs() + buffered
+            now_epoch() + buffered
         });
         // Preserve existing refresh_token if the new response didn't include one
         let prev_refresh = map.get(token_url).and_then(|e| e.refresh_token.clone());
         map.insert(
             token_url.to_string(),
-            CachedToken {
+            TokenBundle {
                 access_token: access_token.to_string(),
                 refresh_token: refresh_token
                     .map(|s| s.to_string())
@@ -207,60 +146,6 @@ impl TokenCache {
         if map.remove(token_url).is_some() {
             let _ = self.write_map(&map);
         }
-    }
-}
-
-/// Write `data` to `path` atomically: write a sibling temp file, set
-/// owner-only permissions (0600 on Unix), then rename over the target.
-fn atomic_write(path: &Path, data: &[u8]) -> Result<(), CliError> {
-    let tmp = path.with_extension("tmp");
-    std::fs::write(&tmp, data).map_err(|e| {
-        CliError::Auth(format!(
-            "Failed to write token cache {}: {e}",
-            tmp.display()
-        ))
-    })?;
-
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        let perms = std::fs::Permissions::from_mode(0o600);
-        let _ = std::fs::set_permissions(&tmp, perms);
-    }
-
-    std::fs::rename(&tmp, path).map_err(|e| {
-        let _ = std::fs::remove_file(&tmp);
-        CliError::Auth(format!(
-            "Failed to rename token cache {}: {e}",
-            tmp.display()
-        ))
-    })
-}
-
-fn home_dir() -> Option<PathBuf> {
-    std::env::var_os("HOME")
-        .or_else(|| std::env::var_os("USERPROFILE"))
-        .map(PathBuf::from)
-        .filter(|p| !p.as_os_str().is_empty())
-}
-
-/// Platform-appropriate config directory.
-fn config_dir(home: &Path) -> PathBuf {
-    #[cfg(target_os = "macos")]
-    {
-        home.join("Library").join("Application Support")
-    }
-    #[cfg(target_os = "windows")]
-    {
-        std::env::var_os("APPDATA")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| home.join("AppData").join("Roaming"))
-    }
-    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-    {
-        std::env::var_os("XDG_CONFIG_HOME")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| home.join(".config"))
     }
 }
 
@@ -403,8 +288,8 @@ async fn parse_token_response(response: reqwest::Response) -> Result<TokenRespon
         .map_err(|e| CliError::Auth(format!("OAuth2 token response body: {e}")))?;
 
     if !status.is_success() {
-        let detail = parse_oauth_error_json(&body_text)
-            .unwrap_or_else(|| truncate_body_for_error(&body_text));
+        let detail = parse_oauth_error_message(&body_text)
+            .unwrap_or_else(|| truncate_body(&body_text));
         return Err(CliError::Auth(format!(
             "OAuth2 token endpoint returned HTTP {status}: {detail}"
         )));
@@ -462,7 +347,7 @@ pub struct OAuth2TokenProvider {
     scheme_name: String,
     token_url: String,
     grant: OAuth2Grant,
-    cache: Option<TokenCache>,
+    cache: OnceLock<TokenCache>,
     cached_token: OnceLock<Result<SecretString, String>>,
 }
 
@@ -486,22 +371,29 @@ impl OAuth2TokenProvider {
             scheme_name: scheme_name.into(),
             token_url: token_url.into(),
             grant,
-            cache: None,
+            cache: OnceLock::new(),
             cached_token: OnceLock::new(),
         }
     }
 
     /// Enable on-disk token persistence. `cli_name` is the binary name
     /// (e.g., `"xero"`) — tokens are stored under the platform config dir.
-    pub fn with_cache(mut self, cli_name: &str) -> Self {
-        self.cache = TokenCache::for_cli(cli_name);
+    pub fn with_cache(self, cli_name: &str) -> Self {
+        if let Some(tc) = TokenCache::for_cli(cli_name) {
+            let _ = self.cache.set(tc);
+        }
         self
     }
 
     /// Enable on-disk token persistence with a pre-built [`TokenCache`].
-    pub fn with_token_cache(mut self, cache: TokenCache) -> Self {
-        self.cache = Some(cache);
+    pub fn with_token_cache(self, cache: TokenCache) -> Self {
+        let _ = self.cache.set(cache);
         self
+    }
+
+    /// Returns `true` if on-disk token caching has been wired.
+    pub fn has_cache(&self) -> bool {
+        self.cache.get().is_some()
     }
 
     fn resolve_token(&self) -> Result<&SecretString, CliError> {
@@ -521,7 +413,7 @@ impl OAuth2TokenProvider {
 
     async fn resolve_token_async(&self) -> Result<String, CliError> {
         // 1. Check on-disk cache for a valid access token
-        if let Some(cache) = &self.cache {
+        if let Some(cache) = self.cache.get() {
             if let Some(cached) = cache.load(&self.token_url) {
                 tracing::debug!("Using cached OAuth2 access token for {}", self.token_url);
                 return Ok(cached.access_token);
@@ -608,7 +500,7 @@ impl OAuth2TokenProvider {
     }
 
     fn persist_response(&self, resp: &TokenResponse) {
-        if let Some(cache) = &self.cache {
+        if let Some(cache) = self.cache.get() {
             if let Err(e) = cache.store(
                 &self.token_url,
                 &resp.access_token,
@@ -628,7 +520,7 @@ impl AuthProvider for OAuth2TokenProvider {
 
     fn has_credentials(&self) -> bool {
         // Check disk cache first — if we have a cached token, we have creds
-        if let Some(cache) = &self.cache {
+        if let Some(cache) = self.cache.get() {
             if cache.load(&self.token_url).is_some() {
                 return true;
             }
@@ -695,12 +587,71 @@ impl AuthProvider for OAuth2TokenProvider {
         header.set_sensitive(true);
         Ok(request.header(reqwest::header::AUTHORIZATION, header))
     }
+
+    fn inject_token_cache(&self, cli_name: &str) {
+        if let Some(tc) = TokenCache::for_cli(cli_name) {
+            let _ = self.cache.set(tc);
+        }
+    }
 }
 
 fn env_is_set(var: &str) -> bool {
     std::env::var(var)
         .map(|v| !v.trim().is_empty())
         .unwrap_or(false)
+}
+
+/// Fail-fast provider for an OAuth2 scheme that was declared (via
+/// [`OAuth2Auth`](crate::auth::OAuth2Auth)) but is missing the config needed
+/// to obtain a token — e.g. no `token_url`, or client credentials supplied
+/// from a non-env source the [`OAuth2Grant`] env-var model can't read.
+///
+/// The point is to **never silently send an unauthenticated request**
+/// (FER-10745). [`has_credentials`](AuthProvider::has_credentials) returns
+/// `true` so composition wrappers select this provider rather than skipping
+/// it, and [`apply`](AuthProvider::apply) then errors with a clear message
+/// instead of letting the request go out with no `Authorization` header.
+#[derive(Debug)]
+pub(crate) struct MisconfiguredOAuth2Provider {
+    scheme_name: String,
+    reason: String,
+}
+
+impl MisconfiguredOAuth2Provider {
+    pub(crate) fn new(scheme_name: impl Into<String>, reason: impl Into<String>) -> Self {
+        Self {
+            scheme_name: scheme_name.into(),
+            reason: reason.into(),
+        }
+    }
+}
+
+impl AuthProvider for MisconfiguredOAuth2Provider {
+    fn name(&self) -> &str {
+        &self.scheme_name
+    }
+
+    // Report credentials as present so wrappers don't skip this provider
+    // (skipping would fall through to an unauthenticated request — the bug).
+    fn has_credentials(&self) -> bool {
+        true
+    }
+
+    fn credential_hints(&self) -> Vec<String> {
+        vec![self.reason.clone()]
+    }
+
+    fn apply(
+        &self,
+        _request: reqwest::RequestBuilder,
+        _endpoint: &EndpointAuthMetadata,
+    ) -> Result<reqwest::RequestBuilder, CliError> {
+        Err(CliError::Auth(format!(
+            "OAuth2 scheme '{}' is configured but cannot obtain a token: {}. \
+             Refusing to send an unauthenticated request.",
+            self.scheme_name, self.reason,
+        )))
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -845,30 +796,8 @@ mod tests {
         std::env::remove_var("TEST_RT_SECRET2");
     }
 
-    #[test]
-    fn parse_oauth_error_prefers_error_and_description() {
-        let body = r#"{"error":"invalid_client","error_description":"bad secret"}"#;
-        assert_eq!(
-            parse_oauth_error_json(body).as_deref(),
-            Some("invalid_client: bad secret")
-        );
-    }
-
-    #[test]
-    fn truncate_body_long() {
-        let s = "x".repeat(600);
-        let t = truncate_body_for_error(&s);
-        assert!(t.len() < s.len());
-        assert!(t.ends_with('…'));
-    }
-
-    #[test]
-    fn truncate_body_multibyte_utf8_no_panic() {
-        let s = "é".repeat(600);
-        let t = truncate_body_for_error(&s);
-        assert!(t.chars().count() <= 513); // 512 chars + '…'
-        assert!(t.ends_with('…'));
-    }
+    // `parse_oauth_error_message` + `truncate_body` are tested in
+    // `oauth_common::tests` — no need to duplicate here.
 
     // ---- Token cache tests ----
 
@@ -1071,7 +1000,7 @@ mod tests {
             let mut map = TokenMap::new();
             map.insert(
                 token_url.clone(),
-                CachedToken {
+                TokenBundle {
                     access_token: "expired".to_string(),
                     refresh_token: Some("cached-refresh".to_string()),
                     expires_at: Some(0), // already expired
@@ -1139,7 +1068,7 @@ mod tests {
             let mut map = TokenMap::new();
             map.insert(
                 token_url.clone(),
-                CachedToken {
+                TokenBundle {
                     access_token: "expired".to_string(),
                     refresh_token: Some("stale-refresh".to_string()),
                     expires_at: Some(0),
@@ -1228,5 +1157,80 @@ mod tests {
 
         // has_credentials is true because of disk cache, even though env vars are unset
         assert!(provider.has_credentials());
+    }
+
+    #[test]
+    fn with_cache_sets_oncelock() {
+        let p = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "X".to_string(),
+                client_secret_env: "Y".to_string(),
+                scope: None,
+            },
+        );
+        assert!(!p.has_cache());
+        let p = p.with_cache("my-test-cli");
+        assert!(p.has_cache());
+    }
+
+    #[test]
+    fn inject_token_cache_sets_cache_via_trait() {
+        use crate::auth::provider::AuthProvider;
+        let p = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "X".to_string(),
+                client_secret_env: "Y".to_string(),
+                scope: None,
+            },
+        );
+        assert!(!p.has_cache());
+        p.inject_token_cache("my-test-cli");
+        assert!(p.has_cache());
+    }
+
+    #[test]
+    fn inject_token_cache_idempotent() {
+        use crate::auth::provider::AuthProvider;
+        let p = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "X".to_string(),
+                client_secret_env: "Y".to_string(),
+                scope: None,
+            },
+        );
+        p.inject_token_cache("first-cli");
+        assert!(p.has_cache());
+        // Second call is a no-op (OnceLock already set)
+        p.inject_token_cache("second-cli");
+        assert!(p.has_cache());
+    }
+
+    // FER-10745: a misconfigured OAuth2 scheme must error loudly, never let an
+    // unauthenticated request through.
+    #[tokio::test(flavor = "multi_thread")]
+    async fn misconfigured_oauth2_provider_errors_instead_of_silent_unauth() {
+        let provider = MisconfiguredOAuth2Provider::new(
+            "OAuth2Security",
+            "missing OAuth2 config: token_url",
+        );
+
+        // Selected by composition (not skipped) so the failure surfaces.
+        assert!(provider.has_credentials());
+
+        let request = reqwest::Client::new().get("https://api.example.com/v1/thing");
+        let result = provider.apply(request, &EndpointAuthMetadata::unspecified());
+        let err = result.expect_err("misconfigured OAuth2 must refuse to send");
+        assert!(matches!(err, CliError::Auth(_)));
+        let msg = err.to_string();
+        assert!(
+            msg.contains("OAuth2Security") && msg.contains("token_url"),
+            "error should name the scheme and the missing config: {msg}",
+        );
     }
 }

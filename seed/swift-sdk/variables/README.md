@@ -53,7 +53,7 @@ import Variables
 private func main() async throws {
     let client = VariablesClient()
 
-    _ = try await client.service.post()
+    _ = try await client.service.post(endpointParam: "<endpointParam>")
 }
 
 try await main()

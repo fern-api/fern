@@ -148,4 +148,5 @@ error-discrimination:
 display-name: Test extension `x-fern-audiences` alongside `x-fern-streaming`.
 ",
   },
+  "specVersion": "1.0.0",
 }

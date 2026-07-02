@@ -252,4 +252,5 @@ error-discrimination:
 display-name: Test spec for discriminator context extension
 ",
   },
+  "specVersion": "1.0.0",
 }

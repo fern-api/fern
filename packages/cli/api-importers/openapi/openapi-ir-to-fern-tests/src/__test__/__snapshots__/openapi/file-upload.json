@@ -303,4 +303,5 @@ error-discrimination:
 display-name: Test file upload
 ",
   },
+  "specVersion": "1.0.0",
 }

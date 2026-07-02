@@ -103,7 +103,8 @@ function createMinimalIR(overrides?: {
         securitySchemes: {},
         security: undefined,
         globalHeaders: undefined,
-        idempotencyHeaders: undefined
+        idempotencyHeaders: undefined,
+        specVersion: undefined
     };
 }
 

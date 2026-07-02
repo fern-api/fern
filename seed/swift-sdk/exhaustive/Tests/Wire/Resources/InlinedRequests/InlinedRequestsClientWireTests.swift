@@ -52,7 +52,9 @@ import Exhaustive
                 "list",
                 "list"
             ]),
-            set: Optional([]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
             map: Optional([
                 1: "map"
             ]),
@@ -76,9 +78,13 @@ import Exhaustive
                         "list",
                         "list"
                     ],
+                    set: .array([
+                        .string("set")
+                    ]),
                     map: [
                         1: "map"
-                    ]
+                    ],
+                    bigint: "1000000"
                 )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

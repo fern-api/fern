@@ -110,13 +110,21 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         }
 
         const pathParams = [...this.example.servicePathParameters, ...this.example.endpointPathParameters];
+        const collidingPathParamPropertyNames = generatedType.getCollidingPathParameterPropertyNames(context);
 
-        return pathParams.map((pathParam) => {
-            const propertyName = generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName;
-            const value = context.type.getGeneratedExample(pathParam.value).build(context, opts);
+        return pathParams
+            .filter(
+                (pathParam) =>
+                    !collidingPathParamPropertyNames.has(
+                        generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName
+                    )
+            )
+            .map((pathParam) => {
+                const propertyName = generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName;
+                const value = context.type.getGeneratedExample(pathParam.value).build(context, opts);
 
-            return ts.factory.createPropertyAssignment(getPropertyKey(propertyName), value);
-        });
+                return ts.factory.createPropertyAssignment(getPropertyKey(propertyName), value);
+            });
     }
 
     private buildQueryParamProperties(

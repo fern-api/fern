@@ -1,3 +1,4 @@
+export * as createWithBodyAndQuery from "./createWithBodyAndQuery.js";
 export * as getWithAllowMultipleQuery from "./getWithAllowMultipleQuery.js";
 export * as getWithBooleanPath from "./getWithBooleanPath.js";
 export * as getWithInlinePath from "./getWithInlinePath.js";
@@ -9,4 +10,5 @@ export * as getWithQuery from "./getWithQuery.js";
 export * as modifyWithInlinePath from "./modifyWithInlinePath.js";
 export * as modifyWithPath from "./modifyWithPath.js";
 export * from "./requests/index.js";
+export * as uploadBytesWithQuery from "./uploadBytesWithQuery.js";
 export * as uploadWithPath from "./uploadWithPath.js";

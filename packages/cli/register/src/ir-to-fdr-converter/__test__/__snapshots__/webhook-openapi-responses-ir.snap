@@ -90,6 +90,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_documents": {
       "displayName": undefined,

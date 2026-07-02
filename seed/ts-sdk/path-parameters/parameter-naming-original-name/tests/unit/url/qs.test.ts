@@ -189,12 +189,12 @@ describe("Test qs toQueryString", () => {
             {
                 description: "should handle arrays with null/undefined values",
                 input: { items: ["a", null, "c", undefined, "e"] },
-                expected: "items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c&items%5B4%5D=e",
+                expected: "items%5B0%5D=a&items%5B2%5D=c&items%5B4%5D=e",
             },
             {
                 description: "should handle objects with null/undefined values",
                 input: { name: "John", age: null, email: undefined, active: true },
-                expected: "name=John&age=&active=true",
+                expected: "name=John&active=true",
             },
         ];
 

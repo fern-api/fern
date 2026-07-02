@@ -57,6 +57,20 @@ pub trait Binding: Send + Sync {
         op_path: &'a [String],
     ) -> BoxFuture<'a, Result<DispatchResult, CliError>>;
 
+    /// Return the embedded API spec(s) as a YAML string.
+    ///
+    /// - `raw == false` → the **effective** spec: source with overlays +
+    ///   overrides merged (what the CLI actually serves at runtime).
+    /// - `raw == true` → the **source** spec: byte-exact embedded YAML,
+    ///   before any overlay/override processing.
+    ///
+    /// Returns `Ok(None)` for bindings that do not embed a spec (e.g.
+    /// GraphQL). Multi-spec bindings concatenate entries as a YAML
+    /// stream (`---`-delimited).
+    fn spec_document(&self, _raw: bool) -> Result<Option<String>, CliError> {
+        Ok(None)
+    }
+
     /// Build this binding's contribution to the `--schema` flag for the given
     /// subcommand path. `--schema` is the agent-facing machine-readable
     /// counterpart to `--help`: wherever a user could type `--help` for prose,

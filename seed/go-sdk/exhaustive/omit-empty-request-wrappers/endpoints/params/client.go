@@ -195,6 +195,40 @@ func (c *Client) UploadWithPath(
 	return response.Body, nil
 }
 
+// POST with referenced body + query params
+func (c *Client) CreateWithBodyAndQuery(
+	ctx context.Context,
+	request *endpoints.CreateWithBodyAndQuery,
+	opts ...option.RequestOption,
+) (*types.ObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.CreateWithBodyAndQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// POST bytes body + query params
+func (c *Client) UploadBytesWithQuery(
+	ctx context.Context,
+	request *endpoints.UploadBytesWithQuery,
+	opts ...option.RequestOption,
+) (*types.ObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.UploadBytesWithQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // GET with boolean path param
 func (c *Client) GetWithBooleanPath(
 	ctx context.Context,

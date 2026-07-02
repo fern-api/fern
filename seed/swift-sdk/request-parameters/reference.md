@@ -209,7 +209,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUsername</a>(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date?, keyValue: [String: String], optionalString: String?, nestedUser: NestedUser, optionalUser: User?, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUsername</a>(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date?, keyValue: [String: String], optionalString: String?, nestedUser: NestedUser, optionalUser: User?, excludeUser: [User], filter: [String], longParam: Int64, bigIntParam: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -279,7 +279,20 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        longParam: 1000000
+        excludeUser: [
+            User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            )
+        ],
+        filter: [
+            "filter"
+        ],
+        longParam: 1000000,
+        bigIntParam: "1000000"
     )
 }
 
@@ -394,7 +407,7 @@ try await main()
 <dl>
 <dd>
 
-**excludeUser:** `User` 
+**excludeUser:** `[User]` 
     
 </dd>
 </dl>
@@ -402,7 +415,7 @@ try await main()
 <dl>
 <dd>
 
-**filter:** `String` 
+**filter:** `[String]` 
     
 </dd>
 </dl>

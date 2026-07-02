@@ -135,7 +135,8 @@ function createMinimalEndpoint(opts?: { errors?: FernIr.ResponseError[] }): Fern
         retries: undefined,
         apiPlayground: undefined,
         docs: undefined,
-        availability: undefined
+        availability: undefined,
+        subtitle: undefined
     };
 }
 

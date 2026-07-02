@@ -20,6 +20,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -32,6 +35,7 @@ public partial class ProblemClient : IProblemClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/problems-v2/lightweight-problem-info",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -98,6 +102,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -110,6 +117,7 @@ public partial class ProblemClient : IProblemClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/problems-v2/problem-info",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -175,6 +183,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -190,6 +201,7 @@ public partial class ProblemClient : IProblemClient
                         "/problems-v2/problem-info/{0}",
                         ValueConvert.ToPathParameterString(problemId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -256,6 +268,9 @@ public partial class ProblemClient : IProblemClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -272,6 +287,7 @@ public partial class ProblemClient : IProblemClient
                         ValueConvert.ToPathParameterString(problemId),
                         ValueConvert.ToPathParameterString(problemVersion)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
