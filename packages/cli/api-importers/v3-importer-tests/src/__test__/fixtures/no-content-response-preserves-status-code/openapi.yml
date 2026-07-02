@@ -53,6 +53,33 @@ paths:
         "204":
           description: No change — new name matched existing name
 
+  # Endpoint with a 200 response (with body) and a 204 that *erroneously* declares
+  # the same JSON body. Per RFC 9110 a 204 cannot carry a body, so the importer must
+  # treat it as no-content and wrap the 200 body optional (mirrors a real customer spec).
+  /plants/{plantId}/water:
+    post:
+      summary: Water a plant (returns the plant, or 204 with no content if already watered)
+      operationId: waterPlant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Plant watered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "204":
+          description: No content — plant was already watered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+
 components:
   schemas:
     RenamePlantRequest:
