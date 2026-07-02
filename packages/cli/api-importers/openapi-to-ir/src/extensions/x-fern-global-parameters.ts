@@ -10,10 +10,11 @@ export declare namespace FernGlobalParametersExtension {
         in: string | undefined;
         target: string | undefined;
         env: string | undefined;
-        default: string | boolean | undefined;
+        default: string | boolean | number | undefined;
         optional: boolean | undefined;
         apply: string | undefined;
         type: string | undefined;
+        docs: string | undefined;
     }
 }
 
@@ -65,12 +66,15 @@ export class FernGlobalParametersExtension extends AbstractExtension<
                 target: typeof entry["target"] === "string" ? (entry["target"] as string) : undefined,
                 env: typeof entry["env"] === "string" ? (entry["env"] as string) : undefined,
                 default:
-                    typeof entry["default"] === "string" || typeof entry["default"] === "boolean"
-                        ? (entry["default"] as string | boolean)
+                    typeof entry["default"] === "string" ||
+                    typeof entry["default"] === "boolean" ||
+                    typeof entry["default"] === "number"
+                        ? (entry["default"] as string | boolean | number)
                         : undefined,
                 optional: typeof entry["optional"] === "boolean" ? (entry["optional"] as boolean) : undefined,
                 apply: typeof entry["apply"] === "string" ? (entry["apply"] as string) : undefined,
-                type: typeof entry["type"] === "string" ? (entry["type"] as string) : undefined
+                type: typeof entry["type"] === "string" ? (entry["type"] as string) : undefined,
+                docs: typeof entry["docs"] === "string" ? (entry["docs"] as string) : undefined
             });
         }
         return result.length > 0 ? result : undefined;

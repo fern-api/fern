@@ -10,6 +10,7 @@ x-fern-global-parameters:
     default: USD
     optional: true
     apply: auto
+    docs: The currency code used for pricing.
   - name: language
     in: query
     env: CHANNEL3_LANGUAGE
@@ -24,6 +25,21 @@ x-fern-global-parameters:
     env: CHANNEL3_REGION
     default: us
     apply: explicit
+  - name: verbose
+    in: query
+    type: boolean
+    default: false
+    optional: true
+    docs: Enable verbose response output.
+  - name: max-retries
+    in: header
+    target: X-Max-Retries
+    type: integer
+    default: 3
+    optional: true
+  - name: api-version
+    in: query
+    docs: The API version to use for the request.
 paths:
   "/v1/products/{regionId}/search":
     post:

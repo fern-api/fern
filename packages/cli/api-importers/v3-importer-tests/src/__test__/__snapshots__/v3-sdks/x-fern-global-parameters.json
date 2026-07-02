@@ -1545,7 +1545,8 @@
         "type": "string"
       },
       "optional": true,
-      "apply": "auto"
+      "apply": "auto",
+      "docs": "The currency code used for pricing."
     },
     {
       "id": "language",
@@ -1607,6 +1608,75 @@
         "type": "string"
       },
       "apply": "explicit"
+    },
+    {
+      "id": "verbose",
+      "name": "verbose",
+      "location": "query",
+      "target": "verbose",
+      "valueType": {
+        "container": {
+          "optional": {
+            "primitive": {
+              "v1": "BOOLEAN",
+              "v2": {
+                "type": "boolean"
+              }
+            },
+            "type": "primitive"
+          },
+          "type": "optional"
+        },
+        "type": "container"
+      },
+      "clientDefault": {
+        "boolean": false,
+        "type": "boolean"
+      },
+      "optional": true,
+      "docs": "Enable verbose response output."
+    },
+    {
+      "id": "max-retries",
+      "name": "max-retries",
+      "location": "header",
+      "target": "X-Max-Retries",
+      "valueType": {
+        "container": {
+          "optional": {
+            "primitive": {
+              "v1": "INTEGER",
+              "v2": {
+                "type": "integer"
+              }
+            },
+            "type": "primitive"
+          },
+          "type": "optional"
+        },
+        "type": "container"
+      },
+      "clientDefault": {
+        "string": "3",
+        "type": "string"
+      },
+      "optional": true
+    },
+    {
+      "id": "api-version",
+      "name": "api-version",
+      "location": "query",
+      "target": "api-version",
+      "valueType": {
+        "primitive": {
+          "v1": "STRING",
+          "v2": {
+            "type": "string"
+          }
+        },
+        "type": "primitive"
+      },
+      "docs": "The API version to use for the request."
     }
   ],
   "serviceTypeReferenceInfo": {

@@ -13,6 +13,9 @@ function convertDefaultToLiteral(defaultValue: unknown): FernIr.Literal | undefi
     if (typeof defaultValue === "boolean") {
         return FernIr.Literal.boolean(defaultValue);
     }
+    if (typeof defaultValue === "number") {
+        return FernIr.Literal.string(String(defaultValue));
+    }
     return undefined;
 }
 
@@ -87,6 +90,7 @@ function resolveBaseType(typeString: string | undefined): FernIr.TypeReference {
                 })
             });
         case "double":
+        case "number":
             return FernIr.TypeReference.primitive({
                 v1: "DOUBLE",
                 v2: FernIr.PrimitiveTypeV2.double({
@@ -131,7 +135,7 @@ export function convertGlobalParametersExtension({
             clientDefault: convertDefaultToLiteral(param.default),
             optional: param.optional,
             apply: convertApplyMode(param.apply, [...breadcrumbs, "apply"], context),
-            docs: undefined
+            docs: param.docs
         };
     });
 }
