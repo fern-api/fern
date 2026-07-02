@@ -1467,9 +1467,7 @@ export async function runAppPreviewServer({
         context.logger.info(
             `[PERF]   Duration: ${sessionDuration}s | Requests: ${loadWithUrlRequestCount} | Data: ${totalMB}MB`
         );
-        context.logger.info(
-            `[PERF]   CLI cache: ${cacheHits} hits, ${cacheMisses} misses | Reloads: ${reloadCount}`
-        );
+        context.logger.info(`[PERF]   CLI cache: ${cacheHits} hits, ${cacheMisses} misses | Reloads: ${reloadCount}`);
         context.logger.info(`[PERF]   Unique pages: ${uniquePages}`);
         for (const [url, count] of urlHitCounts) {
             context.logger.info(`[PERF]     ${url}: ${count} requests`);
