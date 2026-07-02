@@ -149,6 +149,7 @@ export class DynamicSnippetsConverter {
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments != null ? this.convertEnvironments(this.ir.environments) : undefined,
             variables: this.convertVariables(),
+            globalParameters: this.ir.globalParameters,
             generatorConfig: this.generatorConfig
         };
     }

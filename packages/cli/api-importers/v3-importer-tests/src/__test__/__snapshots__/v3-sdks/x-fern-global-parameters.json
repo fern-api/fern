@@ -833,6 +833,10 @@
             "type": "openapi"
           },
           "audiences": [],
+          "globalParameters": [
+            "region",
+            "currency"
+          ],
           "id": "endpoint_products.search",
           "name": "search",
           "requestBody": {
@@ -1402,6 +1406,9 @@
             "type": "openapi"
           },
           "audiences": [],
+          "globalParameters": [
+            "region"
+          ],
           "id": "endpoint_products.get",
           "name": "get",
           "v2RequestBodies": {},
@@ -1677,6 +1684,27 @@
         "type": "primitive"
       },
       "docs": "The API version to use for the request."
+    },
+    {
+      "id": "x-trace-id",
+      "name": "x-trace-id",
+      "location": "header",
+      "target": "x-trace-id",
+      "valueType": {
+        "primitive": {
+          "v1": "STRING",
+          "v2": {
+            "type": "string"
+          }
+        },
+        "type": "primitive"
+      },
+      "env": "TRACE_ID",
+      "clientDefault": {
+        "string": "trace-default",
+        "type": "string"
+      },
+      "docs": "x-fern-default should take precedence over default."
     }
   ],
   "serviceTypeReferenceInfo": {

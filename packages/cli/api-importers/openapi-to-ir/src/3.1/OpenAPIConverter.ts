@@ -116,6 +116,26 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 context: this.context
             });
             this.ir.globalParameters = globalParameters;
+
+            // Warn about overlapping header names between x-fern-global-parameters
+            // and x-fern-global-headers — the former takes precedence.
+            if (this.ir.headers.length > 0) {
+                const globalHeaderNames = new Set(
+                    this.ir.headers.map((h) => {
+                        const name = h.name;
+                        return (typeof name === "string" ? name : name.wireValue).toLowerCase();
+                    })
+                );
+                for (const param of convertedGlobalParameters) {
+                    if (param.in === "header" && globalHeaderNames.has(param.name.toLowerCase())) {
+                        this.context.logger.warn(
+                            `Global parameter "${param.name}" (in: header) overlaps with an ` +
+                                `x-fern-global-headers entry. The x-fern-global-parameters ` +
+                                `definition takes precedence.`
+                        );
+                    }
+                }
+            }
         }
     }
 

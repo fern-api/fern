@@ -3,6 +3,7 @@ import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { HttpMethods } from "../../constants/HttpMethods.js";
+import { FernGlobalParameterExtension } from "../../extensions/x-fern-global-parameter.js";
 import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent.js";
 import { FernPaginationExtension } from "../../extensions/x-fern-pagination.js";
 import { FernStreamingExtension, getDocumentLevelResumable } from "../../extensions/x-fern-streaming.js";
@@ -206,6 +207,13 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         });
         const subtitle = subtitleExtensionConverter.convert();
 
+        const globalParameterExtensionConverter = new FernGlobalParameterExtension({
+            breadcrumbs: operationBreadcrumbs,
+            operation,
+            context: this.context
+        });
+        const globalParameterIds = globalParameterExtensionConverter.convert();
+
         const operationConverter = new OperationConverter({
             context: this.context,
             breadcrumbs: operationBreadcrumbs,
@@ -215,6 +223,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             pathItemParameters: this.pathItem.parameters,
             idempotent: isIdempotent,
             subtitle,
+            globalParameterIds,
             idToAuthScheme: this.idToAuthScheme,
             topLevelServers: this.topLevelServers,
             pathLevelServers: this.pathItem.servers,

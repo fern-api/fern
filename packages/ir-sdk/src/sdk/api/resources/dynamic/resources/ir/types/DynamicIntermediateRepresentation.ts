@@ -33,5 +33,11 @@ export interface DynamicIntermediateRepresentation {
      * referenced in path parameters and other contexts.
      */
     variables: FernIr.dynamic.VariableDeclaration[] | undefined;
+    /**
+     * Global parameters configured at the client level and injected
+     * into relevant requests. Used by dynamic snippet generators to
+     * include client-level parameters in generated code samples.
+     */
+    globalParameters: FernIr.GlobalParameter[] | undefined;
     generatorConfig: FernIr.dynamic.GeneratorConfig | undefined;
 }

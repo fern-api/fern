@@ -18,6 +18,15 @@ export declare namespace FernGlobalParametersExtension {
     }
 }
 
+function resolveDefault(entry: Record<string, unknown>): string | boolean | number | undefined {
+    const fernDefault = entry["x-fern-default"];
+    const rawDefault = fernDefault ?? entry["default"];
+    if (typeof rawDefault === "string" || typeof rawDefault === "boolean" || typeof rawDefault === "number") {
+        return rawDefault;
+    }
+    return undefined;
+}
+
 export class FernGlobalParametersExtension extends AbstractExtension<
     FernGlobalParametersExtension.GlobalParameterExtension[]
 > {
@@ -65,12 +74,7 @@ export class FernGlobalParametersExtension extends AbstractExtension<
                 in: typeof entry["in"] === "string" ? (entry["in"] as string) : undefined,
                 target: typeof entry["target"] === "string" ? (entry["target"] as string) : undefined,
                 env: typeof entry["env"] === "string" ? (entry["env"] as string) : undefined,
-                default:
-                    typeof entry["default"] === "string" ||
-                    typeof entry["default"] === "boolean" ||
-                    typeof entry["default"] === "number"
-                        ? (entry["default"] as string | boolean | number)
-                        : undefined,
+                default: resolveDefault(entry),
                 optional: typeof entry["optional"] === "boolean" ? (entry["optional"] as boolean) : undefined,
                 apply: typeof entry["apply"] === "string" ? (entry["apply"] as string) : undefined,
                 type: typeof entry["type"] === "string" ? (entry["type"] as string) : undefined,
