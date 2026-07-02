@@ -5,6 +5,7 @@ import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
 interface DocsTranslationsConfig {
     defaultLocale: string;
     translations: string[] | undefined;
+    localeSlugs?: Record<string, string> | undefined;
 }
 
 interface DocsConfigWithTranslations {
@@ -15,6 +16,7 @@ function createResolverWithTranslations(
     translations: Array<{
         lang: string;
         default?: boolean;
+        slug?: string;
     }>
 ): DocsDefinitionResolver {
     const resolver = Object.create(DocsDefinitionResolver.prototype) as DocsDefinitionResolver;
@@ -56,9 +58,10 @@ function createResolverWithTranslations(
         title: undefined,
         translationPages: undefined,
         translations: translations.map((translation) => ({
-            // The resolver only reads `lang` and `default`.
+            // The resolver only reads `lang`, `default`, and `slug`.
             lang: translation.lang,
-            default: translation.default
+            default: translation.default,
+            slug: translation.slug
         })),
         typography: undefined
     });
@@ -104,5 +107,41 @@ describe("DocsDefinitionResolver translations config", () => {
             defaultLocale: "fr",
             translations: ["fr", "de"]
         });
+    });
+
+    it("emits locale → URL-slug overrides when a translation sets a slug", async () => {
+        const resolver = createResolverWithTranslations([
+            { lang: "en", default: true },
+            { lang: "ja", slug: "jp" }
+        ]);
+
+        const convertDocsConfiguration = Reflect.get(resolver, "convertDocsConfiguration") as (
+            root: object
+        ) => Promise<object>;
+
+        const config = await convertDocsConfiguration.call(resolver, { type: "root" });
+
+        expect(getTranslationsConfig(config)).toEqual({
+            defaultLocale: "en",
+            translations: ["en", "ja"],
+            localeSlugs: { ja: "jp" }
+        });
+    });
+
+    it("ignores a slug on the default locale and a slug equal to the locale", async () => {
+        const resolver = createResolverWithTranslations([
+            { lang: "en", default: true, slug: "us" },
+            { lang: "fr", slug: "fr" }
+        ]);
+
+        const convertDocsConfiguration = Reflect.get(resolver, "convertDocsConfiguration") as (
+            root: object
+        ) => Promise<object>;
+
+        const config = await convertDocsConfiguration.call(resolver, { type: "root" });
+
+        // Default-locale slug is meaningless (served unprefixed) and slug===lang
+        // adds nothing, so no localeSlugs map is emitted.
+        expect(getTranslationsConfig(config)?.localeSlugs).toBeUndefined();
     });
 });

@@ -57,6 +57,15 @@ interface LibraryNavNode {
 interface DocsTranslationsConfig {
     defaultLocale: string;
     translations: string[] | undefined;
+    /**
+     * Maps a locale to the URL path segment it should be served under, for
+     * locales that set a `slug` override in `docs.yml` (e.g. `{ ja: "jp" }` so
+     * Japanese is served at `/jp/...`). Absent/empty when every locale uses its
+     * own code as its URL prefix. Locales not present here fall back to using
+     * their own code as the prefix. The default locale is served unprefixed, so
+     * it never appears here.
+     */
+    localeSlugs: Record<string, string> | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
@@ -355,9 +364,23 @@ export class DocsDefinitionResolver {
             return undefined;
         }
 
+        // Collect locale → URL-slug overrides. The default locale is served
+        // unprefixed so any slug on it is meaningless and skipped; a slug equal
+        // to the locale is the implicit default and adds nothing.
+        const localeSlugs: Record<string, string> = {};
+        for (const translation of normalizedTranslations) {
+            if (translation === defaultTranslation) {
+                continue;
+            }
+            if (translation.slug != null && translation.slug !== translation.lang) {
+                localeSlugs[translation.lang] = translation.slug;
+            }
+        }
+
         return {
             defaultLocale: defaultTranslation.lang,
-            translations: normalizedTranslations.map((translation) => translation.lang)
+            translations: normalizedTranslations.map((translation) => translation.lang),
+            localeSlugs: Object.keys(localeSlugs).length > 0 ? localeSlugs : undefined
         };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();

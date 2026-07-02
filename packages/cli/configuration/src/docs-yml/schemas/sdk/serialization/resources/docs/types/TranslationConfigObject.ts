@@ -11,11 +11,13 @@ export const TranslationConfigObject: core.serialization.ObjectSchema<
 > = core.serialization.object({
     lang: Language,
     default: core.serialization.boolean().optional(),
+    slug: core.serialization.string().optional(),
 });
 
 export declare namespace TranslationConfigObject {
     export interface Raw {
         lang: Language.Raw;
         default?: boolean | null;
+        slug?: string | null;
     }
 }

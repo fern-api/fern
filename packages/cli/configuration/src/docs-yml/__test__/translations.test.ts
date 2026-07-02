@@ -46,6 +46,21 @@ describe("TranslationConfig schema", () => {
             expect(() => TranslationConfig.parse({ lang: "en", default: "yes" })).toThrow();
         });
 
+        it("should parse a translation entry with a slug override", () => {
+            const result = TranslationConfig.parse({ lang: "ja", slug: "jp" });
+            expect(typeof result === "string" ? undefined : result.lang).toBe("ja");
+            expect(typeof result === "string" ? undefined : result.slug).toBe("jp");
+        });
+
+        it("should leave slug undefined when not provided", () => {
+            const result = TranslationConfig.parse({ lang: "ja" });
+            expect(typeof result === "string" ? undefined : result.slug).toBeUndefined();
+        });
+
+        it("should reject an invalid slug", () => {
+            expect(() => TranslationConfig.parse({ lang: "ja", slug: "not a slug" })).toThrow();
+        });
+
         it("should accept all common language codes", () => {
             const langs = ["en", "es", "fr", "de", "it", "pt", "ja", "zh", "ko", "el", "no", "pl", "ru", "sv", "tr"];
             for (const lang of langs) {

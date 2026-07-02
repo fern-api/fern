@@ -47,6 +47,22 @@ export const Language = z
         "Language must be a valid BCP 47 language tag (e.g. 'en', 'ja', 'ja-JP', 'pt-BR', 'zh-Hans-CN')"
     );
 
+/**
+ * A single URL path segment used as a locale's public URL prefix.
+ *
+ * Unlike {@link Language}, this is intentionally NOT constrained to the BCP 47
+ * grammar — the whole point of a slug override is to let a site pick an
+ * arbitrary public URL for a locale (e.g. `jp`, `japan`, `v2`). It is only
+ * constrained to what makes a safe, unambiguous single path segment: URL-safe
+ * characters and no slashes, spaces, or empty values.
+ */
+export const LocaleUrlSlug = z
+    .string()
+    .regex(
+        /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/,
+        "slug must be a URL-safe path segment (letters, numbers, and single hyphens), e.g. 'jp'"
+    );
+
 export const PageActionOption = z.enum([
     "copy-page",
     "view-as-markdown",
@@ -956,7 +972,19 @@ export const ProductFileConfig = z.object({
 
 export const TranslationConfigObject = z.object({
     lang: Language,
-    default: z.boolean().optional()
+    default: z.boolean().optional(),
+    /**
+     * Overrides the URL path segment used for this locale. By default the
+     * locale (`lang`) doubles as its own URL prefix (e.g. `ja` → `/ja/...`).
+     * Set `slug` when a site wants a different public URL — e.g. a marketing
+     * team already publishes Japanese under `/jp` — without changing the
+     * locale's language identity (`lang` still drives hreflang, `<html lang>`,
+     * the language-switcher label, translated content directory, etc.).
+     *
+     * Any URL-safe single path segment (see {@link LocaleUrlSlug}) — it is not
+     * restricted to the BCP 47 language grammar.
+     */
+    slug: LocaleUrlSlug.optional()
 });
 
 export const TranslationConfig = z.union([Language, TranslationConfigObject]);
@@ -964,6 +992,7 @@ export const TranslationConfig = z.union([Language, TranslationConfigObject]);
 export function normalizeTranslationConfig(config: z.infer<typeof TranslationConfig>): {
     lang: string;
     default?: boolean;
+    slug?: string;
 } {
     if (typeof config === "string") {
         return { lang: config };
