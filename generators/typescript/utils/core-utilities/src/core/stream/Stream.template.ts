@@ -218,7 +218,11 @@ export class Stream<T> implements AsyncIterable<T> {
 
             reconnectAttempts++;
             await this.delayReconnect(lastRetry);
-            currentStream = await this.reconnect!(lastId!);
+            const reconnectFn = this.reconnect;
+            if (reconnectFn == null || lastId == null) {
+                return;
+            }
+            currentStream = await reconnectFn(lastId);
         }
     }
 
@@ -296,7 +300,11 @@ export class Stream<T> implements AsyncIterable<T> {
 
             reconnectAttempts++;
             await this.delayReconnect(lastRetry);
-            currentStream = await this.reconnect!(lastId!);
+            const reconnectFn = this.reconnect;
+            if (reconnectFn == null || lastId == null) {
+                return;
+            }
+            currentStream = await reconnectFn(lastId);
         }
     }
 
