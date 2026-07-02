@@ -78,7 +78,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
             parameters: [],
             return_: this.Primitive.string,
             body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("var sb = new System.Text.StringBuilder()");
+                writer.writeTextStatement("var sb = new global::System.Text.StringBuilder()");
                 writer.writeTextStatement("sb.Append(GetType().FullName)");
                 writer.writeTextStatement(`sb.Append($": {Message}")`);
                 writer.writeTextStatement(`sb.Append($" (Status Code: {StatusCode})")`);

@@ -30,7 +30,7 @@ public class SeedBearerTokenEnvironmentVariableApiException(
 
     public override string ToString()
     {
-        var sb = new System.Text.StringBuilder();
+        var sb = new global::System.Text.StringBuilder();
         sb.Append(GetType().FullName);
         sb.Append($": {Message}");
         sb.Append($" (Status Code: {StatusCode})");
