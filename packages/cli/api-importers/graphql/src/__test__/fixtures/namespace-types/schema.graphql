@@ -1,11 +1,16 @@
 # GraphQL schema to test namespace type handling.
-# AccountMutations has all fields with arguments, so it qualifies as a namespace type.
-# Its fields should be promoted to top-level operations and AccountMutations itself
-# should NOT appear in the types registry.
 #
-# InventoryQueries also qualifies as a namespace type (all fields have arguments).
-# Since it's returned from a root Query field with no arguments, a parent operation
-# should be created for the landing page to show the namespace type's own fields.
+# Namespace types (all fields have arguments) are kept in the type registry so the
+# frontend can render their fields on landing pages. Their fields are also promoted
+# to standalone operations via convertNamespaceOperations.
+#
+# AccountMutations: mutation namespace. Its fields become flat sidebar entries; each
+# mutation's example request wraps itself in the parent field (e.g. mutation { account { create(...) } }).
+# No parent operation is created — mutations are always listed individually.
+#
+# InventoryQueries: query namespace. A parent operation (query_inventory) is created
+# so the sidebar entry for "inventory" has an operation whose returnType points at
+# InventoryQueries, letting the page render all nested query fields.
 
 """
 An account in the system.
