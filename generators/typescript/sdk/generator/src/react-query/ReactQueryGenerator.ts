@@ -397,7 +397,14 @@ export class ReactQueryGenerator {
         // Generate child service namespaces
         for (const [name, child] of node.children) {
             content += `${innerIndent}${name}: `;
-            content += this.generateNamespaceObject(child, queryKeyPrefix, clientName, [...path, name], namespaceName, depth + 1);
+            content += this.generateNamespaceObject(
+                child,
+                queryKeyPrefix,
+                clientName,
+                [...path, name],
+                namespaceName,
+                depth + 1
+            );
             content += `,\n`;
         }
 
