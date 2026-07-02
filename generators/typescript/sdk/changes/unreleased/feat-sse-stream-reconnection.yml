@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Implement SSE stream auto-reconnection for resumable endpoints. When an SSE
+    stream drops mid-connection and the endpoint is marked `resumable: true`, the
+    SDK now automatically reconnects using the Last-Event-ID header, honoring
+    server-sent retry directives clamped to 30 seconds. Reconnection respects
+    `reconnectionEnabled` and `maxReconnectionAttempts` options.
+  type: feat

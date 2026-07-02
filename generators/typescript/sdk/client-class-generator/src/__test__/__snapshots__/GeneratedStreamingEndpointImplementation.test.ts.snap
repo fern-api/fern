@@ -1,5 +1,18 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`GeneratedStreamingEndpointImplementation > SSE response type > does not generate reconnect function for non-resumable SSE endpoints 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedStreamingEndpointImplementation > SSE response type > generates reconnect function for resumable SSE streaming endpoints 1`] = `
+"const _response = await this._options.fetcher.fetch({});
+const _reconnect = async (lastEventId: string) => {
+    const _reconnectResponse = await this._options.fetcher.fetch({});
+    if (!_reconnectResponse.ok) {
+        throw new Error("SSE stream reconnection failed");
+    }
+    return _reconnectResponse.body;
+};"
+`;
+
 exports[`GeneratedStreamingEndpointImplementation > SSE response type > uses sse response type for SSE streaming endpoints 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
 
 exports[`GeneratedStreamingEndpointImplementation > SSE response type > uses sse response type for streamParameter SSE endpoints 1`] = `"const _response = await this._options.fetcher.fetch({});"`;

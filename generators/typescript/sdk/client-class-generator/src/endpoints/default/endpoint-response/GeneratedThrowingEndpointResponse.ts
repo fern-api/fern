@@ -13,7 +13,10 @@ import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl.js";
-import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation.js";
+import {
+    GeneratedStreamingEndpointImplementation,
+    RECONNECT_FUNCTION_VARIABLE_NAME
+} from "../../GeneratedStreamingEndpointImplementation.js";
 import { getAbortSignalExpression, REQUEST_OPTIONS_PARAMETER_NAME } from "../../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import {
@@ -815,15 +818,19 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
+            let isResumableSse = false;
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
-                sse: (sse) => ({
-                    type: "sse" as const,
-                    ...(sse.terminator != null
-                        ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
-                        : {}),
-                    ...this.getEventDiscriminator(sse.payload, context),
-                    ...(sse.resumable === true ? { resumable: ts.factory.createTrue() } : {})
-                }),
+                sse: (sse) => {
+                    isResumableSse = sse.resumable === true;
+                    return {
+                        type: "sse" as const,
+                        ...(sse.terminator != null
+                            ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
+                            : {}),
+                        ...this.getEventDiscriminator(sse.payload, context),
+                        ...(sse.resumable === true ? { resumable: ts.factory.createTrue() } : {})
+                    };
+                },
                 json: (json) => ({
                     type: "json",
                     messageTerminator: ts.factory.createStringLiteral(json.terminator ?? "\n")
@@ -900,6 +907,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             ts.factory.createIdentifier("maxReconnectionAttempts")
                                         )
                                     ),
+                                    reconnect: isResumableSse
+                                        ? ts.factory.createIdentifier(RECONNECT_FUNCTION_VARIABLE_NAME)
+                                        : undefined,
                                     parse: context.includeSerdeLayer
                                         ? ts.factory.createArrowFunction(
                                               [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],

@@ -1113,6 +1113,220 @@ describe("Stream", () => {
             expect(messages).toEqual([{ value: 1 }]);
         });
     });
+
+    describe("SSE stream reconnection", () => {
+        it("should reconnect on premature EOF when resumable", async () => {
+            const firstStream = createReadableStream([
+                "id: 1\ndata: {\"value\": 1}\n\n",
+                "id: 2\ndata: {\"value\": 2}\n\n",
+            ]);
+            const secondStream = createReadableStream([
+                "id: 3\ndata: {\"value\": 3}\n\n",
+                "data: [DONE]\n\n",
+            ]);
+
+            let reconnectCallCount = 0;
+            let lastReceivedEventId: string | undefined;
+            const reconnect = async (lastEventId: string) => {
+                reconnectCallCount++;
+                lastReceivedEventId = lastEventId;
+                return secondStream;
+            };
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+                resumable: true,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
+            expect(reconnectCallCount).toBe(1);
+            expect(lastReceivedEventId).toBe("2");
+        });
+
+        it("should not reconnect when reconnectionEnabled is false", async () => {
+            const mockStream = createReadableStream([
+                "id: 1\ndata: {\"value\": 1}\n\n",
+            ]);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+                resumable: true,
+                reconnectionEnabled: false,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should not reconnect when not resumable", async () => {
+            const mockStream = createReadableStream([
+                "id: 1\ndata: {\"value\": 1}\n\n",
+            ]);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+                resumable: false,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should respect maxReconnectionAttempts", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                // Return a stream that immediately ends (premature EOF)
+                return createReadableStream(["id: x\ndata: {\"value\": 99}\n\n"]);
+            };
+
+            const firstStream = createReadableStream([
+                "id: 1\ndata: {\"value\": 1}\n\n",
+            ]);
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+                resumable: true,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 3,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // First stream yields 1, then each reconnect yields 99, all hitting EOF without terminator
+            expect(reconnectCallCount).toBe(3);
+        });
+
+        it("should not reconnect when stream ends with terminator", async () => {
+            const mockStream = createReadableStream([
+                "id: 1\ndata: {\"value\": 1}\n\n",
+                "data: [DONE]\n\n",
+            ]);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+                resumable: true,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should not reconnect without a reconnect function", async () => {
+            const mockStream = createReadableStream([
+                "id: 1\ndata: {\"value\": 1}\n\n",
+            ]);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+                resumable: true,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+        });
+
+        it("should not reconnect without a lastId", async () => {
+            const mockStream = createReadableStream([
+                "data: {\"value\": 1}\n\n",
+            ]);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+                resumable: true,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
 });
 
 // Helper function to create a ReadableStream from string chunks
