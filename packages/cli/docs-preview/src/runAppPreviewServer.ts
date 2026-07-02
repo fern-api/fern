@@ -1018,6 +1018,7 @@ export async function runAppPreviewServer({
             });
 
             const totalTime = Date.now() - startTime;
+            lastReloadTimestamp = Date.now();
             context.logger.info(
                 `Reload completed in ${totalTime}ms (loadProject: ${loadProjectTime}ms, docsGen: ${docsGenTime}ms)`
             );
@@ -1155,6 +1156,7 @@ export async function runAppPreviewServer({
     let totalDataTransferred = 0;
     let reloadCount = 0;
     const sessionStart = Date.now();
+    let lastReloadTimestamp = Date.now();
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
@@ -1173,8 +1175,9 @@ export async function runAppPreviewServer({
             const byteSize = Buffer.byteLength(json);
             totalDataTransferred += byteSize;
             const sizeMB = (byteSize / (1024 * 1024)).toFixed(2);
+            const sinceReload = Date.now() - lastReloadTimestamp;
             context.logger.info(
-                `[PERF] /load-with-url #${loadWithUrlRequestCount}: latency=${Date.now() - start}ms, size=${sizeMB}MB`
+                `[PERF] /load-with-url #${loadWithUrlRequestCount}: latency=${Date.now() - start}ms, size=${sizeMB}MB, since_reload=${sinceReload}ms`
             );
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
