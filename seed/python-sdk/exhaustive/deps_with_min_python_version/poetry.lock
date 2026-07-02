@@ -1075,14 +1075,14 @@ websockets = ">=14,<16"
 
 [[package]]
 name = "langsmith"
-version = "0.9.6"
+version = "0.9.7"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langsmith-0.9.6-py3-none-any.whl", hash = "sha256:c5e5f2425dcb8fe363b9e1fa87a9cb9cf5631389bf7e168aa4f325f580ca284c"},
-    {file = "langsmith-0.9.6.tar.gz", hash = "sha256:1df590a40352b2f40a36229d90e2ef6af276a0bc9f1e44a87b829f879eed2130"},
+    {file = "langsmith-0.9.7-py3-none-any.whl", hash = "sha256:a5ff9179b77eb0c3a0129294d30924eab13e51e2720f374372dbbc014c892911"},
+    {file = "langsmith-0.9.7.tar.gz", hash = "sha256:40f8a66a466a7abd991a9df1b50de0a9d30c48ee0d3da46ce00516b68e41c9d7"},
 ]
 
 [package.dependencies]
@@ -1104,6 +1104,7 @@ zstandard = ">=0.23.0"
 [package.extras]
 claude-agent-sdk = ["claude-agent-sdk (>=0.1.0) ; python_version >= \"3.10\""]
 google-adk = ["google-adk (>=1.0.0)", "wrapt (>=1.16.0)"]
+google-adk-live = ["google-adk (>=1.14.0)"]
 langsmith-pyo3 = ["langsmith-pyo3 (>=0.1.0rc2)"]
 livekit = ["cachetools (>=5.0.0)", "livekit-agents (>=1.0)", "opentelemetry-api (>=1.30.0)", "opentelemetry-exporter-otlp-proto-http (>=1.30.0)", "opentelemetry-sdk (>=1.30.0)"]
 openai-agents = ["openai-agents (>=0.0.3)"]
