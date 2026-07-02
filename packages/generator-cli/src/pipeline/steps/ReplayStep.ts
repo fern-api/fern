@@ -177,11 +177,11 @@ export class ReplayStep extends BaseStep {
      */
     private commitLockfileIfUncommitted(): void {
         try {
-            const status = execFileSync(
-                "git",
-                ["status", "--porcelain", "--", ".fern/replay.lock"],
-                { cwd: this.outputDir, encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"] }
-            ).trim();
+            const status = execFileSync("git", ["status", "--porcelain", "--", ".fern/replay.lock"], {
+                cwd: this.outputDir,
+                encoding: "utf-8",
+                stdio: ["pipe", "pipe", "pipe"]
+            }).trim();
             if (status.length === 0) {
                 return;
             }
