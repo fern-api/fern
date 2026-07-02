@@ -192,6 +192,19 @@
         }
       ]
     },
+    "global-parameters": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/global-parameters.GlobalParameterDeclarationSchema"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "pagination": {
       "oneOf": [
         {
@@ -1759,6 +1772,117 @@
           "$ref": "#/definitions/variables.VariableDeclarationDetailed"
         }
       ]
+    },
+    "global-parameters.GlobalParameterDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "in": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The location of the parameter: body, query, header, or path.\nDefaults to body if not specified."
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The wire-level injection path for the parameter.\nIf not specified, defaults to the parameter name."
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The type of the parameter: string, integer, double, boolean.\nDefaults to string if not specified."
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Environment variable to read the default value from."
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Client-side default value for the parameter."
+        },
+        "optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether the parameter is optional."
+        },
+        "apply": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the parameter is applied: explicit or auto.\nexplicit requires per-operation opt-in via x-fern-global-parameter.\nauto injects on every operation with the target field."
+        },
+        "parameter-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "SDK/CLI alias for the parameter name.\nIf specified, this name is used in generated SDKs and CLIs\ninstead of the parameter name key."
+        }
+      },
+      "additionalProperties": false
     },
     "pagination.CursorPaginationSchema": {
       "type": "object",
