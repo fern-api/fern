@@ -110,11 +110,8 @@ export async function loadRawDocsConfiguration({
             });
         }
 
-        // Semantic validation the JSON schema can't express: a translation `slug`
-        // must not collide with a recognized locale code, another configured
-        // locale, or another slug — otherwise it silently mis-routes at the edge.
-        // Fail `fern check` / generation with a clear message instead. (Kept
-        // outside the try above so this message isn't re-wrapped as a parse error.)
+        // Semantic slug validation the JSON schema can't express. Kept outside the
+        // try above so the message isn't re-wrapped as a parse error.
         const slugErrors = validateTranslationSlugs(parsed.translations as RawTranslationEntry[] | undefined);
         if (slugErrors.length > 0) {
             throw new CliError({

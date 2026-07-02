@@ -58,12 +58,9 @@ interface DocsTranslationsConfig {
     defaultLocale: string;
     translations: string[] | undefined;
     /**
-     * Maps a locale to the URL path segment it should be served under, for
-     * locales that set a `slug` override in `docs.yml` (e.g. `{ ja: "jp" }` so
-     * Japanese is served at `/jp/...`). Absent/empty when every locale uses its
-     * own code as its URL prefix. Locales not present here fall back to using
-     * their own code as the prefix. The default locale is served unprefixed, so
-     * it never appears here.
+     * Maps a locale to its custom URL segment from a `docs.yml` `slug` override
+     * (e.g. `{ ja: "jp" }`). Absent when every locale uses its own code; the
+     * default locale is served unprefixed and never appears here.
      */
     localeSlugs: Record<string, string> | undefined;
 }
@@ -364,9 +361,8 @@ export class DocsDefinitionResolver {
             return undefined;
         }
 
-        // Collect locale → URL-slug overrides. The default locale is served
-        // unprefixed so any slug on it is meaningless and skipped; a slug equal
-        // to the locale is the implicit default and adds nothing.
+        // Collect locale → URL-slug overrides, skipping the (unprefixed) default
+        // locale and any slug that just equals its own locale.
         const localeSlugs: Record<string, string> = {};
         for (const translation of normalizedTranslations) {
             if (translation === defaultTranslation) {

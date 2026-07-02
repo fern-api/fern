@@ -1,16 +1,11 @@
 /**
- * Locale codes the docs platform recognizes as routable URL prefixes.
+ * Locale codes the docs platform recognizes as routable URL prefixes. A `slug`
+ * override may not be one of these: the edge middleware resolves them to a locale
+ * before any slug logic runs, so such a slug would silently mis-route.
  *
- * This list MUST stay in sync, one-to-one, with `LOCALE_LABELS` in fern-platform
- * (`packages/fern-docs/components/src/header/language-dropdown-utils.ts`) — that
- * is the exact set the docs middleware matches URL path prefixes against
- * (`KNOWN_LOCALES = Object.keys(LOCALE_LABELS)`).
- *
- * A translation `slug` override may NOT be one of these codes: the docs
- * middleware resolves a recognized locale code to its locale at the edge, before
- * any slug logic runs (it can't read the site config there). So a slug that
- * collides with a locale code could never take effect and would silently
- * mis-route. We reject such slugs at `fern check` / generation time instead.
+ * MUST stay in sync one-to-one with `LOCALE_LABELS` in fern-platform
+ * (`packages/fern-docs/components/src/header/language-dropdown-utils.ts`), the
+ * exact set middleware matches against.
  */
 const RECOGNIZED_LOCALE_CODES: readonly string[] = [
     "en",
@@ -129,11 +124,9 @@ const RECOGNIZED_LOCALE_CODES: readonly string[] = [
 const RECOGNIZED_LOCALE_CODES_LOWER: ReadonlySet<string> = new Set(RECOGNIZED_LOCALE_CODES.map((c) => c.toLowerCase()));
 
 /**
- * A slug becomes a single URL path segment, so it must be URL-safe: letters and
- * digits, joined by single hyphens (no spaces, slashes, dots, or other
- * punctuation). This mirrors `LocaleUrlSlug` in `DocsYmlSchemas.ts`, but that
- * zod schema is not on the production parse path (the SDK serializer accepts any
- * string), so the constraint is actually enforced here.
+ * A slug must be a URL-safe path segment: letters/digits joined by single
+ * hyphens. Mirrors `LocaleUrlSlug` in `DocsYmlSchemas.ts`, but that zod schema
+ * isn't on the production parse path, so the constraint is enforced here.
  */
 const URL_SLUG_PATTERN = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/;
 

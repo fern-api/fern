@@ -48,13 +48,9 @@ export const Language = z
     );
 
 /**
- * A single URL path segment used as a locale's public URL prefix.
- *
- * Unlike {@link Language}, this is intentionally NOT constrained to the BCP 47
- * grammar — the whole point of a slug override is to let a site pick an
- * arbitrary public URL for a locale (e.g. `jp`, `japan`, `v2`). It is only
- * constrained to what makes a safe, unambiguous single path segment: URL-safe
- * characters and no slashes, spaces, or empty values.
+ * A locale's public URL prefix. Unlike {@link Language} it is not BCP 47 — the
+ * point is an arbitrary public URL (e.g. `jp`, `japan`) — only a safe single
+ * path segment (URL-safe chars, no slashes/spaces/empties).
  */
 export const LocaleUrlSlug = z
     .string()
@@ -974,15 +970,10 @@ export const TranslationConfigObject = z.object({
     lang: Language,
     default: z.boolean().optional(),
     /**
-     * Overrides the URL path segment used for this locale. By default the
-     * locale (`lang`) doubles as its own URL prefix (e.g. `ja` → `/ja/...`).
-     * Set `slug` when a site wants a different public URL — e.g. a marketing
-     * team already publishes Japanese under `/jp` — without changing the
-     * locale's language identity (`lang` still drives hreflang, `<html lang>`,
-     * the language-switcher label, translated content directory, etc.).
-     *
-     * Any URL-safe single path segment (see {@link LocaleUrlSlug}) — it is not
-     * restricted to the BCP 47 language grammar.
+     * Overrides this locale's URL prefix (default: `lang` itself, e.g. `ja` →
+     * `/ja/...`). Set it for a different public URL (e.g. Japanese under `/jp`)
+     * without changing the language identity `lang` drives. Any URL-safe segment
+     * (see {@link LocaleUrlSlug}), not restricted to BCP 47.
      */
     slug: LocaleUrlSlug.optional()
 });
