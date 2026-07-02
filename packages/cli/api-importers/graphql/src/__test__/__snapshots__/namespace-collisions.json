@@ -1,0 +1,321 @@
+{
+  "graphqlOperations": {
+    "query_inventory": {
+      "id": "query_inventory",
+      "operationType": "QUERY",
+      "name": "inventory",
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "InventoryQueries"
+        }
+      }
+    },
+    "query_inventory.inventory": {
+      "id": "query_inventory.inventory",
+      "operationType": "QUERY",
+      "name": "inventory",
+      "fieldPath": [
+        "inventory"
+      ],
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Widget"
+      }
+    },
+    "query_inventory.search": {
+      "id": "query_inventory.search",
+      "operationType": "QUERY",
+      "name": "search",
+      "fieldPath": [
+        "inventory"
+      ],
+      "arguments": [
+        {
+          "name": "term",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "Widget"
+        }
+      }
+    },
+    "query_stock": {
+      "id": "query_stock",
+      "operationType": "QUERY",
+      "name": "stock",
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "InventoryQueries"
+        }
+      }
+    },
+    "query_stock.inventory": {
+      "id": "query_stock.inventory",
+      "operationType": "QUERY",
+      "name": "inventory",
+      "fieldPath": [
+        "stock"
+      ],
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Widget"
+      }
+    },
+    "query_stock.search": {
+      "id": "query_stock.search",
+      "operationType": "QUERY",
+      "name": "search",
+      "fieldPath": [
+        "stock"
+      ],
+      "arguments": [
+        {
+          "name": "term",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "Widget"
+        }
+      }
+    },
+    "query_catalog": {
+      "id": "query_catalog",
+      "operationType": "QUERY",
+      "name": "catalog",
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "CatalogQueries"
+        }
+      }
+    },
+    "query_catalog.search": {
+      "id": "query_catalog.search",
+      "operationType": "QUERY",
+      "name": "search",
+      "fieldPath": [
+        "catalog"
+      ],
+      "arguments": [
+        {
+          "name": "term",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "Widget"
+        }
+      }
+    },
+    "query_featured": {
+      "id": "query_featured",
+      "operationType": "QUERY",
+      "name": "featured",
+      "fieldPath": [
+        "catalog"
+      ],
+      "arguments": [
+        {
+          "name": "limit",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "integer"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "Widget"
+        }
+      }
+    }
+  },
+  "types": {
+    "Widget": {
+      "name": "Widget",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "label",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "description": "A basic data type (not a namespace — its fields take no arguments)."
+    },
+    "InventoryQueries": {
+      "name": "InventoryQueries",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "inventory",
+            "valueType": {
+              "type": "id",
+              "value": "Widget"
+            },
+            "arguments": [
+              {
+                "name": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "key": "search",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "Widget"
+              }
+            },
+            "arguments": [
+              {
+                "name": "term",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Query namespace whose `inventory` child field collides with the root `inventory` field.\nAll fields have arguments, so this is treated as a namespace type."
+    },
+    "CatalogQueries": {
+      "name": "CatalogQueries",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "search",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "Widget"
+              }
+            },
+            "arguments": [
+              {
+                "name": "term",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "key": "featured",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "Widget"
+              }
+            },
+            "arguments": [
+              {
+                "name": "limit",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "A second query namespace that shares the `search` child field name with InventoryQueries."
+    }
+  }
+}
