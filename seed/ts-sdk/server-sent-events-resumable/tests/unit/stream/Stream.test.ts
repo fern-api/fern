@@ -1256,6 +1256,187 @@ describe("Stream", () => {
         });
     });
 
+    describe("SSE stream reconnection - abort during delay", () => {
+        it("should stop promptly when aborted during reconnect delay", async () => {
+            const firstStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const abortController = new AbortController();
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                signal: abortController.signal,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            const startTime = Date.now();
+
+            // Abort after a short delay (while the stream is in its reconnect delay)
+            setTimeout(() => abortController.abort(), 50);
+
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            const elapsed = Date.now() - startTime;
+            // Should have stopped well before the default 1000ms reconnect delay completes
+            expect(elapsed).toBeLessThan(500);
+            expect(messages).toEqual([{ value: 1 }]);
+            // reconnect should NOT have been called since we aborted during the delay
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
+    describe("SSE stream reconnection - backoff with progress", () => {
+        it("should apply default backoff even when server sends no retry directive", async () => {
+            // Server yields 1 event then drops on each connection (no retry: field)
+            const streams = [
+                createReadableStream(['id: 1\ndata: {"value": 1}\n\n']),
+                createReadableStream(['id: 2\ndata: {"value": 2}\n\n']),
+                createReadableStream(['id: 3\ndata: {"value": 3}\n\ndata: [DONE]\n\n']),
+            ];
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return streams[reconnectCallCount]!;
+            };
+
+            const startTime = Date.now();
+            const stream = new Stream({
+                stream: streams[0]!,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
+            expect(reconnectCallCount).toBe(2);
+            // Total elapsed time should be at least 2 * DEFAULT_RECONNECT_DELAY_MS (~1000ms each)
+            const totalElapsed = Date.now() - startTime;
+            expect(totalElapsed).toBeGreaterThanOrEqual(1800);
+        });
+
+        it("should respect maxReconnectionAttempts even when each reconnect yields data", async () => {
+            // Server yields 1 event per connection, then drops (no terminator, no retry).
+            // reconnectAttempts resets on progress, so the cap is per-consecutive-failed-reconnects.
+            // With data yielded each time, reconnects reset and should keep going until terminator.
+            const streams = [
+                createReadableStream(['id: 1\ndata: {"value": 1}\n\n']),
+                createReadableStream(['id: 2\ndata: {"value": 2}\n\n']),
+                createReadableStream(['id: 3\ndata: {"value": 3}\n\ndata: [DONE]\n\n']),
+            ];
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return streams[reconnectCallCount]!;
+            };
+
+            const stream = new Stream({
+                stream: streams[0]!,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 1,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Even with maxReconnectionAttempts=1, since each reconnect yields data
+            // the counter resets; all 3 events are received.
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
+            expect(reconnectCallCount).toBe(2);
+        });
+    });
+
+    describe("SSE stream reconnection - terminator stops without extra reconnect", () => {
+        it("should stop immediately on terminator with zero reconnect calls", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const mockStream = createReadableStream([
+                'id: 1\ndata: {"value": 1}\n\n',
+                'id: 2\ndata: {"value": 2}\n\n',
+                "data: [DONE]\n\n",
+            ]);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should stop immediately on terminator mid-stream without extra reconnect", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(['id: 99\ndata: {"value": 99}\n\ndata: [DONE]\n\n']);
+            };
+
+            // Terminator arrives in the middle of a stream that still has more data buffered
+            const mockStream = createReadableStream([
+                'id: 1\ndata: {"value": 1}\n\n',
+                'id: 2\ndata: {"value": 2}\n\n',
+                "id: 3\ndata: [DONE]\n\n",
+                'id: 4\ndata: {"value": 4}\n\n',
+            ]);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Should stop at [DONE] and not yield event 4 or attempt reconnection
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
     describe("SSE stream reconnection E2E (real HTTP server)", () => {
         let server: http.Server;
         let port: number;

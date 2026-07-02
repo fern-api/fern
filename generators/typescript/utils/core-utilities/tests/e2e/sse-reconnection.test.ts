@@ -52,6 +52,7 @@ const ID_PREFIX = "id:";
 const RETRY_PREFIX = "retry:";
 
 const DEFAULT_MAX_RECONNECTION_ATTEMPTS = 5;
+const DEFAULT_RECONNECT_DELAY_MS = 1_000;
 const MAX_RECONNECT_DELAY_MS = 30_000;
 
 function fromJson(json: string): unknown {
@@ -121,7 +122,6 @@ class Stream<T> implements AsyncIterable<T> {
             const stream = readableStreamAsyncIterable<Uint8Array>(currentStream);
             let buf = "";
             let dataValue: string | undefined;
-            let terminatorReached = false;
 
             for await (const chunk of stream) {
                 buf += this.decodeChunk(chunk);
@@ -134,7 +134,6 @@ class Stream<T> implements AsyncIterable<T> {
                     if (!line.trim()) {
                         if (this.prefix != null && dataValue != null) {
                             if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
-                                terminatorReached = true;
                                 return;
                             }
                             const data = await this.parse(fromJson(dataValue));
@@ -170,7 +169,6 @@ class Stream<T> implements AsyncIterable<T> {
                         dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
                     } else {
                         if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
-                            terminatorReached = true;
                             return;
                         }
                         const data = await this.parse(fromJson(line));
@@ -189,16 +187,15 @@ class Stream<T> implements AsyncIterable<T> {
                 reconnectAttempts = 0;
             }
 
-            if (terminatorReached) {
-                return;
-            }
-
             if (!this.shouldReconnect(lastId, reconnectAttempts)) {
                 return;
             }
 
             reconnectAttempts++;
             await this.delayReconnect(lastRetry);
+            if (this.controller.signal.aborted) {
+                return;
+            }
             const reconnectFn = this.reconnect;
             if (reconnectFn == null || lastId == null) {
                 return;
@@ -218,7 +215,6 @@ class Stream<T> implements AsyncIterable<T> {
             let buf = "";
             let eventType: string | undefined;
             let dataValue: string | undefined;
-            let terminatorReached = false;
 
             for await (const chunk of stream) {
                 buf += this.decodeChunk(chunk);
@@ -232,7 +228,6 @@ class Stream<T> implements AsyncIterable<T> {
                         if (dataValue != null) {
                             const data = await this.dispatchSseEvent(dataValue, eventType);
                             if (data == null) {
-                                terminatorReached = true;
                                 return;
                             }
                             yield { data, id: lastId, retry: lastRetry, event: eventType };
@@ -271,16 +266,15 @@ class Stream<T> implements AsyncIterable<T> {
                 }
             }
 
-            if (terminatorReached) {
-                return;
-            }
-
             if (!this.shouldReconnect(lastId, reconnectAttempts)) {
                 return;
             }
 
             reconnectAttempts++;
             await this.delayReconnect(lastRetry);
+            if (this.controller.signal.aborted) {
+                return;
+            }
             const reconnectFn = this.reconnect;
             if (reconnectFn == null || lastId == null) {
                 return;
@@ -319,11 +313,23 @@ class Stream<T> implements AsyncIterable<T> {
     }
 
     private async delayReconnect(lastRetry: number | undefined): Promise<void> {
-        if (lastRetry == null || lastRetry <= 0) {
+        const base = lastRetry != null && lastRetry > 0 ? lastRetry : DEFAULT_RECONNECT_DELAY_MS;
+        const delay = Math.min(base, MAX_RECONNECT_DELAY_MS);
+        const signal = this.controller.signal;
+        if (signal.aborted) {
             return;
         }
-        const delay = Math.min(lastRetry, MAX_RECONNECT_DELAY_MS);
-        await new Promise((resolve) => setTimeout(resolve, delay));
+        await new Promise<void>((resolve) => {
+            const timer = setTimeout(() => {
+                signal.removeEventListener("abort", onAbort);
+                resolve();
+            }, delay);
+            const onAbort = (): void => {
+                clearTimeout(timer);
+                resolve();
+            };
+            signal.addEventListener("abort", onAbort, { once: true });
+        });
     }
 
     private injectDiscriminator(parsed: unknown, eventType: string | undefined): unknown {
