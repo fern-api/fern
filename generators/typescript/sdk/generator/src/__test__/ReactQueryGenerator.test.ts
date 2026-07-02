@@ -964,13 +964,13 @@ describe("ReactQueryGenerator", () => {
             expect(files["src/react-query/index.ts"]).toBeDefined();
 
             // Verify hooks.ts has correct structure
-            const hooks = files["src/react-query/hooks.ts"]!;
+            const hooks = getFile(files, "src/react-query/hooks.ts");
             expect(hooks).toContain("export const seedApi:");
             expect(hooks).toContain("user: user,");
             expect(hooks).toContain('import { user } from "./user/index.js"');
 
             // Verify user service file has all endpoints
-            const userService = files["src/react-query/user/index.ts"]!;
+            const userService = getFile(files, "src/react-query/user/index.ts");
             expect(userService).toContain("list: {");
             expect(userService).toContain("get: {");
             expect(userService).toContain("create: {");
@@ -989,19 +989,19 @@ describe("ReactQueryGenerator", () => {
             expect(userService).toContain("@example");
 
             // Verify context.ts has provider and hook
-            const context = files["src/react-query/context.ts"]!;
+            const context = getFile(files, "src/react-query/context.ts");
             expect(context).toContain("SeedApiClientProvider");
             expect(context).toContain("useSeedApiClientContext");
             expect(context).toContain("createElement");
 
             // Verify types.ts has all hook option types
-            const types = files["src/react-query/types.ts"]!;
+            const types = getFile(files, "src/react-query/types.ts");
             expect(types).toContain("QueryHookOptions");
             expect(types).toContain("SuspenseQueryHookOptions");
             expect(types).toContain("MutationHookOptions");
 
             // Verify index.ts re-exports everything
-            const index = files["src/react-query/index.ts"]!;
+            const index = getFile(files, "src/react-query/index.ts");
             expect(index).toContain("seedApi");
             expect(index).toContain("SeedApiClientProvider");
             expect(index).toContain("QueryHookOptions");
