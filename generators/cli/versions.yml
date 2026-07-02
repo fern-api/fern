@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.21.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI parser crash when a schema property value is an array instead
+        of an object. Some Fern-processed specs (e.g. ElevenLabs) emit a
+        single-element array wrapping the real schema object. The parser now
+        unwraps single-element arrays and falls back to a default schema for
+        other non-object values, instead of aborting with "invalid type: sequence,
+        expected struct OpenApiSchemaObject".
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
 - version: 0.21.0
   changelogEntry:
     - summary: |
