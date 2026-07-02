@@ -953,6 +953,8 @@ export async function runAppPreviewServer({
         return translations;
     }
 
+    let lastReloadTimestamp = Date.now();
+
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
@@ -1156,7 +1158,6 @@ export async function runAppPreviewServer({
     let totalDataTransferred = 0;
     let reloadCount = 0;
     const sessionStart = Date.now();
-    let lastReloadTimestamp = Date.now();
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
