@@ -153,10 +153,7 @@ export class StreamImpl extends CoreUtility implements Stream {
                     }
                     if (reconnect != null) {
                         constructorProperties.push(
-                            ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier("reconnect"),
-                                reconnect
-                            )
+                            ts.factory.createPropertyAssignment(ts.factory.createIdentifier("reconnect"), reconnect)
                         );
                     }
                     return ts.factory.createNewExpression(Stream.getExpression(), undefined, [
