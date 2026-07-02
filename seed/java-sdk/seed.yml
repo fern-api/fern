@@ -144,6 +144,11 @@ fixtures:
         jackson-version: "3"
       outputFolder: jackson3
       skipScripts: true
+    - customConfig:
+        jackson-version: "3"
+        enable-forward-compatible-enums: true
+      outputFolder: jackson3-forward-compatible-enums
+      skipScripts: true
   java-idempotency-headers-file-upload:
     - outputFolder: default
   java-inline-types:
@@ -206,6 +211,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+    - customConfig:
+        jackson-version: "3"
+      outputFolder: jackson3
+      skipScripts: true
   unions-with-local-date:
     - customConfig:
         use-local-date-for-dates: true
@@ -227,6 +236,10 @@ fixtures:
         inline-path-parameters: true
       outputFolder: inline-file-properties
     - outputFolder: no-custom-config
+    - customConfig:
+        jackson-version: "3"
+      outputFolder: jackson3
+      skipScripts: true
   examples:
     - customConfig:
         enable-wire-tests: true
@@ -278,6 +291,11 @@ fixtures:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - outputFolder: no-custom-config
+    - customConfig:
+        jackson-version: "3"
+        enable-forward-compatible-enums: true
+      outputFolder: jackson3
+      skipScripts: true
   version:
     - customConfig:
         enable-forward-compatible-enums: true
@@ -331,12 +349,20 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+    - customConfig:
+        jackson-version: "3"
+      outputFolder: jackson3
+      skipScripts: true
   server-sent-event-examples:
     - customConfig:
         enable-wire-tests: true
       outputFolder: with-wire-tests
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        jackson-version: "3"
+      outputFolder: jackson3
+      skipScripts: true
   server-sent-events-openapi:
     - customConfig:
         enable_wire_tests: true

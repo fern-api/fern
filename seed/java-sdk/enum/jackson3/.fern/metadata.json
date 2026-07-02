@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "jackson-version": "3",
+    "enable-forward-compatible-enums": true
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "0.0.1"
+}
