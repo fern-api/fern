@@ -682,6 +682,8 @@ export async function runAppPreviewServer({
                 if (parsed.type === "pong") {
                     metadata.isAlive = true;
                     metadata.lastPong = Date.now();
+                } else if (parsed.type === "perf_log" && typeof parsed.message === "string") {
+                    context.logger.info(parsed.message);
                 } else if (DebugLogger.isMetricsMessage(parsed)) {
                     // Handle metrics messages from the frontend
                     void debugLogger.logFrontendMetrics(parsed);
@@ -1129,15 +1131,31 @@ export async function runAppPreviewServer({
     // Parse JSON body middleware for the load-with-url endpoint
     app.use(express.json());
 
+    let loadWithUrlRequestCount = 0;
+    let totalDataTransferred = 0;
+    let reloadCount = 0;
+    const sessionStart = Date.now();
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
         try {
+            const start = Date.now();
             // Extract locale from the request body URL if present
             const requestBody = req.body as { url?: string } | undefined;
             const urlPath = requestBody?.url;
             const locale = extractLocaleFromPath(urlPath);
 
-            res.send(buildDocsLoadResponse(locale));
+            const response = buildDocsLoadResponse(locale);
+            res.send(response);
+
+            loadWithUrlRequestCount++;
+            const json = JSON.stringify(response);
+            const byteSize = Buffer.byteLength(json);
+            totalDataTransferred += byteSize;
+            const sizeMB = (byteSize / (1024 * 1024)).toFixed(2);
+            context.logger.info(
+                `[PERF] /load-with-url #${loadWithUrlRequestCount}: latency=${Date.now() - start}ms, size=${sizeMB}MB`
+            );
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -1157,7 +1175,8 @@ export async function runAppPreviewServer({
         port: backendPort,
         debugLogger,
         getDocsLoadResponse: buildDocsLoadResponse,
-        extractLocaleFromPath
+        extractLocaleFromPath,
+        logInfo: (msg) => context.logger.info(msg)
     });
     if (bunHandle != null) {
         sendData = bunHandle.sendData;
@@ -1355,6 +1374,7 @@ export async function runAppPreviewServer({
                         if (translatedDefinitions.size > 0) {
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
+                        reloadCount++;
 
                         sendData({
                             version: 1,
@@ -1400,6 +1420,14 @@ export async function runAppPreviewServer({
             return;
         }
         cleanedUp = true;
+
+        // Print session summary
+        const sessionDuration = ((Date.now() - sessionStart) / 1000).toFixed(1);
+        const totalMB = (totalDataTransferred / (1024 * 1024)).toFixed(1);
+        context.logger.info(`[PERF] ── Session Summary ──`);
+        context.logger.info(
+            `[PERF]   Duration: ${sessionDuration}s | Requests: ${loadWithUrlRequestCount} | Data: ${totalMB}MB | Reloads: ${reloadCount}`
+        );
 
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);

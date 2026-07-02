@@ -40,6 +40,8 @@ export interface BunServerOptions {
      * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
      */
     extractLocaleFromPath?(urlPath: string | undefined): string | undefined;
+    /** Optional logger for benchmark output. */
+    logInfo?(message: string): void;
 }
 
 export interface BunServer {
@@ -57,7 +59,8 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath } = options;
+    const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath, logInfo } = options;
+    let loadWithUrlRequestCount = 0;
 
     type WsData = { connectionId: string };
     const connections = new Map<BunServerWebSocket<WsData>, { pingInterval: NodeJS.Timeout; lastPong: number }>();
@@ -98,10 +101,18 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
             // POST /v2/registry/docs/load-with-url
             if (req.method === "POST" && url.pathname === "/v2/registry/docs/load-with-url") {
+                const start = Date.now();
                 try {
                     const body = (await req.json()) as { url?: string } | undefined;
                     const locale = extractLocaleFromPath?.(body?.url);
-                    return new Response(JSON.stringify(getDocsLoadResponse(locale)), {
+                    const response = getDocsLoadResponse(locale);
+                    const responseJson = JSON.stringify(response);
+                    loadWithUrlRequestCount++;
+                    const sizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
+                    logInfo?.(
+                        `[PERF] /load-with-url #${loadWithUrlRequestCount}: latency=${Date.now() - start}ms, size=${sizeMB}MB`
+                    );
+                    return new Response(responseJson, {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
                 } catch {
@@ -154,6 +165,8 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                         if (metadata) {
                             metadata.lastPong = Date.now();
                         }
+                    } else if (parsed.type === "perf_log" && typeof parsed.message === "string") {
+                        logInfo?.(parsed.message);
                     } else if (DebugLogger.isMetricsMessage(parsed)) {
                         void debugLogger.logFrontendMetrics(parsed);
                     }
