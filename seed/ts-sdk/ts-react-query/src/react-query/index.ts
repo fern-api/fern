@@ -3,5 +3,11 @@
 export { SeedApiClientProvider, useSeedApiClientContext } from "./context.js";
 export type { SeedApiClientProviderProps } from "./context.js";
 export { type QueryKey } from "@tanstack/react-query";
-export type { QueryHookOptions, SuspenseQueryHookOptions, InfiniteQueryHookOptions, SuspenseInfiniteQueryHookOptions, MutationHookOptions } from "./types.js";
+export type {
+    QueryHookOptions,
+    SuspenseQueryHookOptions,
+    InfiniteQueryHookOptions,
+    SuspenseInfiniteQueryHookOptions,
+    MutationHookOptions,
+} from "./types.js";
 export { seedApi } from "./hooks.js";

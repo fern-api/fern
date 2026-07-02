@@ -99,7 +99,13 @@ export class ReactQueryGenerator {
             `export { ${clientName}Provider, use${clientName}Context } from "./context.js";\n` +
             `export type { ${clientName}ProviderProps } from "./context.js";\n` +
             `export { type QueryKey } from "@tanstack/react-query";\n` +
-            `export type { QueryHookOptions, SuspenseQueryHookOptions, InfiniteQueryHookOptions, SuspenseInfiniteQueryHookOptions, MutationHookOptions } from "./types.js";\n`;
+            `export type {\n` +
+            `    QueryHookOptions,\n` +
+            `    SuspenseQueryHookOptions,\n` +
+            `    InfiniteQueryHookOptions,\n` +
+            `    SuspenseInfiniteQueryHookOptions,\n` +
+            `    MutationHookOptions,\n` +
+            `} from "./types.js";\n`;
         if (hasHooks) {
             content += `export { ${this.getNamespaceName()} } from "./hooks.js";\n`;
         }
