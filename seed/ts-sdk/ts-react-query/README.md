@@ -9,6 +9,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 
 - [Installation](#installation)
 - [Reference](#reference)
+- [React Query](#react-query)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -33,6 +34,79 @@ npm i -s @fern/ts-react-query
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
+
+## React Query
+
+This SDK includes first-class [TanStack React Query](https://tanstack.com/query) hooks, available via the `@fern/ts-react-query/react-query` subpath import. React and `@tanstack/react-query` are optional peer dependencies — they are only needed if you use the hooks.
+
+### Setup
+
+Wrap your application with the client provider:
+
+```typescript
+import { SeedApiClient } from "@fern/ts-react-query";
+import { SeedApiClientProvider } from "@fern/ts-react-query/react-query";
+
+const client = new SeedApiClient({ /* ... */ });
+
+function App() {
+    return (
+        <SeedApiClientProvider client={client}>
+            <YourApp />
+        </SeedApiClientProvider>
+    );
+}
+```
+
+### Query Hooks
+
+Hooks follow a tRPC-style namespace that mirrors the SDK client hierarchy:
+
+```typescript
+import { seedApi } from "@fern/ts-react-query/react-query";
+
+function UserList() {
+    const { data, isLoading } = seedApi.user.list.useQuery();
+    // Also available: useSuspenseQuery(), useInfiniteQuery(), useSuspenseInfiniteQuery()
+}
+```
+
+### Mutation Hooks
+
+```typescript
+function CreateUser() {
+    const mutation = seedApi.user.create.useMutation();
+    return <button onClick={() => mutation.mutate([{ name: "Alice" }])}>Create</button>;
+}
+```
+
+### Cache Invalidation
+
+Each endpoint and service exposes an `invalidate` helper for targeted cache invalidation:
+
+```typescript
+import { useQueryClient } from "@tanstack/react-query";
+
+const queryClient = useQueryClient();
+
+// Invalidate a specific endpoint
+await seedApi.user.list.invalidate(queryClient);
+
+// Invalidate all queries for a service
+await seedApi.user.invalidate(queryClient);
+
+// Invalidate all SDK queries
+await seedApi.invalidate(queryClient);
+```
+
+### SSR / React Server Components
+
+Use `getQueryOptions` to prefetch data on the server:
+
+```typescript
+const options = seedApi.user.list.getQueryOptions(client);
+await queryClient.prefetchQuery(options);
+```
 
 ## Usage
 

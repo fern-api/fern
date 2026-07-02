@@ -606,7 +606,14 @@ export class SdkGenerator {
                 fileResponseType: config.fileResponseType,
                 fetchSupport: config.fetchSupport,
                 allowCustomFetcher: config.allowCustomFetcher,
-                generateSubpackageExports: config.generateSubpackageExports
+                generateSubpackageExports: config.generateSubpackageExports,
+                reactQueryConfig: config.generateReactQueryHooks
+                    ? {
+                          clientClassName: naming.client,
+                          namespaceName: this.getReactQueryNamespaceName(naming.client),
+                          providerName: `${naming.client}Provider`
+                      }
+                    : undefined
             }),
             ir: intermediateRepresentation
         });
@@ -852,6 +859,13 @@ export class SdkGenerator {
         this.generatedPeerDependenciesMeta["@tanstack/react-query"] = { optional: true };
         this.generatedPeerDependenciesMeta["react"] = { optional: true };
         this.context.logger.debug("Generated React Query hooks");
+    }
+
+    private getReactQueryNamespaceName(clientClassName: string): string {
+        const withoutClient = clientClassName.endsWith("Client")
+            ? clientClassName.slice(0, -"Client".length)
+            : clientClassName;
+        return withoutClient.charAt(0).toLowerCase() + withoutClient.slice(1);
     }
 
     private hasIdempotentEndpoints(): boolean {
