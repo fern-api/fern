@@ -4,6 +4,7 @@
 
 package com.test.sdk.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.ObjectMappers;
 import com.test.sdk.core.RequestOptions;
@@ -74,6 +75,9 @@ public class AsyncRawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
+          }
+          catch (JsonProcessingException e) {
+            future.completeExceptionally(new SeedApiException("Failed to deserialize response: " + e.getMessage(), e));
           }
           catch (IOException e) {
             future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));

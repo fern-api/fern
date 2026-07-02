@@ -93,6 +93,9 @@ public class AsyncRawUnknownClient {
                     future.completeExceptionally(new SeedUnknownAsAnyApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedUnknownAsAnyException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedUnknownAsAnyException("Network error executing HTTP request", e));
@@ -165,6 +168,9 @@ public class AsyncRawUnknownClient {
                     future.completeExceptionally(new SeedUnknownAsAnyApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedUnknownAsAnyException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedUnknownAsAnyException("Network error executing HTTP request", e));

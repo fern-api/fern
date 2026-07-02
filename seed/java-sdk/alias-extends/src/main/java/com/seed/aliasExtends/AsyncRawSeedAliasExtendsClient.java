@@ -89,6 +89,9 @@ public class AsyncRawSeedAliasExtendsClient {
                     future.completeExceptionally(new SeedAliasExtendsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedAliasExtendsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedAliasExtendsException("Network error executing HTTP request", e));

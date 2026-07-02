@@ -3,6 +3,7 @@
  */
 package com.seed.crossPackageTypeNames.resources.foo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.MediaTypes;
 import com.seed.crossPackageTypeNames.core.ObjectMappers;
@@ -85,6 +86,8 @@ public class RawFooClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedCrossPackageTypeNamesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedCrossPackageTypeNamesException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedCrossPackageTypeNamesException("Network error executing HTTP request", e);
         }

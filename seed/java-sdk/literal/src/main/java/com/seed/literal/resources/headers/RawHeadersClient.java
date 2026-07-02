@@ -3,6 +3,7 @@
  */
 package com.seed.literal.resources.headers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.MediaTypes;
 import com.seed.literal.core.ObjectMappers;
@@ -82,6 +83,8 @@ public class RawHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedLiteralApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedLiteralException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedLiteralException("Network error executing HTTP request", e);
         }

@@ -3,6 +3,7 @@
  */
 package com.seed.mixedFileDirectory.resources.user.events.metadata;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.ObjectMappers;
 import com.seed.mixedFileDirectory.core.QueryStringMapper;
@@ -78,6 +79,8 @@ public class RawMetadataClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMixedFileDirectoryApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedMixedFileDirectoryException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedMixedFileDirectoryException("Network error executing HTTP request", e);
         }

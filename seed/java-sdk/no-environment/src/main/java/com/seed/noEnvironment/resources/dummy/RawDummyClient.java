@@ -3,6 +3,7 @@
  */
 package com.seed.noEnvironment.resources.dummy;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.noEnvironment.core.ClientOptions;
 import com.seed.noEnvironment.core.ObjectMappers;
 import com.seed.noEnvironment.core.RequestOptions;
@@ -67,6 +68,8 @@ public class RawDummyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedNoEnvironmentApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedNoEnvironmentException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedNoEnvironmentException("Network error executing HTTP request", e);
         }

@@ -3,6 +3,7 @@
  */
 package com.seed.plainText.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.plainText.core.ClientOptions;
 import com.seed.plainText.core.ObjectMappers;
 import com.seed.plainText.core.RequestOptions;
@@ -66,6 +67,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPlainTextApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPlainTextException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPlainTextException("Network error executing HTTP request", e);
         }
@@ -111,6 +114,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPlainTextApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPlainTextException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPlainTextException("Network error executing HTTP request", e);
         }
@@ -156,6 +161,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPlainTextApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPlainTextException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPlainTextException("Network error executing HTTP request", e);
         }

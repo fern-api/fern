@@ -88,6 +88,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -144,6 +146,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -201,6 +205,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -258,6 +264,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -317,6 +325,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -376,6 +386,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -432,6 +444,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -488,6 +502,8 @@ public class RawAdminClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }

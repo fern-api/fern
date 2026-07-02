@@ -3,6 +3,7 @@
  */
 package com.seed.oauthClientCredentials.resources.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentials.core.ClientOptions;
 import com.seed.oauthClientCredentials.core.ObjectMappers;
 import com.seed.oauthClientCredentials.core.RequestOptions;
@@ -96,6 +97,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedOauthClientCredentialsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedOauthClientCredentialsException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedOauthClientCredentialsException("Network error executing HTTP request", e));
@@ -175,6 +179,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedOauthClientCredentialsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedOauthClientCredentialsException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedOauthClientCredentialsException("Network error executing HTTP request", e));

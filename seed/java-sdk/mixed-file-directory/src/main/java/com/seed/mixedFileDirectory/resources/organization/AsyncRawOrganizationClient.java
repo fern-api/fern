@@ -97,6 +97,9 @@ public class AsyncRawOrganizationClient {
                     future.completeExceptionally(new SeedMixedFileDirectoryApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedMixedFileDirectoryException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedMixedFileDirectoryException("Network error executing HTTP request", e));
