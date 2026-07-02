@@ -59,9 +59,9 @@ async function main() {
             type: "movie",
             tag: "tag-12efs9dv",
             metadata: {
-                "academyAward": true,
-                "releaseDate": "2023-12-08",
-                "ratings": {
+                academyAward: true,
+                releaseDate: "2023-12-08",
+                ratings: {
                     rottenTomatoes: 97,
                     imdb: 7.6,
                 },
@@ -78,8 +78,8 @@ async function main() {
             type: "metadata",
             id: "event-12345",
             data: {
-                "key1": "val1",
-                "key2": "val2",
+                key1: "val1",
+                key2: "val2",
             },
             jsonString: "abc",
         },
@@ -122,13 +122,13 @@ async function main() {
         type: "movie",
         tag: "development",
         metadata: {
-            "actors": [
+            actors: [
                 "Christian Bale",
                 "Florence Pugh",
                 "Willem Dafoe",
             ],
-            "releaseDate": "2023-12-08",
-            "ratings": {
+            releaseDate: "2023-12-08",
+            ratings: {
                 rottenTomatoes: 97,
                 imdb: 7.6,
             },
@@ -251,10 +251,10 @@ async function main() {
         token: "<YOUR_API_KEY>",
     });
     await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
-        "test": 0,
-        "test2": true,
-        "test3": "Test",
-        "test4": [
+        test: 0,
+        test2: true,
+        test3: "Test",
+        test4: [
             "1",
             "1",
             "1",
