@@ -27,8 +27,7 @@ export class FernGlobalParameterExtension extends AbstractExtension<string[]> {
 
         if (!Array.isArray(extensionValue)) {
             this.context.errorCollector.collect({
-                message:
-                    "Received unexpected value for x-fern-global-parameter; expected a string or array of strings",
+                message: "Received unexpected value for x-fern-global-parameter; expected a string or array of strings",
                 path: this.breadcrumbs
             });
             return undefined;
