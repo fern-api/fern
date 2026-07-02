@@ -85,7 +85,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
                 if (!this.settings.redactResponseBodyOnError) {
                     writer.writeLine("if (Body != null)");
                     writer.pushScope();
-                    writer.write("sb.Append($\"\\nBody: {");
+                    writer.write('sb.Append($"\\nBody: {');
                     writer.writeNode(this.System.Text.Json.JsonSerializer);
                     writer.writeTextStatement('.Serialize(Body)}")');
                     writer.popScope();
