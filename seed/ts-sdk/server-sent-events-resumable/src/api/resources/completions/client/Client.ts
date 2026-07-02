@@ -52,6 +52,31 @@ export class CompletionsClient {
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });
+        const _reconnect = async (lastEventId: string) => {
+            const _reconnectResponse = await core.fetcher<ReadableStream>({
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "stream",
+                ),
+                method: "POST",
+                headers: { ..._headers, "Last-Event-ID": lastEventId },
+                contentType: "application/json",
+                queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+                requestType: "json",
+                body: request,
+                responseType: "sse",
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            });
+            if (!_reconnectResponse.ok) {
+                throw new Error("SSE stream reconnection failed");
+            }
+            return _reconnectResponse.body;
+        };
         if (_response.ok) {
             return {
                 data: new core.Stream({
@@ -68,6 +93,7 @@ export class CompletionsClient {
                     maxReconnectionAttempts:
                         requestOptions?.stream?.maxReconnectionAttempts ??
                         this._options?.stream?.maxReconnectionAttempts,
+                    reconnect: _reconnect,
                 }),
                 rawResponse: _response.rawResponse,
             };

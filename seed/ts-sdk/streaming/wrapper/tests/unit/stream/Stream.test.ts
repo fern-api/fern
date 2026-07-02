@@ -1,5 +1,5 @@
+import http from "http";
 import { Readable } from "stream";
-
 import { type ServerSentEvent, Stream } from "../../../src/core/stream/Stream";
 
 describe("Stream", () => {
@@ -1062,6 +1062,479 @@ describe("Stream", () => {
             }
 
             expect(messages).toEqual([{ value: 1 }]);
+        });
+    });
+
+    describe("SSE stream reconnection", () => {
+        it("should reconnect on premature EOF when resumable", async () => {
+            const firstStream = createReadableStream([
+                'id: 1\ndata: {"value": 1}\n\n',
+                'id: 2\ndata: {"value": 2}\n\n',
+            ]);
+            const secondStream = createReadableStream(['id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n"]);
+
+            let reconnectCallCount = 0;
+            let lastReceivedEventId: string | undefined;
+            const reconnect = async (lastEventId: string) => {
+                reconnectCallCount++;
+                lastReceivedEventId = lastEventId;
+                return secondStream;
+            };
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
+            expect(reconnectCallCount).toBe(1);
+            expect(lastReceivedEventId).toBe("2");
+        });
+
+        it("should not reconnect when reconnectionEnabled is false", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: false,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should not reconnect when not resumable", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: false },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should respect maxReconnectionAttempts", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                // Return a stream that immediately ends without data (server down)
+                return createReadableStream([]);
+            };
+
+            const firstStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 3,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // First stream yields 1, then reconnection attempts get empty streams
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(3);
+        });
+
+        it("should not reconnect when stream ends with terminator", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n', "data: [DONE]\n\n"]);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should not reconnect without a reconnect function", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+        });
+
+        it("should not reconnect without a lastId", async () => {
+            const mockStream = createReadableStream(['data: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
+    describe("SSE stream reconnection E2E (real HTTP server)", () => {
+        let server: http.Server;
+        let port: number;
+
+        afterEach(async () => {
+            if (server) {
+                await new Promise<void>((resolve) => server.close(() => resolve()));
+            }
+        });
+
+        it("should reconnect to a real SSE server on connection drop and resume with Last-Event-ID", async () => {
+            // Track connection attempts and Last-Event-ID headers received
+            const connectionAttempts: { lastEventId: string | undefined }[] = [];
+            let connectionCount = 0;
+
+            server = http.createServer((req, res) => {
+                const lastEventId = req.headers["last-event-id"] as string | undefined;
+                connectionAttempts.push({ lastEventId });
+                connectionCount++;
+
+                res.writeHead(200, {
+                    "Content-Type": "text/event-stream",
+                    "Cache-Control": "no-cache",
+                    Connection: "keep-alive",
+                });
+
+                if (connectionCount === 1) {
+                    // First connection: send events 1-3, then drop (no terminator)
+                    res.write('id: evt-1\ndata: {"value": 1}\n\n');
+                    res.write('id: evt-2\ndata: {"value": 2}\n\n');
+                    res.write('id: evt-3\ndata: {"value": 3}\n\n');
+                    // Abruptly end the response to simulate a connection drop
+                    res.end();
+                } else if (connectionCount === 2) {
+                    // Second connection (reconnect): verify Last-Event-ID and send remaining events
+                    res.write('id: evt-4\ndata: {"value": 4}\n\n');
+                    res.write('id: evt-5\ndata: {"value": 5}\n\n');
+                    res.write("data: [DONE]\n\n");
+                    res.end();
+                } else {
+                    res.write("data: [DONE]\n\n");
+                    res.end();
+                }
+            });
+
+            // Start the server on a random available port
+            await new Promise<void>((resolve) => {
+                server.listen(0, "127.0.0.1", () => resolve());
+            });
+            const addr = server.address() as { port: number };
+            port = addr.port;
+
+            const url = `http://127.0.0.1:${port}/sse`;
+
+            // Make the initial fetch request
+            const initialResponse = await fetch(url);
+            const initialStream = initialResponse.body!;
+
+            // Create the reconnect function (simulates what the generated SDK does)
+            const reconnect = async (lastEventId: string) => {
+                const response = await fetch(url, {
+                    headers: { "Last-Event-ID": lastEventId },
+                });
+                return response.body!;
+            };
+
+            // Create the Stream instance with reconnection enabled
+            const stream = new Stream<{ value: number }>({
+                stream: initialStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 3,
+                reconnect,
+            });
+
+            // Collect all messages
+            const messages: { value: number }[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Verify we got all 5 events (3 from first connection + 2 from reconnect)
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }]);
+
+            // Verify there were exactly 2 connections
+            expect(connectionAttempts.length).toBe(2);
+            // First connection had no Last-Event-ID
+            expect(connectionAttempts[0]?.lastEventId).toBeUndefined();
+            // Second connection (reconnect) had Last-Event-ID = "evt-3"
+            expect(connectionAttempts[1]?.lastEventId).toBe("evt-3");
+        });
+
+        it("should handle multiple reconnections with a real server", async () => {
+            const connectionAttempts: { lastEventId: string | undefined }[] = [];
+            let connectionCount = 0;
+
+            server = http.createServer((req, res) => {
+                const lastEventId = req.headers["last-event-id"] as string | undefined;
+                connectionAttempts.push({ lastEventId });
+                connectionCount++;
+
+                res.writeHead(200, {
+                    "Content-Type": "text/event-stream",
+                    "Cache-Control": "no-cache",
+                    Connection: "keep-alive",
+                });
+
+                if (connectionCount === 1) {
+                    // First connection: send 1 event, then drop
+                    res.write('id: 1\ndata: {"seq": 1}\n\n');
+                    res.end();
+                } else if (connectionCount === 2) {
+                    // Second connection: send 1 event, then drop again
+                    res.write('id: 2\ndata: {"seq": 2}\n\n');
+                    res.end();
+                } else if (connectionCount === 3) {
+                    // Third connection: send final event with terminator
+                    res.write('id: 3\ndata: {"seq": 3}\n\n');
+                    res.write("data: [DONE]\n\n");
+                    res.end();
+                }
+            });
+
+            await new Promise<void>((resolve) => {
+                server.listen(0, "127.0.0.1", () => resolve());
+            });
+            const addr = server.address() as { port: number };
+            port = addr.port;
+            const url = `http://127.0.0.1:${port}/sse`;
+
+            const initialResponse = await fetch(url);
+
+            const reconnect = async (lastEventId: string) => {
+                const response = await fetch(url, {
+                    headers: { "Last-Event-ID": lastEventId },
+                });
+                return response.body!;
+            };
+
+            const stream = new Stream<{ seq: number }>({
+                stream: initialResponse.body!,
+                parse: async (val: unknown) => val as { seq: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: { seq: number }[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ seq: 1 }, { seq: 2 }, { seq: 3 }]);
+            expect(connectionAttempts.length).toBe(3);
+            expect(connectionAttempts[0]?.lastEventId).toBeUndefined();
+            expect(connectionAttempts[1]?.lastEventId).toBe("1");
+            expect(connectionAttempts[2]?.lastEventId).toBe("2");
+        });
+
+        it("should respect server retry directive during reconnection", async () => {
+            let connectionCount = 0;
+            const connectionTimestamps: number[] = [];
+
+            server = http.createServer((_req, res) => {
+                connectionTimestamps.push(Date.now());
+                connectionCount++;
+
+                res.writeHead(200, {
+                    "Content-Type": "text/event-stream",
+                    "Cache-Control": "no-cache",
+                    Connection: "keep-alive",
+                });
+
+                if (connectionCount === 1) {
+                    // Send retry directive of 100ms, then drop
+                    res.write('retry: 100\nid: 1\ndata: {"value": "first"}\n\n');
+                    res.end();
+                } else {
+                    res.write('id: 2\ndata: {"value": "second"}\n\n');
+                    res.write("data: [DONE]\n\n");
+                    res.end();
+                }
+            });
+
+            await new Promise<void>((resolve) => {
+                server.listen(0, "127.0.0.1", () => resolve());
+            });
+            const addr = server.address() as { port: number };
+            port = addr.port;
+            const url = `http://127.0.0.1:${port}/sse`;
+
+            const initialResponse = await fetch(url);
+
+            const reconnect = async (lastEventId: string) => {
+                const response = await fetch(url, {
+                    headers: { "Last-Event-ID": lastEventId },
+                });
+                return response.body!;
+            };
+
+            const stream = new Stream<{ value: string }>({
+                stream: initialResponse.body!,
+                parse: async (val: unknown) => val as { value: string },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 3,
+                reconnect,
+            });
+
+            const messages: { value: string }[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: "first" }, { value: "second" }]);
+            // Verify there was a delay between connections (at least the 100ms retry)
+            expect(connectionTimestamps.length).toBe(2);
+            const delayMs = connectionTimestamps[1]! - connectionTimestamps[0]!;
+            expect(delayMs).toBeGreaterThanOrEqual(90); // Allow small timing variance
+        });
+
+        it("should stop reconnecting after maxReconnectionAttempts with a real server", async () => {
+            let connectionCount = 0;
+
+            server = http.createServer((_req, res) => {
+                connectionCount++;
+                res.writeHead(200, {
+                    "Content-Type": "text/event-stream",
+                    "Cache-Control": "no-cache",
+                    Connection: "keep-alive",
+                });
+
+                if (connectionCount === 1) {
+                    // First connection: send one event, then drop
+                    res.write('id: evt-1\ndata: {"attempt": 1}\n\n');
+                    res.end();
+                } else {
+                    // Reconnect attempts: immediately close without data (server down)
+                    res.end();
+                }
+            });
+
+            await new Promise<void>((resolve) => {
+                server.listen(0, "127.0.0.1", () => resolve());
+            });
+            const addr = server.address() as { port: number };
+            port = addr.port;
+            const url = `http://127.0.0.1:${port}/sse`;
+
+            const initialResponse = await fetch(url);
+
+            const reconnect = async (lastEventId: string) => {
+                const response = await fetch(url, {
+                    headers: { "Last-Event-ID": lastEventId },
+                });
+                return response.body!;
+            };
+
+            const stream = new Stream<{ attempt: number }>({
+                stream: initialResponse.body!,
+                parse: async (val: unknown) => val as { attempt: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 2,
+                reconnect,
+            });
+
+            const messages: { attempt: number }[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Got only the event from the first connection
+            expect(messages).toEqual([{ attempt: 1 }]);
+            // Initial + 2 reconnect attempts = 3 connections total
+            expect(connectionCount).toBe(3);
         });
     });
 });

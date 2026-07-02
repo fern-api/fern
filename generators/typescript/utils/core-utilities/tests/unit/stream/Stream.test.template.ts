@@ -1137,8 +1137,7 @@ describe("Stream", () => {
             const stream = new Stream({
                 stream: firstStream,
                 parse: async (val: unknown) => val as { value: number },
-                eventShape: { type: "sse", streamTerminator: "[DONE]" },
-                resumable: true,
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
                 maxReconnectionAttempts: 5,
                 reconnect,
@@ -1168,8 +1167,7 @@ describe("Stream", () => {
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
-                eventShape: { type: "sse", streamTerminator: "[DONE]" },
-                resumable: true,
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: false,
                 maxReconnectionAttempts: 5,
                 reconnect,
@@ -1198,8 +1196,7 @@ describe("Stream", () => {
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
-                eventShape: { type: "sse", streamTerminator: "[DONE]" },
-                resumable: false,
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: false },
                 reconnectionEnabled: true,
                 maxReconnectionAttempts: 5,
                 reconnect,
@@ -1229,8 +1226,7 @@ describe("Stream", () => {
             const stream = new Stream({
                 stream: firstStream,
                 parse: async (val: unknown) => val as { value: number },
-                eventShape: { type: "sse", streamTerminator: "[DONE]" },
-                resumable: true,
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
                 maxReconnectionAttempts: 3,
                 reconnect,
@@ -1261,8 +1257,7 @@ describe("Stream", () => {
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
-                eventShape: { type: "sse", streamTerminator: "[DONE]" },
-                resumable: true,
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
                 maxReconnectionAttempts: 5,
                 reconnect,
@@ -1285,8 +1280,7 @@ describe("Stream", () => {
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
-                eventShape: { type: "sse", streamTerminator: "[DONE]" },
-                resumable: true,
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
                 maxReconnectionAttempts: 5,
             });
@@ -1313,8 +1307,7 @@ describe("Stream", () => {
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
-                eventShape: { type: "sse", streamTerminator: "[DONE]" },
-                resumable: true,
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
                 maxReconnectionAttempts: 5,
                 reconnect,
@@ -1334,11 +1327,9 @@ describe("Stream", () => {
         let server: http.Server;
         let port: number;
 
-        afterEach((done) => {
+        afterEach(async () => {
             if (server) {
-                server.close(done);
-            } else {
-                done();
+                await new Promise<void>((resolve) => server.close(() => resolve()));
             }
         });
 
