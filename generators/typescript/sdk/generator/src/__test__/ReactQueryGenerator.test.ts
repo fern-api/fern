@@ -226,8 +226,6 @@ describe("ReactQueryGenerator", () => {
             expect(index).toContain("QueryKey");
             expect(index).toContain("QueryHookOptions");
             expect(index).toContain("SuspenseQueryHookOptions");
-            expect(index).toContain("InfiniteQueryHookOptions");
-            expect(index).toContain("SuspenseInfiniteQueryHookOptions");
             expect(index).toContain("MutationHookOptions");
         });
     });
@@ -401,8 +399,6 @@ describe("ReactQueryGenerator", () => {
 
             expect(userService).toContain("useQuery(");
             expect(userService).toContain("useSuspenseQuery(");
-            expect(userService).toContain("useInfiniteQuery<TPageParam = unknown>(");
-            expect(userService).toContain("useSuspenseInfiniteQuery<TPageParam = unknown>(");
         });
 
         it("generates useMutation method on each mutation endpoint node", () => {
@@ -919,8 +915,8 @@ describe("ReactQueryGenerator", () => {
         });
     });
 
-    describe("infinite query methods", () => {
-        it("generates infinite query method with required pagination options", () => {
+    describe("no infinite query hooks", () => {
+        it("does not generate infinite query hooks (removed — not wired to pagination)", () => {
             const ir = createIRWithService({
                 serviceName: "user",
                 subpackageName: "user",
@@ -930,56 +926,9 @@ describe("ReactQueryGenerator", () => {
             const { files } = generator.generateFiles();
             const userService = getFile(files, "src/react-query/user/index.ts");
 
-            expect(userService).toContain("useInfiniteQuery<TPageParam = unknown>(");
-            expect(userService).toContain("initialPageParam: TPageParam");
-            expect(userService).toContain("getNextPageParam:");
-        });
-
-        it("generates suspense infinite query method", () => {
-            const ir = createIRWithService({
-                serviceName: "user",
-                subpackageName: "user",
-                endpoints: [createEndpointWithMethod("list", "GET")]
-            });
-            const generator = createGenerator(ir);
-            const { files } = generator.generateFiles();
-            const userService = getFile(files, "src/react-query/user/index.ts");
-
-            expect(userService).toContain("useSuspenseInfiniteQuery<TPageParam = unknown>(");
-        });
-
-        it("does not generate infinite query for mutation endpoints", () => {
-            const ir = createIRWithService({
-                serviceName: "user",
-                subpackageName: "user",
-                endpoints: [
-                    createEndpointWithMethod("create", "POST", {
-                        sdkRequest: createSdkRequestBody()
-                    })
-                ]
-            });
-            const generator = createGenerator(ir);
-            const { files } = generator.generateFiles();
-            const userService = getFile(files, "src/react-query/user/index.ts");
-
-            expect(userService).not.toContain("Infinite");
-        });
-
-        it("passes args through to infinite query methods", () => {
-            const ir = createIRWithService({
-                serviceName: "user",
-                subpackageName: "user",
-                endpoints: [
-                    createEndpointWithMethod("get", "GET", {
-                        pathParameters: [createPathParameter("userId")]
-                    })
-                ]
-            });
-            const generator = createGenerator(ir);
-            const { files } = generator.generateFiles();
-            const userService = getFile(files, "src/react-query/user/index.ts");
-
-            expect(userService).toContain("useInfiniteQuery<TPageParam = unknown>(\n            args:");
+            expect(userService).not.toContain("useInfiniteQuery");
+            expect(userService).not.toContain("useSuspenseInfiniteQuery");
+            expect(userService).not.toContain("InfiniteQueryHookOptions");
         });
     });
 
