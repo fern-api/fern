@@ -272,6 +272,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -651,6 +652,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
