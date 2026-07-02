@@ -233,6 +233,7 @@ export class SdkGeneratorContext extends GeneratorContext {
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
+            AsIsFiles.Test.ApiExceptionTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests,

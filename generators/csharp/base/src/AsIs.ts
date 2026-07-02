@@ -80,6 +80,7 @@ export const AsIsFiles = {
         OptionalAttribute: "OptionalAttribute.Template.cs"
     },
     Test: {
+        ApiExceptionTests: "test/ApiExceptionTests.Template.cs",
         HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",
         QueryStringBuilderTests: "test/QueryStringBuilderTests.Template.cs",
         QueryStringConverterTests: "test/QueryStringConverterTests.Template.cs",
