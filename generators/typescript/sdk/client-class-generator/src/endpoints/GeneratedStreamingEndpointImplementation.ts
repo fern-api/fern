@@ -401,11 +401,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     ts.factory.createBlock(
                         [
                             ts.factory.createThrowStatement(
-                                ts.factory.createNewExpression(
-                                    ts.factory.createIdentifier("Error"),
-                                    undefined,
-                                    [ts.factory.createStringLiteral("SSE stream reconnection failed")]
-                                )
+                                ts.factory.createNewExpression(ts.factory.createIdentifier("Error"), undefined, [
+                                    ts.factory.createStringLiteral("SSE stream reconnection failed")
+                                ])
                             )
                         ],
                         true
