@@ -4635,17 +4635,6 @@
             }
           ],
           "description": "Whether this language is the default. At most one entry should be marked as default."
-        },
-        "slug": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Overrides the URL path segment this locale is served under. By default the locale (`lang`) is its own URL prefix (e.g. `ja` → `/ja/...`). Set `slug` to serve it under a different public URL — e.g. `lang: ja` with `slug: jp` serves Japanese at `/jp/...` — without changing the locale's language identity."
         }
       },
       "required": [
