@@ -31,7 +31,7 @@ import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
-import { readFile, rm } from "fs/promises";
+import { readFile, rm, writeFile } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
@@ -954,6 +954,18 @@ export async function runAppPreviewServer({
     }
 
     let lastReloadTimestamp = Date.now();
+    let reloadGeneration = 0;
+
+    // Write generation counter to a well-known temp file so the Next.js
+    // process can detect stale cache entries without an HTTP round-trip.
+    const genFilePath = path.join(require("os").tmpdir(), `fern-docs-dev-gen-${backendPort}`);
+    async function writeGenerationFile(): Promise<void> {
+        try {
+            await writeFile(genFilePath, String(reloadGeneration), "utf-8");
+        } catch {
+            // Best-effort; the HTTP path remains as fallback
+        }
+    }
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
@@ -1263,6 +1275,7 @@ export async function runAppPreviewServer({
         NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
         NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         NEXT_PUBLIC_IS_LOCAL: "1",
+        FERN_DOCS_DEV_GEN_FILE: genFilePath,
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
@@ -1434,6 +1447,8 @@ export async function runAppPreviewServer({
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
                         reloadCount++;
+                        reloadGeneration++;
+                        await writeGenerationFile();
 
                         sendData({
                             version: 1,
@@ -1454,6 +1469,8 @@ export async function runAppPreviewServer({
                             });
                         }
                     } else {
+                        reloadGeneration++;
+                        await writeGenerationFile();
                         sendData({
                             version: 1,
                             type: "finishReload"
@@ -1461,6 +1478,8 @@ export async function runAppPreviewServer({
                     }
                 } catch (err) {
                     context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
+                    reloadGeneration++;
+                    await writeGenerationFile();
                     sendData({
                         version: 1,
                         type: "finishReload"
