@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.endpoints.put;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.BestApiException;
 import com.seed.exhaustive.core.BestException;
 import com.seed.exhaustive.core.BestHttpResponse;
@@ -79,6 +80,9 @@ public class AsyncRawPutClient {
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new BestException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new BestException("Network error executing HTTP request", e));
                 }

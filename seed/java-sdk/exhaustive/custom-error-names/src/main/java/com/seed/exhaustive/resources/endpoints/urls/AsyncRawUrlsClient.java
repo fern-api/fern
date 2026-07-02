@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.endpoints.urls;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.core.CustomException;
@@ -77,6 +78,9 @@ public class AsyncRawUrlsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -138,6 +142,9 @@ public class AsyncRawUrlsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -199,6 +206,9 @@ public class AsyncRawUrlsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -260,6 +270,9 @@ public class AsyncRawUrlsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }

@@ -113,6 +113,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -186,6 +189,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -259,6 +265,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -345,6 +354,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -421,6 +433,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -496,6 +511,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -569,6 +587,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -645,6 +666,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -719,6 +743,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -803,6 +830,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -891,6 +921,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -975,6 +1008,9 @@ public class AsyncRawObjectClient {
                     future.completeExceptionally(new SeedExhaustiveApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExhaustiveException("Network error executing HTTP request", e));

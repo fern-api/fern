@@ -7,7 +7,6 @@
     "package-prefix": "com.fern.sdk"
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
-  "requestedVersion": "0.0.1",
-  "ciProvider": "github"
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1"
 }

@@ -80,6 +80,8 @@ public class RawEnumClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new CustomApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new CustomException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new CustomException("Network error executing HTTP request", e);
         }

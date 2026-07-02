@@ -105,6 +105,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -174,6 +177,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -241,6 +247,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -308,6 +317,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -377,6 +389,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -446,6 +461,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -523,6 +541,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -601,6 +622,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -672,6 +696,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -788,6 +815,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -885,6 +915,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -954,6 +987,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }
@@ -1033,6 +1069,9 @@ public class AsyncRawParamsClient {
                     future.completeExceptionally(new CustomApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new CustomException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new CustomException("Network error executing HTTP request", e));
                 }

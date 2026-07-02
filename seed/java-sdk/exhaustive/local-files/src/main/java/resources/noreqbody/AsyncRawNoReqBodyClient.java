@@ -4,6 +4,7 @@
 
 package com.fern.sdk.resources.noreqbody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
@@ -76,6 +77,9 @@ public class AsyncRawNoReqBodyClient {
             future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
           }
+          catch (JsonProcessingException e) {
+            future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
+          }
           catch (IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
           }
@@ -128,6 +132,9 @@ public class AsyncRawNoReqBodyClient {
               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
               future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
               return;
+            }
+            catch (JsonProcessingException e) {
+              future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
             }
             catch (IOException e) {
               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
