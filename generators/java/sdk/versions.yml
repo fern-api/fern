@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.11.1
+  changelogEntry:
+    - summary: |
+        Fix misleading "Network error" message when deserialization fails. JSON deserialization
+        errors (e.g. unsupported date formats) are now reported as "Failed to deserialize response"
+        instead of being incorrectly wrapped as network errors.
+      type: fix
+    - summary: |
+        Add RFC 1123 (RFC 2822) date format support to DateTimeDeserializer. Dates like
+        "Thu, 07 May 2026 14:23:38 +0000" are now parsed correctly.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 66
 - version: 4.11.0
   changelogEntry:
     - summary: |
