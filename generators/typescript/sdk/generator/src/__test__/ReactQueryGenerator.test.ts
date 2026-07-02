@@ -668,7 +668,9 @@ describe("ReactQueryGenerator", () => {
             const { files } = generator.generateFiles();
             const userService = getFile(files, "src/react-query/user/index.ts");
 
-            expect(userService).toContain("/** List all users */");
+            expect(userService).toContain("* List all users");
+            expect(userService).toContain("@example");
+            expect(userService).toContain("seedApi.user.list.useQuery()");
         });
     });
 

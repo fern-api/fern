@@ -207,7 +207,11 @@ export class ReactQueryGenerator {
                 reactQueryImports.push("type QueryClient");
             }
         }
-        content += `import { ${reactQueryImports.join(", ")} } from "@tanstack/react-query";\n`;
+        content += `import {\n`;
+        for (const imp of reactQueryImports) {
+            content += `    ${imp},\n`;
+        }
+        content += `} from "@tanstack/react-query";\n`;
 
         const clientImportPath = isServiceFile ? "../../index.js" : "../index.js";
         const contextImportPath = isServiceFile ? "../context.js" : "./context.js";
@@ -228,7 +232,11 @@ export class ReactQueryGenerator {
         if (mutationEndpoints.length > 0) {
             typeImports.push("MutationHookOptions");
         }
-        content += `import type { ${typeImports.join(", ")} } from "${typesImportPath}";\n`;
+        content += `import type {\n`;
+        for (const imp of typeImports) {
+            content += `    ${imp},\n`;
+        }
+        content += `} from "${typesImportPath}";\n`;
 
         return content;
     }
@@ -236,6 +244,7 @@ export class ReactQueryGenerator {
     private generateServiceFile(serviceName: string, node: NamespaceNode, path: string[]): string {
         const clientName = this.clientClassName;
         const queryKeyPrefix = this.getQueryKeyPrefix();
+        const namespaceName = this.getNamespaceName();
 
         const allEndpoints = this.collectEndpointsFromNode(node);
         const queryEndpoints = allEndpoints.filter((e) => this.isQueryMethod(e.method));
@@ -245,7 +254,7 @@ export class ReactQueryGenerator {
         content += this.generateHookImports(queryEndpoints, mutationEndpoints, clientName, true);
         content += `\n`;
         content += `export const ${serviceName} = `;
-        content += this.generateNamespaceObject(node, queryKeyPrefix, clientName, path, 0);
+        content += this.generateNamespaceObject(node, queryKeyPrefix, clientName, path, namespaceName, 0);
         content += `;\n`;
 
         return content;
@@ -293,9 +302,7 @@ export class ReactQueryGenerator {
 
         // Root-level endpoints (generated inline)
         for (const endpoint of rootEndpoints) {
-            if (endpoint.docs) {
-                content += `    /** ${endpoint.docs} */\n`;
-            }
+            content += this.generateEndpointJsDoc(endpoint, namespaceName, [], 1);
             content += `    ${endpoint.endpointCamelName}: `;
             content += this.generateEndpointNode(endpoint, queryKeyPrefix, clientName, [], 1);
             content += `,\n`;
@@ -343,11 +350,35 @@ export class ReactQueryGenerator {
         return endpoints;
     }
 
+    private generateEndpointJsDoc(
+        endpoint: EndpointHookInfo,
+        namespaceName: string,
+        servicePath: string[],
+        depth: number
+    ): string {
+        const indent = "    ".repeat(depth);
+        const isQuery = this.isQueryMethod(endpoint.method);
+        const accessPath = [namespaceName, ...servicePath, endpoint.endpointCamelName].join(".");
+        const hookCall = isQuery ? "useQuery" : "useMutation";
+
+        let content = `${indent}/**\n`;
+        if (endpoint.docs) {
+            content += `${indent} * ${endpoint.docs}\n`;
+            content += `${indent} *\n`;
+        }
+        content += `${indent} * @example\n`;
+        content += `${indent} *     ${accessPath}.${hookCall}(${isQuery && endpoint.hasArgs ? "[...args]" : ""})\n`;
+        content += `${indent} */\n`;
+
+        return content;
+    }
+
     private generateNamespaceObject(
         node: NamespaceNode,
         queryKeyPrefix: string,
         clientName: string,
         path: string[],
+        namespaceName: string,
         depth: number
     ): string {
         const indent = "    ".repeat(depth);
@@ -357,9 +388,7 @@ export class ReactQueryGenerator {
 
         // Generate endpoint entries
         for (const endpoint of node.endpoints) {
-            if (endpoint.docs) {
-                content += `${innerIndent}/** ${endpoint.docs} */\n`;
-            }
+            content += this.generateEndpointJsDoc(endpoint, namespaceName, path, depth + 1);
             content += `${innerIndent}${endpoint.endpointCamelName}: `;
             content += this.generateEndpointNode(endpoint, queryKeyPrefix, clientName, path, depth + 1);
             content += `,\n`;
@@ -368,7 +397,7 @@ export class ReactQueryGenerator {
         // Generate child service namespaces
         for (const [name, child] of node.children) {
             content += `${innerIndent}${name}: `;
-            content += this.generateNamespaceObject(child, queryKeyPrefix, clientName, [...path, name], depth + 1);
+            content += this.generateNamespaceObject(child, queryKeyPrefix, clientName, [...path, name], namespaceName, depth + 1);
             content += `,\n`;
         }
 
