@@ -3,6 +3,7 @@
  */
 package com.seed.simpleApi.resources.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.simpleApi.core.ClientOptions;
 import com.seed.simpleApi.core.ObjectMappers;
 import com.seed.simpleApi.core.RequestOptions;
@@ -78,6 +79,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedSimpleApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedSimpleApiException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedSimpleApiException("Network error executing HTTP request", e));
                 }

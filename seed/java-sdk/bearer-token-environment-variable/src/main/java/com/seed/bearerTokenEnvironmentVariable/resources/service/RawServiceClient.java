@@ -3,6 +3,7 @@
  */
 package com.seed.bearerTokenEnvironmentVariable.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
@@ -73,6 +74,9 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBearerTokenEnvironmentVariableApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBearerTokenEnvironmentVariableException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBearerTokenEnvironmentVariableException("Network error executing HTTP request", e);
         }

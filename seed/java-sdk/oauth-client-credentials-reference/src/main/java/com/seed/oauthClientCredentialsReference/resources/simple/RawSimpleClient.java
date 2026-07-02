@@ -3,6 +3,7 @@
  */
 package com.seed.oauthClientCredentialsReference.resources.simple;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentialsReference.core.ClientOptions;
 import com.seed.oauthClientCredentialsReference.core.ObjectMappers;
 import com.seed.oauthClientCredentialsReference.core.RequestOptions;
@@ -65,6 +66,9 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsReferenceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedOauthClientCredentialsReferenceException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsReferenceException("Network error executing HTTP request", e);
         }

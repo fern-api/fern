@@ -3,6 +3,7 @@
  */
 package com.seed.variables.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.variables.core.ClientOptions;
 import com.seed.variables.core.ObjectMappers;
 import com.seed.variables.core.RequestOptions;
@@ -75,6 +76,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedVariablesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedVariablesException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedVariablesException("Network error executing HTTP request", e));
                 }

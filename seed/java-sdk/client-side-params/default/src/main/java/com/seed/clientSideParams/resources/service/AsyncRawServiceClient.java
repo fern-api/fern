@@ -126,6 +126,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -202,6 +205,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -285,6 +291,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -399,6 +408,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -492,6 +504,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -570,6 +585,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -665,6 +683,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -734,6 +755,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -834,6 +858,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -925,6 +952,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -1044,6 +1074,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));
@@ -1139,6 +1172,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedClientSideParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedClientSideParamsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedClientSideParamsException("Network error executing HTTP request", e));

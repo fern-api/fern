@@ -3,6 +3,7 @@
  */
 package com.seed.bytesUpload.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.bytesUpload.core.ClientOptions;
 import com.seed.bytesUpload.core.InputStreamRequestBody;
 import com.seed.bytesUpload.core.ObjectMappers;
@@ -83,6 +84,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedBytesUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedBytesUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedBytesUploadException("Network error executing HTTP request", e));
@@ -160,6 +164,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedBytesUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedBytesUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedBytesUploadException("Network error executing HTTP request", e));

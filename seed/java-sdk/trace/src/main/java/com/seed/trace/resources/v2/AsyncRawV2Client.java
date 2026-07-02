@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
@@ -74,6 +75,9 @@ public class AsyncRawV2Client {
                     future.completeExceptionally(new SeedTraceApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
                 }

@@ -91,6 +91,9 @@ public class AsyncRawS3Client {
                     future.completeExceptionally(new SeedMultiUrlEnvironmentNoDefaultApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedMultiUrlEnvironmentNoDefaultException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedMultiUrlEnvironmentNoDefaultException("Network error executing HTTP request", e));

@@ -3,6 +3,7 @@
  */
 package com.seed.singleProperty.resources.singleproperty;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.singleProperty.core.ClientOptions;
 import com.seed.singleProperty.core.ObjectMappers;
 import com.seed.singleProperty.core.QueryStringMapper;
@@ -85,6 +86,8 @@ public class RawSinglePropertyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedSinglePropertyApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedSinglePropertyException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedSinglePropertyException("Network error executing HTTP request", e);
         }

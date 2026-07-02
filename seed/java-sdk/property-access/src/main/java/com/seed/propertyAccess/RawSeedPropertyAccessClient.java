@@ -79,6 +79,8 @@ public class RawSeedPropertyAccessClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPropertyAccessApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPropertyAccessException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPropertyAccessException("Network error executing HTTP request", e);
         }

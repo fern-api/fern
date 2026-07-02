@@ -3,6 +3,7 @@
  */
 package com.seed.inferredAuthExplicit.resources.simple;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.inferredAuthExplicit.core.ClientOptions;
 import com.seed.inferredAuthExplicit.core.ObjectMappers;
 import com.seed.inferredAuthExplicit.core.RequestOptions;
@@ -65,6 +66,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedInferredAuthExplicitApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedInferredAuthExplicitException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedInferredAuthExplicitException("Network error executing HTTP request", e);
         }

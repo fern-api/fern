@@ -3,6 +3,7 @@
  */
 package com.seed.noRetries.resources.retries;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.noRetries.core.ClientOptions;
 import com.seed.noRetries.core.ObjectMappers;
@@ -71,6 +72,8 @@ public class RawRetriesClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedNoRetriesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedNoRetriesException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedNoRetriesException("Network error executing HTTP request", e);
         }

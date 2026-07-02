@@ -82,6 +82,8 @@ public class RawPaymentClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedIdempotencyHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedIdempotencyHeadersException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedIdempotencyHeadersException("Network error executing HTTP request", e);
         }
@@ -128,6 +130,8 @@ public class RawPaymentClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedIdempotencyHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedIdempotencyHeadersException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedIdempotencyHeadersException("Network error executing HTTP request", e);
         }

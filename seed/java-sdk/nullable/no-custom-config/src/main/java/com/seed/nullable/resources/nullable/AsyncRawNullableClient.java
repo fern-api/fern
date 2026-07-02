@@ -117,6 +117,9 @@ public class AsyncRawNullableClient {
                     future.completeExceptionally(new SeedNullableApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedNullableException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedNullableException("Network error executing HTTP request", e));
                 }
@@ -186,6 +189,9 @@ public class AsyncRawNullableClient {
                     future.completeExceptionally(new SeedNullableApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedNullableException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedNullableException("Network error executing HTTP request", e));
                 }
@@ -263,6 +269,9 @@ public class AsyncRawNullableClient {
                     future.completeExceptionally(new SeedNullableApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedNullableException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedNullableException("Network error executing HTTP request", e));
                 }

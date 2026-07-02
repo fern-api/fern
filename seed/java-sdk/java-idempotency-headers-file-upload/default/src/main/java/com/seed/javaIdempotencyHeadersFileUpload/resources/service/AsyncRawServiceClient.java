@@ -3,6 +3,7 @@
  */
 package com.seed.javaIdempotencyHeadersFileUpload.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.javaIdempotencyHeadersFileUpload.core.ClientOptions;
 import com.seed.javaIdempotencyHeadersFileUpload.core.FileStream;
 import com.seed.javaIdempotencyHeadersFileUpload.core.IdempotentRequestOptions;
@@ -100,6 +101,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
                             "Network error executing HTTP request", e));
@@ -145,6 +149,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
                             "Network error executing HTTP request", e));
@@ -190,6 +197,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
                             "Network error executing HTTP request", e));
@@ -252,6 +262,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
                             "Network error executing HTTP request", e));
@@ -314,6 +327,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaIdempotencyHeadersFileUploadException(
                             "Network error executing HTTP request", e));

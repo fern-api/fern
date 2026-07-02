@@ -80,6 +80,9 @@ public class AsyncRawUnionClient {
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
                 }
@@ -148,6 +151,9 @@ public class AsyncRawUnionClient {
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
                 }

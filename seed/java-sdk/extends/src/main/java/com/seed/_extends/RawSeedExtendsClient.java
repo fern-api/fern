@@ -78,6 +78,8 @@ public class RawSeedExtendsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExtendsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedExtendsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedExtendsException("Network error executing HTTP request", e);
         }
