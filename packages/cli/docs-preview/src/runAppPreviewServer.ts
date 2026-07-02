@@ -1264,6 +1264,14 @@ export async function runAppPreviewServer({
 
             const checkReady = (data: Buffer) => {
                 const output = data.toString();
+                // Surface [PERF lines to terminal for benchmark visibility
+                if (output.includes("[PERF")) {
+                    for (const line of output.split("\n")) {
+                        if (line.includes("[PERF")) {
+                            context.logger.info(line.trim());
+                        }
+                    }
+                }
                 context.logger.debug(`[Next.js] ${output}`);
 
                 const portMatch = output.match(/localhost:(\d+)/);
@@ -1283,7 +1291,16 @@ export async function runAppPreviewServer({
 
             // Also log stderr but don't block on it
             serverProcess.stderr?.on("data", (data) => {
-                context.logger.debug(`[Next.js] ${data.toString()}`);
+                const output = data.toString();
+                // Surface [PERF lines to terminal for benchmark visibility
+                if (output.includes("[PERF")) {
+                    for (const line of output.split("\n")) {
+                        if (line.includes("[PERF")) {
+                            context.logger.info(line.trim());
+                        }
+                    }
+                }
+                context.logger.debug(`[Next.js] ${output}`);
             });
 
             context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
