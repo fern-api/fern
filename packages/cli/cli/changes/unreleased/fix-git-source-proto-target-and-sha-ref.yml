@@ -1,0 +1,9 @@
+- summary: |
+    Fix proto `target` path resolution when using remote git sources. Previously the target
+    was resolved relative to the workspace instead of the cloned repository, causing
+    "file missing" errors.
+  type: fix
+- summary: |
+    Support commit SHA references in git source `ref` field. Previously only branch names
+    and tags were supported; commit SHAs now work via fetch+checkout.
+  type: feat
