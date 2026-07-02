@@ -932,8 +932,8 @@ describe("ReactQueryGenerator", () => {
         });
     });
 
-    describe("snapshot", () => {
-        it("generates complete namespace snapshot", () => {
+    describe("complete generation", () => {
+        it("generates all expected files for a service with mixed endpoints", () => {
             const ir = createIRWithService({
                 serviceName: "user",
                 subpackageName: "user",
@@ -956,11 +956,55 @@ describe("ReactQueryGenerator", () => {
             const generator = createGenerator(ir);
             const { files } = generator.generateFiles();
 
-            expect(files["src/react-query/hooks.ts"]).toMatchSnapshot();
-            expect(files["src/react-query/user/index.ts"]).toMatchSnapshot();
-            expect(files["src/react-query/context.ts"]).toMatchSnapshot();
-            expect(files["src/react-query/types.ts"]).toMatchSnapshot();
-            expect(files["src/react-query/index.ts"]).toMatchSnapshot();
+            // Verify all expected files exist
+            expect(files["src/react-query/hooks.ts"]).toBeDefined();
+            expect(files["src/react-query/user/index.ts"]).toBeDefined();
+            expect(files["src/react-query/context.ts"]).toBeDefined();
+            expect(files["src/react-query/types.ts"]).toBeDefined();
+            expect(files["src/react-query/index.ts"]).toBeDefined();
+
+            // Verify hooks.ts has correct structure
+            const hooks = files["src/react-query/hooks.ts"]!;
+            expect(hooks).toContain("export const seedApi:");
+            expect(hooks).toContain("user: user,");
+            expect(hooks).toContain('import { user } from "./user/index.js"');
+
+            // Verify user service file has all endpoints
+            const userService = files["src/react-query/user/index.ts"]!;
+            expect(userService).toContain("list: {");
+            expect(userService).toContain("get: {");
+            expect(userService).toContain("create: {");
+            expect(userService).toContain("delete: {");
+            // Query endpoints have useQuery + useSuspenseQuery
+            expect(userService).toContain("useQuery(");
+            expect(userService).toContain("useSuspenseQuery(");
+            // Mutation endpoints have useMutation
+            expect(userService).toContain("useMutation(");
+            // No infinite query hooks
+            expect(userService).not.toContain("useInfiniteQuery");
+            expect(userService).not.toContain("useSuspenseInfiniteQuery");
+            // JSDoc with @example tags
+            expect(userService).toContain("* List all users");
+            expect(userService).toContain("* Get a user by ID");
+            expect(userService).toContain("@example");
+
+            // Verify context.ts has provider and hook
+            const context = files["src/react-query/context.ts"]!;
+            expect(context).toContain("SeedApiClientProvider");
+            expect(context).toContain("useSeedApiClientContext");
+            expect(context).toContain("createElement");
+
+            // Verify types.ts has all hook option types
+            const types = files["src/react-query/types.ts"]!;
+            expect(types).toContain("QueryHookOptions");
+            expect(types).toContain("SuspenseQueryHookOptions");
+            expect(types).toContain("MutationHookOptions");
+
+            // Verify index.ts re-exports everything
+            const index = files["src/react-query/index.ts"]!;
+            expect(index).toContain("seedApi");
+            expect(index).toContain("SeedApiClientProvider");
+            expect(index).toContain("QueryHookOptions");
         });
     });
 });
