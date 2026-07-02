@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an optional `slug` field to `translations` entries in `docs.yml`, letting a
+    localized site serve a locale under a custom URL segment (e.g. `lang: ja` with
+    `slug: jp` serves Japanese at `/jp/...`) while the locale still drives the
+    language identity (hreflang, `<html lang>`, switcher label, translated content
+    directory). Locales without a `slug` continue to use their own code as the URL
+    prefix, so existing sites are unaffected.
+
+    `fern check` now rejects a `slug` that would silently mis-route: a recognized
+    locale code (e.g. `ja`), another configured locale's code, or a slug already
+    used by another locale.
+  type: feat
