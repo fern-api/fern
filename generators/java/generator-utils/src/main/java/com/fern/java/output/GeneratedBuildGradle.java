@@ -65,6 +65,11 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         return false;
     }
 
+    @Value.Default
+    public Boolean useJackson3() {
+        return false;
+    }
+
     @Override
     public final String filename() {
         return "build.gradle";
@@ -125,8 +130,9 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.addNewLine();
 
         writer.addNewLine();
-        writer.addLine("sourceCompatibility = 1.8");
-        writer.addLine("targetCompatibility = 1.8");
+        String javaVersion = useJackson3() ? "17" : "1.8";
+        writer.addLine("sourceCompatibility = " + javaVersion);
+        writer.addLine("targetCompatibility = " + javaVersion);
         writer.addNewLine();
 
         customBlocks().forEach((block) -> {

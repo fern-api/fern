@@ -77,7 +77,7 @@ public class QueryStringMapper {
     public static List<Map.Entry<String, JsonNode>> flattenObject(ObjectNode object, boolean arraysAsRepeats) {
         List<Map.Entry<String, JsonNode>> flat = new ArrayList<>();
 
-        Iterator<Map.Entry<String, JsonNode>> fields = object.fields();
+        Iterator<Map.Entry<String, JsonNode>> fields = object.properties().iterator();
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> field = fields.next();
 
@@ -103,7 +103,7 @@ public class QueryStringMapper {
             ArrayNode array, String key, boolean arraysAsRepeats) {
         List<Map.Entry<String, JsonNode>> flat = new ArrayList<>();
 
-        Iterator<JsonNode> elements = array.elements();
+        Iterator<JsonNode> elements = array.elements().iterator();
 
         int index = 0;
         while (elements.hasNext()) {

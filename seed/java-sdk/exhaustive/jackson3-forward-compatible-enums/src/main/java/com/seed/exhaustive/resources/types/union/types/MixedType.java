@@ -5,11 +5,10 @@ package com.seed.exhaustive.resources.types.union.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.seed.exhaustive.core.ObjectMappers;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import tools.jackson.core.JsonParseException;
 import tools.jackson.core.JsonParser;
+import tools.jackson.core.exc.StreamReadException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.annotation.JsonDeserialize;
@@ -97,7 +96,7 @@ public final class MixedType {
         }
 
         @java.lang.Override
-        public MixedType deserialize(JsonParser p, DeserializationContext context) throws IOException {
+        public MixedType deserialize(JsonParser p, DeserializationContext context) {
             Object value = p.readValueAs(Object.class);
             if (value instanceof Double) {
                 return of((Double) value);
@@ -113,7 +112,7 @@ public final class MixedType {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
             } catch (RuntimeException e) {
             }
-            throw new JsonParseException(p, "Failed to deserialize");
+            throw new StreamReadException(p, "Failed to deserialize");
         }
     }
 }

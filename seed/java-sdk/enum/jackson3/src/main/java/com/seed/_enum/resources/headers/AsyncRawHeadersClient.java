@@ -23,7 +23,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 
 public class AsyncRawHeadersClient {
     protected final ClientOptions clientOptions;
@@ -89,7 +89,7 @@ public class AsyncRawHeadersClient {
                     future.completeExceptionally(new SeedEnumApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedEnumException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {

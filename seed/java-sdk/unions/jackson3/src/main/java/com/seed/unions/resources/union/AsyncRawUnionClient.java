@@ -24,7 +24,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 
 public class AsyncRawUnionClient {
     protected final ClientOptions clientOptions;
@@ -80,7 +80,7 @@ public class AsyncRawUnionClient {
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -113,7 +113,7 @@ public class AsyncRawUnionClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedUnionsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -151,7 +151,7 @@ public class AsyncRawUnionClient {
                     future.completeExceptionally(new SeedUnionsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {

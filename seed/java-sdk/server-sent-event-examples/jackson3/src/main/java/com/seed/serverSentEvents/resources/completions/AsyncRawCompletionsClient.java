@@ -35,7 +35,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 
 public class AsyncRawCompletionsClient {
     protected final ClientOptions clientOptions;
@@ -63,7 +63,7 @@ public class AsyncRawCompletionsClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -106,14 +106,14 @@ public class AsyncRawCompletionsClient {
                                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                         }
-                    } catch (JsonProcessingException ignored) {
+                    } catch (JacksonException ignored) {
                         // unable to map error response, throwing generic error
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -150,7 +150,7 @@ public class AsyncRawCompletionsClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -192,14 +192,14 @@ public class AsyncRawCompletionsClient {
                                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                         }
-                    } catch (JsonProcessingException ignored) {
+                    } catch (JacksonException ignored) {
                         // unable to map error response, throwing generic error
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -237,7 +237,7 @@ public class AsyncRawCompletionsClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -281,14 +281,14 @@ public class AsyncRawCompletionsClient {
                                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                         }
-                    } catch (JsonProcessingException ignored) {
+                    } catch (JacksonException ignored) {
                         // unable to map error response, throwing generic error
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -325,7 +325,7 @@ public class AsyncRawCompletionsClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedServerSentEventsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -372,14 +372,14 @@ public class AsyncRawCompletionsClient {
                                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                         }
-                    } catch (JsonProcessingException ignored) {
+                    } catch (JacksonException ignored) {
                         // unable to map error response, throwing generic error
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {

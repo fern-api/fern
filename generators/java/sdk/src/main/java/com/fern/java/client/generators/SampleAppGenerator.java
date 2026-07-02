@@ -1,6 +1,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.ICustomConfig;
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.generators.AbstractFilesGenerator;
 import com.fern.java.output.GeneratedBuildGradle;
@@ -45,6 +46,8 @@ public final class SampleAppGenerator extends AbstractFilesGenerator {
                 .addDependencies(RootProjectGradleDependency.INSTANCE)
                 .shouldSignPackage(false)
                 .skipRepositories(skipRepositories)
+                .useJackson3(generatorContext.getCustomConfig() != null
+                        && generatorContext.getCustomConfig().jacksonVersion() == ICustomConfig.JacksonVersion.V3)
                 .build();
         TypeSpec appTypeSpec = TypeSpec.classBuilder("App")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)

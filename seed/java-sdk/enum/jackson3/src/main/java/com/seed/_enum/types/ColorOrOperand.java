@@ -5,10 +5,9 @@ package com.seed._enum.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.seed._enum.core.ObjectMappers;
-import java.io.IOException;
 import java.util.Objects;
-import tools.jackson.core.JsonParseException;
 import tools.jackson.core.JsonParser;
+import tools.jackson.core.exc.StreamReadException;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.annotation.JsonDeserialize;
 import tools.jackson.databind.deser.std.StdDeserializer;
@@ -79,7 +78,7 @@ public final class ColorOrOperand {
         }
 
         @java.lang.Override
-        public ColorOrOperand deserialize(JsonParser p, DeserializationContext context) throws IOException {
+        public ColorOrOperand deserialize(JsonParser p, DeserializationContext context) {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Color.class));
@@ -89,7 +88,7 @@ public final class ColorOrOperand {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Operand.class));
             } catch (RuntimeException e) {
             }
-            throw new JsonParseException(p, "Failed to deserialize");
+            throw new StreamReadException(p, "Failed to deserialize");
         }
     }
 }

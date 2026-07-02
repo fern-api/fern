@@ -22,7 +22,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
 
 public class RawBigunionClient {
@@ -75,7 +75,7 @@ public class RawBigunionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);
@@ -99,7 +99,7 @@ public class RawBigunionClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedUnionsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -132,7 +132,7 @@ public class RawBigunionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);
@@ -158,7 +158,7 @@ public class RawBigunionClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedUnionsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -193,7 +193,7 @@ public class RawBigunionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);

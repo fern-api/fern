@@ -3,7 +3,6 @@
  */
 package com.seed.streaming.core;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -15,14 +14,14 @@ import java.time.temporal.TemporalQueries;
 import tools.jackson.core.JsonParser;
 import tools.jackson.core.JsonToken;
 import tools.jackson.databind.DeserializationContext;
-import tools.jackson.databind.JsonDeserializer;
+import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.module.SimpleModule;
 
 /**
  * Custom deserializer that handles converting date-time strings into {@link OffsetDateTime} objects.
  * Supports ISO 8601 format, space-separated variants, and RFC 1123 (RFC 2822) format.
  */
-class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
+class DateTimeDeserializer extends ValueDeserializer<OffsetDateTime> {
     private static final SimpleModule MODULE;
 
     static {
@@ -39,7 +38,7 @@ class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
     }
 
     @Override
-    public OffsetDateTime deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+    public OffsetDateTime deserialize(JsonParser parser, DeserializationContext context) {
         JsonToken token = parser.currentToken();
         if (token == JsonToken.VALUE_NUMBER_INT) {
             return OffsetDateTime.ofInstant(Instant.ofEpochSecond(parser.getValueAsLong()), ZoneOffset.UTC);

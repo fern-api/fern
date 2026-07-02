@@ -20,7 +20,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 
 public class RawUnionClient {
     protected final ClientOptions clientOptions;
@@ -46,7 +46,7 @@ public class RawUnionClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -79,7 +79,7 @@ public class RawUnionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);

@@ -578,8 +578,11 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(className)
                 .addParameter(jackson.jsonParser(), "p")
-                .addParameter(jackson.deserializationContext(), "context")
-                .addException(IOException.class)
+                .addParameter(jackson.deserializationContext(), "context");
+        if (!jackson.isJackson3()) {
+            deserializeMethod.addException(IOException.class);
+        }
+        deserializeMethod
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(
                         "$T $L = $L.readValueAs($T.class)", Object.class, VALUE_FIELD_SPEC.name, "p", Object.class);

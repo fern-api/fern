@@ -19,7 +19,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 
 public class RawNoReqBodyClient {
     protected final ClientOptions clientOptions;
@@ -71,7 +71,7 @@ public class RawNoReqBodyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
@@ -120,7 +120,7 @@ public class RawNoReqBodyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);

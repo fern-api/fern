@@ -42,7 +42,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 
 public class AsyncRawServiceClient {
     protected final ClientOptions clientOptions;
@@ -119,7 +119,7 @@ public class AsyncRawServiceClient {
                 try {
                     multipartBodyBuilder.addFormDataPart(
                             "list_of_objects", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     throw new RuntimeException("Failed to write value as JSON", e);
                 }
             });
@@ -144,7 +144,7 @@ public class AsyncRawServiceClient {
                 try {
                     multipartBodyBuilder.addFormDataPart(
                             "list_of_alias_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     throw new RuntimeException("Failed to write value as JSON", e);
                 }
             });
@@ -152,7 +152,7 @@ public class AsyncRawServiceClient {
                 try {
                     multipartBodyBuilder.addFormDataPart(
                             "alias_list_of_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     throw new RuntimeException("Failed to write value as JSON", e);
                 }
             });
@@ -191,7 +191,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -263,7 +263,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -308,7 +308,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -354,7 +354,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -417,7 +417,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -480,7 +480,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -570,7 +570,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -651,7 +651,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -732,7 +732,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -777,7 +777,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -823,7 +823,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -886,7 +886,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -949,7 +949,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1024,7 +1024,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1069,7 +1069,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1115,7 +1115,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1178,7 +1178,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1241,7 +1241,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1398,7 +1398,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1494,7 +1494,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1541,7 +1541,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1588,7 +1588,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1652,7 +1652,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1720,7 +1720,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1796,7 +1796,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1842,7 +1842,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1889,7 +1889,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -1953,7 +1953,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2017,7 +2017,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2098,7 +2098,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2144,7 +2144,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2191,7 +2191,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2255,7 +2255,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2319,7 +2319,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2402,7 +2402,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2449,7 +2449,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2496,7 +2496,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2560,7 +2560,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2628,7 +2628,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2690,7 +2690,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2777,7 +2777,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2824,7 +2824,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2871,7 +2871,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2935,7 +2935,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -2999,7 +2999,7 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileUploadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {

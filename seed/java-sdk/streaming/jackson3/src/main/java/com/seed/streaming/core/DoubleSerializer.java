@@ -3,10 +3,9 @@
  */
 package com.seed.streaming.core;
 
-import java.io.IOException;
 import tools.jackson.core.JsonGenerator;
-import tools.jackson.databind.JsonSerializer;
-import tools.jackson.databind.SerializerProvider;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 import tools.jackson.databind.module.SimpleModule;
 
 /**
@@ -14,7 +13,7 @@ import tools.jackson.databind.module.SimpleModule;
  * For example, {@code 24000.0} is serialized as {@code 24000} instead of {@code 24000.0}.
  * Non-integer values like {@code 3.14} are serialized normally.
  */
-class DoubleSerializer extends JsonSerializer<Double> {
+class DoubleSerializer extends ValueSerializer<Double> {
     private static final SimpleModule MODULE;
 
     static {
@@ -33,7 +32,7 @@ class DoubleSerializer extends JsonSerializer<Double> {
     }
 
     @Override
-    public void serialize(Double value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(Double value, JsonGenerator gen, SerializationContext serializers) {
         if (value != null && value == Math.floor(value) && !Double.isInfinite(value) && !Double.isNaN(value)) {
             gen.writeNumber(value.longValue());
         } else {

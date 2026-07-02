@@ -1,0 +1,9 @@
+- summary: |
+    Fix Jackson 3 class renames and API changes that the initial implementation missed.
+    Corrected mappings: JsonProcessingException → JacksonException, JsonSerializer → ValueSerializer,
+    JsonDeserializer → ValueDeserializer, JsonParseException → StreamReadException,
+    SerializerProvider → SerializationContext, WRITE_DATES_AS_TIMESTAMPS → DateTimeFeature.
+    Fixed immutable ObjectMapper (removed setSerializationInclusion), ObjectNode.fields() → properties(),
+    ArrayNode.elements() returning Collection, and set sourceCompatibility to Java 17 for Jackson 3.
+    Stripped throws IOException from Jackson override methods (Jackson 3 uses unchecked JacksonException).
+  type: fix

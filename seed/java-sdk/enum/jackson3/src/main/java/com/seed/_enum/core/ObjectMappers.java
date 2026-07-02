@@ -3,12 +3,10 @@
  */
 package com.seed._enum.core;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import java.io.IOException;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.cfg.DateTimeFeature;
 import tools.jackson.databind.json.JsonMapper;
 
 public final class ObjectMappers {
@@ -16,18 +14,15 @@ public final class ObjectMappers {
             .addModule(DateTimeDeserializer.getModule())
             .addModule(DoubleSerializer.getModule())
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
             .build();
 
     private ObjectMappers() {}
 
     public static String stringify(Object o) {
         try {
-            return JSON_MAPPER
-                    .setSerializationInclusion(JsonInclude.Include.ALWAYS)
-                    .writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(o);
-        } catch (IOException e) {
+            return JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+        } catch (JacksonException e) {
             return o.getClass().getName() + "@" + Integer.toHexString(o.hashCode());
         }
     }
@@ -35,7 +30,7 @@ public final class ObjectMappers {
     public static Object parseErrorBody(String responseBodyString) {
         try {
             return JSON_MAPPER.readValue(responseBodyString, Object.class);
-        } catch (JsonProcessingException ignored) {
+        } catch (JacksonException ignored) {
             return responseBodyString;
         }
     }

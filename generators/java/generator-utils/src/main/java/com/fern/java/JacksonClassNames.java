@@ -86,19 +86,27 @@ public final class JacksonClassNames {
     }
 
     public ClassName jsonSerializer() {
-        return ClassName.get(databindPackage(), "JsonSerializer");
+        return useJackson3
+                ? ClassName.get(databindPackage(), "ValueSerializer")
+                : ClassName.get(databindPackage(), "JsonSerializer");
     }
 
     public ClassName serializerProvider() {
-        return ClassName.get(databindPackage(), "SerializerProvider");
+        return useJackson3
+                ? ClassName.get(databindPackage(), "SerializationContext")
+                : ClassName.get(databindPackage(), "SerializerProvider");
     }
 
     public ClassName jsonDeserializerClass() {
-        return ClassName.get(databindPackage(), "JsonDeserializer");
+        return useJackson3
+                ? ClassName.get(databindPackage(), "ValueDeserializer")
+                : ClassName.get(databindPackage(), "JsonDeserializer");
     }
 
     public ClassName jsonProcessingException() {
-        return ClassName.get(corePackage(), "JsonProcessingException");
+        return useJackson3
+                ? ClassName.get(corePackage(), "JacksonException")
+                : ClassName.get(corePackage(), "JsonProcessingException");
     }
 
     // --- core types ---
@@ -112,7 +120,13 @@ public final class JacksonClassNames {
     }
 
     public ClassName jsonParseException() {
-        return ClassName.get(corePackage(), "JsonParseException");
+        return useJackson3
+                ? ClassName.get(corePackage() + ".exc", "StreamReadException")
+                : ClassName.get(corePackage(), "JsonParseException");
+    }
+
+    public ClassName dateTimeFeature() {
+        return ClassName.get(databindPackage() + ".cfg", "DateTimeFeature");
     }
 
     public ClassName jsonGenerator() {
@@ -132,9 +146,35 @@ public final class JacksonClassNames {
             return contents;
         }
         String result = contents;
+        // Class renames (must happen before the generic package swap)
+        result = result.replace(
+                "com.fasterxml.jackson.core.JsonProcessingException", "tools.jackson.core.JacksonException");
+        result = result.replace("JsonProcessingException", "JacksonException");
+        result = result.replace(
+                "com.fasterxml.jackson.core.JsonParseException", "tools.jackson.core.exc.StreamReadException");
+        result = result.replace("JsonParseException", "StreamReadException");
+        result = result.replace(
+                "com.fasterxml.jackson.databind.JsonSerializer", "tools.jackson.databind.ValueSerializer");
+        result = result.replace("extends JsonSerializer", "extends ValueSerializer");
+        result = result.replace(
+                "com.fasterxml.jackson.databind.JsonDeserializer", "tools.jackson.databind.ValueDeserializer");
+        result = result.replace("extends JsonDeserializer", "extends ValueDeserializer");
+        result = result.replace(
+                "com.fasterxml.jackson.databind.SerializerProvider", "tools.jackson.databind.SerializationContext");
+        result = result.replace("SerializerProvider", "SerializationContext");
+        // Strip throws IOException from Jackson override methods (Jackson 3 uses unchecked JacksonException).
+        // Target specific Jackson method signatures to avoid stripping from non-Jackson methods.
+        result = result.replace(
+                "DeserializationContext context) throws IOException {", "DeserializationContext context) {");
+        result = result.replace(
+                "SerializationContext serializers) throws IOException {", "SerializationContext serializers) {");
         // Replace databind packages (must come before core to avoid partial matches)
         result = result.replace("com.fasterxml.jackson.databind", "tools.jackson.databind");
         result = result.replace("com.fasterxml.jackson.core", "tools.jackson.core");
+        // Jackson 3 API changes: ObjectNode.fields() → properties(), ArrayNode.elements() returns Collection
+        result = result.replace("object.fields()", "object.properties().iterator()");
+        result = result.replace("Iterator<JsonNode> elements = array.elements()",
+                "Iterator<JsonNode> elements = array.elements().iterator()");
         // Remove Jdk8Module and JavaTimeModule imports and registrations (built into Jackson 3)
         result = result.replace("import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;\n", "");
         result = result.replace("import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;\n", "");

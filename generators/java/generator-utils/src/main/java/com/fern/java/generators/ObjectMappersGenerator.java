@@ -21,6 +21,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.JacksonClassNames;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -61,9 +62,13 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                         ".addModule($T.$L())\n",
                         generatorContext.getPoetClassNameFactory().getDoubleSerializerClassName(),
                         DoubleSerializerGenerator.GET_MODULE_METHOD_NAME)
-                .add(".disable($T.FAIL_ON_UNKNOWN_PROPERTIES)\n", jackson.deserializationFeature())
-                .add(".disable($T.WRITE_DATES_AS_TIMESTAMPS)\n", jackson.serializationFeature())
-                .add(".build()");
+                .add(".disable($T.FAIL_ON_UNKNOWN_PROPERTIES)\n", jackson.deserializationFeature());
+        if (jackson.isJackson3()) {
+            initBuilder.add(".disable($T.WRITE_DATES_AS_TIMESTAMPS)\n", jackson.dateTimeFeature());
+        } else {
+            initBuilder.add(".disable($T.WRITE_DATES_AS_TIMESTAMPS)\n", jackson.serializationFeature());
+        }
+        initBuilder.add(".build()");
 
         FieldSpec jsonMapperField = FieldSpec.builder(
                         jackson.objectMapper(),
@@ -79,7 +84,7 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build())
-                .addMethod(getStringifyMethod())
+                .addMethod(getStringifyMethod(jackson))
                 .addMethod(getParseErrorBodyMethod(jackson))
                 .build();
         JavaFile enumFile =
@@ -91,25 +96,36 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private static MethodSpec getStringifyMethod() {
-        return MethodSpec.methodBuilder(STRINGIFY_METHOD_NAME)
+    private static MethodSpec getStringifyMethod(JacksonClassNames jackson) {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(STRINGIFY_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(String.class)
                 .addParameter(ParameterSpec.builder(Object.class, "o").build())
-                .beginControlFlow("try")
-                .addStatement(CodeBlock.builder()
-                        .add(
-                                "return $L.setSerializationInclusion($T.Include.ALWAYS)\n",
-                                JSON_MAPPER_STATIC_FIELD_NAME,
-                                JsonInclude.class)
-                        .add(".writerWithDefaultPrettyPrinter()\n")
-                        .add(".writeValueAsString(o)")
-                        .build())
-                .endControlFlow()
-                .beginControlFlow("catch ($T e)", IOException.class)
+                .beginControlFlow("try");
+        if (jackson.isJackson3()) {
+            builder.addStatement(CodeBlock.builder()
+                    .add(
+                            "return $L\n.writerWithDefaultPrettyPrinter()\n",
+                            JSON_MAPPER_STATIC_FIELD_NAME)
+                    .add(".writeValueAsString(o)")
+                    .build());
+        } else {
+            builder.addStatement(CodeBlock.builder()
+                    .add(
+                            "return $L.setSerializationInclusion($T.Include.ALWAYS)\n",
+                            JSON_MAPPER_STATIC_FIELD_NAME,
+                            JsonInclude.class)
+                    .add(".writerWithDefaultPrettyPrinter()\n")
+                    .add(".writeValueAsString(o)")
+                    .build());
+        }
+        builder.endControlFlow()
+                .beginControlFlow(
+                        "catch ($T e)",
+                        jackson.isJackson3() ? jackson.jsonProcessingException() : ClassName.get(IOException.class))
                 .addStatement("return o.getClass().getName() + $S + $T.toHexString(o.hashCode())", "@", Integer.class)
-                .endControlFlow()
-                .build();
+                .endControlFlow();
+        return builder.build();
     }
 
     private static MethodSpec getParseErrorBodyMethod(JacksonClassNames jackson) {

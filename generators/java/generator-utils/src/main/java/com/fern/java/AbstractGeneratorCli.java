@@ -530,7 +530,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     false,
                     generatorConfig,
                     customConfig.gradlePluginManagement(),
-                    customConfig.gradleCentralDependencyManagement());
+                    customConfig.gradleCentralDependencyManagement(),
+                    false);
         }
         ICustomConfig.OutputDirectory outputDirectoryMode = customConfig.outputDirectory();
         generatedFiles.forEach(generatedFile ->
@@ -578,7 +579,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 addSignatureBlock,
                 generatorConfig,
                 customConfig.gradlePluginManagement(),
-                customConfig.gradleCentralDependencyManagement());
+                customConfig.gradleCentralDependencyManagement(),
+                customConfig.jacksonVersion() == ICustomConfig.JacksonVersion.V3);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
@@ -627,7 +629,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 mavenRegistryConfigV2.getSignature().isPresent(),
                 generatorConfig,
                 customConfig.gradlePluginManagement(),
-                customConfig.gradleCentralDependencyManagement());
+                customConfig.gradleCentralDependencyManagement(),
+                customConfig.jacksonVersion() == ICustomConfig.JacksonVersion.V3);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(
                 outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT));
@@ -700,7 +703,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             boolean addSignaturePlugin,
             GeneratorConfig generatorConfig,
             Optional<String> gradlePluginManagement,
-            boolean skipRepositories) {
+            boolean skipRepositories,
+            boolean useJackson3) {
         String repositoryUrl = addSignaturePlugin
                 ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 : "https://s01.oss.sonatype.org/content/repositories/releases/";
@@ -732,6 +736,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         + "}")
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
+                .useJackson3(useJackson3)
                 .addAllCustomBlocks(getAdditionalBuildGradleBlocks());
         if (maybeMavenCoordinate.isPresent()) {
             buildGradle.addCustomBlocks("group = '" + maybeMavenCoordinate.get().getGroup() + "'");

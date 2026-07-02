@@ -3,22 +3,21 @@
  */
 package com.seed._enum.core;
 
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import tools.jackson.core.JsonParser;
 import tools.jackson.databind.DeserializationContext;
-import tools.jackson.databind.JsonDeserializer;
+import tools.jackson.databind.ValueDeserializer;
 
 /**
  * Custom deserializer that handles converting RFC 2822 (RFC 1123) dates into {@link OffsetDateTime} objects.
  * This is used for fields with format "date-time-rfc-2822", such as Twilio's dateCreated, dateSent, dateUpdated.
  */
-public class Rfc2822DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
+public class Rfc2822DateTimeDeserializer extends ValueDeserializer<OffsetDateTime> {
 
     @Override
-    public OffsetDateTime deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+    public OffsetDateTime deserialize(JsonParser parser, DeserializationContext context) {
         String raw = parser.getValueAsString();
         return ZonedDateTime.parse(raw, DateTimeFormatter.RFC_1123_DATE_TIME).toOffsetDateTime();
     }

@@ -29,7 +29,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
-import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 
 public class AsyncRawDummyClient {
     protected final ClientOptions clientOptions;
@@ -57,7 +57,7 @@ public class AsyncRawDummyClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -97,7 +97,7 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedStreamingApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedStreamingException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
@@ -131,7 +131,7 @@ public class AsyncRawDummyClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
@@ -170,7 +170,7 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedStreamingApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
-                } catch (JsonProcessingException e) {
+                } catch (JacksonException e) {
                     future.completeExceptionally(
                             new SeedStreamingException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
