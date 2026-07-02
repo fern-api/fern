@@ -1,0 +1,4 @@
+- summary: |
+    Add [PERF] instrumentation to fern docs dev for benchmarking load-with-url
+    requests, CLI cache hit/miss rates, and session summaries on shutdown.
+  type: internal

@@ -68,4 +68,19 @@ describe("ResponseCache", () => {
         expect(defaultBuilder).toHaveBeenCalledTimes(1);
         expect(enBuilder).toHaveBeenCalledTimes(1);
     });
+
+    it("lastHit reports false on miss and true on hit", () => {
+        const cache = new ResponseCache();
+        const builder = () => ({ data: 1 });
+
+        cache.getOrSerialize(undefined, builder);
+        expect(cache.lastHit).toBe(false);
+
+        cache.getOrSerialize(undefined, builder);
+        expect(cache.lastHit).toBe(true);
+
+        cache.invalidate();
+        cache.getOrSerialize(undefined, builder);
+        expect(cache.lastHit).toBe(false);
+    });
 });

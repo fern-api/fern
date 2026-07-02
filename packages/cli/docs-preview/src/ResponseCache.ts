@@ -16,11 +16,22 @@ export class ResponseCache {
         const cacheKey = locale ?? "";
         const cached = this.cache.get(cacheKey);
         if (cached != null) {
+            this._lastHit = true;
             return cached;
         }
+        this._lastHit = false;
         const json = JSON.stringify(buildResponse());
         this.cache.set(cacheKey, json);
         return json;
+    }
+
+    private _lastHit = false;
+
+    /**
+     * Whether the last `getOrSerialize` call was a cache hit.
+     */
+    get lastHit(): boolean {
+        return this._lastHit;
     }
 
     /**

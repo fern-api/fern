@@ -683,6 +683,8 @@ export async function runAppPreviewServer({
                 if (parsed.type === "pong") {
                     metadata.isAlive = true;
                     metadata.lastPong = Date.now();
+                } else if (parsed.type === "perf_log" && typeof parsed.message === "string") {
+                    context.logger.info(parsed.message);
                 } else if (DebugLogger.isMetricsMessage(parsed)) {
                     // Handle metrics messages from the frontend
                     void debugLogger.logFrontendMetrics(parsed);
@@ -1153,6 +1155,12 @@ export async function runAppPreviewServer({
     app.use(express.json());
 
     let loadWithUrlRequestCount = 0;
+    let totalDataTransferred = 0;
+    let cacheHits = 0;
+    let cacheMisses = 0;
+    let reloadCount = 0;
+    const sessionStart = Date.now();
+    const urlHitCounts = new Map<string, number>();
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
@@ -1164,15 +1172,25 @@ export async function runAppPreviewServer({
             const locale = extractLocaleFromPath(urlPath);
 
             const json = getSerializedDocsLoadResponse(locale);
+            const cliCacheStatus = responseCache.lastHit ? "HIT" : "MISS";
             // Content-Type set explicitly because `json` is a pre-serialized string;
             // res.send(string) would otherwise default to text/html.
             res.setHeader("Content-Type", "application/json");
             res.send(json);
 
             loadWithUrlRequestCount++;
-            const sizeMB = (Buffer.byteLength(json) / (1024 * 1024)).toFixed(2);
+            const byteSize = Buffer.byteLength(json);
+            totalDataTransferred += byteSize;
+            const sizeMB = (byteSize / (1024 * 1024)).toFixed(2);
+            const normalizedUrl = urlPath ?? "/";
+            urlHitCounts.set(normalizedUrl, (urlHitCounts.get(normalizedUrl) ?? 0) + 1);
+            if (cliCacheStatus === "HIT") {
+                cacheHits++;
+            } else {
+                cacheMisses++;
+            }
             context.logger.info(
-                `[BENCHMARK] /load-with-url #${loadWithUrlRequestCount}: url=${urlPath ?? "/"}, total: ${Date.now() - start}ms, size: ${sizeMB}MB`
+                `[PERF] /load-with-url #${loadWithUrlRequestCount}: url=${normalizedUrl}, latency=${Date.now() - start}ms, size=${sizeMB}MB, cli_cache=${cliCacheStatus}`
             );
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
@@ -1194,7 +1212,8 @@ export async function runAppPreviewServer({
         debugLogger,
         getSerializedDocsLoadResponse,
         extractLocaleFromPath,
-        logInfo: (msg) => context.logger.info(msg)
+        logInfo: (msg) => context.logger.info(msg),
+        getLastCacheHit: () => responseCache.lastHit
     });
     if (bunHandle != null) {
         sendData = bunHandle.sendData;
@@ -1393,6 +1412,7 @@ export async function runAppPreviewServer({
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
                         invalidateResponseCache();
+                        reloadCount++;
 
                         sendData({
                             version: 1,
@@ -1438,6 +1458,22 @@ export async function runAppPreviewServer({
             return;
         }
         cleanedUp = true;
+
+        // Print session summary
+        const sessionDuration = ((Date.now() - sessionStart) / 1000).toFixed(1);
+        const totalMB = (totalDataTransferred / (1024 * 1024)).toFixed(1);
+        const uniquePages = urlHitCounts.size;
+        context.logger.info(`[PERF] ── Session Summary ──`);
+        context.logger.info(
+            `[PERF]   Duration: ${sessionDuration}s | Requests: ${loadWithUrlRequestCount} | Data: ${totalMB}MB`
+        );
+        context.logger.info(
+            `[PERF]   CLI cache: ${cacheHits} hits, ${cacheMisses} misses | Reloads: ${reloadCount}`
+        );
+        context.logger.info(`[PERF]   Unique pages: ${uniquePages}`);
+        for (const [url, count] of urlHitCounts) {
+            context.logger.info(`[PERF]     ${url}: ${count} requests`);
+        }
 
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);

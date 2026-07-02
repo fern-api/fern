@@ -41,6 +41,8 @@ export interface BunServerOptions {
     extractLocaleFromPath?(urlPath: string | undefined): string | undefined;
     /** Optional logger for benchmark output. */
     logInfo?(message: string): void;
+    /** Returns whether the last getSerializedDocsLoadResponse call was a cache hit. */
+    getLastCacheHit?(): boolean;
 }
 
 export interface BunServer {
@@ -58,7 +60,8 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getSerializedDocsLoadResponse, extractLocaleFromPath, logInfo } = options;
+    const { port, debugLogger, getSerializedDocsLoadResponse, extractLocaleFromPath, logInfo, getLastCacheHit } =
+        options;
     let loadWithUrlRequestCount = 0;
 
     type WsData = { connectionId: string };
@@ -106,10 +109,11 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                     const urlPath = body?.url;
                     const locale = extractLocaleFromPath?.(urlPath);
                     const responseJson = getSerializedDocsLoadResponse(locale);
+                    const cliCacheStatus = getLastCacheHit?.() ? "HIT" : "MISS";
                     loadWithUrlRequestCount++;
                     const sizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
                     logInfo?.(
-                        `[BENCHMARK] /load-with-url #${loadWithUrlRequestCount}: url=${urlPath ?? "/"}, total: ${Date.now() - start}ms, size: ${sizeMB}MB`
+                        `[PERF] /load-with-url #${loadWithUrlRequestCount}: url=${urlPath ?? "/"}, latency=${Date.now() - start}ms, size=${sizeMB}MB, cli_cache=${cliCacheStatus}`
                     );
                     return new Response(responseJson, {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
@@ -164,6 +168,8 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                         if (metadata) {
                             metadata.lastPong = Date.now();
                         }
+                    } else if (parsed.type === "perf_log" && typeof parsed.message === "string") {
+                        logInfo?.(parsed.message);
                     } else if (DebugLogger.isMetricsMessage(parsed)) {
                         void debugLogger.logFrontendMetrics(parsed);
                     }
