@@ -39,6 +39,8 @@ export interface BunServerOptions {
      * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
      */
     extractLocaleFromPath?(urlPath: string | undefined): string | undefined;
+    /** Optional logger for benchmark output. */
+    logInfo?(message: string): void;
 }
 
 export interface BunServer {
@@ -56,7 +58,8 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getSerializedDocsLoadResponse, extractLocaleFromPath } = options;
+    const { port, debugLogger, getSerializedDocsLoadResponse, extractLocaleFromPath, logInfo } = options;
+    let loadWithUrlRequestCount = 0;
 
     type WsData = { connectionId: string };
     const connections = new Map<BunServerWebSocket<WsData>, { pingInterval: NodeJS.Timeout; lastPong: number }>();
@@ -97,11 +100,17 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
             // POST /v2/registry/docs/load-with-url
             if (req.method === "POST" && url.pathname === "/v2/registry/docs/load-with-url") {
+                const start = Date.now();
                 try {
                     const body = (await req.json()) as { url?: string } | undefined;
                     const urlPath = body?.url;
                     const locale = extractLocaleFromPath?.(urlPath);
                     const responseJson = getSerializedDocsLoadResponse(locale);
+                    loadWithUrlRequestCount++;
+                    const sizeMB = (responseJson.length / (1024 * 1024)).toFixed(2);
+                    logInfo?.(
+                        `[BENCHMARK] /load-with-url #${loadWithUrlRequestCount}: url=${urlPath ?? "/"}, total: ${Date.now() - start}ms, size: ${sizeMB}MB`
+                    );
                     return new Response(responseJson, {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });

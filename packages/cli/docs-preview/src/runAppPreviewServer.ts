@@ -1152,9 +1152,12 @@ export async function runAppPreviewServer({
     // Parse JSON body middleware for the load-with-url endpoint
     app.use(express.json());
 
+    let loadWithUrlRequestCount = 0;
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (req, res) => {
         try {
+            const start = Date.now();
             // Extract locale from the request body URL if present
             const requestBody = req.body as { url?: string } | undefined;
             const urlPath = requestBody?.url;
@@ -1165,6 +1168,12 @@ export async function runAppPreviewServer({
             // res.send(string) would otherwise default to text/html.
             res.setHeader("Content-Type", "application/json");
             res.send(json);
+
+            loadWithUrlRequestCount++;
+            const sizeMB = (Buffer.byteLength(json) / (1024 * 1024)).toFixed(2);
+            context.logger.info(
+                `[BENCHMARK] /load-with-url #${loadWithUrlRequestCount}: url=${urlPath ?? "/"}, total: ${Date.now() - start}ms, size: ${sizeMB}MB`
+            );
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -1184,7 +1193,8 @@ export async function runAppPreviewServer({
         port: backendPort,
         debugLogger,
         getSerializedDocsLoadResponse,
-        extractLocaleFromPath
+        extractLocaleFromPath,
+        logInfo: (msg) => context.logger.info(msg)
     });
     if (bunHandle != null) {
         sendData = bunHandle.sendData;
