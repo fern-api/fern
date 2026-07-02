@@ -104,9 +104,7 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                 .beginControlFlow("try");
         if (jackson.isJackson3()) {
             builder.addStatement(CodeBlock.builder()
-                    .add(
-                            "return $L\n.writerWithDefaultPrettyPrinter()\n",
-                            JSON_MAPPER_STATIC_FIELD_NAME)
+                    .add("return $L\n.writerWithDefaultPrettyPrinter()\n", JSON_MAPPER_STATIC_FIELD_NAME)
                     .add(".writeValueAsString(o)")
                     .build());
         } else {

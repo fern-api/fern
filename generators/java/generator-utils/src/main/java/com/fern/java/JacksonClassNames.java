@@ -173,7 +173,8 @@ public final class JacksonClassNames {
         result = result.replace("com.fasterxml.jackson.core", "tools.jackson.core");
         // Jackson 3 API changes: ObjectNode.fields() → properties(), ArrayNode.elements() returns Collection
         result = result.replace("object.fields()", "object.properties().iterator()");
-        result = result.replace("Iterator<JsonNode> elements = array.elements()",
+        result = result.replace(
+                "Iterator<JsonNode> elements = array.elements()",
                 "Iterator<JsonNode> elements = array.elements().iterator()");
         // Remove Jdk8Module and JavaTimeModule imports and registrations (built into Jackson 3)
         result = result.replace("import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;\n", "");
