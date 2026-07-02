@@ -846,6 +846,224 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
-    "globalParameters": null,
+    "globalParameters": [
+        {
+            "id": "currency",
+            "name": "currency",
+            "location": "body",
+            "target": "config.currency",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": "CHANNEL3_CURRENCY",
+            "clientDefault": {
+                "type": "string",
+                "string": "USD"
+            },
+            "optional": true,
+            "apply": "auto",
+            "docs": "The currency code used for pricing."
+        },
+        {
+            "id": "language",
+            "name": "language",
+            "location": "query",
+            "target": "language",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": "CHANNEL3_LANGUAGE",
+            "clientDefault": null,
+            "optional": true,
+            "apply": null,
+            "docs": null
+        },
+        {
+            "id": "x-custom-header",
+            "name": "x-custom-header",
+            "location": "header",
+            "target": "x-custom-header",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": "CUSTOM_HEADER",
+            "clientDefault": null,
+            "optional": false,
+            "apply": null,
+            "docs": null
+        },
+        {
+            "id": "region",
+            "name": "region",
+            "location": "path",
+            "target": "regionId",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": "CHANNEL3_REGION",
+            "clientDefault": {
+                "type": "string",
+                "string": "us"
+            },
+            "optional": null,
+            "apply": "explicit",
+            "docs": null
+        },
+        {
+            "id": "verbose",
+            "name": "verbose",
+            "location": "query",
+            "target": "verbose",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "BOOLEAN",
+                            "v2": {
+                                "type": "boolean",
+                                "default": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": null,
+            "clientDefault": {
+                "type": "boolean",
+                "boolean": false
+            },
+            "optional": true,
+            "apply": null,
+            "docs": "Enable verbose response output."
+        },
+        {
+            "id": "max-retries",
+            "name": {
+                "wireValue": "max-retries",
+                "name": "maxRetries"
+            },
+            "location": "header",
+            "target": "X-Max-Retries",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "INTEGER",
+                            "v2": {
+                                "type": "integer",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
+                    }
+                }
+            },
+            "env": null,
+            "clientDefault": {
+                "type": "string",
+                "string": "3"
+            },
+            "optional": true,
+            "apply": null,
+            "docs": null
+        },
+        {
+            "id": "api-version",
+            "name": "api-version",
+            "location": "query",
+            "target": "api-version",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": null,
+            "clientDefault": null,
+            "optional": null,
+            "apply": null,
+            "docs": "The API version to use for the request."
+        },
+        {
+            "id": "x-trace-id",
+            "name": "x-trace-id",
+            "location": "header",
+            "target": "x-trace-id",
+            "valueType": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "env": "TRACE_ID",
+            "clientDefault": {
+                "type": "string",
+                "string": "trace-default"
+            },
+            "optional": null,
+            "apply": null,
+            "docs": "x-fern-default should take precedence over default."
+        }
+    ],
     "generatorConfig": null
 }

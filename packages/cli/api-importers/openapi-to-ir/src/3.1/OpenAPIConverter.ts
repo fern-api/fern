@@ -359,13 +359,14 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
         const errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
+        const declaredGlobalParameterIds =
+            this.ir.globalParameters != null ? new Set(this.ir.globalParameters.map((p) => p.id)) : undefined;
+
         for (const [path, pathItem] of Object.entries(this.context.spec.paths ?? {})) {
             if (pathItem == null) {
                 continue;
             }
 
-            const declaredGlobalParameterIds =
-                this.ir.globalParameters != null ? new Set(this.ir.globalParameters.map((p) => p.id)) : undefined;
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],

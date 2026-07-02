@@ -34,6 +34,7 @@ import { convertApiVersionScheme } from "./converters/convertApiVersionScheme.js
 import { convertChannel } from "./converters/convertChannel.js";
 import { getAudiences } from "./converters/convertDeclaration.js";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration.js";
+import { convertGlobalParameters } from "./converters/convertGlobalParameters.js";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy.js";
 import { convertReadmeConfig } from "./converters/convertReadmeConfig.js";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup.js";
@@ -198,7 +199,13 @@ export function generateIntermediateRepresentation({
                       type: rootApiFileContext.parseTypeReference(variable)
                   }))
                 : [],
-        globalParameters: undefined,
+        globalParameters:
+            workspace.definition.rootApiFile.contents["global-parameters"] != null
+                ? convertGlobalParameters({
+                      globalParameters: workspace.definition.rootApiFile.contents["global-parameters"],
+                      file: rootApiFileContext
+                  })
+                : undefined,
         serviceTypeReferenceInfo: {
             typesReferencedOnlyByService: {},
             sharedTypes: []

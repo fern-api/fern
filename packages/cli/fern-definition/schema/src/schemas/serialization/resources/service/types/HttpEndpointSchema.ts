@@ -41,6 +41,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         transport: ServiceTransport.optional(),
         source: SourceSchema.optional(),
         retries: RetriesConfiguration.optional(),
+        "global-parameters": core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDisplayName)
     .extend(DeclarationSchema);
@@ -65,5 +66,6 @@ export declare namespace HttpEndpointSchema {
         transport?: ServiceTransport.Raw | null;
         source?: SourceSchema.Raw | null;
         retries?: RetriesConfiguration.Raw | null;
+        "global-parameters"?: string[] | null;
     }
 }

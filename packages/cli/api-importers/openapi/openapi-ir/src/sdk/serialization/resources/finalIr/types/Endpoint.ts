@@ -50,6 +50,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             examples: core.serialization.list(EndpointExample),
             pagination: Pagination.optional(),
             retries: RetriesConfiguration.optional(),
+            globalParameterIds: core.serialization.list(core.serialization.string()).optional(),
         })
         .extend(WithDescription)
         .extend(WithAvailability)
@@ -82,5 +83,6 @@ export declare namespace Endpoint {
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
         retries?: RetriesConfiguration.Raw | null;
+        globalParameterIds?: string[] | null;
     }
 }
