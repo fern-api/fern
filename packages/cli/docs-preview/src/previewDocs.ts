@@ -189,7 +189,14 @@ export async function getPreviewDocsDefinition({
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
+        if (!allMarkdownFiles) {
+            const nonMd = editedAbsoluteFilepaths.filter((f) => !f.endsWith(".mdx") && !f.endsWith(".md"));
+            context.logger.info(
+                `[PERF] docsGen: FULL path (non-markdown files: ${nonMd.map((f) => f.split("/").pop()).join(", ")})`
+            );
+        }
         let navAffectingChange = false;
+        let navAffectingReason = "";
 
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
@@ -198,6 +205,7 @@ export async function getPreviewDocsDefinition({
 
             if (!(await doesPathExist(absoluteFilePath))) {
                 navAffectingChange = true;
+                navAffectingReason = `file deleted: ${absoluteFilePath.split("/").pop()}`;
                 continue;
             }
 
@@ -206,24 +214,28 @@ export async function getPreviewDocsDefinition({
             const isNewFile = previousValue == null;
             if (isNewFile) {
                 navAffectingChange = true;
+                navAffectingReason = `new file: ${absoluteFilePath.split("/").pop()}`;
             }
 
             const currentPosition = extractFrontmatterPosition(markdown);
             const cachedPosition = frontmatterPositionCache.get(absoluteFilePath);
             if (cachedPosition !== currentPosition) {
                 navAffectingChange = true;
+                navAffectingReason = `position changed: ${cachedPosition} -> ${currentPosition}`;
             }
 
             const currentSidebarTitle = extractFrontmatterSidebarTitle(markdown);
             const cachedSidebarTitle = frontmatterSidebarTitleCache.get(absoluteFilePath);
             if (cachedSidebarTitle !== currentSidebarTitle) {
                 navAffectingChange = true;
+                navAffectingReason = `sidebar-title changed: "${cachedSidebarTitle}" -> "${currentSidebarTitle}"`;
             }
 
             const currentSlug = extractFrontmatterSlug(markdown);
             const cachedSlug = frontmatterSlugCache.get(absoluteFilePath);
             if (cachedSlug !== currentSlug) {
                 navAffectingChange = true;
+                navAffectingReason = `slug changed: "${cachedSlug}" -> "${currentSlug}"`;
             }
 
             frontmatterPositionCache.set(absoluteFilePath, currentPosition);
@@ -319,7 +331,7 @@ export async function getPreviewDocsDefinition({
         }
 
         if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {
-            // Return updated definition with preserved translation data
+            context.logger.info(`[PERF] docsGen: INCREMENTAL path (content-only update)`);
             return {
                 docsDefinition: previousDocsDefinition,
                 translationPages: previousPreviewResult.translationPages,
@@ -329,6 +341,20 @@ export async function getPreviewDocsDefinition({
                 translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions
             };
         }
+
+        if (navAffectingChange) {
+            context.logger.info(`[PERF] docsGen: FULL path (nav-affecting change: ${navAffectingReason})`);
+        } else if (!allMarkdownFiles) {
+            // already logged above
+        } else if (previousPreviewResult == null) {
+            context.logger.info(`[PERF] docsGen: FULL path (no previous preview result)`);
+        }
+    }
+
+    if (editedAbsoluteFilepaths == null) {
+        context.logger.info(`[PERF] docsGen: FULL path (initial load, no edited files)`);
+    } else if (previousDocsDefinition == null) {
+        context.logger.info(`[PERF] docsGen: FULL path (no previous docs definition)`);
     }
 
     const ossWorkspaces = await filterOssWorkspaces(project);

@@ -957,24 +957,41 @@ export async function runAppPreviewServer({
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
 
+        // Log edited files for debugging
+        if (editedAbsoluteFilepaths != null && editedAbsoluteFilepaths.length > 0) {
+            const fileNames = editedAbsoluteFilepaths.map((f) => f.split("/").pop() ?? f);
+            context.logger.info(`[PERF] Edited files (${editedAbsoluteFilepaths.length}): ${fileNames.join(", ")}`);
+        }
+
         // Log CLI reload start
         void debugLogger.logCliReloadStart();
 
         try {
+            const loadProjectStart = Date.now();
             project = await reloadProject();
+            const loadProjectTime = Date.now() - loadProjectStart;
+            context.logger.info(`[PERF] loadProject: ${loadProjectTime}ms`);
 
             // Rebuild dependency map after reloading project
+            const snippetStart = Date.now();
             await snippetTracker.buildDependencyMap(project);
+            const snippetTime = Date.now() - snippetStart;
+            if (snippetTime > 50) {
+                context.logger.info(`[PERF] snippetTracker.buildDependencyMap: ${snippetTime}ms`);
+            }
 
             // Start validation in background - don't block the reload
             const validationStartTime = Date.now();
+            context.logger.info(`[PERF] Background validation started`);
             void validateProject(project)
                 .then(() => {
                     const validationTime = Date.now() - validationStartTime;
+                    context.logger.info(`[PERF] Background validation completed: ${validationTime}ms`);
                     void debugLogger.logCliValidation(validationTime, true);
                 })
                 .catch((err) => {
                     const validationTime = Date.now() - validationStartTime;
+                    context.logger.info(`[PERF] Background validation failed: ${validationTime}ms`);
                     void debugLogger.logCliValidation(validationTime, false);
                     context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
                     // Still log validation errors to help developers
@@ -993,6 +1010,7 @@ export async function runAppPreviewServer({
                 previousPreviewResult: previewResult
             });
             const docsGenTime = Date.now() - docsGenStartTime;
+            context.logger.info(`[PERF] docsGen: ${docsGenTime}ms`);
 
             // Log CLI docs generation time
             void debugLogger.logCliDocsGeneration(docsGenTime, {
@@ -1000,7 +1018,9 @@ export async function runAppPreviewServer({
             });
 
             const totalTime = Date.now() - startTime;
-            context.logger.info(`Reload completed in ${totalTime}ms`);
+            context.logger.info(
+                `Reload completed in ${totalTime}ms (loadProject: ${loadProjectTime}ms, docsGen: ${docsGenTime}ms)`
+            );
 
             // Log CLI reload finish with total time and memory
             void debugLogger.logCliReloadFinish(totalTime, {
