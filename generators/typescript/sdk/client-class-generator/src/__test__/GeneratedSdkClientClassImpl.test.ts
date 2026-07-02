@@ -1018,17 +1018,17 @@ describe("GeneratedSdkClientClassImpl", () => {
     });
 
     describe("getOptionsPropertiesForSnippet", () => {
-        it("includes environment property when no default environment and not requireDefaultEnvironment", () => {
+        it("includes baseUrl property when no default environment, no first enum, and not requireDefaultEnvironment", () => {
             const clientClass = createClientClass({ requireDefaultEnvironment: false });
             const context = createMockFileContext();
             const props = clientClass.getOptionsPropertiesForSnippet(context);
-            // Should include environment: "YOUR_BASE_URL" since no default env and no first enum
+            // Should include baseUrl: "YOUR_BASE_URL" since no predefined environments exist
             expect(props.length).toBeGreaterThan(0);
-            const envProp = props.find((p) => {
+            const baseUrlProp = props.find((p) => {
                 const text = getTextOfTsNode(p);
-                return text.includes("environment");
+                return text.includes("baseUrl");
             });
-            expect(envProp).toBeDefined();
+            expect(baseUrlProp).toBeDefined();
         });
 
         it("includes auth snippet properties when auth provider exists", () => {
