@@ -213,11 +213,14 @@ export class Stream<T> implements AsyncIterable<T> {
             if (this.controller.signal.aborted) {
                 return;
             }
+            // Re-check after async delay; needed for TypeScript narrowing.
             const reconnectFn = this.reconnect;
             if (reconnectFn == null || lastId == null) {
                 return;
             }
-            currentStream = await reconnectFn(lastId);
+            try {
+                currentStream = await reconnectFn(lastId);
+            } catch {}
         }
     }
 
@@ -292,11 +295,14 @@ export class Stream<T> implements AsyncIterable<T> {
             if (this.controller.signal.aborted) {
                 return;
             }
+            // Re-check after async delay; needed for TypeScript narrowing.
             const reconnectFn = this.reconnect;
             if (reconnectFn == null || lastId == null) {
                 return;
             }
-            currentStream = await reconnectFn(lastId);
+            try {
+                currentStream = await reconnectFn(lastId);
+            } catch {}
         }
     }
 
