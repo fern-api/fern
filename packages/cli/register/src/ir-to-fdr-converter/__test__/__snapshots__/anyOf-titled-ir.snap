@@ -169,6 +169,7 @@
             "head": "/anyOf/titled",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_anyOfExamples.anyOfExample",
           "idempotent": false,

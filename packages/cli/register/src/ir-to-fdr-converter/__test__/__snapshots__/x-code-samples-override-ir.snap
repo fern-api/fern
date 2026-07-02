@@ -129,6 +129,7 @@
               },
             ],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.getUser",
           "idempotent": false,

@@ -93,6 +93,7 @@
             "head": "/measurements",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.createMeasurement",
           "idempotent": false,

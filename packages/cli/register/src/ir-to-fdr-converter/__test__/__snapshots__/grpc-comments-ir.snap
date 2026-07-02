@@ -126,6 +126,7 @@
             "head": "/comments/v1/comments",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_commentsService.CreateComment",
           "idempotent": false,

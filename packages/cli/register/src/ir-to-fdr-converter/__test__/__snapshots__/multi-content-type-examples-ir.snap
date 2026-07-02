@@ -374,6 +374,7 @@
             "head": "/clients",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_clients.create",
           "idempotent": false,

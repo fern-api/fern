@@ -94,6 +94,7 @@
             "head": "/companies",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.createACompany",
           "idempotent": false,

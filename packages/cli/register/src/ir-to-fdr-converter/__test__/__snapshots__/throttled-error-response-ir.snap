@@ -172,6 +172,7 @@
             "head": "/api/resource",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.getResource",
           "idempotent": false,

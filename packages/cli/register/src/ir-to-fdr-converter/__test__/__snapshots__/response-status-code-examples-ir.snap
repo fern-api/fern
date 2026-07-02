@@ -323,6 +323,7 @@
             "head": "/sessions/create",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_sessions.createSession",
           "idempotent": false,

@@ -959,6 +959,7 @@
             "head": "/plant",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_plant.addPlant",
           "idempotent": false,

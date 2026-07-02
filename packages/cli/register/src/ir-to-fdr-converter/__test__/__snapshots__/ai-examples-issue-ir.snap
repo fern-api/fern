@@ -1172,6 +1172,7 @@
             "head": "/plant",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.addPlant",
           "idempotent": false,
