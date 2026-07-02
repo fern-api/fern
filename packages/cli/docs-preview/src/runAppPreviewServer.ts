@@ -744,7 +744,8 @@ export async function runAppPreviewServer({
             translationNavigationOverlays,
             translatedApiDefinitions,
             collectedFileIds,
-            docsWorkspacePath
+            docsWorkspacePath,
+            markdownFilesToPathName
         } = result;
 
         const hasTranslatedPages = translationPages != null && Object.keys(translationPages).length > 0;
@@ -838,7 +839,7 @@ export async function runAppPreviewServer({
                         processedMarkdown = replaceImagePathsAndUrls(
                             processedMarkdown,
                             collectedFileIds,
-                            {}, // markdownFilesToPathName not needed for translations
+                            markdownFilesToPathName,
                             {
                                 absolutePathToMarkdownFile,
                                 absolutePathToFernFolder: docsWorkspacePath

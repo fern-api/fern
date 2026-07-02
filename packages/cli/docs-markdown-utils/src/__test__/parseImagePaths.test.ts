@@ -1049,6 +1049,39 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
         expect(replaced).toContain("[text](/other/page)");
     });
 
+    it("should resolve relative .md links in translated content when markdownFilesToPathName is provided", () => {
+        // Regression test: translated pages previously passed {} for markdownFilesToPathName,
+        // so relative .md links like ../reference/support-matrix.md were not resolved to slugs.
+        // The on-disk directory "reference/" maps to nav slug "resources/" in this scenario.
+        const page =
+            "Check the [support matrix](../reference/support-matrix.md) for details and also the [quickstart](./quickstart.mdx) guide.";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/reference/support-matrix.md": "/dynamo/dev/resources/support-matrix",
+            "/Volume/git/fern/my/docs/reference/support-matrix.mdx": "/dynamo/dev/resources/support-matrix",
+            "/Volume/git/fern/my/docs/folder/quickstart.mdx": "/dynamo/dev/getting-started/quickstart"
+        };
+        const replaced = replaceImagePathsAndUrls(
+            parseResult.markdown,
+            new Map(),
+            markdownFilesToPathName,
+            PATHS,
+            CONTEXT
+        );
+        expect(replaced).toContain("[support matrix](/dynamo/dev/resources/support-matrix)");
+        expect(replaced).toContain("[quickstart](/dynamo/dev/getting-started/quickstart)");
+    });
+
+    it("should not resolve relative .md links when markdownFilesToPathName is empty (previous bug)", () => {
+        // When markdownFilesToPathName is {}, relative .md links pass through unresolved.
+        // This demonstrates the bug that existed for translated content.
+        const page = "Check the [support matrix](../reference/support-matrix.md) for details.";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, new Map(), {}, PATHS, CONTEXT);
+        // With empty map, the link is NOT resolved — the .md extension remains
+        expect(replaced).toContain("[support matrix](../reference/support-matrix.md)");
+    });
+
     it("should replace absolute image paths with file IDs using streaming parser", () => {
         const page =
             "This is a test page with an absolute image ![image](/static/image.png) and lots more content to exceed the 100 bytes threshold for the streaming parser to run while replacing paths.";
