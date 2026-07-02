@@ -1,6 +1,5 @@
 package com.fern.java;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.*;
 import com.squareup.javapoet.ArrayTypeName;
@@ -23,6 +22,7 @@ public final class PoetTypeNameMapper {
             new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
     private final ICustomConfig customConfig;
+    private final JacksonClassNames jacksonClassNames;
     private final Map<TypeId, TypeDeclaration> typeDefinitionsByName;
     private final Map<DeclaredTypeName, ClassName> enclosingClasses;
 
@@ -33,6 +33,7 @@ public final class PoetTypeNameMapper {
             Map<DeclaredTypeName, ClassName> enclosingClasses) {
         this.poetClassNameFactory = poetClassNameFactory;
         this.customConfig = customConfig;
+        this.jacksonClassNames = new JacksonClassNames(customConfig);
         this.typeDefinitionsByName = typeDefinitionsByName;
         this.enclosingClasses = enclosingClasses;
     }
@@ -112,7 +113,7 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitUnknown() {
             if (customConfig.generateUnknownAsJsonNode()) {
-                return ClassName.get(JsonNode.class);
+                return jacksonClassNames.jsonNode();
             }
             return ClassName.get(Object.class);
         }

@@ -1,6 +1,5 @@
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.errors.ErrorDeclaration;
@@ -760,7 +759,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                 }
                 httpResponseBuilder
                         .endControlFlow()
-                        .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
+                        .beginControlFlow(
+                                "catch ($T ignored)",
+                                clientGeneratorContext.getJacksonClassNames().jsonProcessingException())
                         .add("// unable to map error response, throwing generic error\n")
                         .endControlFlow();
             }

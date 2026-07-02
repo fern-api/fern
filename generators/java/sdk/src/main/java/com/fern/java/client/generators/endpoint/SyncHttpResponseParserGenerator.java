@@ -1,6 +1,5 @@
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.java.client.ClientGeneratorContext;
@@ -272,7 +271,9 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     @Override
     public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
-                .beginControlFlow("catch ($T e)", JsonProcessingException.class)
+                .beginControlFlow(
+                        "catch ($T e)",
+                        clientGeneratorContext.getJacksonClassNames().jsonProcessingException())
                 .addStatement(
                         "throw new $T($S + e.getMessage(), e)", baseErrorClassName, "Failed to deserialize response: ")
                 .endControlFlow()

@@ -32,6 +32,7 @@ public final class SseEventParserGenerator extends AbstractFileGenerator {
     public GeneratedResourcesJavaFile generateFile() {
         try (InputStream is = SseEventParserGenerator.class.getResourceAsStream("/SseEventParser.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            contents = generatorContext.getJacksonClassNames().transformResourceContents(contents);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)

@@ -2,8 +2,8 @@ package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ICustomConfig;
+import com.fern.java.JacksonClassNames;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeWithClassName;
@@ -44,6 +44,7 @@ public final class ObjectTypeSpecGenerator {
     private final boolean disableRequiredPropertyBuilderChecks;
     private final boolean builderNotNullChecks;
     private final boolean useBuilderConstructor;
+    private final JacksonClassNames jacksonClassNames;
 
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
@@ -56,7 +57,8 @@ public final class ObjectTypeSpecGenerator {
             boolean supportAdditionalProperties,
             ICustomConfig.JsonInclude jsonInclude,
             Boolean disableRequiredPropertyBuilderChecks,
-            boolean builderNotNullChecks) {
+            boolean builderNotNullChecks,
+            JacksonClassNames jacksonClassNames) {
         this.objectClassName = objectClassName;
         this.generatedObjectMapperClassName = generatedObjectMapperClassName;
         this.nullableClassName = nullableClassName;
@@ -71,6 +73,7 @@ public final class ObjectTypeSpecGenerator {
         this.publicConstructorsEnabled = publicConstructorsEnabled;
         this.supportAdditionalProperties = supportAdditionalProperties;
         this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
+        this.jacksonClassNames = jacksonClassNames;
         long paramSlots = allEnrichedProperties.stream()
                 .filter(p -> p.fieldSpec().isPresent())
                 .mapToLong(p -> jvmSlots(p.fieldSpec().get().type))
@@ -130,7 +133,7 @@ public final class ObjectTypeSpecGenerator {
                                 JsonInclude.class,
                                 jsonInclude == ICustomConfig.JsonInclude.NON_ABSENT ? "NON_ABSENT" : "NON_EMPTY")
                         .build());
-                typeSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                typeSpecBuilder.addAnnotation(AnnotationSpec.builder(jacksonClassNames.jsonDeserialize())
                         .addMember("builder", "$T.class", objectBuilder.getBuilderImplClassName())
                         .build());
             }

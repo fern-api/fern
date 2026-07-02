@@ -9,6 +9,7 @@ public abstract class ParsedGradleDependency extends AbstractGradleDependency {
 
     public static final String JACKSON_JDK8_VERSION = "2.18.6";
     public static final String JACKSON_DATABIND_VERSION = "2.18.6";
+    public static final String JACKSON3_DATABIND_VERSION = "3.2.0";
     public static final String UTILS_VERSION = "0.0.82";
     public static final String OKHTTP_VERSION = "5.2.1";
     public static final String FEIGN_VERSION = "11.8";

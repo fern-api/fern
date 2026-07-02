@@ -16,7 +16,6 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.http.BytesRequest;
 import com.fern.ir.model.http.FileUploadRequest;
 import com.fern.ir.model.http.HttpEndpoint;
@@ -425,7 +424,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 codeBlock.endControlFlow();
             }
             codeBlock
-                    .beginControlFlow("catch($T e)", JsonProcessingException.class)
+                    .beginControlFlow(
+                            "catch($T e)",
+                            clientGeneratorContext.getJacksonClassNames().jsonProcessingException())
                     .addStatement("throw new $T($S, e)", baseErrorClassName, "Failed to serialize request")
                     .endControlFlow();
             return null;
@@ -453,13 +454,14 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
             // Convert the request object to a Map using Jackson, preserving wire names from @JsonProperty
             codeBlock.addStatement(
-                    "$T<$T, $T> formParams = $T.$L.convertValue($L, new com.fasterxml.jackson.core.type.TypeReference<$T<$T, $T>>() {})",
+                    "$T<$T, $T> formParams = $T.$L.convertValue($L, new $T<$T<$T, $T>>() {})",
                     Map.class,
                     String.class,
                     Object.class,
                     generatedObjectMapper.getClassName(),
                     generatedObjectMapper.jsonMapperStaticField().name,
                     requestBodyGetter,
+                    clientGeneratorContext.getJacksonClassNames().typeReference(),
                     Map.class,
                     String.class,
                     Object.class);

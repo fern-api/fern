@@ -33,6 +33,7 @@ public final class StreamGenerator extends AbstractFileGenerator {
     public GeneratedResourcesJavaFile generateFile() {
         try (InputStream is = StreamGenerator.class.getResourceAsStream("/Stream.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            contents = generatorContext.getJacksonClassNames().transformResourceContents(contents);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)

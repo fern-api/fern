@@ -140,6 +140,10 @@ fixtures:
       license:
         custom: LICENSE
       outputFolder: custom-license
+    - customConfig:
+        jackson-version: "3"
+      outputFolder: jackson3
+      skipScripts: true
   java-idempotency-headers-file-upload:
     - outputFolder: default
   java-inline-types:

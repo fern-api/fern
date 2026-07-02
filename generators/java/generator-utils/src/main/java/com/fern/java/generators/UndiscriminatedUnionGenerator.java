@@ -17,12 +17,7 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fern.java.JacksonClassNames;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.commons.TypeId;
@@ -404,8 +399,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
         EqualsMethod equalsMethod = generateEqualsMethod();
 
+        JacksonClassNames jackson = generatorContext.getJacksonClassNames();
         TypeSpec.Builder unionTypeSpec = TypeSpec.classBuilder(className)
-                .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
+                .addAnnotation(AnnotationSpec.builder(jackson.jsonDeserialize())
                         .addMember("using", "$T.class", deserializerClassName)
                         .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
@@ -571,17 +567,18 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     }
 
     private TypeSpec getDeserializer() {
+        JacksonClassNames jackson = generatorContext.getJacksonClassNames();
         TypeSpec.Builder deserializerBuilder = TypeSpec.classBuilder(deserializerClassName)
                 .addModifiers(Modifier.STATIC, Modifier.FINAL)
-                .superclass(ParameterizedTypeName.get(ClassName.get(StdDeserializer.class), className))
+                .superclass(ParameterizedTypeName.get(jackson.stdDeserializer(), className))
                 .addMethod(MethodSpec.constructorBuilder()
                         .addStatement("super($T.class)", className)
                         .build());
         MethodSpec.Builder deserializeMethod = MethodSpec.methodBuilder("deserialize")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(className)
-                .addParameter(JsonParser.class, "p")
-                .addParameter(DeserializationContext.class, "context")
+                .addParameter(jackson.jsonParser(), "p")
+                .addParameter(jackson.deserializationContext(), "context")
                 .addException(IOException.class)
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(
@@ -650,7 +647,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
                                 ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
                                 VALUE_FIELD_SPEC.name,
-                                ParameterizedTypeName.get(ClassName.get(TypeReference.class), typeName))
+                                ParameterizedTypeName.get(jackson.typeReference(), typeName))
                         .nextControlFlow("catch($T e)", RuntimeException.class)
                         .endControlFlow();
             } else {
@@ -670,7 +667,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 deserializeMethod.endControlFlow();
             }
         }
-        deserializeMethod.addStatement("throw new $T(p, $S)", JsonParseException.class, "Failed to deserialize");
+        deserializeMethod.addStatement("throw new $T(p, $S)", jackson.jsonParseException(), "Failed to deserialize");
         return deserializerBuilder.addMethod(deserializeMethod.build()).build();
     }
 

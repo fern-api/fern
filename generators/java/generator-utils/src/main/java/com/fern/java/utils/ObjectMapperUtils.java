@@ -32,7 +32,7 @@ public final class ObjectMapperUtils {
                 typeReferenceBlock = CodeBlock.of(
                         "new $T() {}",
                         ParameterizedTypeName.get(
-                                ClassName.get(com.fasterxml.jackson.core.type.TypeReference.class),
+                                context.getJacksonClassNames().typeReference(),
                                 dataVariableTypeName));
             } else {
                 typeReferenceBlock = CodeBlock.of("$T.class", dataVariableTypeName);

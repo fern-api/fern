@@ -33,6 +33,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
     private final Set<TypeId> interfaces;
     private final U customConfig;
     private final List<AuthScheme> resolvedAuthSchemes;
+    private final JacksonClassNames jacksonClassNames;
 
     public AbstractGeneratorContext(
             IntermediateRepresentation ir,
@@ -43,6 +44,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.ir = ir;
         this.generatorConfig = generatorConfig;
         this.customConfig = customConfig;
+        this.jacksonClassNames = new JacksonClassNames(customConfig);
         this.poetClassNameFactory = poetClassNameFactory;
         this.typeDefinitionsByName = ir.getTypes();
         this.resolvedAuthSchemes = resolvedAuthSchemes;
@@ -96,6 +98,10 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
 
     public List<AuthScheme> getResolvedAuthSchemes() {
         return resolvedAuthSchemes;
+    }
+
+    public JacksonClassNames getJacksonClassNames() {
+        return jacksonClassNames;
     }
 
     public boolean isEndpointSecurity() {

@@ -21,6 +21,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "enable-inline-types": z.boolean().optional(),
     "enable-public-constructors": z.boolean().optional(),
     "generate-unknown-as-json-node": z.boolean().optional(),
+    "jackson-version": z.enum(["2", "3"]).optional(),
     "json-include": z.enum(["non-absent", "non-empty"]).optional(),
     "enable-extensible-builders": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),

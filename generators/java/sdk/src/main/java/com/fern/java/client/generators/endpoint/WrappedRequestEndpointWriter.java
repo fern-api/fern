@@ -16,7 +16,6 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.ContainerType;
@@ -434,7 +433,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     if (isCollection) {
                         if (needsJsonSerialization) {
                             dataPartBuilder.endControlFlow();
-                            dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
+                            dataPartBuilder.beginControlFlow(
+                                    "catch ($T e)",
+                                    clientGeneratorContext
+                                            .getJacksonClassNames()
+                                            .jsonProcessingException());
                             dataPartBuilder.add(
                                     "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
                             dataPartBuilder.endControlFlow();

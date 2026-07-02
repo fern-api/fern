@@ -16,6 +16,7 @@ public final class QueryStringMapperGenerator extends AbstractFileGenerator {
     public GeneratedFile generateFile() {
         try (InputStream is = QueryStringMapperGenerator.class.getResourceAsStream("/QueryStringMapper.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            contents = generatorContext.getJacksonClassNames().transformResourceContents(contents);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)

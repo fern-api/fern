@@ -17,6 +17,7 @@ public final class Rfc2822DateTimeDeserializerGenerator extends AbstractFileGene
         try (InputStream is =
                 Rfc2822DateTimeDeserializerGenerator.class.getResourceAsStream("/Rfc2822DateTimeDeserializer.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            contents = generatorContext.getJacksonClassNames().transformResourceContents(contents);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)

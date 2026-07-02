@@ -10,6 +10,7 @@ import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.DownloadFilesCustomConfig;
+import com.fern.java.ICustomConfig;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.DoubleSerializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
@@ -23,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 
 public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesCustomConfig> {
+
+    private final List<AbstractGradleDependency> dependencies = new java.util.ArrayList<>();
 
     @Override
     public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
@@ -61,6 +64,7 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
     private void generateTypes(
             GeneratorConfig generatorConfig, IntermediateRepresentation ir, CustomConfig customConfig) {
         ModelGeneratorContext context = new ModelGeneratorContext(ir, generatorConfig, customConfig);
+        addJacksonDependencies(customConfig);
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
@@ -83,27 +87,39 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
     }
 
+    private void addJacksonDependencies(ICustomConfig customConfig) {
+        if (customConfig.jacksonVersion() == ICustomConfig.JacksonVersion.V3) {
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("tools.jackson.core")
+                    .artifact("jackson-databind")
+                    .version(ParsedGradleDependency.JACKSON3_DATABIND_VERSION)
+                    .build());
+        } else {
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("com.fasterxml.jackson.core")
+                    .artifact("jackson-databind")
+                    .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
+                    .build());
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("com.fasterxml.jackson.datatype")
+                    .artifact("jackson-datatype-jdk8")
+                    .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
+                    .build());
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("com.fasterxml.jackson.datatype")
+                    .artifact("jackson-datatype-jsr310")
+                    .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
+                    .build());
+        }
+    }
+
     @Override
     public List<AbstractGradleDependency> getBuildGradleDependencies() {
-        return List.of(
-                ParsedGradleDependency.builder()
-                        .type(GradleDependencyType.API)
-                        .group("com.fasterxml.jackson.core")
-                        .artifact("jackson-databind")
-                        .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
-                        .build(),
-                ParsedGradleDependency.builder()
-                        .type(GradleDependencyType.API)
-                        .group("com.fasterxml.jackson.datatype")
-                        .artifact("jackson-datatype-jdk8")
-                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
-                        .build(),
-                ParsedGradleDependency.builder()
-                        .type(GradleDependencyType.API)
-                        .group("com.fasterxml.jackson.datatype")
-                        .artifact("jackson-datatype-jsr310")
-                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
-                        .build());
+        return dependencies;
     }
 
     @Override

@@ -1,0 +1,6 @@
+- summary: |
+    Add `jackson-version` config flag to support generating SDKs against Jackson 3.
+    When set to `"3"`, generated code uses `tools.jackson.*` packages, drops Jdk8Module/JavaTimeModule
+    registration (built into Jackson 3 core), and declares `tools.jackson.core:jackson-databind:3.2.0`
+    as the sole Jackson dependency. Defaults to Jackson 2 for backward compatibility.
+  type: feat

@@ -176,7 +176,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 generatorContext.deserializeWithAdditionalProperties(),
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
-                generatorContext.builderNotNullChecks());
+                generatorContext.builderNotNullChecks(),
+                generatorContext.getJacksonClassNames());
         return genericObjectGenerator.generate();
     }
 

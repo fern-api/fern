@@ -143,7 +143,7 @@ public abstract class AbstractWebSocketChannelWriter {
         // Initialize common fields
         // Note: The field holds an ObjectMapper instance, not the ObjectMappers utility class
         this.objectMapperField = FieldSpec.builder(
-                        ClassName.get("com.fasterxml.jackson.databind", "ObjectMapper"),
+                        clientGeneratorContext.getJacksonClassNames().objectMapper(),
                         "objectMapper",
                         Modifier.PRIVATE,
                         Modifier.FINAL)
@@ -463,7 +463,7 @@ public abstract class AbstractWebSocketChannelWriter {
                 .endControlFlow()
                 .addStatement(
                         "$T node = $N.readTree(json)",
-                        ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
+                        clientGeneratorContext.getJacksonClassNames().jsonNode(),
                         objectMapperField)
                 .beginControlFlow("if (node == null || node.isNull())")
                 .addStatement(

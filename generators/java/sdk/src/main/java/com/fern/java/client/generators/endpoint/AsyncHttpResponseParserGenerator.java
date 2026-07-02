@@ -1,6 +1,5 @@
 package com.fern.java.client.generators.endpoint;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.java.client.ClientGeneratorContext;
@@ -217,7 +216,9 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
         httpResponseBuilder.indent();
         onResponseWriter.accept(httpResponseBuilder);
         httpResponseBuilder
-                .beginControlFlow("catch ($T e)", JsonProcessingException.class)
+                .beginControlFlow(
+                        "catch ($T e)",
+                        clientGeneratorContext.getJacksonClassNames().jsonProcessingException())
                 .addStatement(
                         "$L.completeExceptionally(new $T($S + e.getMessage(), e))",
                         FUTURE,

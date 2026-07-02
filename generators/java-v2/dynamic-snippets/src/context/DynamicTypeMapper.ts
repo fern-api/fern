@@ -103,10 +103,14 @@ export class DynamicTypeMapper {
 
     private convertUnknown(): java.Type {
         if (this.context.customConfig?.["generate-unknown-as-json-node"] === true) {
+            const packageName =
+                this.context.customConfig?.["jackson-version"] === "3"
+                    ? "tools.jackson.databind"
+                    : "com.fasterxml.jackson.databind";
             return java.Type.reference(
                 java.classReference({
                     name: "JsonNode",
-                    packageName: "com.fasterxml.jackson.databind"
+                    packageName
                 })
             );
         }

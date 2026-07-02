@@ -43,6 +43,12 @@ public interface ICustomConfig {
     }
 
     @Value.Default
+    @JsonProperty("jackson-version")
+    default JacksonVersion jacksonVersion() {
+        return JacksonVersion.V2;
+    }
+
+    @Value.Default
     @JsonProperty("json-include")
     default JsonInclude jsonInclude() {
         return JsonInclude.NON_ABSENT;
@@ -134,6 +140,22 @@ public interface ICustomConfig {
 
     @JsonProperty("custom-plugins")
     Optional<List<String>> customPlugins();
+
+    enum JacksonVersion {
+        V2("2"),
+        V3("3");
+
+        private final String value;
+
+        JacksonVersion(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+    }
 
     enum PackageLayout {
         NESTED("nested"),

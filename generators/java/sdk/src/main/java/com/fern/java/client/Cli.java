@@ -24,6 +24,7 @@ import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
+import com.fern.java.ICustomConfig;
 import com.fern.java.JavaV2Adapter;
 import com.fern.java.JavaV2Arguments;
 import com.fern.java.client.generators.AbstractRootClientGenerator;
@@ -124,31 +125,42 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     private final List<GradlePlugin> customPlugins = new ArrayList<>();
 
     public Cli() {
-        this.dependencies.addAll(List.of(
-                ParsedGradleDependency.builder()
-                        .type(GradleDependencyType.API)
-                        .group("com.squareup.okhttp3")
-                        .artifact("okhttp")
-                        .version(ParsedGradleDependency.OKHTTP_VERSION)
-                        .build(),
-                ParsedGradleDependency.builder()
-                        .type(GradleDependencyType.API)
-                        .group("com.fasterxml.jackson.core")
-                        .artifact("jackson-databind")
-                        .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
-                        .build(),
-                ParsedGradleDependency.builder()
-                        .type(GradleDependencyType.API)
-                        .group("com.fasterxml.jackson.datatype")
-                        .artifact("jackson-datatype-jdk8")
-                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
-                        .build(),
-                ParsedGradleDependency.builder()
-                        .type(GradleDependencyType.API)
-                        .group("com.fasterxml.jackson.datatype")
-                        .artifact("jackson-datatype-jsr310")
-                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
-                        .build()));
+        this.dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.API)
+                .group("com.squareup.okhttp3")
+                .artifact("okhttp")
+                .version(ParsedGradleDependency.OKHTTP_VERSION)
+                .build());
+    }
+
+    private void addJacksonDependencies(ICustomConfig customConfig) {
+        if (customConfig.jacksonVersion() == ICustomConfig.JacksonVersion.V3) {
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("tools.jackson.core")
+                    .artifact("jackson-databind")
+                    .version(ParsedGradleDependency.JACKSON3_DATABIND_VERSION)
+                    .build());
+        } else {
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("com.fasterxml.jackson.core")
+                    .artifact("jackson-databind")
+                    .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
+                    .build());
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("com.fasterxml.jackson.datatype")
+                    .artifact("jackson-datatype-jdk8")
+                    .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
+                    .build());
+            dependencies.add(ParsedGradleDependency.builder()
+                    .type(GradleDependencyType.API)
+                    .group("com.fasterxml.jackson.datatype")
+                    .artifact("jackson-datatype-jsr310")
+                    .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
+                    .build());
+        }
     }
 
     @Override
@@ -263,6 +275,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             ClientGeneratorContext context,
             IntermediateRepresentation ir,
             DefaultGeneratorExecClient generatorExecClient) {
+
+        addJacksonDependencies(context.getCustomConfig());
 
         log(generatorExecClient, "Generating core SDK files");
 
