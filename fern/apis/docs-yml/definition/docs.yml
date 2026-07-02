@@ -38,6 +38,12 @@ types:
       default:
         type: optional<boolean>
         docs: Whether this language is the default. At most one entry should be marked as default.
+      slug:
+        type: optional<string>
+        docs: |
+          Custom URL slug to serve this locale under, instead of the locale code
+          (e.g. `lang: ja` with `slug: jp` serves Japanese at `/jp/...`). Must be a
+          URL-safe segment and cannot be a recognized locale code.
 
   TranslationConfig:
     discriminated: false

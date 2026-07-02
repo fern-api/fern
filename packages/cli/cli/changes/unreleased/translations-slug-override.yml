@@ -8,7 +8,8 @@
     directory). Locales without a `slug` continue to use their own code as the URL
     prefix, so existing sites are unaffected.
 
-    `fern check` now rejects a `slug` that would silently mis-route: a recognized
-    locale code (e.g. `ja`), another configured locale's code, or a slug already
-    used by another locale.
+    `fern check` now rejects a `slug` that would silently mis-route: one that is
+    not a URL-safe segment (letters, digits, single hyphens), a recognized locale
+    code (e.g. `ja`), another configured locale's code, or a slug already used by
+    another locale.
   type: feat

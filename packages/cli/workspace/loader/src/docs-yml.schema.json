@@ -4635,6 +4635,17 @@
             }
           ],
           "description": "Whether this language is the default. At most one entry should be marked as default."
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Custom URL slug to serve this locale under, instead of the locale code\n(e.g. `lang: ja` with `slug: jp` serves Japanese at `/jp/...`). Must be a\nURL-safe segment and cannot be a recognized locale code."
         }
       },
       "required": [

@@ -39,6 +39,36 @@ describe("validateTranslationSlugs", () => {
         });
     });
 
+    describe("malformed slugs are rejected", () => {
+        it.each([
+            "my docs",
+            "en/us",
+            "jp.",
+            "jp!",
+            "-jp",
+            "jp-",
+            "jp--kr",
+            "",
+            "café"
+        ])("rejects slug %j as not URL-safe", (slug) => {
+            const errors = validateTranslationSlugs([
+                { lang: "en", default: true },
+                { lang: "ja", slug }
+            ]);
+            expect(errors).toHaveLength(1);
+            expect(errors[0]).toContain("is not a valid URL slug");
+        });
+
+        it("accepts hyphenated non-locale market slugs (latam-1, apac-2)", () => {
+            expect(
+                validateTranslationSlugs([
+                    { lang: "de", slug: "latam-1" },
+                    { lang: "ja", slug: "apac-2" }
+                ])
+            ).toEqual([]);
+        });
+    });
+
     describe("reserved locale code slugs are rejected", () => {
         it("rejects a slug equal to a recognized locale code (ja)", () => {
             const errors = validateTranslationSlugs([

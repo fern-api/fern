@@ -6,4 +6,10 @@ export interface TranslationConfigObject {
     lang: FernDocsConfig.Language;
     /** Whether this language is the default. At most one entry should be marked as default. */
     default?: boolean;
+    /**
+     * Custom URL slug to serve this locale under, instead of the locale code
+     * (e.g. `lang: ja` with `slug: jp` serves Japanese at `/jp/...`). Must be a
+     * URL-safe segment and cannot be a recognized locale code.
+     */
+    slug?: string;
 }

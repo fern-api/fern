@@ -128,6 +128,15 @@ const RECOGNIZED_LOCALE_CODES: readonly string[] = [
  */
 const RECOGNIZED_LOCALE_CODES_LOWER: ReadonlySet<string> = new Set(RECOGNIZED_LOCALE_CODES.map((c) => c.toLowerCase()));
 
+/**
+ * A slug becomes a single URL path segment, so it must be URL-safe: letters and
+ * digits, joined by single hyphens (no spaces, slashes, dots, or other
+ * punctuation). This mirrors `LocaleUrlSlug` in `DocsYmlSchemas.ts`, but that
+ * zod schema is not on the production parse path (the SDK serializer accepts any
+ * string), so the constraint is actually enforced here.
+ */
+const URL_SLUG_PATTERN = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/;
+
 /** A `translations` entry as it appears in the raw docs.yml (string or object). */
 export type RawTranslationEntry = string | { lang: string; slug?: string | null; default?: boolean | null };
 
@@ -143,10 +152,11 @@ function normalizeEntry(entry: RawTranslationEntry): { lang: string; slug: strin
  * human-readable error messages (empty when valid).
  *
  * A slug is rejected when it:
- *  1. is a recognized locale code (would be intercepted by middleware as that
+ *  1. is not a URL-safe path segment (letters, digits, single hyphens),
+ *  2. is a recognized locale code (would be intercepted by middleware as that
  *     locale before the slug can take effect),
- *  2. equals another translation's locale (`lang`) configured on the same site,
- *  3. duplicates another translation's slug.
+ *  3. equals another translation's locale (`lang`) configured on the same site,
+ *  4. duplicates another translation's slug.
  *
  * A slug equal to its own locale (case-insensitively) is a harmless no-op and is
  * ignored.
@@ -163,6 +173,14 @@ export function validateTranslationSlugs(translations: readonly RawTranslationEn
 
     for (const { lang, slug } of normalized) {
         if (slug == null || slug.toLowerCase() === lang.toLowerCase()) {
+            continue;
+        }
+
+        if (!URL_SLUG_PATTERN.test(slug)) {
+            errors.push(
+                `translations: slug "${slug}" (for locale "${lang}") is not a valid URL slug. ` +
+                    `Use only letters, digits, and single hyphens (e.g. "jp" or "latam").`
+            );
             continue;
         }
         const slugLower = slug.toLowerCase();
