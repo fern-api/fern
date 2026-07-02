@@ -8,6 +8,7 @@ import yaml from "js-yaml";
 
 import * as DocsYmlJsonSchema from "./docs-yml.schema.json";
 import { DocsWorkspace } from "./types/Workspace.js";
+import { type RawTranslationEntry, validateTranslationSlugs } from "./validateTranslationSlugs.js";
 
 export async function loadDocsWorkspace({
     fernDirectory,
@@ -95,9 +96,10 @@ export async function loadRawDocsConfiguration({
             context.logger.debug(`No null/undefined values found during sanitization`);
         }
 
+        let parsed: docsYml.RawSchemas.DocsConfiguration;
         try {
             context.logger.debug(`Attempting to parse sanitized docs configuration`);
-            return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(sanitizedJson);
+            parsed = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(sanitizedJson);
         } catch (err) {
             context.logger.error(`Parsing failed even after sanitization: ${extractErrorMessage(err)}`);
             // Log the JSON structure to debug
@@ -107,6 +109,21 @@ export async function loadRawDocsConfiguration({
                 code: CliError.Code.ParseError
             });
         }
+
+        // Semantic validation the JSON schema can't express: a translation `slug`
+        // must not collide with a recognized locale code, another configured
+        // locale, or another slug — otherwise it silently mis-routes at the edge.
+        // Fail `fern check` / generation with a clear message instead. (Kept
+        // outside the try above so this message isn't re-wrapped as a parse error.)
+        const slugErrors = validateTranslationSlugs(parsed.translations as RawTranslationEntry[] | undefined);
+        if (slugErrors.length > 0) {
+            throw new CliError({
+                message: `Invalid docs.yml:\n${slugErrors.join("\n")}`,
+                code: CliError.Code.ParseError
+            });
+        }
+
+        return parsed;
     } else {
         throw new CliError({
             message: `Failed to parse docs.yml:\n${result.error?.message ?? "Unknown error"}`,
