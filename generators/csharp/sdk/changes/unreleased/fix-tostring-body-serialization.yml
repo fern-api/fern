@@ -1,0 +1,6 @@
+- summary: |
+    Add ToString() override to base API exception that serializes the response body
+    via JsonSerializer.Serialize, so error details are visible when logging or
+    printing exceptions. When redact-response-body-on-error is enabled, the body
+    is omitted from the output.
+  type: fix

@@ -70,32 +70,38 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
             summary: "The raw HTTP response (status code, URL, headers) that triggered the exception, if available."
         });
 
-        if (this.settings.redactResponseBodyOnError) {
-            class_.addMethod({
-                name: "ToString",
-                access: ast.Access.Public,
-                isAsync: false,
-                override: true,
-                parameters: [],
-                return_: this.Primitive.string,
-                body: this.csharp.codeblock((writer) => {
-                    writer.writeTextStatement("var sb = new System.Text.StringBuilder()");
-                    writer.writeTextStatement("sb.Append(GetType().FullName)");
-                    writer.writeTextStatement(`sb.Append($": {Message}")`);
-                    writer.writeTextStatement(`sb.Append($" (Status Code: {StatusCode})")`);
-                    writer.writeLine("if (InnerException != null)");
+        class_.addMethod({
+            name: "ToString",
+            access: ast.Access.Public,
+            isAsync: false,
+            override: true,
+            parameters: [],
+            return_: this.Primitive.string,
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement("var sb = new System.Text.StringBuilder()");
+                writer.writeTextStatement("sb.Append(GetType().FullName)");
+                writer.writeTextStatement(`sb.Append($": {Message}")`);
+                writer.writeTextStatement(`sb.Append($" (Status Code: {StatusCode})")`);
+                if (!this.settings.redactResponseBodyOnError) {
+                    writer.writeLine("if (Body != null)");
                     writer.pushScope();
-                    writer.writeTextStatement(`sb.Append($"\\n ---> {InnerException}")`);
-                    writer.writeTextStatement(`sb.Append("\\n --- End of inner exception stack trace ---")`);
+                    writer.write("sb.Append($\"\\nBody: {");
+                    writer.writeNode(this.System.Text.Json.JsonSerializer);
+                    writer.writeTextStatement('.Serialize(Body)}")');
                     writer.popScope();
-                    writer.writeLine("if (StackTrace != null)");
-                    writer.pushScope();
-                    writer.writeTextStatement(`sb.Append($"\\n{StackTrace}")`);
-                    writer.popScope();
-                    writer.writeTextStatement("return sb.ToString()");
-                })
-            });
-        }
+                }
+                writer.writeLine("if (InnerException != null)");
+                writer.pushScope();
+                writer.writeTextStatement(`sb.Append($"\\n ---> {InnerException}")`);
+                writer.writeTextStatement(`sb.Append("\\n --- End of inner exception stack trace ---")`);
+                writer.popScope();
+                writer.writeLine("if (StackTrace != null)");
+                writer.pushScope();
+                writer.writeTextStatement(`sb.Append($"\\n{StackTrace}")`);
+                writer.popScope();
+                writer.writeTextStatement("return sb.ToString()");
+            })
+        });
 
         return new CSharpFile({
             clazz: class_,
