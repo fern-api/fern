@@ -3,19 +3,66 @@ import { AbstractConverter, AbstractConverterContext } from "@fern-api/v3-import
 
 import { FernGlobalParametersExtension } from "../extensions/x-fern-global-parameters.js";
 
-function convertDefaultToLiteral(defaultValue: unknown): FernIr.Literal | undefined {
+function convertDefaultToLiteral(
+    defaultValue: unknown,
+    typeString: string | undefined,
+    breadcrumbs: string[],
+    context: AbstractConverterContext<object>
+): FernIr.Literal | undefined {
     if (defaultValue == null) {
         return undefined;
     }
-    if (typeof defaultValue === "string") {
-        return FernIr.Literal.string(defaultValue);
-    }
+
     if (typeof defaultValue === "boolean") {
+        if (typeString != null && typeString !== "boolean") {
+            context.errorCollector.collect({
+                message: `Default value is a boolean but type is '${typeString}'; expected a ${typeString} value`,
+                path: [...breadcrumbs, "default"]
+            });
+            return undefined;
+        }
         return FernIr.Literal.boolean(defaultValue);
     }
+
+    if (typeof defaultValue === "string") {
+        if (typeString === "boolean") {
+            context.errorCollector.collect({
+                message: `Default value is a string but type is 'boolean'; expected a boolean value`,
+                path: [...breadcrumbs, "default"]
+            });
+            return undefined;
+        }
+        if (typeString === "integer" || typeString === "double" || typeString === "number") {
+            context.errorCollector.collect({
+                message: `Default value is a string but type is '${typeString}'; expected a numeric value`,
+                path: [...breadcrumbs, "default"]
+            });
+            return undefined;
+        }
+        return FernIr.Literal.string(defaultValue);
+    }
+
     if (typeof defaultValue === "number") {
+        if (typeString === "boolean") {
+            context.errorCollector.collect({
+                message: `Default value is a number but type is 'boolean'; expected a boolean value`,
+                path: [...breadcrumbs, "default"]
+            });
+            return undefined;
+        }
+        if (typeString === "integer" && !Number.isInteger(defaultValue)) {
+            context.errorCollector.collect({
+                message: `Default value ${defaultValue} is not an integer`,
+                path: [...breadcrumbs, "default"]
+            });
+            return undefined;
+        }
+        // The IR Literal union only has string/boolean variants. Numeric
+        // defaults are stored as string literals; Phase-3 generators must
+        // parse back to the numeric type indicated by valueType.
         return FernIr.Literal.string(String(defaultValue));
     }
+
     return undefined;
 }
 
@@ -119,20 +166,37 @@ export function convertGlobalParametersExtension({
     globalParameters: FernGlobalParametersExtension.GlobalParameterExtension[];
     context: AbstractConverterContext<object>;
 }): FernIr.GlobalParameter[] {
+    // Validate id uniqueness
+    const seenIds = new Map<string, number>();
+    for (const [index, param] of globalParameters.entries()) {
+        const existingIndex = seenIds.get(param.name);
+        if (existingIndex != null) {
+            context.errorCollector.collect({
+                message:
+                    `Duplicate global parameter name '${param.name}' at index ${index} ` +
+                    `(first seen at index ${existingIndex}). Each global parameter must ` +
+                    `have a unique name.`,
+                path: ["x-fern-global-parameters", `${index}`, "name"]
+            });
+        }
+        seenIds.set(param.name, index);
+    }
+
     return globalParameters.map((param, index) => {
         const breadcrumbs = ["x-fern-global-parameters", `${index}`];
         const location = convertLocation(param.in, [...breadcrumbs, "in"], context);
+        const sdkName = param["parameter-name"] ?? param.name;
         return {
             id: param.name,
             name: context.casingsGenerator.generateNameAndWireValue({
-                name: param.name,
+                name: sdkName,
                 wireValue: param.name
             }),
             location,
             target: resolveTarget(param),
             valueType: resolveValueType(param.type, param.optional),
             env: param.env,
-            clientDefault: convertDefaultToLiteral(param.default),
+            clientDefault: convertDefaultToLiteral(param.default, param.type, breadcrumbs, context),
             optional: param.optional,
             apply: convertApplyMode(param.apply, [...breadcrumbs, "apply"], context),
             docs: param.docs

@@ -40,8 +40,12 @@ types:
       name:
         type: commons.NameAndWireValueOrString
         docs: |
-          The parameter name. The wire value is used as the flag name
-          in CLIs and the constructor parameter name in SDKs.
+          The parameter name. `wireValue` is the canonical identifier
+          (matches the extension entry's `name` field and the id used
+          in per-operation opt-in). `name` is the SDK-facing identifier
+          (from `parameter-name` if provided, otherwise derived from
+          `wireValue` via casing rules). CLIs use `wireValue` as the
+          flag name; SDKs use `name` as the constructor parameter name.
       location: GlobalParameterLocation
       target:
         type: string

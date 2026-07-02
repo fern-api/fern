@@ -34,6 +34,7 @@ x-fern-global-parameters:
   - name: max-retries
     in: header
     target: X-Max-Retries
+    parameter-name: maxRetries
     type: integer
     default: 3
     optional: true

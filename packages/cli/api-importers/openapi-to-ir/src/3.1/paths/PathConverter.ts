@@ -19,6 +19,7 @@ export declare namespace PathConverter {
         path: string;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
         idToAuthScheme?: Record<string, AuthScheme>;
+        declaredGlobalParameterIds?: Set<string>;
     }
 
     export interface Output {
@@ -33,13 +34,23 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
     private readonly path: string;
     private readonly idToAuthScheme?: Record<string, AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
+    private readonly declaredGlobalParameterIds?: Set<string>;
 
-    constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme, topLevelServers }: PathConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        pathItem,
+        path,
+        idToAuthScheme,
+        topLevelServers,
+        declaredGlobalParameterIds
+    }: PathConverter.Args) {
         super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
+        this.declaredGlobalParameterIds = declaredGlobalParameterIds;
     }
 
     public convert(): PathConverter.Output | undefined {
@@ -212,7 +223,25 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             operation,
             context: this.context
         });
-        const globalParameterIds = globalParameterExtensionConverter.convert();
+        let globalParameterIds = globalParameterExtensionConverter.convert();
+
+        // Validate that per-op opt-in IDs reference declared global parameters
+        if (globalParameterIds != null && this.declaredGlobalParameterIds != null) {
+            const validIds: string[] = [];
+            for (const id of globalParameterIds) {
+                if (!this.declaredGlobalParameterIds.has(id)) {
+                    this.context.errorCollector.collect({
+                        message:
+                            `x-fern-global-parameter references undeclared global parameter '${id}'. ` +
+                            `Declared parameters: ${[...this.declaredGlobalParameterIds].join(", ")}`,
+                        path: [...operationBreadcrumbs, "x-fern-global-parameter"]
+                    });
+                } else {
+                    validIds.push(id);
+                }
+            }
+            globalParameterIds = validIds.length > 0 ? validIds : undefined;
+        }
 
         const operationConverter = new OperationConverter({
             context: this.context,

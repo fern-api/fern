@@ -119,18 +119,20 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
             // Warn about overlapping header names between x-fern-global-parameters
             // and x-fern-global-headers — the former takes precedence.
+            // Compare on target (the actual wire header name), not the SDK name.
             if (this.ir.headers.length > 0) {
-                const globalHeaderNames = new Set(
+                const globalHeaderWireValues = new Set(
                     this.ir.headers.map((h) => {
                         const name = h.name;
                         return (typeof name === "string" ? name : name.wireValue).toLowerCase();
                     })
                 );
                 for (const param of convertedGlobalParameters) {
-                    if (param.in === "header" && globalHeaderNames.has(param.name.toLowerCase())) {
+                    const wireTarget = (param.target ?? param.name).toLowerCase();
+                    if (param.in === "header" && globalHeaderWireValues.has(wireTarget)) {
                         this.context.logger.warn(
-                            `Global parameter "${param.name}" (in: header) overlaps with an ` +
-                                `x-fern-global-headers entry. The x-fern-global-parameters ` +
+                            `Global parameter "${param.name}" (in: header, target: "${param.target ?? param.name}") ` +
+                                `overlaps with an x-fern-global-headers entry. The x-fern-global-parameters ` +
                                 `definition takes precedence.`
                         );
                     }
@@ -362,12 +364,17 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 continue;
             }
 
+            const declaredGlobalParameterIds =
+                this.ir.globalParameters != null
+                    ? new Set(this.ir.globalParameters.map((p) => p.id))
+                    : undefined;
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
                 topLevelServers: this.context.spec.servers,
                 pathItem,
-                path
+                path,
+                declaredGlobalParameterIds
             });
             const convertedPath = pathConverter.convert();
             if (convertedPath != null) {

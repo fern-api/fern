@@ -1645,7 +1645,10 @@
     },
     {
       "id": "max-retries",
-      "name": "max-retries",
+      "name": {
+        "wireValue": "max-retries",
+        "name": "maxRetries"
+      },
       "location": "header",
       "target": "X-Max-Retries",
       "valueType": {

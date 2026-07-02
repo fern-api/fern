@@ -7,6 +7,7 @@ export declare namespace FernGlobalParametersExtension {
 
     export interface GlobalParameterExtension {
         name: string;
+        "parameter-name": string | undefined;
         in: string | undefined;
         target: string | undefined;
         env: string | undefined;
@@ -71,6 +72,10 @@ export class FernGlobalParametersExtension extends AbstractExtension<
             }
             result.push({
                 name: entry["name"] as string,
+                "parameter-name":
+                    typeof entry["parameter-name"] === "string"
+                        ? (entry["parameter-name"] as string)
+                        : undefined,
                 in: typeof entry["in"] === "string" ? (entry["in"] as string) : undefined,
                 target: typeof entry["target"] === "string" ? (entry["target"] as string) : undefined,
                 env: typeof entry["env"] === "string" ? (entry["env"] as string) : undefined,
