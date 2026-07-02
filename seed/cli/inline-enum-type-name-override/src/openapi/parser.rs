@@ -11004,146 +11004,11 @@ components:
     // Property-value-as-array tolerance (ElevenLabs / Fern-processed specs)
     // -----------------------------------------------------------------------
 
-    // -----------------------------------------------------------------------
-    // deserialize_schema_properties: unit tests
-    // -----------------------------------------------------------------------
-
-    /// Helper: deserialize a raw YAML mapping through `deserialize_schema_properties`
-    /// so we can test the deserializer in isolation without going through
-    /// the full spec parser.
-    fn deser_properties(yaml: &str) -> HashMap<String, OpenApiSchemaObject> {
-        #[derive(Deserialize)]
-        struct Wrapper {
-            #[serde(default, deserialize_with = "deserialize_schema_properties")]
-            properties: HashMap<String, OpenApiSchemaObject>,
-        }
-        let w: Wrapper = serde_yaml::from_str(yaml).expect("YAML should parse");
-        w.properties
-    }
-
     #[test]
-    fn schema_properties_normal_objects_pass_through() {
-        let props = deser_properties(
-            r#"
-properties:
-  name:
-    type: string
-    description: "a name"
-  count:
-    type: integer
-"#,
-        );
-        assert_eq!(props.len(), 2);
-        assert_eq!(props["name"].schema_type(), Some("string"));
-        assert_eq!(props["name"].description.as_deref(), Some("a name"));
-        assert_eq!(props["count"].schema_type(), Some("integer"));
-    }
-
-    #[test]
-    fn schema_properties_single_element_array_unwrapped() {
-        let props = deser_properties(
-            r#"
-properties:
-  state:
-    - type: string
-      description: "unwrapped from array"
-"#,
-        );
-        assert_eq!(props.len(), 1);
-        assert_eq!(props["state"].schema_type(), Some("string"));
-        assert_eq!(
-            props["state"].description.as_deref(),
-            Some("unwrapped from array"),
-        );
-    }
-
-    #[test]
-    fn schema_properties_single_element_array_with_fern_extension() {
-        // Exact pattern from ElevenLabs Fern-processed spec:
-        // property value is `[{"x-fern-type-name": "SpeechHistoryState"}]`
-        let props = deser_properties(
-            r#"
-properties:
-  state:
-    - x-fern-type-name: SpeechHistoryState
-"#,
-        );
-        assert_eq!(props.len(), 1, "state property should be present");
-        // The schema won't have a type but should exist as a valid schema object.
-        assert!(props.contains_key("state"));
-    }
-
-    #[test]
-    fn schema_properties_multi_element_array_falls_back_to_default() {
-        let props = deser_properties(
-            r#"
-properties:
-  good:
-    type: string
-  ambiguous:
-    - type: string
-    - type: integer
-"#,
-        );
-        assert_eq!(props.len(), 2);
-        assert_eq!(props["good"].schema_type(), Some("string"));
-        // Multi-element array can't be unambiguously unwrapped, so falls back
-        // to default (no type).
-        assert_eq!(props["ambiguous"].schema_type(), None);
-    }
-
-    #[test]
-    fn schema_properties_empty_array_falls_back_to_default() {
-        let props = deser_properties(
-            r#"
-properties:
-  normal:
-    type: boolean
-  empty_arr: []
-"#,
-        );
-        assert_eq!(props.len(), 2);
-        assert_eq!(props["normal"].schema_type(), Some("boolean"));
-        assert_eq!(props["empty_arr"].schema_type(), None);
-    }
-
-    #[test]
-    fn schema_properties_mixed_normal_and_array_values() {
-        let props = deser_properties(
-            r#"
-properties:
-  id:
-    type: integer
-  tags:
-    type: array
-    items:
-      type: string
-  wrapped_status:
-    - type: string
-      description: "status field"
-  multi_wrap:
-    - type: string
-    - type: number
-"#,
-        );
-        assert_eq!(props.len(), 4);
-        assert_eq!(props["id"].schema_type(), Some("integer"));
-        assert_eq!(props["tags"].schema_type(), Some("array"));
-        assert_eq!(props["wrapped_status"].schema_type(), Some("string"));
-        assert_eq!(
-            props["wrapped_status"].description.as_deref(),
-            Some("status field"),
-        );
-        // multi-element array → default
-        assert_eq!(props["multi_wrap"].schema_type(), None);
-    }
-
-    // -----------------------------------------------------------------------
-    // End-to-end: full spec parsing with array-wrapped properties
-    // -----------------------------------------------------------------------
-
-    #[test]
-    fn full_spec_array_property_in_response_schema() {
+    fn property_value_single_element_array_unwrapped() {
+        // Some Fern-processed specs emit a property value as a
+        // single-element array wrapping the real schema object.
+        // The parser should unwrap it transparently.
         let yaml = r#"
 openapi: "3.1.0"
 info:
@@ -11181,7 +11046,9 @@ paths:
     }
 
     #[test]
-    fn full_spec_array_property_in_request_body() {
+    fn property_value_multi_element_array_defaults() {
+        // Multi-element arrays at property positions fall back to an
+        // empty (default) schema instead of aborting the entire parse.
         let yaml = r#"
 openapi: "3.1.0"
 info:
@@ -11190,38 +11057,38 @@ info:
 servers:
   - url: https://api.example.com
 paths:
-  /items:
-    post:
-      operationId: createItem
-      x-fern-sdk-method-name: create
-      x-fern-sdk-group-name: items
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                state:
-                  - type: string
-                    description: "array-wrapped in request body"
+  /things:
+    get:
+      operationId: getThings
+      x-fern-sdk-method-name: get
+      x-fern-sdk-group-name: things
       responses:
-        "201":
-          description: created
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok_field:
+                    type: string
+                  odd_field:
+                    - type: string
+                    - type: integer
 "#;
         let doc = load_openapi_spec(yaml, "t")
-            .expect("spec with array-valued request body property should parse");
-        let items = doc.resources.get("items").expect("items resource");
+            .expect("spec with multi-element array property should parse");
+        let things = doc.resources.get("things").expect("things resource");
         assert!(
-            items.methods.values().any(|m| m.id.as_deref() == Some("createItem")),
-            "createItem method should exist",
+            things.methods.values().any(|m| m.id.as_deref() == Some("getThings")),
+            "getThings method should exist",
         );
     }
 
     #[test]
-    fn full_spec_component_schema_as_array_tolerated() {
+    fn component_schema_as_array_tolerated() {
+        // A component schema whose value is a single-element array
+        // should be unwrapped, not crash the parser.
         let yaml = r##"
 openapi: "3.1.0"
 info:
