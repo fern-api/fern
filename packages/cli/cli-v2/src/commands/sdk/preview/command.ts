@@ -55,7 +55,7 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
                     description: "Filter the target API(s) with the given audience(s)"
                 })
                 .option("container-engine", {
-                    choices: ["docker", "podman"],
+                    choices: ["docker", "podman", "container"],
                     description: "Choose the container engine to use for local generation"
                 })
                 .option("force", {

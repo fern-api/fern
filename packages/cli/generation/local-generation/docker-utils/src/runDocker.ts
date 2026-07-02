@@ -1,4 +1,4 @@
-import { ContainerRunner } from "@fern-api/core-utils";
+import { assertNever, ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
@@ -169,7 +169,7 @@ async function tryRunContainer({
         throw new Error(
             `Container runtime '${containerRunner}' is not installed or not found on PATH.\n` +
                 `${containerRunner === "podman" ? "Seed tests default to Podman. " : ""}` +
-                `Install ${containerRunner}: ${containerRunner === "podman" ? "https://podman.io/docs/installation" : "https://docs.docker.com/get-docker/"}\n` +
+                `Install ${containerRunner}: ${getContainerRunnerInstallUrl(containerRunner)}\n` +
                 `Error details: ${stderr || stdout || "No output"}`
         );
     }
@@ -372,4 +372,17 @@ export async function stopContainer({
         reject: false,
         doNotPipeOutput: true
     });
+}
+
+function getContainerRunnerInstallUrl(runner: ContainerRunner): string {
+    switch (runner) {
+        case "podman":
+            return "https://podman.io/docs/installation";
+        case "container":
+            return "https://github.com/apple/container";
+        case "docker":
+            return "https://docs.docker.com/get-docker/";
+        default:
+            assertNever(runner);
+    }
 }
