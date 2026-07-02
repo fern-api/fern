@@ -34,8 +34,8 @@ import { convertApiVersionScheme } from "./converters/convertApiVersionScheme.js
 import { convertChannel } from "./converters/convertChannel.js";
 import { getAudiences } from "./converters/convertDeclaration.js";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration.js";
-import { convertGlobalParameters } from "./converters/convertGlobalParameters.js";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy.js";
+import { convertGlobalParameters } from "./converters/convertGlobalParameters.js";
 import { convertReadmeConfig } from "./converters/convertReadmeConfig.js";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup.js";
 import {
