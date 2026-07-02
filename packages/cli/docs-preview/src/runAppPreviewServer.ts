@@ -982,25 +982,43 @@ export async function runAppPreviewServer({
                 context.logger.info(`[PERF] snippetTracker.buildDependencyMap: ${snippetTime}ms`);
             }
 
-            // Start validation in background - don't block the reload
-            const validationStartTime = Date.now();
-            context.logger.info(`[PERF] Background validation started`);
-            void validateProject(project)
-                .then(() => {
-                    const validationTime = Date.now() - validationStartTime;
-                    context.logger.info(`[PERF] Background validation completed: ${validationTime}ms`);
-                    void debugLogger.logCliValidation(validationTime, true);
-                })
-                .catch((err) => {
-                    const validationTime = Date.now() - validationStartTime;
-                    context.logger.info(`[PERF] Background validation failed: ${validationTime}ms`);
-                    void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
-                    // Still log validation errors to help developers
-                    if (err instanceof Error && err.stack) {
-                        context.logger.debug(`Validation error stack: ${err.stack}`);
-                    }
+            // Skip background validation for content-only edits (MDX/MD files).
+            // Validation re-parses all OpenAPI specs (~26s for large projects) and
+            // competes for CPU with Next.js server-side rendering, inflating reload
+            // latency from ~3s to ~30s.
+            const isContentOnlyEdit =
+                editedAbsoluteFilepaths != null &&
+                editedAbsoluteFilepaths.length > 0 &&
+                editedAbsoluteFilepaths.every((f) => {
+                    const lower = f.toLowerCase();
+                    return lower.endsWith(".md") || lower.endsWith(".mdx");
                 });
+
+            if (isContentOnlyEdit) {
+                context.logger.info(`[PERF] Background validation skipped (content-only edit)`);
+            } else {
+                // Start validation in background - don't block the reload
+                const validationStartTime = Date.now();
+                context.logger.info(`[PERF] Background validation started`);
+                void validateProject(project)
+                    .then(() => {
+                        const validationTime = Date.now() - validationStartTime;
+                        context.logger.info(`[PERF] Background validation completed: ${validationTime}ms`);
+                        void debugLogger.logCliValidation(validationTime, true);
+                    })
+                    .catch((err) => {
+                        const validationTime = Date.now() - validationStartTime;
+                        context.logger.info(`[PERF] Background validation failed: ${validationTime}ms`);
+                        void debugLogger.logCliValidation(validationTime, false);
+                        context.logger.error(
+                            `Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`
+                        );
+                        // Still log validation errors to help developers
+                        if (err instanceof Error && err.stack) {
+                            context.logger.debug(`Validation error stack: ${err.stack}`);
+                        }
+                    });
+            }
 
             const docsGenStartTime = Date.now();
             const newPreviewResult = await getPreviewDocsDefinition({
