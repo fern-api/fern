@@ -1,0 +1,5 @@
+- summary: |
+    Fix AI example enhancement attaching an empty JSON request body (`{}`) to endpoints
+    that have no request body (e.g. DELETE endpoints). This caused docs code snippets to
+    render `-d '{}'` and a `Content-Type: application/json` header for bodyless endpoints.
+  type: fix

@@ -8,7 +8,7 @@ import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
-import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers.js";
+import { filterRequestBody, isEmptyObject, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers.js";
 import { LambdaExampleEnhancer } from "./lambdaClient.js";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator.js";
 import {
@@ -1241,7 +1241,7 @@ async function processEndpoint(
 
             return {
                 endpointKey,
-                enhancedReq: filteredBody,
+                enhancedReq: resolveEnhancedRequestBody(filteredBody, request.originalRequestExample),
                 enhancedRes: result.enhancedResponseExample,
                 extractedHeaders: Object.keys(mergedHeaders).length > 0 ? mergedHeaders : undefined,
                 extractedPathParams: Object.keys(mergedPathParams).length > 0 ? mergedPathParams : undefined,
@@ -1253,7 +1253,7 @@ async function processEndpoint(
         context.logger.debug(`No changes needed for ${workItem.endpoint.method} ${workItem.example.path}`);
         return {
             endpointKey,
-            enhancedReq: result.enhancedRequestExample,
+            enhancedReq: resolveEnhancedRequestBody(result.enhancedRequestExample, request.originalRequestExample),
             enhancedRes: result.enhancedResponseExample
         };
     } catch (error) {
@@ -1676,6 +1676,18 @@ export function unwrapLambdaBodyEnvelope(value: unknown): { wasWrapped: boolean;
         return { wasWrapped: true, inner: (value as Record<string, unknown>).body };
     }
     return { wasWrapped: false, inner: value };
+}
+
+/**
+ * Endpoints without a request body (e.g. DELETE) must not gain one during enhancement:
+ * once path/query/header params are filtered out of the AI's request example, an empty
+ * object would otherwise be attached as a JSON body and rendered in code snippets.
+ */
+export function resolveEnhancedRequestBody(filteredBody: unknown, originalRequestExample: unknown): unknown {
+    if (originalRequestExample == null && isEmptyObject(filteredBody)) {
+        return undefined;
+    }
+    return filteredBody;
 }
 
 /**
