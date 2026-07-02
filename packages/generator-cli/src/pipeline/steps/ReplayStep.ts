@@ -192,7 +192,15 @@ export class ReplayStep extends BaseStep {
             });
             execFileSync(
                 "git",
-                ["-c", `user.name=${FERN_BOT_NAME}`, "-c", `user.email=${FERN_BOT_EMAIL}`, "commit", "-m", "[fern-replay] advance lockfile"],
+                [
+                    "-c",
+                    `user.name=${FERN_BOT_NAME}`,
+                    "-c",
+                    `user.email=${FERN_BOT_EMAIL}`,
+                    "commit",
+                    "-m",
+                    "[fern-replay] advance lockfile"
+                ],
                 { cwd: this.outputDir, stdio: "pipe" }
             );
             this.logger.debug("ReplayStep: committed uncommitted lockfile advance.");
