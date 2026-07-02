@@ -1,7 +1,9 @@
 using global::System.Text.Json;
 using NUnit.Framework;
 using <%= namespace%>;
-
+<% if (namespaces.publicCoreClasses !== namespace) { %>
+using <%= namespaces.publicCoreClasses %>;
+<% } %>
 namespace <%= testNamespace%>.Core;
 
 [TestFixture]
@@ -35,7 +37,7 @@ public class ApiExceptionTests
 
         Assert.That(
             result,
-            Does.Contain("<%= namespace %>.<%= context.generation.names.classes.baseApiException %>")
+            Does.Contain("<%= namespaces.publicCoreClasses %>.<%= context.generation.names.classes.baseApiException %>")
         );
     }
 <% if (!context.generation.settings.redactResponseBodyOnError) { %>

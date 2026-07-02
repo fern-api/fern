@@ -1,6 +1,7 @@
 using global::System.Text.Json;
 using NUnit.Framework;
 using SeedExhaustive;
+using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Test.Core;
 
@@ -25,7 +26,7 @@ public class ApiExceptionTests
 
         var result = exception.ToString();
 
-        Assert.That(result, Does.Contain("SeedExhaustive.SeedExhaustiveApiException"));
+        Assert.That(result, Does.Contain("SeedExhaustive.Core.SeedExhaustiveApiException"));
     }
 
     [Test]
