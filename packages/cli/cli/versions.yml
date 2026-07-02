@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.64.1
+  changelogEntry:
+    - summary: |
+        Fix GraphQL namespace types (e.g. Inventory, Geography) being excluded from the
+        type registry and missing parent operations for query pages. Namespace types are
+        now registered so their fields render correctly on landing pages.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
 - version: 5.64.0
   changelogEntry:
     - summary: |
