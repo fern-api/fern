@@ -730,7 +730,7 @@ export async function runAppPreviewServer({
 
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
-    const RELOAD_DEBOUNCE_MS = 1000;
+    const RELOAD_DEBOUNCE_MS = 300;
 
     /**
      * Computes translated definitions for each locale.
