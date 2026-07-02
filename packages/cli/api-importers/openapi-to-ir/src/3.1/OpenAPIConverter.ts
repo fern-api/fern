@@ -365,9 +365,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
 
             const declaredGlobalParameterIds =
-                this.ir.globalParameters != null
-                    ? new Set(this.ir.globalParameters.map((p) => p.id))
-                    : undefined;
+                this.ir.globalParameters != null ? new Set(this.ir.globalParameters.map((p) => p.id)) : undefined;
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
