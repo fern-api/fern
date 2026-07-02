@@ -1,5 +1,6 @@
 import { execFileSync } from "child_process";
 import { replayApply, replayRun } from "../../replay/replay-run";
+import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "../github/constants";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { PipelineContext, ReplayStepConfig, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
@@ -189,13 +190,14 @@ export class ReplayStep extends BaseStep {
                 cwd: this.outputDir,
                 stdio: "pipe"
             });
-            execFileSync("git", ["commit", "-m", "[fern-replay] advance lockfile"], {
-                cwd: this.outputDir,
-                stdio: "pipe"
-            });
+            execFileSync(
+                "git",
+                ["-c", `user.name=${FERN_BOT_NAME}`, "-c", `user.email=${FERN_BOT_EMAIL}`, "commit", "-m", "[fern-replay] advance lockfile"],
+                { cwd: this.outputDir, stdio: "pipe" }
+            );
             this.logger.debug("ReplayStep: committed uncommitted lockfile advance.");
-        } catch {
-            // Best-effort — don't fail the pipeline on lockfile commit issues.
+        } catch (error) {
+            this.logger.debug("ReplayStep: failed to commit lockfile advance: " + String(error));
         }
     }
 }
