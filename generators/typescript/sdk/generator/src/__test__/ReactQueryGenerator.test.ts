@@ -39,13 +39,14 @@ function createEndpointWithMethod(
     method: FernIr.HttpMethod,
     opts?: {
         pathParameters?: FernIr.PathParameter[];
+        allPathParameters?: FernIr.PathParameter[];
         sdkRequest?: FernIr.SdkRequest;
         docs?: string;
     }
 ): FernIr.HttpEndpoint {
     const base = createHttpEndpoint({
         pathParameters: opts?.pathParameters,
-        allPathParameters: opts?.pathParameters,
+        allPathParameters: opts?.allPathParameters ?? opts?.pathParameters,
         sdkRequest: opts?.sdkRequest,
         docs: opts?.docs
     });
@@ -353,6 +354,29 @@ describe("ReactQueryGenerator", () => {
             const hooks = getFile(files, "src/react-query/hooks.ts");
 
             expect(hooks).toContain("export const myApi:");
+        });
+
+        it("falls back to namespace export when class name is exactly 'Client'", () => {
+            // Fix #8: stripping "Client" suffix from "Client" yields empty string
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("list", "GET")]
+            });
+            const generator = new ReactQueryGenerator({
+                intermediateRepresentation: ir,
+                packageResolver: createMockPackageResolver(ir),
+                namespaceExport: "MyNamespace",
+                clientClassName: "Client",
+                caseConverter,
+                npmPackageName: "@fern/test-sdk",
+                relativePackagePath: "src"
+            });
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            // Should fall back to namespace export (lowercased first char)
+            expect(hooks).toContain("export const myNamespace:");
         });
 
         it("index exports the correct namespace name", () => {
@@ -894,6 +918,129 @@ describe("ReactQueryGenerator", () => {
             expect(hooks).toContain("health: {");
             expect(hooks).toContain("queryFn: () => client.health()");
             expect(hooks).toContain('"@fern/test-sdk", "health"');
+        });
+
+        it("generates valid type annotation when root endpoints coexist with services", () => {
+            // Fix #1: hooks.ts must include root endpoint keys in the type annotation
+            // alongside typeof import(...) for services, otherwise TS2353 fires.
+            const rootServiceId = "service_root";
+            const userServiceId = "service_user";
+            const rootService = {
+                ...createHttpService(),
+                endpoints: [createEndpointWithMethod("status", "GET")],
+                name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } }
+            };
+            const userService = {
+                ...createHttpService(),
+                endpoints: [createEndpointWithMethod("list", "GET")],
+                name: {
+                    fernFilepath: {
+                        allParts: [casingsGenerator.generateName("user")],
+                        packagePath: [casingsGenerator.generateName("user")],
+                        file: casingsGenerator.generateName("user")
+                    }
+                }
+            };
+            const ir = createMinimalIR({
+                services: {
+                    [rootServiceId]: rootService,
+                    [userServiceId]: userService
+                }
+            });
+            ir.rootPackage.service = rootServiceId;
+            const subpackageId = "subpackage_user";
+            ir.subpackages[subpackageId] = {
+                name: casingsGenerator.generateName("user"),
+                fernFilepath: {
+                    allParts: [casingsGenerator.generateName("user")],
+                    packagePath: [casingsGenerator.generateName("user")],
+                    file: casingsGenerator.generateName("user")
+                },
+                service: userServiceId,
+                types: [],
+                errors: [],
+                subpackages: [],
+                hasEndpointsInTree: true,
+                docs: undefined,
+                websocket: undefined,
+                webhooks: undefined,
+                navigationConfig: undefined,
+                displayName: undefined
+                // biome-ignore lint/suspicious/noExplicitAny: minimal subpackage mock
+            } as any;
+            ir.rootPackage.subpackages = [subpackageId];
+
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            // Type annotation includes root endpoint key AND service typeof
+            expect(hooks).toContain("export const seedApi: {");
+            expect(hooks).toContain("status: {");
+            expect(hooks).toContain('typeof import("./user/index.js").user');
+            // Object literal includes both root endpoint and service
+            expect(hooks).toContain("user: user,");
+            expect(hooks).toContain("queryFn: () => client.status()");
+        });
+    });
+
+    describe("collision handling", () => {
+        it("escapes endpoint named 'invalidate' to 'invalidate_' at root level", () => {
+            // Fix #2: endpoint named "invalidate" collides with the generated invalidate method
+            const ir = createIRWithService({
+                serviceName: "root",
+                endpoints: [createEndpointWithMethod("invalidate", "GET"), createEndpointWithMethod("status", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const hooks = getFile(files, "src/react-query/hooks.ts");
+
+            // The endpoint key is escaped to avoid collision with the generated invalidate method
+            expect(hooks).toContain("invalidate_: {");
+            // But the client accessor still uses the original name
+            expect(hooks).toContain("client.invalidate()");
+            // And the query key uses the original name
+            expect(hooks).toContain('"@fern/test-sdk", "invalidate"');
+            // The generated invalidate method still exists
+            expect(hooks).toContain("invalidate(queryClient: QueryClient): Promise<void>");
+        });
+
+        it("escapes endpoint named 'useQuery' at service level", () => {
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [createEndpointWithMethod("useQuery", "GET")]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            // Endpoint key is escaped to avoid collision with the generated useQuery method
+            expect(userService).toContain("useQuery_: {");
+        });
+    });
+
+    describe("hasArgs with construction-level path params", () => {
+        it("does not treat construction-level path params as hook args", () => {
+            // Fix #5: allPathParameters includes root/env path params that are NOT
+            // part of the endpoint method signature. Only endpoint-level pathParameters count.
+            const ir = createIRWithService({
+                serviceName: "user",
+                subpackageName: "user",
+                endpoints: [
+                    createEndpointWithMethod("list", "GET", {
+                        pathParameters: [],
+                        allPathParameters: [createPathParameter("envId")]
+                    })
+                ]
+            });
+            const generator = createGenerator(ir);
+            const { files } = generator.generateFiles();
+            const userService = getFile(files, "src/react-query/user/index.ts");
+
+            // Should be a no-args hook (construction-level param excluded)
+            expect(userService).toContain("useQuery(\n            options?:");
+            expect(userService).not.toContain("args: Parameters<");
         });
     });
 
