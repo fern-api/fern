@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedTsPathParamBodyConflictClient } from "@fern/ts-path-param-body-conflict";
 
-const client = new SeedTsPathParamBodyConflictClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedTsPathParamBodyConflictClient({ baseUrl: "YOUR_BASE_URL" });
 await client.identifiers.update({
     idType: "phone",
     oldValue: "+13175556789",

@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPaginationClient } from "@fern/pagination-custom";
 
-const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedPaginationClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const pageableResponse = await client.users.listWithCustomPager({
     limit: 1,
     starting_after: "starting_after"
@@ -105,7 +105,7 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 ```typescript
 import { SeedPaginationClient } from "@fern/pagination-custom";
 
-const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedPaginationClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const pageableResponse = await client.users.listWithCustomPager({
     limit: 1,
     starting_after: "starting_after"

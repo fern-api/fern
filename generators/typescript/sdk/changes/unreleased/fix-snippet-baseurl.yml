@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Show `baseUrl` instead of `environment` in generated README snippets when no
+    predefined environments are configured. This makes the TypeScript SDK consistent
+    with the Python SDK for users who only use a base URL.
+  type: fix

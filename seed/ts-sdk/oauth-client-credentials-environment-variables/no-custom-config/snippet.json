@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nestedNoAuth.api.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nestedNoAuth.api.getSomething();\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nested.api.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nested.api.getSomething();\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst client = new SeedOauthClientCredentialsEnvironmentVariablesClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n"
             }
         }
     ],
