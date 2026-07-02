@@ -2,9 +2,9 @@
     Add React Query hooks generation support via the `generateReactQueryHooks` config flag.
     When enabled, generates a `react-query/` directory with a tRPC-style namespace object
     that mirrors the SDK client hierarchy (e.g. `seedApi.user.list.useQuery()`). Each query
-    endpoint exposes useQuery, useSuspenseQuery, useInfiniteQuery, useSuspenseInfiniteQuery,
-    getQueryKey, getQueryOptions (for SSR/RSC), and invalidate. Mutation endpoints expose
-    useMutation. Hierarchical cache invalidation at endpoint, service, and SDK levels.
-    All exports available via a `./react-query` package.json subexport with optional peer
-    dependencies on react and @tanstack/react-query.
+    endpoint exposes useQuery, useSuspenseQuery, getQueryKey, getQueryOptions (for SSR/RSC),
+    and invalidate. Mutation endpoints expose useMutation. Hierarchical cache invalidation
+    at endpoint, service, and SDK levels. Per-service file splits with wildcard subexports
+    for tree-shaking. All exports available via a `./react-query` package.json subexport
+    with optional peer dependencies on react and @tanstack/react-query.
   type: feat
