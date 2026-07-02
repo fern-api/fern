@@ -3,6 +3,7 @@
  */
 package com.seed.paginationUriPath.resources.users;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.paginationUriPath.core.ClientOptions;
 import com.seed.paginationUriPath.core.ObjectMappers;
 import com.seed.paginationUriPath.core.RequestOptions;
@@ -93,6 +94,8 @@ public class RawUsersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationUriPathApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPaginationUriPathException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPaginationUriPathException("Network error executing HTTP request", e);
         }
@@ -158,6 +161,8 @@ public class RawUsersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationUriPathApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPaginationUriPathException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPaginationUriPathException("Network error executing HTTP request", e);
         }

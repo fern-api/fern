@@ -3,6 +3,7 @@
  */
 package com.seed.websocketAuth.resources.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.websocketAuth.core.ClientOptions;
 import com.seed.websocketAuth.core.MediaTypes;
 import com.seed.websocketAuth.core.ObjectMappers;
@@ -82,6 +83,8 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedWebsocketAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedWebsocketAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedWebsocketAuthException("Network error executing HTTP request", e);
         }
@@ -139,6 +142,8 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedWebsocketAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedWebsocketAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedWebsocketAuthException("Network error executing HTTP request", e);
         }

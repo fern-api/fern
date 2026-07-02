@@ -182,6 +182,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -237,6 +239,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -265,6 +269,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -293,6 +299,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -339,6 +347,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -385,6 +395,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -457,6 +469,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -521,6 +535,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -584,6 +600,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -612,6 +630,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -640,6 +660,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -686,6 +708,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -732,6 +756,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -789,6 +815,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -817,6 +845,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -845,6 +875,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -891,6 +923,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -937,6 +971,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1077,6 +1113,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1154,6 +1192,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1184,6 +1224,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1214,6 +1256,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1261,6 +1305,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1312,6 +1358,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1371,6 +1419,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1400,6 +1450,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1429,6 +1481,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1476,6 +1530,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1523,6 +1579,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1586,6 +1644,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1615,6 +1675,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1645,6 +1707,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1692,6 +1756,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1739,6 +1805,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1804,6 +1872,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1834,6 +1904,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1864,6 +1936,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1911,6 +1985,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -1962,6 +2038,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -2007,6 +2085,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -2076,6 +2156,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -2105,6 +2187,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -2135,6 +2219,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -2182,6 +2268,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }
@@ -2229,6 +2317,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedFileUploadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedFileUploadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedFileUploadException("Network error executing HTTP request", e);
         }

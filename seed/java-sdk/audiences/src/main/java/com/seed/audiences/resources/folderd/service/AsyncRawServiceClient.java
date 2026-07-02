@@ -3,6 +3,7 @@
  */
 package com.seed.audiences.resources.folderd.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.ObjectMappers;
 import com.seed.audiences.core.RequestOptions;
@@ -76,6 +77,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedAudiencesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedAudiencesException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedAudiencesException("Network error executing HTTP request", e));
                 }

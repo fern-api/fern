@@ -3,6 +3,7 @@
  */
 package com.seed.javaOptionalQueryParamsOverloads;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.javaOptionalQueryParamsOverloads.core.ClientOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.ObjectMappers;
@@ -121,6 +122,9 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
                     future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsException(
                             "Network error executing HTTP request", e));
@@ -200,6 +204,9 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
                     future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsException(
                             "Network error executing HTTP request", e));
@@ -274,6 +281,9 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
                     future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaOptionalQueryParamsOverloadsException(
                             "Network error executing HTTP request", e));

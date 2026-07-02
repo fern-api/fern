@@ -3,6 +3,7 @@
  */
 package com.seed.packageYml.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.ObjectMappers;
 import com.seed.packageYml.core.RequestOptions;
@@ -66,6 +67,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPackageYmlApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPackageYmlException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPackageYmlException("Network error executing HTTP request", e);
         }

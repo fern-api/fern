@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
@@ -80,6 +81,8 @@ public class RawProblemClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -136,6 +139,8 @@ public class RawProblemClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -191,6 +196,8 @@ public class RawProblemClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -249,6 +256,8 @@ public class RawProblemClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }

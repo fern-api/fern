@@ -3,6 +3,7 @@
  */
 package com.seed.javaRequiredBodyOptionalHeaders;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.javaRequiredBodyOptionalHeaders.core.ClientOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.MediaTypes;
@@ -116,6 +117,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaRequiredBodyOptionalHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaRequiredBodyOptionalHeadersException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e);
         }
@@ -199,6 +203,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaRequiredBodyOptionalHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaRequiredBodyOptionalHeadersException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e);
         }
@@ -287,6 +294,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaRequiredBodyOptionalHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaRequiredBodyOptionalHeadersException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e);
         }
@@ -352,6 +362,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaRequiredBodyOptionalHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaRequiredBodyOptionalHeadersException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e);
         }
@@ -417,6 +430,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaRequiredBodyOptionalHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaRequiredBodyOptionalHeadersException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e);
         }
@@ -491,6 +507,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaRequiredBodyOptionalHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaRequiredBodyOptionalHeadersException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e);
         }
@@ -557,6 +576,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedJavaRequiredBodyOptionalHeadersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedJavaRequiredBodyOptionalHeadersException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedJavaRequiredBodyOptionalHeadersException("Network error executing HTTP request", e);
         }

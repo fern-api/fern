@@ -3,6 +3,7 @@
  */
 package com.seed.fileDownload.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.ObjectMappers;
 import com.seed.fileDownload.core.RequestOptions;
@@ -77,6 +78,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileDownloadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedFileDownloadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedFileDownloadException("Network error executing HTTP request", e));
@@ -138,6 +142,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedFileDownloadApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedFileDownloadException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedFileDownloadException("Network error executing HTTP request", e));

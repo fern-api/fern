@@ -91,6 +91,9 @@ public class AsyncRawPaymentClient {
                     future.completeExceptionally(new SeedIdempotencyHeadersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedIdempotencyHeadersException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedIdempotencyHeadersException("Network error executing HTTP request", e));
@@ -153,6 +156,9 @@ public class AsyncRawPaymentClient {
                     future.completeExceptionally(new SeedIdempotencyHeadersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedIdempotencyHeadersException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedIdempotencyHeadersException("Network error executing HTTP request", e));

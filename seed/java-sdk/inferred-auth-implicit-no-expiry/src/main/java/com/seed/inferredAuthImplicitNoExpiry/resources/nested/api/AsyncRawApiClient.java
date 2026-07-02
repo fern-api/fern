@@ -3,6 +3,7 @@
  */
 package com.seed.inferredAuthImplicitNoExpiry.resources.nested.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.inferredAuthImplicitNoExpiry.core.ClientOptions;
 import com.seed.inferredAuthImplicitNoExpiry.core.ObjectMappers;
 import com.seed.inferredAuthImplicitNoExpiry.core.RequestOptions;
@@ -76,6 +77,9 @@ public class AsyncRawApiClient {
                     future.completeExceptionally(new SeedInferredAuthImplicitNoExpiryApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedInferredAuthImplicitNoExpiryException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedInferredAuthImplicitNoExpiryException("Network error executing HTTP request", e));

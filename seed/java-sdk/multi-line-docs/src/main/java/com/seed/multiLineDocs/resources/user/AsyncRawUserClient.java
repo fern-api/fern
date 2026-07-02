@@ -89,6 +89,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedMultiLineDocsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedMultiLineDocsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedMultiLineDocsException("Network error executing HTTP request", e));
@@ -167,6 +170,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedMultiLineDocsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedMultiLineDocsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedMultiLineDocsException("Network error executing HTTP request", e));

@@ -77,6 +77,8 @@ public class RawInlinedRequestClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEnumApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEnumException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEnumException("Network error executing HTTP request", e);
         }

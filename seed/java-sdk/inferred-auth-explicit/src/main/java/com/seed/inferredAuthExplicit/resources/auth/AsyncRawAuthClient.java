@@ -3,6 +3,7 @@
  */
 package com.seed.inferredAuthExplicit.resources.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.inferredAuthExplicit.core.ClientOptions;
 import com.seed.inferredAuthExplicit.core.MediaTypes;
 import com.seed.inferredAuthExplicit.core.ObjectMappers;
@@ -93,6 +94,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedInferredAuthExplicitApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedInferredAuthExplicitException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedInferredAuthExplicitException("Network error executing HTTP request", e));
@@ -167,6 +171,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedInferredAuthExplicitApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedInferredAuthExplicitException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedInferredAuthExplicitException("Network error executing HTTP request", e));

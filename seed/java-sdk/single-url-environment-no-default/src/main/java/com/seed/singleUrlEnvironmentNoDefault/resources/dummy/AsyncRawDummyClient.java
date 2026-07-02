@@ -3,6 +3,7 @@
  */
 package com.seed.singleUrlEnvironmentNoDefault.resources.dummy;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.singleUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentNoDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentNoDefault.core.RequestOptions;
@@ -77,6 +78,9 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedSingleUrlEnvironmentNoDefaultApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedSingleUrlEnvironmentNoDefaultException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedSingleUrlEnvironmentNoDefaultException("Network error executing HTTP request", e));

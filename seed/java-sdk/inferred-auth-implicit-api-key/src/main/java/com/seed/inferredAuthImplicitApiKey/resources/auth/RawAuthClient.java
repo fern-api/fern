@@ -3,6 +3,7 @@
  */
 package com.seed.inferredAuthImplicitApiKey.resources.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.inferredAuthImplicitApiKey.core.ClientOptions;
 import com.seed.inferredAuthImplicitApiKey.core.ObjectMappers;
 import com.seed.inferredAuthImplicitApiKey.core.RequestOptions;
@@ -72,6 +73,8 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedInferredAuthImplicitApiKeyApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedInferredAuthImplicitApiKeyException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedInferredAuthImplicitApiKeyException("Network error executing HTTP request", e);
         }
