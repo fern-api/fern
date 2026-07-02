@@ -2,6 +2,28 @@
     "endpoints": [
         {
             "id": {
+                "path": "/status",
+                "method": "GET",
+                "identifier_override": "endpoint_.status"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.status();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/invalidate",
+                "method": "GET",
+                "identifier_override": "endpoint_.invalidate"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.invalidate();\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/health",
                 "method": "HEAD",
                 "identifier_override": "endpoint_health.check"

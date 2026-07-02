@@ -850,7 +850,7 @@ export class SdkGenerator {
             type: DependencyType.PEER
         });
         this.dependencyManager.addDependency("@types/react", ">=18.0.0", {
-            type: DependencyType.DEV
+            type: DependencyType.PEER
         });
         this.extraExportPaths.push("react-query");
         for (const servicePath of serviceExportPaths) {
@@ -858,6 +858,7 @@ export class SdkGenerator {
         }
         this.generatedPeerDependenciesMeta["@tanstack/react-query"] = { optional: true };
         this.generatedPeerDependenciesMeta["react"] = { optional: true };
+        this.generatedPeerDependenciesMeta["@types/react"] = { optional: true };
         this.context.logger.debug("Generated React Query hooks");
     }
 
@@ -865,6 +866,9 @@ export class SdkGenerator {
         const withoutClient = clientClassName.endsWith("Client")
             ? clientClassName.slice(0, -"Client".length)
             : clientClassName;
+        if (withoutClient.length === 0) {
+            return this.namespaceExport.charAt(0).toLowerCase() + this.namespaceExport.slice(1);
+        }
         return withoutClient.charAt(0).toLowerCase() + withoutClient.slice(1);
     }
 

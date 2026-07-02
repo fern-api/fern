@@ -3,13 +3,8 @@
 import {
     useQuery,
     useSuspenseQuery,
-    useInfiniteQuery,
-    useSuspenseInfiniteQuery,
     type UseQueryResult,
     type UseSuspenseQueryResult,
-    type UseInfiniteQueryResult,
-    type UseSuspenseInfiniteQueryResult,
-    type InfiniteData,
     type QueryKey,
     type QueryClient,
     useMutation,
@@ -20,8 +15,6 @@ import { useSeedApiClientContext } from "../context.js";
 import type {
     QueryHookOptions,
     SuspenseQueryHookOptions,
-    InfiniteQueryHookOptions,
-    SuspenseInfiniteQueryHookOptions,
     MutationHookOptions,
 } from "../types.js";
 
@@ -51,32 +44,6 @@ export const user = {
                 queryKey: ["@fern/ts-react-query", "user", "list"] as const,
                 queryFn: () => client.user.list(),
                 ...options,
-            });
-        },
-        useInfiniteQuery<TPageParam = unknown>(
-            options: InfiniteQueryHookOptions<Awaited<ReturnType<SeedApiClient["user"]["list"]>>, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: Awaited<ReturnType<SeedApiClient["user"]["list"]>>, allPages: Awaited<ReturnType<SeedApiClient["user"]["list"]>>[]) => TPageParam | undefined },
-        ): UseInfiniteQueryResult<InfiniteData<Awaited<ReturnType<SeedApiClient["user"]["list"]>>>> {
-            const client = useSeedApiClientContext();
-            const { initialPageParam, getNextPageParam, ...rest } = options;
-            return useInfiniteQuery({
-                queryKey: ["@fern/ts-react-query", "user", "list"] as const,
-                queryFn: () => client.user.list(),
-                initialPageParam,
-                getNextPageParam,
-                ...rest,
-            });
-        },
-        useSuspenseInfiniteQuery<TPageParam = unknown>(
-            options: SuspenseInfiniteQueryHookOptions<Awaited<ReturnType<SeedApiClient["user"]["list"]>>, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: Awaited<ReturnType<SeedApiClient["user"]["list"]>>, allPages: Awaited<ReturnType<SeedApiClient["user"]["list"]>>[]) => TPageParam | undefined },
-        ): UseSuspenseInfiniteQueryResult<InfiniteData<Awaited<ReturnType<SeedApiClient["user"]["list"]>>>> {
-            const client = useSeedApiClientContext();
-            const { initialPageParam, getNextPageParam, ...rest } = options;
-            return useSuspenseInfiniteQuery({
-                queryKey: ["@fern/ts-react-query", "user", "list"] as const,
-                queryFn: () => client.user.list(),
-                initialPageParam,
-                getNextPageParam,
-                ...rest,
             });
         },
         getQueryKey(): QueryKey {
@@ -121,34 +88,6 @@ export const user = {
                 queryKey: ["@fern/ts-react-query", "user", "get", ...args] as const,
                 queryFn: () => client.user.get(...args),
                 ...options,
-            });
-        },
-        useInfiniteQuery<TPageParam = unknown>(
-            args: Parameters<SeedApiClient["user"]["get"]>,
-            options: InfiniteQueryHookOptions<Awaited<ReturnType<SeedApiClient["user"]["get"]>>, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: Awaited<ReturnType<SeedApiClient["user"]["get"]>>, allPages: Awaited<ReturnType<SeedApiClient["user"]["get"]>>[]) => TPageParam | undefined },
-        ): UseInfiniteQueryResult<InfiniteData<Awaited<ReturnType<SeedApiClient["user"]["get"]>>>> {
-            const client = useSeedApiClientContext();
-            const { initialPageParam, getNextPageParam, ...rest } = options;
-            return useInfiniteQuery({
-                queryKey: ["@fern/ts-react-query", "user", "get", ...args] as const,
-                queryFn: () => client.user.get(...args),
-                initialPageParam,
-                getNextPageParam,
-                ...rest,
-            });
-        },
-        useSuspenseInfiniteQuery<TPageParam = unknown>(
-            args: Parameters<SeedApiClient["user"]["get"]>,
-            options: SuspenseInfiniteQueryHookOptions<Awaited<ReturnType<SeedApiClient["user"]["get"]>>, Error, TPageParam> & { initialPageParam: TPageParam; getNextPageParam: (lastPage: Awaited<ReturnType<SeedApiClient["user"]["get"]>>, allPages: Awaited<ReturnType<SeedApiClient["user"]["get"]>>[]) => TPageParam | undefined },
-        ): UseSuspenseInfiniteQueryResult<InfiniteData<Awaited<ReturnType<SeedApiClient["user"]["get"]>>>> {
-            const client = useSeedApiClientContext();
-            const { initialPageParam, getNextPageParam, ...rest } = options;
-            return useSuspenseInfiniteQuery({
-                queryKey: ["@fern/ts-react-query", "user", "get", ...args] as const,
-                queryFn: () => client.user.get(...args),
-                initialPageParam,
-                getNextPageParam,
-                ...rest,
             });
         },
         getQueryKey(...args: Parameters<SeedApiClient["user"]["get"]>): QueryKey {

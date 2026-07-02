@@ -191,7 +191,7 @@ export class ReadmeConfigBuilder {
             "",
             "function UserList() {",
             `    const { data, isLoading } = ${namespaceName}.user.list.useQuery();`,
-            "    // Also available: useSuspenseQuery(), useInfiniteQuery(), useSuspenseInfiniteQuery()",
+            "    // Also available: useSuspenseQuery()",
             "}",
             "```",
             "",

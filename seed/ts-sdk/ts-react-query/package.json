@@ -102,13 +102,17 @@
     "dependencies": {},
     "peerDependencies": {
         "@tanstack/react-query": ">=5.0.0",
-        "react": ">=18.0.0"
+        "react": ">=18.0.0",
+        "@types/react": ">=18.0.0"
     },
     "peerDependenciesMeta": {
         "@tanstack/react-query": {
             "optional": true
         },
         "react": {
+            "optional": true
+        },
+        "@types/react": {
             "optional": true
         }
     },
@@ -117,7 +121,6 @@
         "ts-loader": "^9.5.4",
         "vitest": "^4.1.1",
         "msw": "2.11.2",
-        "@types/react": ">=18.0.0",
         "@types/node": "^20.0.0",
         "typescript": "~5.9.3",
         "@biomejs/biome": "2.4.10"

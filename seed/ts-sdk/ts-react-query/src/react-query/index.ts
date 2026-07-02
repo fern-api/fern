@@ -6,8 +6,6 @@ export { type QueryKey } from "@tanstack/react-query";
 export type {
     QueryHookOptions,
     SuspenseQueryHookOptions,
-    InfiniteQueryHookOptions,
-    SuspenseInfiniteQueryHookOptions,
     MutationHookOptions,
 } from "./types.js";
 export { seedApi } from "./hooks.js";

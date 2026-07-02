@@ -67,7 +67,7 @@ import { seedApi } from "@fern/ts-react-query/react-query";
 
 function UserList() {
     const { data, isLoading } = seedApi.user.list.useQuery();
-    // Also available: useSuspenseQuery(), useInfiniteQuery(), useSuspenseInfiniteQuery()
+    // Also available: useSuspenseQuery()
 }
 ```
 
