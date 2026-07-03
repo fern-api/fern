@@ -89,7 +89,12 @@ function convertDefaultToLiteral(defaultValue: unknown, typeString: string | und
         return FernIr.Literal.boolean(defaultValue);
     }
     if (typeof defaultValue === "string") {
-        if (typeString === "boolean" || typeString === "integer" || typeString === "double" || typeString === "number") {
+        if (
+            typeString === "boolean" ||
+            typeString === "integer" ||
+            typeString === "double" ||
+            typeString === "number"
+        ) {
             return undefined;
         }
         return FernIr.Literal.string(defaultValue);
