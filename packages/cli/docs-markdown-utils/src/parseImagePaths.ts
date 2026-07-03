@@ -722,143 +722,138 @@ export function replaceImagePathsAndUrls(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
-    let replacedContent: string;
-
     // Use streaming scanner for all pages (O(n) character scan instead of full MDX parse)
-    {
-        const edits: Edit[] = [];
-        let i = 0;
-        const len = content.length;
+    const edits: Edit[] = [];
+    let i = 0;
+    const len = content.length;
 
-        while (i < len) {
-            if (content[i] === "!" && content[i + 1] === "[") {
-                const result = parseMarkdownImage(content, i, metadata);
-                if (result) {
-                    const imageSrc = mapImage(result.src);
-                    if (imageSrc) {
-                        edits.push({
-                            start: result.edit.start,
-                            end: result.edit.end,
-                            replacement: result.originalUrl.replace(result.rawSrc, imageSrc)
-                        });
-                    }
-                    i = result.nextIndex;
-                    continue;
+    while (i < len) {
+        if (content[i] === "!" && content[i + 1] === "[") {
+            const result = parseMarkdownImage(content, i, metadata);
+            if (result) {
+                const imageSrc = mapImage(result.src);
+                if (imageSrc) {
+                    edits.push({
+                        start: result.edit.start,
+                        end: result.edit.end,
+                        replacement: result.originalUrl.replace(result.rawSrc, imageSrc)
+                    });
                 }
-            } else if (content[i] === "[" && content[i - 1] !== "!") {
-                const linkStart = i;
-                let j = i + 1;
-                while (j < len && content[j] !== "]") {
+                i = result.nextIndex;
+                continue;
+            }
+        } else if (content[i] === "[" && content[i - 1] !== "!") {
+            let j = i + 1;
+            while (j < len && content[j] !== "]") {
+                if (content[j] === "\\") {
+                    j += 2;
+                } else {
+                    j++;
+                }
+            }
+            if (j < len && content[j] === "]" && content[j + 1] === "(") {
+                j += 2;
+                const urlStart = j;
+                let parenDepth = 1;
+                while (j < len && parenDepth > 0) {
                     if (content[j] === "\\") {
                         j += 2;
+                    } else if (content[j] === "(") {
+                        parenDepth++;
+                        j++;
+                    } else if (content[j] === ")") {
+                        parenDepth--;
+                        j++;
                     } else {
                         j++;
                     }
                 }
-                if (j < len && content[j] === "]" && content[j + 1] === "(") {
-                    j += 2;
-                    const urlStart = j;
-                    let parenDepth = 1;
-                    while (j < len && parenDepth > 0) {
-                        if (content[j] === "\\") {
-                            j += 2;
-                        } else if (content[j] === "(") {
-                            parenDepth++;
-                            j++;
-                        } else if (content[j] === ")") {
-                            parenDepth--;
-                            j++;
-                        } else {
-                            j++;
-                        }
-                    }
-                    const urlEnd = j - 1;
-                    const href = content.slice(urlStart, urlEnd).trim();
-                    const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
-                    if (replacedHref && replacedHref.type === "replace") {
-                        edits.push({ start: urlStart, end: urlEnd, replacement: replacedHref.slug });
-                    }
-                    i = j;
-                    continue;
-                }
-            } else if (content[i] === "<") {
-                let j = i + 1;
-                while (j < len && content[j] !== ">" && content[j] !== " " && content[j] !== "\n") {
-                    j++;
-                }
-                while (j < len && content[j] !== ">") {
-                    while (j < len && (content[j] === " " || content[j] === "\n")) {
-                        j++;
-                    }
-                    const attrStart = j;
-                    while (
-                        j < len &&
-                        content[j] !== "=" &&
-                        content[j] !== ">" &&
-                        content[j] !== " " &&
-                        content[j] !== "\n"
-                    ) {
-                        j++;
-                    }
-                    const attrName = content.slice(attrStart, j).trim();
-                    if (content[j] === "=") {
-                        j++;
-                        while (j < len && (content[j] === " " || content[j] === "\n")) {
-                            j++;
-                        }
-                        if (content[j] === '"' || content[j] === "'") {
-                            const quote = content[j];
-                            j++;
-                            const valueStart = j;
-                            while (j < len && content[j] !== quote) {
-                                if (content[j] === "\\") {
-                                    j += 2;
-                                } else {
-                                    j++;
-                                }
-                            }
-                            const value = content.slice(valueStart, j);
-                            j++;
-                            if (attrName === "src" || (attrName === "icon" && isLocalIconReference(value))) {
-                                const trimmedValue = trimAnchor(value);
-                                const anchor =
-                                    trimmedValue && value !== trimmedValue ? value.slice(trimmedValue.length) : "";
-                                const imageSrc = mapImage(trimmedValue ?? value);
-                                if (imageSrc) {
-                                    edits.push({
-                                        start: valueStart,
-                                        end: valueStart + value.length,
-                                        replacement: imageSrc + anchor
-                                    });
-                                }
-                            } else if (attrName === "href") {
-                                const replacedHref = getReplacedHref({
-                                    href: value,
-                                    markdownFilesToPathName,
-                                    metadata
-                                });
-                                if (replacedHref && replacedHref.type === "replace") {
-                                    edits.push({
-                                        start: valueStart,
-                                        end: valueStart + value.length,
-                                        replacement: replacedHref.slug
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-                if (j < len && content[j] === ">") {
-                    j++;
+                const urlEnd = j - 1;
+                const href = content.slice(urlStart, urlEnd).trim();
+                const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
+                if (replacedHref && replacedHref.type === "replace") {
+                    edits.push({ start: urlStart, end: urlEnd, replacement: replacedHref.slug });
                 }
                 i = j;
                 continue;
             }
-            i++;
+        } else if (content[i] === "<") {
+            let j = i + 1;
+            while (j < len && content[j] !== ">" && content[j] !== " " && content[j] !== "\n") {
+                j++;
+            }
+            while (j < len && content[j] !== ">") {
+                while (j < len && (content[j] === " " || content[j] === "\n")) {
+                    j++;
+                }
+                const attrStart = j;
+                while (
+                    j < len &&
+                    content[j] !== "=" &&
+                    content[j] !== ">" &&
+                    content[j] !== " " &&
+                    content[j] !== "\n"
+                ) {
+                    j++;
+                }
+                const attrName = content.slice(attrStart, j).trim();
+                if (content[j] === "=") {
+                    j++;
+                    while (j < len && (content[j] === " " || content[j] === "\n")) {
+                        j++;
+                    }
+                    if (content[j] === '"' || content[j] === "'") {
+                        const quote = content[j];
+                        j++;
+                        const valueStart = j;
+                        while (j < len && content[j] !== quote) {
+                            if (content[j] === "\\") {
+                                j += 2;
+                            } else {
+                                j++;
+                            }
+                        }
+                        const value = content.slice(valueStart, j);
+                        j++;
+                        if (attrName === "src" || (attrName === "icon" && isLocalIconReference(value))) {
+                            const trimmedValue = trimAnchor(value);
+                            const anchor =
+                                trimmedValue && value !== trimmedValue ? value.slice(trimmedValue.length) : "";
+                            const imageSrc = mapImage(trimmedValue ?? value);
+                            if (imageSrc) {
+                                edits.push({
+                                    start: valueStart,
+                                    end: valueStart + value.length,
+                                    replacement: imageSrc + anchor
+                                });
+                            }
+                        } else if (attrName === "href") {
+                            const replacedHref = getReplacedHref({
+                                href: value,
+                                markdownFilesToPathName,
+                                metadata
+                            });
+                            if (replacedHref && replacedHref.type === "replace") {
+                                edits.push({
+                                    start: valueStart,
+                                    end: valueStart + value.length,
+                                    replacement: replacedHref.slug
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            if (j < len && content[j] === ">") {
+                j++;
+            }
+            i = j;
+            continue;
         }
-
-        replacedContent = applyEdits(content, edits);
+        i++;
     }
+
+    const replacedContent = applyEdits(content, edits);
 
     return requoteLeadingZeroValues(grayMatter.stringify(replacedContent, data));
 }

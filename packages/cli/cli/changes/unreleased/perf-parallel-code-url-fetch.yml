@@ -3,4 +3,4 @@
     in parallel instead of sequentially, and optimizing image processing with early-exit checks and
     streaming scanning. For large docs sites with many external code snippets, this reduces initial
     build time from ~57s to ~14s (75% faster).
-  type: feat
+  type: fix
