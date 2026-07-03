@@ -984,6 +984,11 @@ export function replaceImagePathsAndUrls(
                         attr.value != null &&
                         attr.value.data?.estree
                     ) {
+                        // Skip simple string literals — already handled by the streaming scanner.
+                        // Only process complex expressions (functions, identifiers, concatenation).
+                        if (extractSingleLiteral(attr.value.data.estree) != null) {
+                            return;
+                        }
                         walkEstreeForSrcAndHref(attr.value.data.estree);
                     } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
                         walkEstreeForSrcAndHref(attr.data.estree);
