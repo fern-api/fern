@@ -4,40 +4,25 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("HealthClient", () => {
-    
     test("check", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        
-        
-        server
-            .mockEndpoint()
-            .head("/health").respondWith()
-            .statusCode(200).build();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+
+        server.mockEndpoint().head("/health").respondWith().statusCode(200).build();
 
         const headers = await client.health.check();
         expect(headers).toBeInstanceOf(Headers);
     });
-          
+
     test("details", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        const rawResponseBody = "string";
-        
-        server
-            .mockEndpoint()
-            .get("/health/details").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
-        
-                        
-                                const response = await client.health.details();
-                                expect(response).toEqual(rawResponseBody);
-                              
-                    
+        const rawResponseBody = "string";
+
+        server.mockEndpoint().get("/health/details").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.health.details();
+        expect(response).toEqual(rawResponseBody);
     });
-          
 });

@@ -4,45 +4,27 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
-    
     test("status", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        const rawResponseBody = "string";
-        
-        server
-            .mockEndpoint()
-            .get("/status").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
-        
-                        
-                                const response = await client.status();
-                                expect(response).toEqual(rawResponseBody);
-                              
-                    
+        const rawResponseBody = "string";
+
+        server.mockEndpoint().get("/status").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.status();
+        expect(response).toEqual(rawResponseBody);
     });
-          
+
     test("invalidate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        const rawResponseBody = "string";
-        
-        server
-            .mockEndpoint()
-            .get("/invalidate").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
-        
-                        
-                                const response = await client.invalidate();
-                                expect(response).toEqual(rawResponseBody);
-                              
-                    
+        const rawResponseBody = "string";
+
+        server.mockEndpoint().get("/invalidate").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.invalidate();
+        expect(response).toEqual(rawResponseBody);
     });
-          
 });
