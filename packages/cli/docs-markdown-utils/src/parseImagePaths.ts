@@ -416,8 +416,7 @@ export function parseImagePaths(
     replaceFrontmatterImagesforLogo(data, mapImage);
 
     // Fast path: skip expensive MDX/streaming parse if content has no image-related patterns
-    const hasImageIndicators =
-        content.includes("![") || content.includes("src=") || content.includes("icon=");
+    const hasImageIndicators = content.includes("![") || content.includes("src=") || content.includes("icon=");
     if (!hasImageIndicators) {
         return {
             filepaths: [...filepaths],
@@ -822,7 +821,8 @@ export function replaceImagePathsAndUrls(
                             j++;
                             if (attrName === "src" || (attrName === "icon" && isLocalIconReference(value))) {
                                 const trimmedValue = trimAnchor(value);
-                                const anchor = trimmedValue && value !== trimmedValue ? value.slice(trimmedValue.length) : "";
+                                const anchor =
+                                    trimmedValue && value !== trimmedValue ? value.slice(trimmedValue.length) : "";
                                 const imageSrc = mapImage(trimmedValue ?? value);
                                 if (imageSrc) {
                                     edits.push({
