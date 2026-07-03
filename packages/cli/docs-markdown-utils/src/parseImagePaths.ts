@@ -802,6 +802,15 @@ export function replaceImagePathsAndUrls(
                     while (j < len && (content[j] === " " || content[j] === "\n")) {
                         j++;
                     }
+                    // Handle plain quotes: attr="value" or attr='value'
+                    // Also handle JSX expression: attr={'value'} or attr={"value"}
+                    const isCurlyWrapped = content[j] === "{";
+                    if (isCurlyWrapped) {
+                        j++; // skip {
+                        while (j < len && (content[j] === " " || content[j] === "\n")) {
+                            j++;
+                        }
+                    }
                     if (content[j] === '"' || content[j] === "'") {
                         const quote = content[j];
                         j++;
@@ -814,7 +823,15 @@ export function replaceImagePathsAndUrls(
                             }
                         }
                         const value = content.slice(valueStart, j);
-                        j++;
+                        j++; // skip closing quote
+                        if (isCurlyWrapped) {
+                            while (j < len && (content[j] === " " || content[j] === "\n")) {
+                                j++;
+                            }
+                            if (j < len && content[j] === "}") {
+                                j++; // skip }
+                            }
+                        }
                         if (attrName === "src" || (attrName === "icon" && isLocalIconReference(value))) {
                             const trimmedValue = trimAnchor(value);
                             const anchor =
