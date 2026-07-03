@@ -83,12 +83,24 @@ function convertDefaultToLiteral(defaultValue: unknown, typeString: string | und
         return undefined;
     }
     if (typeof defaultValue === "boolean") {
+        if (typeString != null && typeString !== "boolean") {
+            return undefined;
+        }
         return FernIr.Literal.boolean(defaultValue);
     }
     if (typeof defaultValue === "string") {
+        if (typeString === "boolean" || typeString === "integer" || typeString === "double" || typeString === "number") {
+            return undefined;
+        }
         return FernIr.Literal.string(defaultValue);
     }
     if (typeof defaultValue === "number") {
+        if (typeString === "boolean" || typeString === "string") {
+            return undefined;
+        }
+        if (typeString === "integer" && !Number.isInteger(defaultValue)) {
+            return undefined;
+        }
         return FernIr.Literal.string(String(defaultValue));
     }
     return undefined;

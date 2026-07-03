@@ -50,6 +50,13 @@ function convertDefaultToLiteral(
             });
             return undefined;
         }
+        if (typeString === "string") {
+            context.errorCollector.collect({
+                message: `Default value is a number but type is 'string'; expected a string value`,
+                path: [...breadcrumbs, "default"]
+            });
+            return undefined;
+        }
         if (typeString === "integer" && !Number.isInteger(defaultValue)) {
             context.errorCollector.collect({
                 message: `Default value ${defaultValue} is not an integer`,
@@ -63,6 +70,10 @@ function convertDefaultToLiteral(
         return FernIr.Literal.string(String(defaultValue));
     }
 
+    context.errorCollector.collect({
+        message: `Default value has unsupported type '${typeof defaultValue}'; expected a string, number, or boolean`,
+        path: [...breadcrumbs, "default"]
+    });
     return undefined;
 }
 
@@ -166,10 +177,10 @@ export function convertGlobalParametersExtension({
     globalParameters: FernGlobalParametersExtension.GlobalParameterExtension[];
     context: AbstractConverterContext<object>;
 }): FernIr.GlobalParameter[] {
-    // Validate id uniqueness
-    const seenIds = new Map<string, number>();
+    // Validate id uniqueness — keep only the first occurrence of each name
+    const firstOccurrence = new Map<string, number>();
     for (const [index, param] of globalParameters.entries()) {
-        const existingIndex = seenIds.get(param.name);
+        const existingIndex = firstOccurrence.get(param.name);
         if (existingIndex != null) {
             context.errorCollector.collect({
                 message:
@@ -178,28 +189,32 @@ export function convertGlobalParametersExtension({
                     `have a unique name.`,
                 path: ["x-fern-global-parameters", `${index}`, "name"]
             });
+        } else {
+            firstOccurrence.set(param.name, index);
         }
-        seenIds.set(param.name, index);
     }
 
-    return globalParameters.map((param, index) => {
-        const breadcrumbs = ["x-fern-global-parameters", `${index}`];
-        const location = convertLocation(param.in, [...breadcrumbs, "in"], context);
-        const sdkName = param["parameter-name"] ?? param.name;
-        return {
-            id: param.name,
-            name: context.casingsGenerator.generateNameAndWireValue({
-                name: sdkName,
-                wireValue: param.name
-            }),
-            location,
-            target: resolveTarget(param),
-            valueType: resolveValueType(param.type, param.optional),
-            env: param.env,
-            clientDefault: convertDefaultToLiteral(param.default, param.type, breadcrumbs, context),
-            optional: param.optional,
-            apply: convertApplyMode(param.apply, [...breadcrumbs, "apply"], context),
-            docs: param.docs
-        };
-    });
+    return globalParameters
+        .map((param, index) => ({ param, index }))
+        .filter(({ param, index }) => firstOccurrence.get(param.name) === index)
+        .map(({ param, index }) => {
+            const breadcrumbs = ["x-fern-global-parameters", `${index}`];
+            const location = convertLocation(param.in, [...breadcrumbs, "in"], context);
+            const sdkName = param["parameter-name"] ?? param.name;
+            return {
+                id: param.name,
+                name: context.casingsGenerator.generateNameAndWireValue({
+                    name: sdkName,
+                    wireValue: param.name
+                }),
+                location,
+                target: resolveTarget(param),
+                valueType: resolveValueType(param.type, param.optional),
+                env: param.env,
+                clientDefault: convertDefaultToLiteral(param.default, param.type, breadcrumbs, context),
+                optional: param.optional,
+                apply: convertApplyMode(param.apply, [...breadcrumbs, "apply"], context),
+                docs: param.docs
+            };
+        });
 }
