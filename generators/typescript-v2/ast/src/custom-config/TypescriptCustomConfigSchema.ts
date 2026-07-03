@@ -89,6 +89,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
     alwaysSendAuth: z.optional(z.boolean()),
+    generateReactQueryHooks: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

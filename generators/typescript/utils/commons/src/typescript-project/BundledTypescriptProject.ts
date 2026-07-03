@@ -78,10 +78,23 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         format,
         entryPoints: [entryPoint],
         outfile,
-        bundle: true,
+        bundle: true,${this.getEsbuildExternalList()}
     }).catch(() => process.exit(1));
 }
 `;
+    }
+
+    private getEsbuildExternalList(): string {
+        const peerDeps = {
+            ...this.dependencies[DependencyType.PEER],
+            ...this.extraPeerDependencies
+        };
+        const externalPackages = Object.keys(peerDeps);
+        if (externalPackages.length === 0) {
+            return "";
+        }
+        const externalsArray = externalPackages.map((pkg) => `"${pkg}"`).join(", ");
+        return `\n        external: [${externalsArray}],`;
     }
 
     private getBundleForNonExportedFolder(folder: string): string {
