@@ -469,18 +469,25 @@ export class DocsDefinitionResolver {
         // Replace all instances of <Markdown src="..."/> and <Code src="..."/> with their content
         // This should happen before we parse image paths, as the referenced files may contain images.
         // Also collects all referenced markdown files to store in jsFiles
-        this.taskContext.logger.debug("Replacing referenced markdown and code files...");
         const refStart = performance.now();
+        let refMarkdownTotal = 0;
+        let refCodeTotal = 0;
+        let refTransformTotal = 0;
+        let refSlowPages = 0;
         // Use a Set for O(1) deduplication instead of O(N) array scan
         const seenReferencedFiles = new Set<AbsoluteFilePath>();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+        const pageEntries = Object.entries(this.parsedDocsConfig.pages);
+        for (const [relativePath, markdown] of pageEntries) {
+            const pageStart = performance.now();
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
+            const mdStart = performance.now();
             const result = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
+            refMarkdownTotal += performance.now() - mdStart;
             // Collect referenced markdown files (deduplicated by absolute path using Set for O(1) lookup)
             for (const refFile of result.referencedFiles) {
                 if (!seenReferencedFiles.has(refFile.absoluteFilePath)) {
@@ -488,23 +495,41 @@ export class DocsDefinitionResolver {
                     this.referencedMarkdownFiles.push(refFile);
                 }
             }
+            const codeStart = performance.now();
             const codeReplacedMarkdown = await replaceReferencedCode({
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
+            refCodeTotal += performance.now() - codeStart;
 
+            const transformStart = performance.now();
             const newMarkdown = transformAtPrefixImports({
                 markdown: codeReplacedMarkdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath)
             });
+            refTransformTotal += performance.now() - transformStart;
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
+
+            const pageTime = performance.now() - pageStart;
+            if (pageTime > 100) {
+                this.taskContext.logger.info(
+                    `[PERF]   slow page (${pageTime.toFixed(0)}ms): ${relativePath} (${(markdown.length / 1024).toFixed(0)}KB)`
+                );
+                refSlowPages++;
+            }
         }
         const refTime = performance.now() - refStart;
         this.taskContext.logger.info(
-            `[PERF] replaceReferencedMarkdown+Code: ${refTime.toFixed(0)}ms (${this.referencedMarkdownFiles.length} referenced files)`
+            `[PERF] replaceReferencedMarkdown+Code: ${refTime.toFixed(0)}ms over ${pageEntries.length} pages`
+        );
+        this.taskContext.logger.info(
+            `[PERF]   breakdown: replaceMarkdown=${refMarkdownTotal.toFixed(0)}ms, replaceCode=${refCodeTotal.toFixed(0)}ms, transformImports=${refTransformTotal.toFixed(0)}ms`
+        );
+        this.taskContext.logger.info(
+            `[PERF]   slow pages (>100ms): ${refSlowPages}, referenced files: ${this.referencedMarkdownFiles.length}`
         );
 
         this.taskContext.logger.debug("Collecting files from docs config...");
@@ -528,10 +553,12 @@ export class DocsDefinitionResolver {
         }
 
         // preprocess markdown files to extract image paths
-        this.taskContext.logger.debug("Parsing image paths from markdown files...");
         const imageParseStart = performance.now();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+        let imgSlowPages = 0;
+        const imgPageEntries = Object.entries(this.parsedDocsConfig.pages);
+        for (const [relativePath, markdown] of imgPageEntries) {
             try {
+                const imgPageStart = performance.now();
                 const { filepaths, markdown: newMarkdown } = parseImagePaths(
                     markdown,
                     {
@@ -548,6 +575,13 @@ export class DocsDefinitionResolver {
                 for (const filepath of filepaths) {
                     filesToUploadSet.add(filepath);
                 }
+                const imgPageTime = performance.now() - imgPageStart;
+                if (imgPageTime > 50) {
+                    this.taskContext.logger.info(
+                        `[PERF]   parseImagePaths slow (${imgPageTime.toFixed(0)}ms): ${relativePath} (${(markdown.length / 1024).toFixed(0)}KB)`
+                    );
+                    imgSlowPages++;
+                }
             } catch (error) {
                 this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
                 throw new CliError({
@@ -557,7 +591,9 @@ export class DocsDefinitionResolver {
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
-        this.taskContext.logger.info(`[PERF] parseImagePaths: ${imageParseTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(
+            `[PERF] parseImagePaths: ${imageParseTime.toFixed(0)}ms over ${imgPageEntries.length} pages (${imgSlowPages} slow)`
+        );
 
         const filesToUpload: FilePathPair[] = Array.from(filesToUploadSet).map(
             (absoluteFilePath): FilePathPair => ({
@@ -651,10 +687,12 @@ export class DocsDefinitionResolver {
             this.pendingApiRegistrations = [];
         }
 
-        this.taskContext.logger.debug("Replacing image paths and URLs in markdown...");
         const replaceStart = performance.now();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+        let replSlowPages = 0;
+        const replPageEntries = Object.entries(this.parsedDocsConfig.pages);
+        for (const [relativePath, markdown] of replPageEntries) {
             try {
+                const replPageStart = performance.now();
                 this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                     markdown,
                     this.collectedFileIds,
@@ -666,6 +704,13 @@ export class DocsDefinitionResolver {
                     },
                     this.taskContext
                 );
+                const replPageTime = performance.now() - replPageStart;
+                if (replPageTime > 50) {
+                    this.taskContext.logger.info(
+                        `[PERF]   replaceImagePaths slow (${replPageTime.toFixed(0)}ms): ${relativePath} (${(markdown.length / 1024).toFixed(0)}KB)`
+                    );
+                    replSlowPages++;
+                }
             } catch (error) {
                 throw new CliError({
                     message: `Failed to replace image paths in markdown file ${relativePath}: ${extractErrorMessage(error)}`,
@@ -674,7 +719,9 @@ export class DocsDefinitionResolver {
             }
         }
         const replaceTime = performance.now() - replaceStart;
-        this.taskContext.logger.info(`[PERF] replaceImagePathsAndUrls: ${replaceTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(
+            `[PERF] replaceImagePathsAndUrls: ${replaceTime.toFixed(0)}ms over ${replPageEntries.length} pages (${replSlowPages} slow)`
+        );
 
         this.taskContext.logger.debug("Building page content...");
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
