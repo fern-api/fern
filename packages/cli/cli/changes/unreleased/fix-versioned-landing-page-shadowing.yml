@@ -1,12 +1,8 @@
 - summary: |
-    Revert the landing-page emission changes from 5.58.0: the top-level
-    `landing-page` from docs.yml is no longer propagated into every version node
-    of versioned navigation, and product-level `landing-page` config is no longer
-    emitted for unversioned products in product groups. The emitted landing pages
-    were visited before the surrounding navigation during slug collection, so a
-    landing page whose slug matched an existing page (e.g. `landing-page: /overview`
-    pointing at the same mdx as an "Overview" page in the sidebar) shadowed that
-    page and rendered it without a sidebar. Restores the pre-5.58.0 behavior that
-    published docs sites were authored against. Per-version `landing-page` config
-    in version files is unaffected.
+    Fix pages losing their sidebar when a top-level `landing-page` shares a slug
+    with a page in versioned navigation. Reverts a 5.58.0 change: the top-level
+    `landing-page` is no longer copied into each version, and product-level
+    `landing-page` config is no longer applied to products inside product groups
+    (restoring pre-5.58.0 rendering). `landing-page` in version files is
+    unaffected.
   type: fix
