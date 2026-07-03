@@ -72,6 +72,8 @@ class Stream<T> implements AsyncIterable<T> {
     private reconnect: ((lastEventId: string) => Promise<ReadableStream>) | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
+    private externalSignal: AbortSignal | undefined;
+    private onExternalAbort: (() => void) | undefined;
 
     constructor({
         stream,
@@ -97,7 +99,11 @@ class Stream<T> implements AsyncIterable<T> {
         this.reconnectionEnabled = reconnectionEnabled ?? true;
         this.maxReconnectionAttempts = maxReconnectionAttempts ?? DEFAULT_MAX_RECONNECTION_ATTEMPTS;
         this.reconnect = reconnect;
-        signal?.addEventListener("abort", () => this.controller.abort());
+        if (signal != null) {
+            this.externalSignal = signal;
+            this.onExternalAbort = () => this.controller.abort();
+            signal.addEventListener("abort", this.onExternalAbort, { once: true });
+        }
 
         if (typeof TextDecoder !== "undefined") {
             this.decoder = new TextDecoder("utf-8");
@@ -202,11 +208,16 @@ class Stream<T> implements AsyncIterable<T> {
                 return;
             }
             try {
-                currentStream = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastId);
+                if (reconnected == null) {
+                    currentStream = this.createEmptyStream();
+                    continue;
+                }
+                currentStream = reconnected;
             } catch {
-                // Treat a failed reconnect (e.g. HTTP error) like an empty stream:
-                // the next loop iteration will hit shouldReconnect and respect
-                // maxReconnectionAttempts.
+                // Failed reconnect (e.g. HTTP error); assign an empty stream
+                // so the next iteration is a safe no-op before shouldReconnect.
+                currentStream = this.createEmptyStream();
                 continue;
             }
         }
@@ -289,11 +300,16 @@ class Stream<T> implements AsyncIterable<T> {
                 return;
             }
             try {
-                currentStream = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastId);
+                if (reconnected == null) {
+                    currentStream = this.createEmptyStream();
+                    continue;
+                }
+                currentStream = reconnected;
             } catch {
-                // Treat a failed reconnect (e.g. HTTP error) like an empty stream:
-                // the next loop iteration will hit shouldReconnect and respect
-                // maxReconnectionAttempts.
+                // Failed reconnect (e.g. HTTP error); assign an empty stream
+                // so the next iteration is a safe no-op before shouldReconnect.
+                currentStream = this.createEmptyStream();
                 continue;
             }
         }
@@ -308,6 +324,9 @@ class Stream<T> implements AsyncIterable<T> {
 
     private shouldReconnect(lastId: string | undefined, reconnectAttempts: number): boolean {
         if (!this.resumable) {
+            return false;
+        }
+        if (this.streamTerminator == null) {
             return false;
         }
         if (!this.reconnectionEnabled) {
@@ -362,26 +381,48 @@ class Stream<T> implements AsyncIterable<T> {
         return { [this.eventDiscriminator]: eventType, ...obj };
     }
 
+    private createEmptyStream(): ReadableStream {
+        return new ReadableStream({ start(controller) { controller.close(); } });
+    }
+
+    private removeAbortListener(): void {
+        if (this.externalSignal != null && this.onExternalAbort != null) {
+            this.externalSignal.removeEventListener("abort", this.onExternalAbort);
+            this.onExternalAbort = undefined;
+        }
+    }
+
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
-        for await (const event of this.iterMessages()) {
-            yield event.data;
+        try {
+            for await (const event of this.iterMessages()) {
+                yield event.data;
+            }
+        } finally {
+            this.removeAbortListener();
         }
     }
 
     private decodeChunk(chunk: unknown): string {
-        if (this.decoder != null) {
-            return this.decoder.decode(chunk as BufferSource, { stream: true });
+        if (this.decoder != null && (chunk instanceof Uint8Array || chunk instanceof ArrayBuffer)) {
+            return this.decoder.decode(chunk, { stream: true });
         }
         if (Buffer.isBuffer(chunk)) {
             return chunk.toString("utf-8");
         }
-        return Buffer.from(chunk as ArrayBuffer).toString("utf-8");
+        if (chunk instanceof ArrayBuffer) {
+            return Buffer.from(chunk).toString("utf-8");
+        }
+        return String(chunk);
     }
 }
 
+function hasAsyncIterator<T>(obj: object): obj is AsyncIterable<T> {
+    return Symbol.asyncIterator in obj;
+}
+
 function readableStreamAsyncIterable<T>(stream: ReadableStream): AsyncIterableIterator<T> {
-    if ((stream as any)[Symbol.asyncIterator]) {
-        return (stream as any)[Symbol.asyncIterator]();
+    if (hasAsyncIterator<T>(stream)) {
+        return stream[Symbol.asyncIterator]();
     }
 
     const reader = stream.getReader();
@@ -408,6 +449,26 @@ function readableStreamAsyncIterable<T>(stream: ReadableStream): AsyncIterableIt
             return this;
         },
     };
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+function assertBody(response: Response): ReadableStream {
+    const body = response.body;
+    if (body == null) {
+        throw new Error("response body is null");
+    }
+    return body;
+}
+
+function at<T>(arr: T[], index: number): T {
+    const val = arr[index];
+    if (val === undefined) {
+        throw new Error(`expected element at index ${index}`);
+    }
+    return val;
 }
 
 // ---------------------------------------------------------------------------
@@ -473,11 +534,11 @@ describe("SSE Stream Reconnection E2E", () => {
                 const response = await fetch(url, {
                     headers: { "Last-Event-ID": lastEventId },
                 });
-                return response.body!;
+                return assertBody(response);
             };
 
             const stream = new Stream<{ value: number }>({
-                stream: initialResponse.body!,
+                stream: assertBody(initialResponse),
                 parse: async (val: unknown) => val as { value: number },
                 eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
@@ -502,9 +563,9 @@ describe("SSE Stream Reconnection E2E", () => {
             // Exactly 2 connections made
             assert.strictEqual(connectionAttempts.length, 2);
             // First connection had no Last-Event-ID
-            assert.strictEqual(connectionAttempts[0]!.lastEventId, undefined);
+            assert.strictEqual(at(connectionAttempts, 0).lastEventId, undefined);
             // Second connection sent Last-Event-ID = "evt-3"
-            assert.strictEqual(connectionAttempts[1]!.lastEventId, "evt-3");
+            assert.strictEqual(at(connectionAttempts, 1).lastEventId, "evt-3");
 
             console.log("✓ Reconnection works: got all 5 events across 2 connections");
             console.log(`  Connection 1: no Last-Event-ID → events evt-1..evt-3`);
@@ -550,11 +611,11 @@ describe("SSE Stream Reconnection E2E", () => {
                 const response = await fetch(url, {
                     headers: { "Last-Event-ID": lastEventId },
                 });
-                return response.body!;
+                return assertBody(response);
             };
 
             const stream = new Stream<{ seq: number }>({
-                stream: initialResponse.body!,
+                stream: assertBody(initialResponse),
                 parse: async (val: unknown) => val as { seq: number },
                 eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
@@ -569,9 +630,9 @@ describe("SSE Stream Reconnection E2E", () => {
 
             assert.deepStrictEqual(messages, [{ seq: 1 }, { seq: 2 }, { seq: 3 }]);
             assert.strictEqual(connectionAttempts.length, 3);
-            assert.strictEqual(connectionAttempts[0]!.lastEventId, undefined);
-            assert.strictEqual(connectionAttempts[1]!.lastEventId, "1");
-            assert.strictEqual(connectionAttempts[2]!.lastEventId, "2");
+            assert.strictEqual(at(connectionAttempts, 0).lastEventId, undefined);
+            assert.strictEqual(at(connectionAttempts, 1).lastEventId, "1");
+            assert.strictEqual(at(connectionAttempts, 2).lastEventId, "2");
 
             console.log("✓ Multiple reconnections work: 3 connections, all events received");
         } finally {
@@ -612,11 +673,11 @@ describe("SSE Stream Reconnection E2E", () => {
                 const response = await fetch(url, {
                     headers: { "Last-Event-ID": lastEventId },
                 });
-                return response.body!;
+                return assertBody(response);
             };
 
             const stream = new Stream<{ msg: string }>({
-                stream: initialResponse.body!,
+                stream: assertBody(initialResponse),
                 parse: async (val: unknown) => val as { msg: string },
                 eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
@@ -632,7 +693,7 @@ describe("SSE Stream Reconnection E2E", () => {
             assert.deepStrictEqual(messages, [{ msg: "first" }, { msg: "second" }]);
             assert.strictEqual(connectionTimestamps.length, 2);
 
-            const delayMs = connectionTimestamps[1]! - connectionTimestamps[0]!;
+            const delayMs = at(connectionTimestamps, 1) - at(connectionTimestamps, 0);
             // Should have waited at least ~150ms (allowing 30ms variance for network)
             assert.ok(delayMs >= 120, `Expected delay >= 120ms, got ${delayMs}ms`);
 
@@ -672,11 +733,11 @@ describe("SSE Stream Reconnection E2E", () => {
                 const response = await fetch(url, {
                     headers: { "Last-Event-ID": lastEventId },
                 });
-                return response.body!;
+                return assertBody(response);
             };
 
             const stream = new Stream<{ n: number }>({
-                stream: initialResponse.body!,
+                stream: assertBody(initialResponse),
                 parse: async (val: unknown) => val as { n: number },
                 eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: true,
@@ -722,11 +783,11 @@ describe("SSE Stream Reconnection E2E", () => {
                 const response = await fetch(url, {
                     headers: { "Last-Event-ID": lastEventId },
                 });
-                return response.body!;
+                return assertBody(response);
             };
 
             const stream = new Stream<{ only: boolean }>({
-                stream: initialResponse.body!,
+                stream: assertBody(initialResponse),
                 parse: async (val: unknown) => val as { only: boolean },
                 eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
                 reconnectionEnabled: false, // Disabled!

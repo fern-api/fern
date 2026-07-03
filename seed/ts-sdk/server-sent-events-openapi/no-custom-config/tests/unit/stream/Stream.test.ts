@@ -1451,6 +1451,68 @@ describe("Stream", () => {
             expect(reconnectCallCount).toBe(0);
         });
     });
+
+    describe("SSE stream reconnection - no terminator prevents reconnect", () => {
+        it("should not attempt reconnection when no streamTerminator is configured", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(['id: 2\ndata: {"value": 2}\n\n']);
+            };
+
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Without a streamTerminator, shouldReconnect returns false
+            // to avoid a reconnect storm.
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
+    describe("SSE stream reconnection - null reconnect body", () => {
+        it("should treat null reconnect body as a failed attempt", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                // @ts-expect-error Intentionally returning null to test null-body handling
+                return null;
+            };
+
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 2,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            // Both reconnect attempts returned null, exhausting maxReconnectionAttempts
+            expect(reconnectCallCount).toBe(2);
+        });
+    });
 });
 
 // Helper function to create a ReadableStream from string chunks

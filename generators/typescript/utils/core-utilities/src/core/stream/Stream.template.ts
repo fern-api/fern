@@ -100,6 +100,8 @@ export class Stream<T> implements AsyncIterable<T> {
     <% } %>
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
+    private externalSignal: AbortSignal | undefined;
+    private onExternalAbort: (() => void) | undefined;
 
     constructor({ stream, parse, eventShape, signal, reconnectionEnabled, maxReconnectionAttempts, reconnect }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
@@ -117,7 +119,11 @@ export class Stream<T> implements AsyncIterable<T> {
         this.reconnectionEnabled = reconnectionEnabled ?? true;
         this.maxReconnectionAttempts = maxReconnectionAttempts ?? DEFAULT_MAX_RECONNECTION_ATTEMPTS;
         this.reconnect = reconnect;
-        signal?.addEventListener("abort", () => this.controller.abort());
+        if (signal != null) {
+            this.externalSignal = signal;
+            this.onExternalAbort = () => this.controller.abort();
+            signal.addEventListener("abort", this.onExternalAbort, { once: true });
+        }
 
         // Initialize shared TextDecoder
         if (typeof TextDecoder !== "undefined") {
@@ -223,11 +229,16 @@ export class Stream<T> implements AsyncIterable<T> {
                 return;
             }
             try {
-                currentStream = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastId);
+                if (reconnected == null) {
+                    currentStream = this.createEmptyStream();
+                    continue;
+                }
+                currentStream = reconnected;
             } catch {
-                // Treat a failed reconnect (e.g. HTTP error) like an empty stream:
-                // the next loop iteration will hit shouldReconnect and respect
-                // maxReconnectionAttempts.
+                // Failed reconnect (e.g. HTTP error); assign an empty stream
+                // so the next iteration is a safe no-op before shouldReconnect.
+                currentStream = this.createEmptyStream();
                 continue;
             }
         }
@@ -310,11 +321,16 @@ export class Stream<T> implements AsyncIterable<T> {
                 return;
             }
             try {
-                currentStream = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastId);
+                if (reconnected == null) {
+                    currentStream = this.createEmptyStream();
+                    continue;
+                }
+                currentStream = reconnected;
             } catch {
-                // Treat a failed reconnect (e.g. HTTP error) like an empty stream:
-                // the next loop iteration will hit shouldReconnect and respect
-                // maxReconnectionAttempts.
+                // Failed reconnect (e.g. HTTP error); assign an empty stream
+                // so the next iteration is a safe no-op before shouldReconnect.
+                currentStream = this.createEmptyStream();
                 continue;
             }
         }
@@ -335,6 +351,14 @@ export class Stream<T> implements AsyncIterable<T> {
      */
     private shouldReconnect(lastId: string | undefined, reconnectAttempts: number): boolean {
         if (!this.resumable) {
+            return false;
+        }
+        if (this.streamTerminator == null) {
+            // Without a terminator the client cannot distinguish a
+            // completed stream from a dropped connection. Combined
+            // with the reset-on-progress semantics of reconnectAttempts,
+            // a server that emits ≥1 event per connection without a
+            // terminator would reconnect unboundedly.
             return false;
         }
         if (!this.reconnectionEnabled) {
@@ -381,11 +405,32 @@ export class Stream<T> implements AsyncIterable<T> {
         });
     }
 
+<% if (streamType === "wrapper") { %>
+    private createEmptyStream(): Readable {
+        return new Readable({ read() { this.push(null); } });
+    }
+<% } else { %>
+    private createEmptyStream(): ReadableStream {
+        return new ReadableStream({ start(controller) { controller.close(); } });
+    }
+<% } %>
+
+    private removeAbortListener(): void {
+        if (this.externalSignal != null && this.onExternalAbort != null) {
+            this.externalSignal.removeEventListener("abort", this.onExternalAbort);
+            this.onExternalAbort = undefined;
+        }
+    }
+
     public withMetadata(): AsyncIterable<ServerSentEvent<T>> {
         const self = this;
         return {
             async *[Symbol.asyncIterator]() {
-                yield* self.iterMessages();
+                try {
+                    yield* self.iterMessages();
+                } finally {
+                    self.removeAbortListener();
+                }
             }
         };
     }
@@ -405,8 +450,12 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
-        for await (const event of this.iterMessages()) {
-            yield event.data;
+        try {
+            for await (const event of this.iterMessages()) {
+                yield event.data;
+            }
+        } finally {
+            this.removeAbortListener();
         }
     }
 
