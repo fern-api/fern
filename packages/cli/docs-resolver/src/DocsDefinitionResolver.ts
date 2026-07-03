@@ -1416,14 +1416,20 @@ export class DocsDefinitionResolver {
         if (product.type === "internal") {
             const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
             let child: FernNavigation.V1.ProductChild;
+            // NOTE: `product.landingPage` is intentionally NOT emitted here.
+            // Like the versioned case in toRootChild, landingPage nodes are
+            // visited before the product's own navigation during slug
+            // collection, so a landing page sharing a slug with a page in the
+            // product shadows that page and strips its sidebar at render time.
+            // This matches the legacy (< 5.58.0) publish behavior that live
+            // docs sites were authored against.
             switch (product.navigation.type) {
                 case "tabbed":
                     child = {
                         type: "unversioned",
                         id: this.#idgen.get(product.product),
                         collapsed: undefined,
-                        landingPage:
-                            product.landingPage != null ? this.toLandingPageNode(product.landingPage, slug) : undefined,
+                        landingPage: undefined,
                         child: await this.convertTabbedNavigation(
                             this.#idgen.get(product.product),
                             product.navigation.items,
@@ -1436,8 +1442,7 @@ export class DocsDefinitionResolver {
                         type: "unversioned",
                         id: this.#idgen.get(product.product),
                         collapsed: undefined,
-                        landingPage:
-                            product.landingPage != null ? this.toLandingPageNode(product.landingPage, slug) : undefined,
+                        landingPage: undefined,
                         child: await this.toSidebarRootNode(
                             this.#idgen.get(product.product),
                             product.navigation.items,
