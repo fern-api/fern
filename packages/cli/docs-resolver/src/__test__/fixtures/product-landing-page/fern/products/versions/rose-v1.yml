@@ -1,0 +1,4 @@
+navigation:
+  - page: Overview
+    slug: overview
+    path: ../../pages/rose-overview.mdx

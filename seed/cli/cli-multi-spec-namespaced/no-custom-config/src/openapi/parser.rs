@@ -752,7 +752,7 @@ struct OpenApiSchemaObject {
     #[serde(default)]
     nullable: bool,
     description: Option<String>,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "deserialize_schema_properties")]
     properties: HashMap<String, OpenApiSchemaObject>,
     items: Option<Box<OpenApiSchemaObject>>,
     #[serde(default)]
@@ -964,6 +964,31 @@ where
     deserializer.deserialize_any(TypeVisitor)
 }
 
+/// Deserialize `properties` tolerantly: each value is normally a schema object,
+/// but some Fern-processed specs emit a single-element array wrapping the
+/// schema (e.g. `[{"x-fern-type-name": "Foo"}]`). Single-element arrays
+/// are unwrapped; other non-object values are replaced with an empty schema
+/// so parsing continues instead of aborting.
+fn deserialize_schema_properties<'de, D>(
+    deserializer: D,
+) -> Result<HashMap<String, OpenApiSchemaObject>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let raw: HashMap<String, serde_yaml::Value> = HashMap::deserialize(deserializer)?;
+    let mut result = HashMap::with_capacity(raw.len());
+    for (key, value) in raw {
+        let schema_value = match &value {
+            serde_yaml::Value::Sequence(seq) if seq.len() == 1 => seq[0].clone(),
+            _ => value,
+        };
+        let schema = serde_yaml::from_value::<OpenApiSchemaObject>(schema_value)
+            .unwrap_or_default();
+        result.insert(key, schema);
+    }
+    Ok(result)
+}
+
 /// Deserialize `additionalProperties` which can be a boolean or a schema object.
 /// When it's `false`, we treat it as None. When `true`, we treat it as an empty schema.
 fn deserialize_additional_properties<'de, D>(
@@ -1011,7 +1036,7 @@ where
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 struct OpenApiComponents {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "deserialize_schema_properties")]
     schemas: HashMap<String, OpenApiSchemaObject>,
     #[serde(default)]
     parameters: HashMap<String, OpenApiParameter>,
@@ -10972,6 +10997,136 @@ components:
         assert!(
             schemas.contains_key("inline_op_response"),
             "inline schema must be stored in schemas map",
+        );
+    }
+
+    // -----------------------------------------------------------------------
+    // Property-value-as-array tolerance (ElevenLabs / Fern-processed specs)
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn property_value_single_element_array_unwrapped() {
+        // Some Fern-processed specs emit a property value as a
+        // single-element array wrapping the real schema object.
+        // The parser should unwrap it transparently.
+        let yaml = r#"
+openapi: "3.1.0"
+info:
+  title: Test
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /items:
+    get:
+      operationId: listItems
+      x-fern-sdk-method-name: list
+      x-fern-sdk-group-name: items
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  normal_prop:
+                    type: string
+                  wrapped_prop:
+                    - type: integer
+                      description: "wrapped in array"
+"#;
+        let doc = load_openapi_spec(yaml, "t")
+            .expect("spec with array-valued property should parse");
+        let items = doc.resources.get("items").expect("items resource");
+        assert!(
+            items.methods.values().any(|m| m.id.as_deref() == Some("listItems")),
+            "listItems method should exist",
+        );
+    }
+
+    #[test]
+    fn property_value_multi_element_array_defaults() {
+        // Multi-element arrays at property positions fall back to an
+        // empty (default) schema instead of aborting the entire parse.
+        let yaml = r#"
+openapi: "3.1.0"
+info:
+  title: Test
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /things:
+    get:
+      operationId: getThings
+      x-fern-sdk-method-name: get
+      x-fern-sdk-group-name: things
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok_field:
+                    type: string
+                  odd_field:
+                    - type: string
+                    - type: integer
+"#;
+        let doc = load_openapi_spec(yaml, "t")
+            .expect("spec with multi-element array property should parse");
+        let things = doc.resources.get("things").expect("things resource");
+        assert!(
+            things.methods.values().any(|m| m.id.as_deref() == Some("getThings")),
+            "getThings method should exist",
+        );
+    }
+
+    #[test]
+    fn component_schema_as_array_tolerated() {
+        // A component schema whose value is a single-element array
+        // should be unwrapped, not crash the parser.
+        let yaml = r##"
+openapi: "3.1.0"
+info:
+  title: Test
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /foo:
+    get:
+      operationId: getFoo
+      x-fern-sdk-method-name: get
+      x-fern-sdk-group-name: foo
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Normal"
+components:
+  schemas:
+    Normal:
+      type: object
+      properties:
+        name:
+          type: string
+    Wrapped:
+      - type: object
+        properties:
+          state:
+            type: string
+"##;
+        let doc = load_openapi_spec(yaml, "t")
+            .expect("spec with array-valued component schema should parse");
+        assert!(
+            doc.schemas.contains_key("Normal"),
+            "Normal schema should be present",
         );
     }
 }

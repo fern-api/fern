@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.64.3
+  changelogEntry:
+    - summary: |
+        Fix pages losing their sidebar when a top-level `landing-page` shares a slug
+        with a page in versioned navigation. Reverts a 5.58.0 change: the top-level
+        `landing-page` is no longer copied into each version, and product-level
+        `landing-page` config is no longer applied to products inside product groups
+        (restoring pre-5.58.0 rendering). `landing-page` in version files is
+        unaffected.
+      type: fix
+  createdAt: "2026-07-03"
+  irVersion: 67
+- version: 5.64.2
+  changelogEntry:
+    - summary: |
+        OpenAPI import: an endpoint that declares both a body-bearing 2xx response and a 204 No
+        Content response now correctly produces an optional success body, even when the 204
+        erroneously declares a response body. Per RFC 9110 a 204 cannot carry a body, so the
+        declared 204 body is ignored (with a warning) and the success response type is wrapped
+        optional. Previously the 204 was dropped and the return type stayed non-optional, so a real
+        204 (empty body) failed to decode in generated SDKs. Applies to both the legacy and v3
+        OpenAPI importers.
+      type: fix
+  createdAt: "2026-07-03"
+  irVersion: 67
+- version: 5.64.1
+  changelogEntry:
+    - summary: |
+        Fix GraphQL namespace types (e.g. Inventory, Geography) being excluded from the
+        type registry and missing parent operations for query pages. Namespace types are
+        now registered so their fields render correctly on landing pages.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
 - version: 5.64.0
   changelogEntry:
     - summary: |
