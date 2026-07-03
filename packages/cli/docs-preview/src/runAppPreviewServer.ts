@@ -31,7 +31,7 @@ import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
-import { readFile, rm } from "fs/promises";
+import { readFile, rm, writeFile } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
@@ -728,7 +728,7 @@ export async function runAppPreviewServer({
 
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
-    const RELOAD_DEBOUNCE_MS = 1000;
+    const RELOAD_DEBOUNCE_MS = 300;
 
     /**
      * Computes translated definitions for each locale.
@@ -951,6 +951,19 @@ export async function runAppPreviewServer({
         return translations;
     }
 
+    let reloadGeneration = 0;
+
+    // Write generation counter to a well-known temp file so the Next.js
+    // process can detect stale cache entries without an HTTP round-trip.
+    const genFilePath = path.join(require("os").tmpdir(), `fern-docs-dev-gen-${backendPort}`);
+    async function writeGenerationFile(): Promise<void> {
+        try {
+            await writeFile(genFilePath, String(reloadGeneration), "utf-8");
+        } catch {
+            // Best-effort; the HTTP path remains as fallback
+        }
+    }
+
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
@@ -964,22 +977,37 @@ export async function runAppPreviewServer({
             // Rebuild dependency map after reloading project
             await snippetTracker.buildDependencyMap(project);
 
-            // Start validation in background - don't block the reload
-            const validationStartTime = Date.now();
-            void validateProject(project)
-                .then(() => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, true);
-                })
-                .catch((err) => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
-                    // Still log validation errors to help developers
-                    if (err instanceof Error && err.stack) {
-                        context.logger.debug(`Validation error stack: ${err.stack}`);
-                    }
+            // Skip background validation for content-only edits (MDX/MD files).
+            // Validation re-parses all OpenAPI specs (~26s for large projects) and
+            // competes for CPU with Next.js server-side rendering, inflating reload
+            // latency from ~3s to ~30s.
+            const isContentOnlyEdit =
+                editedAbsoluteFilepaths != null &&
+                editedAbsoluteFilepaths.length > 0 &&
+                editedAbsoluteFilepaths.every((f) => {
+                    const lower = f.toLowerCase();
+                    return lower.endsWith(".md") || lower.endsWith(".mdx");
                 });
+
+            if (!isContentOnlyEdit) {
+                // Start validation in background - don't block the reload
+                const validationStartTime = Date.now();
+                void validateProject(project)
+                    .then(() => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, true);
+                    })
+                    .catch((err) => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, false);
+                        context.logger.error(
+                            `Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`
+                        );
+                        if (err instanceof Error && err.stack) {
+                            context.logger.debug(`Validation error stack: ${err.stack}`);
+                        }
+                    });
+            }
 
             const docsGenStartTime = Date.now();
             const newPreviewResult = await getPreviewDocsDefinition({
@@ -1202,6 +1230,7 @@ export async function runAppPreviewServer({
         NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
         NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         NEXT_PUBLIC_IS_LOCAL: "1",
+        FERN_DOCS_DEV_GEN_FILE: genFilePath,
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
@@ -1356,6 +1385,9 @@ export async function runAppPreviewServer({
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
 
+                        reloadGeneration++;
+                        await writeGenerationFile();
+
                         sendData({
                             version: 1,
                             type: "finishReload"
@@ -1375,6 +1407,9 @@ export async function runAppPreviewServer({
                             });
                         }
                     } else {
+                        reloadGeneration++;
+                        await writeGenerationFile();
+
                         sendData({
                             version: 1,
                             type: "finishReload"
@@ -1382,6 +1417,9 @@ export async function runAppPreviewServer({
                     }
                 } catch (err) {
                     context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
+                    reloadGeneration++;
+                    await writeGenerationFile();
+
                     sendData({
                         version: 1,
                         type: "finishReload"
