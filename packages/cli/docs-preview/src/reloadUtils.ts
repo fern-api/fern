@@ -46,8 +46,9 @@ export class GenerationFileManager {
     private async write(): Promise<void> {
         try {
             await writeFile(this.filePath, String(this.generation), "utf-8");
-        } catch {
-            // Best-effort; the HTTP path remains as fallback
+        } catch (e: unknown) {
+            // biome-ignore lint/suspicious/noConsole: best-effort debug logging for generation file write failures
+            console.debug(`Failed to write generation file ${this.filePath}: ${e}`);
         }
     }
 }

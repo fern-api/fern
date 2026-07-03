@@ -33,6 +33,7 @@ import express from "express";
 import fs from "fs";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
+import os from "os";
 import path from "path";
 import { type Duplex } from "stream";
 import { WebSocket, WebSocketServer } from "ws";
@@ -729,7 +730,7 @@ export async function runAppPreviewServer({
 
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
-    const RELOAD_DEBOUNCE_MS = 300;
+    const RELOAD_DEBOUNCE_MS = 500;
 
     /**
      * Computes translated definitions for each locale.
@@ -954,7 +955,7 @@ export async function runAppPreviewServer({
 
     // Generation counter backed by a temp file so the Next.js process can
     // detect stale cache entries without an HTTP round-trip.
-    const genFilePath = path.join(require("os").tmpdir(), `fern-docs-dev-gen-${backendPort}`);
+    const genFilePath = path.join(os.tmpdir(), `fern-docs-dev-gen-${backendPort}`);
     const generationManager = new GenerationFileManager(genFilePath);
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
