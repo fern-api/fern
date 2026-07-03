@@ -80,6 +80,228 @@ function extractLines(content: string, linesParam: string): string {
     return extractedLines.join("\n");
 }
 
+interface CodeTagMatch {
+    fullMatch: string;
+    indent: string;
+    src: string;
+    afterSrcAttrs: string;
+}
+
+/**
+ * Character-level scanner that finds self-closing <Code .../> tags with a src attribute.
+ * Replaces the previous regex which had catastrophic backtracking on pages containing
+ * <Code inside code fences or non-self-closing <Code> tags (e.g. <CodeGroup>).
+ */
+function scanForCodeTags(content: string): CodeTagMatch[] {
+    const matches: CodeTagMatch[] = [];
+    const len = content.length;
+    let i = 0;
+    let inCodeFence = false;
+
+    while (i < len) {
+        // Track code fences to skip <Code> inside them
+        if ((i === 0 || content[i - 1] === "\n") && content.slice(i, i + 3) === "```") {
+            inCodeFence = !inCodeFence;
+            i += 3;
+            continue;
+        }
+
+        if (inCodeFence) {
+            i++;
+            continue;
+        }
+
+        // Look for <Code (must be followed by whitespace or / or >)
+        if (
+            content[i] === "<" &&
+            content.slice(i + 1, i + 5) === "Code" &&
+            i + 5 < len &&
+            (content[i + 5] === " " ||
+                content[i + 5] === "\t" ||
+                content[i + 5] === "\n" ||
+                content[i + 5] === "/" ||
+                content[i + 5] === ">")
+        ) {
+            // Must NOT be <CodeBlock, <CodeGroup, etc.
+            const charAfterCode = content[i + 5];
+            if (
+                charAfterCode !== undefined &&
+                /\w/.test(charAfterCode) &&
+                charAfterCode !== "/" &&
+                charAfterCode !== ">"
+            ) {
+                i++;
+                continue;
+            }
+
+            // Capture leading indent (spaces/tabs before <Code on the same line)
+            let indentStart = i;
+            while (indentStart > 0 && (content[indentStart - 1] === " " || content[indentStart - 1] === "\t")) {
+                indentStart--;
+            }
+            // Only count as indent if at start of line (or start of string)
+            const indent = indentStart === 0 || content[indentStart - 1] === "\n" ? content.slice(indentStart, i) : "";
+
+            // Scan forward to find /> (self-closing) or > (not self-closing, skip)
+            const tagStart = indentStart === 0 || content[indentStart - 1] === "\n" ? indentStart : i;
+            let j = i + 5;
+            let foundSelfClose = false;
+
+            while (j < len) {
+                const ch = content[j];
+                if (ch === "/" && j + 1 < len && content[j + 1] === ">") {
+                    foundSelfClose = true;
+                    j += 2;
+                    break;
+                }
+                if (ch === ">") {
+                    // Non-self-closing tag, skip
+                    break;
+                }
+                // Skip quoted strings to avoid matching /> inside attribute values
+                if (ch === '"' || ch === "'") {
+                    const quote = ch;
+                    j++;
+                    while (j < len && content[j] !== quote) {
+                        if (content[j] === "\\") {
+                            j++;
+                        }
+                        j++;
+                    }
+                    if (j < len) {
+                        j++;
+                    }
+                    continue;
+                }
+                // Skip curly brace expressions
+                if (ch === "{") {
+                    let depth = 1;
+                    j++;
+                    while (j < len && depth > 0) {
+                        if (content[j] === "{") {
+                            depth++;
+                        } else if (content[j] === "}") {
+                            depth--;
+                        }
+                        j++;
+                    }
+                    continue;
+                }
+                j++;
+            }
+
+            if (!foundSelfClose) {
+                i++;
+                continue;
+            }
+
+            const fullMatch = content.slice(tagStart, j);
+            const attrsStr = content.slice(i + 5, j - 2);
+
+            // Extract src value from the attributes string
+            const src = extractSrcValue(attrsStr);
+            if (src == null) {
+                i = j;
+                continue;
+            }
+
+            // Skip src values with string concatenation (src="x" + "y")
+            const srcEndInAttrs = attrsStr.indexOf(src) + src.length;
+            const afterSrc = attrsStr.slice(srcEndInAttrs);
+            const afterSrcTrimmed = afterSrc.replace(/^['"}]?\s*/, "");
+            if (afterSrcTrimmed.startsWith("+")) {
+                i = j;
+                continue;
+            }
+
+            // Build afterSrcAttrs: everything in the attrs after the src=... value
+            const afterSrcAttrs = extractAfterSrcAttrs(attrsStr);
+
+            matches.push({ fullMatch, indent, src, afterSrcAttrs });
+            i = j;
+        } else {
+            i++;
+        }
+    }
+
+    return matches;
+}
+
+function extractSrcValue(attrsStr: string): string | undefined {
+    // Find "src=" in the attributes
+    let idx = 0;
+    const len = attrsStr.length;
+
+    while (idx < len) {
+        const srcIdx = attrsStr.indexOf("src=", idx);
+        if (srcIdx === -1) {
+            return undefined;
+        }
+        // Make sure "src" is the attr name (preceded by whitespace or is at start)
+        if (srcIdx > 0 && /\w/.test(attrsStr[srcIdx - 1] ?? "")) {
+            idx = srcIdx + 4;
+            continue;
+        }
+
+        let vStart = srcIdx + 4;
+        // Skip optional { wrapper
+        if (attrsStr[vStart] === "{") {
+            vStart++;
+        }
+        // Read the quote character
+        const quote = attrsStr[vStart];
+        if (quote !== '"' && quote !== "'") {
+            idx = vStart;
+            continue;
+        }
+        vStart++;
+        let vEnd = vStart;
+        while (vEnd < len && attrsStr[vEnd] !== quote) {
+            vEnd++;
+        }
+        return attrsStr.slice(vStart, vEnd);
+    }
+    return undefined;
+}
+
+function extractAfterSrcAttrs(attrsStr: string): string {
+    // Find "src=" and skip past the src value, return the rest
+    let idx = 0;
+    const len = attrsStr.length;
+
+    while (idx < len) {
+        const srcIdx = attrsStr.indexOf("src=", idx);
+        if (srcIdx === -1) {
+            return "";
+        }
+        if (srcIdx > 0 && /\w/.test(attrsStr[srcIdx - 1] ?? "")) {
+            idx = srcIdx + 4;
+            continue;
+        }
+
+        let vStart = srcIdx + 4;
+        const hasBrace = attrsStr[vStart] === "{";
+        if (hasBrace) {
+            vStart++;
+        }
+        const quote = attrsStr[vStart];
+        if (quote !== '"' && quote !== "'") {
+            return "";
+        }
+        vStart++;
+        let vEnd = vStart;
+        while (vEnd < len && attrsStr[vEnd] !== quote) {
+            vEnd++;
+        }
+        vEnd++; // skip closing quote
+        if (hasBrace && attrsStr[vEnd] === "}") {
+            vEnd++; // skip closing }
+        }
+        return attrsStr.slice(vEnd).trim();
+    }
+    return "";
+}
+
 // TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
 export async function replaceReferencedCode({
     markdown,
@@ -99,20 +321,15 @@ export async function replaceReferencedCode({
         return markdown;
     }
 
-    const regex = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
+    const codeTagMatches = scanForCodeTags(markdown);
+    if (codeTagMatches.length === 0) {
+        return markdown;
+    }
 
     let newMarkdown = markdown;
 
-    // while match is found, replace the match with the content of the referenced markdown file
-    let match: RegExpExecArray | null;
-    while ((match = regex.exec(markdown)) != null) {
-        const matchString = match[0];
-        const indent = match[1];
-        const src = match[2];
-
-        if (matchString == null || src == null) {
-            throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
-        }
+    for (const codeTag of codeTagMatches) {
+        const { fullMatch: matchString, indent, src, afterSrcAttrs } = codeTag;
 
         try {
             let replacement: string;
@@ -170,9 +387,8 @@ export async function replaceReferencedCode({
             }
 
             // Extract props after src
-            const afterSrcProps = match[3]?.trim() || "";
             propsRegex.lastIndex = 0; // Reset regex
-            while ((propMatch = propsRegex.exec(afterSrcProps)) !== null) {
+            while ((propMatch = propsRegex.exec(afterSrcAttrs)) !== null) {
                 const propName = propMatch[1];
                 // propMatch[2] = curly braces value, propMatch[3] = quoted value, propMatch[4] = unquoted number
                 const propValue = propMatch[2] || propMatch[3] || propMatch[4];
