@@ -6,6 +6,7 @@ imports:
   environment: environment.yml
   errors: errors.yml
   examples: examples.yml
+  globalParameters: global-parameters.yml
   proto: proto.yml
   types: types.yml
   variables: variables.yml
@@ -81,6 +82,12 @@ types:
       source: optional<HttpEndpointSource>
       audiences: optional<list<audience.AudienceReference>>
       retries: optional<RetriesConfiguration>
+      globalParameters:
+        type: optional<list<globalParameters.GlobalParameterId>>
+        docs: |
+          When a global parameter has `apply: explicit`, only endpoints
+          listed here receive the injection. Populated from the per-operation
+          `x-fern-global-parameter` extension.
       apiPlayground:
         type: optional<boolean>
         docs: Whether this endpoint is shown in the API playground

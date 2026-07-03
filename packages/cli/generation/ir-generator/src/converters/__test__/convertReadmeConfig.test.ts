@@ -82,6 +82,7 @@ describe("convertReadmeConfig", () => {
             subtitle: undefined,
             source: undefined,
             retries: undefined,
+            globalParameters: undefined,
             apiPlayground: undefined
         };
         const service: HttpService = {

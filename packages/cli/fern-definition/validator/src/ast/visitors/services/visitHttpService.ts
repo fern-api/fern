@@ -312,7 +312,8 @@ function visitEndpoint({
         pagination: noop,
         source: noop,
         transport: noop,
-        retries: noop
+        retries: noop,
+        "global-parameters": noop
     });
 }
 

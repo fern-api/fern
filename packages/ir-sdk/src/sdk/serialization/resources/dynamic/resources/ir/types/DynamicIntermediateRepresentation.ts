@@ -3,6 +3,7 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
+import { GlobalParameter } from "../../../../globalParameters/types/GlobalParameter.js";
 import { EndpointId } from "../../commons/types/EndpointId.js";
 import { TypeId } from "../../commons/types/TypeId.js";
 import { Endpoint } from "../../endpoints/types/Endpoint.js";
@@ -23,6 +24,7 @@ export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     headers: core.serialization.list(NamedParameter).optional(),
     pathParameters: core.serialization.list(NamedParameter).optional(),
     variables: core.serialization.list(VariableDeclaration).optional(),
+    globalParameters: core.serialization.list(GlobalParameter).optional(),
     generatorConfig: GeneratorConfig.optional(),
 });
 
@@ -35,6 +37,7 @@ export declare namespace DynamicIntermediateRepresentation {
         headers?: NamedParameter.Raw[] | null;
         pathParameters?: NamedParameter.Raw[] | null;
         variables?: VariableDeclaration.Raw[] | null;
+        globalParameters?: GlobalParameter.Raw[] | null;
         generatorConfig?: GeneratorConfig.Raw | null;
     }
 }
