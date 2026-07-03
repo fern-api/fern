@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.46.3
+  changelogEntry:
+    - summary: |
+        Generated `raw_client.go` now sets `ResponseIsOptional: true` in `CallParams` for endpoints
+        whose success response body is optional — e.g. an operation that returns both a body-bearing
+        2xx and a 204 No Content. Previously the field was never emitted, so a real 204 (empty body)
+        hit `io.EOF` in the caller and surfaced as an error instead of a successful, nil-bodied
+        response.
+      type: fix
+  createdAt: "2026-07-03"
+  irVersion: 66
 - version: 1.46.2
   changelogEntry:
     - summary: |
