@@ -483,9 +483,13 @@ export class DocsDefinitionResolver {
         for (const [, markdown] of pageEntries) {
             allCodeSrcUrls.push(...collectCodeSrcUrls(markdown));
         }
+        const prefetchStart = Date.now();
         const urlCache = await prefetchCodeSrcUrls(allCodeSrcUrls, this.taskContext);
         if (urlCache.size > 0) {
-            this.taskContext.logger.debug(`Pre-fetched ${urlCache.size} unique external code URLs in parallel`);
+            const uniqueCount = new Set(allCodeSrcUrls).size;
+            this.taskContext.logger.info(
+                `Prefetched ${uniqueCount} external code URLs in ${Date.now() - prefetchStart}ms`
+            );
         }
 
         for (const [relativePath, markdown] of pageEntries) {
