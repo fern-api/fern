@@ -528,6 +528,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         inlinePathParameters: true
+  ts-react-query:
+    - outputFolder: .
+      customConfig:
+        generateReactQueryHooks: true
   server-sent-events-openapi:
     - outputFolder: no-custom-config
       customConfig: null
