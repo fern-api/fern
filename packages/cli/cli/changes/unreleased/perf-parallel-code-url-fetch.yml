@@ -1,0 +1,5 @@
+- summary: |
+    Improve `fern docs dev` initial build time by pre-fetching external `<Code src="https://..."/>` URLs
+    in parallel instead of sequentially. For docs with many external code snippets (e.g., LaunchDarkly
+    with 48 URLs), this reduces the replaceReferencedCode step from ~30s to <1s.
+  type: feat
