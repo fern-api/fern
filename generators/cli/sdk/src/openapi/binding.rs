@@ -296,11 +296,24 @@ impl OpenApiBinding {
                 Some((h.header.clone(), val))
             })
             .collect();
+        let global_params: Vec<super::app::ResolvedGlobalParam> = doc
+            .global_parameters
+            .iter()
+            .filter_map(|p| {
+                let val = super::app::resolve_global_parameter_value(matches, p)?;
+                Some(super::app::ResolvedGlobalParam {
+                    location: p.location,
+                    target: p.target.clone(),
+                    value: val,
+                })
+            })
+            .collect();
         Ok(super::app::BindingEntry {
             doc: doc.clone(),
             auth_provider,
             http_config: prepared.http_config.clone(),
             global_headers,
+            global_params,
         })
     }
 
@@ -594,6 +607,13 @@ impl Binding for OpenApiBinding {
                 &params,
             )?;
 
+            let global_param_overrides = super::app::build_global_parameter_overrides(
+                matched_args,
+                doc,
+                method,
+                &params,
+            )?;
+
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
             let base_url_override_owned =
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
@@ -673,6 +693,7 @@ impl Binding for OpenApiBinding {
                 no_stream,
                 debug,
                 &global_header_overrides,
+                &global_param_overrides,
             )
             .await?;
 
@@ -702,6 +723,7 @@ impl Binding for OpenApiBinding {
             entry.auth_provider,
             entry.http_config,
             entry.global_headers,
+            entry.global_params,
         ).with_quiet(quiet)
          .with_base_url_override(base_url_override)
          .with_debug(debug);
@@ -740,6 +762,7 @@ impl Binding for OpenApiBinding {
                         entry.auth_provider,
                         entry.http_config,
                         entry.global_headers,
+                        entry.global_params,
                     ).with_quiet(quiet)
                      .with_base_url_override(base_url_override)
                      .with_debug(debug);
@@ -753,6 +776,7 @@ impl Binding for OpenApiBinding {
                     entry.auth_provider,
                     entry.http_config,
                     entry.global_headers,
+                    entry.global_params,
                 ).with_quiet(quiet)
                  .with_base_url_override(base_url_override)
                  .with_debug(debug);

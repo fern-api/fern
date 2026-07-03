@@ -612,6 +612,7 @@ fn parse_and_validate_inputs(
     is_media_upload: bool,
     base_url_override: Option<&str>,
     extra_headers: &[(String, String)],
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
 ) -> Result<ExecutionInput, CliError> {
     let params: Map<String, Value> = if let Some(p) = params_json {
         serde_json::from_str(p)
@@ -749,6 +750,43 @@ fn parse_and_validate_inputs(
     for (name, value) in extra_headers {
         if !header_params.iter().any(|(k, _)| k == name) {
             header_params.push((name.clone(), value.clone()));
+        }
+    }
+
+    // Inject resolved `x-fern-global-parameters` by location. Header
+    // and body params are stamped here; query and path params are added
+    // to `non_header_params` so `build_url` handles them.
+    for gp in extra_global_params {
+        use crate::openapi::discovery::GlobalParameterLocation;
+        match gp.location {
+            GlobalParameterLocation::Header => {
+                if !header_params.iter().any(|(k, _)| k.eq_ignore_ascii_case(&gp.target)) {
+                    header_params.push((gp.target.clone(), gp.value.clone()));
+                }
+            }
+            GlobalParameterLocation::Query => {
+                if !non_header_params.contains_key(&gp.target) {
+                    non_header_params.insert(
+                        gp.target.clone(),
+                        Value::String(gp.value.clone()),
+                    );
+                }
+            }
+            GlobalParameterLocation::Body => {
+                set_nested_value(
+                    &mut body_from_flags,
+                    &gp.target,
+                    Value::String(gp.value.clone()),
+                );
+            }
+            GlobalParameterLocation::Path => {
+                if !non_header_params.contains_key(&gp.target) {
+                    non_header_params.insert(
+                        gp.target.clone(),
+                        Value::String(gp.value.clone()),
+                    );
+                }
+            }
         }
     }
 
@@ -1907,6 +1945,7 @@ pub async fn execute_method(
     no_stream: bool,
     debug: bool,
     extra_headers: &[(String, String)],
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
 ) -> Result<Option<Value>, CliError> {
     let binary_flag = method
         .binary_request_body
@@ -1925,7 +1964,7 @@ pub async fn execute_method(
         )));
     }
 
-    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers)?;
+    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers, extra_global_params)?;
 
     // Human-readable identifier for the operation, used in
     // `x-fern-sdk-return-value` extraction errors so the user can find
@@ -5494,7 +5533,7 @@ mod tests {
         let params_json =
             r#"{"user_id": "123", "X-Custom-Header": "my-value", "limit": "10"}"#;
         let input =
-            parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[]).unwrap();
+            parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[]).unwrap();
 
         // Header param should be in header_params
         assert_eq!(input.header_params.len(), 1);
@@ -5823,7 +5862,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "Acme", "count": "3"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap();
 
         // Body must contain both fields, with `count` coerced to a JSON integer.
@@ -5879,6 +5918,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -5925,7 +5965,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -5967,7 +6007,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6018,6 +6058,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -6056,7 +6097,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6095,7 +6136,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6139,7 +6180,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6212,7 +6253,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "not-an-integer"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6261,6 +6302,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -6308,7 +6350,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"last\":\"Lincoln\"}", "name.first": "Abraham"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6349,7 +6391,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\",\"last\":\"Lincoln\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap();
         let body = input.body.expect("body should be populated");
         assert_eq!(body, json!({ "name": { "first": "Abraham", "last": "Lincoln" } }));
@@ -6393,7 +6435,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .expect("required leaf satisfied by ancestor shorthand should pass");
         let body = input.body.expect("body should be populated");
         assert_eq!(body, json!({ "name": { "first": "Abraham" } }));
@@ -6434,7 +6476,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -9934,7 +9976,7 @@ mod tests {
         let doc = RestDescription::default();
         let method = RestMethod::default();
         let err =
-            parse_and_validate_inputs(&doc, &method, Some("{not json}"), None, false, None, &[]).unwrap_err();
+            parse_and_validate_inputs(&doc, &method, Some("{not json}"), None, false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Invalid --params JSON"));
     }
 
@@ -9943,7 +9985,7 @@ mod tests {
         let doc = RestDescription::default();
         let method = RestMethod::default();
         let err =
-            parse_and_validate_inputs(&doc, &method, None, Some("{not json}"), false, None, &[]).unwrap_err();
+            parse_and_validate_inputs(&doc, &method, None, Some("{not json}"), false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Invalid --json body"));
     }
 
@@ -9963,7 +10005,7 @@ mod tests {
             parameters,
             ..Default::default()
         };
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[]).unwrap_err();
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Required parameter 'api_key'"));
     }
 
@@ -10585,6 +10627,7 @@ async fn test_execute_method_dry_run() {
         false, // no_stream
         false, // debug
         &[],
+        &[],
     )
     .await;
 
@@ -10633,6 +10676,7 @@ async fn test_execute_method_missing_path_param() {
         false, // no_retry
         false, // no_stream
         false, // debug
+        &[],
         &[],
     )
     .await;
@@ -10967,4 +11011,218 @@ fn write_http_preamble_duplicate_headers() {
         output.contains("set-cookie: b=2\r\n"),
         "should include second set-cookie value, got: {output}"
     );
+}
+
+// ── Global Parameter Injection Tests ──────────────────────────
+
+#[test]
+fn test_global_param_header_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Header,
+        target: "X-Api-Version".to_string(),
+        value: "2024-01-01".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(input.header_params[0].0, "X-Api-Version");
+    assert_eq!(input.header_params[0].1, "2024-01-01");
+}
+
+#[test]
+fn test_global_param_header_per_op_override_suppresses() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{
+        GlobalParameterLocation, MethodParameter, RestDescription, RestMethod,
+    };
+
+    let mut parameters = std::collections::HashMap::new();
+    parameters.insert(
+        "X-Api-Version".to_string(),
+        MethodParameter {
+            location: Some("header".to_string()),
+            ..Default::default()
+        },
+    );
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        parameters,
+        ..Default::default()
+    };
+    let params_json = r#"{"X-Api-Version": "per-op-v3"}"#;
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Header,
+        target: "X-Api-Version".to_string(),
+        value: "global-v1".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        Some(params_json),
+        None,
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(
+        input.header_params[0].1, "per-op-v3",
+        "per-op value should win over global"
+    );
+}
+
+#[test]
+fn test_global_param_query_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Query,
+        target: "api_version".to_string(),
+        value: "2024-01-01".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert!(
+        input.query_params.iter().any(|(k, v)| k == "api_version" && v == "2024-01-01"),
+        "query param should appear in query_params: {:?}",
+        input.query_params
+    );
+}
+
+#[test]
+fn test_global_param_body_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Body,
+        target: "currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    let body = input.body.expect("body should be populated from global param");
+    assert_eq!(body["currency"], "USD");
+}
+
+#[test]
+fn test_global_param_path_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // Path param supplied by global param only (not in method.parameters),
+    // so no required-param validation fires before injection.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "orgs/{orgId}/users".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Path,
+        target: "orgId".to_string(),
+        value: "my-org-123".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert!(
+        input.full_url.contains("my-org-123"),
+        "path param should be substituted in URL: {}",
+        input.full_url
+    );
+    assert!(
+        !input.full_url.contains("{orgId}"),
+        "template variable should be replaced: {}",
+        input.full_url
+    );
+}
+
+#[test]
+fn test_global_param_multiple_locations() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![
+        ResolvedGlobalParam {
+            location: GlobalParameterLocation::Header,
+            target: "X-Tenant".to_string(),
+            value: "acme".to_string(),
+        },
+        ResolvedGlobalParam {
+            location: GlobalParameterLocation::Query,
+            target: "version".to_string(),
+            value: "v2".to_string(),
+        },
+        ResolvedGlobalParam {
+            location: GlobalParameterLocation::Body,
+            target: "currency".to_string(),
+            value: "EUR".to_string(),
+        },
+    ];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(input.header_params[0].0, "X-Tenant");
+    assert!(
+        input.query_params.iter().any(|(k, v)| k == "version" && v == "v2"),
+        "query param should appear in query_params: {:?}",
+        input.query_params
+    );
+    let body = input.body.expect("body should have currency");
+    assert_eq!(body["currency"], "EUR");
 }

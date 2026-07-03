@@ -9,7 +9,8 @@ use serde::{Deserialize, Deserializer};
 
 use crate::text::to_kebab_flag;
 use crate::openapi::discovery::{
-    Availability, BinaryRequestBody, BodyEncoding, GlobalHeader, IdempotencyHeader, JsonSchema,
+    Availability, BinaryRequestBody, BodyEncoding, GlobalHeader, GlobalParameter,
+    GlobalParameterApplyMode, GlobalParameterLocation, IdempotencyHeader, JsonSchema,
     JsonSchemaProperty, MethodParameter, MultipartField, PaginationConfig, RestDescription,
     RestMethod, RestResource, RetriesConfig, SchemaRef, SdkGroupInfo, SdkVariable,
     SecurityScheme, StreamingConfig,
@@ -20,6 +21,25 @@ use crate::error::CliError;
 /// strings. The Fern extension allows both forms; specs like AssemblyAI's use
 /// the scalar form while internal fixtures use the list form for nesting.
 fn deserialize_group_name<'de, D>(deserializer: D) -> Result<Option<Vec<String>>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    #[derive(Deserialize)]
+    #[serde(untagged)]
+    enum StringOrList {
+        String(String),
+        List(Vec<String>),
+    }
+    match Option::<StringOrList>::deserialize(deserializer)? {
+        None => Ok(None),
+        Some(StringOrList::String(s)) => Ok(Some(vec![s])),
+        Some(StringOrList::List(v)) => Ok(Some(v)),
+    }
+}
+
+/// Deserialize `x-fern-global-parameter` as either a single string or an
+/// array of strings. The extension accepts both forms for convenience.
+fn deserialize_global_parameter_opt_ins<'de, D>(deserializer: D) -> Result<Option<Vec<String>>, D::Error>
 where
     D: Deserializer<'de>,
 {
@@ -202,6 +222,11 @@ struct OpenApiSpec {
     /// extension. List of headers stamped on every outgoing request.
     #[serde(default, rename = "x-fern-global-headers")]
     x_fern_global_headers: Option<Vec<RawGlobalHeader>>,
+    /// Spec-root `x-fern-global-parameters` extension. Generalizes
+    /// `x-fern-global-headers` to support header, query, body, and path
+    /// locations with apply-mode control (`auto` vs `explicit`).
+    #[serde(default, rename = "x-fern-global-parameters")]
+    x_fern_global_parameters: Option<Vec<RawGlobalParameter>>,
     /// Spec-root [`x-fern-groups`](https://buildwithfern.com/learn/api-definitions/openapi/extensions/groups)
     /// extension. Mirrors the upstream Fern OpenAPI importer's
     /// `getFernGroups.ts`: a record mapping group identifiers to
@@ -261,6 +286,48 @@ struct RawGlobalHeader {
     /// Fern OpenAPI importer).
     #[serde(rename = "x-fern-default", default)]
     x_fern_default: Option<serde_yaml::Value>,
+}
+
+/// Raw deserialized form of a single entry in `x-fern-global-parameters`.
+/// Generalizes [`RawGlobalHeader`] to support header, query, body, and
+/// path locations with apply-mode control.
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "kebab-case")]
+struct RawGlobalParameter {
+    /// Parameter name (e.g. `currency`, `x-custom-header`). Required.
+    name: String,
+    /// Where the value is injected: `header`, `query`, `body`, or `path`.
+    /// Defaults to `header` when absent.
+    #[serde(default, rename = "in")]
+    location: Option<String>,
+    /// Wire-level target. For headers: the header name; for query: the
+    /// query param name; for body: a dotted JSON path; for path: the
+    /// path template variable. Defaults to `name` when absent.
+    #[serde(default)]
+    target: Option<String>,
+    /// Optional environment variable name supplying a fallback value.
+    #[serde(default)]
+    env: Option<String>,
+    /// Optional baked-in default value.
+    #[serde(default)]
+    default: Option<serde_yaml::Value>,
+    /// Alternate baked-in default. Wins over `default` when both present.
+    #[serde(rename = "x-fern-default", default)]
+    x_fern_default: Option<serde_yaml::Value>,
+    /// When `true`, the parameter is omitted when no value resolves.
+    /// Defaults to `false` (required).
+    #[serde(default)]
+    optional: Option<bool>,
+    /// `auto` (default) or `explicit`. Controls whether the parameter
+    /// is injected on all operations or only opted-in ones.
+    #[serde(default)]
+    apply: Option<String>,
+    /// Optional flag name override (e.g. `maxRetries` → `--max-retries`).
+    #[serde(default)]
+    parameter_name: Option<String>,
+    /// One-line help text for `--help`.
+    #[serde(default)]
+    docs: Option<String>,
 }
 
 /// Raw deserialized form of a single entry in the document-root
@@ -462,6 +529,13 @@ struct OpenApiOperation {
     /// `operationAudiences` is `[]`).
     #[serde(rename = "x-fern-audiences", default)]
     x_fern_audiences: Option<Vec<String>>,
+    /// Per-operation `x-fern-global-parameter` opt-in. May be a single
+    /// string or an array of strings referencing global parameter names
+    /// declared in the spec-root `x-fern-global-parameters`. Only
+    /// `apply: explicit` parameters are affected — `apply: auto`
+    /// parameters ignore this field.
+    #[serde(rename = "x-fern-global-parameter", default, deserialize_with = "deserialize_global_parameter_opt_ins")]
+    x_fern_global_parameter: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -1983,6 +2057,68 @@ fn lower_global_headers(raws: &[RawGlobalHeader]) -> Vec<GlobalHeader> {
 }
 
 // ---------------------------------------------------------------------------
+// x-fern-global-parameters
+// ---------------------------------------------------------------------------
+
+/// Lower a YAML scalar used as a global parameter's `default` into a
+/// string form. Reuses the same coercion as global headers — string,
+/// bool, and number are representable; null / sequence / mapping are not
+/// meaningful as a CLI flag default and are dropped.
+fn lower_global_parameter_default(value: &serde_yaml::Value) -> Option<String> {
+    lower_global_header_default(value)
+}
+
+/// Lower the spec-root `x-fern-global-parameters` block into the canonical
+/// [`GlobalParameter`] discovery types. `x-fern-default` wins over `default`
+/// when both are present.
+fn lower_global_parameters(raws: &[RawGlobalParameter]) -> Vec<GlobalParameter> {
+    raws.iter()
+        .filter_map(|raw| {
+            let location = match raw.location.as_deref().unwrap_or("header") {
+                "header" => GlobalParameterLocation::Header,
+                "query" => GlobalParameterLocation::Query,
+                "body" => GlobalParameterLocation::Body,
+                "path" => GlobalParameterLocation::Path,
+                other => {
+                    tracing::warn!(
+                        name = %raw.name,
+                        location = %other,
+                        "x-fern-global-parameters entry has unsupported `in` value; skipping"
+                    );
+                    return None;
+                }
+            };
+            let apply = match raw.apply.as_deref().unwrap_or("auto") {
+                "auto" => GlobalParameterApplyMode::Auto,
+                "explicit" => GlobalParameterApplyMode::Explicit,
+                other => {
+                    tracing::warn!(
+                        name = %raw.name,
+                        apply = %other,
+                        "x-fern-global-parameters entry has unsupported `apply` value; \
+                         defaulting to auto"
+                    );
+                    GlobalParameterApplyMode::Auto
+                }
+            };
+            let default_yaml = raw.x_fern_default.as_ref().or(raw.default.as_ref());
+            let target = raw.target.clone().unwrap_or_else(|| raw.name.clone());
+            Some(GlobalParameter {
+                name: raw.name.clone(),
+                location,
+                target,
+                env: raw.env.clone(),
+                default: default_yaml.and_then(lower_global_parameter_default),
+                optional: raw.optional.unwrap_or(false),
+                apply,
+                parameter_name: raw.parameter_name.clone(),
+                docs: raw.docs.clone(),
+            })
+        })
+        .collect()
+}
+
+// ---------------------------------------------------------------------------
 // x-fern-groups
 // ---------------------------------------------------------------------------
 
@@ -2454,6 +2590,22 @@ pub fn load_openapi_spec_from_value(
         .map(|raws| lower_global_headers(raws))
         .unwrap_or_default();
 
+    // Lower the spec-root `x-fern-global-parameters` block once.
+    // Generalizes `x-fern-global-headers` to support header, query,
+    // body, and path locations with per-operation opt-in control.
+    let global_parameters: Vec<GlobalParameter> = spec
+        .x_fern_global_parameters
+        .as_ref()
+        .map(|raws| lower_global_parameters(raws))
+        .unwrap_or_default();
+
+    // Build a set of declared global parameter names for validating
+    // per-operation `x-fern-global-parameter` references.
+    let declared_global_param_names: std::collections::HashSet<String> = global_parameters
+        .iter()
+        .map(|p| p.name.clone())
+        .collect();
+
     // Lower the document-root `x-fern-groups` extension. Keys are
     // kebab-cased so they match the resource-tree keys built from
     // `x-fern-sdk-group-name` further down. Mirrors fern's
@@ -2480,6 +2632,7 @@ pub fn load_openapi_spec_from_value(
         idempotency_headers,
         sdk_variables,
         retries: spec_root_retries.clone(),
+        global_parameters,
         global_headers,
         groups,
         ..Default::default()
@@ -2771,6 +2924,34 @@ pub fn load_openapi_spec_from_value(
             }
 
 
+            // Per-operation `x-fern-global-parameter` opt-in. Validate
+            // that every referenced name is declared in the spec-root
+            // `x-fern-global-parameters`. Unknown names are logged and
+            // dropped so a typo doesn't silently fail to inject.
+            let global_parameter_opt_ins: Vec<String> = operation
+                .x_fern_global_parameter
+                .as_ref()
+                .map(|names| {
+                    names
+                        .iter()
+                        .filter(|n| {
+                            if declared_global_param_names.contains(n.as_str() as &str) {
+                                true
+                            } else {
+                                tracing::warn!(
+                                    operation = operation.operation_id.as_deref().unwrap_or("unknown"),
+                                    param = %n,
+                                    "x-fern-global-parameter references undeclared \
+                                     global parameter; ignoring"
+                                );
+                                false
+                            }
+                        })
+                        .cloned()
+                        .collect()
+                })
+                .unwrap_or_default();
+
             let rest_method = RestMethod {
                 id: operation.operation_id.clone(),
                 description,
@@ -2794,6 +2975,7 @@ pub fn load_openapi_spec_from_value(
                 retries,
                 audiences,
                 has_binary_response,
+                global_parameter_opt_ins,
                 ..Default::default()
             };
 
