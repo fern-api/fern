@@ -9,8 +9,10 @@ import {
     visitDiscriminatedUnion
 } from "@fern-api/core-utils";
 import {
+    collectCodeSrcUrls,
     isValidRelativeSlug,
     parseImagePaths,
+    prefetchCodeSrcUrls,
     type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -477,6 +479,19 @@ export class DocsDefinitionResolver {
         // Use a Set for O(1) deduplication instead of O(N) array scan
         const seenReferencedFiles = new Set<AbsoluteFilePath>();
         const pageEntries = Object.entries(this.parsedDocsConfig.pages);
+
+        // Pre-fetch all external <Code src="https://..."/> URLs in parallel
+        const prefetchStart = performance.now();
+        const allUrls: string[] = [];
+        for (const [, markdown] of pageEntries) {
+            allUrls.push(...collectCodeSrcUrls(markdown));
+        }
+        const urlCache = await prefetchCodeSrcUrls(allUrls, this.taskContext);
+        const prefetchTime = performance.now() - prefetchStart;
+        this.taskContext.logger.info(
+            `[PERF] prefetchCodeSrcUrls: ${prefetchTime.toFixed(0)}ms (${urlCache.size} unique URLs fetched in parallel)`
+        );
+
         for (const [relativePath, markdown] of pageEntries) {
             const pageStart = performance.now();
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
@@ -500,7 +515,8 @@ export class DocsDefinitionResolver {
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                context: this.taskContext
+                context: this.taskContext,
+                urlCache
             });
             refCodeTotal += performance.now() - codeStart;
 
