@@ -1,0 +1,17 @@
+tabs:
+  documentation:
+    display-name: Documentation
+    skip-slug: true
+
+navigation:
+  - tab: documentation
+    layout:
+      - section: Getting Started
+        skip-slug: true
+        contents:
+          - page: Overview
+            slug: overview
+            path: ../pages/overview.mdx
+          - page: Quickstart
+            slug: quickstart
+            path: ../pages/quickstart.mdx
