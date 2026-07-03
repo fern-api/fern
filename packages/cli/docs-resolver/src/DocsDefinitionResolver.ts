@@ -399,7 +399,7 @@ export class DocsDefinitionResolver {
         // Reset referenced markdown files to prevent accumulation if resolver is reused
         this.referencedMarkdownFiles = [];
 
-        this.taskContext.logger.debug("Parsing docs configuration...");
+        this.taskContext.logger.info("[PERF] resolve() started");
         const parseStart = performance.now();
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
@@ -409,7 +409,7 @@ export class DocsDefinitionResolver {
         });
         const parseTime = performance.now() - parseStart;
         const pageCount = Object.keys(this.parsedDocsConfig.pages).length;
-        this.taskContext.logger.debug(`Parsed docs configuration in ${parseTime.toFixed(0)}ms: ${pageCount} pages`);
+        this.taskContext.logger.info(`[PERF] parseDocsConfiguration: ${parseTime.toFixed(0)}ms (${pageCount} pages)`);
 
         // Apply audience-based filtering to the navigation if target audiences are specified
         if (this.targetAudiences && this.targetAudiences.length > 0) {
@@ -503,8 +503,8 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }
         const refTime = performance.now() - refStart;
-        this.taskContext.logger.debug(
-            `Replaced referenced content in ${refTime.toFixed(0)}ms, found ${this.referencedMarkdownFiles.length} referenced markdown files`
+        this.taskContext.logger.info(
+            `[PERF] replaceReferencedMarkdown+Code: ${refTime.toFixed(0)}ms (${this.referencedMarkdownFiles.length} referenced files)`
         );
 
         this.taskContext.logger.debug("Collecting files from docs config...");
@@ -513,7 +513,7 @@ export class DocsDefinitionResolver {
             parsedDocsConfig: this.parsedDocsConfig
         });
         const collectTime = performance.now() - collectStart;
-        this.taskContext.logger.debug(`Collected ${filesToUploadSet.size} files in ${collectTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(`[PERF] collectFilesFromDocsConfig: ${collectTime.toFixed(0)}ms (${filesToUploadSet.size} files)`);
 
         // upload author-supplied Agent Skills bundles so the docs site can serve them
         // at /.well-known/skills/… and /.well-known/agent-skills/…
@@ -555,7 +555,7 @@ export class DocsDefinitionResolver {
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
-        this.taskContext.logger.debug(`Parsed image paths in ${imageParseTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(`[PERF] parseImagePaths: ${imageParseTime.toFixed(0)}ms`);
 
         const filesToUpload: FilePathPair[] = Array.from(filesToUploadSet).map(
             (absoluteFilePath): FilePathPair => ({
@@ -579,11 +579,10 @@ export class DocsDefinitionResolver {
         this.resolveTranslationOverlayNavbarLinkIcons();
 
         // store root here so we only process once
-        this.taskContext.logger.debug("Building navigation tree...");
         const rootStart = performance.now();
         const root = await this.toRootNode();
         const rootTime = performance.now() - rootStart;
-        this.taskContext.logger.debug(`Built navigation tree in ${rootTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(`[PERF] toRootNode (nav tree + API IR generation): ${rootTime.toFixed(0)}ms`);
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
 
@@ -593,7 +592,7 @@ export class DocsDefinitionResolver {
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
         const pathNameTime = performance.now() - pathNameStart;
-        this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(`[PERF] getMarkdownFilesToFullyQualifiedPathNames: ${pathNameTime.toFixed(0)}ms`);
 
         // Process deferred API registrations: resolve .mdx/.md file path links in IR descriptions,
         // then register APIs with FDR and update the navigation tree with real API definition IDs.
@@ -644,7 +643,7 @@ export class DocsDefinitionResolver {
                 }
             }
             const deferredTime = performance.now() - deferredStart;
-            this.taskContext.logger.debug(`Processed deferred API registrations in ${deferredTime.toFixed(0)}ms`);
+            this.taskContext.logger.info(`[PERF] deferredApiRegistrations: ${deferredTime.toFixed(0)}ms (${this.pendingApiRegistrations.length} APIs)`);
             this.pendingApiRegistrations = [];
         }
 
@@ -671,7 +670,7 @@ export class DocsDefinitionResolver {
             }
         }
         const replaceTime = performance.now() - replaceStart;
-        this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(`[PERF] replaceImagePathsAndUrls: ${replaceTime.toFixed(0)}ms`);
 
         this.taskContext.logger.debug("Building page content...");
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
@@ -694,7 +693,7 @@ export class DocsDefinitionResolver {
         const configStart = performance.now();
         const config = await this.convertDocsConfiguration(root);
         const configTime = performance.now() - configStart;
-        this.taskContext.logger.debug(`Converted docs configuration in ${configTime.toFixed(0)}ms`);
+        this.taskContext.logger.info(`[PERF] convertDocsConfiguration: ${configTime.toFixed(0)}ms`);
 
         // detect experimental js files to include in the docs
         let jsFiles: Record<string, string> = {};
@@ -763,8 +762,8 @@ export class DocsDefinitionResolver {
 
         const totalResolveTime = performance.now() - resolveStartTime;
         const endMemory = process.memoryUsage();
-        this.taskContext.logger.debug(
-            `Total resolve time: ${totalResolveTime.toFixed(0)}ms, Memory delta: RSS=${((endMemory.rss - startMemory.rss) / 1024 / 1024).toFixed(2)}MB`
+        this.taskContext.logger.info(
+            `[PERF] resolve() TOTAL: ${totalResolveTime.toFixed(0)}ms, Memory delta: RSS=${((endMemory.rss - startMemory.rss) / 1024 / 1024).toFixed(0)}MB, heap=${((endMemory.heapUsed - startMemory.heapUsed) / 1024 / 1024).toFixed(0)}MB`
         );
 
         return { config, pages, jsFiles };
@@ -1686,6 +1685,8 @@ export class DocsDefinitionResolver {
         parentAvailability?: docsYml.RawSchemas.Availability;
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
+        const apiSectionStart = performance.now();
+        this.taskContext.logger.info(`[PERF] toApiSectionNode started (api: ${item.apiName ?? "default"})`);
 
         let ir: IntermediateRepresentation | undefined = undefined;
         let workspace: FernWorkspace | undefined = undefined;
@@ -1697,6 +1698,7 @@ export class DocsDefinitionResolver {
         if (useV3Parser) {
             try {
                 openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                const irStart = performance.now();
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
@@ -1704,6 +1706,7 @@ export class DocsDefinitionResolver {
                     generateV1Examples: false,
                     logWarnings: false
                 });
+                this.taskContext.logger.info(`[PERF]   v3 getIntermediateRepresentation: ${(performance.now() - irStart).toFixed(0)}ms`);
             } catch (error) {
                 openapiError = error;
             }
@@ -1742,6 +1745,7 @@ export class DocsDefinitionResolver {
             if (this.apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
+            const v1WsStart = performance.now();
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
                 { context: this.taskContext },
                 {
@@ -1751,6 +1755,8 @@ export class DocsDefinitionResolver {
                     preserveSchemaIds: true
                 }
             );
+            this.taskContext.logger.info(`[PERF]   v1 toFernWorkspace: ${(performance.now() - v1WsStart).toFixed(0)}ms`);
+            const v1IrStart = performance.now();
             ir = generateIntermediateRepresentation({
                 workspace,
                 audiences: item.audiences,
@@ -1768,11 +1774,13 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
+            this.taskContext.logger.info(`[PERF]   v1 generateIntermediateRepresentation: ${(performance.now() - v1IrStart).toFixed(0)}ms`);
         } else {
             // When using the v3 parser (ir != null), we still need to load the workspace
             // for dynamic snippet generation and AI example enhancement, which require
             // access to generators.yml configuration and source file paths.
             try {
+                const v3WsStart = performance.now();
                 workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
                     { context: this.taskContext },
                     {
@@ -1782,6 +1790,7 @@ export class DocsDefinitionResolver {
                         preserveSchemaIds: true
                     }
                 );
+                this.taskContext.logger.info(`[PERF]   v3 fallback toFernWorkspace (for snippets): ${(performance.now() - v3WsStart).toFixed(0)}ms`);
             } catch (error) {
                 // If we can't load the workspace, log a warning but continue
                 // since the IR was already successfully generated by the v3 parser
@@ -1831,6 +1840,7 @@ export class DocsDefinitionResolver {
         const tempApiDefinitionId = `__pending_api_${this.pendingApiCounter++}__`;
 
         // Create API definition WITH GraphQL operations (single full conversion)
+        const convertStart = performance.now();
         const api = convertIrToApiDefinition({
             ir,
             apiDefinitionId: tempApiDefinitionId,
@@ -1839,6 +1849,7 @@ export class DocsDefinitionResolver {
             graphqlOperations: graphqlData.operations,
             graphqlTypes: graphqlData.types
         });
+        this.taskContext.logger.info(`[PERF]   convertIrToApiDefinition: ${(performance.now() - convertStart).toFixed(0)}ms`);
 
         const node = new ApiReferenceNodeConverter(
             item,
@@ -1908,6 +1919,7 @@ export class DocsDefinitionResolver {
             translatedIrsByLocale
         });
 
+        this.taskContext.logger.info(`[PERF] toApiSectionNode DONE: ${(performance.now() - apiSectionStart).toFixed(0)}ms`);
         return apiReferenceNode;
     }
 
