@@ -111,20 +111,35 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
 
         const pathParams = [...this.example.servicePathParameters, ...this.example.endpointPathParameters];
         const collidingPathParamPropertyNames = generatedType.getCollidingPathParameterPropertyNames(context);
+        // A colliding path param shares a single wrapper property with a body property. Prefer the
+        // body example's value, but fall back to the path param example when the body example
+        // doesn't populate the shared property (otherwise a required property would be missing).
+        const bodyExamplePropertyNames = this.getBodyExamplePropertyNames(generatedType);
 
         return pathParams
-            .filter(
-                (pathParam) =>
-                    !collidingPathParamPropertyNames.has(
-                        generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName
-                    )
-            )
+            .filter((pathParam) => {
+                const propertyName = generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName;
+                if (!collidingPathParamPropertyNames.has(propertyName)) {
+                    return true;
+                }
+                return !bodyExamplePropertyNames.has(propertyName);
+            })
             .map((pathParam) => {
                 const propertyName = generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName;
                 const value = context.type.getGeneratedExample(pathParam.value).build(context, opts);
 
                 return ts.factory.createPropertyAssignment(getPropertyKey(propertyName), value);
             });
+    }
+
+    private getBodyExamplePropertyNames(generatedType: GeneratedRequestWrapper): Set<string> {
+        const propertyNames = new Set<string>();
+        if (this.example.request?.type === "inlinedRequestBody") {
+            for (const property of this.example.request.properties) {
+                propertyNames.add(generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName);
+            }
+        }
+        return propertyNames;
     }
 
     private buildQueryParamProperties(

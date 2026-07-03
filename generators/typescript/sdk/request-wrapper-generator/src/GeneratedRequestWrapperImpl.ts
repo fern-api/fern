@@ -362,11 +362,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     ): GeneratedRequestWrapper.Property {
         const type = this.getTypeForBodyProperty(requestBody, property, context);
         const name = this.getInlinedRequestBodyPropertyKey(property);
+        const isRequiredPathParamProperty = this.getRequiredCollidingPathParamPropertyNames(context).has(
+            name.propertyName
+        );
         return {
             name: getPropertyKey(name.propertyName),
             safeName: getPropertyKey(name.safeName),
             type: type.typeNodeWithoutUndefined,
-            isOptional: type.isOptional,
+            isOptional: type.isOptional && !isRequiredPathParamProperty,
             docs: property.docs ? [property.docs] : undefined
         };
     }
@@ -1017,12 +1020,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
 
             const typeNode = propertyType.typeNodeWithoutUndefined;
+            const isRequiredPathParamProperty = this.getRequiredCollidingPathParamPropertyNames(context).has(
+                propertyName.propertyName
+            );
 
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
                 type: typeNode,
-                isOptional: propertyType.isOptional || hasDefaultValue,
+                isOptional: (propertyType.isOptional || hasDefaultValue) && !isRequiredPathParamProperty,
                 docs: property.docs ? [property.docs] : undefined
             });
         }
@@ -1153,6 +1159,31 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             }
         }
         return colliding;
+    }
+
+    /**
+     * The subset of colliding path-parameter property names whose path parameter is required.
+     * The shared body property must be required in that case: its value populates the URL path,
+     * so allowing it to be omitted would produce an invalid URL (e.g. `/users/undefined`).
+     */
+    private getRequiredCollidingPathParamPropertyNames(context: FileContext): Set<string> {
+        const required = new Set<string>();
+        const colliding = this.getCollidingPathParameterPropertyNames(context);
+        if (colliding.size === 0) {
+            return required;
+        }
+        for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
+            const propertyName = this.getPropertyNameOfPathParameter(pathParameter).propertyName;
+            if (!colliding.has(propertyName)) {
+                continue;
+            }
+            const type = context.type.getReferenceToType(pathParameter.valueType);
+            const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
+            if (!type.isOptional && !hasDefaultValue && pathParameter.clientDefault == null) {
+                required.add(propertyName);
+            }
+        }
+        return required;
     }
 
     /**

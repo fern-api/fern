@@ -32,6 +32,33 @@ service:
               idType: phone
               oldValue: "+13175556789"
               newValue: "+13175556798"
+    patchMetadata:
+      docs: Patch an identifier whose optional body property shares a name with a required path param.
+      method: PATCH
+      path: /{idType}/metadata
+      request:
+        name: IdentifierMetadataPatch
+        path-parameters:
+          idType:
+            docs: The identifier type in the URL path.
+            type: string
+        body:
+          properties:
+            idType:
+              docs: An optional replacement identifier type in the body.
+              type: optional<string>
+            label: optional<string>
+      response: IdentifierUpdateResponse
+      examples:
+        - path-parameters:
+            idType: phone
+          request:
+            label: primary
+          response:
+            body:
+              idType: phone
+              oldValue: "+13175556789"
+              newValue: "+13175556798"
 
 types:
   IdentifierUpdateResponse:

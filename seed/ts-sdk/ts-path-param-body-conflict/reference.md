@@ -67,3 +67,69 @@ await client.identifiers.update({
 </dl>
 </details>
 
+<details><summary><code>client.identifiers.<a href="/src/api/resources/identifiers/client/Client.ts">patchMetadata</a>({ ...params }) -> SeedTsPathParamBodyConflict.IdentifierUpdateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Patch an identifier whose optional body property shares a name with a required path param.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.identifiers.patchMetadata({
+    idType: "phone",
+    label: "primary"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedTsPathParamBodyConflict.IdentifierMetadataPatch` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `IdentifiersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

@@ -13,7 +13,7 @@ import {
     type PackageId,
     type Reference
 } from "@fern-typescript/commons";
-import type { FileContext, GeneratedSdkClientClass } from "@fern-typescript/contexts";
+import type { FileContext, GeneratedRequestWrapper, GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { camelCase, upperFirst } from "lodash-es";
 import path from "path";
 import { type Directory, ts } from "ts-morph";
@@ -1049,7 +1049,7 @@ export function ${functionName}(server: MockServer): void {
         const tests = service.endpoints
             .filter((e) => this.shouldBuildTest(e))
             .map((endpoint) =>
-                this.buildEndpointTests(endpoint, serviceGenerator, context, refToClientType, baseOptions)
+                this.buildEndpointTests(endpoint, packageId, serviceGenerator, context, refToClientType, baseOptions)
             )
             .filter((test) => test != null);
 
@@ -1066,6 +1066,7 @@ describe("${serviceName}", () => {
 
     private buildEndpointTests(
         endpoint: FernIr.HttpEndpoint,
+        packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: FileContext,
         importStatement: Reference,
@@ -1114,6 +1115,7 @@ describe("${serviceName}", () => {
             .flatMap((example, exampleIndex) =>
                 this.buildExampleTest({
                     endpoint,
+                    packageId,
                     example,
                     exampleIndex,
                     hasMultipleExamples,
@@ -1128,6 +1130,7 @@ describe("${serviceName}", () => {
 
     private buildExampleTest({
         endpoint,
+        packageId,
         example: rawExample,
         exampleIndex,
         hasMultipleExamples,
@@ -1137,6 +1140,7 @@ describe("${serviceName}", () => {
         baseOptions
     }: {
         endpoint: FernIr.HttpEndpoint;
+        packageId: PackageId;
         example: FernIr.ExampleEndpointCall;
         exampleIndex: number;
         hasMultipleExamples: boolean;
@@ -1172,7 +1176,10 @@ describe("${serviceName}", () => {
             return;
         }
 
-        const rawRequestBody = this.getRequestExample(example.request);
+        const rawRequestBody = this.getRequestExample(
+            example.request,
+            this.getCollidingPathParamMockBodyEntries({ endpoint, packageId, example, context })
+        );
         const isSSEStreaming =
             endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
         const rawResponseBody = this.getResponseExample(
@@ -1652,14 +1659,91 @@ describe("${serviceName}", () => {
         return true;
     }
 
-    getRequestExample(request: FernIr.ExampleRequestBody | undefined): Code | undefined {
+    /**
+     * When an inlined path parameter collides with an inlined body property, the wrapper exposes a
+     * single shared property whose value is used for the URL path and also sent in the request body.
+     * If the example body doesn't populate the shared property, the client still sends the path
+     * parameter's value in the body, so the mocked request body must include it.
+     */
+    private getCollidingPathParamMockBodyEntries({
+        endpoint,
+        packageId,
+        example,
+        context
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        packageId: PackageId;
+        example: FernIr.ExampleEndpointCall;
+        context: FileContext;
+    }): [string, Code][] {
+        if (endpoint.sdkRequest?.shape.type !== "wrapper") {
+            return [];
+        }
+        const generatedWrapper = context.requestWrapper.getGeneratedRequestWrapper(packageId, endpoint.name);
+        const collidingPropertyNames = generatedWrapper.getCollidingPathParameterPropertyNames(context);
+        if (collidingPropertyNames.size === 0) {
+            return [];
+        }
+        const bodyExamplePropertyNames = new Set<string>();
+        if (example.request?.type === "inlinedRequestBody") {
+            for (const property of example.request.properties) {
+                bodyExamplePropertyNames.add(
+                    generatedWrapper.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName
+                );
+            }
+        }
+        const entries: [string, Code][] = [];
+        for (const pathParam of [...example.servicePathParameters, ...example.endpointPathParameters]) {
+            const propertyName = generatedWrapper.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName;
+            if (!collidingPropertyNames.has(propertyName) || bodyExamplePropertyNames.has(propertyName)) {
+                continue;
+            }
+            const wireKey = this.getWireKeyForCollidingBodyProperty({ endpoint, generatedWrapper, propertyName });
+            if (wireKey == null) {
+                continue;
+            }
+            entries.push([wireKey, code`${literalOf(pathParam.value.jsonExample)}`]);
+        }
+        return entries;
+    }
+
+    private getWireKeyForCollidingBodyProperty({
+        endpoint,
+        generatedWrapper,
+        propertyName
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        generatedWrapper: GeneratedRequestWrapper;
+        propertyName: string;
+    }): string | undefined {
+        if (endpoint.requestBody?.type !== "inlinedRequestBody") {
+            return undefined;
+        }
+        for (const property of endpoint.requestBody.properties) {
+            if (
+                generatedWrapper.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName === propertyName
+            ) {
+                return getWireValue(property.name);
+            }
+        }
+        return undefined;
+    }
+
+    getRequestExample(
+        request: FernIr.ExampleRequestBody | undefined,
+        extraBodyEntries: [string, Code][] = []
+    ): Code | undefined {
         if (!request) {
+            if (extraBodyEntries.length > 0) {
+                return code`${literalOf(Object.fromEntries(extraBodyEntries))}`;
+            }
             return undefined;
         }
         const requestExample = request._visit({
             inlinedRequestBody: (value) => {
                 return code`${literalOf(
                     Object.fromEntries([
+                        ...extraBodyEntries,
                         ...getUnusedPropertiesFromJsonExample(value.jsonExample, value, this.case),
                         ...value.properties
                             .map<[string, Code]>((p) => {
