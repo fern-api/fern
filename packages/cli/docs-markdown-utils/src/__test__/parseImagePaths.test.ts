@@ -745,6 +745,33 @@ describe("replaceImagePaths", () => {
             "
         `);
     });
+
+    it("should preserve anchors when replacing markdown link hrefs", () => {
+        const page = "[link text](../other/page.mdx#some-heading)";
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain("[link text](/other/page#some-heading)");
+    });
+
+    it("should preserve anchors when replacing JSX href attributes", () => {
+        const page = '<a href="../other/page.mdx#section">link</a>';
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain('href="/other/page#section"');
+    });
+
+    it("should resolve markdown link without anchor", () => {
+        const page = "[link text](../other/page.mdx)";
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain("[link text](/other/page)");
+    });
 });
 
 describe("cross-platform image path round-trip", () => {

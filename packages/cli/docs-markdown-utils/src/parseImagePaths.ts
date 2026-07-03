@@ -772,9 +772,19 @@ export function replaceImagePathsAndUrls(
                 }
                 const urlEnd = j - 1;
                 const href = content.slice(urlStart, urlEnd).trim();
-                const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
+                const trimmedHref = trimAnchor(href) ?? href;
+                const hrefAnchor = trimmedHref !== href ? href.slice(trimmedHref.length) : "";
+                const replacedHref = getReplacedHref({
+                    href: trimmedHref,
+                    markdownFilesToPathName,
+                    metadata
+                });
                 if (replacedHref && replacedHref.type === "replace") {
-                    edits.push({ start: urlStart, end: urlEnd, replacement: replacedHref.slug });
+                    edits.push({
+                        start: urlStart,
+                        end: urlEnd,
+                        replacement: replacedHref.slug + hrefAnchor
+                    });
                 }
                 i = j;
                 continue;
@@ -876,8 +886,11 @@ export function replaceImagePathsAndUrls(
                                 });
                             }
                         } else if (attrName === "href") {
+                            const trimmedHrefValue = trimAnchor(value) ?? value;
+                            const hrefAnchorSuffix =
+                                trimmedHrefValue !== value ? value.slice(trimmedHrefValue.length) : "";
                             const replacedHref = getReplacedHref({
-                                href: value,
+                                href: trimmedHrefValue,
                                 markdownFilesToPathName,
                                 metadata
                             });
@@ -885,7 +898,7 @@ export function replaceImagePathsAndUrls(
                                 edits.push({
                                     start: valueStart,
                                     end: valueStart + value.length,
-                                    replacement: replacedHref.slug
+                                    replacement: replacedHref.slug + hrefAnchorSuffix
                                 });
                             }
                         }
