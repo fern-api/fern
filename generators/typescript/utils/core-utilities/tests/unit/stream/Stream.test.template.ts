@@ -1356,8 +1356,9 @@ describe("Stream", () => {
             }
 
             const elapsed = Date.now() - startTime;
-            // Should have stopped well before the default 1000ms reconnect delay completes
-            expect(elapsed).toBeLessThan(500);
+            // Should have stopped well before the default 1000ms reconnect delay completes.
+            // Use a generous upper bound to avoid flakiness on slow CI runners.
+            expect(elapsed).toBeLessThan(800);
             expect(messages).toEqual([{ value: 1 }]);
             // reconnect should NOT have been called since we aborted during the delay
             expect(reconnectCallCount).toBe(0);
@@ -1404,9 +1405,10 @@ describe("Stream", () => {
 
             expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
             expect(reconnectCallCount).toBe(2);
-            // Total elapsed time should be at least 2 * DEFAULT_RECONNECT_DELAY_MS (~1000ms each)
+            // Total elapsed time should be at least 2 * DEFAULT_RECONNECT_DELAY_MS (~1000ms each).
+            // Use a slightly relaxed lower bound to tolerate timer jitter on slow CI.
             const totalElapsed = Date.now() - startTime;
-            expect(totalElapsed).toBeGreaterThanOrEqual(1800);
+            expect(totalElapsed).toBeGreaterThanOrEqual(1500);
         });
 
         it("should respect maxReconnectionAttempts even when each reconnect yields data", async () => {

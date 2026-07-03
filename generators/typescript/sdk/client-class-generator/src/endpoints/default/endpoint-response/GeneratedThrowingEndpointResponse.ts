@@ -865,51 +865,53 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             this.clientClass
                                         )
                                     }),
-                                    reconnectionEnabled: ts.factory.createBinaryExpression(
-                                        ts.factory.createPropertyAccessChain(
-                                            ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier("stream")
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                            ts.factory.createIdentifier("reconnectionEnabled")
-                                        ),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                        ts.factory.createPropertyAccessChain(
-                                            ts.factory.createPropertyAccessChain(
-                                                this.clientClass.getReferenceToOptions(),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier("stream")
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                            ts.factory.createIdentifier("reconnectionEnabled")
-                                        )
-                                    ),
-                                    maxReconnectionAttempts: ts.factory.createBinaryExpression(
-                                        ts.factory.createPropertyAccessChain(
-                                            ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier("stream")
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                            ts.factory.createIdentifier("maxReconnectionAttempts")
-                                        ),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                        ts.factory.createPropertyAccessChain(
-                                            ts.factory.createPropertyAccessChain(
-                                                this.clientClass.getReferenceToOptions(),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier("stream")
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                            ts.factory.createIdentifier("maxReconnectionAttempts")
-                                        )
-                                    ),
-                                    reconnect: isResumableSse
-                                        ? ts.factory.createIdentifier(RECONNECT_FUNCTION_VARIABLE_NAME)
-                                        : undefined,
+                                    ...(isResumableSse
+                                        ? {
+                                              reconnectionEnabled: ts.factory.createBinaryExpression(
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("reconnectionEnabled")
+                                                  ),
+                                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          this.clientClass.getReferenceToOptions(),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("reconnectionEnabled")
+                                                  )
+                                              ),
+                                              maxReconnectionAttempts: ts.factory.createBinaryExpression(
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("maxReconnectionAttempts")
+                                                  ),
+                                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                                  ts.factory.createPropertyAccessChain(
+                                                      ts.factory.createPropertyAccessChain(
+                                                          this.clientClass.getReferenceToOptions(),
+                                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                          ts.factory.createIdentifier("stream")
+                                                      ),
+                                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                      ts.factory.createIdentifier("maxReconnectionAttempts")
+                                                  )
+                                              ),
+                                              reconnect: ts.factory.createIdentifier(RECONNECT_FUNCTION_VARIABLE_NAME)
+                                          }
+                                        : {}),
                                     parse: context.includeSerdeLayer
                                         ? ts.factory.createArrowFunction(
                                               [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],

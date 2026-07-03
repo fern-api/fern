@@ -75,6 +75,9 @@ export class CompletionsClient {
             if (!_reconnectResponse.ok) {
                 throw new Error("SSE stream reconnection failed");
             }
+            if (_reconnectResponse.body == null) {
+                throw new Error("SSE stream reconnection failed: empty response body");
+            }
             return _reconnectResponse.body;
         };
         if (_response.ok) {
@@ -151,11 +154,6 @@ export class CompletionsClient {
                         type: "sse",
                         streamTerminator: "[[DONE]]",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };

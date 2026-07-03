@@ -9,6 +9,9 @@ const _reconnect = async (lastEventId: string) => {
     if (!_reconnectResponse.ok) {
         throw new Error("SSE stream reconnection failed");
     }
+    if (_reconnectResponse.body == null) {
+        throw new Error("SSE stream reconnection failed: empty response body");
+    }
     return _reconnectResponse.body;
 };"
 `;

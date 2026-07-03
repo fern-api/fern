@@ -392,6 +392,19 @@ class Stream<T> implements AsyncIterable<T> {
         }
     }
 
+    public withMetadata(): AsyncIterable<ServerSentEvent<T>> {
+        const self = this;
+        return {
+            async *[Symbol.asyncIterator]() {
+                try {
+                    yield* self.iterMessages();
+                } finally {
+                    self.removeAbortListener();
+                }
+            },
+        };
+    }
+
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
         try {
             for await (const event of this.iterMessages()) {

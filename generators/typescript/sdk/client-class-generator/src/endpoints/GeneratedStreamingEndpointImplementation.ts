@@ -409,6 +409,28 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                         true
                     )
                 ),
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(reconnectResponseVar),
+                            ts.factory.createIdentifier("body")
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createThrowStatement(
+                                ts.factory.createNewExpression(ts.factory.createIdentifier("Error"), undefined, [
+                                    ts.factory.createStringLiteral(
+                                        "SSE stream reconnection failed: empty response body"
+                                    )
+                                ])
+                            )
+                        ],
+                        true
+                    )
+                ),
                 ts.factory.createReturnStatement(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier(reconnectResponseVar),
