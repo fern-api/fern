@@ -1,0 +1,10 @@
+- summary: |
+    Stop propagating the top-level `landing-page` from docs.yml into every version
+    node of versioned navigation (introduced in 5.58.0). The cloned landing pages
+    were visited before each version's own navigation during slug collection, so a
+    landing page whose slug matched an existing page (e.g. `landing-page: /overview`
+    pointing at the same mdx as an "Overview" page in the sidebar) shadowed that
+    page and rendered it without a sidebar. Restores the pre-5.58.0 behavior that
+    published docs sites were authored against. Per-version `landing-page` config
+    in version files is unaffected.
+  type: fix
