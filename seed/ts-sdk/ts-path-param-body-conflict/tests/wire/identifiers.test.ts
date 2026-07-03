@@ -20,6 +20,7 @@ describe("IdentifiersClient", () => {
             .build();
 
         const response = await client.identifiers.update({
+            idTypePathParam: "phone",
             idType: "phone",
             oldValue: "+13175556789",
             newValue: "+13175556798",

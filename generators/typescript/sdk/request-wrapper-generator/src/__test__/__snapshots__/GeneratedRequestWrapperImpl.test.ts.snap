@@ -262,6 +262,16 @@ exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with re
 "
 `;
 
+exports[`GeneratedRequestWrapperImpl > writeToFile > renames inlined path parameters that collide with body properties 1`] = `
+"export interface TestRequest {
+    idTypePathParam: string;
+    idType: string;
+    oldValue: string;
+    newValue: string;
+}
+"
+`;
+
 exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes > does not generate namespace module when no inline properties exist 1`] = `
 "export interface TestRequest {
     name: string;

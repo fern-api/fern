@@ -398,6 +398,34 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(sourceFile.getText()).toMatchSnapshot();
         });
 
+        it("renames inlined path parameters that collide with body properties", () => {
+            const body = createInlinedRequestBody({
+                properties: [
+                    createInlinedRequestBodyProperty("idType", STRING_TYPE),
+                    createInlinedRequestBodyProperty("oldValue", STRING_TYPE),
+                    createInlinedRequestBodyProperty("newValue", STRING_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                shouldInlinePathParameters: true,
+                endpoint: createHttpEndpoint({
+                    pathParameters: [createPathParameter("idType", "ENDPOINT")],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({
+                shouldInlinePathParameters: true
+            });
+
+            wrapper.writeToFile(context);
+            const text = sourceFile.getText();
+            expect(text).toContain("idTypePathParam: string");
+            expect(text).toContain("idType: string");
+            expect(text).toMatchSnapshot();
+        });
+
         it("generates interface with inlined request body properties", () => {
             const body = createInlinedRequestBody({
                 properties: [
