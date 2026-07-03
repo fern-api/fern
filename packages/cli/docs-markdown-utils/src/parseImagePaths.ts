@@ -722,8 +722,10 @@ export function replaceImagePathsAndUrls(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
-    // Use streaming scanner for all pages (O(n) character scan instead of full MDX parse)
+    // Use streaming scanner for all pages (O(n) character scan instead of full MDX parse).
+    // Falls back to AST parse only for pages with complex JSX expressions like src={getUrl(...)}.
     const edits: Edit[] = [];
+    let hasUnhandledExpressions = false;
     let i = 0;
     const len = content.length;
 
@@ -797,6 +799,35 @@ export function replaceImagePathsAndUrls(
                     j++;
                 }
                 const attrName = content.slice(attrStart, j).trim();
+                // Detect JSX spread attributes like {...{src: "path"}}
+                if (attrName.startsWith("{")) {
+                    hasUnhandledExpressions = true;
+                    // Skip past the closing }
+                    let braceDepth = 0;
+                    j = attrStart;
+                    while (j < len) {
+                        if (content[j] === "{") {
+                            braceDepth++;
+                        } else if (content[j] === "}") {
+                            braceDepth--;
+                            if (braceDepth === 0) {
+                                j++;
+                                break;
+                            }
+                        } else if (content[j] === '"' || content[j] === "'") {
+                            const q = content[j];
+                            j++;
+                            while (j < len && content[j] !== q) {
+                                if (content[j] === "\\") {
+                                    j++;
+                                }
+                                j++;
+                            }
+                        }
+                        j++;
+                    }
+                    continue;
+                }
                 if (content[j] === "=") {
                     j++;
                     while (j < len && (content[j] === " " || content[j] === "\n")) {
@@ -858,6 +889,29 @@ export function replaceImagePathsAndUrls(
                                 });
                             }
                         }
+                    } else if (isCurlyWrapped && (attrName === "src" || attrName === "icon" || attrName === "href")) {
+                        // Complex JSX expression (e.g. src={getUrl(...)}, spread attrs)
+                        // that the streaming scanner can't resolve — flag for AST fallback
+                        hasUnhandledExpressions = true;
+                        // Skip past the closing }
+                        let braceDepth = 1;
+                        while (j < len && braceDepth > 0) {
+                            if (content[j] === "{") {
+                                braceDepth++;
+                            } else if (content[j] === "}") {
+                                braceDepth--;
+                            } else if (content[j] === '"' || content[j] === "'") {
+                                const q = content[j];
+                                j++;
+                                while (j < len && content[j] !== q) {
+                                    if (content[j] === "\\") {
+                                        j++;
+                                    }
+                                    j++;
+                                }
+                            }
+                            j++;
+                        }
                     }
                 }
             }
@@ -868,6 +922,85 @@ export function replaceImagePathsAndUrls(
             continue;
         }
         i++;
+    }
+
+    // If the streaming scanner encountered complex JSX expressions it couldn't resolve,
+    // fall back to AST parse to handle them (e.g. src={getUrl(...)}, spread attributes).
+    // This path is rarely hit (~0% of pages) so it doesn't affect overall performance.
+    if (hasUnhandledExpressions) {
+        const tree = parseMarkdownToTree(content);
+        const lineStarts = precomputeLineStarts(content);
+
+        const nodeTypeFilter = (node: unknown): boolean => {
+            const n = node as { type?: string };
+            return (
+                n.type === "mdxJsxFlowElement" ||
+                n.type === "mdxJsxTextElement" ||
+                n.type === "mdxFlowExpression" ||
+                n.type === "mdxTextExpression"
+            );
+        };
+
+        visit(tree, nodeTypeFilter, (node) => {
+            if (node.position == null) {
+                return;
+            }
+            const { start, length } = getPositionUsingLineStarts(lineStarts, node.position);
+            const original = content.slice(start, start + length);
+            let replaced = original;
+
+            function replaceSrc(src: string | undefined) {
+                const imageSrc = mapImage(src);
+                if (src && imageSrc) {
+                    replaced = replaced.replace(src, imageSrc);
+                }
+            }
+
+            function replaceHref(href: string | undefined) {
+                const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
+                if (href != null && replacedHref != null && replacedHref.type === "replace") {
+                    replaced = replaced.replace(href, replacedHref.slug);
+                }
+            }
+
+            function walkEstreeForSrcAndHref(estree: EstreeNode) {
+                walkEstreeJsxAttributes(estree, {
+                    src: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
+                    icon: (attr) => {
+                        const icon = trimAnchor(extractSingleLiteral(attr.value));
+                        if (isLocalIconReference(icon)) {
+                            replaceSrc(icon);
+                        }
+                    },
+                    href: (attr) => replaceHref(trimAnchor(extractSingleLiteral(attr.value)))
+                });
+            }
+
+            if (isMdxJsxElement(node)) {
+                node.attributes.forEach((attr) => {
+                    if (
+                        isMdxJsxAttribute(attr) &&
+                        typeof attr.value !== "string" &&
+                        attr.value != null &&
+                        attr.value.data?.estree
+                    ) {
+                        walkEstreeForSrcAndHref(attr.value.data.estree);
+                    } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
+                        walkEstreeForSrcAndHref(attr.data.estree);
+                    }
+                });
+            }
+
+            if (isMdxExpression(node) && node.data?.estree) {
+                walkEstreeForSrcAndHref(node.data.estree);
+            }
+
+            if (replaced !== original) {
+                edits.push({ start, end: start + length, replacement: replaced });
+            }
+
+            return CONTINUE;
+        });
     }
 
     const replacedContent = applyEdits(content, edits);
