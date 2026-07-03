@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.64.2
+  changelogEntry:
+    - summary: |
+        OpenAPI import: an endpoint that declares both a body-bearing 2xx response and a 204 No
+        Content response now correctly produces an optional success body, even when the 204
+        erroneously declares a response body. Per RFC 9110 a 204 cannot carry a body, so the
+        declared 204 body is ignored (with a warning) and the success response type is wrapped
+        optional. Previously the 204 was dropped and the return type stayed non-optional, so a real
+        204 (empty body) failed to decode in generated SDKs. Applies to both the legacy and v3
+        OpenAPI importers.
+      type: fix
+  createdAt: "2026-07-03"
+  irVersion: 67
 - version: 5.64.1
   changelogEntry:
     - summary: |
