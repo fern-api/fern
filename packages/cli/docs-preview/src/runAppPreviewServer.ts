@@ -31,7 +31,7 @@ import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
-import { readFile, rm, writeFile } from "fs/promises";
+import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
@@ -43,6 +43,7 @@ import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from ".
 import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
+import { GenerationFileManager, isContentOnlyEdit } from "./reloadUtils.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -951,18 +952,10 @@ export async function runAppPreviewServer({
         return translations;
     }
 
-    let reloadGeneration = 0;
-
-    // Write generation counter to a well-known temp file so the Next.js
-    // process can detect stale cache entries without an HTTP round-trip.
+    // Generation counter backed by a temp file so the Next.js process can
+    // detect stale cache entries without an HTTP round-trip.
     const genFilePath = path.join(require("os").tmpdir(), `fern-docs-dev-gen-${backendPort}`);
-    async function writeGenerationFile(): Promise<void> {
-        try {
-            await writeFile(genFilePath, String(reloadGeneration), "utf-8");
-        } catch {
-            // Best-effort; the HTTP path remains as fallback
-        }
-    }
+    const generationManager = new GenerationFileManager(genFilePath);
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
@@ -977,19 +970,7 @@ export async function runAppPreviewServer({
             // Rebuild dependency map after reloading project
             await snippetTracker.buildDependencyMap(project);
 
-            // Skip background validation for content-only edits (MDX/MD files).
-            // Validation re-parses all OpenAPI specs (~26s for large projects) and
-            // competes for CPU with Next.js server-side rendering, inflating reload
-            // latency from ~3s to ~30s.
-            const isContentOnlyEdit =
-                editedAbsoluteFilepaths != null &&
-                editedAbsoluteFilepaths.length > 0 &&
-                editedAbsoluteFilepaths.every((f) => {
-                    const lower = f.toLowerCase();
-                    return lower.endsWith(".md") || lower.endsWith(".mdx");
-                });
-
-            if (!isContentOnlyEdit) {
+            if (!isContentOnlyEdit(editedAbsoluteFilepaths)) {
                 // Start validation in background - don't block the reload
                 const validationStartTime = Date.now();
                 void validateProject(project)
@@ -1385,8 +1366,7 @@ export async function runAppPreviewServer({
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
 
-                        reloadGeneration++;
-                        await writeGenerationFile();
+                        await generationManager.increment();
 
                         sendData({
                             version: 1,
@@ -1407,8 +1387,7 @@ export async function runAppPreviewServer({
                             });
                         }
                     } else {
-                        reloadGeneration++;
-                        await writeGenerationFile();
+                        await generationManager.increment();
 
                         sendData({
                             version: 1,
@@ -1417,8 +1396,7 @@ export async function runAppPreviewServer({
                     }
                 } catch (err) {
                     context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
-                    reloadGeneration++;
-                    await writeGenerationFile();
+                    await generationManager.increment();
 
                     sendData({
                         version: 1,
