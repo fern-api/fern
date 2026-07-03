@@ -415,6 +415,15 @@ export function parseImagePaths(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
+    // Fast path: skip expensive parsing if content has no image-related patterns
+    const hasImageIndicators = content.includes("![") || content.includes("src=") || content.includes("icon=");
+    if (!hasImageIndicators) {
+        return {
+            filepaths: [...filepaths],
+            markdown: requoteLeadingZeroValues(grayMatter.stringify(content, data))
+        };
+    }
+
     const contentBytes = Buffer.byteLength(content, "utf8");
     const isLargeFile = contentBytes > getLargeFileBytes();
 
@@ -713,17 +722,10 @@ export function replaceImagePathsAndUrls(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
-    const contentBytes = Buffer.byteLength(content, "utf8");
-    const isLargeFile = contentBytes > getLargeFileBytes();
-
     let replacedContent: string;
 
-    if (isLargeFile) {
-        context.logger.debug(
-            `Using streaming parser for large file replacement: ${metadata.absolutePathToMarkdownFile} (${(contentBytes / 1024 / 1024).toFixed(2)} MB)`
-        );
-
-        const streamingStart = performance.now();
+    // Use streaming scanner for all pages (O(n) character scan instead of full MDX parse)
+    {
         const edits: Edit[] = [];
         let i = 0;
         const len = content.length;
@@ -818,12 +820,15 @@ export function replaceImagePathsAndUrls(
                             const value = content.slice(valueStart, j);
                             j++;
                             if (attrName === "src" || (attrName === "icon" && isLocalIconReference(value))) {
-                                const imageSrc = mapImage(value);
+                                const trimmedValue = trimAnchor(value);
+                                const anchor =
+                                    trimmedValue && value !== trimmedValue ? value.slice(trimmedValue.length) : "";
+                                const imageSrc = mapImage(trimmedValue ?? value);
                                 if (imageSrc) {
                                     edits.push({
                                         start: valueStart,
                                         end: valueStart + value.length,
-                                        replacement: imageSrc
+                                        replacement: imageSrc + anchor
                                     });
                                 }
                             } else if (attrName === "href") {
@@ -851,112 +856,6 @@ export function replaceImagePathsAndUrls(
             }
             i++;
         }
-
-        replacedContent = applyEdits(content, edits);
-        const streamingTime = performance.now() - streamingStart;
-        context.logger.debug(
-            `Streaming replacement completed in ${streamingTime.toFixed(0)}ms: ${edits.length} edits applied`
-        );
-    } else {
-        const tree = parseMarkdownToTree(content);
-        const lineStarts = precomputeLineStarts(content);
-        const edits: Edit[] = [];
-
-        const nodeTypeFilter = (node: unknown): boolean => {
-            const n = node as { type?: string };
-            return (
-                n.type === "image" ||
-                n.type === "link" ||
-                n.type === "mdxJsxFlowElement" ||
-                n.type === "mdxJsxTextElement" ||
-                n.type === "mdxFlowExpression" ||
-                n.type === "mdxTextExpression"
-            );
-        };
-
-        visit(tree, nodeTypeFilter, (node) => {
-            if (node.position == null) {
-                return;
-            }
-            const { start, length } = getPositionUsingLineStarts(lineStarts, node.position);
-            const original = content.slice(start, start + length);
-            let replaced = original;
-
-            function replaceSrc(src: string | undefined) {
-                const imageSrc = mapImage(src);
-                if (src && imageSrc) {
-                    replaced = replaced.replace(src, imageSrc);
-                }
-            }
-
-            function replaceHref(href: string | undefined) {
-                const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
-                if (href != null && replacedHref != null && replacedHref.type === "replace") {
-                    replaced = replaced.replace(href, replacedHref.slug);
-                }
-            }
-
-            function walkEstreeForSrcAndHref(estree: EstreeNode) {
-                walkEstreeJsxAttributes(estree, {
-                    src: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
-                    icon: (attr) => {
-                        const icon = trimAnchor(extractSingleLiteral(attr.value));
-                        if (isLocalIconReference(icon)) {
-                            replaceSrc(icon);
-                        }
-                    },
-                    href: (attr) => replaceHref(trimAnchor(extractSingleLiteral(attr.value)))
-                });
-            }
-
-            if (node.type === "image") {
-                const src = trimAnchor(node.url);
-                replaceSrc(trimAnchor(src));
-            }
-
-            if (node.type === "link") {
-                replaceHref(trimAnchor(node.url));
-            }
-
-            if (isMdxJsxElement(node)) {
-                const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src");
-                replaceSrc(trimAnchor(extractAttributeValueLiteral(srcAttr?.value)));
-
-                const iconAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "icon");
-                const iconValue = trimAnchor(extractAttributeValueLiteral(iconAttr?.value));
-                if (isLocalIconReference(iconValue)) {
-                    replaceSrc(iconValue);
-                }
-
-                const hrefAttr = node.attributes.find(
-                    (attr) => attr.type === "mdxJsxAttribute" && attr.name === "href"
-                );
-                replaceHref(trimAnchor(extractAttributeValueLiteral(hrefAttr?.value)));
-
-                node.attributes.forEach((attr) => {
-                    if (
-                        isMdxJsxAttribute(attr) &&
-                        typeof attr.value !== "string" &&
-                        attr.value != null &&
-                        attr.value.data?.estree
-                    ) {
-                        walkEstreeForSrcAndHref(attr.value.data.estree);
-                    } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
-                        walkEstreeForSrcAndHref(attr.data.estree);
-                    }
-                });
-            }
-
-            if (isMdxExpression(node) && node.data?.estree) {
-                walkEstreeForSrcAndHref(node.data.estree);
-            }
-
-            if (replaced !== original) {
-                edits.push({ start, end: start + length, replacement: replaced });
-            }
-
-            return CONTINUE;
-        });
 
         replacedContent = applyEdits(content, edits);
     }
