@@ -635,11 +635,24 @@ fn parse_and_validate_inputs(
         }
     };
 
+    // Declared parameters whose value will be supplied by a resolved
+    // global parameter (targeting the same wire name). These are exempt
+    // from the required-param checks below: their value is injected after
+    // validation (see the `extra_global_params` loop), and a required
+    // global without a resolved value already errored in
+    // `build_global_parameter_overrides`. Without this exemption a
+    // `location: path` global (whose OpenAPI target must be declared as a
+    // required path variable) would always trip the check before its
+    // value is ever applied.
+    let global_param_targets: std::collections::HashSet<&str> =
+        extra_global_params.iter().map(|gp| gp.target.as_str()).collect();
+
     for param_name in &method.parameter_order {
         if let Some(param_def) = method.parameters.get(param_name) {
             if param_def.required
                 && param_def.location.as_deref() == Some("path")
                 && !params.contains_key(param_name)
+                && !global_param_targets.contains(param_name.as_str())
             {
                 let hint = missing_param_hint(param_def, param_name);
                 return Err(CliError::Validation(format!(
@@ -650,7 +663,10 @@ fn parse_and_validate_inputs(
     }
 
     for (param_name, param_def) in &method.parameters {
-        if param_def.required && !params.contains_key(param_name) {
+        if param_def.required
+            && !params.contains_key(param_name)
+            && !global_param_targets.contains(param_name.as_str())
+        {
             // When --json is provided, body-located required params are satisfied
             // by the JSON payload — skip their individual-flag validation.
             if param_def.location.as_deref() == Some("body") && body_json.is_some() {
@@ -11230,6 +11246,58 @@ fn test_global_param_path_injection() {
     );
     assert!(
         !input.full_url.contains("{orgId}"),
+        "template variable should be replaced: {}",
+        input.full_url
+    );
+}
+
+#[test]
+fn test_global_param_path_injection_satisfies_declared_required_param() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{
+        GlobalParameterLocation, MethodParameter, RestDescription, RestMethod,
+    };
+
+    // Regression (FER-11190): the path template variable is ALSO declared
+    // as a required `location: path` parameter (as OpenAPI requires). The
+    // required-param validation must not reject the request when a resolved
+    // global parameter targets that same variable — its value is injected
+    // right after validation.
+    let mut parameters = std::collections::HashMap::new();
+    parameters.insert(
+        "regionId".to_string(),
+        MethodParameter {
+            location: Some("path".to_string()),
+            required: true,
+            ..Default::default()
+        },
+    );
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "regions/{regionId}/items".to_string(),
+        parameter_order: vec!["regionId".to_string()],
+        parameters,
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Path,
+        target: "regionId".to_string(),
+        value: "us".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .expect("resolved global must satisfy the declared required path param");
+    assert!(
+        input.full_url.contains("regions/us/items"),
+        "path param should be substituted from the global value: {}",
+        input.full_url
+    );
+    assert!(
+        !input.full_url.contains("{regionId}"),
         "template variable should be replaced: {}",
         input.full_url
     );

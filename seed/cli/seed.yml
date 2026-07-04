@@ -229,4 +229,3 @@ allowedFailures:
   - websocket-bearer-auth
   - websocket-inferred-auth
   - websocket-multi-url
-  - x-fern-global-parameters

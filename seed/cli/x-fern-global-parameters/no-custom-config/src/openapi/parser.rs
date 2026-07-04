@@ -2935,7 +2935,7 @@ pub fn load_openapi_spec_from_value(
                     names
                         .iter()
                         .filter(|n| {
-                            if declared_global_param_names.contains(n.as_str() as &str) {
+                            if declared_global_param_names.contains(n.as_str()) {
                                 true
                             } else {
                                 tracing::warn!(

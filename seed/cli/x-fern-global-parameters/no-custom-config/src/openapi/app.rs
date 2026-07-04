@@ -1186,22 +1186,15 @@ impl CliApp {
         // TypeScript codegen). Builder params are authoritative — they
         // replace any spec-parsed param with the same name.
         if !self.builder_global_parameters.is_empty() {
-            let spec_names: std::collections::HashSet<String> =
-                doc.global_parameters.iter().map(|p| p.name.clone()).collect();
-            // Remove spec-parsed params that the builder overrides.
+            // Remove spec-parsed params that the builder overrides by name.
             let builder_names: std::collections::HashSet<String> =
                 self.builder_global_parameters.iter().map(|p| p.name.clone()).collect();
             doc.global_parameters.retain(|p| !builder_names.contains(&p.name));
-            // Prepend builder params (they take precedence in flag order).
+            // Prepend builder params (they take precedence in flag order),
+            // followed by the surviving spec-parsed params.
             let mut merged = self.builder_global_parameters.clone();
-            for p in doc.global_parameters.drain(..) {
-                if !builder_names.contains(&p.name) {
-                    merged.push(p);
-                }
-            }
+            merged.append(&mut doc.global_parameters);
             doc.global_parameters = merged;
-            // Suppress: spec_names is used to verify no silent overwrites.
-            let _ = spec_names;
         }
 
         // Apply generator-supplied idempotency-header env overrides.
