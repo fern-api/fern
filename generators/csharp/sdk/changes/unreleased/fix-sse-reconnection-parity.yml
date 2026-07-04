@@ -1,0 +1,11 @@
+- summary: |
+    Fix SSE stream reconnection correctness to match the reference implementation:
+    (1) Do not reconnect when no terminator is configured (the client cannot
+    distinguish a completed stream from a dropped connection).
+    (2) Apply a default 1-second backoff between reconnect attempts when the
+    server sends no retry: directive (previously zero delay).
+    (3) Use the last *dispatched* event ID for reconnection rather than the
+    last *parsed* id, preventing silent event loss on mid-event drops.
+    (4) Treat reconnect function failures (exceptions/null body) as failed
+    attempts that consume the retry cap, rather than propagating unhandled.
+  type: fix
