@@ -19,6 +19,7 @@ from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern
 from fern_python.generators.sdk.client_generator.constants import (
     CHUNK_VARIABLE,
     RESPONSE_VARIABLE,
+    SSE_RECONNECT_VARIABLE,
 )
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
@@ -696,6 +697,8 @@ class EndpointFunctionGenerator:
                         and endpoint.request_body.get_as_union().type == "fileUpload"
                         else False
                     ),
+                    emit_sse_reconnect=is_resumable_sse_endpoint(endpoint),
+                    reconnect_variable_name=SSE_RECONNECT_VARIABLE,
                 )
 
             if self._endpoint.sdk_request is not None and self._endpoint.sdk_request.stream_parameter is not None:
@@ -1945,6 +1948,29 @@ def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
             )
         )
     )
+
+
+def _get_streaming_response(
+    endpoint: ir_types.HttpEndpoint,
+) -> Optional[ir_types.StreamingResponse]:
+    if endpoint.response is None or endpoint.response.body is None:
+        return None
+    return endpoint.response.body.visit(
+        json=lambda _: None,
+        file_download=lambda _: None,
+        text=lambda _: None,
+        bytes=lambda _: None,
+        streaming=lambda stream_response: stream_response,
+        stream_parameter=lambda stream_param_response: stream_param_response.stream_response,
+    )
+
+
+def is_resumable_sse_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
+    stream_response = _get_streaming_response(endpoint)
+    if stream_response is None:
+        return False
+    union = stream_response.get_as_union()
+    return union.type == "sse" and union.resumable is True
 
 
 def is_overloaded_streaming_method(endpoint: ir_types.HttpEndpoint) -> bool:

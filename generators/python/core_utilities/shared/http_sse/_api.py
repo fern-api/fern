@@ -1,14 +1,42 @@
 import codecs
 import re
+import time
 from contextlib import asynccontextmanager, contextmanager
-from typing import Any, AsyncGenerator, AsyncIterator, Iterator, Optional
+from typing import (
+    Any,
+    AsyncContextManager,
+    AsyncGenerator,
+    AsyncIterator,
+    Callable,
+    ContextManager,
+    Iterator,
+    Optional,
+)
 
+import anyio
 import httpx
 from ._decoders import SSEDecoder
 from ._exceptions import SSEError
 from ._models import ServerSentEvent
 
 MAX_LINE_SIZE: int = 1_048_576  # 1 MiB
+
+# Reconnection defaults, mirroring the TypeScript SDK's Stream implementation.
+DEFAULT_MAX_RECONNECTION_ATTEMPTS: int = 5
+DEFAULT_RECONNECT_DELAY_MS: int = 1_000
+MAX_RECONNECT_DELAY_MS: int = 30_000
+
+# Granularity used to poll for cancellation while waiting out the reconnect
+# backoff. Keeps the delay responsive to cancellation instead of blocking for
+# the whole interval in a single, uninterruptible sleep.
+_RECONNECT_DELAY_POLL_SECONDS: float = 0.05
+
+# A reconnect callback re-issues the original request (with a ``Last-Event-ID``
+# header set to the supplied event id) and returns a *context manager* yielding
+# a fresh streaming ``httpx.Response``. Sync clients supply a sync context
+# manager; async clients supply an async one.
+SyncReconnect = Callable[[str], ContextManager[httpx.Response]]
+AsyncReconnect = Callable[[str], AsyncContextManager[httpx.Response]]
 
 
 class EventSource:
@@ -19,11 +47,15 @@ class EventSource:
         resumable: bool = False,
         stream_reconnection_enabled: bool = True,
         max_stream_reconnection_attempts: Optional[int] = None,
+        stream_terminator: Optional[str] = None,
+        reconnect: Optional[Callable[[str], Any]] = None,
     ) -> None:
         self._response = response
         self._resumable = resumable
         self._stream_reconnection_enabled = stream_reconnection_enabled
         self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
+        self._stream_terminator = stream_terminator
+        self._reconnect = reconnect
 
     def _check_content_type(self) -> None:
         content_type = self._response.headers.get("content-type", "").partition(";")[0]
@@ -68,14 +100,95 @@ class EventSource:
             return buf[:-1].replace("\r", "\n") + "\r"
         return buf.replace("\r", "\n")
 
-    def iter_sse(self) -> Iterator[ServerSentEvent]:
-        self._check_content_type()
-        decoder = SSEDecoder()
-        charset = self._get_charset()
-        text_decoder = codecs.getincrementaldecoder(charset)(errors="replace")
+    def _new_text_decoder(self) -> "codecs.IncrementalDecoder":
+        return codecs.getincrementaldecoder(self._get_charset())(errors="replace")
 
+    def _should_reconnect(self, last_dispatched_id: Optional[str], reconnect_attempts: int) -> bool:
+        """Decide whether a prematurely-ended stream should be reconnected.
+
+        Mirrors the TypeScript ``shouldReconnect`` gating:
+        - only resumable SSE endpoints reconnect;
+        - a stream terminator must be configured, otherwise we cannot tell a
+          clean completion from a dropped connection and must not reconnect;
+        - reconnection must be enabled and a reconnect callback provided;
+        - a last *dispatched* event id must exist to resume from;
+        - the consecutive-failed-attempt cap must not be exceeded.
+        """
+        if not self._resumable:
+            return False
+        if self._stream_terminator is None:
+            return False
+        if not self._stream_reconnection_enabled:
+            return False
+        if self._reconnect is None:
+            return False
+        if not last_dispatched_id:
+            return False
+        max_attempts = (
+            self._max_stream_reconnection_attempts
+            if self._max_stream_reconnection_attempts is not None
+            else DEFAULT_MAX_RECONNECTION_ATTEMPTS
+        )
+        if reconnect_attempts >= max_attempts:
+            return False
+        return True
+
+    def _reconnect_delay_seconds(self, last_retry: Optional[int]) -> float:
+        """Backoff before a reconnect.
+
+        Uses the server's most recent ``retry:`` directive (milliseconds) when
+        present, otherwise a default of ``DEFAULT_RECONNECT_DELAY_MS``, clamped
+        to ``MAX_RECONNECT_DELAY_MS``.
+        """
+        base_ms = last_retry if (last_retry is not None and last_retry > 0) else DEFAULT_RECONNECT_DELAY_MS
+        return min(base_ms, MAX_RECONNECT_DELAY_MS) / 1000.0
+
+    def _is_cancelled(self) -> bool:
+        """Best-effort check that consumption has been cancelled.
+
+        When the underlying response has been closed there is no point issuing
+        another request, so the backoff delay bails out early.
+        """
+        try:
+            return bool(self._response.is_closed)
+        except Exception:
+            return False
+
+    def _sleep_before_reconnect(self, last_retry: Optional[int]) -> None:
+        delay = self._reconnect_delay_seconds(last_retry)
+        deadline = time.monotonic() + delay
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return
+            # Re-check cancellation between short sleeps so a consumer that stops
+            # the stream mid-delay is not forced to wait out the whole interval.
+            if self._is_cancelled():
+                return
+            time.sleep(min(remaining, _RECONNECT_DELAY_POLL_SECONDS))
+
+    async def _asleep_before_reconnect(self, last_retry: Optional[int]) -> None:
+        delay = self._reconnect_delay_seconds(last_retry)
+        deadline = time.monotonic() + delay
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return
+            if self._is_cancelled():
+                return
+            # ``anyio.sleep`` is cancellation-aware: if the consumer cancels the
+            # task (or closes the async generator) mid-delay, this raises and no
+            # further request is issued.
+            await anyio.sleep(min(remaining, _RECONNECT_DELAY_POLL_SECONDS))
+
+    def _decode_response(
+        self,
+        response: httpx.Response,
+        decoder: SSEDecoder,
+        text_decoder: "codecs.IncrementalDecoder",
+    ) -> Iterator[ServerSentEvent]:
         buf = ""
-        for chunk in self._response.iter_bytes():
+        for chunk in response.iter_bytes():
             buf += text_decoder.decode(chunk)
             buf = self._normalize_sse_line_endings(buf)
 
@@ -90,6 +203,39 @@ class EventSource:
                     f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
                 )
 
+        yield from self._flush_decoder(buf, decoder, text_decoder)
+
+    async def _adecode_response(
+        self,
+        response: httpx.Response,
+        decoder: SSEDecoder,
+        text_decoder: "codecs.IncrementalDecoder",
+    ) -> AsyncGenerator[ServerSentEvent, None]:
+        buf = ""
+        async for chunk in response.aiter_bytes():
+            buf += text_decoder.decode(chunk)
+            buf = self._normalize_sse_line_endings(buf)
+
+            while "\n" in buf:
+                line, buf = buf.split("\n", 1)
+                sse = decoder.decode(line)
+                if sse is not None:
+                    yield sse
+
+            if len(buf) > MAX_LINE_SIZE:
+                raise SSEError(
+                    f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
+                )
+
+        for sse in self._flush_decoder(buf, decoder, text_decoder):
+            yield sse
+
+    def _flush_decoder(
+        self,
+        buf: str,
+        decoder: SSEDecoder,
+        text_decoder: "codecs.IncrementalDecoder",
+    ) -> Iterator[ServerSentEvent]:
         # Flush any remaining bytes from the incremental decoder
         buf += text_decoder.decode(b"", final=True)
         buf = buf.replace("\r\n", "\n").replace("\r", "\n")
@@ -109,48 +255,128 @@ class EventSource:
             sse = decoder.decode(buf)
             if sse is not None:
                 yield sse
+
+    def iter_sse(self) -> Iterator[ServerSentEvent]:
+        self._check_content_type()
+        decoder = SSEDecoder()
+        text_decoder = self._new_text_decoder()
+
+        last_dispatched_id: Optional[str] = None
+        last_retry: Optional[int] = None
+        # Consecutive failed reconnection attempts. Reset to 0 whenever an event
+        # is successfully dispatched (reset-on-progress) — matching browser
+        # `EventSource` semantics: a server that emits >=1 event then drops on
+        # every connection can reconnect indefinitely.
+        reconnect_attempts = 0
+
+        # ``None`` means there is no live stream to read this iteration (e.g. a
+        # failed reconnect); the loop then re-evaluates the reconnect decision
+        # without re-reading an exhausted response.
+        response: Optional[httpx.Response] = self._response
+        # Context manager for a response we opened ourselves and must close.
+        # The initial response is owned by the caller, so it starts as None.
+        owned_cm: Optional[ContextManager[httpx.Response]] = None
+        try:
+            while True:
+                if response is not None:
+                    for sse in self._decode_response(response, decoder, text_decoder):
+                        yield sse
+                        if sse.id:
+                            last_dispatched_id = sse.id
+                        if sse.retry is not None:
+                            last_retry = sse.retry
+                        reconnect_attempts = 0
+
+                if not self._should_reconnect(last_dispatched_id, reconnect_attempts):
+                    return
+                reconnect_attempts += 1
+
+                self._sleep_before_reconnect(last_retry)
+                if self._is_cancelled():
+                    return
+
+                # Close the previously-opened reconnect response before opening
+                # a new one so we never hold more than one extra connection.
+                if owned_cm is not None:
+                    owned_cm.__exit__(None, None, None)
+                    owned_cm = None
+
+                assert self._reconnect is not None  # guaranteed by _should_reconnect
+                try:
+                    cm: ContextManager[httpx.Response] = self._reconnect(last_dispatched_id or "")
+                    new_response = cm.__enter__()
+                except Exception:
+                    # A failed reconnect consumes an attempt; back off and retry.
+                    response = None
+                    continue
+                owned_cm = cm
+                if new_response is None:
+                    # Null/empty reconnect body: treat as a failed attempt.
+                    response = None
+                    continue
+
+                response = new_response
+                # Drop any partial event left over from the dropped stream, but
+                # keep the last event id (per the SSE spec) and start a fresh
+                # incremental text decoder for the new connection.
+                decoder.reset_in_progress_event()
+                text_decoder = self._new_text_decoder()
+        finally:
+            if owned_cm is not None:
+                owned_cm.__exit__(None, None, None)
 
     async def aiter_sse(self) -> AsyncGenerator[ServerSentEvent, None]:
         self._check_content_type()
         decoder = SSEDecoder()
-        charset = self._get_charset()
-        text_decoder = codecs.getincrementaldecoder(charset)(errors="replace")
+        text_decoder = self._new_text_decoder()
 
-        buf = ""
-        async for chunk in self._response.aiter_bytes():
-            buf += text_decoder.decode(chunk)
-            buf = self._normalize_sse_line_endings(buf)
+        last_dispatched_id: Optional[str] = None
+        last_retry: Optional[int] = None
+        reconnect_attempts = 0
 
-            while "\n" in buf:
-                line, buf = buf.split("\n", 1)
-                sse = decoder.decode(line)
-                if sse is not None:
-                    yield sse
+        response: Optional[httpx.Response] = self._response
+        owned_cm: Optional[AsyncContextManager[httpx.Response]] = None
+        try:
+            while True:
+                if response is not None:
+                    async for sse in self._adecode_response(response, decoder, text_decoder):
+                        yield sse
+                        if sse.id:
+                            last_dispatched_id = sse.id
+                        if sse.retry is not None:
+                            last_retry = sse.retry
+                        reconnect_attempts = 0
 
-            if len(buf) > MAX_LINE_SIZE:
-                raise SSEError(
-                    f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
-                )
+                if not self._should_reconnect(last_dispatched_id, reconnect_attempts):
+                    return
+                reconnect_attempts += 1
 
-        # Flush any remaining bytes from the incremental decoder
-        buf += text_decoder.decode(b"", final=True)
-        buf = buf.replace("\r\n", "\n").replace("\r", "\n")
+                await self._asleep_before_reconnect(last_retry)
+                if self._is_cancelled():
+                    return
 
-        if len(buf) > MAX_LINE_SIZE:
-            raise SSEError(
-                f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
-            )
+                if owned_cm is not None:
+                    await owned_cm.__aexit__(None, None, None)
+                    owned_cm = None
 
-        while "\n" in buf:
-            line, buf = buf.split("\n", 1)
-            sse = decoder.decode(line)
-            if sse is not None:
-                yield sse
+                assert self._reconnect is not None  # guaranteed by _should_reconnect
+                try:
+                    cm: AsyncContextManager[httpx.Response] = self._reconnect(last_dispatched_id or "")
+                    new_response = await cm.__aenter__()
+                except Exception:
+                    response = None
+                    continue
+                owned_cm = cm
+                if new_response is None:
+                    response = None
+                    continue
 
-        if buf.strip():
-            sse = decoder.decode(buf)
-            if sse is not None:
-                yield sse
+                response = new_response
+                decoder.reset_in_progress_event()
+                text_decoder = self._new_text_decoder()
+        finally:
+            if owned_cm is not None:
+                await owned_cm.__aexit__(None, None, None)
 
 
 @contextmanager

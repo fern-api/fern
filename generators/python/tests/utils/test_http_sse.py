@@ -1,10 +1,15 @@
+import asyncio
 import json
-from typing import AsyncIterator
+import threading
+import time
+from contextlib import asynccontextmanager, contextmanager
+from typing import Any, AsyncIterator, Callable, Iterator, List, Optional, Sequence, cast
 from unittest.mock import AsyncMock, Mock
 
 import httpx
 import pytest
 
+import core_utilities.shared.http_sse._api as _sse_api
 from core_utilities.shared.http_sse import (
     MAX_LINE_SIZE,
     EventSource,
@@ -1039,3 +1044,477 @@ class TestMaxLineSize:
         assert events[0].data == "hello"
         assert events[1].event == "pong"
         assert events[1].data == "world"
+
+
+# ---------------------------------------------------------------------------
+# SSE stream reconnection
+# ---------------------------------------------------------------------------
+
+TERMINATOR = "[DONE]"
+
+
+class _FakeResponse:
+    """Minimal stand-in for ``httpx.Response`` that streams predefined chunks."""
+
+    def __init__(self, chunks: List[bytes], content_type: str = "text/event-stream") -> None:
+        self.headers = {"content-type": content_type}
+        self._chunks = chunks
+        self.is_closed = False
+
+    def iter_bytes(self) -> Iterator[bytes]:
+        for chunk in self._chunks:
+            yield chunk
+
+    async def aiter_bytes(self) -> AsyncIterator[bytes]:
+        for chunk in self._chunks:
+            yield chunk
+
+
+def _sse(*events: str) -> _FakeResponse:
+    return _FakeResponse([e.encode("utf-8") for e in events])
+
+
+class _SyncReconnector:
+    """Records reconnect calls and hands out a queue of streams (or ``None``)."""
+
+    def __init__(self, streams: Sequence[Optional[_FakeResponse]]) -> None:
+        self._streams = streams
+        self.calls: List[str] = []
+
+    def __call__(self, last_event_id: str):  # type: ignore[no-untyped-def]
+        index = len(self.calls)
+        self.calls.append(last_event_id)
+        response = self._streams[index] if index < len(self._streams) else None
+
+        @contextmanager
+        def _cm() -> Iterator[Optional[_FakeResponse]]:
+            try:
+                yield response
+            finally:
+                if response is not None:
+                    response.is_closed = True
+
+        return _cm()
+
+
+class _AsyncReconnector:
+    def __init__(self, streams: Sequence[Optional[_FakeResponse]]) -> None:
+        self._streams = streams
+        self.calls: List[str] = []
+
+    def __call__(self, last_event_id: str):  # type: ignore[no-untyped-def]
+        index = len(self.calls)
+        self.calls.append(last_event_id)
+        response = self._streams[index] if index < len(self._streams) else None
+
+        @asynccontextmanager
+        async def _cm() -> AsyncIterator[Optional[_FakeResponse]]:
+            try:
+                yield response
+            finally:
+                if response is not None:
+                    response.is_closed = True
+
+        return _cm()
+
+
+def _collect_sync(event_source: EventSource, terminator: Optional[str] = TERMINATOR) -> List[str]:
+    """Consume like generated SDK code: stop when the terminator event arrives."""
+    data: List[str] = []
+    for sse in event_source.iter_sse():
+        if terminator is not None and sse.data == terminator:
+            break
+        data.append(sse.data)
+    return data
+
+
+async def _collect_async(event_source: EventSource, terminator: Optional[str] = TERMINATOR) -> List[str]:
+    data: List[str] = []
+    async for sse in event_source.aiter_sse():
+        if terminator is not None and sse.data == terminator:
+            break
+        data.append(sse.data)
+    return data
+
+
+@pytest.fixture(autouse=True)
+def _fast_reconnect_delay(monkeypatch: "pytest.MonkeyPatch") -> None:
+    """Shrink the default reconnect backoff so timing-agnostic tests stay fast."""
+    monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 10)
+
+
+def _resumable_source(
+    response: _FakeResponse,
+    reconnect: Optional[Callable[[str], Any]],
+    *,
+    stream_reconnection_enabled: bool = True,
+    max_stream_reconnection_attempts: Optional[int] = None,
+    resumable: bool = True,
+    stream_terminator: Optional[str] = TERMINATOR,
+) -> EventSource:
+    return EventSource(
+        cast(httpx.Response, response),
+        resumable=resumable,
+        stream_reconnection_enabled=stream_reconnection_enabled,
+        max_stream_reconnection_attempts=max_stream_reconnection_attempts,
+        stream_terminator=stream_terminator,
+        reconnect=reconnect,
+    )
+
+
+class TestSSEReconnectionSync:
+    def test_reconnects_with_last_event_id(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n', 'id: 2\ndata: {"value": 2}\n\n')
+        second = _sse('id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n")
+        reconnect = _SyncReconnector([second])
+
+        source = _resumable_source(first, reconnect)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}', '{"value": 3}']
+        assert reconnect.calls == ["2"]
+
+    def test_reconnects_from_last_dispatched_id_not_parsed_id(self) -> None:
+        # evt-2's id: line is parsed but the stream drops before evt-2's data +
+        # blank line, so evt-2 is never dispatched. Reconnection must resume
+        # from evt-1 or evt-2 would be silently skipped.
+        first = _sse('id: evt-1\ndata: {"value": 1}\n\n', "id: evt-2\n")
+        second = _sse('id: evt-2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n")
+        reconnect = _SyncReconnector([second])
+
+        source = _resumable_source(first, reconnect)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}']
+        assert reconnect.calls == ["evt-1"]
+
+    def test_multiple_sequential_reconnects(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        streams = [
+            _sse('id: 2\ndata: {"value": 2}\n\n'),
+            _sse('id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n"),
+        ]
+        reconnect = _SyncReconnector(streams)
+
+        source = _resumable_source(first, reconnect)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}', '{"value": 3}']
+        assert reconnect.calls == ["1", "2"]
+
+    def test_no_terminator_disables_reconnect(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _SyncReconnector([_sse('id: 2\ndata: {"value": 2}\n\n')])
+
+        source = _resumable_source(first, reconnect, stream_terminator=None)
+        data = _collect_sync(source, terminator=None)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    def test_reconnection_disabled_flag(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _SyncReconnector([_sse("data: [DONE]\n\n")])
+
+        source = _resumable_source(first, reconnect, stream_reconnection_enabled=False)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    def test_not_resumable_disables_reconnect(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _SyncReconnector([_sse("data: [DONE]\n\n")])
+
+        source = _resumable_source(first, reconnect, resumable=False)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    def test_no_reconnect_callback(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        source = _resumable_source(first, None)
+        data = _collect_sync(source)
+        assert data == ['{"value": 1}']
+
+    def test_no_last_id_disables_reconnect(self) -> None:
+        first = _sse('data: {"value": 1}\n\n')
+        reconnect = _SyncReconnector([_sse("data: [DONE]\n\n")])
+
+        source = _resumable_source(first, reconnect)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    def test_max_reconnection_attempts_cap(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        # Server is down: every reconnect yields an empty stream.
+        reconnect = _SyncReconnector([_sse(), _sse(), _sse(), _sse(), _sse()])
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=3)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}']
+        assert len(reconnect.calls) == 3
+
+    def test_attempts_reset_on_progress(self) -> None:
+        # max=1, but each reconnect yields an event which resets the counter,
+        # so all events arrive despite the low cap.
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        streams = [
+            _sse('id: 2\ndata: {"value": 2}\n\n'),
+            _sse('id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n"),
+        ]
+        reconnect = _SyncReconnector(streams)
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=1)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}', '{"value": 3}']
+        assert reconnect.calls == ["1", "2"]
+
+    def test_clean_terminator_does_not_reconnect(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n', "data: [DONE]\n\n")
+        reconnect = _SyncReconnector([_sse("data: [DONE]\n\n")])
+
+        source = _resumable_source(first, reconnect)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    def test_null_reconnect_body_counts_as_failed_attempt(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _SyncReconnector([None, None])
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=2)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}']
+        assert len(reconnect.calls) == 2
+
+
+class TestSSEReconnectionAsync:
+    @pytest.mark.asyncio
+    async def test_reconnects_with_last_event_id(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n', 'id: 2\ndata: {"value": 2}\n\n')
+        second = _sse('id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n")
+        reconnect = _AsyncReconnector([second])
+
+        source = _resumable_source(first, reconnect)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}', '{"value": 3}']
+        assert reconnect.calls == ["2"]
+
+    @pytest.mark.asyncio
+    async def test_reconnects_from_last_dispatched_id_not_parsed_id(self) -> None:
+        first = _sse('id: evt-1\ndata: {"value": 1}\n\n', "id: evt-2\n")
+        second = _sse('id: evt-2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n")
+        reconnect = _AsyncReconnector([second])
+
+        source = _resumable_source(first, reconnect)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}']
+        assert reconnect.calls == ["evt-1"]
+
+    @pytest.mark.asyncio
+    async def test_multiple_sequential_reconnects(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        streams = [
+            _sse('id: 2\ndata: {"value": 2}\n\n'),
+            _sse('id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n"),
+        ]
+        reconnect = _AsyncReconnector(streams)
+
+        source = _resumable_source(first, reconnect)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}', '{"value": 3}']
+        assert reconnect.calls == ["1", "2"]
+
+    @pytest.mark.asyncio
+    async def test_no_terminator_disables_reconnect(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _AsyncReconnector([_sse('id: 2\ndata: {"value": 2}\n\n')])
+
+        source = _resumable_source(first, reconnect, stream_terminator=None)
+        data = await _collect_async(source, terminator=None)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    @pytest.mark.asyncio
+    async def test_reconnection_disabled_flag(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _AsyncReconnector([_sse("data: [DONE]\n\n")])
+
+        source = _resumable_source(first, reconnect, stream_reconnection_enabled=False)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    @pytest.mark.asyncio
+    async def test_not_resumable_disables_reconnect(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _AsyncReconnector([_sse("data: [DONE]\n\n")])
+
+        source = _resumable_source(first, reconnect, resumable=False)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    @pytest.mark.asyncio
+    async def test_max_reconnection_attempts_cap(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _AsyncReconnector([_sse(), _sse(), _sse(), _sse(), _sse()])
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=3)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}']
+        assert len(reconnect.calls) == 3
+
+    @pytest.mark.asyncio
+    async def test_attempts_reset_on_progress(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        streams = [
+            _sse('id: 2\ndata: {"value": 2}\n\n'),
+            _sse('id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n"),
+        ]
+        reconnect = _AsyncReconnector(streams)
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=1)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}', '{"value": 3}']
+        assert reconnect.calls == ["1", "2"]
+
+    @pytest.mark.asyncio
+    async def test_clean_terminator_does_not_reconnect(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n', "data: [DONE]\n\n")
+        reconnect = _AsyncReconnector([_sse("data: [DONE]\n\n")])
+
+        source = _resumable_source(first, reconnect)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == []
+
+    @pytest.mark.asyncio
+    async def test_null_reconnect_body_counts_as_failed_attempt(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _AsyncReconnector([None, None])
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=2)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}']
+        assert len(reconnect.calls) == 2
+
+
+class TestSSEReconnectionBackoff:
+    def test_default_delay_when_no_retry(self) -> None:
+        source = EventSource(cast(httpx.Response, _sse()), resumable=True, stream_terminator=TERMINATOR)
+        # Reads the module default (not the shrunk test value) via a fresh source.
+        assert source._reconnect_delay_seconds(None) == _sse_api.DEFAULT_RECONNECT_DELAY_MS / 1000.0
+
+    def test_zero_retry_falls_back_to_default(self) -> None:
+        source = EventSource(cast(httpx.Response, _sse()), resumable=True, stream_terminator=TERMINATOR)
+        assert source._reconnect_delay_seconds(0) == _sse_api.DEFAULT_RECONNECT_DELAY_MS / 1000.0
+
+    def test_server_retry_directive_respected(self) -> None:
+        source = EventSource(cast(httpx.Response, _sse()), resumable=True, stream_terminator=TERMINATOR)
+        assert source._reconnect_delay_seconds(250) == 0.25
+
+    def test_server_retry_clamped_to_max(self) -> None:
+        source = EventSource(cast(httpx.Response, _sse()), resumable=True, stream_terminator=TERMINATOR)
+        assert source._reconnect_delay_seconds(120_000) == _sse_api.MAX_RECONNECT_DELAY_MS / 1000.0
+
+    def test_backoff_elapses_between_reconnects(self, monkeypatch: "pytest.MonkeyPatch") -> None:
+        monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 120)
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        streams = [
+            _sse('id: 2\ndata: {"value": 2}\n\n'),
+            _sse('id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n"),
+        ]
+        reconnect = _SyncReconnector(streams)
+        source = _resumable_source(first, reconnect)
+
+        start = time.monotonic()
+        data = _collect_sync(source)
+        elapsed = time.monotonic() - start
+
+        assert data == ['{"value": 1}', '{"value": 2}', '{"value": 3}']
+        # Two reconnects at ~120ms each.
+        assert elapsed >= 0.2
+
+    def test_server_retry_used_instead_of_default(self, monkeypatch: "pytest.MonkeyPatch") -> None:
+        # Large default; server retry of 30ms should win, so the reconnect
+        # happens quickly rather than after the default.
+        monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 5_000)
+        first = _sse('retry: 30\nid: 1\ndata: {"value": 1}\n\n')
+        reconnect = _SyncReconnector([_sse('id: 2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n")])
+        source = _resumable_source(first, reconnect)
+
+        start = time.monotonic()
+        data = _collect_sync(source)
+        elapsed = time.monotonic() - start
+
+        assert data == ['{"value": 1}', '{"value": 2}']
+        assert reconnect.calls == ["1"]
+        assert elapsed < 1.0
+
+
+class TestSSEReconnectionCancellation:
+    def test_sync_cancellation_during_backoff(self, monkeypatch: "pytest.MonkeyPatch") -> None:
+        monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 2_000)
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _SyncReconnector([_sse("data: [DONE]\n\n")])
+        source = _resumable_source(first, reconnect)
+
+        # Simulate the consumer cancelling: close the underlying response while
+        # the stream is waiting out its (long) reconnect backoff.
+        timer = threading.Timer(0.05, lambda: setattr(first, "is_closed", True))
+        timer.start()
+        try:
+            start = time.monotonic()
+            data = _collect_sync(source)
+            elapsed = time.monotonic() - start
+        finally:
+            timer.cancel()
+
+        assert data == ['{"value": 1}']
+        # Aborted promptly, well before the 2s backoff, and no reconnect issued.
+        assert elapsed < 1.0
+        assert reconnect.calls == []
+
+    @pytest.mark.asyncio
+    async def test_async_cancellation_during_backoff(self, monkeypatch: "pytest.MonkeyPatch") -> None:
+        monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 2_000)
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        reconnect = _AsyncReconnector([_sse("data: [DONE]\n\n")])
+        source = _resumable_source(first, reconnect)
+
+        collected: List[str] = []
+
+        async def _consume() -> None:
+            async for sse in source.aiter_sse():
+                if sse.data == TERMINATOR:
+                    break
+                collected.append(sse.data)
+
+        task = asyncio.ensure_future(_consume())
+        # Let the first event flush, then cancel while it is in reconnect backoff.
+        await asyncio.sleep(0.1)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task
+
+        assert collected == ['{"value": 1}']
+        assert reconnect.calls == []

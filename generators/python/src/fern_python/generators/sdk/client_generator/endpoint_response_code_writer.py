@@ -4,7 +4,11 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.pydantic import Pydantic
-from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
+from fern_python.generators.sdk.client_generator.constants import (
+    CHUNK_VARIABLE,
+    RESPONSE_VARIABLE,
+    SSE_RECONNECT_VARIABLE,
+)
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
 )
@@ -131,6 +135,23 @@ class EndpointResponseCodeWriter:
                         AST.Expression(
                             f'request_options.get("max_stream_reconnection_attempts", self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()) if request_options is not None else self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()'
                         ),
+                    )
+                )
+                # The stream terminator gates reconnection: without it, a
+                # dropped connection is indistinguishable from a clean end.
+                if stream_response_union.terminator is not None:
+                    event_source_kwargs.append(
+                        (
+                            "stream_terminator",
+                            AST.Expression(repr(stream_response_union.terminator)),
+                        )
+                    )
+                # Closure that re-issues the request with a Last-Event-ID header;
+                # emitted alongside the streaming call for resumable endpoints.
+                event_source_kwargs.append(
+                    (
+                        "reconnect",
+                        AST.Expression(SSE_RECONNECT_VARIABLE),
                     )
                 )
             iter_func_body.extend(
