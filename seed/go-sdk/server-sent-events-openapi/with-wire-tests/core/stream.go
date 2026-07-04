@@ -40,9 +40,8 @@ const (
 	defaultMaxStreamReconnectAttempts = 5
 
 	// defaultReconnectDelay is the minimum wait between reconnects when the
-	// server has not sent a `retry:` directive. Without this, a premature
-	// EOF would cause the client to hammer the server with zero-delay retries.
-	defaultReconnectDelay = 1 * time.Second
+	// server has not sent a `retry:` directive.
+	defaultReconnectDelay = time.Second
 
 	// Upper bound on server-sent `retry:` directives. Without this, a server
 	// advertising a multi-day reconnection interval could stall the client.
@@ -224,8 +223,6 @@ func readWithReconnect[V any, T any](s *Stream[T], read func() (V, error)) (V, e
 	for {
 		v, err := read()
 		if err == nil {
-			// Reset the consecutive-failure counter on progress (a
-			// successfully dispatched event).
 			s.reconnectAttempts = 0
 			return v, err
 		}
@@ -348,9 +345,7 @@ func (s *Stream[T]) shouldReconnectOnError(err error) bool {
 	if s.sseReader != nil && s.sseReader.TerminatorSeen() {
 		return false
 	}
-	// Without a configured terminator the client cannot distinguish a
-	// completed stream from a dropped connection, so reconnection is
-	// disabled to prevent reconnect storms and replayed events.
+	// No terminator configured — cannot distinguish clean EOF from drop.
 	if s.options.terminator == "" {
 		return false
 	}
@@ -392,14 +387,9 @@ func (s *Stream[T]) reconnect() error {
 	s.reconnectAttempts++
 
 	resp, err := s.options.reconnectFn(s.ctx, s.lastEventID)
-	if err != nil {
-		// Failed reconnect: install a reader that immediately yields EOF so
-		// the outer loop can attempt again (subject to the attempt cap).
-		s.reader = &eofReader{}
-		s.sseReader = nil
-		return nil
-	}
-	if resp.Body == nil {
+	if err != nil || resp.Body == nil {
+		// Install a reader that immediately yields EOF so the outer loop
+		// re-evaluates shouldReconnectOnError (subject to the attempt cap).
 		s.reader = &eofReader{}
 		s.sseReader = nil
 		return nil
@@ -568,10 +558,8 @@ func (s *streamOptions) isTerminated(data []byte) bool {
 	return len(s.terminatorBytes) > 0 && bytes.Contains(data, s.terminatorBytes)
 }
 
-// eofReader is a streamReader that immediately returns io.EOF. It is used as a
-// placeholder after a failed reconnect so the outer readWithReconnect loop can
-// re-evaluate shouldReconnectOnError (and eventually surface EOF to the caller
-// once the attempt cap is reached).
+// eofReader is a no-op streamReader installed after a failed reconnect so the
+// outer loop can re-evaluate shouldReconnectOnError.
 type eofReader struct{}
 
 func (e *eofReader) ReadFromStream() ([]byte, error) { return nil, io.EOF }
@@ -673,12 +661,9 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 	if err := s.scanner.Err(); err != nil {
 		return nil, err
 	}
-	// EOF — return any accumulated (incomplete) event. Per the WHATWG
-	// EventSource spec, the "last event ID" is only committed when an event
-	// is dispatched (its terminating blank line is reached). Committing an
-	// id parsed from an incomplete event would cause reconnection to skip
-	// that event (the server resumes AFTER the id). We only commit the id
-	// here when we are actually dispatching an event (has data).
+	// EOF — only commit the id when dispatching (event has data). An id
+	// parsed from an incomplete event must not be committed; otherwise
+	// reconnection would skip the undispatched event.
 	if event.hasID && len(event.Data) > 0 {
 		s.lastEventID = event.ID
 	}
