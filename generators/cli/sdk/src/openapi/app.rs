@@ -326,15 +326,26 @@ fn global_parameter_flag_collides_with_builtin(kebab: &str) -> bool {
 
 /// Resolve a global parameter value from clap matches (CLI flag > env >
 /// default, handled by clap's `.env()` + `.default_value()`).
+///
+/// Uses `try_get_one` rather than `get_one` because the flag is not
+/// guaranteed to be registered on every command: when its long name
+/// collides with a per-operation parameter, the flag is dropped from
+/// that operation's command (the per-op parameter wins — see
+/// `register_global_header_on_nonconflicting_leaves`). On such a
+/// command the arg id is unknown and `get_one` would panic;
+/// `try_get_one` returns `Err`, which we map to `None`.
 pub(crate) fn resolve_global_parameter_value(
     matches: &clap::ArgMatches,
     p: &crate::openapi::discovery::GlobalParameter,
 ) -> Option<String> {
     let arg_id = global_parameter_arg_id(p);
     matches
-        .get_one::<String>(&arg_id)
-        .map(|s| s.trim().to_string())
+        .try_get_one::<String>(&arg_id)
+        .ok()
+        .flatten()
+        .map(|s| s.trim())
         .filter(|s| !s.is_empty())
+        .map(|s| s.to_string())
 }
 
 /// Stable clap arg ID for a global header. Anchored to the wire header
@@ -1550,7 +1561,9 @@ impl CliApp {
         }
 
         // Global-parameter flags (`x-fern-global-parameters`).
-        let mut gp_registered_kebabs: std::collections::HashSet<String> = std::collections::HashSet::new();
+        // Reuse `registered_kebabs` from global headers so cross-feature
+        // collisions (header + parameter producing the same flag) are
+        // detected rather than panicking clap.
         let mut global_param_help_pairs: Vec<(String, String)> = Vec::new();
         for p in &doc.global_parameters {
             let kebab = global_parameter_flag_name(p);
@@ -1562,11 +1575,11 @@ impl CliApp {
                 );
                 continue;
             }
-            if !gp_registered_kebabs.insert(kebab.clone()) {
+            if !registered_kebabs.insert(kebab.clone()) {
                 tracing::warn!(
                     name = %p.name,
                     flag = %kebab,
-                    "Duplicate global-parameter flag; skipping"
+                    "Global-parameter flag collides with an already-registered flag; skipping"
                 );
                 continue;
             }
@@ -1920,6 +1933,55 @@ impl AppContext {
         })
     }
 
+    /// Compute the per-op `extra_global_params` slice from the
+    /// pre-resolved global parameters, applying the same apply-mode
+    /// filtering and per-op override suppression as
+    /// `build_global_parameter_overrides` on the built-in command path.
+    fn extra_global_params_for_entry(
+        &self,
+        entry: &BindingEntry,
+        method: &RestMethod,
+        params_json: Option<&str>,
+    ) -> Vec<ResolvedGlobalParam> {
+        use crate::openapi::discovery::{GlobalParameterApplyMode, GlobalParameterLocation};
+
+        let params: serde_json::Map<String, serde_json::Value> = match params_json {
+            Some(s) if !s.trim().is_empty() => serde_json::from_str(s).unwrap_or_default(),
+            _ => serde_json::Map::new(),
+        };
+
+        entry
+            .global_params
+            .iter()
+            .filter(|gp| {
+                // Find the declaration to check apply mode.
+                let decl = entry.doc.global_parameters.iter().find(|d| d.target == gp.target);
+                if let Some(d) = decl {
+                    match d.apply {
+                        GlobalParameterApplyMode::Auto => {}
+                        GlobalParameterApplyMode::Explicit => {
+                            if !method.global_parameter_opt_ins.iter().any(|n| n == &d.name) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+                // Check per-op override suppression.
+                let overridden = match gp.location {
+                    GlobalParameterLocation::Header => {
+                        per_op_header_param_overrides_global(&params, method, &gp.target)
+                    }
+                    GlobalParameterLocation::Query
+                    | GlobalParameterLocation::Body
+                    | GlobalParameterLocation::Path => params.contains_key(&gp.target),
+                };
+                !overridden
+            })
+            .cloned()
+            .collect()
+    }
+
     /// Execute an API method by name, using the same executor as built-in
     /// commands. Automatically routes to the binding that owns `method`.
     pub fn execute(
@@ -1955,6 +2017,7 @@ impl AppContext {
             query: None,
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
+        let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);
 
         // Custom commands dispatch from inside `run_async`, which is itself
         // driven by a tokio runtime. Naively calling `block_on` from a sync
@@ -2001,7 +2064,7 @@ impl AppContext {
                 false,
                 self.debug,
                 &extra_headers,
-                &entry.global_params,
+                &filtered_global_params,
             ))
         })
         .map(|_| ())
@@ -2040,6 +2103,7 @@ impl AppContext {
         };
 
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
+        let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);
         // See note in `execute` — `block_in_place` is required because the
         // handler runs inside the outer tokio runtime.
         let value = tokio::task::block_in_place(|| {
@@ -2078,7 +2142,7 @@ impl AppContext {
                 // debug mode is a CLI-only surface.
                 false,
                 &extra_headers,
-                &entry.global_params,
+                &filtered_global_params,
             ))
         })?;
 

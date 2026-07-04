@@ -773,11 +773,9 @@ fn parse_and_validate_inputs(
                 }
             }
             GlobalParameterLocation::Body => {
-                set_nested_value(
-                    &mut body_from_flags,
-                    &gp.target,
-                    Value::String(gp.value.clone()),
-                );
+                // Body injection is deferred until after body assembly
+                // so that global body params are merged into both the
+                // `--json` path and the per-field-flags path.
             }
             GlobalParameterLocation::Path => {
                 if !non_header_params.contains_key(&gp.target) {
@@ -791,8 +789,8 @@ fn parse_and_validate_inputs(
     }
 
     // The conflict checks above guarantee that `body_json` and
-    // `body_from_flags` are never both populated, so the body is sourced
-    // from exactly one channel here.
+    // `body_from_flags` are never both populated (before global-param
+    // injection), so the body is sourced from exactly one channel here.
     let body: Option<Value> = if let Some(b) = body_json {
         let mut json_val: Value = serde_json::from_str(b)
             .map_err(|e| CliError::Validation(format!("Invalid --json body: {e}")))?;
@@ -815,6 +813,13 @@ fn parse_and_validate_inputs(
     } else {
         None
     };
+
+    // Merge body-location global parameters into the assembled body.
+    // This runs after body assembly so globals are injected into both
+    // the `--json` and per-field-flags paths. Per-call keys already
+    // present in the body are not overwritten (per-op wins via
+    // `set_nested_value` which only writes missing paths).
+    let body = merge_global_body_params(body, extra_global_params);
 
     // Validate the assembled body against the request schema regardless of
     // how it was built (per-field flags, `--json`, or both). The previous
@@ -3634,6 +3639,54 @@ fn build_multipart_body(
 
     let content_type = format!("multipart/related; boundary={boundary}");
     Ok((body, content_type))
+}
+
+/// Merge body-location global parameters into an assembled body value.
+/// Handles both the `--json` and per-field-flags body paths. Non-object
+/// bodies (arrays, scalars) are left untouched since we can't inject
+/// named fields into them. When the body is `None`, a new object is
+/// created to carry the global fields.
+fn merge_global_body_params(
+    body: Option<Value>,
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
+) -> Option<Value> {
+    use crate::openapi::discovery::GlobalParameterLocation;
+
+    let has_body_globals = extra_global_params
+        .iter()
+        .any(|gp| gp.location == GlobalParameterLocation::Body);
+    if !has_body_globals {
+        return body;
+    }
+
+    match body {
+        Some(Value::Object(mut m)) => {
+            for gp in extra_global_params
+                .iter()
+                .filter(|gp| gp.location == GlobalParameterLocation::Body)
+            {
+                // Only inject if the key is not already present (per-op wins).
+                if !m.contains_key(&gp.target) {
+                    set_nested_value(&mut m, &gp.target, Value::String(gp.value.clone()));
+                }
+            }
+            Some(Value::Object(m))
+        }
+        Some(other) => {
+            // Non-object body — can't inject named fields; leave as-is.
+            Some(other)
+        }
+        None => {
+            let mut m = Map::new();
+            for gp in extra_global_params
+                .iter()
+                .filter(|gp| gp.location == GlobalParameterLocation::Body)
+            {
+                set_nested_value(&mut m, &gp.target, Value::String(gp.value.clone()));
+            }
+            Some(Value::Object(m))
+        }
+    }
 }
 
 /// Intentional duplication from `graphql/executor.rs` — no shared module by design.
