@@ -28,11 +28,6 @@ DEFAULT_MAX_RECONNECTION_ATTEMPTS: int = 5
 DEFAULT_RECONNECT_DELAY_MS: int = 1_000
 MAX_RECONNECT_DELAY_MS: int = 30_000
 
-# Granularity used to poll for cancellation while waiting out the reconnect
-# backoff. Keeps the delay responsive to cancellation instead of blocking for
-# the whole interval in a single, uninterruptible sleep.
-_RECONNECT_DELAY_POLL_SECONDS: float = 0.05
-
 # A reconnect callback re-issues the original request (with a ``Last-Event-ID``
 # header set to the supplied event id) and returns a *context manager* yielding
 # a fresh streaming ``httpx.Response``. Sync clients supply a sync context
@@ -145,43 +140,17 @@ class EventSource:
         base_ms = last_retry if (last_retry is not None and last_retry > 0) else DEFAULT_RECONNECT_DELAY_MS
         return min(base_ms, MAX_RECONNECT_DELAY_MS) / 1000.0
 
-    def _is_cancelled(self) -> bool:
-        """Best-effort check that consumption has been cancelled.
-
-        When the underlying response has been closed there is no point issuing
-        another request, so the backoff delay bails out early.
-        """
-        try:
-            return bool(self._response.is_closed)
-        except Exception:
-            return False
-
     def _sleep_before_reconnect(self, last_retry: Optional[int]) -> None:
-        delay = self._reconnect_delay_seconds(last_retry)
-        deadline = time.monotonic() + delay
-        while True:
-            remaining = deadline - time.monotonic()
-            if remaining <= 0:
-                return
-            # Re-check cancellation between short sleeps so a consumer that stops
-            # the stream mid-delay is not forced to wait out the whole interval.
-            if self._is_cancelled():
-                return
-            time.sleep(min(remaining, _RECONNECT_DELAY_POLL_SECONDS))
+        # ``time.sleep`` blocks the calling thread but remains interruptible by
+        # signals (e.g. ``KeyboardInterrupt``), which propagate out and abort
+        # the reconnect without issuing another request.
+        time.sleep(self._reconnect_delay_seconds(last_retry))
 
     async def _asleep_before_reconnect(self, last_retry: Optional[int]) -> None:
-        delay = self._reconnect_delay_seconds(last_retry)
-        deadline = time.monotonic() + delay
-        while True:
-            remaining = deadline - time.monotonic()
-            if remaining <= 0:
-                return
-            if self._is_cancelled():
-                return
-            # ``anyio.sleep`` is cancellation-aware: if the consumer cancels the
-            # task (or closes the async generator) mid-delay, this raises and no
-            # further request is issued.
-            await anyio.sleep(min(remaining, _RECONNECT_DELAY_POLL_SECONDS))
+        # ``anyio.sleep`` is cancellation-aware: if the consumer cancels the task
+        # or closes the async generator mid-delay, this raises (and no further
+        # request is issued) instead of blocking for the whole interval.
+        await anyio.sleep(self._reconnect_delay_seconds(last_retry))
 
     def _decode_response(
         self,
@@ -281,7 +250,26 @@ class EventSource:
         try:
             while True:
                 if response is not None:
-                    for sse in self._decode_response(response, decoder, text_decoder):
+                    events = self._decode_response(response, decoder, text_decoder)
+                    while True:
+                        try:
+                            sse = next(events)
+                        except StopIteration:
+                            break
+                        except SSEError:
+                            # A protocol violation (e.g. an oversized line) is a
+                            # genuine error, not a dropped connection; propagate it.
+                            # Listed first because ``SSEError`` subclasses
+                            # ``httpx.TransportError``.
+                            raise
+                        except httpx.TransportError:
+                            # A transport error mid-stream (e.g. the server dropped
+                            # the connection: ``ReadError``/``RemoteProtocolError``)
+                            # is a premature end: stop reading and let the reconnect
+                            # decision below handle it. ``next`` is used rather than
+                            # ``for`` so this cannot swallow a ``GeneratorExit``
+                            # raised at a ``yield``.
+                            break
                         yield sse
                         if sse.id:
                             last_dispatched_id = sse.id
@@ -294,8 +282,6 @@ class EventSource:
                 reconnect_attempts += 1
 
                 self._sleep_before_reconnect(last_retry)
-                if self._is_cancelled():
-                    return
 
                 # Close the previously-opened reconnect response before opening
                 # a new one so we never hold more than one extra connection.
@@ -341,7 +327,24 @@ class EventSource:
         try:
             while True:
                 if response is not None:
-                    async for sse in self._adecode_response(response, decoder, text_decoder):
+                    events = self._adecode_response(response, decoder, text_decoder)
+                    while True:
+                        try:
+                            sse = await events.__anext__()
+                        except StopAsyncIteration:
+                            break
+                        except SSEError:
+                            # A protocol violation (e.g. an oversized line) is a
+                            # genuine error, not a dropped connection; propagate it.
+                            # Listed first because ``SSEError`` subclasses
+                            # ``httpx.TransportError``.
+                            raise
+                        except httpx.TransportError:
+                            # A transport error mid-stream (e.g. the server dropped
+                            # the connection: ``ReadError``/``RemoteProtocolError``)
+                            # is a premature end: stop reading and let the reconnect
+                            # decision below handle it.
+                            break
                         yield sse
                         if sse.id:
                             last_dispatched_id = sse.id
@@ -354,8 +357,6 @@ class EventSource:
                 reconnect_attempts += 1
 
                 await self._asleep_before_reconnect(last_retry)
-                if self._is_cancelled():
-                    return
 
                 if owned_cm is not None:
                     await owned_cm.__aexit__(None, None, None)

@@ -3,6 +3,7 @@ import json
 import threading
 import time
 from contextlib import asynccontextmanager, contextmanager
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any, AsyncIterator, Callable, Iterator, List, Optional, Sequence, cast
 from unittest.mock import AsyncMock, Mock
 
@@ -1059,7 +1060,6 @@ class _FakeResponse:
     def __init__(self, chunks: List[bytes], content_type: str = "text/event-stream") -> None:
         self.headers = {"content-type": content_type}
         self._chunks = chunks
-        self.is_closed = False
 
     def iter_bytes(self) -> Iterator[bytes]:
         for chunk in self._chunks:
@@ -1088,11 +1088,7 @@ class _SyncReconnector:
 
         @contextmanager
         def _cm() -> Iterator[Optional[_FakeResponse]]:
-            try:
-                yield response
-            finally:
-                if response is not None:
-                    response.is_closed = True
+            yield response
 
         return _cm()
 
@@ -1109,11 +1105,7 @@ class _AsyncReconnector:
 
         @asynccontextmanager
         async def _cm() -> AsyncIterator[Optional[_FakeResponse]]:
-            try:
-                yield response
-            finally:
-                if response is not None:
-                    response.is_closed = True
+            yield response
 
         return _cm()
 
@@ -1472,26 +1464,27 @@ class TestSSEReconnectionBackoff:
 
 
 class TestSSEReconnectionCancellation:
-    def test_sync_cancellation_during_backoff(self, monkeypatch: "pytest.MonkeyPatch") -> None:
-        monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 2_000)
+    def test_sync_backoff_is_interruptible(self, monkeypatch: "pytest.MonkeyPatch") -> None:
+        # A sync consumer blocks inside ``next()`` during the backoff, so the
+        # realistic interruption is a signal (e.g. Ctrl-C) raised out of
+        # ``time.sleep``. It must propagate and abort the reconnect rather than
+        # being swallowed, and no further request may be issued.
         first = _sse('id: 1\ndata: {"value": 1}\n\n')
         reconnect = _SyncReconnector([_sse("data: [DONE]\n\n")])
         source = _resumable_source(first, reconnect)
 
-        # Simulate the consumer cancelling: close the underlying response while
-        # the stream is waiting out its (long) reconnect backoff.
-        timer = threading.Timer(0.05, lambda: setattr(first, "is_closed", True))
-        timer.start()
-        try:
-            start = time.monotonic()
-            data = _collect_sync(source)
-            elapsed = time.monotonic() - start
-        finally:
-            timer.cancel()
+        def _interrupt(_self: EventSource, _last_retry: Optional[int]) -> None:
+            raise KeyboardInterrupt
 
-        assert data == ['{"value": 1}']
-        # Aborted promptly, well before the 2s backoff, and no reconnect issued.
-        assert elapsed < 1.0
+        monkeypatch.setattr(_sse_api.EventSource, "_sleep_before_reconnect", _interrupt)
+
+        collected: List[str] = []
+        with pytest.raises(KeyboardInterrupt):
+            for sse in source.iter_sse():
+                collected.append(sse.data)
+
+        assert collected == ['{"value": 1}']
+        # Interrupted during the backoff, before any reconnect was issued.
         assert reconnect.calls == []
 
     @pytest.mark.asyncio
@@ -1518,3 +1511,108 @@ class TestSSEReconnectionCancellation:
 
         assert collected == ['{"value": 1}']
         assert reconnect.calls == []
+
+
+# ---------------------------------------------------------------------------
+# End-to-end reconnection over a real HTTP socket
+# ---------------------------------------------------------------------------
+#
+# Unit tests above drive ``EventSource`` with in-memory fakes. These exercise
+# the full stack against a real ``httpx.Client``/``AsyncClient`` and a real
+# local HTTP server that deliberately drops the connection mid-stream, so the
+# client must transparently reconnect using the ``Last-Event-ID`` header — the
+# same code path a generated SDK runs. This is the setup that surfaced a bug the
+# in-memory fakes could not: a fully-consumed real stream reports
+# ``is_closed=True``, which must NOT be mistaken for consumer cancellation.
+
+_E2E_TERMINATOR = "[DONE]"
+_E2E_FINAL_ID = 5
+
+
+class _DroppingSSEHandler(BaseHTTPRequestHandler):
+    """Streams events 1..5 but drops the connection after every 2 events.
+
+    On the first connection it sends ``id: 3`` (parsed) *without* its
+    terminating blank line before dropping, so a correct client must resume
+    from the last *dispatched* id (2), never the parsed-but-undispatched 3.
+    """
+
+    # Records the ``Last-Event-ID`` header seen on each request, in order.
+    last_event_ids: List[Optional[str]] = []
+
+    def log_message(self, *args: Any) -> None:  # silence noisy default logging
+        pass
+
+    def do_POST(self) -> None:
+        last_event_id = self.headers.get("Last-Event-ID")
+        type(self).last_event_ids.append(last_event_id)
+        start = int(last_event_id) if last_event_id else 0
+
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.end_headers()
+
+        sent_this_conn = 0
+        event_id = start + 1
+        while event_id <= _E2E_FINAL_ID:
+            if start == 0 and event_id == 3 and sent_this_conn == 2:
+                # id: 3 parsed but never dispatched, then drop.
+                self.wfile.write(b"id: 3\n")
+                self.wfile.flush()
+                return
+            self.wfile.write(f"id: {event_id}\ndata: event-{event_id}\n\n".encode())
+            self.wfile.flush()
+            sent_this_conn += 1
+            event_id += 1
+            if sent_this_conn >= 2 and event_id <= _E2E_FINAL_ID:
+                return  # abrupt drop, no terminator -> client must reconnect
+        self.wfile.write(f"data: {_E2E_TERMINATOR}\n\n".encode())
+        self.wfile.flush()
+
+
+@contextmanager
+def _running_sse_server() -> Iterator[str]:
+    _DroppingSSEHandler.last_event_ids = []
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _DroppingSSEHandler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield f"http://127.0.0.1:{server.server_address[1]}"
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+class TestSSEReconnectionEndToEnd:
+    def test_sync_reconnects_over_real_socket(self, monkeypatch: "pytest.MonkeyPatch") -> None:
+        monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 10)
+        with _running_sse_server() as base_url, httpx.Client() as client:
+
+            def _reconnect(last_event_id: str):  # type: ignore[no-untyped-def]
+                return client.stream("POST", base_url, headers={"Last-Event-ID": last_event_id})
+
+            collected: List[str] = []
+            with client.stream("POST", base_url) as response:
+                source = _resumable_source(cast(Any, response), _reconnect, stream_terminator=_E2E_TERMINATOR)
+                collected = _collect_sync(source, terminator=_E2E_TERMINATOR)
+
+        assert collected == ["event-1", "event-2", "event-3", "event-4", "event-5"]
+        # Resumed from the last *dispatched* id (2), not the parsed id (3).
+        assert _DroppingSSEHandler.last_event_ids == [None, "2", "4"]
+
+    @pytest.mark.asyncio
+    async def test_async_reconnects_over_real_socket(self, monkeypatch: "pytest.MonkeyPatch") -> None:
+        monkeypatch.setattr(_sse_api, "DEFAULT_RECONNECT_DELAY_MS", 10)
+        with _running_sse_server() as base_url:
+            async with httpx.AsyncClient() as client:
+
+                def _reconnect(last_event_id: str):  # type: ignore[no-untyped-def]
+                    return client.stream("POST", base_url, headers={"Last-Event-ID": last_event_id})
+
+                collected: List[str] = []
+                async with client.stream("POST", base_url) as response:
+                    source = _resumable_source(cast(Any, response), _reconnect, stream_terminator=_E2E_TERMINATOR)
+                    collected = await _collect_async(source, terminator=_E2E_TERMINATOR)
+
+        assert collected == ["event-1", "event-2", "event-3", "event-4", "event-5"]
+        assert _DroppingSSEHandler.last_event_ids == [None, "2", "4"]
