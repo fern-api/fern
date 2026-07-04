@@ -10,7 +10,10 @@ use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode
 
 fn main() {
     let app = CliApp::new("test-x-fern-global-parameters-extension")
-        .global_parameter(GlobalParameter {
+        .binding(
+            OpenApiBinding::new()
+                .spec(include_str!("openapi0.json"))
+                .global_parameter(GlobalParameter {
                     name: "currency".into(),
                     location: GlobalParameterLocation::Body,
                     target: "config.currency".into(),
@@ -21,7 +24,7 @@ fn main() {
                     parameter_name: None,
                     docs: Some("The currency code used for pricing.".into()),
                 })
-        .global_parameter(GlobalParameter {
+                .global_parameter(GlobalParameter {
                     name: "language".into(),
                     location: GlobalParameterLocation::Query,
                     target: "language".into(),
@@ -32,7 +35,7 @@ fn main() {
                     parameter_name: None,
                     docs: None,
                 })
-        .global_parameter(GlobalParameter {
+                .global_parameter(GlobalParameter {
                     name: "x-custom-header".into(),
                     location: GlobalParameterLocation::Header,
                     target: "x-custom-header".into(),
@@ -43,7 +46,7 @@ fn main() {
                     parameter_name: None,
                     docs: None,
                 })
-        .global_parameter(GlobalParameter {
+                .global_parameter(GlobalParameter {
                     name: "region".into(),
                     location: GlobalParameterLocation::Path,
                     target: "regionId".into(),
@@ -54,7 +57,7 @@ fn main() {
                     parameter_name: None,
                     docs: None,
                 })
-        .global_parameter(GlobalParameter {
+                .global_parameter(GlobalParameter {
                     name: "verbose".into(),
                     location: GlobalParameterLocation::Query,
                     target: "verbose".into(),
@@ -65,7 +68,7 @@ fn main() {
                     parameter_name: None,
                     docs: Some("Enable verbose response output.".into()),
                 })
-        .global_parameter(GlobalParameter {
+                .global_parameter(GlobalParameter {
                     name: "max-retries".into(),
                     location: GlobalParameterLocation::Header,
                     target: "X-Max-Retries".into(),
@@ -76,7 +79,7 @@ fn main() {
                     parameter_name: Some("maxRetries".into()),
                     docs: None,
                 })
-        .global_parameter(GlobalParameter {
+                .global_parameter(GlobalParameter {
                     name: "api-version".into(),
                     location: GlobalParameterLocation::Query,
                     target: "api-version".into(),
@@ -87,7 +90,7 @@ fn main() {
                     parameter_name: None,
                     docs: Some("The API version to use for the request.".into()),
                 })
-        .global_parameter(GlobalParameter {
+                .global_parameter(GlobalParameter {
                     name: "x-trace-id".into(),
                     location: GlobalParameterLocation::Header,
                     target: "x-trace-id".into(),
@@ -98,9 +101,6 @@ fn main() {
                     parameter_name: None,
                     docs: Some("x-fern-default should take precedence over default.".into()),
                 })
-        .binding(
-            OpenApiBinding::new()
-                .spec(include_str!("openapi0.json"))
         );
 
     let app = custom::register(app);

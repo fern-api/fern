@@ -4,6 +4,7 @@ import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { copySpecs, hasOpenApiSpecs, type RawSpecsManifest } from "../copySpecs.js";
 import type { DetectedAuthBinding } from "../detectAuth.js";
+import type { DetectedGlobalParam } from "../detectGlobalParams.js";
 
 const BIN = "acme";
 const BIN_DIR = path.join("cli", BIN);
@@ -250,6 +251,55 @@ describe("copySpecs", () => {
         // Binding-level auth appears inside the OpenApiBinding chain
         const basicIdx = main.indexOf('.auth_basic_scheme_username_only("ApiKeyAuth"');
         expect(basicIdx).toBeGreaterThan(bindingIdx);
+    });
+
+    it("emits global parameters on the OpenApiBinding chain (not the root CliApp)", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        const globalParamBindings: DetectedGlobalParam[] = [
+            {
+                paramName: "api-version",
+                rustCall:
+                    ".global_parameter(GlobalParameter {\n" +
+                    '            name: "api-version".into(),\n' +
+                    "            location: GlobalParameterLocation::Query,\n" +
+                    '            target: "api-version".into(),\n' +
+                    "            env: None,\n" +
+                    "            default: None,\n" +
+                    "            optional: false,\n" +
+                    "            apply: GlobalParameterApplyMode::Explicit,\n" +
+                    "            parameter_name: None,\n" +
+                    "            docs: None,\n" +
+                    "        })",
+                imports: ["GlobalParameter", "GlobalParameterLocation", "GlobalParameterApplyMode"],
+                envVar: undefined
+            }
+        ];
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings, specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        // discovery imports are emitted
+        expect(main).toContain(
+            "use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation};"
+        );
+        // The global_parameter call appears inside the OpenApiBinding chain (after .binding(),
+        // after the .spec() call), not on the root CliApp before it.
+        const bindingIdx = main.indexOf(".binding(");
+        const specIdx = main.indexOf('.spec(include_str!("openapi0.json"))');
+        const globalIdx = main.indexOf(".global_parameter(GlobalParameter {");
+        expect(bindingIdx).toBeGreaterThan(0);
+        expect(globalIdx).toBeGreaterThan(specIdx);
+        expect(specIdx).toBeGreaterThan(bindingIdx);
     });
 
     it("emits .command_namespace() on the OpenApiBinding when rootGroup is set", async () => {

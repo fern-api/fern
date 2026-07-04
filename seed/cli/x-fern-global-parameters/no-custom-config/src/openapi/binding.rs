@@ -205,6 +205,18 @@ impl OpenApiBinding {
         self
     }
 
+    /// Register a global parameter that surfaces as a top-level CLI flag
+    /// and is injected into outgoing requests at the configured wire
+    /// location. Emitted by the TypeScript codegen layer
+    /// (`detectGlobalParams.ts`) from `ir.globalParameters`; delegates to
+    /// [`super::CliApp::global_parameter`], which merges these (with
+    /// precedence) over any params parsed from the spec's
+    /// `x-fern-global-parameters` extension.
+    pub fn global_parameter(mut self, param: crate::openapi::discovery::GlobalParameter) -> Self {
+        self.inner = self.inner.global_parameter(param);
+        self
+    }
+
     /// Mount all spec-derived subcommands under a namespace prefix.
     ///
     /// Without a namespace the generated commands are top-level:
