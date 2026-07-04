@@ -123,6 +123,9 @@ function buildBinding(param: FernIr.GlobalParameter): DetectedGlobalParam {
     const paramNameRust = optionString(parameterName);
     const docsRust = optionString(param.docs);
 
+    // The first line is emitted at the caller's indentation (8 spaces, on
+    // the root `CliApp` chain); subsequent lines carry absolute indentation
+    // so the struct nests cleanly one level in (fields at 12, close at 8).
     const rustCall = [
         `.global_parameter(GlobalParameter {`,
         `            name: "${escapeRustString(wireValue)}".into(),`,
@@ -135,7 +138,7 @@ function buildBinding(param: FernIr.GlobalParameter): DetectedGlobalParam {
         `            parameter_name: ${paramNameRust},`,
         `            docs: ${docsRust},`,
         `        })`
-    ].join("\n        ");
+    ].join("\n");
 
     return {
         paramName: wireValue,

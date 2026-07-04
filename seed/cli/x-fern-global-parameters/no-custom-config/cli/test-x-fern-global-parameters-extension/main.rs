@@ -10,97 +10,97 @@ use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode
 
 fn main() {
     let app = CliApp::new("test-x-fern-global-parameters-extension")
+        .global_parameter(GlobalParameter {
+            name: "currency".into(),
+            location: GlobalParameterLocation::Body,
+            target: "config.currency".into(),
+            env: Some("CHANNEL3_CURRENCY".into()),
+            default: Some("USD".into()),
+            optional: true,
+            apply: GlobalParameterApplyMode::Auto,
+            parameter_name: None,
+            docs: Some("The currency code used for pricing.".into()),
+        })
+        .global_parameter(GlobalParameter {
+            name: "language".into(),
+            location: GlobalParameterLocation::Query,
+            target: "language".into(),
+            env: Some("CHANNEL3_LANGUAGE".into()),
+            default: None,
+            optional: true,
+            apply: GlobalParameterApplyMode::Explicit,
+            parameter_name: None,
+            docs: None,
+        })
+        .global_parameter(GlobalParameter {
+            name: "x-custom-header".into(),
+            location: GlobalParameterLocation::Header,
+            target: "x-custom-header".into(),
+            env: Some("CUSTOM_HEADER".into()),
+            default: None,
+            optional: false,
+            apply: GlobalParameterApplyMode::Explicit,
+            parameter_name: None,
+            docs: None,
+        })
+        .global_parameter(GlobalParameter {
+            name: "region".into(),
+            location: GlobalParameterLocation::Path,
+            target: "regionId".into(),
+            env: Some("CHANNEL3_REGION".into()),
+            default: Some("us".into()),
+            optional: false,
+            apply: GlobalParameterApplyMode::Explicit,
+            parameter_name: None,
+            docs: None,
+        })
+        .global_parameter(GlobalParameter {
+            name: "verbose".into(),
+            location: GlobalParameterLocation::Query,
+            target: "verbose".into(),
+            env: None,
+            default: Some("false".into()),
+            optional: true,
+            apply: GlobalParameterApplyMode::Explicit,
+            parameter_name: None,
+            docs: Some("Enable verbose response output.".into()),
+        })
+        .global_parameter(GlobalParameter {
+            name: "max-retries".into(),
+            location: GlobalParameterLocation::Header,
+            target: "X-Max-Retries".into(),
+            env: None,
+            default: Some("3".into()),
+            optional: true,
+            apply: GlobalParameterApplyMode::Explicit,
+            parameter_name: Some("maxRetries".into()),
+            docs: None,
+        })
+        .global_parameter(GlobalParameter {
+            name: "api-version".into(),
+            location: GlobalParameterLocation::Query,
+            target: "api-version".into(),
+            env: None,
+            default: None,
+            optional: false,
+            apply: GlobalParameterApplyMode::Explicit,
+            parameter_name: None,
+            docs: Some("The API version to use for the request.".into()),
+        })
+        .global_parameter(GlobalParameter {
+            name: "x-trace-id".into(),
+            location: GlobalParameterLocation::Header,
+            target: "x-trace-id".into(),
+            env: Some("TRACE_ID".into()),
+            default: Some("trace-default".into()),
+            optional: false,
+            apply: GlobalParameterApplyMode::Explicit,
+            parameter_name: None,
+            docs: Some("x-fern-default should take precedence over default.".into()),
+        })
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))
-                .global_parameter(GlobalParameter {
-                    name: "currency".into(),
-                    location: GlobalParameterLocation::Body,
-                    target: "config.currency".into(),
-                    env: Some("CHANNEL3_CURRENCY".into()),
-                    default: Some("USD".into()),
-                    optional: true,
-                    apply: GlobalParameterApplyMode::Auto,
-                    parameter_name: None,
-                    docs: Some("The currency code used for pricing.".into()),
-                })
-                .global_parameter(GlobalParameter {
-                    name: "language".into(),
-                    location: GlobalParameterLocation::Query,
-                    target: "language".into(),
-                    env: Some("CHANNEL3_LANGUAGE".into()),
-                    default: None,
-                    optional: true,
-                    apply: GlobalParameterApplyMode::Explicit,
-                    parameter_name: None,
-                    docs: None,
-                })
-                .global_parameter(GlobalParameter {
-                    name: "x-custom-header".into(),
-                    location: GlobalParameterLocation::Header,
-                    target: "x-custom-header".into(),
-                    env: Some("CUSTOM_HEADER".into()),
-                    default: None,
-                    optional: false,
-                    apply: GlobalParameterApplyMode::Explicit,
-                    parameter_name: None,
-                    docs: None,
-                })
-                .global_parameter(GlobalParameter {
-                    name: "region".into(),
-                    location: GlobalParameterLocation::Path,
-                    target: "regionId".into(),
-                    env: Some("CHANNEL3_REGION".into()),
-                    default: Some("us".into()),
-                    optional: false,
-                    apply: GlobalParameterApplyMode::Explicit,
-                    parameter_name: None,
-                    docs: None,
-                })
-                .global_parameter(GlobalParameter {
-                    name: "verbose".into(),
-                    location: GlobalParameterLocation::Query,
-                    target: "verbose".into(),
-                    env: None,
-                    default: Some("false".into()),
-                    optional: true,
-                    apply: GlobalParameterApplyMode::Explicit,
-                    parameter_name: None,
-                    docs: Some("Enable verbose response output.".into()),
-                })
-                .global_parameter(GlobalParameter {
-                    name: "max-retries".into(),
-                    location: GlobalParameterLocation::Header,
-                    target: "X-Max-Retries".into(),
-                    env: None,
-                    default: Some("3".into()),
-                    optional: true,
-                    apply: GlobalParameterApplyMode::Explicit,
-                    parameter_name: Some("maxRetries".into()),
-                    docs: None,
-                })
-                .global_parameter(GlobalParameter {
-                    name: "api-version".into(),
-                    location: GlobalParameterLocation::Query,
-                    target: "api-version".into(),
-                    env: None,
-                    default: None,
-                    optional: false,
-                    apply: GlobalParameterApplyMode::Explicit,
-                    parameter_name: None,
-                    docs: Some("The API version to use for the request.".into()),
-                })
-                .global_parameter(GlobalParameter {
-                    name: "x-trace-id".into(),
-                    location: GlobalParameterLocation::Header,
-                    target: "x-trace-id".into(),
-                    env: Some("TRACE_ID".into()),
-                    default: Some("trace-default".into()),
-                    optional: false,
-                    apply: GlobalParameterApplyMode::Explicit,
-                    parameter_name: None,
-                    docs: Some("x-fern-default should take precedence over default.".into()),
-                })
         );
 
     let app = custom::register(app);

@@ -253,7 +253,7 @@ describe("copySpecs", () => {
         expect(basicIdx).toBeGreaterThan(bindingIdx);
     });
 
-    it("emits global parameters on the OpenApiBinding chain (not the root CliApp)", async () => {
+    it("emits global parameters on the root CliApp (not the OpenApiBinding chain)", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
         await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
@@ -292,13 +292,16 @@ describe("copySpecs", () => {
         expect(main).toContain(
             "use fern_cli_sdk::openapi::discovery::{GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation};"
         );
-        // The global_parameter call appears inside the OpenApiBinding chain (after .binding(),
-        // after the .spec() call), not on the root CliApp before it.
+        // The global_parameter call appears on the root CliApp — after
+        // CliApp::new(...) but before the .binding( ... ) chain — mirroring
+        // how root-level auth is registered. It is NOT inside the binding.
+        const newIdx = main.indexOf('CliApp::new("');
+        const globalIdx = main.indexOf(".global_parameter(GlobalParameter {");
         const bindingIdx = main.indexOf(".binding(");
         const specIdx = main.indexOf('.spec(include_str!("openapi0.json"))');
-        const globalIdx = main.indexOf(".global_parameter(GlobalParameter {");
-        expect(bindingIdx).toBeGreaterThan(0);
-        expect(globalIdx).toBeGreaterThan(specIdx);
+        expect(newIdx).toBeGreaterThan(0);
+        expect(globalIdx).toBeGreaterThan(newIdx);
+        expect(bindingIdx).toBeGreaterThan(globalIdx);
         expect(specIdx).toBeGreaterThan(bindingIdx);
     });
 

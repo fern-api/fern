@@ -247,6 +247,14 @@ function renderMainRs(args: {
         lines.push(`        ${binding.rustCall}`);
     }
 
+    // Root-level global parameters (from ir.globalParameters via
+    // detectGlobalParams). Registered on the root CliApp — like auth —
+    // and propagated to each binding at runtime via
+    // `CliApp::propagate_root_global_parameters`.
+    for (const gp of globalParamBindings) {
+        lines.push(`        ${gp.rustCall}`);
+    }
+
     // OpenApiBinding with specs and binding-level auth
     lines.push("        .binding(");
     lines.push("            OpenApiBinding::new()");
@@ -266,11 +274,6 @@ function renderMainRs(args: {
     }
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
-    }
-    // Global parameters (from ir.globalParameters via detectGlobalParams).
-    // These are OpenAPI-specific, so they bind on the OpenApiBinding.
-    for (const gp of globalParamBindings) {
-        lines.push(`                ${gp.rustCall}`);
     }
     if (rootGroup != null) {
         lines.push(`                .command_namespace("${rootGroup}")`);
