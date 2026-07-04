@@ -17,8 +17,6 @@ namespace <%= testNamespace%>.Core.Sse;
 [Parallelizable(ParallelScope.Children)]
 public class SseReconnectHelperTests
 {
-    private const int TimeoutMs = 10000;
-
     // ─── Helpers ─────────────────────────────────────────────────────────
 
     /// <summary>
@@ -52,7 +50,6 @@ public class SseReconnectHelperTests
     {
         private readonly byte[] _data;
         private int _position;
-        private bool _hasReadAll;
 
         public DroppingStream(string initialText)
         {
@@ -74,7 +71,6 @@ public class SseReconnectHelperTests
             var remaining = _data.Length - _position;
             if (remaining <= 0)
             {
-                _hasReadAll = true;
                 throw new IOException("Connection dropped");
             }
             var toCopy = Math.Min(count, remaining);
@@ -93,7 +89,6 @@ public class SseReconnectHelperTests
             var remaining = _data.Length - _position;
             if (remaining <= 0)
             {
-                _hasReadAll = true;
                 throw new IOException("Connection dropped");
             }
             var toCopy = Math.Min(count, remaining);
@@ -111,7 +106,6 @@ public class SseReconnectHelperTests
             var remaining = _data.Length - _position;
             if (remaining <= 0)
             {
-                _hasReadAll = true;
                 throw new IOException("Connection dropped");
             }
             var toCopy = Math.Min(buffer.Length, remaining);
@@ -174,18 +168,13 @@ public class SseReconnectHelperTests
         var sseText1 = "id: evt-1\ndata: {\"value\":1}\n\n";
         var sseText2 = "id: evt-2\ndata: {\"value\":2}\n\ndata: [DONE]\n\n";
         var initialResponse = CreateSseResponse(sseText1);
-        var reconnectTimestamp = DateTime.MinValue;
-        var initialTimestamp = DateTime.UtcNow;
+        var sw = System.Diagnostics.Stopwatch.StartNew();
 
         var items = new List<string>();
         await foreach (
             var item in SseReconnectHelper.EnumerateWithReconnectAsync(
                 initialResponse,
-                (lastId, ct) =>
-                {
-                    reconnectTimestamp = DateTime.UtcNow;
-                    return Task.FromResult(CreateSseResponse(sseText2));
-                },
+                (lastId, ct) => Task.FromResult(CreateSseResponse(sseText2)),
                 maxReconnectAttempts: 3,
                 disableReconnection: false,
                 terminator: "[DONE]"
@@ -195,12 +184,12 @@ public class SseReconnectHelperTests
             items.Add(item.Data);
         }
 
+        sw.Stop();
         Assert.That(items, Has.Count.EqualTo(2));
-        var elapsed = reconnectTimestamp - initialTimestamp;
         Assert.That(
-            elapsed.TotalMilliseconds,
+            sw.ElapsedMilliseconds,
             Is.GreaterThanOrEqualTo(900),
-            $"Expected >= 900ms delay before reconnect, got {elapsed.TotalMilliseconds}ms"
+            $"Expected >= 900ms delay before reconnect, got {sw.ElapsedMilliseconds}ms"
         );
     }
 
@@ -213,18 +202,13 @@ public class SseReconnectHelperTests
         var sseText1 = "retry: 200\nid: evt-1\ndata: {\"value\":1}\n\n";
         var sseText2 = "id: evt-2\ndata: {\"value\":2}\n\ndata: [DONE]\n\n";
         var initialResponse = CreateSseResponse(sseText1);
-        var reconnectTimestamp = DateTime.MinValue;
-        var initialTimestamp = DateTime.UtcNow;
+        var sw = System.Diagnostics.Stopwatch.StartNew();
 
         var items = new List<string>();
         await foreach (
             var item in SseReconnectHelper.EnumerateWithReconnectAsync(
                 initialResponse,
-                (lastId, ct) =>
-                {
-                    reconnectTimestamp = DateTime.UtcNow;
-                    return Task.FromResult(CreateSseResponse(sseText2));
-                },
+                (lastId, ct) => Task.FromResult(CreateSseResponse(sseText2)),
                 maxReconnectAttempts: 3,
                 disableReconnection: false,
                 terminator: "[DONE]"
@@ -234,13 +218,12 @@ public class SseReconnectHelperTests
             items.Add(item.Data);
         }
 
+        sw.Stop();
         Assert.That(items, Has.Count.EqualTo(2));
-        var elapsed = reconnectTimestamp - initialTimestamp;
-        // Should be at least ~150ms (allowing variance)
         Assert.That(
-            elapsed.TotalMilliseconds,
+            sw.ElapsedMilliseconds,
             Is.GreaterThanOrEqualTo(150),
-            $"Expected >= 150ms (server retry: 200), got {elapsed.TotalMilliseconds}ms"
+            $"Expected >= 150ms (server retry: 200), got {sw.ElapsedMilliseconds}ms"
         );
     }
 
