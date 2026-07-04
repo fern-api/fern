@@ -165,22 +165,27 @@ internal static class SseReconnectHelper
                 .Delay(delay, cancellationToken)
                 .ConfigureAwait(false);
 
+            ApiResponse newResponse;
+            try
+            {
+                newResponse = await reconnectFn(lastDispatchedEventId!, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                // Failed reconnect (e.g. HTTP error or null body). Treat as a
+                // failed attempt — the next loop iteration will check the cap.
+                // Do NOT dispose the previous response here: we need it to stay
+                // valid in case the retry loop re-enters the stream-read path.
+                continue;
+            }
+
+            // Only dispose the old response after a new one is successfully obtained.
             if (isReconnectedResponse)
             {
                 response.Raw?.Dispose();
             }
-
-            try
-            {
-                response = await reconnectFn(lastDispatchedEventId!, cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch
-            {
-                // Failed reconnect (e.g. HTTP error or null body). Treat as a
-                // failed attempt — the next loop iteration will check the cap.
-                continue;
-            }
+            response = newResponse;
             isReconnectedResponse = true;
         }
     }
