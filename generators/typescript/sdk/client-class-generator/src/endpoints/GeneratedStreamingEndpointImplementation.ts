@@ -265,6 +265,19 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return "streaming";
     }
 
+    /**
+     * Checks whether the endpoint is a resumable SSE stream.
+     *
+     * This reads the raw IR endpoint response body, which may be either
+     * `streaming` or `streamParameter`. Both cases are handled here because
+     * `invokeFetcher` uses this to decide whether to emit `const _reconnect`.
+     *
+     * In `GeneratedThrowingEndpointResponse`, the `streamParameter` variant
+     * is normalized to `HttpResponseBody.streaming(streamResponse)` before
+     * construction (see GeneratedSdkClientClassImpl.ts), so the reconnect
+     * options are wired through the `this.response?.type === "streaming"`
+     * branch for both cases.
+     */
     private isResumableSse(): boolean {
         const responseBody = this.endpoint.response?.body;
         if (responseBody?.type === "streaming" && responseBody.value.type === "sse") {
@@ -339,6 +352,17 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return statements;
     }
 
+    /**
+     * Generates the `_reconnect` arrow function that re-issues the original
+     * request with a `Last-Event-ID` header.
+     *
+     * TODO: Headers are resolved once at the original call site and reused
+     * verbatim on reconnect. For auth suppliers that return refreshing tokens,
+     * a long-lived stream that drops after the token expires will reconnect
+     * with a stale credential (resulting in a 401 treated as a failed reconnect
+     * attempt). A future enhancement should re-resolve headers on each
+     * reconnection to support token refresh.
+     */
     private generateReconnectFunction(context: FileContext, originalFetcherArgs: Fetcher.Args): ts.Statement {
         const lastEventIdParam = ts.factory.createParameterDeclaration(
             undefined,

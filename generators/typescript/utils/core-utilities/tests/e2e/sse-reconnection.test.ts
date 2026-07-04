@@ -5,6 +5,18 @@
  * connection drops. It verifies that the Stream class transparently reconnects
  * using the Last-Event-ID header, just as a generated SDK would in production.
  *
+ * IMPORTANT: This file contains an inline copy of the Stream class (compiled
+ * from Stream.template.ts for the "standard" web variant). It is NOT imported
+ * from the template because the template uses EJS syntax that cannot be
+ * directly consumed by tsx/node. This means:
+ *   - Changes to Stream.template.ts must be manually mirrored here.
+ *   - The inline copy may drift from the template (e.g. decodeChunk uses
+ *     instanceof narrowing here vs. RUNTIME.type in the template).
+ *   - The primary regression gate for template output is the seed-generated
+ *     Stream.test.ts files, not this E2E test.
+ * This test's value is validating the reconnection *protocol* (Last-Event-ID,
+ * retry delays, abort, backoff) against a real HTTP server.
+ *
  * Run with: npx tsx --test tests/e2e/sse-reconnection.test.ts
  */
 import http from "node:http";

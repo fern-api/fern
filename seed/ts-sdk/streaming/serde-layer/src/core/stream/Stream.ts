@@ -346,13 +346,16 @@ export class Stream<T> implements AsyncIterable<T> {
             return false;
         }
         if (this.streamTerminator == null) {
-            // Without a terminator the client cannot distinguish a
-            // completed stream from a dropped connection. Combined
-            // with the reset-on-progress semantics of reconnectAttempts,
-            // a server that emits ≥1 event per connection without a
-            // terminator would reconnect unboundedly.
+            // Without a terminator the client cannot distinguish a completed
+            // stream from a dropped connection, so reconnection is disabled.
             return false;
         }
+        // NOTE: When a terminator IS configured but the server never sends it
+        // (e.g. it drops the connection after emitting events every time),
+        // maxReconnectionAttempts is a per-consecutive-failure cap — each
+        // yielded event resets the counter. This matches EventSource semantics
+        // but means such a server can cause unbounded reconnections. Callers
+        // concerned about this should impose a wall-clock budget externally.
         if (!this.reconnectionEnabled) {
             return false;
         }
