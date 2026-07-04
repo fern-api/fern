@@ -440,6 +440,52 @@ describe("GeneratedStreamingEndpointImplementation", () => {
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
         });
+
+        it("generates reconnect function for resumable SSE streaming endpoints", () => {
+            const endpoint = createHttpEndpoint();
+            endpoint.response = {
+                body: FernIr.HttpResponseBody.streaming(
+                    FernIr.StreamingResponse.sse({
+                        payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        terminator: "[[DONE]]",
+                        resumable: true,
+                        docs: undefined,
+                        v2Examples: undefined
+                    })
+                ),
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
+            const impl = createImpl({ endpoint });
+            const context = createMockFileContext();
+            const stmts = impl.invokeFetcher(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("does not generate reconnect function for non-resumable SSE endpoints", () => {
+            const endpoint = createHttpEndpoint();
+            endpoint.response = {
+                body: FernIr.HttpResponseBody.streaming(
+                    FernIr.StreamingResponse.sse({
+                        payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        terminator: "[[DONE]]",
+                        resumable: false,
+                        docs: undefined,
+                        v2Examples: undefined
+                    })
+                ),
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
+            const impl = createImpl({ endpoint });
+            const context = createMockFileContext();
+            const stmts = impl.invokeFetcher(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
     });
 
     describe("endpoint and response properties", () => {
