@@ -1122,7 +1122,7 @@ func TestStream_WithReconnect_ResetsOnProgress(t *testing.T) {
 		w.Header().Set("Content-Type", "text/event-stream")
 		w.WriteHeader(200)
 		id := calls
-		fmt.Fprintf(w, "id: %d\ndata: {\"content\":\"msg-%d\"}\n\n", id, id)
+		_, _ = fmt.Fprintf(w, "id: %d\ndata: {\"content\":\"msg-%d\"}\n\n", id, id)
 		if calls >= 4 {
 			// After 4 connections, send the terminator to end.
 			_, _ = w.Write([]byte("data: [DONE]\n\n"))
