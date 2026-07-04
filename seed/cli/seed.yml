@@ -85,6 +85,12 @@ fixtures:
       outputFolder: github-no-publish
       outputMode: github
       outputVersion: "1.0.0"
+  # x-fern-global-parameters — exercises the global parameter codegen
+  # path: IR-driven GlobalParameter[] → detectGlobalParams.ts →
+  # .global_parameter(GlobalParameter { ... }) calls in main.rs.
+  x-fern-global-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
   # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
   # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
   # refuses to guess a single name across multiple titles).
@@ -223,3 +229,4 @@ allowedFailures:
   - websocket-bearer-auth
   - websocket-inferred-auth
   - websocket-multi-url
+  - x-fern-global-parameters

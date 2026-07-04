@@ -4,6 +4,7 @@ import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
+import { detectGlobalParams } from "./detectGlobalParams.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
 import { emitReference } from "./emitReference.js";
@@ -60,6 +61,7 @@ export async function runPipeline(args: {
     // rather than half-producing output.
     const binaryName = deriveBinaryName({ customConfig, ir });
     const authBindings = detectAuthBindings({ auth: ir.auth, binaryName });
+    const globalParamBindings = detectGlobalParams({ globalParameters: ir.globalParameters });
 
     await mkdir(outputDir, { recursive: true });
 
@@ -88,6 +90,7 @@ export async function runPipeline(args: {
         outputDir,
         binaryName,
         authBindings,
+        globalParamBindings,
         specsDir,
         customCommands,
         rootGroup: customConfig.rootGroup
