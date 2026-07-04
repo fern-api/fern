@@ -134,6 +134,7 @@ class Stream<T> implements AsyncIterable<T> {
         let reconnectAttempts = 0;
         let currentStream: ReadableStream = this.stream;
         let lastId: string | undefined;
+        let lastDispatchedId: string | undefined;
         let lastRetry: number | undefined;
 
         while (true) {
@@ -156,6 +157,7 @@ class Stream<T> implements AsyncIterable<T> {
                             }
                             const data = await this.parse(fromJson(dataValue));
                             yield { data, id: lastId, retry: lastRetry, event: undefined };
+                            lastDispatchedId = lastId;
                             reconnectAttempts = 0;
                             dataValue = undefined;
                         }
@@ -191,6 +193,7 @@ class Stream<T> implements AsyncIterable<T> {
                         }
                         const data = await this.parse(fromJson(line));
                         yield { data, id: lastId, retry: lastRetry, event: undefined };
+                        lastDispatchedId = lastId;
                         reconnectAttempts = 0;
                     }
                 }
@@ -202,10 +205,11 @@ class Stream<T> implements AsyncIterable<T> {
                 }
                 const data = await this.parse(fromJson(dataValue));
                 yield { data, id: lastId, retry: lastRetry, event: undefined };
+                lastDispatchedId = lastId;
                 reconnectAttempts = 0;
             }
 
-            if (!this.shouldReconnect(lastId, reconnectAttempts)) {
+            if (!this.shouldReconnect(lastDispatchedId, reconnectAttempts)) {
                 return;
             }
 
@@ -216,11 +220,11 @@ class Stream<T> implements AsyncIterable<T> {
             }
             // Re-check after async delay; needed for TypeScript narrowing.
             const reconnectFn = this.reconnect;
-            if (reconnectFn == null || lastId == null) {
+            if (reconnectFn == null || lastDispatchedId == null) {
                 return;
             }
             try {
-                const reconnected = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastDispatchedId);
                 if (reconnected == null) {
                     currentStream = this.createEmptyStream();
                     continue;
@@ -239,6 +243,7 @@ class Stream<T> implements AsyncIterable<T> {
         let reconnectAttempts = 0;
         let currentStream: ReadableStream = this.stream;
         let lastId: string | undefined;
+        let lastDispatchedId: string | undefined;
         let lastRetry: number | undefined;
 
         while (true) {
@@ -262,6 +267,7 @@ class Stream<T> implements AsyncIterable<T> {
                                 return;
                             }
                             yield { data, id: lastId, retry: lastRetry, event: eventType };
+                            lastDispatchedId = lastId;
                             reconnectAttempts = 0;
                         }
                         eventType = undefined;
@@ -293,11 +299,12 @@ class Stream<T> implements AsyncIterable<T> {
                 const data = await this.dispatchSseEvent(dataValue, eventType);
                 if (data != null) {
                     yield { data, id: lastId, retry: lastRetry, event: eventType };
+                    lastDispatchedId = lastId;
                     reconnectAttempts = 0;
                 }
             }
 
-            if (!this.shouldReconnect(lastId, reconnectAttempts)) {
+            if (!this.shouldReconnect(lastDispatchedId, reconnectAttempts)) {
                 return;
             }
 
@@ -308,11 +315,11 @@ class Stream<T> implements AsyncIterable<T> {
             }
             // Re-check after async delay; needed for TypeScript narrowing.
             const reconnectFn = this.reconnect;
-            if (reconnectFn == null || lastId == null) {
+            if (reconnectFn == null || lastDispatchedId == null) {
                 return;
             }
             try {
-                const reconnected = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastDispatchedId);
                 if (reconnected == null) {
                     currentStream = this.createEmptyStream();
                     continue;
@@ -829,6 +836,75 @@ describe("SSE Stream Reconnection E2E", () => {
             assert.deepStrictEqual(messages, [{ only: true }]);
 
             console.log("✓ reconnectionEnabled=false prevents reconnection");
+        } finally {
+            await closeServer(server);
+        }
+    });
+
+    test("does not skip an event when the drop lands after id: but before the event boundary", async () => {
+        const connectionAttempts: { lastEventId: string | undefined }[] = [];
+        let connectionCount = 0;
+
+        const { server, port } = await createSseServer((req, res) => {
+            const lastEventId = req.headers["last-event-id"] as string | undefined;
+            connectionAttempts.push({ lastEventId });
+            connectionCount++;
+
+            res.writeHead(200, {
+                "Content-Type": "text/event-stream",
+                "Cache-Control": "no-cache",
+                Connection: "keep-alive",
+            });
+
+            if (connectionCount === 1) {
+                // evt-1 is fully dispatched, then evt-2's id: arrives but the
+                // connection drops before evt-2's data + blank line. evt-2 must
+                // NOT be considered "seen" — reconnect must resume from evt-1.
+                res.write("id: evt-1\ndata: {\"value\": 1}\n\n");
+                res.write("id: evt-2\n");
+                res.end(); // drop mid-event
+            } else {
+                // Server resumes from the last *dispatched* id (evt-1) and
+                // re-sends evt-2 in full.
+                res.write("id: evt-2\ndata: {\"value\": 2}\n\n");
+                res.write("data: [DONE]\n\n");
+                res.end();
+            }
+        });
+
+        try {
+            const url = `http://127.0.0.1:${port}/sse`;
+            const initialResponse = await fetch(url);
+
+            const reconnect = async (lastEventId: string): Promise<ReadableStream> => {
+                const response = await fetch(url, {
+                    headers: { "Last-Event-ID": lastEventId },
+                });
+                return assertBody(response);
+            };
+
+            const stream = new Stream<{ value: number }>({
+                stream: assertBody(initialResponse),
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 3,
+                reconnect,
+            });
+
+            const messages: { value: number }[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // No event lost: both value 1 and value 2 arrive.
+            assert.deepStrictEqual(messages, [{ value: 1 }, { value: 2 }]);
+            assert.strictEqual(connectionAttempts.length, 2);
+            // Reconnect resumes from the last *dispatched* id (evt-1), NOT the
+            // parsed-but-undispatched evt-2.
+            assert.strictEqual(at(connectionAttempts, 1).lastEventId, "evt-1");
+
+            console.log("✓ Mid-event drop resumes from last dispatched id (evt-1), no event skipped");
         } finally {
             await closeServer(server);
         }

@@ -1098,6 +1098,41 @@ describe("Stream", () => {
             expect(lastReceivedEventId).toBe("2");
         });
 
+        it("should reconnect using the last dispatched id, not a parsed-but-undispatched id", async () => {
+            // evt-1 is fully dispatched; evt-2's id: line is parsed but the
+            // stream ends before evt-2's data + blank line, so evt-2 is never
+            // yielded. Reconnection must resume from evt-1 (the last dispatched
+            // id), otherwise evt-2 would be silently skipped.
+            const firstStream = createReadableStream(['id: evt-1\ndata: {"value": 1}\n\n', "id: evt-2\n"]);
+            const secondStream = createReadableStream(['id: evt-2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n"]);
+
+            let reconnectCallCount = 0;
+            let lastReceivedEventId: string | undefined;
+            const reconnect = async (lastEventId: string) => {
+                reconnectCallCount++;
+                lastReceivedEventId = lastEventId;
+                return secondStream;
+            };
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
+            expect(reconnectCallCount).toBe(1);
+            expect(lastReceivedEventId).toBe("evt-1");
+        });
+
         it("should not reconnect when reconnectionEnabled is false", async () => {
             const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
 

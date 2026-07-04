@@ -139,6 +139,13 @@ export class Stream<T> implements AsyncIterable<T> {
         let reconnectAttempts = 0;
         let currentStream = this.stream;
         let lastId: string | undefined;
+        // The id of the most recently *dispatched* event. Per the WHATWG
+        // EventSource spec, the "last event ID" is only committed when an event
+        // is dispatched, not when the `id:` line is parsed. Reconnecting with a
+        // parsed-but-undispatched id would skip an event that was never yielded
+        // (e.g. if the connection drops after `id:` but before the event's
+        // terminating blank line), so reconnection uses lastDispatchedId.
+        let lastDispatchedId: string | undefined;
         let lastRetry: number | undefined;
 
         while (true) {
@@ -161,6 +168,7 @@ export class Stream<T> implements AsyncIterable<T> {
                             }
                             const data = await this.parse(fromJson(dataValue));
                             yield { data, id: lastId, retry: lastRetry, event: undefined };
+                            lastDispatchedId = lastId;
                             reconnectAttempts = 0;
                             dataValue = undefined;
                         }
@@ -196,6 +204,7 @@ export class Stream<T> implements AsyncIterable<T> {
                         }
                         const data = await this.parse(fromJson(line));
                         yield { data, id: lastId, retry: lastRetry, event: undefined };
+                        lastDispatchedId = lastId;
                         reconnectAttempts = 0;
                     }
                 }
@@ -207,10 +216,11 @@ export class Stream<T> implements AsyncIterable<T> {
                 }
                 const data = await this.parse(fromJson(dataValue));
                 yield { data, id: lastId, retry: lastRetry, event: undefined };
+                lastDispatchedId = lastId;
                 reconnectAttempts = 0;
             }
 
-            if (!this.shouldReconnect(lastId, reconnectAttempts)) {
+            if (!this.shouldReconnect(lastDispatchedId, reconnectAttempts)) {
                 return;
             }
 
@@ -221,11 +231,11 @@ export class Stream<T> implements AsyncIterable<T> {
             }
             // Re-check after async delay; needed for TypeScript narrowing.
             const reconnectFn = this.reconnect;
-            if (reconnectFn == null || lastId == null) {
+            if (reconnectFn == null || lastDispatchedId == null) {
                 return;
             }
             try {
-                const reconnected = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastDispatchedId);
                 if (reconnected == null) {
                     currentStream = this.createEmptyStream();
                     continue;
@@ -243,6 +253,10 @@ export class Stream<T> implements AsyncIterable<T> {
         let reconnectAttempts = 0;
         let currentStream = this.stream;
         let lastId: string | undefined;
+        // See iterDataMessages: reconnection uses the last *dispatched* id (per
+        // the EventSource spec), not the last *parsed* id, to avoid skipping an
+        // event that was never yielded when a drop lands mid-event.
+        let lastDispatchedId: string | undefined;
         let lastRetry: number | undefined;
 
         while (true) {
@@ -266,6 +280,7 @@ export class Stream<T> implements AsyncIterable<T> {
                                 return;
                             }
                             yield { data, id: lastId, retry: lastRetry, event: eventType };
+                            lastDispatchedId = lastId;
                             reconnectAttempts = 0;
                         }
                         eventType = undefined;
@@ -297,11 +312,12 @@ export class Stream<T> implements AsyncIterable<T> {
                 const data = await this.dispatchSseEvent(dataValue, eventType);
                 if (data != null) {
                     yield { data, id: lastId, retry: lastRetry, event: eventType };
+                    lastDispatchedId = lastId;
                     reconnectAttempts = 0;
                 }
             }
 
-            if (!this.shouldReconnect(lastId, reconnectAttempts)) {
+            if (!this.shouldReconnect(lastDispatchedId, reconnectAttempts)) {
                 return;
             }
 
@@ -312,11 +328,11 @@ export class Stream<T> implements AsyncIterable<T> {
             }
             // Re-check after async delay; needed for TypeScript narrowing.
             const reconnectFn = this.reconnect;
-            if (reconnectFn == null || lastId == null) {
+            if (reconnectFn == null || lastDispatchedId == null) {
                 return;
             }
             try {
-                const reconnected = await reconnectFn(lastId);
+                const reconnected = await reconnectFn(lastDispatchedId);
                 if (reconnected == null) {
                     currentStream = this.createEmptyStream();
                     continue;
