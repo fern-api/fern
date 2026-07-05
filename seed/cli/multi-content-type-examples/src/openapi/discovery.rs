@@ -91,6 +91,13 @@ pub struct RestDescription {
     /// disables retries on that operation regardless of root.
     #[serde(default, skip)]
     pub retries: Option<RetriesConfig>,
+    /// Global parameter definitions parsed from the spec-root
+    /// `x-fern-global-parameters` extension. Generalizes
+    /// `x-fern-global-headers` to support header, query, body, and path
+    /// locations. Each entry surfaces as a global CLI flag and is
+    /// injected into outgoing requests at the configured location.
+    #[serde(default, skip)]
+    pub global_parameters: Vec<GlobalParameter>,
     /// Global header definitions parsed from the spec-root
     /// [`x-fern-global-headers`](https://buildwithfern.com/learn/api-definitions/openapi/extensions/global-headers)
     /// extension. Empty when the extension is absent.
@@ -169,6 +176,71 @@ pub struct GlobalHeader {
     /// `x-fern-default` shape — only the value is preserved; the
     /// schema type is informational.
     pub default: Option<String>,
+}
+
+/// Where a global parameter value is injected on the wire.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GlobalParameterLocation {
+    /// HTTP header (e.g. `X-Custom-Header`).
+    Header,
+    /// URL query parameter (e.g. `?language=en`).
+    Query,
+    /// Nested JSON request body path (e.g. `config.currency`).
+    Body,
+    /// URL path segment (e.g. `{regionId}`).
+    Path,
+}
+
+/// Controls which operations receive the global parameter.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum GlobalParameterApplyMode {
+    /// Inject on every operation (unless a per-operation parameter with the
+    /// same wire name overrides it).
+    #[default]
+    Auto,
+    /// Only inject on operations that explicitly list the parameter in
+    /// `x-fern-global-parameter`.
+    Explicit,
+}
+
+/// A single global parameter definition from the spec-root
+/// [`x-fern-global-parameters`] extension. Generalizes
+/// [`GlobalHeader`] to support header, query, body, and path locations.
+///
+/// Each entry surfaces as a global CLI flag at the root of the command
+/// tree with an env-var fallback and (when configured) a baked-in default
+/// value. The resolved value is injected into outgoing requests at the
+/// location specified by [`GlobalParameter::location`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct GlobalParameter {
+    /// Canonical parameter name — used as the basis for the kebab-cased
+    /// CLI flag name (unless `parameter_name` overrides it).
+    pub name: String,
+    /// Where the resolved value is injected on the wire.
+    pub location: GlobalParameterLocation,
+    /// Wire-level target. For headers this is the header name
+    /// (e.g. `X-Max-Retries`); for query it's the query parameter name;
+    /// for body it's a dotted JSON path (e.g. `config.currency`); for
+    /// path it's the path template variable name (e.g. `regionId`).
+    /// Defaults to `name` when absent in the extension.
+    pub target: String,
+    /// Optional environment variable that provides a fallback value.
+    pub env: Option<String>,
+    /// Optional baked-in default value applied when neither the flag
+    /// nor the environment variable is supplied.
+    pub default: Option<String>,
+    /// When `false` (the default), the CLI flag is required — every
+    /// outgoing request must carry a value. When `true`, the parameter
+    /// is omitted from requests where no value resolved.
+    pub optional: bool,
+    /// Controls whether the parameter is injected on all operations
+    /// or only on those that explicitly opt in.
+    pub apply: GlobalParameterApplyMode,
+    /// Optional flag name override for the CLI surface
+    /// (e.g. `maxRetries` → `--max-retries`).
+    pub parameter_name: Option<String>,
+    /// One-line help text for the `--help` output.
+    pub docs: Option<String>,
 }
 
 /// A single idempotency-header definition from the spec-root
@@ -692,6 +764,12 @@ pub struct RestMethod {
     /// it would do nothing. Empty `responses` block → `false`.
     #[serde(default, skip)]
     pub has_binary_response: bool,
+    /// Parameter names from `x-fern-global-parameter` on this operation.
+    /// Only global parameters with `apply: explicit` that appear in this
+    /// list are injected on this operation. `apply: auto` parameters
+    /// ignore this field.
+    #[serde(default, skip)]
+    pub global_parameter_opt_ins: Vec<String>,
 }
 
 /// Per-operation pagination configuration, resolved from the
