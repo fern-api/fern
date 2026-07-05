@@ -28,14 +28,11 @@ DEFAULT_MAX_RECONNECTION_ATTEMPTS: int = 5
 DEFAULT_RECONNECT_DELAY_MS: int = 1_000
 MAX_RECONNECT_DELAY_MS: int = 30_000
 
+
 # A reconnect callback re-issues the original request (with a ``Last-Event-ID``
 # header set to the supplied event id) and returns a *context manager* yielding
 # a fresh streaming ``httpx.Response``. Sync clients supply a sync context
 # manager; async clients supply an async one.
-SyncReconnect = Callable[[str], ContextManager[httpx.Response]]
-AsyncReconnect = Callable[[str], AsyncContextManager[httpx.Response]]
-
-
 class EventSource:
     def __init__(
         self,
@@ -54,16 +51,32 @@ class EventSource:
         self._stream_terminator = stream_terminator
         self._reconnect = reconnect
 
+    @staticmethod
+    def _is_event_stream(response: httpx.Response) -> bool:
+        content_type = response.headers.get("content-type", "").partition(";")[0]
+        return "text/event-stream" in content_type
+
     def _check_content_type(self) -> None:
-        content_type = self._response.headers.get("content-type", "").partition(";")[0]
-        if "text/event-stream" not in content_type:
+        if not self._is_event_stream(self._response):
+            content_type = self._response.headers.get("content-type", "").partition(";")[0]
             raise SSEError(
                 f"Expected response header Content-Type to contain 'text/event-stream', got {content_type!r}"
             )
 
-    def _get_charset(self) -> str:
+    def _is_reconnect_response_usable(self, response: httpx.Response) -> bool:
+        """Whether a reconnected response can be resumed as an SSE stream.
+
+        ``httpx.stream`` does not raise on non-success status, so a resume that
+        returns an error page (e.g. ``200 text/html`` or a ``500`` body) would
+        otherwise be parsed as SSE and yield garbage/zero events. Such a
+        response is treated as a failed attempt (back off and retry) instead.
+        """
+        return response.status_code < 400 and self._is_event_stream(response)
+
+    def _get_charset(self, response: Optional[httpx.Response] = None) -> str:
         """Extract charset from Content-Type header, fallback to UTF-8."""
-        content_type = self._response.headers.get("content-type", "")
+        resolved = response if response is not None else self._response
+        content_type = resolved.headers.get("content-type", "")
 
         # Parse charset parameter using regex
         charset_match = re.search(r"charset=([^;\s]+)", content_type, re.IGNORECASE)
@@ -97,8 +110,8 @@ class EventSource:
             return buf[:-1].replace("\r", "\n") + "\r"
         return buf.replace("\r", "\n")
 
-    def _new_text_decoder(self) -> "codecs.IncrementalDecoder":
-        return codecs.getincrementaldecoder(self._get_charset())(errors="replace")
+    def _new_text_decoder(self, response: Optional[httpx.Response] = None) -> "codecs.IncrementalDecoder":
+        return codecs.getincrementaldecoder(self._get_charset(response))(errors="replace")
 
     def _should_reconnect(self, last_dispatched_id: Optional[str], reconnect_attempts: int) -> bool:
         """Decide whether a prematurely-ended stream should be reconnected.
@@ -265,10 +278,14 @@ class EventSource:
                         except httpx.TransportError:
                             # A transport error mid-stream (e.g. the server dropped
                             # the connection: ``ReadError``/``RemoteProtocolError``)
-                            # is a premature end: stop reading and let the reconnect
-                            # decision below handle it. ``next`` is used rather than
-                            # ``for`` so this cannot swallow a ``GeneratorExit``
-                            # raised at a ``yield``.
+                            # is a premature end. Only swallow it when this stream
+                            # is actually going to reconnect; otherwise re-raise so
+                            # a non-resumable stream still surfaces the error to the
+                            # caller instead of looking like a clean completion.
+                            # ``next`` is used rather than ``for`` so this cannot
+                            # swallow a ``GeneratorExit`` raised at a ``yield``.
+                            if not self._should_reconnect(last_dispatched_id, reconnect_attempts):
+                                raise
                             break
                         yield sse
                         if sse.id:
@@ -298,8 +315,9 @@ class EventSource:
                     response = None
                     continue
                 owned_cm = cm
-                if new_response is None:
-                    # Null/empty reconnect body: treat as a failed attempt.
+                if new_response is None or not self._is_reconnect_response_usable(new_response):
+                    # Null/empty body or a non-SSE/error response (e.g. 204/304,
+                    # a 500, or an HTML error page): treat as a failed attempt.
                     response = None
                     continue
 
@@ -308,7 +326,7 @@ class EventSource:
                 # keep the last event id (per the SSE spec) and start a fresh
                 # incremental text decoder for the new connection.
                 decoder.reset_in_progress_event()
-                text_decoder = self._new_text_decoder()
+                text_decoder = self._new_text_decoder(new_response)
         finally:
             if owned_cm is not None:
                 owned_cm.__exit__(None, None, None)
@@ -342,8 +360,12 @@ class EventSource:
                         except httpx.TransportError:
                             # A transport error mid-stream (e.g. the server dropped
                             # the connection: ``ReadError``/``RemoteProtocolError``)
-                            # is a premature end: stop reading and let the reconnect
-                            # decision below handle it.
+                            # is a premature end. Only swallow it when this stream
+                            # is actually going to reconnect; otherwise re-raise so
+                            # a non-resumable stream still surfaces the error to the
+                            # caller instead of looking like a clean completion.
+                            if not self._should_reconnect(last_dispatched_id, reconnect_attempts):
+                                raise
                             break
                         yield sse
                         if sse.id:
@@ -370,13 +392,13 @@ class EventSource:
                     response = None
                     continue
                 owned_cm = cm
-                if new_response is None:
+                if new_response is None or not self._is_reconnect_response_usable(new_response):
                     response = None
                     continue
 
                 response = new_response
                 decoder.reset_in_progress_event()
-                text_decoder = self._new_text_decoder()
+                text_decoder = self._new_text_decoder(new_response)
         finally:
             if owned_cm is not None:
                 await owned_cm.__aexit__(None, None, None)

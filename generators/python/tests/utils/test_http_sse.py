@@ -1057,8 +1057,11 @@ TERMINATOR = "[DONE]"
 class _FakeResponse:
     """Minimal stand-in for ``httpx.Response`` that streams predefined chunks."""
 
-    def __init__(self, chunks: List[bytes], content_type: str = "text/event-stream") -> None:
+    def __init__(
+        self, chunks: List[bytes], content_type: str = "text/event-stream", status_code: int = 200
+    ) -> None:
         self.headers = {"content-type": content_type}
+        self.status_code = status_code
         self._chunks = chunks
 
     def iter_bytes(self) -> Iterator[bytes]:
@@ -1511,6 +1514,89 @@ class TestSSEReconnectionCancellation:
 
         assert collected == ['{"value": 1}']
         assert reconnect.calls == []
+
+
+class _RaisingResponse(_FakeResponse):
+    """Streams some chunks, then raises a transport error mid-read (a drop)."""
+
+    def __init__(self, chunks: List[bytes]) -> None:
+        super().__init__(chunks)
+
+    def iter_bytes(self) -> Iterator[bytes]:
+        for chunk in self._chunks:
+            yield chunk
+        raise httpx.ReadError("connection dropped")
+
+    async def aiter_bytes(self) -> AsyncIterator[bytes]:
+        for chunk in self._chunks:
+            yield chunk
+        raise httpx.ReadError("connection dropped")
+
+
+class TestSSEReconnectionRobustness:
+    def test_sync_transport_error_propagates_when_not_resumable(self) -> None:
+        # A mid-stream drop on a non-resumable stream must surface to the caller
+        # (as it did before reconnection existed), not look like a clean end.
+        response = _RaisingResponse([b'data: {"value": 1}\n\n'])
+        source = _resumable_source(response, None, resumable=False)
+
+        collected: List[str] = []
+        with pytest.raises(httpx.ReadError):
+            for sse in source.iter_sse():
+                collected.append(sse.data)
+
+        assert collected == ['{"value": 1}']
+
+    @pytest.mark.asyncio
+    async def test_async_transport_error_propagates_when_not_resumable(self) -> None:
+        response = _RaisingResponse([b'data: {"value": 1}\n\n'])
+        source = _resumable_source(response, None, resumable=False)
+
+        collected: List[str] = []
+        with pytest.raises(httpx.ReadError):
+            async for sse in source.aiter_sse():
+                collected.append(sse.data)
+
+        assert collected == ['{"value": 1}']
+
+    def test_sync_transport_error_triggers_reconnect_when_resumable(self) -> None:
+        # The same drop on a resumable stream reconnects instead of raising.
+        first = _RaisingResponse([b"id: 1\ndata: {\"value\": 1}\n\n"])
+        reconnect = _SyncReconnector([_sse('id: 2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n")])
+        source = _resumable_source(first, reconnect)
+
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}']
+        assert reconnect.calls == ["1"]
+
+    def test_reconnect_error_status_is_failed_attempt(self) -> None:
+        # A resume that returns a non-SSE error body (e.g. 500) must be treated
+        # as a failed attempt (back off, retry), not parsed as an SSE stream.
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        error = _FakeResponse([b"<html>error</html>"], content_type="text/html", status_code=500)
+        good = _sse('id: 2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n")
+        reconnect = _SyncReconnector([error, good])
+
+        source = _resumable_source(first, reconnect)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}']
+        # Two attempts: the error response, then the successful resume.
+        assert reconnect.calls == ["1", "1"]
+
+    @pytest.mark.asyncio
+    async def test_async_reconnect_error_status_is_failed_attempt(self) -> None:
+        first = _sse('id: 1\ndata: {"value": 1}\n\n')
+        error = _FakeResponse([b"<html>error</html>"], content_type="text/html", status_code=500)
+        good = _sse('id: 2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n")
+        reconnect = _AsyncReconnector([error, good])
+
+        source = _resumable_source(first, reconnect)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}', '{"value": 2}']
+        assert reconnect.calls == ["1", "1"]
 
 
 # ---------------------------------------------------------------------------
