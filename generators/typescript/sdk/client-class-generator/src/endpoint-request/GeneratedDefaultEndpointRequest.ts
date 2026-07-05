@@ -13,11 +13,11 @@ import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
     getGlobalParametersForEndpoint,
     getResolvedGlobalParameterValueExpression
 } from "../endpoints/utils/globalParameters.js";
-import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter.js";
 import { RequestParameter } from "../request-parameter/RequestParameter.js";

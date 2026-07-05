@@ -51,6 +51,55 @@ await client.products.search({
 </dl>
 </details>
 
+<details><summary><code>client.products.<a href="/src/api/resources/products/client/Client.ts">uploadImage</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.products.uploadImage({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.UploadImageProductsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProductsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.products.<a href="/src/api/resources/products/client/Client.ts">get</a>({ ...params }) -> SeedApi.Product</code></summary>
 <dl>
 <dd>

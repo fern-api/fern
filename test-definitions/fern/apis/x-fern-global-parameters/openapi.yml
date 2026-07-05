@@ -94,6 +94,27 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Product"
+  "/v1/products/image":
+    post:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: uploadImage
+      x-fern-global-parameter:
+        - language
+        - verbose
+        - x-custom-header
+      operationId: uploadProductImage
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Uploaded
   "/v1/products/{regionId}/{productId}":
     get:
       x-fern-sdk-group-name: products

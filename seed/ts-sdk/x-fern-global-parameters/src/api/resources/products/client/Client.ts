@@ -96,6 +96,77 @@ export class ProductsClient {
     }
 
     /**
+     * @param {SeedApi.UploadImageProductsRequest} request
+     * @param {ProductsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.products.uploadImage({})
+     */
+    public uploadImage(
+        request: SeedApi.UploadImageProductsRequest,
+        requestOptions?: ProductsClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__uploadImage(request, requestOptions));
+    }
+
+    private async __uploadImage(
+        request: SeedApi.UploadImageProductsRequest,
+        requestOptions?: ProductsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _body = await core.newFormData();
+        if (request.file != null) {
+            await _body.appendFile("file", request.file);
+        }
+
+        const _maybeEncodedRequest = await _body.getRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "x-custom-header": this._options?.xCustomHeader,
+                ..._maybeEncodedRequest.headers,
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "v1/products/image",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .add("language", this._options?.language)
+                .add("verbose", this._options?.verbose ?? false)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            requestType: "file",
+            duplex: _maybeEncodedRequest.duplex,
+            body: _maybeEncodedRequest.body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v1/products/image");
+    }
+
+    /**
      * @param {SeedApi.GetProductsRequest} request
      * @param {ProductsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
