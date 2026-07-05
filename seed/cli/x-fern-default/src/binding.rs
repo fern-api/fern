@@ -116,6 +116,20 @@ pub trait Binding: Send + Sync {
     /// Default: no-op. Bindings that support root-level auth override this.
     fn set_root_auth(&mut self, _bindings: &[(String, SchemeBinding)]) {}
 
+    /// Receive root-level global parameters. Called by `CliApp` before
+    /// `build_command()` so the binding can register them as top-level
+    /// flags and inject them into outgoing requests. Mirrors
+    /// [`set_root_auth`](Self::set_root_auth): global parameters are
+    /// declared once at the root and shared across all bindings, and each
+    /// binding grabs them here.
+    ///
+    /// Default: no-op. Bindings that support global parameters override this.
+    fn set_root_global_parameters(
+        &mut self,
+        _params: &[crate::openapi::discovery::GlobalParameter],
+    ) {
+    }
+
     /// Validate that all auth schemes referenced by the binding's spec
     /// have a corresponding entry in the auth bindings. Returns `Ok(())`
     /// if validation passes, or `Err(CliError::Validation(...))` listing
