@@ -832,9 +832,10 @@ fn parse_and_validate_inputs(
 
     // Merge body-location global parameters into the assembled body.
     // This runs after body assembly so globals are injected into both
-    // the `--json` and per-field-flags paths. Per-call keys already
-    // present in the body are not overwritten (per-op wins via
-    // `set_nested_value` which only writes missing paths).
+    // the `--json` and per-field-flags paths. A value the user already
+    // supplied at the target path — including a nested path like
+    // `config.currency` — is never overwritten (per-op wins, enforced by
+    // `set_nested_value_if_absent`, which walks the dotted path).
     let body = merge_global_body_params(body, extra_global_params);
 
     // Validate the assembled body against the request schema regardless of
@@ -3681,10 +3682,9 @@ fn merge_global_body_params(
                 .iter()
                 .filter(|gp| gp.location == GlobalParameterLocation::Body)
             {
-                // Only inject if the key is not already present (per-op wins).
-                if !m.contains_key(&gp.target) {
-                    set_nested_value(&mut m, &gp.target, Value::String(gp.value.clone()));
-                }
+                // Per-op wins: only inject where the user hasn't already
+                // supplied a value at the (possibly nested) target path.
+                set_nested_value_if_absent(&mut m, &gp.target, Value::String(gp.value.clone()));
             }
             Some(Value::Object(m))
         }
@@ -3698,7 +3698,7 @@ fn merge_global_body_params(
                 .iter()
                 .filter(|gp| gp.location == GlobalParameterLocation::Body)
             {
-                set_nested_value(&mut m, &gp.target, Value::String(gp.value.clone()));
+                set_nested_value_if_absent(&mut m, &gp.target, Value::String(gp.value.clone()));
             }
             Some(Value::Object(m))
         }
@@ -3717,6 +3717,30 @@ fn set_nested_value(obj: &mut Map<String, Value>, path: &str, value: Value) {
                 .or_insert_with(|| Value::Object(Map::new()));
             if let Value::Object(nested_map) = nested {
                 set_nested_value(nested_map, tail, value);
+            }
+        }
+    }
+}
+
+/// Like [`set_nested_value`] but never overwrites a value the user has
+/// already supplied: it no-ops on an existing leaf and never replaces a
+/// non-object node encountered while walking a dotted path. This is what
+/// enforces "per-op wins" for body-location global parameters — a flat
+/// `contains_key(target)` check can't see a nested target like
+/// `config.currency` (the assembled body has no top-level key literally
+/// named `"config.currency"`), so the presence test must walk the path.
+fn set_nested_value_if_absent(obj: &mut Map<String, Value>, path: &str, value: Value) {
+    match path.split_once('.') {
+        None => {
+            obj.entry(path.to_string()).or_insert(value);
+        }
+        Some((head, tail)) => {
+            let nested = obj
+                .entry(head.to_string())
+                .or_insert_with(|| Value::Object(Map::new()));
+            // If the user already put a non-object here, leave it untouched.
+            if let Value::Object(nested_map) = nested {
+                set_nested_value_if_absent(nested_map, tail, value);
             }
         }
     }
@@ -11213,6 +11237,84 @@ fn test_global_param_body_injection() {
             .unwrap();
     let body = input.body.expect("body should be populated from global param");
     assert_eq!(body["currency"], "USD");
+}
+
+#[test]
+fn test_global_param_nested_body_injection_when_absent() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // A nested (dotted) body target is created when the user did not
+    // supply it.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "search".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Body,
+        target: "config.currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        None,
+        Some(r#"{"query":"shoes"}"#),
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    let body = input.body.expect("body should carry the injected nested global");
+    assert_eq!(body["config"]["currency"], "USD");
+    assert_eq!(body["query"], "shoes");
+}
+
+#[test]
+fn test_global_param_nested_body_does_not_clobber_user_value() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // Regression (FER-11190): a body global with a nested target like
+    // `config.currency` must NOT overwrite a value the user supplied at
+    // that same nested path via `--json`. A flat `contains_key("config.
+    // currency")` check misses the nested key and used to clobber it.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "search".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        location: GlobalParameterLocation::Body,
+        target: "config.currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        None,
+        Some(r#"{"config":{"currency":"EUR"}}"#),
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    let body = input.body.expect("body should be present");
+    assert_eq!(
+        body["config"]["currency"], "EUR",
+        "user-supplied nested value must win over the global default"
+    );
 }
 
 #[test]
