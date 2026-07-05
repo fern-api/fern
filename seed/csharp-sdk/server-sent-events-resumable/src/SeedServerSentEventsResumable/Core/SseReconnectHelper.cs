@@ -193,6 +193,11 @@ internal static class SseReconnectHelper
                 continue;
             }
 
+            // Successful reconnect — clear any stale failure so it doesn't
+            // cause a misleading IOException if a later cap-exhaustion occurs
+            // via empty-body reconnects (which don't set lastReconnectException).
+            lastReconnectException = null;
+
             // Only dispose the old response after a new one is successfully obtained.
             if (isReconnectedResponse)
             {

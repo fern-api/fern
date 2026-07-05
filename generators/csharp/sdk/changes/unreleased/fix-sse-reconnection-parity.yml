@@ -6,6 +6,11 @@
     server sends no retry: directive (previously zero delay).
     (3) Use the last *dispatched* event ID for reconnection rather than the
     last *parsed* id, preventing silent event loss on mid-event drops.
-    (4) Treat reconnect function failures (exceptions/null body) as failed
-    attempts that consume the retry cap, rather than propagating unhandled.
+    (4) Treat reconnect function failures as consumed attempts; throw
+    IOException with the last failure as InnerException when the cap is
+    exhausted, instead of silently truncating the stream.
+    (5) Let OperationCanceledException propagate immediately from reconnectFn
+    instead of swallowing it as a retry attempt.
+    (6) Dispose the old HTTP response only after a new one is successfully
+    obtained, preventing ObjectDisposedException on retry.
   type: fix
