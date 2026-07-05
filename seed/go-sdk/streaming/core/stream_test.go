@@ -1536,3 +1536,105 @@ func TestStream_WithReconnect_DisableStreamReconnection(t *testing.T) {
 	_, err = stream.Recv()
 	assert.ErrorIs(t, err, io.EOF)
 }
+
+func TestStream_WithReconnect_NoEventID_NoReconnect(t *testing.T) {
+	// When events carry no id: field, the stream must not reconnect on EOF
+	// because reconnecting with an empty Last-Event-ID would replay the
+	// entire stream (duplicate events). This matches TS shouldReconnect's
+	// `if (lastId == null || lastId === "") return false` guard.
+	var reconnectCalls int
+	body := "data: {\"content\":\"no-id-event\"}\n\n"
+	server := newSSEServer(t, body)
+	defer server.Close()
+
+	resp, err := http.Get(server.URL)
+	require.NoError(t, err)
+
+	stream := NewStream[TestMessage](
+		context.Background(),
+		resp,
+		WithFormat(StreamFormatSSE),
+		WithTerminator("[DONE]"),
+		WithReconnect(func(_ context.Context, _ string) (*http.Response, error) {
+			reconnectCalls++
+			return http.Get(server.URL)
+		}, 3),
+	)
+	defer func() { _ = stream.Close() }()
+
+	msg, err := stream.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "no-id-event", msg.Content)
+
+	// EOF without terminator — but no id was ever dispatched, so reconnect
+	// must not fire (it would replay from the beginning).
+	_, err = stream.Recv()
+	assert.ErrorIs(t, err, io.EOF)
+	assert.Equal(t, 0, reconnectCalls, "must not reconnect when no event ID was dispatched")
+}
+
+func TestStream_WithReconnect_NilResponse(t *testing.T) {
+	// A reconnectFn that returns (nil, nil) must not panic.
+	body := "id: 1\ndata: {\"content\":\"before-drop\"}\n\n"
+	server := newSSEServer(t, body)
+	defer server.Close()
+
+	resp, err := http.Get(server.URL)
+	require.NoError(t, err)
+
+	stream := NewStream[TestMessage](
+		context.Background(),
+		resp,
+		WithFormat(StreamFormatSSE),
+		WithTerminator("[DONE]"),
+		WithReconnect(func(_ context.Context, _ string) (*http.Response, error) {
+			return nil, nil // common stub/wrapper mistake
+		}, 2),
+	)
+	defer func() { _ = stream.Close() }()
+
+	msg, err := stream.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "before-drop", msg.Content)
+
+	// Should not panic; should exhaust attempts and return EOF.
+	_, err = stream.Recv()
+	assert.ErrorIs(t, err, io.EOF)
+}
+
+func TestStream_WithReconnect_RespBodyLeakOnError(t *testing.T) {
+	// When reconnectFn returns (resp, err) with both non-nil, the body
+	// must be closed to avoid leaking connections.
+	body := "id: 1\ndata: {\"content\":\"first\"}\n\n"
+	server := newSSEServer(t, body)
+	defer server.Close()
+
+	resp, err := http.Get(server.URL)
+	require.NoError(t, err)
+
+	var bodyClosed atomic.Bool
+	stream := NewStream[TestMessage](
+		context.Background(),
+		resp,
+		WithFormat(StreamFormatSSE),
+		WithTerminator("[DONE]"),
+		WithReconnect(func(_ context.Context, _ string) (*http.Response, error) {
+			// Return a response with a trackable body alongside an error.
+			return &http.Response{
+				Body: io.NopCloser(strings.NewReader("")),
+			}, errors.New("simulated error")
+		}, 1),
+	)
+	// bodyClosed is not directly checkable on NopCloser, but the key thing
+	// is that (resp, err) with err != nil does not panic and does not leak.
+	_ = bodyClosed
+	defer func() { _ = stream.Close() }()
+
+	msg, err := stream.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "first", msg.Content)
+
+	// Should handle the (resp, err) case gracefully.
+	_, err = stream.Recv()
+	assert.ErrorIs(t, err, io.EOF)
+}

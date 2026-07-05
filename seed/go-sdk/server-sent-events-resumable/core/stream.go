@@ -349,6 +349,11 @@ func (s *Stream[T]) shouldReconnectOnError(err error) bool {
 	if s.options.terminator == "" {
 		return false
 	}
+	// No event ID ever dispatched — reconnecting with an empty
+	// Last-Event-ID would replay the entire stream.
+	if s.LastEventID() == "" {
+		return false
+	}
 	return true
 }
 
@@ -387,9 +392,12 @@ func (s *Stream[T]) reconnect() error {
 	s.reconnectAttempts++
 
 	resp, err := s.options.reconnectFn(s.ctx, s.lastEventID)
-	if err != nil || resp.Body == nil {
+	if err != nil || resp == nil || resp.Body == nil {
 		// Install a reader that immediately yields EOF so the outer loop
 		// re-evaluates shouldReconnectOnError (subject to the attempt cap).
+		if resp != nil && resp.Body != nil {
+			_ = resp.Body.Close()
+		}
 		s.reader = &eofReader{}
 		s.sseReader = nil
 		return nil
