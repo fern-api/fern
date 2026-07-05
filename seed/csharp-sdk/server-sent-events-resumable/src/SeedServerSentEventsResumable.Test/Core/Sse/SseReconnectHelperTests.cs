@@ -272,13 +272,13 @@ public class SseReconnectHelperTests
         Assert.That(items[1], Is.EqualTo("{\"value\":2}"));
     }
 
-    // ─── Test: maxReconnectAttempts cap with reset on progress ───────────
+    // ─── Test: maxReconnectAttempts caps consecutive failures ────────────
 
     [Test]
-    public async Task MaxReconnectAttempts_CapsReconnects_ResetsOnProgress()
+    public async Task MaxReconnectAttempts_CapsConsecutiveFailures()
     {
-        // Set maxReconnectAttempts=2. First drop yields no data on reconnect
-        // (counts 1), second drop also no data (counts 2), stops.
+        // Set maxReconnectAttempts=2. Each reconnect returns an empty body
+        // (no events, no terminator) so attempts accumulate until the cap.
         var sseText1 = "id: evt-1\ndata: {\"value\":1}\n\n";
         var emptyResponse = ""; // No events
         var initialResponse = CreateSseResponse(sseText1);
@@ -395,37 +395,77 @@ public class SseReconnectHelperTests
         );
     }
 
-    // ─── Test: Reconnect function failure treated as failed attempt ──────
+    // ─── Test: Reconnect function failure throws after exhausting cap ────
 
     [Test]
-    public async Task ReconnectFnThrows_TreatedAsFailedAttempt()
+    public void ReconnectFnThrows_SurfacesIOException_AfterExhaustingCap()
     {
         var sseText = "id: evt-1\ndata: {\"value\":1}\n\n";
         var initialResponse = CreateSseResponse(sseText);
         var reconnectCount = 0;
 
         var items = new List<string>();
-        await foreach (
-            var item in SseReconnectHelper.EnumerateWithReconnectAsync(
-                initialResponse,
-                (lastId, ct) =>
-                {
-                    reconnectCount++;
-                    throw new HttpRequestException("Server returned 500");
-                },
-                maxReconnectAttempts: 2,
-                disableReconnection: false,
-                terminator: "[DONE]"
-            )
-        )
+        var ex = Assert.ThrowsAsync<IOException>(async () =>
         {
-            items.Add(item.Data);
-        }
+            await foreach (
+                var item in SseReconnectHelper.EnumerateWithReconnectAsync(
+                    initialResponse,
+                    (lastId, ct) =>
+                    {
+                        reconnectCount++;
+                        throw new HttpRequestException("Server returned 500");
+                    },
+                    maxReconnectAttempts: 2,
+                    disableReconnection: false,
+                    terminator: "[DONE]"
+                )
+            )
+            {
+                items.Add(item.Data);
+            }
+        });
 
         Assert.That(items, Has.Count.EqualTo(1));
         Assert.That(items[0], Is.EqualTo("{\"value\":1}"));
         // Should have retried up to the max
         Assert.That(reconnectCount, Is.EqualTo(2));
+        // Inner exception should be the last reconnect failure
+        Assert.That(ex!.InnerException, Is.TypeOf<HttpRequestException>());
+        Assert.That(ex.Message, Does.Contain("failed after exhausting all attempts"));
+    }
+
+    // ─── Test: Cancellation in reconnectFn propagates immediately ─────────
+
+    [Test]
+    public void Cancellation_InReconnectFn_PropagatesImmediately()
+    {
+        var sseText = "id: evt-1\ndata: {\"value\":1}\n\n";
+        var initialResponse = CreateSseResponse(sseText);
+        using var cts = new CancellationTokenSource();
+
+        var items = new List<string>();
+        Assert.ThrowsAsync<OperationCanceledException>(async () =>
+        {
+            await foreach (
+                var item in SseReconnectHelper.EnumerateWithReconnectAsync(
+                    initialResponse,
+                    (lastId, ct) =>
+                    {
+                        cts.Cancel();
+                        throw new OperationCanceledException(ct);
+                    },
+                    maxReconnectAttempts: 5,
+                    disableReconnection: false,
+                    terminator: "[DONE]",
+                    cancellationToken: cts.Token
+                )
+            )
+            {
+                items.Add(item.Data);
+            }
+        });
+
+        Assert.That(items, Has.Count.EqualTo(1));
     }
 
     // ─── Test: Normal reconnection works end-to-end ─────────────────────

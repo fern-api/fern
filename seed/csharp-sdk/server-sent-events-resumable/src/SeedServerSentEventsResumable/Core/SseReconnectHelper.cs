@@ -63,6 +63,7 @@ internal static class SseReconnectHelper
         // blank line, reconnecting with the parsed-but-undispatched id would
         // skip an event that was never delivered to the caller.
         string? lastDispatchedEventId = null;
+        Exception? lastReconnectException = null;
 
         while (true)
         {
@@ -145,10 +146,16 @@ internal static class SseReconnectHelper
                 || reconnectAttempts >= maxAttempts
             )
             {
-                if (streamDropped)
+                if (streamDropped || lastReconnectException != null)
                 {
                     throw new IOException(
-                        "SSE stream connection lost and reconnection was not attempted."
+                        "SSE stream connection lost and reconnection "
+                            + (
+                                lastReconnectException != null
+                                    ? "failed after exhausting all attempts."
+                                    : "was not attempted."
+                            ),
+                        lastReconnectException
                     );
                 }
                 yield break;
@@ -176,12 +183,13 @@ internal static class SseReconnectHelper
                 newResponse = await reconnectFn(lastDispatchedEventId!, cancellationToken)
                     .ConfigureAwait(false);
             }
-            catch (Exception)
+            catch (Exception ex) when (!cancellationToken.IsCancellationRequested)
             {
                 // Failed reconnect (e.g. HTTP error or null body). Treat as a
                 // failed attempt — the next loop iteration will check the cap.
                 // Do NOT dispose the previous response here: we need it to stay
                 // valid in case the retry loop re-enters the stream-read path.
+                lastReconnectException = ex;
                 continue;
             }
 
