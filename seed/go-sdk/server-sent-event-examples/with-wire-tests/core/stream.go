@@ -36,7 +36,10 @@ const (
 	defaultMaxBufSize  = 1024 * 1024 // 1MB
 	defaultInitBufSize = 4096        // Initial buffer allocation; grows as needed up to maxBufSize.
 
-	// Bounded so a misbehaving server cannot cause an unbounded reconnect loop.
+	// Caps consecutive reconnects without progress. The counter resets each
+	// time an event is successfully dispatched, so the limit bounds retries
+	// between useful responses, not the total over the stream's lifetime.
+	// The defaultReconnectDelay bounds the retry rate.
 	defaultMaxStreamReconnectAttempts = 5
 
 	// defaultReconnectDelay is the minimum wait between reconnects when the
