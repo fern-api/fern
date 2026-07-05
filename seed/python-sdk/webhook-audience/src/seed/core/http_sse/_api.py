@@ -113,24 +113,38 @@ class EventSource:
     def _new_text_decoder(self, response: Optional[httpx.Response] = None) -> "codecs.IncrementalDecoder":
         return codecs.getincrementaldecoder(self._get_charset(response))(errors="replace")
 
+    def _reconnect_applicable(self) -> bool:
+        """Whether reconnection is configured for this stream at all.
+
+        This is the terminator-gating half of the reconnect decision, kept
+        separate from :meth:`_should_reconnect` (which additionally requires a
+        last *dispatched* id and an unexhausted attempt budget). The split lets
+        a mid-stream transport error terminate consistently:
+        - a stream that can never reconnect (non-resumable, no terminator,
+          disabled, or no callback) must re-raise the error to the caller, so a
+          truncated stream is not mistaken for a clean completion;
+        - a resumable stream that has merely run out of attempts (or has no id
+          to resume from) ends cleanly — the same way an exhausted empty/error
+          -body resume already does, matching the TypeScript ``return``.
+        """
+        return (
+            self._resumable
+            and self._stream_terminator is not None
+            and self._stream_reconnection_enabled
+            and self._reconnect is not None
+        )
+
     def _should_reconnect(self, last_dispatched_id: Optional[str], reconnect_attempts: int) -> bool:
         """Decide whether a prematurely-ended stream should be reconnected.
 
         Mirrors the TypeScript ``shouldReconnect`` gating:
-        - only resumable SSE endpoints reconnect;
-        - a stream terminator must be configured, otherwise we cannot tell a
-          clean completion from a dropped connection and must not reconnect;
-        - reconnection must be enabled and a reconnect callback provided;
+        - only resumable SSE endpoints with a configured terminator, reconnect
+          enabled, and a reconnect callback are eligible (see
+          :meth:`_reconnect_applicable`);
         - a last *dispatched* event id must exist to resume from;
         - the consecutive-failed-attempt cap must not be exceeded.
         """
-        if not self._resumable:
-            return False
-        if self._stream_terminator is None:
-            return False
-        if not self._stream_reconnection_enabled:
-            return False
-        if self._reconnect is None:
+        if not self._reconnect_applicable():
             return False
         if not last_dispatched_id:
             return False
@@ -278,13 +292,17 @@ class EventSource:
                         except httpx.TransportError:
                             # A transport error mid-stream (e.g. the server dropped
                             # the connection: ``ReadError``/``RemoteProtocolError``)
-                            # is a premature end. Only swallow it when this stream
-                            # is actually going to reconnect; otherwise re-raise so
-                            # a non-resumable stream still surfaces the error to the
+                            # is a premature end. Only swallow it when reconnection
+                            # is configured for this stream; otherwise re-raise so a
+                            # non-resumable stream still surfaces the error to the
                             # caller instead of looking like a clean completion.
+                            # When reconnection is applicable but the attempt budget
+                            # is exhausted, we ``break`` and end cleanly below — the
+                            # same way an exhausted empty/error-body resume does, so
+                            # give-up is consistent regardless of failure shape.
                             # ``next`` is used rather than ``for`` so this cannot
                             # swallow a ``GeneratorExit`` raised at a ``yield``.
-                            if not self._should_reconnect(last_dispatched_id, reconnect_attempts):
+                            if not self._reconnect_applicable():
                                 raise
                             break
                         yield sse
@@ -360,11 +378,15 @@ class EventSource:
                         except httpx.TransportError:
                             # A transport error mid-stream (e.g. the server dropped
                             # the connection: ``ReadError``/``RemoteProtocolError``)
-                            # is a premature end. Only swallow it when this stream
-                            # is actually going to reconnect; otherwise re-raise so
-                            # a non-resumable stream still surfaces the error to the
+                            # is a premature end. Only swallow it when reconnection
+                            # is configured for this stream; otherwise re-raise so a
+                            # non-resumable stream still surfaces the error to the
                             # caller instead of looking like a clean completion.
-                            if not self._should_reconnect(last_dispatched_id, reconnect_attempts):
+                            # When reconnection is applicable but the attempt budget
+                            # is exhausted, we ``break`` and end cleanly below — the
+                            # same way an exhausted empty/error-body resume does, so
+                            # give-up is consistent regardless of failure shape.
+                            if not self._reconnect_applicable():
                                 raise
                             break
                         yield sse
@@ -401,7 +423,11 @@ class EventSource:
                 text_decoder = self._new_text_decoder(new_response)
         finally:
             if owned_cm is not None:
-                await owned_cm.__aexit__(None, None, None)
+                # Shield the close so a cancellation delivered while reading a
+                # reconnected response still fully tears the connection down
+                # instead of leaking it until the client is closed.
+                with anyio.CancelScope(shield=True):
+                    await owned_cm.__aexit__(None, None, None)
 
 
 @contextmanager

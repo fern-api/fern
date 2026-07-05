@@ -1598,6 +1598,32 @@ class TestSSEReconnectionRobustness:
         assert data == ['{"value": 1}', '{"value": 2}']
         assert reconnect.calls == ["1", "1"]
 
+    def test_sync_exhaustion_ends_cleanly_regardless_of_failure_shape(self) -> None:
+        # Once the reconnect budget is exhausted, a resumable stream must end
+        # cleanly whether the final attempt failed via an empty body or a live
+        # mid-read drop — give-up should not depend on the failure's shape.
+        first = _RaisingResponse([b"id: 1\ndata: {\"value\": 1}\n\n"])
+        # The one allowed reconnect also drops mid-read (a live transport error),
+        # dispatching nothing, so the attempt cap (1) is reached.
+        reconnect = _SyncReconnector([_RaisingResponse([])])
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=1)
+        data = _collect_sync(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == ["1"]
+
+    @pytest.mark.asyncio
+    async def test_async_exhaustion_ends_cleanly_regardless_of_failure_shape(self) -> None:
+        first = _RaisingResponse([b"id: 1\ndata: {\"value\": 1}\n\n"])
+        reconnect = _AsyncReconnector([_RaisingResponse([])])
+
+        source = _resumable_source(first, reconnect, max_stream_reconnection_attempts=1)
+        data = await _collect_async(source)
+
+        assert data == ['{"value": 1}']
+        assert reconnect.calls == ["1"]
+
 
 # ---------------------------------------------------------------------------
 # End-to-end reconnection over a real HTTP socket
