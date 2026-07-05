@@ -1612,22 +1612,17 @@ func TestStream_WithReconnect_RespBodyLeakOnError(t *testing.T) {
 	resp, err := http.Get(server.URL)
 	require.NoError(t, err)
 
-	var bodyClosed atomic.Bool
 	stream := NewStream[TestMessage](
 		context.Background(),
 		resp,
 		WithFormat(StreamFormatSSE),
 		WithTerminator("[DONE]"),
 		WithReconnect(func(_ context.Context, _ string) (*http.Response, error) {
-			// Return a response with a trackable body alongside an error.
 			return &http.Response{
 				Body: io.NopCloser(strings.NewReader("")),
 			}, errors.New("simulated error")
 		}, 1),
 	)
-	// bodyClosed is not directly checkable on NopCloser, but the key thing
-	// is that (resp, err) with err != nil does not panic and does not leak.
-	_ = bodyClosed
 	defer func() { _ = stream.Close() }()
 
 	msg, err := stream.Recv()
