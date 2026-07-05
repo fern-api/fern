@@ -580,6 +580,11 @@ pub(crate) fn build_global_header_overrides(
 /// executor can route the value to the correct part of the request.
 #[derive(Debug, Clone)]
 pub struct ResolvedGlobalParam {
+    /// Stable identity of the declaring `x-fern-global-parameters` entry
+    /// (its `name`). Two parameters may share a `target` across different
+    /// locations (e.g. `currency` in both `query` and `body`), so the
+    /// declaration must be looked up by `name`, not `target`.
+    pub name: String,
     /// Where the value is injected on the wire.
     pub location: crate::openapi::discovery::GlobalParameterLocation,
     /// Wire-level target (header name, query param name, body path, or
@@ -587,6 +592,45 @@ pub struct ResolvedGlobalParam {
     pub target: String,
     /// The resolved string value.
     pub value: String,
+}
+
+/// Whether a declared global parameter's apply mode admits it on
+/// `method`: `auto` always applies; `explicit` applies only when the
+/// operation opts in via `x-fern-global-parameter`. Shared by both the
+/// built-in command path ([`build_global_parameter_overrides`]) and the
+/// custom-command path ([`CliApp::extra_global_params_for_entry`]) so the
+/// two cannot drift.
+pub(crate) fn global_param_apply_mode_admits(
+    decl: &crate::openapi::discovery::GlobalParameter,
+    method: &RestMethod,
+) -> bool {
+    use crate::openapi::discovery::GlobalParameterApplyMode;
+    match decl.apply {
+        GlobalParameterApplyMode::Auto => true,
+        GlobalParameterApplyMode::Explicit => {
+            method.global_parameter_opt_ins.iter().any(|n| n == &decl.name)
+        }
+    }
+}
+
+/// Whether a per-operation parameter supplied by the caller overrides the
+/// global targeting the same wire location (per-op wins). Shared by both
+/// injection paths.
+pub(crate) fn per_op_param_overrides_global(
+    params: &serde_json::Map<String, serde_json::Value>,
+    method: &RestMethod,
+    location: crate::openapi::discovery::GlobalParameterLocation,
+    target: &str,
+) -> bool {
+    use crate::openapi::discovery::GlobalParameterLocation;
+    match location {
+        GlobalParameterLocation::Header => {
+            per_op_header_param_overrides_global(params, method, target)
+        }
+        GlobalParameterLocation::Query
+        | GlobalParameterLocation::Body
+        | GlobalParameterLocation::Path => params.contains_key(target),
+    }
 }
 
 /// Build the resolved list of `x-fern-global-parameters` to inject on
@@ -605,43 +649,21 @@ pub(crate) fn build_global_parameter_overrides(
     method: &RestMethod,
     params: &serde_json::Map<String, serde_json::Value>,
 ) -> Result<Vec<ResolvedGlobalParam>, CliError> {
-    use crate::openapi::discovery::{GlobalParameterApplyMode, GlobalParameterLocation};
-
     let mut out = Vec::new();
     for p in &doc.global_parameters {
-        // Check apply mode: auto injects on all ops, explicit only on opted-in ops.
-        match p.apply {
-            GlobalParameterApplyMode::Auto => {}
-            GlobalParameterApplyMode::Explicit => {
-                if !method.global_parameter_opt_ins.iter().any(|n| n == &p.name) {
-                    continue;
-                }
-            }
+        // Apply mode: auto injects on all ops, explicit only on opted-in ops.
+        if !global_param_apply_mode_admits(p, method) {
+            continue;
         }
 
-        // Check if a per-operation parameter overrides this global.
-        let overridden = match p.location {
-            GlobalParameterLocation::Header => {
-                per_op_header_param_overrides_global(params, method, &p.target)
-            }
-            GlobalParameterLocation::Query => {
-                // Per-op query param with the same wire name
-                params.contains_key(&p.target)
-            }
-            GlobalParameterLocation::Body => {
-                // Per-op body param with the same dotted path
-                params.contains_key(&p.target)
-            }
-            GlobalParameterLocation::Path => {
-                // Per-op path param with the same name
-                params.contains_key(&p.target)
-            }
-        };
+        // A per-operation parameter with the same target overrides the global.
+        let overridden = per_op_param_overrides_global(params, method, p.location, &p.target);
 
         let resolved = resolve_global_parameter_value(matched_args, p);
         match (resolved, overridden) {
             (Some(value), false) => {
                 out.push(ResolvedGlobalParam {
+                    name: p.name.clone(),
                     location: p.location,
                     target: p.target.clone(),
                     value,
@@ -1988,14 +2010,19 @@ impl AppContext {
     /// pre-resolved global parameters, applying the same apply-mode
     /// filtering and per-op override suppression as
     /// `build_global_parameter_overrides` on the built-in command path.
+    ///
+    /// Note: `entry.global_params` is already resolved (CLI flag > env >
+    /// default) in `binding.rs`; a global with no resolved value was
+    /// dropped there. Unlike the built-in path, this path does not raise
+    /// a "required global has no value" error — a custom command's own
+    /// handler owns request assembly, so the built-in required-param
+    /// enforcement is intentionally not duplicated here.
     fn extra_global_params_for_entry(
         &self,
         entry: &BindingEntry,
         method: &RestMethod,
         params_json: Option<&str>,
     ) -> Vec<ResolvedGlobalParam> {
-        use crate::openapi::discovery::{GlobalParameterApplyMode, GlobalParameterLocation};
-
         let params: serde_json::Map<String, serde_json::Value> = match params_json {
             Some(s) if !s.trim().is_empty() => serde_json::from_str(s).unwrap_or_default(),
             _ => serde_json::Map::new(),
@@ -2005,29 +2032,15 @@ impl AppContext {
             .global_params
             .iter()
             .filter(|gp| {
-                // Find the declaration to check apply mode.
-                let decl = entry.doc.global_parameters.iter().find(|d| d.target == gp.target);
+                // Look up the declaration by identity (`name`), not `target`:
+                // two params can share a target across locations.
+                let decl = entry.doc.global_parameters.iter().find(|d| d.name == gp.name);
                 if let Some(d) = decl {
-                    match d.apply {
-                        GlobalParameterApplyMode::Auto => {}
-                        GlobalParameterApplyMode::Explicit => {
-                            if !method.global_parameter_opt_ins.iter().any(|n| n == &d.name) {
-                                return false;
-                            }
-                        }
+                    if !global_param_apply_mode_admits(d, method) {
+                        return false;
                     }
                 }
-
-                // Check per-op override suppression.
-                let overridden = match gp.location {
-                    GlobalParameterLocation::Header => {
-                        per_op_header_param_overrides_global(&params, method, &gp.target)
-                    }
-                    GlobalParameterLocation::Query
-                    | GlobalParameterLocation::Body
-                    | GlobalParameterLocation::Path => params.contains_key(&gp.target),
-                };
-                !overridden
+                !per_op_param_overrides_global(&params, method, gp.location, &gp.target)
             })
             .cloned()
             .collect()

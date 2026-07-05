@@ -11123,6 +11123,7 @@ fn test_global_param_header_injection() {
         ..Default::default()
     };
     let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
         location: GlobalParameterLocation::Header,
         target: "X-Api-Version".to_string(),
         value: "2024-01-01".to_string(),
@@ -11162,6 +11163,7 @@ fn test_global_param_header_per_op_override_suppresses() {
     };
     let params_json = r#"{"X-Api-Version": "per-op-v3"}"#;
     let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
         location: GlobalParameterLocation::Header,
         target: "X-Api-Version".to_string(),
         value: "global-v1".to_string(),
@@ -11199,6 +11201,7 @@ fn test_global_param_query_injection() {
         ..Default::default()
     };
     let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
         location: GlobalParameterLocation::Query,
         target: "api_version".to_string(),
         value: "2024-01-01".to_string(),
@@ -11228,6 +11231,7 @@ fn test_global_param_body_injection() {
         ..Default::default()
     };
     let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
         location: GlobalParameterLocation::Body,
         target: "currency".to_string(),
         value: "USD".to_string(),
@@ -11256,6 +11260,7 @@ fn test_global_param_nested_body_injection_when_absent() {
         ..Default::default()
     };
     let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
         location: GlobalParameterLocation::Body,
         target: "config.currency".to_string(),
         value: "USD".to_string(),
@@ -11295,6 +11300,7 @@ fn test_global_param_nested_body_does_not_clobber_user_value() {
         ..Default::default()
     };
     let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
         location: GlobalParameterLocation::Body,
         target: "config.currency".to_string(),
         value: "USD".to_string(),
@@ -11334,6 +11340,7 @@ fn test_global_param_path_injection() {
         ..Default::default()
     };
     let global_params = vec![ResolvedGlobalParam {
+        name: "org".to_string(),
         location: GlobalParameterLocation::Path,
         target: "orgId".to_string(),
         value: "my-org-123".to_string(),
@@ -11386,6 +11393,7 @@ fn test_global_param_path_injection_satisfies_declared_required_param() {
         ..Default::default()
     };
     let global_params = vec![ResolvedGlobalParam {
+        name: "region".to_string(),
         location: GlobalParameterLocation::Path,
         target: "regionId".to_string(),
         value: "us".to_string(),
@@ -11421,16 +11429,19 @@ fn test_global_param_multiple_locations() {
     };
     let global_params = vec![
         ResolvedGlobalParam {
+            name: "tenant".to_string(),
             location: GlobalParameterLocation::Header,
             target: "X-Tenant".to_string(),
             value: "acme".to_string(),
         },
         ResolvedGlobalParam {
+            name: "version".to_string(),
             location: GlobalParameterLocation::Query,
             target: "version".to_string(),
             value: "v2".to_string(),
         },
         ResolvedGlobalParam {
+            name: "currency".to_string(),
             location: GlobalParameterLocation::Body,
             target: "currency".to_string(),
             value: "EUR".to_string(),

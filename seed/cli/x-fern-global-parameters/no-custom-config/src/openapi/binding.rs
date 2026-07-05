@@ -314,6 +314,7 @@ impl OpenApiBinding {
             .filter_map(|p| {
                 let val = super::app::resolve_global_parameter_value(matches, p)?;
                 Some(super::app::ResolvedGlobalParam {
+                    name: p.name.clone(),
                     location: p.location,
                     target: p.target.clone(),
                     value: val,
