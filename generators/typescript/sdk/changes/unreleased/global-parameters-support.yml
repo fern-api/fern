@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add support for the `x-fern-global-parameters` extension. Global parameters are exposed as
+    typed constructor options on every client and sub-client (`BaseClientOptions`) and injected
+    into each applicable request at its declared wire location (header, query, or body). Per-call
+    values take precedence over the client option, which in turn falls back to the client-side
+    default. Options whose name collides with a built-in client option are skipped.
+  type: feat

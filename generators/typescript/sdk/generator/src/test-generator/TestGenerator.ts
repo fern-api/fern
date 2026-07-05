@@ -21,6 +21,22 @@ import { arrayOf, type Code, code, literalOf } from "ts-poet";
 
 const DEFAULT_PACKAGE_PATH = "src";
 
+// Built-in client options that a global parameter never overrides (mirrors the
+// collision handling in BaseClientContextImpl). A required global whose SDK name
+// collides with one of these is not emitted as an option, so the test client
+// must not try to set it either.
+const RESERVED_CLIENT_OPTION_NAMES = new Set<string>([
+    "environment",
+    "baseUrl",
+    "headers",
+    "timeoutInSeconds",
+    "maxRetries",
+    "fetch",
+    "fetcher",
+    "logging",
+    "stream"
+]);
+
 export declare namespace TestGenerator {
     interface Args {
         ir: FernIr.IntermediateRepresentation;
@@ -1046,6 +1062,22 @@ export function ${functionName}(server: MockServer): void {
             _other: () => {}
         });
 
+        // Required global parameters are exposed as required constructor options, so the
+        // generated test client must supply a value for them. Optional globals (and those
+        // colliding with a built-in option) are left unset so the client-side default applies.
+        (this.ir.globalParameters ?? []).forEach((param) => {
+            const sdkKey = this.case.camelUnsafe(param.name);
+            if (sdkKey in baseOptions || RESERVED_CLIENT_OPTION_NAMES.has(sdkKey)) {
+                return;
+            }
+            const isOptional =
+                param.optional === true || param.clientDefault != null || context.type.isOptional(param.valueType);
+            if (isOptional) {
+                return;
+            }
+            baseOptions[sdkKey] = this.getRequiredGlobalParameterPlaceholder(param, context);
+        });
+
         const tests = service.endpoints
             .filter((e) => this.shouldBuildTest(e))
             .map((endpoint) =>
@@ -1172,7 +1204,16 @@ describe("${serviceName}", () => {
             return;
         }
 
-        const rawRequestBody = this.getRequestExample(example.request);
+        const exampleRequestBody = this.getRequestExample(example.request);
+        const rawRequestBody =
+            exampleRequestBody != null
+                ? this.applyBodyGlobalParametersToMockRequest({
+                      endpoint,
+                      rawRequestBody: exampleRequestBody,
+                      options,
+                      context
+                  })
+                : exampleRequestBody;
         const isSSEStreaming =
             endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
         const rawResponseBody = this.getResponseExample(
@@ -1548,6 +1589,103 @@ describe("${serviceName}", () => {
         return context.retainOriginalCasing || !context.includeSerdeLayer
             ? getOriginalName(name)
             : context.case.camelSafe(name);
+    }
+
+    private getRequiredGlobalParameterPlaceholder(param: FernIr.GlobalParameter, context: FileContext): Code {
+        const resolved = context.type.resolveTypeReference(param.valueType);
+        if (resolved.type === "primitive") {
+            const v1 = resolved.primitive.v1;
+            if (v1 === "BOOLEAN") {
+                return code`true`;
+            }
+            if (
+                v1 === "INTEGER" ||
+                v1 === "LONG" ||
+                v1 === "UINT" ||
+                v1 === "UINT_64" ||
+                v1 === "FLOAT" ||
+                v1 === "DOUBLE" ||
+                v1 === "BIG_INTEGER"
+            ) {
+                return code`1`;
+            }
+        }
+        return code`"test"`;
+    }
+
+    private globalParameterAppliesToEndpoint(param: FernIr.GlobalParameter, endpoint: FernIr.HttpEndpoint): boolean {
+        const apply = param.apply ?? FernIr.GlobalParameterApplyMode.Explicit;
+        return FernIr.GlobalParameterApplyMode._visit<boolean>(apply, {
+            auto: () => true,
+            explicit: () => (endpoint.globalParameters ?? []).includes(param.id),
+            _other: () => false
+        });
+    }
+
+    private getGlobalParameterTestValue(
+        param: FernIr.GlobalParameter,
+        options: Record<string, Code>
+    ): Code | undefined {
+        const sdkKey = this.case.camelUnsafe(param.name);
+        const optionValue = options[sdkKey];
+        if (optionValue != null) {
+            return optionValue;
+        }
+        const clientDefault = param.clientDefault;
+        if (clientDefault == null) {
+            return undefined;
+        }
+        switch (clientDefault.type) {
+            case "string":
+                return code`${literalOf(clientDefault.string)}`;
+            case "boolean":
+                return code`${literalOf(clientDefault.boolean)}`;
+            default:
+                assertNever(clientDefault);
+        }
+    }
+
+    /**
+     * Body-location global parameters are injected into the request body by the SDK, so the
+     * mock server must expect the same injected value. This mirrors the SDK's injection with
+     * the runtime helper `setGlobalBodyParameterIfAbsent`, using the resolved global value
+     * (client option when set in the test client, otherwise the client-side default).
+     */
+    private applyBodyGlobalParametersToMockRequest({
+        endpoint,
+        rawRequestBody,
+        options,
+        context
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        rawRequestBody: Code;
+        options: Record<string, Code>;
+        context: FileContext;
+    }): Code {
+        let result = rawRequestBody;
+        for (const param of this.ir.globalParameters ?? []) {
+            if (param.location !== FernIr.GlobalParameterLocation.Body) {
+                continue;
+            }
+            if (!this.globalParameterAppliesToEndpoint(param, endpoint)) {
+                continue;
+            }
+            const value = this.getGlobalParameterTestValue(param, options);
+            if (value == null) {
+                continue;
+            }
+            const segments = param.target.split(".").filter((segment) => segment.length > 0);
+            if (segments.length === 0) {
+                continue;
+            }
+            context.importsManager.addImportFromRoot(
+                "core/globalParameters",
+                { namedImports: ["setGlobalBodyParameterIfAbsent"] },
+                this.relativePackagePath
+            );
+            result = code`setGlobalBodyParameterIfAbsent(${result}, ${literalOf(segments)}, ${value})`;
+        }
+        return result;
     }
 
     private getMockBodyMethod(endpoint: FernIr.HttpEndpoint): string {

@@ -621,6 +621,7 @@ export class SdkGenerator {
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,
             generateWireTests: config.generateWireTests,
+            hasGlobalParameters: (intermediateRepresentation.globalParameters?.length ?? 0) > 0,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             generatorType: "sdk",

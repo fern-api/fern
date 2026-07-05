@@ -6,6 +6,7 @@ import { ts } from "ts-morph";
 import { GeneratedHeader } from "../../GeneratedHeader.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { RequestParameter } from "../../request-parameter/RequestParameter.js";
+import { getGlobalParametersForEndpoint, getResolvedGlobalParameterValueExpression } from "./globalParameters.js";
 import { getClientDefaultValue, getLiteralValueForHeader } from "./isLiteralHeader.js";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter.js";
 
@@ -91,6 +92,17 @@ export function generateHeaders({
     }
 
     elements.push(...getOverridableRootHeaders({ context, intermediateRepresentation }));
+
+    for (const globalParameter of getGlobalParametersForEndpoint({
+        ir: intermediateRepresentation,
+        endpoint,
+        location: FernIr.GlobalParameterLocation.Header
+    })) {
+        elements.push({
+            header: globalParameter.target,
+            value: getResolvedGlobalParameterValueExpression(globalParameter, context.case)
+        });
+    }
 
     elements.push(...additionalHeaders);
 

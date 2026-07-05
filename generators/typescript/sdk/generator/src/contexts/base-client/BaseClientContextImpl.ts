@@ -262,6 +262,44 @@ export class BaseClientContextImpl implements BaseClientContext {
             });
         }
 
+        // Names already used above, plus the reserved built-in options appended
+        // below. A global parameter whose SDK name collides with one of these is
+        // skipped so we never emit a duplicate property (the built-in option wins).
+        const usedOptionNames = new Set<string>([
+            ...properties.map((property) => property.name),
+            "headers",
+            getPropertyKey(TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME),
+            getPropertyKey(MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME),
+            "fetch",
+            getPropertyKey(CUSTOM_FETCHER_PROPERTY_NAME),
+            "logging",
+            "stream"
+        ]);
+        for (const globalParameter of this.intermediateRepresentation.globalParameters ?? []) {
+            // Path-location global parameters are not yet injected into requests (the target is a
+            // declared path parameter that the caller still supplies), so we don't expose them as a
+            // constructor option to avoid a no-op option. Header/query/body locations are supported.
+            if (globalParameter.location === FernIr.GlobalParameterLocation.Path) {
+                continue;
+            }
+            const optionName = getPropertyKey(this.case.camelUnsafe(globalParameter.name));
+            if (usedOptionNames.has(optionName)) {
+                continue;
+            }
+            usedOptionNames.add(optionName);
+            const type = context.type.getReferenceToType(globalParameter.valueType);
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: optionName,
+                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
+                // Optional when explicitly optional, when a client-side default exists,
+                // or when the underlying type is already optional. Otherwise required.
+                hasQuestionToken:
+                    globalParameter.optional === true || globalParameter.clientDefault != null || type.isOptional,
+                docs: globalParameter.docs != null ? [globalParameter.docs] : undefined
+            });
+        }
+
         properties.push({
             kind: StructureKind.PropertySignature,
             docs: ["Additional headers to include in requests."],

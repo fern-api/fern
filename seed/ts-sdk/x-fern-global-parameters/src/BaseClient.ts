@@ -7,6 +7,16 @@ export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
+    /** The currency code used for pricing. */
+    currency?: string;
+    language?: string;
+    xCustomHeader: string;
+    /** Enable verbose response output. */
+    verbose?: boolean;
+    /** The API version to use for the request. */
+    apiVersion: string;
+    /** x-fern-default should take precedence over default. */
+    xTraceId?: string;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */

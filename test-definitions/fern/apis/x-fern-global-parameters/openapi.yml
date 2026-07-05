@@ -55,6 +55,11 @@ paths:
       x-fern-global-parameter:
         - region
         - currency
+        - language
+        - x-custom-header
+        - verbose
+        - api-version
+        - x-trace-id
       operationId: searchProducts
       parameters:
         - in: path

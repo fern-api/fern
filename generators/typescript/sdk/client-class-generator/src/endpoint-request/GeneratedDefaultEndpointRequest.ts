@@ -13,6 +13,10 @@ import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import {
+    getGlobalParametersForEndpoint,
+    getResolvedGlobalParameterValueExpression
+} from "../endpoints/utils/globalParameters.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter.js";
@@ -208,10 +212,61 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
             queryString: queryParams.getQueryStringExpression(context),
-            body: this.getSerializedRequestBodyWithNullCheck(context),
+            body: this.injectBodyGlobalParameters(this.getSerializedRequestBodyWithNullCheck(context), context),
             contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
             requestType: this.getRequestType()
         };
+    }
+
+    /**
+     * Wraps the serialized request body with `setGlobalBodyParameterIfAbsent`
+     * calls for each applicable `in: body` global parameter, injecting the
+     * resolved client value at the parameter's dotted target path. The helper
+     * only writes when the leaf is absent, so a per-call body value wins.
+     */
+    private injectBodyGlobalParameters(
+        body: ts.Expression | undefined,
+        context: FileContext
+    ): ts.Expression | undefined {
+        // Only inject into an existing request body — never fabricate a body on a
+        // bodyless endpoint (e.g. an `apply: auto` body global must not add a body
+        // to a GET). The runtime helper additionally leaves non-object bodies alone.
+        if (body == null || this.requestBody == null) {
+            return body;
+        }
+
+        const bodyGlobalParameters = getGlobalParametersForEndpoint({
+            ir: this.ir,
+            endpoint: this.endpoint,
+            location: FernIr.GlobalParameterLocation.Body
+        });
+        if (bodyGlobalParameters.length === 0) {
+            return body;
+        }
+
+        context.importsManager.addImportFromRoot("core/globalParameters", {
+            namedImports: ["setGlobalBodyParameterIfAbsent"]
+        });
+
+        let wrapped: ts.Expression = body ?? ts.factory.createIdentifier("undefined");
+        for (const globalParameter of bodyGlobalParameters) {
+            const pathSegments = globalParameter.target.split(".").filter((segment) => segment.length > 0);
+            if (pathSegments.length === 0) {
+                continue;
+            }
+            wrapped = ts.factory.createCallExpression(
+                ts.factory.createIdentifier("setGlobalBodyParameterIfAbsent"),
+                undefined,
+                [
+                    wrapped,
+                    ts.factory.createArrayLiteralExpression(
+                        pathSegments.map((segment) => ts.factory.createStringLiteral(segment))
+                    ),
+                    getResolvedGlobalParameterValueExpression(globalParameter, this.case)
+                ]
+            );
+        }
+        return wrapped;
     }
 
     private getFallbackContentType(): string | undefined {
@@ -373,7 +428,15 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
                 queryParameters: this.requestParameter?.getAllQueryParameters(context),
-                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context),
+                globalQueryParameters: getGlobalParametersForEndpoint({
+                    ir: this.ir,
+                    endpoint: this.endpoint,
+                    location: FernIr.GlobalParameterLocation.Query
+                }).map((param) => ({
+                    wireName: param.target,
+                    value: getResolvedGlobalParameterValueExpression(param, this.case)
+                }))
             });
         }
         return this.queryParams;
