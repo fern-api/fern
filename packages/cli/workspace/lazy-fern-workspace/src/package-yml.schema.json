@@ -3205,6 +3205,20 @@
               "type": "null"
             }
           ]
+        },
+        "global-parameters": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "List of global parameter IDs that this endpoint opts into.\nUsed with apply: explicit mode."
         }
       },
       "required": [

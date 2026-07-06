@@ -254,6 +254,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasWebSocketEndpoints) {
             Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));
         }
+        if (this.hasResumableSseEndpoints) {
+            Object.values(AsIsFiles.Test.Sse).forEach((file) => files.push(file));
+        }
 
         return files;
     }

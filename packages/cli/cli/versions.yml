@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.65.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-global-parameters` OpenAPI extension. Allows declaring
+        global defaults for request body, query, header, and path fields that are set
+        once at the SDK client level and injected at the declared wire location, with
+        per-call values winning. IR bumped to 67.10.0.
+      type: feat
+  createdAt: "2026-07-03"
+  irVersion: 67
 - version: 5.64.3
   changelogEntry:
     - summary: |

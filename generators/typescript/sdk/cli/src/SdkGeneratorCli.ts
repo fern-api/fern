@@ -105,7 +105,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
             maxRetries: parsed?.maxRetries,
-            retryStatusCodes: parsed?.retryStatusCodes ?? "legacy"
+            retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
+            generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
         };
 
         if (parsed?.serdeLayer != null && parsed?.noSerdeLayer != null) {
@@ -268,7 +269,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 customPagerName: customConfig.customPagerName ?? "CustomPager",
                 resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
                 maxRetries: customConfig.maxRetries,
-                alwaysSendAuth: customConfig.alwaysSendAuth
+                alwaysSendAuth: customConfig.alwaysSendAuth,
+                generateReactQueryHooks: customConfig.generateReactQueryHooks
             }
         });
         const typescriptProject = await sdkGenerator.generate();

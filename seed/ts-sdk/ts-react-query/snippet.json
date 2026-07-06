@@ -1,0 +1,115 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/status",
+                "method": "GET",
+                "identifier_override": "endpoint_.status"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.status();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/invalidate",
+                "method": "GET",
+                "identifier_override": "endpoint_.invalidate"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.invalidate();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/health",
+                "method": "HEAD",
+                "identifier_override": "endpoint_health.check"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.health.check();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/health/details",
+                "method": "GET",
+                "identifier_override": "endpoint_health.details"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.health.details();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.get(\"userId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_user.create"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.create({\n    name: \"name\",\n    email: \"email\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "PUT",
+                "identifier_override": "endpoint_user.update"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.update(\"userId\", {\n    name: \"name\",\n    email: \"email\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_user.patch"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.patch(\"userId\", {\n    name: \"name\",\n    email: \"email\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_user.delete"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-react-query\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.delete(\"userId\");\n"
+            }
+        }
+    ],
+    "types": {}
+}

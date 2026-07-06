@@ -461,6 +461,36 @@ export const FernOpenAPIExtension = {
     FERN_GLOBAL_HEADERS: "x-fern-global-headers",
 
     /**
+     * Allows users to specify global request parameter defaults that are
+     * injected into requests at the SDK/CLI level.
+     *
+     * x-fern-global-parameters:
+     *  - name: currency
+     *    in: query
+     *    type: string
+     *    env: DEFAULT_CURRENCY
+     *    default: USD
+     *    apply: auto
+     *  - name: api-version
+     *    in: header
+     *    target: X-API-Version
+     *    type: string
+     *    parameter-name: apiVersion
+     *    apply: explicit
+     */
+    FERN_GLOBAL_PARAMETERS: "x-fern-global-parameters",
+
+    /**
+     * Per-operation opt-in for global parameters with apply: explicit.
+     *
+     * paths:
+     *   /payments:
+     *     post:
+     *       x-fern-global-parameter: [currency]
+     */
+    FERN_GLOBAL_PARAMETER: "x-fern-global-parameter",
+
+    /**
      * Allows users to specify which headers are idempotent.
      *
      * x-fern-idempotency-headers:

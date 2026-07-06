@@ -12,6 +12,7 @@ export interface Stream {
             signal: ts.Expression;
             reconnectionEnabled?: ts.Expression;
             maxReconnectionAttempts?: ts.Expression;
+            reconnect?: ts.Expression;
         }) => ts.Expression;
         _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
     };
@@ -68,7 +69,8 @@ export class StreamImpl extends CoreUtility implements Stream {
                     eventShape,
                     signal,
                     reconnectionEnabled,
-                    maxReconnectionAttempts
+                    maxReconnectionAttempts,
+                    reconnect
                 }: {
                     stream: ts.Expression;
                     parse: ts.Expression;
@@ -76,6 +78,7 @@ export class StreamImpl extends CoreUtility implements Stream {
                     signal: ts.Expression;
                     reconnectionEnabled?: ts.Expression;
                     maxReconnectionAttempts?: ts.Expression;
+                    reconnect?: ts.Expression;
                 }): ts.Expression => {
                     const eventShapeProperties: ts.ObjectLiteralElementLike[] = [];
                     if (eventShape.type === "sse") {
@@ -146,6 +149,11 @@ export class StreamImpl extends CoreUtility implements Stream {
                                 ts.factory.createIdentifier("maxReconnectionAttempts"),
                                 maxReconnectionAttempts
                             )
+                        );
+                    }
+                    if (reconnect != null) {
+                        constructorProperties.push(
+                            ts.factory.createPropertyAssignment(ts.factory.createIdentifier("reconnect"), reconnect)
                         );
                     }
                     return ts.factory.createNewExpression(Stream.getExpression(), undefined, [

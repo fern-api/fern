@@ -12,6 +12,7 @@ namespace <%= namespace%>;
 internal static class SseReconnectHelper
 {
     private const int DefaultMaxReconnectAttempts = 5;
+    private static readonly TimeSpan DefaultReconnectDelay = TimeSpan.FromSeconds(1);
     private static readonly TimeSpan MaxReconnectDelay = TimeSpan.FromSeconds(30);
 
     /// <summary>
@@ -25,13 +26,16 @@ internal static class SseReconnectHelper
     /// </param>
     /// <param name="maxReconnectAttempts">
     /// The maximum number of consecutive reconnection attempts before giving up.
-    /// Defaults to <c>5</c> when <c>null</c>.
+    /// Defaults to <c>5</c> when <c>null</c>. The counter resets to zero each
+    /// time a reconnected stream successfully yields at least one event.
     /// </param>
     /// <param name="disableReconnection">
     /// When <c>true</c>, reconnection is disabled and the stream ends on premature EOF.
     /// </param>
     /// <param name="terminator">
-    /// The SSE data value that signals the end of the stream.
+    /// The SSE data value that signals the end of the stream. When <c>null</c>,
+    /// reconnection is disabled because the client cannot distinguish a completed
+    /// stream from a dropped connection.
     /// </param>
     /// <param name="cancellationToken">A token to cancel the enumeration.</param>
     /// <returns>An async enumerable of <see cref="SseItem{T}"/> items.</returns>
@@ -48,6 +52,14 @@ internal static class SseReconnectHelper
         var maxAttempts = maxReconnectAttempts ?? DefaultMaxReconnectAttempts;
         var reconnectAttempts = 0;
         var isReconnectedResponse = false;
+        // Track the last event ID from the most recently *dispatched* (yielded)
+        // event, not the last parsed id. Per the WHATWG EventSource spec the
+        // "last event ID" is only committed when an event is dispatched — if a
+        // connection drops after an id: line but before the event's terminating
+        // blank line, reconnecting with the parsed-but-undispatched id would
+        // skip an event that was never delivered to the caller.
+        string? lastDispatchedEventId = null;
+        Exception? lastReconnectException = null;
 
         while (true)
         {
@@ -98,6 +110,15 @@ internal static class SseReconnectHelper
                     }
 
                     yield return item;
+                    // Capture parser.LastEventId immediately after a successful
+                    // dispatch — at this point it reflects the just-dispatched
+                    // event's id. We must snapshot it before the next
+                    // MoveNextAsync could partially update it with a new id:
+                    // line from an incomplete event.
+                    if (!string.IsNullOrEmpty(parser.LastEventId))
+                    {
+                        lastDispatchedEventId = parser.LastEventId;
+                    }
                     reconnectAttempts = 0;
                 }
             }
@@ -111,16 +132,24 @@ internal static class SseReconnectHelper
                 yield break;
             }
 
+            // Determine whether reconnection should be attempted.
+            // Without a terminator the client cannot distinguish "stream
+            // completed" from "connection dropped", so reconnection is disabled.
             if (
                 disableReconnection
-                || string.IsNullOrEmpty(parser.LastEventId)
+                || terminator == null
+                || string.IsNullOrEmpty(lastDispatchedEventId)
                 || reconnectAttempts >= maxAttempts
             )
             {
-                if (streamDropped)
+                if (streamDropped || lastReconnectException != null)
                 {
                     throw new IOException(
-                        "SSE stream connection lost and reconnection was not attempted."
+                        "SSE stream connection lost and reconnection "
+                            + (lastReconnectException != null
+                                ? "failed after exhausting all attempts."
+                                : "was not attempted."),
+                        lastReconnectException
                     );
                 }
                 yield break;
@@ -128,25 +157,46 @@ internal static class SseReconnectHelper
 
             reconnectAttempts++;
 
-            var delay = parser.ReconnectionInterval;
+            // Use the server-sent retry interval if available; otherwise fall
+            // back to DefaultReconnectDelay (1s) to avoid hammering the server.
+            var delay = parser.ReconnectionInterval > TimeSpan.Zero
+                ? parser.ReconnectionInterval
+                : DefaultReconnectDelay;
             if (delay > MaxReconnectDelay)
             {
                 delay = MaxReconnectDelay;
             }
-            if (delay > TimeSpan.Zero)
+            await global::System.Threading.Tasks.Task
+                .Delay(delay, cancellationToken)
+                .ConfigureAwait(false);
+
+            ApiResponse newResponse;
+            try
             {
-                await global::System.Threading.Tasks.Task
-                    .Delay(delay, cancellationToken)
+                newResponse = await reconnectFn(lastDispatchedEventId!, cancellationToken)
                     .ConfigureAwait(false);
             }
+            catch (Exception ex) when (!cancellationToken.IsCancellationRequested)
+            {
+                // Failed reconnect (e.g. HTTP error or null body). Treat as a
+                // failed attempt — the next loop iteration will check the cap.
+                // Do NOT dispose the previous response here: we need it to stay
+                // valid in case the retry loop re-enters the stream-read path.
+                lastReconnectException = ex;
+                continue;
+            }
 
+            // Successful reconnect — clear any stale failure so it doesn't
+            // cause a misleading IOException if a later cap-exhaustion occurs
+            // via empty-body reconnects (which don't set lastReconnectException).
+            lastReconnectException = null;
+
+            // Only dispose the old response after a new one is successfully obtained.
             if (isReconnectedResponse)
             {
                 response.Raw?.Dispose();
             }
-
-            response = await reconnectFn(parser.LastEventId, cancellationToken)
-                .ConfigureAwait(false);
+            response = newResponse;
             isReconnectedResponse = true;
         }
     }

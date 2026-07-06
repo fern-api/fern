@@ -62,11 +62,6 @@ export class CompletionsClient {
                         type: "sse",
                         streamTerminator: "[[DONE]]",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -132,11 +127,6 @@ export class CompletionsClient {
                         type: "sse",
                         streamTerminator: "[DONE]",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -202,11 +192,6 @@ export class CompletionsClient {
                         type: "sse",
                         eventDiscriminator: "type",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -278,11 +263,6 @@ export class CompletionsClient {
                         streamTerminator: "[DONE]",
                         eventDiscriminator: "event",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };

@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.77.0
+  changelogEntry:
+    - summary: |
+        Implement SSE stream auto-reconnection for resumable endpoints. When an SSE
+        stream drops mid-connection and the endpoint is marked `resumable: true`, the
+        SDK now automatically reconnects using the Last-Event-ID header, honoring
+        server-sent retry directives clamped to 30 seconds. Reconnection respects
+        `reconnectionEnabled` and `maxReconnectionAttempts` options.
+      type: feat
+  createdAt: "2026-07-04"
+  irVersion: 67
+- version: 3.76.0
+  changelogEntry:
+    - summary: |
+        Add React Query hooks generation support via the `generateReactQueryHooks` config flag.
+        When enabled, generates a `react-query/` directory with a tRPC-style namespace object
+        that mirrors the SDK client hierarchy (e.g. `seedApi.user.list.useQuery()`). Each query
+        endpoint exposes useQuery, useSuspenseQuery, getQueryKey, getQueryOptions (for SSR/RSC),
+        and invalidate. Mutation endpoints expose useMutation. Hierarchical cache invalidation
+        at endpoint, service, and SDK levels. Per-service file splits with wildcard subexports
+        for tree-shaking. All exports available via a `./react-query` package.json subexport
+        with optional peer dependencies on react and @tanstack/react-query.
+      type: feat
+  createdAt: "2026-07-03"
+  irVersion: 67
 - version: 3.75.3
   changelogEntry:
     - summary: |
