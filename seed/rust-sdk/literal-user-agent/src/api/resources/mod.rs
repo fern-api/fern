@@ -19,6 +19,20 @@ impl LiteralUserAgentClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_literal_user_agent::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LiteralUserAgentClient::new(config).expect("Failed to build client");
+    ///     client.ping(None).await;
+    /// }
+    /// ```
     pub async fn ping(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client
             .execute_request(Method::GET, "ping", None, None, options)

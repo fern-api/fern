@@ -19,6 +19,27 @@ impl ApiClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .search_rule_types(
+    ///             &SearchRuleTypesQueryRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn search_rule_types(
         &self,
         request: &SearchRuleTypesQueryRequest,
@@ -37,6 +58,28 @@ impl ApiClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .create_rule(
+    ///             &RuleCreateRequest {
+    ///                 name: "name".to_string(),
+    ///                 execution_context: RuleCreateRequestExecutionContext::Prod,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_rule(
         &self,
         request: &RuleCreateRequest,
@@ -53,6 +96,20 @@ impl ApiClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.list_users(None).await;
+    /// }
+    /// ```
     pub async fn list_users(
         &self,
         options: Option<RequestOptions>,
@@ -62,6 +119,20 @@ impl ApiClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.get_entity(None).await;
+    /// }
+    /// ```
     pub async fn get_entity(
         &self,
         options: Option<RequestOptions>,
@@ -71,6 +142,20 @@ impl ApiClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.get_organization(None).await;
+    /// }
+    /// ```
     pub async fn get_organization(
         &self,
         options: Option<RequestOptions>,
@@ -89,6 +174,35 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .create_plant(
+    ///             &PlantPost {
+    ///                 species: "species".to_string(),
+    ///                 family: "family".to_string(),
+    ///                 genus: "genus".to_string(),
+    ///                 common_name: "commonName".to_string(),
+    ///                 watering_frequency: PlantPostWateringFrequency::Daily,
+    ///                 sun_exposure: PlantPostSunExposure::Full,
+    ///                 planted_at: None,
+    ///                 soil_type: None,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_plant(
         &self,
         request: &PlantPost,
@@ -114,6 +228,31 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .create_tree(
+    ///             &TreeRecord {
+    ///                 id: "id".to_string(),
+    ///                 tree_name: "treeName".to_string(),
+    ///                 tree_species: "treeSpecies".to_string(),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_tree(
         &self,
         request: &TreeRecord,

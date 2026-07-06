@@ -13,6 +13,41 @@ impl ReferenceClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_literal::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LiteralClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .reference
+    ///         .send(
+    ///             &SendRequest {
+    ///                 prompt: "You are a helpful assistant".to_string(),
+    ///                 query: "What is the weather today".to_string(),
+    ///                 stream: false,
+    ///                 ending: Default::default(),
+    ///                 context: SomeLiteral("You're super wise".to_string()),
+    ///                 maybe_context: None,
+    ///                 container_object: ContainerObject {
+    ///                     nested_objects: vec![NestedObjectWithLiterals {
+    ///                         literal1: "literal1".to_string(),
+    ///                         literal2: "literal2".to_string(),
+    ///                         str_prop: "strProp".to_string(),
+    ///                     }],
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn send(
         &self,
         request: &SendRequest,

@@ -974,14 +974,28 @@ export class SubClientGenerator {
             returnType: returnType.toString(),
             isAsync: true,
             body,
-            docs: endpoint.docs
-                ? rust.docComment({
-                      summary: endpoint.docs,
-                      parameters: this.extractParameterDocs(params, endpoint),
-                      returns: this.getReturnTypeDescription(endpoint)
-                  })
-                : undefined
+            docs: this.buildEndpointDocs(endpoint, params)
         };
+    }
+
+    private buildEndpointDocs(
+        endpoint: FernIr.HttpEndpoint,
+        params: EndpointParameter[]
+    ): rust.DocComment | undefined {
+        const snippet = this.context.getEndpointSnippet(endpoint.id);
+        const examples = snippet != null ? [snippet] : undefined;
+        if (endpoint.docs) {
+            return rust.docComment({
+                summary: endpoint.docs,
+                parameters: this.extractParameterDocs(params, endpoint),
+                returns: this.getReturnTypeDescription(endpoint),
+                examples
+            });
+        }
+        if (examples != null) {
+            return rust.docComment({ examples });
+        }
+        return undefined;
     }
 
     private buildMethodParameters(params: EndpointParameter[], _endpoint: FernIr.HttpEndpoint): string[] {

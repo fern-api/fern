@@ -22,6 +22,25 @@ impl SubmissionClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .submission
+    ///         .create_execution_session(&Language::Java, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_execution_session(
         &self,
         language: &Language,
@@ -47,6 +66,25 @@ impl SubmissionClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .submission
+    ///         .get_execution_session(&"sessionId".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_execution_session(
         &self,
         session_id: &str,
@@ -72,6 +110,25 @@ impl SubmissionClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .submission
+    ///         .stop_execution_session(&"sessionId".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stop_execution_session(
         &self,
         session_id: &str,
@@ -88,6 +145,21 @@ impl SubmissionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client.submission.get_execution_sessions_state(None).await;
+    /// }
+    /// ```
     pub async fn get_execution_sessions_state(
         &self,
         options: Option<RequestOptions>,
