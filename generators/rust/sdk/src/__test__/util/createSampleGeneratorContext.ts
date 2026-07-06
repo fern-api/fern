@@ -48,6 +48,8 @@ export function createSampleGeneratorContext(args: CreateSampleGeneratorContextA
         hasMultipleBaseUrls: () => mockIR.environments?.environments?.type === "multipleBaseUrls",
         getEnvironmentEnumName: () => "Environment",
         getOAuthClientCredentialsScheme: () => undefined,
-        getOAuthTokenEndpointPath: () => undefined
+        getOAuthTokenEndpointPath: () => undefined,
+        getOAuthTokenHttpEndpoint: () => undefined,
+        getOAuthTokenExchange: () => undefined
     } as SdkGeneratorContext;
 }

@@ -13,6 +13,27 @@ import {
     validateAndSanitizeCrateName
 } from "../utils/index.js";
 
+/**
+ * A literal request-body property (e.g. `grant_type: "client_credentials"`) that must be
+ * sent verbatim on the OAuth token request.
+ */
+export interface OAuthTokenExchangeExtraProperty {
+    name: string;
+    value: string;
+}
+
+/**
+ * The wire-level property-name mapping for the OAuth client-credentials token exchange,
+ * resolved from the API's OAuth scheme configuration in the IR.
+ */
+export interface OAuthTokenExchange {
+    clientIdProperty: string;
+    clientSecretProperty: string;
+    accessTokenProperty: string;
+    expiresInProperty: string;
+    extraRequestProperties: OAuthTokenExchangeExtraProperty[];
+}
+
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -1459,12 +1480,10 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get the URL path of the OAuth token endpoint (e.g. "/token"), resolved from the
-     * endpoint referenced by the OAuth client-credentials scheme. Returns undefined when
-     * no OAuth client-credentials scheme is configured or the referenced endpoint cannot
-     * be resolved.
+     * Resolve the {@link FernIr.HttpEndpoint} referenced by the OAuth client-credentials
+     * token endpoint, if one is configured and resolvable.
      */
-    public getOAuthTokenEndpointPath(): string | undefined {
+    public getOAuthTokenHttpEndpoint(): FernIr.HttpEndpoint | undefined {
         const scheme = this.getOAuthClientCredentialsScheme();
         if (scheme == null) {
             return undefined;
@@ -1474,7 +1493,17 @@ export abstract class AbstractRustGeneratorContext<
         if (service == null) {
             return undefined;
         }
-        const endpoint = service.endpoints.find((e) => e.id === reference.endpointId);
+        return service.endpoints.find((e) => e.id === reference.endpointId);
+    }
+
+    /**
+     * Get the URL path of the OAuth token endpoint (e.g. "/token"), resolved from the
+     * endpoint referenced by the OAuth client-credentials scheme. Returns undefined when
+     * no OAuth client-credentials scheme is configured or the referenced endpoint cannot
+     * be resolved.
+     */
+    public getOAuthTokenEndpointPath(): string | undefined {
+        const endpoint = this.getOAuthTokenHttpEndpoint();
         if (endpoint == null) {
             return undefined;
         }
@@ -1486,6 +1515,93 @@ export abstract class AbstractRustGeneratorContext<
             path = `/${path}`;
         }
         return path;
+    }
+
+    /**
+     * Extract the wire-level property-name mapping for the OAuth client-credentials token
+     * exchange from the IR. The generated token fetch uses these names to build the request
+     * body and parse the response, instead of hardcoding the default `client_id` /
+     * `client_secret` / `grant_type` / `access_token` / `expires_in` shape.
+     *
+     * Returns undefined when no OAuth client-credentials scheme is configured.
+     */
+    public getOAuthTokenExchange(): OAuthTokenExchange | undefined {
+        const scheme = this.getOAuthClientCredentialsScheme();
+        if (scheme == null) {
+            return undefined;
+        }
+        const { tokenEndpoint } = scheme.configuration;
+        const clientIdProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientId);
+        const clientSecretProperty = this.getRequestPropertyWireName(tokenEndpoint.requestProperties.clientSecret);
+        const accessTokenProperty = this.getResponsePropertyWireName(tokenEndpoint.responseProperties.accessToken);
+        const expiresInProperty =
+            tokenEndpoint.responseProperties.expiresIn != null
+                ? this.getResponsePropertyWireName(tokenEndpoint.responseProperties.expiresIn)
+                : undefined;
+
+        // Collect literal request-body properties (e.g. `grant_type: "client_credentials"`,
+        // `audience: "..."`), which must be sent verbatim on the token request. Non-literal
+        // properties are supplied from the credentials (client id / secret) or omitted.
+        const extraRequestProperties: OAuthTokenExchangeExtraProperty[] = [];
+        const endpoint = this.getOAuthTokenHttpEndpoint();
+        if (endpoint?.requestBody?.type === "inlinedRequestBody") {
+            for (const property of endpoint.requestBody.properties) {
+                const literalValue = this.getLiteralValueAsString(property.valueType);
+                if (literalValue != null) {
+                    extraRequestProperties.push({
+                        name: this.getWireValueFromName(property.name),
+                        value: literalValue
+                    });
+                }
+            }
+        }
+
+        return {
+            clientIdProperty: clientIdProperty ?? "client_id",
+            clientSecretProperty: clientSecretProperty ?? "client_secret",
+            accessTokenProperty: accessTokenProperty ?? "access_token",
+            expiresInProperty: expiresInProperty ?? "expires_in",
+            extraRequestProperties
+        };
+    }
+
+    private getWireValueFromName(name: FernIr.NameAndWireValueOrString): string {
+        return typeof name === "string" ? name : name.wireValue;
+    }
+
+    private getRequestPropertyWireName(requestProperty: FernIr.RequestProperty): string | undefined {
+        const value = requestProperty.property;
+        switch (value.type) {
+            case "body":
+                return this.getWireValueFromName(value.name);
+            case "query":
+                return this.getWireValueFromName(value.name);
+            default:
+                return undefined;
+        }
+    }
+
+    private getResponsePropertyWireName(responseProperty: FernIr.ResponseProperty): string | undefined {
+        return this.getWireValueFromName(responseProperty.property.name);
+    }
+
+    /**
+     * Returns the constant value of a literal type reference (e.g. `literal<"client_credentials">`)
+     * as a string, or undefined when the type reference is not a literal.
+     */
+    private getLiteralValueAsString(typeReference: FernIr.TypeReference): string | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            const literal = typeReference.container.literal;
+            switch (literal.type) {
+                case "string":
+                    return literal.string;
+                case "boolean":
+                    return String(literal.boolean);
+                default:
+                    return undefined;
+            }
+        }
+        return undefined;
     }
 
     /**
