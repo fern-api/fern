@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.16.1
+  changelogEntry:
+    - summary: |
+        Emit attribute docstrings for aliased Pydantic model fields (e.g. fields renamed
+        from camelCase wire names to snake_case) so IDEs surface the field description
+        on hover, matching the behavior of non-aliased fields.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
 - version: 5.16.0
   changelogEntry:
     - summary: |
