@@ -1,20 +1,26 @@
-import { Rule } from "../../Rule.js";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const OnlyVersionedNavigation: Rule = {
     name: "only-versioned-navigation",
     create: () => {
         return {
             file: async ({ config }) => {
+                const violations: RuleViolation[] = [];
                 if (config.navigation != null && config.versions != null) {
-                    return [
-                        {
-                            severity: "fatal",
-                            message:
-                                "Cannot contain both navigation and versions. If you want versioned docs, use versions. Otherwise use navigation."
-                        }
-                    ];
+                    violations.push({
+                        severity: "fatal",
+                        message:
+                            "Cannot contain both navigation and versions. If you want versioned docs, use versions. Otherwise use navigation."
+                    });
                 }
-                return [];
+                if (config.navigation != null && config.products != null) {
+                    violations.push({
+                        severity: "fatal",
+                        message:
+                            "Cannot contain both navigation and products. If you want multi-product docs, define navigation inside each product file. Otherwise use navigation."
+                    });
+                }
+                return violations;
             }
         };
     }
