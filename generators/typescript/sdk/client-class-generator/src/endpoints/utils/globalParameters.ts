@@ -1,8 +1,10 @@
 import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { typeNeedsStringify } from "./generateHeaders.js";
 import { getClientDefaultValue } from "./isLiteralHeader.js";
 
 /**
@@ -60,26 +62,29 @@ export function getGlobalParametersForEndpoint({
     );
 }
 
-function createClientDefaultLiteral(value: string | boolean): ts.Expression {
-    return typeof value === "boolean"
-        ? value
-            ? ts.factory.createTrue()
-            : ts.factory.createFalse()
-        : ts.factory.createStringLiteral(value);
+function createClientDefaultLiteral(value: string | boolean, forWire: boolean): ts.Expression {
+    if (typeof value === "boolean") {
+        const booleanLiteral = value ? ts.factory.createTrue() : ts.factory.createFalse();
+        if (!forWire) {
+            return booleanLiteral;
+        }
+        // On the wire a boolean default is serialized to its string form, mirroring
+        // the `<value>.toString()` fallback that declared header/query params emit.
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(booleanLiteral, ts.factory.createIdentifier("toString")),
+            undefined,
+            []
+        );
+    }
+    return ts.factory.createStringLiteral(value);
 }
 
-/**
- * Reads the resolved value of a global parameter from the client options,
- * falling back to the client-side default when present:
- *
- *     this._options?.<name> ?? <clientDefault>
- */
-export function getResolvedGlobalParameterValueExpression(
+function getGlobalParameterOptionAccessExpression(
     param: FernIr.GlobalParameter,
     caseConverter: CaseConverter
 ): ts.Expression {
     const optionKey = getSdkOptionKeyForGlobalParameter(param, caseConverter);
-    const optionAccess: ts.Expression = ts.factory.createPropertyAccessChain(
+    return ts.factory.createPropertyAccessChain(
         ts.factory.createPropertyAccessChain(
             ts.factory.createThis(),
             undefined,
@@ -88,15 +93,61 @@ export function getResolvedGlobalParameterValueExpression(
         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
         ts.factory.createIdentifier(optionKey)
     );
+}
 
+function applyClientDefaultFallback(
+    valueExpression: ts.Expression,
+    param: FernIr.GlobalParameter,
+    forWire: boolean
+): ts.Expression {
     const clientDefault = getClientDefaultValue(param.clientDefault);
     if (clientDefault == null) {
-        return optionAccess;
+        return valueExpression;
     }
 
     return ts.factory.createBinaryExpression(
-        optionAccess,
+        valueExpression,
         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-        createClientDefaultLiteral(clientDefault)
+        createClientDefaultLiteral(clientDefault, forWire)
     );
+}
+
+/**
+ * Reads the resolved value of a global parameter from the client options,
+ * falling back to the client-side default when present:
+ *
+ *     this._options?.<name> ?? <clientDefault>
+ *
+ * The value is returned in its declared TypeScript type (not stringified), so
+ * this is used for body injection where the value is serialized as-is. Header
+ * and query locations must use {@link getResolvedGlobalParameterValueExpressionForWire}
+ * so date/datetime values are formatted to their wire representation.
+ */
+export function getResolvedGlobalParameterValueExpression(
+    param: FernIr.GlobalParameter,
+    caseConverter: CaseConverter
+): ts.Expression {
+    return applyClientDefaultFallback(getGlobalParameterOptionAccessExpression(param, caseConverter), param, false);
+}
+
+/**
+ * Like {@link getResolvedGlobalParameterValueExpression}, but formats the
+ * resolved value to its wire representation for header/query locations —
+ * mirroring the `context.type.stringify` handling that declared header and
+ * query parameters receive (e.g. `date`/`datetime` serialize to ISO-8601
+ * rather than being coerced by `String(new Date())`):
+ *
+ *     stringify(this._options?.<name>) ?? <clientDefault>
+ */
+export function getResolvedGlobalParameterValueExpressionForWire(
+    param: FernIr.GlobalParameter,
+    context: FileContext
+): ts.Expression {
+    let optionAccess = getGlobalParameterOptionAccessExpression(param, context.case);
+    if (typeNeedsStringify(param.valueType, context)) {
+        optionAccess = context.type.stringify(optionAccess, param.valueType, {
+            includeNullCheckIfOptional: true
+        });
+    }
+    return applyClientDefaultFallback(optionAccess, param, true);
 }

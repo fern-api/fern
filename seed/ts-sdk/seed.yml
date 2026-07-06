@@ -535,6 +535,12 @@ fixtures:
   server-sent-events-openapi:
     - outputFolder: no-custom-config
       customConfig: null
+  x-fern-global-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde
+      customConfig:
+        noSerdeLayer: false
 
 scripts:
   - image: fernapi/ts-seed

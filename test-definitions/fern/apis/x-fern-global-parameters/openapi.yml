@@ -47,6 +47,11 @@ x-fern-global-parameters:
     default: auto-generated
     x-fern-default: trace-default
     docs: x-fern-default should take precedence over default.
+  - name: updated-since
+    in: query
+    type: date-time
+    optional: true
+    docs: A datetime global must serialize to ISO-8601 on the wire, not String(Date).
 paths:
   "/v1/products/{regionId}/search":
     post:
@@ -60,6 +65,7 @@ paths:
         - verbose
         - api-version
         - x-trace-id
+        - updated-since
       operationId: searchProducts
       parameters:
         - in: path
@@ -94,6 +100,23 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Product"
+  "/v1/products/config":
+    post:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: updateConfig
+      # currency is `apply: auto`, so it targets this endpoint's body (config.currency)
+      # automatically. The request body is an OPTIONAL reference, so when the caller omits
+      # it the runtime body is `undefined` — the body global must NOT fabricate a body.
+      operationId: updateConfig
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductConfig"
+      responses:
+        "200":
+          description: Updated
   "/v1/products/image":
     post:
       x-fern-sdk-group-name: products
@@ -141,6 +164,16 @@ paths:
                 $ref: "#/components/schemas/Product"
 components:
   schemas:
+    ProductConfig:
+      type: object
+      properties:
+        config:
+          type: object
+          properties:
+            currency:
+              type: string
+            limit:
+              type: integer
     Product:
       type: object
       properties:

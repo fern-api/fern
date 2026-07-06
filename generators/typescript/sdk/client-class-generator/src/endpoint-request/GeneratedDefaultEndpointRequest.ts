@@ -16,7 +16,8 @@ import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHe
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
     getGlobalParametersForEndpoint,
-    getResolvedGlobalParameterValueExpression
+    getResolvedGlobalParameterValueExpression,
+    getResolvedGlobalParameterValueExpressionForWire
 } from "../endpoints/utils/globalParameters.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter.js";
@@ -228,9 +229,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         body: ts.Expression | undefined,
         context: FileContext
     ): ts.Expression | undefined {
-        // Only inject into an existing request body — never fabricate a body on a
-        // bodyless endpoint (e.g. an `apply: auto` body global must not add a body
-        // to a GET). The runtime helper additionally leaves non-object bodies alone.
+        // Only inject when the endpoint declares a request body — never fabricate a
+        // body on a bodyless endpoint (e.g. an `apply: auto` body global must not add
+        // a body to a GET). The runtime helper additionally leaves non-object bodies
+        // and a runtime-`undefined` body (an omitted optional reference body) alone,
+        // so an injected global never turns a bodyless request into one with a payload.
         if (body == null || this.requestBody == null) {
             return body;
         }
@@ -435,7 +438,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                     location: FernIr.GlobalParameterLocation.Query
                 }).map((param) => ({
                     wireName: param.target,
-                    value: getResolvedGlobalParameterValueExpression(param, this.case)
+                    value: getResolvedGlobalParameterValueExpressionForWire(param, context)
                 }))
             });
         }

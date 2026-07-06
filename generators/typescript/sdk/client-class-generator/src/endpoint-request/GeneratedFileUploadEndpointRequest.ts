@@ -16,7 +16,7 @@ import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForF
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
     getGlobalParametersForEndpoint,
-    getResolvedGlobalParameterValueExpression
+    getResolvedGlobalParameterValueExpressionForWire
 } from "../endpoints/utils/globalParameters.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter.js";
@@ -437,7 +437,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     location: FernIr.GlobalParameterLocation.Query
                 }).map((param) => ({
                     wireName: param.target,
-                    value: getResolvedGlobalParameterValueExpression(param, this.case)
+                    value: getResolvedGlobalParameterValueExpressionForWire(param, context)
                 }))
             });
         }

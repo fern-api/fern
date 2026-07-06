@@ -105,6 +105,38 @@ export class BaseClientContextImpl implements BaseClientContext {
         }
     }
 
+    /**
+     * Built-in client-option names that a global parameter never overrides. A
+     * global whose SDK-facing name collides with one of these is skipped so we
+     * never emit a duplicate property (the built-in option wins). This is the
+     * single source of truth shared with the test generator so the two cannot
+     * drift.
+     *
+     * `environment` is only reserved when the SDK actually exposes an environment
+     * option — an environment-less SDK may legitimately expose a global parameter
+     * literally named `environment`.
+     */
+    public static getReservedClientOptionNames({
+        hasEnvironmentOption
+    }: {
+        hasEnvironmentOption: boolean;
+    }): Set<string> {
+        const names = new Set<string>([
+            BASE_URL_OPTION_PROPERTY_NAME,
+            "headers",
+            TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME,
+            MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME,
+            "fetch",
+            CUSTOM_FETCHER_PROPERTY_NAME,
+            "logging",
+            "stream"
+        ]);
+        if (hasEnvironmentOption) {
+            names.add(ENVIRONMENT_OPTION_PROPERTY_NAME);
+        }
+        return names;
+    }
+
     public anyRequiredBaseClientOptions(context: FileContext): boolean {
         // Check base properties
         if (this.generateBaseClientOptionsInterface(context).properties.some(isPropertyRequired)) {
@@ -267,13 +299,9 @@ export class BaseClientContextImpl implements BaseClientContext {
         // skipped so we never emit a duplicate property (the built-in option wins).
         const usedOptionNames = new Set<string>([
             ...properties.map((property) => property.name),
-            "headers",
-            getPropertyKey(TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME),
-            getPropertyKey(MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME),
-            "fetch",
-            getPropertyKey(CUSTOM_FETCHER_PROPERTY_NAME),
-            "logging",
-            "stream"
+            ...BaseClientContextImpl.getReservedClientOptionNames({
+                hasEnvironmentOption: !this.requireDefaultEnvironment
+            })
         ]);
         for (const globalParameter of this.intermediateRepresentation.globalParameters ?? []) {
             // Path-location global parameters are not yet injected into requests (the target is a

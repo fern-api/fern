@@ -1,12 +1,13 @@
 import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { createHttpEndpoint } from "@fern-typescript/test-utils";
+import { createHttpEndpoint, createMockTypeContext } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
 import {
     getGlobalParametersForEndpoint,
     getResolvedGlobalParameterValueExpression,
+    getResolvedGlobalParameterValueExpressionForWire,
     getSdkOptionKeyForGlobalParameter,
     globalParameterAppliesToEndpoint
 } from "../endpoints/utils/globalParameters.js";
@@ -16,6 +17,14 @@ const caseConverter = new CaseConverter({
     keywords: undefined,
     smartCasing: true
 });
+
+const wireContext = {
+    case: caseConverter,
+    type: createMockTypeContext()
+    // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal FileContext interface
+} as any;
+
+const dateTimeType = FernIr.TypeReference.primitive({ v1: "DATE_TIME", v2: undefined });
 
 function createGlobalParameter(overrides: Partial<FernIr.GlobalParameter> & { id: string }): FernIr.GlobalParameter {
     return {
@@ -125,6 +134,33 @@ describe("getResolvedGlobalParameterValueExpression", () => {
         const param = createGlobalParameter({ id: "verbose", clientDefault: FernIr.Literal.boolean(false) });
         expect(printExpression(getResolvedGlobalParameterValueExpression(param, caseConverter))).toBe(
             "this._options?.verbose ?? false"
+        );
+    });
+});
+
+describe("getResolvedGlobalParameterValueExpressionForWire", () => {
+    it("stringifies a datetime value to its wire representation", () => {
+        // Declared date/datetime params serialize via context.type.stringify (ISO-8601);
+        // globals must do the same instead of letting the fetcher coerce a raw Date.
+        const param = createGlobalParameter({ id: "updated-since", valueType: dateTimeType });
+        expect(printExpression(getResolvedGlobalParameterValueExpressionForWire(param, wireContext))).toBe(
+            "(this._options?.updatedSince).toString()"
+        );
+    });
+
+    it("does not stringify a plain string value", () => {
+        const param = createGlobalParameter({ id: "language" });
+        expect(printExpression(getResolvedGlobalParameterValueExpressionForWire(param, wireContext))).toBe(
+            "this._options?.language"
+        );
+    });
+
+    it("serializes a boolean client default to its string form on the wire", () => {
+        // Mirrors the `<value>.toString()` fallback declared header/query params emit,
+        // rather than the raw boolean literal used for body injection.
+        const param = createGlobalParameter({ id: "verbose", clientDefault: FernIr.Literal.boolean(false) });
+        expect(printExpression(getResolvedGlobalParameterValueExpressionForWire(param, wireContext))).toBe(
+            "this._options?.verbose ?? false.toString()"
         );
     });
 });

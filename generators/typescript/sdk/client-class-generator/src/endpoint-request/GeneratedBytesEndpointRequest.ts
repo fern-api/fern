@@ -15,7 +15,7 @@ import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHe
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
     getGlobalParametersForEndpoint,
-    getResolvedGlobalParameterValueExpression
+    getResolvedGlobalParameterValueExpressionForWire
 } from "../endpoints/utils/globalParameters.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter.js";
@@ -305,7 +305,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                     location: FernIr.GlobalParameterLocation.Query
                 }).map((param) => ({
                     wireName: param.target,
-                    value: getResolvedGlobalParameterValueExpression(param, this.case)
+                    value: getResolvedGlobalParameterValueExpressionForWire(param, context)
                 }))
             });
         }

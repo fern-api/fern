@@ -6,7 +6,10 @@ import { ts } from "ts-morph";
 import { GeneratedHeader } from "../../GeneratedHeader.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { RequestParameter } from "../../request-parameter/RequestParameter.js";
-import { getGlobalParametersForEndpoint, getResolvedGlobalParameterValueExpression } from "./globalParameters.js";
+import {
+    getGlobalParametersForEndpoint,
+    getResolvedGlobalParameterValueExpressionForWire
+} from "./globalParameters.js";
 import { getClientDefaultValue, getLiteralValueForHeader } from "./isLiteralHeader.js";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter.js";
 
@@ -100,7 +103,7 @@ export function generateHeaders({
     })) {
         elements.push({
             header: globalParameter.target,
-            value: getResolvedGlobalParameterValueExpression(globalParameter, context.case)
+            value: getResolvedGlobalParameterValueExpressionForWire(globalParameter, context)
         });
     }
 
@@ -455,7 +458,7 @@ export function typeContainsNullable(type: FernIr.TypeReference, context: FileCo
     }
 }
 
-function typeNeedsStringify(type: FernIr.TypeReference, context: FileContext): boolean {
+export function typeNeedsStringify(type: FernIr.TypeReference, context: FileContext): boolean {
     return type._visit({
         container: (containerType) => {
             return containerType._visit({
