@@ -4,8 +4,8 @@ import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
-import { typeNeedsStringify } from "./generateHeaders.js";
 import { getClientDefaultValue } from "./isLiteralHeader.js";
+import { typeNeedsStringify } from "./typeNeedsStringify.js";
 
 /**
  * Helpers for consuming `ir.globalParameters` in the SDK generator.
@@ -62,21 +62,32 @@ export function getGlobalParametersForEndpoint({
     );
 }
 
-function createClientDefaultLiteral(value: string | boolean, forWire: boolean): ts.Expression {
+function createClientDefaultLiteral(value: string | boolean): ts.Expression {
     if (typeof value === "boolean") {
-        const booleanLiteral = value ? ts.factory.createTrue() : ts.factory.createFalse();
-        if (!forWire) {
-            return booleanLiteral;
-        }
-        // On the wire a boolean default is serialized to its string form, mirroring
-        // the `<value>.toString()` fallback that declared header/query params emit.
-        return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(booleanLiteral, ts.factory.createIdentifier("toString")),
-            undefined,
-            []
-        );
+        return value ? ts.factory.createTrue() : ts.factory.createFalse();
     }
     return ts.factory.createStringLiteral(value);
+}
+
+function createToStringCall(expression: ts.Expression): ts.Expression {
+    return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(expression, ts.factory.createIdentifier("toString")),
+        undefined,
+        []
+    );
+}
+
+function isBooleanValueType(type: FernIr.TypeReference): boolean {
+    if (type.type === "container") {
+        if (type.container.type === "optional") {
+            return isBooleanValueType(type.container.optional);
+        }
+        if (type.container.type === "nullable") {
+            return isBooleanValueType(type.container.nullable);
+        }
+        return false;
+    }
+    return type.type === "primitive" && type.primitive.v1 === "BOOLEAN";
 }
 
 function getGlobalParameterOptionAccessExpression(
@@ -95,11 +106,7 @@ function getGlobalParameterOptionAccessExpression(
     );
 }
 
-function applyClientDefaultFallback(
-    valueExpression: ts.Expression,
-    param: FernIr.GlobalParameter,
-    forWire: boolean
-): ts.Expression {
+function applyClientDefaultFallback(valueExpression: ts.Expression, param: FernIr.GlobalParameter): ts.Expression {
     const clientDefault = getClientDefaultValue(param.clientDefault);
     if (clientDefault == null) {
         return valueExpression;
@@ -108,7 +115,7 @@ function applyClientDefaultFallback(
     return ts.factory.createBinaryExpression(
         valueExpression,
         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-        createClientDefaultLiteral(clientDefault, forWire)
+        createClientDefaultLiteral(clientDefault)
     );
 }
 
@@ -127,7 +134,7 @@ export function getResolvedGlobalParameterValueExpression(
     param: FernIr.GlobalParameter,
     caseConverter: CaseConverter
 ): ts.Expression {
-    return applyClientDefaultFallback(getGlobalParameterOptionAccessExpression(param, caseConverter), param, false);
+    return applyClientDefaultFallback(getGlobalParameterOptionAccessExpression(param, caseConverter), param);
 }
 
 /**
@@ -138,16 +145,31 @@ export function getResolvedGlobalParameterValueExpression(
  * rather than being coerced by `String(new Date())`):
  *
  *     stringify(this._options?.<name>) ?? <clientDefault>
+ *
+ * Booleans are handled symmetrically: the whole resolved value is stringified
+ * (`(this._options?.<name> ?? <default>).toString()`) so the option value and
+ * the default are treated identically, matching declared params. A bare boolean
+ * option with no default is left as-is (the fetcher/query builder coerces it).
  */
 export function getResolvedGlobalParameterValueExpressionForWire(
     param: FernIr.GlobalParameter,
     context: FileContext
 ): ts.Expression {
+    if (isBooleanValueType(param.valueType)) {
+        const resolved = applyClientDefaultFallback(
+            getGlobalParameterOptionAccessExpression(param, context.case),
+            param
+        );
+        // Only wrap in `.toString()` when a default guarantees the value is a
+        // non-null boolean; otherwise `undefined.toString()` could throw.
+        return getClientDefaultValue(param.clientDefault) != null ? createToStringCall(resolved) : resolved;
+    }
+
     let optionAccess = getGlobalParameterOptionAccessExpression(param, context.case);
     if (typeNeedsStringify(param.valueType, context)) {
         optionAccess = context.type.stringify(optionAccess, param.valueType, {
             includeNullCheckIfOptional: true
         });
     }
-    return applyClientDefaultFallback(optionAccess, param, true);
+    return applyClientDefaultFallback(optionAccess, param);
 }

@@ -25,6 +25,7 @@ const wireContext = {
 } as any;
 
 const dateTimeType = FernIr.TypeReference.primitive({ v1: "DATE_TIME", v2: undefined });
+const booleanType = FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined });
 
 function createGlobalParameter(overrides: Partial<FernIr.GlobalParameter> & { id: string }): FernIr.GlobalParameter {
     return {
@@ -155,12 +156,25 @@ describe("getResolvedGlobalParameterValueExpressionForWire", () => {
         );
     });
 
-    it("serializes a boolean client default to its string form on the wire", () => {
-        // Mirrors the `<value>.toString()` fallback declared header/query params emit,
-        // rather than the raw boolean literal used for body injection.
-        const param = createGlobalParameter({ id: "verbose", clientDefault: FernIr.Literal.boolean(false) });
+    it("serializes a boolean global symmetrically on the wire when it has a default", () => {
+        // The whole resolved value is stringified so the option value and the default
+        // are treated identically (matching declared params), rather than only the default.
+        const param = createGlobalParameter({
+            id: "verbose",
+            valueType: booleanType,
+            clientDefault: FernIr.Literal.boolean(false)
+        });
         expect(printExpression(getResolvedGlobalParameterValueExpressionForWire(param, wireContext))).toBe(
-            "this._options?.verbose ?? false.toString()"
+            "(this._options?.verbose ?? false).toString()"
+        );
+    });
+
+    it("leaves a boolean global with no default as a raw value on the wire", () => {
+        // Without a default the option may be undefined; wrapping in `.toString()` could
+        // throw, so the raw value is emitted and the fetcher/query builder coerces it.
+        const param = createGlobalParameter({ id: "verbose", valueType: booleanType });
+        expect(printExpression(getResolvedGlobalParameterValueExpressionForWire(param, wireContext))).toBe(
+            "this._options?.verbose"
         );
     });
 });

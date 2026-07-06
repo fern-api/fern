@@ -12,6 +12,7 @@ import {
 } from "./globalParameters.js";
 import { getClientDefaultValue, getLiteralValueForHeader } from "./isLiteralHeader.js";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter.js";
+import { typeNeedsStringify } from "./typeNeedsStringify.js";
 
 export const HEADERS_VAR_NAME = "_headers";
 export function generateHeaders({
@@ -456,55 +457,4 @@ export function typeContainsNullable(type: FernIr.TypeReference, context: FileCo
         default:
             return false;
     }
-}
-
-export function typeNeedsStringify(type: FernIr.TypeReference, context: FileContext): boolean {
-    return type._visit({
-        container: (containerType) => {
-            return containerType._visit({
-                list: () => true,
-                map: () => true,
-                set: () => true,
-                literal: () => false,
-                optional: (innerType) => typeNeedsStringify(innerType, context),
-                nullable: (innerType) => typeNeedsStringify(innerType, context),
-                _other: () => true
-            });
-        },
-        named: (namedType) => {
-            const declaration = context.type.getTypeDeclaration(namedType);
-            return declaration.shape._visit({
-                alias: (alias) => typeNeedsStringify(alias.aliasOf, context),
-                enum: () => false,
-                object: () => true,
-                union: () => true,
-                undiscriminatedUnion: () => true,
-                _other: () => true
-            });
-        },
-        primitive: (primitiveType) => {
-            switch (primitiveType.v1) {
-                case "INTEGER":
-                case "LONG":
-                case "UINT":
-                case "UINT_64":
-                case "FLOAT":
-                case "DOUBLE":
-                case "BOOLEAN":
-                case "STRING":
-                case "UUID":
-                case "BASE_64":
-                case "BIG_INTEGER":
-                    return false;
-                case "DATE":
-                case "DATE_TIME":
-                case "DATE_TIME_RFC_2822":
-                    return true;
-                default:
-                    return false;
-            }
-        },
-        unknown: () => true,
-        _other: () => true
-    });
 }

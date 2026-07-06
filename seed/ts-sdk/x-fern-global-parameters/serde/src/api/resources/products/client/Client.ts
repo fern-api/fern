@@ -64,7 +64,7 @@ export class ProductsClient {
             queryString: core.url
                 .queryBuilder()
                 .add("language", this._options?.language)
-                .add("verbose", this._options?.verbose ?? false.toString())
+                .add("verbose", (this._options?.verbose ?? false).toString())
                 .add("api-version", this._options?.apiVersion)
                 .add(
                     "updated-since",
@@ -219,7 +219,7 @@ export class ProductsClient {
             queryString: core.url
                 .queryBuilder()
                 .add("language", this._options?.language)
-                .add("verbose", this._options?.verbose ?? false.toString())
+                .add("verbose", (this._options?.verbose ?? false).toString())
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "file",
