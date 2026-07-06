@@ -35,6 +35,31 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Create a new playlist
+//
+// Example:
+//
+//	request := &fern.CreatePlaylistRequest{
+//	    Datetime: fern.MustParseDateTime(
+//	        "2024-01-15T09:30:00Z",
+//	    ),
+//	    OptionalDatetime: fern.Time(
+//	        fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	    ),
+//	    Body: &fern.PlaylistCreateRequest{
+//	        Name: "name",
+//	        Problems: []common.ProblemID{
+//	            "problems",
+//	            "problems",
+//	        },
+//	    },
+//	}
+//	client.Playlist.CreatePlaylist(
+//	    context.TODO(),
+//	    1,
+//	    request,
+//	)
 func (c *Client) CreatePlaylist(
 	ctx context.Context,
 	serviceParam int,
@@ -54,6 +79,29 @@ func (c *Client) CreatePlaylist(
 }
 
 // Returns the user's playlists
+//
+// Example:
+//
+//	request := &fern.GetPlaylistsRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	    OtherField: "otherField",
+//	    MultiLineDocs: "multiLineDocs",
+//	    OptionalMultipleField: []*string{
+//	        fern.String(
+//	            "optionalMultipleField",
+//	        ),
+//	    },
+//	    MultipleField: []string{
+//	        "multipleField",
+//	    },
+//	}
+//	client.Playlist.GetPlaylists(
+//	    context.TODO(),
+//	    1,
+//	    request,
+//	)
 func (c *Client) GetPlaylists(
 	ctx context.Context,
 	serviceParam int,
@@ -73,6 +121,14 @@ func (c *Client) GetPlaylists(
 }
 
 // Returns a playlist
+//
+// Example:
+//
+//	client.Playlist.GetPlaylist(
+//	    context.TODO(),
+//	    1,
+//	    "playlistId",
+//	)
 func (c *Client) GetPlaylist(
 	ctx context.Context,
 	serviceParam int,
@@ -92,6 +148,22 @@ func (c *Client) GetPlaylist(
 }
 
 // Updates a playlist
+//
+// Example:
+//
+//	request := &fern.UpdatePlaylistRequest{
+//	    Name: "name",
+//	    Problems: []common.ProblemID{
+//	        "problems",
+//	        "problems",
+//	    },
+//	}
+//	client.Playlist.UpdatePlaylist(
+//	    context.TODO(),
+//	    1,
+//	    "playlistId",
+//	    request,
+//	)
 func (c *Client) UpdatePlaylist(
 	ctx context.Context,
 	serviceParam int,
@@ -113,6 +185,14 @@ func (c *Client) UpdatePlaylist(
 }
 
 // Deletes a playlist
+//
+// Example:
+//
+//	client.Playlist.DeletePlaylist(
+//	    context.TODO(),
+//	    1,
+//	    "playlist_id",
+//	)
 func (c *Client) DeletePlaylist(
 	ctx context.Context,
 	serviceParam int,

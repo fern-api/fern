@@ -34,6 +34,13 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Organizations.GetOrganization(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "organization_id",
+//	)
 func (c *Client) GetOrganization(
 	ctx context.Context,
 	tenantID string,
@@ -52,6 +59,14 @@ func (c *Client) GetOrganization(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Organizations.GetOrganizationUser(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "organization_id",
+//	    "user_id",
+//	)
 func (c *Client) GetOrganizationUser(
 	ctx context.Context,
 	tenantID string,
@@ -72,6 +87,19 @@ func (c *Client) GetOrganizationUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.SearchOrganizationsRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Organizations.SearchOrganizations(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "organization_id",
+//	    request,
+//	)
 func (c *Client) SearchOrganizations(
 	ctx context.Context,
 	tenantID string,

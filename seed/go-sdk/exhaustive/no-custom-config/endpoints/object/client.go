@@ -34,6 +34,60 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &types.ObjectWithOptionalField{
+//	    FieldString: fern.String(
+//	        "string",
+//	    ),
+//	    Integer: fern.Int(
+//	        1,
+//	    ),
+//	    Long: fern.Int64(
+//	        int64(1000000),
+//	    ),
+//	    Double: fern.Float64(
+//	        1.1,
+//	    ),
+//	    Bool: fern.Bool(
+//	        true,
+//	    ),
+//	    Datetime: fern.Time(
+//	        fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	    ),
+//	    Date: fern.Time(
+//	        fern.MustParseDate(
+//	            "2023-01-15",
+//	        ),
+//	    ),
+//	    UUID: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	    Base64: fern.Bytes(
+//	        []byte("SGVsbG8gd29ybGQh"),
+//	    ),
+//	    List: []string{
+//	        "list",
+//	        "list",
+//	    },
+//	    Set: []string{
+//	        "set",
+//	    },
+//	    Map: map[int]string{
+//	        1: "map",
+//	    },
+//	    Bigint: fern.String(
+//	        "1000000",
+//	    ),
+//	}
+//	client.Endpoints.Object.GetAndReturnWithOptionalField(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithOptionalField(
 	ctx context.Context,
 	request *types.ObjectWithOptionalField,
@@ -50,6 +104,15 @@ func (c *Client) GetAndReturnWithOptionalField(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithRequiredField{
+//	    FieldString: "string",
+//	}
+//	client.Endpoints.Object.GetAndReturnWithRequiredField(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithRequiredField(
 	ctx context.Context,
 	request *types.ObjectWithRequiredField,
@@ -66,6 +129,19 @@ func (c *Client) GetAndReturnWithRequiredField(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithMapOfMap{
+//	    Map: map[string]map[string]string{
+//	        "map": map[string]string{
+//	            "map": "map",
+//	        },
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnWithMapOfMap(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithMapOfMap(
 	ctx context.Context,
 	request *types.ObjectWithMapOfMap,
@@ -82,6 +158,65 @@ func (c *Client) GetAndReturnWithMapOfMap(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.NestedObjectWithOptionalField{
+//	    FieldString: fern.String(
+//	        "string",
+//	    ),
+//	    NestedObject: &types.ObjectWithOptionalField{
+//	        FieldString: fern.String(
+//	            "string",
+//	        ),
+//	        Integer: fern.Int(
+//	            1,
+//	        ),
+//	        Long: fern.Int64(
+//	            int64(1000000),
+//	        ),
+//	        Double: fern.Float64(
+//	            1.1,
+//	        ),
+//	        Bool: fern.Bool(
+//	            true,
+//	        ),
+//	        Datetime: fern.Time(
+//	            fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	        ),
+//	        Date: fern.Time(
+//	            fern.MustParseDate(
+//	                "2023-01-15",
+//	            ),
+//	        ),
+//	        UUID: fern.UUID(
+//	            uuid.MustParse(
+//	                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	            ),
+//	        ),
+//	        Base64: fern.Bytes(
+//	            []byte("SGVsbG8gd29ybGQh"),
+//	        ),
+//	        List: []string{
+//	            "list",
+//	            "list",
+//	        },
+//	        Set: []string{
+//	            "set",
+//	        },
+//	        Map: map[int]string{
+//	            1: "map",
+//	        },
+//	        Bigint: fern.String(
+//	            "1000000",
+//	        ),
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnNestedWithOptionalField(
 	ctx context.Context,
 	request *types.NestedObjectWithOptionalField,
@@ -98,6 +233,64 @@ func (c *Client) GetAndReturnNestedWithOptionalField(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.NestedObjectWithRequiredField{
+//	    FieldString: "string",
+//	    NestedObject: &types.ObjectWithOptionalField{
+//	        FieldString: fern.String(
+//	            "string",
+//	        ),
+//	        Integer: fern.Int(
+//	            1,
+//	        ),
+//	        Long: fern.Int64(
+//	            int64(1000000),
+//	        ),
+//	        Double: fern.Float64(
+//	            1.1,
+//	        ),
+//	        Bool: fern.Bool(
+//	            true,
+//	        ),
+//	        Datetime: fern.Time(
+//	            fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	        ),
+//	        Date: fern.Time(
+//	            fern.MustParseDate(
+//	                "2023-01-15",
+//	            ),
+//	        ),
+//	        UUID: fern.UUID(
+//	            uuid.MustParse(
+//	                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	            ),
+//	        ),
+//	        Base64: fern.Bytes(
+//	            []byte("SGVsbG8gd29ybGQh"),
+//	        ),
+//	        List: []string{
+//	            "list",
+//	            "list",
+//	        },
+//	        Set: []string{
+//	            "set",
+//	        },
+//	        Map: map[int]string{
+//	            1: "map",
+//	        },
+//	        Bigint: fern.String(
+//	            "1000000",
+//	        ),
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
+//	    context.TODO(),
+//	    "string",
+//	    request,
+//	)
 func (c *Client) GetAndReturnNestedWithRequiredField(
 	ctx context.Context,
 	string_ string,
@@ -116,6 +309,116 @@ func (c *Client) GetAndReturnNestedWithRequiredField(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := []*types.NestedObjectWithRequiredField{
+//	    &types.NestedObjectWithRequiredField{
+//	        FieldString: "string",
+//	        NestedObject: &types.ObjectWithOptionalField{
+//	            FieldString: fern.String(
+//	                "string",
+//	            ),
+//	            Integer: fern.Int(
+//	                1,
+//	            ),
+//	            Long: fern.Int64(
+//	                int64(1000000),
+//	            ),
+//	            Double: fern.Float64(
+//	                1.1,
+//	            ),
+//	            Bool: fern.Bool(
+//	                true,
+//	            ),
+//	            Datetime: fern.Time(
+//	                fern.MustParseDateTime(
+//	                    "2024-01-15T09:30:00Z",
+//	                ),
+//	            ),
+//	            Date: fern.Time(
+//	                fern.MustParseDate(
+//	                    "2023-01-15",
+//	                ),
+//	            ),
+//	            UUID: fern.UUID(
+//	                uuid.MustParse(
+//	                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	                ),
+//	            ),
+//	            Base64: fern.Bytes(
+//	                []byte("SGVsbG8gd29ybGQh"),
+//	            ),
+//	            List: []string{
+//	                "list",
+//	                "list",
+//	            },
+//	            Set: []string{
+//	                "set",
+//	            },
+//	            Map: map[int]string{
+//	                1: "map",
+//	            },
+//	            Bigint: fern.String(
+//	                "1000000",
+//	            ),
+//	        },
+//	    },
+//	    &types.NestedObjectWithRequiredField{
+//	        FieldString: "string",
+//	        NestedObject: &types.ObjectWithOptionalField{
+//	            FieldString: fern.String(
+//	                "string",
+//	            ),
+//	            Integer: fern.Int(
+//	                1,
+//	            ),
+//	            Long: fern.Int64(
+//	                int64(1000000),
+//	            ),
+//	            Double: fern.Float64(
+//	                1.1,
+//	            ),
+//	            Bool: fern.Bool(
+//	                true,
+//	            ),
+//	            Datetime: fern.Time(
+//	                fern.MustParseDateTime(
+//	                    "2024-01-15T09:30:00Z",
+//	                ),
+//	            ),
+//	            Date: fern.Time(
+//	                fern.MustParseDate(
+//	                    "2023-01-15",
+//	                ),
+//	            ),
+//	            UUID: fern.UUID(
+//	                uuid.MustParse(
+//	                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	                ),
+//	            ),
+//	            Base64: fern.Bytes(
+//	                []byte("SGVsbG8gd29ybGQh"),
+//	            ),
+//	            List: []string{
+//	                "list",
+//	                "list",
+//	            },
+//	            Set: []string{
+//	                "set",
+//	            },
+//	            Map: map[int]string{
+//	                1: "map",
+//	            },
+//	            Bigint: fern.String(
+//	                "1000000",
+//	            ),
+//	        },
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 	ctx context.Context,
 	request []*types.NestedObjectWithRequiredField,
@@ -132,6 +435,17 @@ func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithUnknownField{
+//	    Unknown: map[string]any{
+//	        "$ref": "https://example.com/schema",
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnWithUnknownField(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithUnknownField(
 	ctx context.Context,
 	request *types.ObjectWithUnknownField,
@@ -148,6 +462,17 @@ func (c *Client) GetAndReturnWithUnknownField(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithDocumentedUnknownType{
+//	    DocumentedUnknownType: map[string]any{
+//	        "key": "value",
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithDocumentedUnknownType(
 	ctx context.Context,
 	request *types.ObjectWithDocumentedUnknownType,
@@ -164,6 +489,17 @@ func (c *Client) GetAndReturnWithDocumentedUnknownType(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := map[string]types.DocumentedUnknownType{
+//	    "string": map[string]any{
+//	        "key": "value",
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnMapOfDocumentedUnknownType(
 	ctx context.Context,
 	request types.MapOfDocumentedUnknownType,
@@ -182,6 +518,21 @@ func (c *Client) GetAndReturnMapOfDocumentedUnknownType(
 
 // Tests that dynamic snippets include all required properties in the
 // object initializer, even when the example omits some required fields.
+//
+// Example:
+//
+//	request := &types.ObjectWithMixedRequiredAndOptionalFields{
+//	    RequiredString: "hello",
+//	    RequiredInteger: 0,
+//	    OptionalString: fern.String(
+//	        "world",
+//	    ),
+//	    RequiredLong: int64(0),
+//	}
+//	client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithMixedRequiredAndOptionalFields(
 	ctx context.Context,
 	request *types.ObjectWithMixedRequiredAndOptionalFields,
@@ -202,6 +553,20 @@ func (c *Client) GetAndReturnWithMixedRequiredAndOptionalFields(
 // required properties whose type is a named object. When the example
 // omits the nested object, the generator should construct a default
 // initializer with the nested object's required properties filled in.
+//
+// Example:
+//
+//	request := &types.ObjectWithRequiredNestedObject{
+//	    RequiredString: "hello",
+//	    RequiredObject: &types.NestedObjectWithRequiredField{
+//	        FieldString: "nested",
+//	        NestedObject: &types.ObjectWithOptionalField{},
+//	    },
+//	}
+//	client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithRequiredNestedObject(
 	ctx context.Context,
 	request *types.ObjectWithRequiredNestedObject,
@@ -221,6 +586,19 @@ func (c *Client) GetAndReturnWithRequiredNestedObject(
 // Tests that string fields containing datetime-like values are NOT reformatted.
 // The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
 // without being converted to "2023-08-31T14:15:22.000Z".
+//
+// Example:
+//
+//	request := &types.ObjectWithDatetimeLikeString{
+//	    DatetimeLikeString: "2023-08-31T14:15:22Z",
+//	    ActualDatetime: fern.MustParseDateTime(
+//	        "2023-08-31T14:15:22Z",
+//	    ),
+//	}
+//	client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnWithDatetimeLikeString(
 	ctx context.Context,
 	request *types.ObjectWithDatetimeLikeString,

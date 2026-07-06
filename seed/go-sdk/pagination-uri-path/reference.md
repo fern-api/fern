@@ -14,9 +14,8 @@
 
 ```go
 client.Users.ListWithURIPagination(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -42,9 +41,8 @@ client.Users.ListWithURIPagination(
 
 ```go
 client.Users.ListWithPathPagination(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

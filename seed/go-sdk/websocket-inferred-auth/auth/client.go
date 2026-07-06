@@ -34,6 +34,20 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetTokenRequest{
+//	    XAPIKey: "X-Api-Key",
+//	    ClientID: "client_id",
+//	    ClientSecret: "client_secret",
+//	    Scope: fern.String(
+//	        "scope",
+//	    ),
+//	}
+//	client.Auth.GetTokenWithClientCredentials(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetTokenWithClientCredentials(
 	ctx context.Context,
 	request *fern.GetTokenRequest,
@@ -50,6 +64,21 @@ func (c *Client) GetTokenWithClientCredentials(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.RefreshTokenRequest{
+//	    XAPIKey: "X-Api-Key",
+//	    ClientID: "client_id",
+//	    ClientSecret: "client_secret",
+//	    RefreshToken: "refresh_token",
+//	    Scope: fern.String(
+//	        "scope",
+//	    ),
+//	}
+//	client.Auth.RefreshToken(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) RefreshToken(
 	ctx context.Context,
 	request *fern.RefreshTokenRequest,

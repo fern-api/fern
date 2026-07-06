@@ -34,6 +34,27 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendLiteralsInQueryRequest{
+//	    AliasPrompt: fern.AliasToPrompt(
+//	        "You are a helpful assistant",
+//	    ),
+//	    AliasOptionalPrompt: fern.String(
+//	        "You are a helpful assistant",
+//	    ),
+//	    AliasStream: fern.AliasToStream(
+//	        false,
+//	    ),
+//	    AliasOptionalStream: fern.Bool(
+//	        false,
+//	    ),
+//	    Query: "What is the weather today",
+//	}
+//	client.Query.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendLiteralsInQueryRequest,

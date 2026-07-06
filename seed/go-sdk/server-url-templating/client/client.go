@@ -35,6 +35,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.GetUsers(
+//	    context.TODO(),
+//	)
 func (c *Client) GetUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -49,6 +54,15 @@ func (c *Client) GetUsers(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetUserRequest{
+//	    UserID: "userId",
+//	}
+//	client.GetUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	request *fern.GetUserRequest,
@@ -65,6 +79,16 @@ func (c *Client) GetUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.TokenRequest{
+//	    ClientID: "client_id",
+//	    ClientSecret: "client_secret",
+//	}
+//	client.GetToken(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetToken(
 	ctx context.Context,
 	request *fern.TokenRequest,

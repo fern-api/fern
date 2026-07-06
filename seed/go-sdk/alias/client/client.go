@@ -35,6 +35,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Get(
+//	    context.TODO(),
+//	    "typeId",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	typeID fern.TypeID,

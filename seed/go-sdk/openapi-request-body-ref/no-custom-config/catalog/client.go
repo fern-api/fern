@@ -34,6 +34,20 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.CreateCatalogImageBody{
+//	    ImageFile: strings.NewReader(
+//	        "",
+//	    ),
+//	    Request: &fern.CreateCatalogImageRequest{
+//	        CatalogObjectID: "catalog_object_id",
+//	    },
+//	}
+//	client.Catalog.CreateCatalogImage(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateCatalogImage(
 	ctx context.Context,
 	request *fern.CreateCatalogImageBody,
@@ -50,6 +64,15 @@ func (c *Client) CreateCatalogImage(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetCatalogImageRequest{
+//	    ImageID: "image_id",
+//	}
+//	client.Catalog.GetCatalogImage(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetCatalogImage(
 	ctx context.Context,
 	request *fern.GetCatalogImageRequest,

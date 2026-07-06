@@ -35,6 +35,17 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.Inlined{
+//	    Name: "name",
+//	    Docs: "docs",
+//	    Unique: "unique",
+//	}
+//	client.ExtendedInlineRequestBody(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ExtendedInlineRequestBody(
 	ctx context.Context,
 	request *fern.Inlined,

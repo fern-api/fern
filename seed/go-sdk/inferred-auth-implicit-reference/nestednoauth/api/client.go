@@ -33,6 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.NestedNoAuth.API.GetSomething(
+//	    context.TODO(),
+//	)
 func (c *Client) GetSomething(
 	ctx context.Context,
 	opts ...option.RequestOption,

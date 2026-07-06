@@ -35,6 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get a user by ID
+//
+// Example:
+//
+//	client.NullableOptional.GetUser(
+//	    context.TODO(),
+//	    "userId",
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	userID string,
@@ -52,6 +59,41 @@ func (c *Client) GetUser(
 }
 
 // Create a new user
+//
+// Example:
+//
+//	request := &fern.CreateUserRequest{
+//	    Username: "username",
+//	    Email: fern.String(
+//	        "email",
+//	    ),
+//	    Phone: fern.String(
+//	        "phone",
+//	    ),
+//	    Address: &fern.Address{
+//	        Street: "street",
+//	        City: fern.String(
+//	            "city",
+//	        ),
+//	        State: fern.String(
+//	            "state",
+//	        ),
+//	        ZipCode: "zipCode",
+//	        Country: fern.String(
+//	            "country",
+//	        ),
+//	        BuildingID: fern.String(
+//	            "buildingId",
+//	        ),
+//	        TenantID: fern.String(
+//	            "tenantId",
+//	        ),
+//	    },
+//	}
+//	client.NullableOptional.CreateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.CreateUserRequest,
@@ -69,6 +111,44 @@ func (c *Client) CreateUser(
 }
 
 // Update a user (partial update)
+//
+// Example:
+//
+//	request := &fern.UpdateUserRequest{
+//	    Username: fern.String(
+//	        "username",
+//	    ),
+//	    Email: fern.String(
+//	        "email",
+//	    ),
+//	    Phone: fern.String(
+//	        "phone",
+//	    ),
+//	    Address: &fern.Address{
+//	        Street: "street",
+//	        City: fern.String(
+//	            "city",
+//	        ),
+//	        State: fern.String(
+//	            "state",
+//	        ),
+//	        ZipCode: "zipCode",
+//	        Country: fern.String(
+//	            "country",
+//	        ),
+//	        BuildingID: fern.String(
+//	            "buildingId",
+//	        ),
+//	        TenantID: fern.String(
+//	            "tenantId",
+//	        ),
+//	    },
+//	}
+//	client.NullableOptional.UpdateUser(
+//	    context.TODO(),
+//	    "userId",
+//	    request,
+//	)
 func (c *Client) UpdateUser(
 	ctx context.Context,
 	userID string,
@@ -88,6 +168,27 @@ func (c *Client) UpdateUser(
 }
 
 // List all users
+//
+// Example:
+//
+//	request := &fern.ListUsersRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	    Offset: fern.Int(
+//	        1,
+//	    ),
+//	    IncludeDeleted: fern.Bool(
+//	        true,
+//	    ),
+//	    SortBy: fern.String(
+//	        "sortBy",
+//	    ),
+//	}
+//	client.NullableOptional.ListUsers(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListUsers(
 	ctx context.Context,
 	request *fern.ListUsersRequest,
@@ -105,6 +206,25 @@ func (c *Client) ListUsers(
 }
 
 // Search users
+//
+// Example:
+//
+//	request := &fern.SearchUsersRequest{
+//	    Query: "query",
+//	    Department: fern.String(
+//	        "department",
+//	    ),
+//	    Role: fern.String(
+//	        "role",
+//	    ),
+//	    IsActive: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.NullableOptional.SearchUsers(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SearchUsers(
 	ctx context.Context,
 	request *fern.SearchUsersRequest,
@@ -122,6 +242,191 @@ func (c *Client) SearchUsers(
 }
 
 // Create a complex profile to test nullable enums and unions
+//
+// Example:
+//
+//	request := &fern.ComplexProfile{
+//	    ID: "id",
+//	    NullableRole: fern.UserRoleAdmin.Ptr(),
+//	    OptionalRole: fern.UserRoleAdmin.Ptr(),
+//	    OptionalNullableRole: fern.UserRoleAdmin.Ptr(),
+//	    NullableStatus: fern.UserStatusActive.Ptr(),
+//	    OptionalStatus: fern.UserStatusActive.Ptr(),
+//	    OptionalNullableStatus: fern.UserStatusActive.Ptr(),
+//	    NullableNotification: &fern.NotificationMethod{
+//	        Email: &fern.EmailNotification{
+//	            EmailAddress: "emailAddress",
+//	            Subject: "subject",
+//	            HTMLContent: fern.String(
+//	                "htmlContent",
+//	            ),
+//	        },
+//	    },
+//	    OptionalNotification: &fern.NotificationMethod{
+//	        Email: &fern.EmailNotification{
+//	            EmailAddress: "emailAddress",
+//	            Subject: "subject",
+//	            HTMLContent: fern.String(
+//	                "htmlContent",
+//	            ),
+//	        },
+//	    },
+//	    OptionalNullableNotification: &fern.NotificationMethod{
+//	        Email: &fern.EmailNotification{
+//	            EmailAddress: "emailAddress",
+//	            Subject: "subject",
+//	            HTMLContent: fern.String(
+//	                "htmlContent",
+//	            ),
+//	        },
+//	    },
+//	    NullableSearchResult: &fern.SearchResult{
+//	        User: &fern.UserResponse{
+//	            ID: "id",
+//	            Username: "username",
+//	            Email: fern.String(
+//	                "email",
+//	            ),
+//	            Phone: fern.String(
+//	                "phone",
+//	            ),
+//	            CreatedAt: fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	            UpdatedAt: fern.Time(
+//	                fern.MustParseDateTime(
+//	                    "2024-01-15T09:30:00Z",
+//	                ),
+//	            ),
+//	            Address: &fern.Address{
+//	                Street: "street",
+//	                City: fern.String(
+//	                    "city",
+//	                ),
+//	                State: fern.String(
+//	                    "state",
+//	                ),
+//	                ZipCode: "zipCode",
+//	                Country: fern.String(
+//	                    "country",
+//	                ),
+//	                BuildingID: fern.String(
+//	                    "buildingId",
+//	                ),
+//	                TenantID: fern.String(
+//	                    "tenantId",
+//	                ),
+//	            },
+//	        },
+//	    },
+//	    OptionalSearchResult: &fern.SearchResult{
+//	        User: &fern.UserResponse{
+//	            ID: "id",
+//	            Username: "username",
+//	            Email: fern.String(
+//	                "email",
+//	            ),
+//	            Phone: fern.String(
+//	                "phone",
+//	            ),
+//	            CreatedAt: fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	            UpdatedAt: fern.Time(
+//	                fern.MustParseDateTime(
+//	                    "2024-01-15T09:30:00Z",
+//	                ),
+//	            ),
+//	            Address: &fern.Address{
+//	                Street: "street",
+//	                City: fern.String(
+//	                    "city",
+//	                ),
+//	                State: fern.String(
+//	                    "state",
+//	                ),
+//	                ZipCode: "zipCode",
+//	                Country: fern.String(
+//	                    "country",
+//	                ),
+//	                BuildingID: fern.String(
+//	                    "buildingId",
+//	                ),
+//	                TenantID: fern.String(
+//	                    "tenantId",
+//	                ),
+//	            },
+//	        },
+//	    },
+//	    NullableArray: []string{
+//	        "nullableArray",
+//	        "nullableArray",
+//	    },
+//	    OptionalArray: []string{
+//	        "optionalArray",
+//	        "optionalArray",
+//	    },
+//	    OptionalNullableArray: []string{
+//	        "optionalNullableArray",
+//	        "optionalNullableArray",
+//	    },
+//	    NullableListOfNullables: []*string{
+//	        fern.String(
+//	            "nullableListOfNullables",
+//	        ),
+//	        fern.String(
+//	            "nullableListOfNullables",
+//	        ),
+//	    },
+//	    NullableMapOfNullables: map[string]*fern.Address{
+//	        "nullableMapOfNullables": &fern.Address{
+//	            Street: "street",
+//	            City: fern.String(
+//	                "city",
+//	            ),
+//	            State: fern.String(
+//	                "state",
+//	            ),
+//	            ZipCode: "zipCode",
+//	            Country: fern.String(
+//	                "country",
+//	            ),
+//	            BuildingID: fern.String(
+//	                "buildingId",
+//	            ),
+//	            TenantID: fern.String(
+//	                "tenantId",
+//	            ),
+//	        },
+//	    },
+//	    NullableListOfUnions: []*fern.NotificationMethod{
+//	        &fern.NotificationMethod{
+//	            Email: &fern.EmailNotification{
+//	                EmailAddress: "emailAddress",
+//	                Subject: "subject",
+//	                HTMLContent: fern.String(
+//	                    "htmlContent",
+//	                ),
+//	            },
+//	        },
+//	        &fern.NotificationMethod{
+//	            Email: &fern.EmailNotification{
+//	                EmailAddress: "emailAddress",
+//	                Subject: "subject",
+//	                HTMLContent: fern.String(
+//	                    "htmlContent",
+//	                ),
+//	            },
+//	        },
+//	    },
+//	    OptionalMapOfEnums: map[string]fern.UserRole{
+//	        "optionalMapOfEnums": fern.UserRoleAdmin,
+//	    },
+//	}
+//	client.NullableOptional.CreateComplexProfile(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateComplexProfile(
 	ctx context.Context,
 	request *fern.ComplexProfile,
@@ -139,6 +444,13 @@ func (c *Client) CreateComplexProfile(
 }
 
 // Get a complex profile by ID
+//
+// Example:
+//
+//	client.NullableOptional.GetComplexProfile(
+//	    context.TODO(),
+//	    "profileId",
+//	)
 func (c *Client) GetComplexProfile(
 	ctx context.Context,
 	profileID string,
@@ -156,6 +468,70 @@ func (c *Client) GetComplexProfile(
 }
 
 // Update complex profile to test nullable field updates
+//
+// Example:
+//
+//	request := &fern.UpdateComplexProfileRequest{
+//	    NullableRole: fern.UserRoleAdmin.Ptr(),
+//	    NullableStatus: fern.UserStatusActive.Ptr(),
+//	    NullableNotification: &fern.NotificationMethod{
+//	        Email: &fern.EmailNotification{
+//	            EmailAddress: "emailAddress",
+//	            Subject: "subject",
+//	            HTMLContent: fern.String(
+//	                "htmlContent",
+//	            ),
+//	        },
+//	    },
+//	    NullableSearchResult: &fern.SearchResult{
+//	        User: &fern.UserResponse{
+//	            ID: "id",
+//	            Username: "username",
+//	            Email: fern.String(
+//	                "email",
+//	            ),
+//	            Phone: fern.String(
+//	                "phone",
+//	            ),
+//	            CreatedAt: fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	            UpdatedAt: fern.Time(
+//	                fern.MustParseDateTime(
+//	                    "2024-01-15T09:30:00Z",
+//	                ),
+//	            ),
+//	            Address: &fern.Address{
+//	                Street: "street",
+//	                City: fern.String(
+//	                    "city",
+//	                ),
+//	                State: fern.String(
+//	                    "state",
+//	                ),
+//	                ZipCode: "zipCode",
+//	                Country: fern.String(
+//	                    "country",
+//	                ),
+//	                BuildingID: fern.String(
+//	                    "buildingId",
+//	                ),
+//	                TenantID: fern.String(
+//	                    "tenantId",
+//	                ),
+//	            },
+//	        },
+//	    },
+//	    NullableArray: []string{
+//	        "nullableArray",
+//	        "nullableArray",
+//	    },
+//	}
+//	client.NullableOptional.UpdateComplexProfile(
+//	    context.TODO(),
+//	    "profileId",
+//	    request,
+//	)
 func (c *Client) UpdateComplexProfile(
 	ctx context.Context,
 	profileID string,
@@ -175,6 +551,111 @@ func (c *Client) UpdateComplexProfile(
 }
 
 // Test endpoint for validating null deserialization
+//
+// Example:
+//
+//	request := &fern.DeserializationTestRequest{
+//	    RequiredString: "requiredString",
+//	    NullableString: fern.String(
+//	        "nullableString",
+//	    ),
+//	    OptionalString: fern.String(
+//	        "optionalString",
+//	    ),
+//	    OptionalNullableString: fern.String(
+//	        "optionalNullableString",
+//	    ),
+//	    NullableEnum: fern.UserRoleAdmin.Ptr(),
+//	    OptionalEnum: fern.UserStatusActive.Ptr(),
+//	    NullableUnion: &fern.NotificationMethod{
+//	        Email: &fern.EmailNotification{
+//	            EmailAddress: "emailAddress",
+//	            Subject: "subject",
+//	            HTMLContent: fern.String(
+//	                "htmlContent",
+//	            ),
+//	        },
+//	    },
+//	    OptionalUnion: &fern.SearchResult{
+//	        User: &fern.UserResponse{
+//	            ID: "id",
+//	            Username: "username",
+//	            Email: fern.String(
+//	                "email",
+//	            ),
+//	            Phone: fern.String(
+//	                "phone",
+//	            ),
+//	            CreatedAt: fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	            UpdatedAt: fern.Time(
+//	                fern.MustParseDateTime(
+//	                    "2024-01-15T09:30:00Z",
+//	                ),
+//	            ),
+//	            Address: &fern.Address{
+//	                Street: "street",
+//	                City: fern.String(
+//	                    "city",
+//	                ),
+//	                State: fern.String(
+//	                    "state",
+//	                ),
+//	                ZipCode: "zipCode",
+//	                Country: fern.String(
+//	                    "country",
+//	                ),
+//	                BuildingID: fern.String(
+//	                    "buildingId",
+//	                ),
+//	                TenantID: fern.String(
+//	                    "tenantId",
+//	                ),
+//	            },
+//	        },
+//	    },
+//	    NullableList: []string{
+//	        "nullableList",
+//	        "nullableList",
+//	    },
+//	    NullableMap: map[string]int{
+//	        "nullableMap": 1,
+//	    },
+//	    NullableObject: &fern.Address{
+//	        Street: "street",
+//	        City: fern.String(
+//	            "city",
+//	        ),
+//	        State: fern.String(
+//	            "state",
+//	        ),
+//	        ZipCode: "zipCode",
+//	        Country: fern.String(
+//	            "country",
+//	        ),
+//	        BuildingID: fern.String(
+//	            "buildingId",
+//	        ),
+//	        TenantID: fern.String(
+//	            "tenantId",
+//	        ),
+//	    },
+//	    OptionalObject: &fern.Organization{
+//	        ID: "id",
+//	        Name: "name",
+//	        Domain: fern.String(
+//	            "domain",
+//	        ),
+//	        EmployeeCount: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.NullableOptional.TestDeserialization(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) TestDeserialization(
 	ctx context.Context,
 	request *fern.DeserializationTestRequest,
@@ -192,6 +673,18 @@ func (c *Client) TestDeserialization(
 }
 
 // Filter users by role with nullable enum
+//
+// Example:
+//
+//	request := &fern.FilterByRoleRequest{
+//	    Role: fern.UserRoleAdmin.Ptr(),
+//	    Status: fern.UserStatusActive.Ptr(),
+//	    SecondaryRole: fern.UserRoleAdmin.Ptr(),
+//	}
+//	client.NullableOptional.FilterByRole(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) FilterByRole(
 	ctx context.Context,
 	request *fern.FilterByRoleRequest,
@@ -209,6 +702,13 @@ func (c *Client) FilterByRole(
 }
 
 // Get notification settings which may be null
+//
+// Example:
+//
+//	client.NullableOptional.GetNotificationSettings(
+//	    context.TODO(),
+//	    "userId",
+//	)
 func (c *Client) GetNotificationSettings(
 	ctx context.Context,
 	userID string,
@@ -226,6 +726,28 @@ func (c *Client) GetNotificationSettings(
 }
 
 // Update tags to test array handling
+//
+// Example:
+//
+//	request := &fern.UpdateTagsRequest{
+//	    Tags: []string{
+//	        "tags",
+//	        "tags",
+//	    },
+//	    Categories: []string{
+//	        "categories",
+//	        "categories",
+//	    },
+//	    Labels: []string{
+//	        "labels",
+//	        "labels",
+//	    },
+//	}
+//	client.NullableOptional.UpdateTags(
+//	    context.TODO(),
+//	    "userId",
+//	    request,
+//	)
 func (c *Client) UpdateTags(
 	ctx context.Context,
 	userID string,
@@ -245,6 +767,25 @@ func (c *Client) UpdateTags(
 }
 
 // Get search results with nullable unions
+//
+// Example:
+//
+//	request := &fern.SearchRequest{
+//	    Query: "query",
+//	    Filters: map[string]*string{
+//	        "filters": fern.String(
+//	            "filters",
+//	        ),
+//	    },
+//	    IncludeTypes: []string{
+//	        "includeTypes",
+//	        "includeTypes",
+//	    },
+//	}
+//	client.NullableOptional.GetSearchResults(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetSearchResults(
 	ctx context.Context,
 	request *fern.SearchRequest,

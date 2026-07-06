@@ -36,6 +36,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 }
 
 // Returns a paginated list of all plants currently in the store inventory.
+//
+// Example:
+//
+//	client.ListPlants(
+//	    context.TODO(),
+//	)
 func (c *Client) ListPlants(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -51,6 +57,16 @@ func (c *Client) ListPlants(
 }
 
 // Retrieve details about a specific plant by its unique identifier.
+//
+// Example:
+//
+//	request := &fern.GetPlantRequest{
+//	    PlantID: "plantId",
+//	}
+//	client.GetPlant(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetPlant(
 	ctx context.Context,
 	request *fern.GetPlantRequest,

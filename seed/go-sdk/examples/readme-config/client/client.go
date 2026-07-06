@@ -44,6 +44,12 @@ func New(opts ...option.RequestOption) *Acme {
 	}
 }
 
+// Example:
+//
+//	client.Echo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (a *Acme) Echo(
 	ctx context.Context,
 	request string,
@@ -60,6 +66,12 @@ func (a *Acme) Echo(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Echo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (a *Acme) CreateType(
 	ctx context.Context,
 	request *fern.Type,

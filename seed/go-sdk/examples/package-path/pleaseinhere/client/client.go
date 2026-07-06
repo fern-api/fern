@@ -44,6 +44,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Echo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Echo(
 	ctx context.Context,
 	request string,
@@ -60,6 +66,12 @@ func (c *Client) Echo(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Echo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateType(
 	ctx context.Context,
 	request *pleaseinhere.Type,

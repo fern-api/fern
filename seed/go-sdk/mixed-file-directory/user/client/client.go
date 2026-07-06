@@ -38,6 +38,18 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List all users.
+//
+// Example:
+//
+//	request := &fern.ListUsersRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.User.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *fern.ListUsersRequest,

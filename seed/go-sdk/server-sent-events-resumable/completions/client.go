@@ -35,6 +35,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &sseresumable.StreamCompletionRequest{
+//	    Query: "foo",
+//	}
+//	client.Completions.Stream(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Stream(
 	ctx context.Context,
 	request *sseresumable.StreamCompletionRequest,
@@ -76,6 +85,15 @@ func (c *Client) Stream(
 	)
 }
 
+// Example:
+//
+//	request := &sseresumable.StreamCompletionRequestNonResumable{
+//	    Query: "bar",
+//	}
+//	client.Completions.StreamNonResumable(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamNonResumable(
 	ctx context.Context,
 	request *sseresumable.StreamCompletionRequestNonResumable,

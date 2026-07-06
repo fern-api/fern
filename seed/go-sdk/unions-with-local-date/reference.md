@@ -14,10 +14,9 @@
 
 ```go
 client.Bigunion.Get(
-        context.TODO(),
-        "id",
-    )
-}
+    context.TODO(),
+    "id",
+)
 ```
 </dd>
 </dl>
@@ -58,24 +57,23 @@ client.Bigunion.Get(
 
 ```go
 request := &fern.BigUnion{
-        NormalSweet: &fern.NormalSweet{
-            Value: "value",
-        },
-        ID: "id",
-        CreatedAt: fern.MustParseDateTime(
+    NormalSweet: &fern.NormalSweet{
+        Value: "value",
+    },
+    ID: "id",
+    CreatedAt: fern.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
+    ),
+    ArchivedAt: fern.Time(
+        fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
-        ArchivedAt: fern.Time(
-            fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
-    }
-client.Bigunion.Update(
-        context.TODO(),
-        request,
-    )
+    ),
 }
+client.Bigunion.Update(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -116,40 +114,39 @@ client.Bigunion.Update(
 
 ```go
 request := []*fern.BigUnion{
-        &fern.BigUnion{
-            NormalSweet: &fern.NormalSweet{
-                Value: "value",
-            },
-            ID: "id",
-            CreatedAt: fern.MustParseDateTime(
+    &fern.BigUnion{
+        NormalSweet: &fern.NormalSweet{
+            Value: "value",
+        },
+        ID: "id",
+        CreatedAt: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        ArchivedAt: fern.Time(
+            fern.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
-            ArchivedAt: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
+        ),
+    },
+    &fern.BigUnion{
+        NormalSweet: &fern.NormalSweet{
+            Value: "value",
         },
-        &fern.BigUnion{
-            NormalSweet: &fern.NormalSweet{
-                Value: "value",
-            },
-            ID: "id",
-            CreatedAt: fern.MustParseDateTime(
+        ID: "id",
+        CreatedAt: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        ArchivedAt: fern.Time(
+            fern.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
-            ArchivedAt: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-        },
-    }
-client.Bigunion.UpdateMany(
-        context.TODO(),
-        request,
-    )
+        ),
+    },
 }
+client.Bigunion.UpdateMany(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -191,10 +188,9 @@ client.Bigunion.UpdateMany(
 
 ```go
 client.Types.Get(
-        context.TODO(),
-        "date-example",
-    )
-}
+    context.TODO(),
+    "date-example",
+)
 ```
 </dd>
 </dl>
@@ -236,10 +232,9 @@ client.Types.Get(
 ```go
 request := &fern.UnionWithTime{}
 client.Types.Update(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -281,10 +276,9 @@ client.Types.Update(
 
 ```go
 client.Bigunion.Get(
-        context.TODO(),
-        "id",
-    )
-}
+    context.TODO(),
+    "id",
+)
 ```
 </dd>
 </dl>
@@ -325,16 +319,15 @@ client.Bigunion.Get(
 
 ```go
 request := &fern.Shape{
-        Circle: &fern.Circle{
-            Radius: 1.1,
-        },
-        ID: "id",
-    }
-client.Union.Update(
-        context.TODO(),
-        request,
-    )
+    Circle: &fern.Circle{
+        Radius: 1.1,
+    },
+    ID: "id",
 }
+client.Union.Update(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
