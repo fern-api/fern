@@ -46,6 +46,8 @@ export declare namespace Method {
         statements?: AstNode[];
         /* YARD @option tags for the keyword splat parameter. */
         splatOptionDocs?: string[];
+        /* Usage example rendered as a YARD @example tag. */
+        codeExample?: string;
     }
 }
 
@@ -62,6 +64,7 @@ export class Method extends AstNode {
     private readonly statements: AstNode[];
     public readonly returnType: Type;
     private readonly splatOptionDocs: string[];
+    private readonly codeExample: string | undefined;
 
     constructor({
         name,
@@ -71,7 +74,8 @@ export class Method extends AstNode {
         parameters,
         returnType,
         statements,
-        splatOptionDocs
+        splatOptionDocs,
+        codeExample
     }: Method.Args) {
         super();
 
@@ -87,6 +91,7 @@ export class Method extends AstNode {
         this.returnType = returnType ?? Type.untyped();
         this.statements = statements ?? [];
         this.splatOptionDocs = splatOptionDocs ?? [];
+        this.codeExample = codeExample;
     }
 
     public addStatement(statement: AstNode): void {
@@ -144,8 +149,18 @@ export class Method extends AstNode {
             writer.writeLine(`# ${optionDoc}`);
         }
 
+        if (this.codeExample?.trim()) {
+            if (this.docstring || hasAnyParameters || this.splatOptionDocs.length > 0) {
+                writer.writeLine("#");
+            }
+            writer.writeLine("# @example");
+            for (const line of this.codeExample.trim().split("\n")) {
+                writer.writeLine(line.trim() === "" ? "#" : `#   ${line.trimEnd()}`);
+            }
+        }
+
         if (this.returnType != null) {
-            if (hasAnyParameters || this.docstring) {
+            if (hasAnyParameters || this.docstring || this.codeExample?.trim()) {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);

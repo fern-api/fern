@@ -20,6 +20,13 @@ module Seed
       # @option params [String] :endpoint_version
       # @option params [Boolean] :async
       #
+      # @example
+      #   client.headers.send_(
+      #     endpoint_version: "02-12-2024",
+      #     async: true,
+      #     query: "What is the weather today"
+      #   )
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

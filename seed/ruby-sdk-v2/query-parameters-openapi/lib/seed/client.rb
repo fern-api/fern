@@ -28,6 +28,43 @@ module Seed
     # @option params [Seed::Types::SearchRequestNeighbor, nil] :neighbor
     # @option params [Seed::Types::SearchRequestNeighborRequired] :neighbor_required
     #
+    # @example
+    #   client.search(
+    #     limit: 1,
+    #     id: "id",
+    #     date: "2023-01-15",
+    #     deadline: "2024-01-15T09:30:00Z",
+    #     bytes: "bytes",
+    #     user: {
+    #       name: "name",
+    #       tags: %w[tags tags]
+    #     },
+    #     optional_deadline: "2024-01-15T09:30:00Z",
+    #     key_value: {
+    #       keyValue: "keyValue"
+    #     },
+    #     optional_string: "optionalString",
+    #     nested_user: {
+    #       name: "name",
+    #       user: {
+    #         name: "name",
+    #         tags: %w[tags tags]
+    #       }
+    #     },
+    #     optional_user: {
+    #       name: "name",
+    #       tags: %w[tags tags]
+    #     },
+    #     neighbor: {
+    #       name: "name",
+    #       tags: %w[tags tags]
+    #     },
+    #     neighbor_required: {
+    #       name: "name",
+    #       tags: %w[tags tags]
+    #     }
+    #   )
+    #
     # @return [Seed::Types::SearchResponse]
     def search(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)

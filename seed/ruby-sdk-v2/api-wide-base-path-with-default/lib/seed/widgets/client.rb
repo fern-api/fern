@@ -19,6 +19,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :api_version
       #
+      # @example
+      #   client.widgets.create(
+      #     api_version: "v1beta",
+      #     name: "name"
+      #   )
+      #
       # @return [Seed::Types::Widget]
       def create(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

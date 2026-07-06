@@ -23,6 +23,12 @@ module Seed
         # @option params [String, nil] :cursor
         # @option params [Integer, nil] :limit
         #
+        # @example
+        #   client.endpoints.pagination.list_items(
+        #     cursor: "cursor",
+        #     limit: 1
+        #   )
+        #
         # @return [Seed::Endpoints::Pagination::Types::PaginatedResponse]
         def list_items(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)

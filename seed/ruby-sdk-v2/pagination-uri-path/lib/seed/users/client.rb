@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.users.list_with_uri_pagination
+      #
       # @return [Seed::Users::Types::ListUsersURIPaginationResponse]
       def list_with_uri_pagination(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -48,6 +51,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.users.list_with_path_pagination
       #
       # @return [Seed::Users::Types::ListUsersPathPaginationResponse]
       def list_with_path_pagination(request_options: {}, **_params)

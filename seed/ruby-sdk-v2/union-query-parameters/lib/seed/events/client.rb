@@ -23,6 +23,12 @@ module Seed
       # @option params [Seed::Events::Types::EventTypeParam, nil] :event_type
       # @option params [Seed::Events::Types::StringOrListParam, nil] :tags
       #
+      # @example
+      #   client.events.subscribe(
+      #     event_type: "group.created",
+      #     tags: "tags"
+      #   )
+      #
       # @return [String]
       def subscribe(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

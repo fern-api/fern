@@ -20,6 +20,51 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.problem.create_problem(
+      #     problem_name: "problemName",
+      #     problem_description: {
+      #       boards: [{}, {}]
+      #     },
+      #     files: {
+      #       JAVA: {
+      #         solution_file: {
+      #           filename: "filename",
+      #           contents: "contents"
+      #         },
+      #         read_only_files: [{
+      #           filename: "filename",
+      #           contents: "contents"
+      #         }, {
+      #           filename: "filename",
+      #           contents: "contents"
+      #         }]
+      #       }
+      #     },
+      #     input_params: [{
+      #       variable_type: {},
+      #       name: "name"
+      #     }, {
+      #       variable_type: {},
+      #       name: "name"
+      #     }],
+      #     output_type: {},
+      #     testcases: [{
+      #       test_case: {
+      #         id: "id",
+      #         params: [{}, {}]
+      #       },
+      #       expected_result: {}
+      #     }, {
+      #       test_case: {
+      #         id: "id",
+      #         params: [{}, {}]
+      #       },
+      #       expected_result: {}
+      #     }],
+      #     method_name: "methodName"
+      #   )
+      #
       # @return [Seed::Problem::Types::CreateProblemResponse]
       def create_problem(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -54,6 +99,52 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Commons::Types::ProblemID] :problem_id
+      #
+      # @example
+      #   client.problem.update_problem(
+      #     problem_id: "problemId",
+      #     problem_name: "problemName",
+      #     problem_description: {
+      #       boards: [{}, {}]
+      #     },
+      #     files: {
+      #       JAVA: {
+      #         solution_file: {
+      #           filename: "filename",
+      #           contents: "contents"
+      #         },
+      #         read_only_files: [{
+      #           filename: "filename",
+      #           contents: "contents"
+      #         }, {
+      #           filename: "filename",
+      #           contents: "contents"
+      #         }]
+      #       }
+      #     },
+      #     input_params: [{
+      #       variable_type: {},
+      #       name: "name"
+      #     }, {
+      #       variable_type: {},
+      #       name: "name"
+      #     }],
+      #     output_type: {},
+      #     testcases: [{
+      #       test_case: {
+      #         id: "id",
+      #         params: [{}, {}]
+      #       },
+      #       expected_result: {}
+      #     }, {
+      #       test_case: {
+      #         id: "id",
+      #         params: [{}, {}]
+      #       },
+      #       expected_result: {}
+      #     }],
+      #     method_name: "methodName"
+      #   )
       #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
@@ -90,6 +181,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Commons::Types::ProblemID] :problem_id
       #
+      # @example
+      #   client.problem.delete_problem(problem_id: "problemId")
+      #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -120,6 +214,19 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.problem.get_default_starter_files(
+      #     input_params: [{
+      #       variable_type: {},
+      #       name: "name"
+      #     }, {
+      #       variable_type: {},
+      #       name: "name"
+      #     }],
+      #     output_type: {},
+      #     method_name: "methodName"
+      #   )
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)

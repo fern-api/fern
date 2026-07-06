@@ -21,6 +21,14 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id_type_path_param
       #
+      # @example
+      #   client.identifiers.update(
+      #     id_type_path_param: "phone",
+      #     id_type: "phone",
+      #     old_value: "+13175556789",
+      #     new_value: "+13175556798"
+      #   )
+      #
       # @return [Seed::Identifiers::Types::IdentifierUpdateResponse]
       def update(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -59,6 +67,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id_type_path_param
+      #
+      # @example
+      #   client.identifiers.patch_metadata(
+      #     id_type_path_param: "phone",
+      #     label: "primary"
+      #   )
       #
       # @return [Seed::Identifiers::Types::IdentifierUpdateResponse]
       def patch_metadata(request_options: {}, **params)

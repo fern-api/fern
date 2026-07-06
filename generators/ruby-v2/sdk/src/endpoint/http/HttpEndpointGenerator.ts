@@ -120,6 +120,7 @@ export class HttpEndpointGenerator {
         });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
+        const codeExample = this.getEndpointCodeExample({ endpoint });
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
         const requestOptionsDocs = this.generateRequestOptionsDocs();
 
@@ -285,6 +286,7 @@ export class HttpEndpointGenerator {
                 })
             },
             splatOptionDocs: [...requestOptionsDocs, ...splatOptionDocs],
+            codeExample,
             statements
         });
     }
@@ -461,6 +463,17 @@ export class HttpEndpointGenerator {
         request: ReturnType<typeof getEndpointRequest>;
     }): string {
         return endpoint.docs ?? "";
+    }
+
+    private getEndpointCodeExample({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
+        const exampleCall = this.context.maybeGetExampleEndpointCall(endpoint);
+        if (exampleCall == null) {
+            return undefined;
+        }
+        return this.context.snippetGenerator.getSingleEndpointSnippet({
+            endpoint,
+            example: exampleCall
+        })?.endpointCall;
     }
 
     private generateRequestOptionsDocs(): string[] {

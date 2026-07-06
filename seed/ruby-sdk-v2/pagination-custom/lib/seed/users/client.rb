@@ -20,6 +20,12 @@ module Seed
       # @option params [Integer, nil] :limit
       # @option params [String, nil] :starting_after
       #
+      # @example
+      #   client.users.list_with_custom_pager(
+      #     limit: 1,
+      #     starting_after: "starting_after"
+      #   )
+      #
       # @return [Seed::Types::UsersListResponse]
       def list_with_custom_pager(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
