@@ -1,0 +1,10 @@
+- summary: |
+    Rename inlined path parameters that collide with request body properties (e.g. an
+    `{idType}` path param and an `idType` body field) with a `_path_param` suffix so both
+    values remain independently settable and the body property is no longer stripped from
+    the serialized request body.
+  type: fix
+- summary: |
+    Fix the wire test helper `verify_authorization_header` to read the Authorization header
+    from the correct path in WireMock's `/requests/find` response.
+  type: fix
