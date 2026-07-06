@@ -16,6 +16,9 @@ class TreeRecord(TreeBase):
         FieldMetadata(alias="plantedDate"),
         pydantic.Field(alias="plantedDate", description="Date the tree was planted."),
     ] = None
+    """
+    Date the tree was planted.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

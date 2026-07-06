@@ -16,11 +16,18 @@ class TreeBase(TreeIdentifiable, TreeDescribable):
         FieldMetadata(alias="treeSpecies"),
         pydantic.Field(alias="treeSpecies", description="The species of tree."),
     ] = None
+    """
+    The species of tree.
+    """
+
     height_in_feet: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="heightInFeet"),
         pydantic.Field(alias="heightInFeet", description="Height of the tree in feet."),
     ] = None
+    """
+    Height of the tree in feet.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

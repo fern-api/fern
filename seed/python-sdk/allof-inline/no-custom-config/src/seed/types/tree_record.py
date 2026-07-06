@@ -18,24 +18,43 @@ class TreeRecord(UniversalBaseModel):
     tree_name: typing_extensions.Annotated[
         str, FieldMetadata(alias="treeName"), pydantic.Field(alias="treeName", description="Display name of the tree.")
     ]
+    """
+    Display name of the tree.
+    """
+
     tree_description: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="treeDescription"),
         pydantic.Field(alias="treeDescription", description="A description of the tree."),
     ] = None
+    """
+    A description of the tree.
+    """
+
     tree_species: typing_extensions.Annotated[
         str, FieldMetadata(alias="treeSpecies"), pydantic.Field(alias="treeSpecies", description="The species of tree.")
     ]
+    """
+    The species of tree.
+    """
+
     height_in_feet: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="heightInFeet"),
         pydantic.Field(alias="heightInFeet", description="Height of the tree in feet."),
     ] = None
+    """
+    Height of the tree in feet.
+    """
+
     planted_date: typing_extensions.Annotated[
         typing.Optional[dt.date],
         FieldMetadata(alias="plantedDate"),
         pydantic.Field(alias="plantedDate", description="Date the tree was planted."),
     ] = None
+    """
+    Date the tree was planted.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
