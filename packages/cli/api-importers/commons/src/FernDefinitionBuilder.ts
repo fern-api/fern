@@ -32,6 +32,8 @@ export interface FernDefinitionBuilder {
 
     addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void;
 
+    addGlobalParameter({ name, schema }: { name: string; schema: RawSchemas.GlobalParameterDeclarationSchema }): void;
+
     addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
 
     setDefaultEnvironment(name: string): void;
@@ -288,6 +290,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile.variables = {};
         }
         this.rootApiFile.variables[name] = schema;
+    }
+
+    public addGlobalParameter({
+        name,
+        schema
+    }: {
+        name: string;
+        schema: RawSchemas.GlobalParameterDeclarationSchema;
+    }): void {
+        if (this.rootApiFile["global-parameters"] == null) {
+            this.rootApiFile["global-parameters"] = {};
+        }
+        this.rootApiFile["global-parameters"][name] = schema;
     }
 
     public addImport({

@@ -820,8 +820,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/cli/task-context
       '@fern-fern/ir-sdk':
-        specifier: 67.0.0
-        version: 67.0.0
+        specifier: 67.10.1
+        version: 67.10.1
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -3151,6 +3151,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -9592,8 +9595,8 @@ packages:
     resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@67.0.0':
-    resolution: {integrity: sha512-+y2op0IX0w9XAZtxiMAz3lHpSEwmWedNc5zHOuT7mRmjBvKsPvO+lmGb24KFPnaJCLQ/uMBIGVJBI6aqEkJg5w==}
+  '@fern-fern/ir-sdk@67.10.1':
+    resolution: {integrity: sha512-raP+HeW7wmV1seF7Wc8yasvwIjRATKkRxbM8Ttd4a1x99LEuIZ5KOFXsb53aKFJ2k52HZuaa2deLljP3CH15lA==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-sdk@67.2.0':
@@ -16641,7 +16644,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.3.0': {}
 
-  '@fern-fern/ir-sdk@67.0.0': {}
+  '@fern-fern/ir-sdk@67.10.1': {}
 
   '@fern-fern/ir-sdk@67.2.0': {}
 

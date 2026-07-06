@@ -71,7 +71,8 @@ function createMinimalEndpoint(overrides: {
         availability: undefined,
         source: undefined,
         namespace: undefined,
-        retries: undefined
+        retries: undefined,
+        globalParameterIds: undefined
     };
 }
 
@@ -103,6 +104,7 @@ function createMinimalIR(overrides?: {
         securitySchemes: {},
         security: undefined,
         globalHeaders: undefined,
+        globalParameters: undefined,
         idempotencyHeaders: undefined,
         specVersion: undefined
     };

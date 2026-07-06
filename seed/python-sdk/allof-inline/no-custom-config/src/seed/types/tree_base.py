@@ -19,21 +19,36 @@ class TreeBase(UniversalBaseModel):
         FieldMetadata(alias="treeName"),
         pydantic.Field(alias="treeName", description="Display name of the tree."),
     ] = None
+    """
+    Display name of the tree.
+    """
+
     tree_description: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="treeDescription"),
         pydantic.Field(alias="treeDescription", description="A description of the tree."),
     ] = None
+    """
+    A description of the tree.
+    """
+
     tree_species: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="treeSpecies"),
         pydantic.Field(alias="treeSpecies", description="The species of tree."),
     ] = None
+    """
+    The species of tree.
+    """
+
     height_in_feet: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="heightInFeet"),
         pydantic.Field(alias="heightInFeet", description="Height of the tree in feet."),
     ] = None
+    """
+    Height of the tree in feet.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

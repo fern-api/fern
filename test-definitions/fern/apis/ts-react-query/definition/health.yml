@@ -1,0 +1,14 @@
+service:
+  base-path: /health
+  auth: false
+  endpoints:
+    check:
+      method: HEAD
+      path: ""
+      docs: Health check endpoint
+    
+    details:
+      method: GET
+      path: /details
+      response: string
+      docs: Get health details

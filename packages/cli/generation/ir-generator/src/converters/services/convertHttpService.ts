@@ -275,6 +275,7 @@ export function convertHttpService({
                 retries: convertRetries({
                     endpointSchema: endpoint
                 }),
+                globalParameters: endpoint["global-parameters"] ?? undefined,
                 apiPlayground: undefined,
                 responseHeaders: []
             };

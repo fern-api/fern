@@ -73,8 +73,12 @@ class HttpX:
         reference_to_client: AST.Expression,
         is_default_body_parameter_used: bool,
         force_multipart: bool = False,
+        emit_sse_reconnect: bool = False,
+        reconnect_variable_name: str = "_reconnect",
     ) -> AST.Expression:
-        def add_request_params(*, writer: AST.NodeWriter) -> None:
+        last_event_id_param = "last_event_id"
+
+        def add_request_params(*, writer: AST.NodeWriter, reconnect_last_event_id_var: Optional[str] = None) -> None:
             if query_parameters is not None:
                 writer.write("params=")
                 writer.write_node(query_parameters)
@@ -100,7 +104,18 @@ class HttpX:
                 writer.write_node(content)
                 writer.write_line(",")
 
-            if headers is not None:
+            if reconnect_last_event_id_var is not None:
+                # Reconnect re-issues the original request, adding the
+                # Last-Event-ID header so the server resumes the stream.
+                writer.write("headers=")
+                if headers is not None:
+                    writer.write("{**(")
+                    writer.write_node(headers)
+                    writer.write(f' or {{}}), "Last-Event-ID": {reconnect_last_event_id_var}}}')
+                else:
+                    writer.write(f'{{"Last-Event-ID": {reconnect_last_event_id_var}}}')
+                writer.write_line(",")
+            elif headers is not None:
                 writer.write("headers=")
                 writer.write_node(headers)
                 writer.write_line(",")
@@ -144,6 +159,28 @@ class HttpX:
                 add_request_params(writer=writer)
             writer.write_line(")")
 
+        def write_reconnect_closure(*, writer: AST.NodeWriter) -> None:
+            # A closure that re-issues the original streaming request with a
+            # Last-Event-ID header. Returns the streaming context manager (sync
+            # or async) so EventSource can transparently resume a dropped stream.
+            writer.write_line(f"def {reconnect_variable_name}({last_event_id_param}: str):")
+            with writer.indent():
+                writer.write("return ")
+                writer.write_node(reference_to_client)
+                writer.write_line(".stream(")
+                with writer.indent():
+                    if path is not None:
+                        writer.write_node(path)
+                        writer.write(",")
+                    if url is not None:
+                        writer.write("base_url=")
+                        writer.write_node(url)
+                        writer.write(",")
+                    writer.write_line(f'method="{method}",')
+                    add_request_params(writer=writer, reconnect_last_event_id_var=last_event_id_param)
+                writer.write_line(")")
+            writer.write_newline_if_last_line_not()
+
         def write_streaming_call(*, writer: AST.NodeWriter) -> None:
             if is_async:
                 writer.write("async ")
@@ -164,6 +201,8 @@ class HttpX:
             writer.write_line(f") as {response_variable_name}:")
 
             with writer.indent():
+                if emit_sse_reconnect:
+                    write_reconnect_closure(writer=writer)
                 writer.write_node(
                     AST.FunctionDeclaration(
                         name=HttpX.STREAM_FUNC_NAME,

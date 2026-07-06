@@ -16,6 +16,10 @@ class PlantBase(PlantStrict):
         FieldMetadata(alias="commonName"),
         pydantic.Field(alias="commonName", description="The common name of the plant."),
     ] = None
+    """
+    The common name of the plant.
+    """
+
     watering_frequency: typing_extensions.Annotated[
         typing.Optional[PlantBaseWateringFrequency],
         FieldMetadata(alias="wateringFrequency"),

@@ -65,11 +65,6 @@ export class SeedApiClient {
                         type: "sse",
                         eventDiscriminator: "event",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -135,11 +130,6 @@ export class SeedApiClient {
                         type: "sse",
                         eventDiscriminator: "event",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -199,11 +189,6 @@ export class SeedApiClient {
                     eventShape: {
                         type: "sse",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -263,11 +248,6 @@ export class SeedApiClient {
                     eventShape: {
                         type: "sse",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -328,11 +308,6 @@ export class SeedApiClient {
                         type: "sse",
                         eventDiscriminator: "event",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -399,11 +374,6 @@ export class SeedApiClient {
                     eventShape: {
                         type: "sse",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -468,11 +438,6 @@ export class SeedApiClient {
                     eventShape: {
                         type: "sse",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -535,11 +500,6 @@ export class SeedApiClient {
                         type: "json",
                         messageTerminator: "\n",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -668,11 +628,6 @@ export class SeedApiClient {
                         type: "json",
                         messageTerminator: "\n",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -857,11 +812,6 @@ export class SeedApiClient {
                         type: "json",
                         messageTerminator: "\n",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -1050,11 +1000,6 @@ export class SeedApiClient {
                         type: "json",
                         messageTerminator: "\n",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -1182,11 +1127,6 @@ export class SeedApiClient {
                     eventShape: {
                         type: "sse",
                     },
-                    reconnectionEnabled:
-                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
-                    maxReconnectionAttempts:
-                        requestOptions?.stream?.maxReconnectionAttempts ??
-                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };

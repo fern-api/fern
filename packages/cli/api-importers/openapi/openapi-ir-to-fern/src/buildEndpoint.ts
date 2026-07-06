@@ -414,6 +414,10 @@ export function buildEndpoint({
         });
     }
 
+    if (endpoint.globalParameterIds != null && endpoint.globalParameterIds.length > 0) {
+        convertedEndpoint["global-parameters"] = endpoint.globalParameterIds;
+    }
+
     // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
     if (context.ir.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
         convertedEndpoint.audiences = [EXTERNAL_AUDIENCE, ...endpoint.audiences];

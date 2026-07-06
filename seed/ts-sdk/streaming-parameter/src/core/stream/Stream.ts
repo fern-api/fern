@@ -23,10 +23,18 @@ export declare namespace Stream {
          */
         reconnectionEnabled?: boolean;
         /**
-         * Maximum number of transparent mid-stream reconnect attempts on
-         * resumable SSE endpoints. Has no effect on non-resumable endpoints.
+         * Maximum number of consecutive failed reconnect attempts on resumable SSE
+         * endpoints before giving up. The counter resets to zero each time a
+         * reconnected stream successfully yields at least one event (i.e. makes
+         * progress). Has no effect on non-resumable endpoints.
          */
         maxReconnectionAttempts?: number;
+        /**
+         * A function that re-issues the HTTP request with the Last-Event-ID header
+         * and returns the new response body stream. Required for reconnection to work.
+         */
+
+        reconnect?: (lastEventId: string) => Promise<ReadableStream>;
     }
 
     interface JsonEvent {
@@ -54,6 +62,10 @@ const EVENT_PREFIX = "event:";
 const ID_PREFIX = "id:";
 const RETRY_PREFIX = "retry:";
 
+const DEFAULT_MAX_RECONNECTION_ATTEMPTS = 5;
+const DEFAULT_RECONNECT_DELAY_MS = 1_000;
+const MAX_RECONNECT_DELAY_MS = 30_000;
+
 export class Stream<T> implements AsyncIterable<T> {
     private stream: ReadableStream;
 
@@ -66,14 +78,16 @@ export class Stream<T> implements AsyncIterable<T> {
     private messageTerminator: string;
     private streamTerminator: string | undefined;
     private eventDiscriminator: string | undefined;
-    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
     private resumable: boolean;
-    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
     private reconnectionEnabled: boolean;
-    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
-    private maxReconnectionAttempts: number | undefined;
+    private maxReconnectionAttempts: number;
+
+    private reconnect: ((lastEventId: string) => Promise<ReadableStream>) | undefined;
+
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
+    private externalSignal: AbortSignal | undefined;
+    private onExternalAbort: (() => void) | undefined;
 
     constructor({
         stream,
@@ -82,6 +96,7 @@ export class Stream<T> implements AsyncIterable<T> {
         signal,
         reconnectionEnabled,
         maxReconnectionAttempts,
+        reconnect,
     }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
@@ -96,8 +111,13 @@ export class Stream<T> implements AsyncIterable<T> {
             this.resumable = false;
         }
         this.reconnectionEnabled = reconnectionEnabled ?? true;
-        this.maxReconnectionAttempts = maxReconnectionAttempts;
-        signal?.addEventListener("abort", () => this.controller.abort());
+        this.maxReconnectionAttempts = maxReconnectionAttempts ?? DEFAULT_MAX_RECONNECTION_ATTEMPTS;
+        this.reconnect = reconnect;
+        if (signal != null) {
+            this.externalSignal = signal;
+            this.onExternalAbort = () => this.controller.abort();
+            signal.addEventListener("abort", this.onExternalAbort, { once: true });
+        }
 
         // Initialize shared TextDecoder
         if (typeof TextDecoder !== "undefined") {
@@ -114,126 +134,212 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     private async *iterDataMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
-        const stream = readableStreamAsyncIterable<any>(this.stream);
-        let buf = "";
+        let reconnectAttempts = 0;
+        let currentStream = this.stream;
         let lastId: string | undefined;
+        // The id of the most recently *dispatched* event. Per the WHATWG
+        // EventSource spec, the "last event ID" is only committed when an event
+        // is dispatched, not when the `id:` line is parsed. Reconnecting with a
+        // parsed-but-undispatched id would skip an event that was never yielded
+        // (e.g. if the connection drops after `id:` but before the event's
+        // terminating blank line), so reconnection uses lastDispatchedId.
+        let lastDispatchedId: string | undefined;
         let lastRetry: number | undefined;
-        let dataValue: string | undefined;
 
-        for await (const chunk of stream) {
-            buf += this.decodeChunk(chunk);
+        while (true) {
+            const stream = readableStreamAsyncIterable<any>(currentStream);
+            let buf = "";
+            let dataValue: string | undefined;
 
-            let terminatorIndex: number;
-            while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
-                const line = buf.slice(0, terminatorIndex);
-                buf = buf.slice(terminatorIndex + this.messageTerminator.length);
+            for await (const chunk of stream) {
+                buf += this.decodeChunk(chunk);
 
-                if (!line.trim()) {
-                    if (this.prefix != null && dataValue != null) {
-                        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
-                            return;
+                let terminatorIndex: number;
+                while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
+                    const line = buf.slice(0, terminatorIndex);
+                    buf = buf.slice(terminatorIndex + this.messageTerminator.length);
+
+                    if (!line.trim()) {
+                        if (this.prefix != null && dataValue != null) {
+                            if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                                return;
+                            }
+                            const data = await this.parse(fromJson(dataValue));
+                            yield { data, id: lastId, retry: lastRetry, event: undefined };
+                            lastDispatchedId = lastId;
+                            reconnectAttempts = 0;
+                            dataValue = undefined;
                         }
-                        const data = await this.parse(fromJson(dataValue));
-                        yield { data, id: lastId, retry: lastRetry, event: undefined };
-                        dataValue = undefined;
-                    }
-                    continue;
-                }
-
-                if (line.startsWith(ID_PREFIX)) {
-                    const idValue = line.slice(ID_PREFIX.length).trim();
-                    if (!idValue.includes("\0")) {
-                        lastId = idValue;
-                    }
-                    continue;
-                }
-                if (line.startsWith(RETRY_PREFIX)) {
-                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
-                    const parsed = parseInt(retryValue, 10);
-                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
-                        lastRetry = parsed;
-                    }
-                    continue;
-                }
-
-                if (this.prefix != null) {
-                    const prefixIndex = line.indexOf(this.prefix);
-                    if (prefixIndex === -1) {
                         continue;
                     }
-                    const val = line.slice(prefixIndex + this.prefix.length).trim();
-                    dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
-                } else {
-                    if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
-                        return;
+
+                    if (line.startsWith(ID_PREFIX)) {
+                        const idValue = line.slice(ID_PREFIX.length).trim();
+                        if (!idValue.includes("\0")) {
+                            lastId = idValue;
+                        }
+                        continue;
                     }
-                    const data = await this.parse(fromJson(line));
-                    yield { data, id: lastId, retry: lastRetry, event: undefined };
+                    if (line.startsWith(RETRY_PREFIX)) {
+                        const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                        const parsed = parseInt(retryValue, 10);
+                        if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                            lastRetry = parsed;
+                        }
+                        continue;
+                    }
+
+                    if (this.prefix != null) {
+                        const prefixIndex = line.indexOf(this.prefix);
+                        if (prefixIndex === -1) {
+                            continue;
+                        }
+                        const val = line.slice(prefixIndex + this.prefix.length).trim();
+                        dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                    } else {
+                        if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
+                            return;
+                        }
+                        const data = await this.parse(fromJson(line));
+                        yield { data, id: lastId, retry: lastRetry, event: undefined };
+                        lastDispatchedId = lastId;
+                        reconnectAttempts = 0;
+                    }
                 }
             }
-        }
 
-        if (this.prefix != null && dataValue != null) {
-            if (this.streamTerminator == null || !dataValue.includes(this.streamTerminator)) {
+            if (this.prefix != null && dataValue != null) {
+                if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                    return;
+                }
                 const data = await this.parse(fromJson(dataValue));
                 yield { data, id: lastId, retry: lastRetry, event: undefined };
+                lastDispatchedId = lastId;
+                reconnectAttempts = 0;
+            }
+
+            if (!this.shouldReconnect(lastDispatchedId, reconnectAttempts)) {
+                return;
+            }
+
+            reconnectAttempts++;
+            await this.delayReconnect(lastRetry);
+            if (this.controller.signal.aborted) {
+                return;
+            }
+            // Re-check after async delay; needed for TypeScript narrowing.
+            const reconnectFn = this.reconnect;
+            if (reconnectFn == null || lastDispatchedId == null) {
+                return;
+            }
+            try {
+                const reconnected = await reconnectFn(lastDispatchedId);
+                if (reconnected == null) {
+                    currentStream = this.createEmptyStream();
+                    continue;
+                }
+                currentStream = reconnected;
+            } catch {
+                // Failed reconnect (e.g. HTTP error); assign an empty stream
+                // so the next iteration is a safe no-op before shouldReconnect.
+                currentStream = this.createEmptyStream();
             }
         }
     }
 
     private async *iterSseEvents(): AsyncGenerator<ServerSentEvent<T>, void> {
-        const stream = readableStreamAsyncIterable<any>(this.stream);
-        let buf = "";
-        let eventType: string | undefined;
-        let dataValue: string | undefined;
+        let reconnectAttempts = 0;
+        let currentStream = this.stream;
         let lastId: string | undefined;
+        // See iterDataMessages: reconnection uses the last *dispatched* id (per
+        // the EventSource spec), not the last *parsed* id, to avoid skipping an
+        // event that was never yielded when a drop lands mid-event.
+        let lastDispatchedId: string | undefined;
         let lastRetry: number | undefined;
 
-        for await (const chunk of stream) {
-            buf += this.decodeChunk(chunk);
+        while (true) {
+            const stream = readableStreamAsyncIterable<any>(currentStream);
+            let buf = "";
+            let eventType: string | undefined;
+            let dataValue: string | undefined;
 
-            let terminatorIndex: number;
-            while ((terminatorIndex = buf.indexOf("\n")) >= 0) {
-                const line = buf.slice(0, terminatorIndex).replace(/\r$/, "");
-                buf = buf.slice(terminatorIndex + 1);
+            for await (const chunk of stream) {
+                buf += this.decodeChunk(chunk);
 
-                if (!line.trim()) {
-                    if (dataValue != null) {
-                        const data = await this.dispatchSseEvent(dataValue, eventType);
-                        if (data == null) {
-                            return;
+                let terminatorIndex: number;
+                while ((terminatorIndex = buf.indexOf("\n")) >= 0) {
+                    const line = buf.slice(0, terminatorIndex).replace(/\r$/, "");
+                    buf = buf.slice(terminatorIndex + 1);
+
+                    if (!line.trim()) {
+                        if (dataValue != null) {
+                            const data = await this.dispatchSseEvent(dataValue, eventType);
+                            if (data == null) {
+                                return;
+                            }
+                            yield { data, id: lastId, retry: lastRetry, event: eventType };
+                            lastDispatchedId = lastId;
+                            reconnectAttempts = 0;
                         }
-                        yield { data, id: lastId, retry: lastRetry, event: eventType };
+                        eventType = undefined;
+                        dataValue = undefined;
+                        continue;
                     }
-                    eventType = undefined;
-                    dataValue = undefined;
-                    continue;
-                }
 
-                if (line.startsWith(EVENT_PREFIX)) {
-                    eventType = line.slice(EVENT_PREFIX.length).trim();
-                } else if (line.startsWith(DATA_PREFIX)) {
-                    const val = line.slice(DATA_PREFIX.length).trim();
-                    dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
-                } else if (line.startsWith(ID_PREFIX)) {
-                    const idValue = line.slice(ID_PREFIX.length).trim();
-                    if (!idValue.includes("\0")) {
-                        lastId = idValue;
-                    }
-                } else if (line.startsWith(RETRY_PREFIX)) {
-                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
-                    const parsed = parseInt(retryValue, 10);
-                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
-                        lastRetry = parsed;
+                    if (line.startsWith(EVENT_PREFIX)) {
+                        eventType = line.slice(EVENT_PREFIX.length).trim();
+                    } else if (line.startsWith(DATA_PREFIX)) {
+                        const val = line.slice(DATA_PREFIX.length).trim();
+                        dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                    } else if (line.startsWith(ID_PREFIX)) {
+                        const idValue = line.slice(ID_PREFIX.length).trim();
+                        if (!idValue.includes("\0")) {
+                            lastId = idValue;
+                        }
+                    } else if (line.startsWith(RETRY_PREFIX)) {
+                        const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                        const parsed = parseInt(retryValue, 10);
+                        if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                            lastRetry = parsed;
+                        }
                     }
                 }
             }
-        }
 
-        if (dataValue != null) {
-            const data = await this.dispatchSseEvent(dataValue, eventType);
-            if (data != null) {
-                yield { data, id: lastId, retry: lastRetry, event: eventType };
+            if (dataValue != null) {
+                const data = await this.dispatchSseEvent(dataValue, eventType);
+                if (data != null) {
+                    yield { data, id: lastId, retry: lastRetry, event: eventType };
+                    lastDispatchedId = lastId;
+                    reconnectAttempts = 0;
+                }
+            }
+
+            if (!this.shouldReconnect(lastDispatchedId, reconnectAttempts)) {
+                return;
+            }
+
+            reconnectAttempts++;
+            await this.delayReconnect(lastRetry);
+            if (this.controller.signal.aborted) {
+                return;
+            }
+            // Re-check after async delay; needed for TypeScript narrowing.
+            const reconnectFn = this.reconnect;
+            if (reconnectFn == null || lastDispatchedId == null) {
+                return;
+            }
+            try {
+                const reconnected = await reconnectFn(lastDispatchedId);
+                if (reconnected == null) {
+                    currentStream = this.createEmptyStream();
+                    continue;
+                }
+                currentStream = reconnected;
+            } catch {
+                // Failed reconnect (e.g. HTTP error); assign an empty stream
+                // so the next iteration is a safe no-op before shouldReconnect.
+                currentStream = this.createEmptyStream();
             }
         }
     }
@@ -248,11 +354,92 @@ export class Stream<T> implements AsyncIterable<T> {
         return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));
     }
 
+    /**
+     * Determines whether a reconnection attempt should be made.
+     */
+    private shouldReconnect(lastId: string | undefined, reconnectAttempts: number): boolean {
+        if (!this.resumable) {
+            return false;
+        }
+        if (this.streamTerminator == null) {
+            // Without a terminator the client cannot distinguish a completed
+            // stream from a dropped connection, so reconnection is disabled.
+            return false;
+        }
+        // NOTE: When a terminator IS configured but the server never sends it
+        // (e.g. it drops the connection after emitting events every time),
+        // maxReconnectionAttempts is a per-consecutive-failure cap — each
+        // yielded event resets the counter. This matches EventSource semantics
+        // but means such a server can cause unbounded reconnections. Callers
+        // concerned about this should impose a wall-clock budget externally.
+        if (!this.reconnectionEnabled) {
+            return false;
+        }
+        if (this.reconnect == null) {
+            return false;
+        }
+        if (lastId == null || lastId === "") {
+            return false;
+        }
+        if (reconnectAttempts >= this.maxReconnectionAttempts) {
+            return false;
+        }
+        if (this.controller.signal.aborted) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Delays before reconnecting, using a server-sent retry directive if provided
+     * (clamped to MAX_RECONNECT_DELAY_MS), otherwise falling back to
+     * DEFAULT_RECONNECT_DELAY_MS. The delay is abortable: if the stream's abort
+     * signal fires during the wait, the promise resolves immediately.
+     */
+    private async delayReconnect(lastRetry: number | undefined): Promise<void> {
+        const base = lastRetry != null && lastRetry > 0 ? lastRetry : DEFAULT_RECONNECT_DELAY_MS;
+        const delay = Math.min(base, MAX_RECONNECT_DELAY_MS);
+        const signal = this.controller.signal;
+        if (signal.aborted) {
+            return;
+        }
+        await new Promise<void>((resolve) => {
+            const timer = setTimeout(() => {
+                signal.removeEventListener("abort", onAbort);
+                resolve();
+            }, delay);
+            const onAbort = (): void => {
+                clearTimeout(timer);
+                resolve();
+            };
+            signal.addEventListener("abort", onAbort, { once: true });
+        });
+    }
+
+    private createEmptyStream(): ReadableStream {
+        return new ReadableStream({
+            start(controller) {
+                controller.close();
+            },
+        });
+    }
+
+    private removeAbortListener(): void {
+        if (this.externalSignal != null && this.onExternalAbort != null) {
+            this.externalSignal.removeEventListener("abort", this.onExternalAbort);
+            this.onExternalAbort = undefined;
+        }
+    }
+
     public withMetadata(): AsyncIterable<ServerSentEvent<T>> {
         const self = this;
         return {
             async *[Symbol.asyncIterator]() {
-                yield* self.iterMessages();
+                try {
+                    yield* self.iterMessages();
+                } finally {
+                    self.removeAbortListener();
+                }
             },
         };
     }
@@ -272,8 +459,12 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
-        for await (const event of this.iterMessages()) {
-            yield event.data;
+        try {
+            for await (const event of this.iterMessages()) {
+                yield event.data;
+            }
+        } finally {
+            this.removeAbortListener();
         }
     }
 

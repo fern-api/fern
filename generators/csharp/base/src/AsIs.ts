@@ -112,6 +112,9 @@ export const AsIsFiles = {
             "test/Pagination/StepOffsetTest.Template.cs",
             "test/Pagination/StringCursorTest.Template.cs"
         ],
+        Sse: {
+            SseReconnectHelperTests: "test/Sse/SseReconnectHelperTests.Template.cs"
+        },
         WebSockets: {
             AsyncLockTests: "test/WebSockets/AsyncLockTests.Template.cs",
             DisconnectionInfoTests: "test/WebSockets/DisconnectionInfoTests.Template.cs",

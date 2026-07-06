@@ -518,7 +518,8 @@ export class EndpointSnippetGenerator {
             ...this.getNamedParameterArgs({
                 kind: "PathParameters",
                 namedParameters: pathParameters,
-                values: snippet.pathParameters
+                values: snippet.pathParameters,
+                reservedNames: this.getInlinedBodyPropertyNames({ request })
             })
         );
         args.push(
@@ -597,14 +598,33 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
+    /**
+     * Property names of an inlined request body (both Ruby names and wire values). Path
+     * parameters that collide with these are renamed in the generated SDK, so snippets
+     * must rename them the same way.
+     */
+    private getInlinedBodyPropertyNames({ request }: { request: FernIr.dynamic.InlinedRequest }): Set<string> {
+        const names = new Set<string>();
+        if (request.body?.type !== "properties") {
+            return names;
+        }
+        for (const property of request.body.value) {
+            names.add(this.context.getPropertyName(property.name.name));
+            names.add(property.name.wireValue);
+        }
+        return names;
+    }
+
     private getNamedParameterArgs({
         kind,
         namedParameters,
-        values
+        values,
+        reservedNames
     }: {
         kind: "PathParameters" | "QueryParameters" | "Headers";
         namedParameters: FernIr.dynamic.NamedParameter[] | undefined;
         values: Record<string, unknown> | undefined;
+        reservedNames?: Set<string>;
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
         this.context.errors.scope(kind);
@@ -620,9 +640,19 @@ export class EndpointSnippetGenerator {
                 if (ruby.TypeLiteral.isNop(value)) {
                     continue;
                 }
+                let name = this.context.getPropertyName(parameter.name.name);
+                // Path parameters that collide with an inlined body property are renamed
+                // with a `_path_param` suffix in the generated SDK (see the SDK generator's
+                // pathParameterNaming), so the snippet must use the renamed keyword.
+                if (reservedNames != null && reservedNames.has(name)) {
+                    name = `${name}_path_param`;
+                    while (reservedNames.has(name)) {
+                        name = `${name}_`;
+                    }
+                }
                 args.push(
                     ruby.keywordArgument({
-                        name: this.context.getPropertyName(parameter.name.name),
+                        name,
                         value
                     })
                 );

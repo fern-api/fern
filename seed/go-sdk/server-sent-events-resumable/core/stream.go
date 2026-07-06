@@ -36,8 +36,15 @@ const (
 	defaultMaxBufSize  = 1024 * 1024 // 1MB
 	defaultInitBufSize = 4096        // Initial buffer allocation; grows as needed up to maxBufSize.
 
-	// Bounded so a misbehaving server cannot cause an unbounded reconnect loop.
+	// Caps consecutive reconnects without progress. The counter resets each
+	// time an event is successfully dispatched, so the limit bounds retries
+	// between useful responses, not the total over the stream's lifetime.
+	// The defaultReconnectDelay bounds the retry rate.
 	defaultMaxStreamReconnectAttempts = 5
+
+	// defaultReconnectDelay is the minimum wait between reconnects when the
+	// server has not sent a `retry:` directive.
+	defaultReconnectDelay = time.Second
 
 	// Upper bound on server-sent `retry:` directives. Without this, a server
 	// advertising a multi-day reconnection interval could stall the client.
@@ -218,7 +225,11 @@ func readWithReconnect[V any, T any](s *Stream[T], read func() (V, error)) (V, e
 	}
 	for {
 		v, err := read()
-		if err == nil || !s.shouldReconnectOnError(err) {
+		if err == nil {
+			s.reconnectAttempts = 0
+			return v, err
+		}
+		if !s.shouldReconnectOnError(err) {
 			return v, err
 		}
 		if rerr := s.reconnect(); rerr != nil {
@@ -325,7 +336,7 @@ func (s *Stream[T]) shouldReconnectOnError(err error) bool {
 	if s.ctx.Err() != nil {
 		return false
 	}
-	if s.sseReader == nil {
+	if s.options.format != StreamFormatSSE {
 		return false
 	}
 	if s.reconnectAttempts >= s.options.reconnectMax {
@@ -334,7 +345,16 @@ func (s *Stream[T]) shouldReconnectOnError(err error) bool {
 	if err != io.EOF {
 		return false
 	}
-	if s.sseReader.TerminatorSeen() {
+	if s.sseReader != nil && s.sseReader.TerminatorSeen() {
+		return false
+	}
+	// No terminator configured — cannot distinguish clean EOF from drop.
+	if s.options.terminator == "" {
+		return false
+	}
+	// No event ID ever dispatched — reconnecting with an empty
+	// Last-Event-ID would replay the entire stream.
+	if s.LastEventID() == "" {
 		return false
 	}
 	return true
@@ -343,8 +363,8 @@ func (s *Stream[T]) shouldReconnectOnError(err error) bool {
 // reconnect re-issues the request via ReconnectFunc and swaps the underlying
 // reader. The lastEventID snapshot only updates on non-empty values so the
 // carried ID survives across reconnects whose resumed reader hasn't yet
-// emitted an `id:`. A server-sent `retry:` directive gates the delay before
-// re-issuing, clamped to maxReconnectBackoff.
+// emitted an `id:`. A delay (server-sent `retry:` or the default minimum) is
+// applied before re-issuing, clamped to maxReconnectBackoff.
 func (s *Stream[T]) reconnect() error {
 	if s.sseReader != nil {
 		if id := s.sseReader.LastEventID(); id != "" {
@@ -352,23 +372,40 @@ func (s *Stream[T]) reconnect() error {
 		}
 		if ms := s.sseReader.LastRetryMs(); ms > 0 {
 			s.lastRetryMs = ms
-			delay := time.Duration(ms) * time.Millisecond
-			if delay > maxReconnectBackoff {
-				delay = maxReconnectBackoff
-			}
-			timer := time.NewTimer(delay)
-			select {
-			case <-timer.C:
-			case <-s.ctx.Done():
-				timer.Stop()
-				return s.ctx.Err()
-			}
 		}
 	}
-	resp, err := s.options.reconnectFn(s.ctx, s.lastEventID)
-	if err != nil {
-		return err
+
+	// Apply backoff: use the server-sent retry directive if available,
+	// otherwise fall back to the default minimum delay.
+	delay := defaultReconnectDelay
+	if s.lastRetryMs > 0 {
+		delay = time.Duration(s.lastRetryMs) * time.Millisecond
 	}
+	if delay > maxReconnectBackoff {
+		delay = maxReconnectBackoff
+	}
+	timer := time.NewTimer(delay)
+	select {
+	case <-timer.C:
+	case <-s.ctx.Done():
+		timer.Stop()
+		return s.ctx.Err()
+	}
+
+	s.reconnectAttempts++
+
+	resp, err := s.options.reconnectFn(s.ctx, s.lastEventID)
+	if err != nil || resp == nil || resp.Body == nil {
+		// Install a reader that immediately yields EOF so the outer loop
+		// re-evaluates shouldReconnectOnError (subject to the attempt cap).
+		if resp != nil && resp.Body != nil {
+			_ = resp.Body.Close()
+		}
+		s.reader = &eofReader{}
+		s.sseReader = nil
+		return nil
+	}
+
 	// Stop the previous AfterFunc and swap closers atomically from the
 	// stream's perspective. Each AfterFunc captures its specific closer in
 	// its closure, so a stale AfterFunc firing concurrently with reconnect
@@ -384,7 +421,6 @@ func (s *Stream[T]) reconnect() error {
 	})
 	s.reader = newStreamReader(resp.Body, s.options)
 	s.sseReader, _ = s.reader.(sseEventReader)
-	s.reconnectAttempts++
 	return nil
 }
 
@@ -533,6 +569,12 @@ func (s *streamOptions) isTerminated(data []byte) bool {
 	return len(s.terminatorBytes) > 0 && bytes.Contains(data, s.terminatorBytes)
 }
 
+// eofReader is a no-op streamReader installed after a failed reconnect so the
+// outer loop can re-evaluate shouldReconnectOnError.
+type eofReader struct{}
+
+func (e *eofReader) ReadFromStream() ([]byte, error) { return nil, io.EOF }
+
 type onceCloser struct {
 	closer io.Closer
 	once   sync.Once
@@ -630,8 +672,10 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 	if err := s.scanner.Err(); err != nil {
 		return nil, err
 	}
-	// EOF — return any accumulated event
-	if event.hasID {
+	// EOF — only commit the id when dispatching (event has data). An id
+	// parsed from an incomplete event must not be committed; otherwise
+	// reconnection would skip the undispatched event.
+	if event.hasID && len(event.Data) > 0 {
 		s.lastEventID = event.ID
 	}
 	if len(event.Data) > 0 || event.hasID || event.Event != "" {
