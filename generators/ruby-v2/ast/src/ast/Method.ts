@@ -149,18 +149,19 @@ export class Method extends AstNode {
             writer.writeLine(`# ${optionDoc}`);
         }
 
-        if (this.codeExample?.trim()) {
+        const codeExample = this.codeExample?.trim();
+        if (codeExample) {
             if (this.docstring || hasAnyParameters || this.splatOptionDocs.length > 0) {
                 writer.writeLine("#");
             }
             writer.writeLine("# @example");
-            for (const line of this.codeExample.trim().split("\n")) {
+            for (const line of codeExample.split("\n")) {
                 writer.writeLine(line.trim() === "" ? "#" : `#   ${line.trimEnd()}`);
             }
         }
 
         if (this.returnType != null) {
-            if (hasAnyParameters || this.docstring || this.codeExample?.trim()) {
+            if (hasAnyParameters || this.docstring || codeExample) {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);
