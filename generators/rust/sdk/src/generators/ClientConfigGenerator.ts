@@ -78,6 +78,11 @@ export class ClientConfigGenerator {
                 visibility: PUBLIC
             }),
             rust.field({
+                name: "oauth_token_endpoint",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
                 name: "timeout",
                 type: rust.Type.reference(rust.reference({ name: "Duration" })),
                 visibility: PUBLIC
@@ -171,6 +176,15 @@ export class ClientConfigGenerator {
                     {
                         name: "client_secret",
                         value: Expression.none()
+                    },
+                    {
+                        name: "oauth_token_endpoint",
+                        value: (() => {
+                            const tokenEndpoint = this.context.getOAuthTokenEndpointPath();
+                            return tokenEndpoint != null
+                                ? Expression.raw(`Some(${JSON.stringify(tokenEndpoint)}.to_string())`)
+                                : Expression.none();
+                        })()
                     },
                     {
                         name: "timeout",

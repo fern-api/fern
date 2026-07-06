@@ -10,6 +10,7 @@ pub struct ClientConfig {
     pub password: Option<String>,
     pub client_id: Option<String>,
     pub client_secret: Option<String>,
+    pub oauth_token_endpoint: Option<String>,
     pub timeout: Duration,
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
@@ -25,6 +26,7 @@ impl Default for ClientConfig {
             password: None,
             client_id: None,
             client_secret: None,
+            oauth_token_endpoint: None,
             timeout: Duration::from_secs(60),
             max_retries: 3,
             custom_headers: HashMap::from([

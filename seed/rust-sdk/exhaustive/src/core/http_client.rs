@@ -147,9 +147,24 @@ pub struct HttpClient {
 }
 
 impl HttpClient {
-    /// Creates a new HttpClient without OAuth support.
+    /// Creates a new HttpClient, enabling OAuth automatically when the configuration
+    /// provides an OAuth token endpoint together with client credentials.
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
-        Self::new_with_oauth(config, None)
+        let oauth_config = match (
+            config.oauth_token_endpoint.as_ref(),
+            config.client_id.as_ref(),
+            config.client_secret.as_ref(),
+        ) {
+            (Some(token_endpoint), Some(client_id), Some(client_secret)) => Some(OAuthConfig {
+                token_provider: Arc::new(OAuthTokenProvider::new(
+                    client_id.clone(),
+                    client_secret.clone(),
+                )),
+                token_endpoint: token_endpoint.clone(),
+            }),
+            _ => None,
+        };
+        Self::new_with_oauth(config, oauth_config)
     }
 
     /// Creates a new HttpClient with optional OAuth support.

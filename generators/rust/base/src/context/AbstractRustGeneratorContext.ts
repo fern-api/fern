@@ -1444,6 +1444,51 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Get the OAuth client-credentials auth scheme from the IR, if one is configured.
+     */
+    public getOAuthClientCredentialsScheme(): FernIr.OAuthScheme | undefined {
+        if (this.ir.auth?.schemes == null) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Get the URL path of the OAuth token endpoint (e.g. "/token"), resolved from the
+     * endpoint referenced by the OAuth client-credentials scheme. Returns undefined when
+     * no OAuth client-credentials scheme is configured or the referenced endpoint cannot
+     * be resolved.
+     */
+    public getOAuthTokenEndpointPath(): string | undefined {
+        const scheme = this.getOAuthClientCredentialsScheme();
+        if (scheme == null) {
+            return undefined;
+        }
+        const reference = scheme.configuration.tokenEndpoint.endpointReference;
+        const service = this.ir.services[reference.serviceId];
+        if (service == null) {
+            return undefined;
+        }
+        const endpoint = service.endpoints.find((e) => e.id === reference.endpointId);
+        if (endpoint == null) {
+            return undefined;
+        }
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        if (!path.startsWith("/")) {
+            path = `/${path}`;
+        }
+        return path;
+    }
+
+    /**
      * Get the core AsIs template files for this generator type
      */
     public abstract getCoreAsIsFiles(): AsIsFileDefinition[];
