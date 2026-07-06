@@ -74,7 +74,7 @@ func (c *Client) GetWithBearer(
 
 // Example:
 //
-//	client.User.GetWithBearer(
+//	client.User.GetWithAPIKey(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithAPIKey(
@@ -93,7 +93,7 @@ func (c *Client) GetWithAPIKey(
 
 // Example:
 //
-//	client.User.GetWithBearer(
+//	client.User.GetWithOAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithOAuth(
@@ -112,7 +112,7 @@ func (c *Client) GetWithOAuth(
 
 // Example:
 //
-//	client.User.GetWithBearer(
+//	client.User.GetWithBasic(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithBasic(
@@ -131,7 +131,7 @@ func (c *Client) GetWithBasic(
 
 // Example:
 //
-//	client.User.GetWithBearer(
+//	client.User.GetWithInferredAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithInferredAuth(
@@ -150,7 +150,7 @@ func (c *Client) GetWithInferredAuth(
 
 // Example:
 //
-//	client.User.GetWithBearer(
+//	client.User.GetWithAnyAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithAnyAuth(
@@ -169,7 +169,7 @@ func (c *Client) GetWithAnyAuth(
 
 // Example:
 //
-//	client.User.GetWithBearer(
+//	client.User.GetWithAllAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithAllAuth(

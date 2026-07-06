@@ -2309,7 +2309,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```go
-client.V2.Problem.GetLightweightProblems(
+client.V2.V3.Problem.GetLightweightProblems(
     context.TODO(),
 )
 ```
@@ -2350,7 +2350,7 @@ Returns latest versions of all problems
 <dd>
 
 ```go
-client.V2.Problem.GetProblems(
+client.V2.V3.Problem.GetProblems(
     context.TODO(),
 )
 ```
@@ -2391,7 +2391,7 @@ Returns latest version of a problem
 <dd>
 
 ```go
-client.V2.Problem.GetLatestProblem(
+client.V2.V3.Problem.GetLatestProblem(
     context.TODO(),
     "problemId",
 )
@@ -2448,7 +2448,7 @@ Returns requested version of a problem
 <dd>
 
 ```go
-client.V2.Problem.GetProblemVersion(
+client.V2.V3.Problem.GetProblemVersion(
     context.TODO(),
     "problemId",
     1,

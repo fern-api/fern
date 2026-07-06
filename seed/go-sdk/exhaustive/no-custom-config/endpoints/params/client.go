@@ -64,9 +64,12 @@ func (c *Client) GetWithPath(
 //
 // Example:
 //
-//	client.Endpoints.Params.GetWithPath(
+//	request := &endpoints.GetWithInlinePath{
+//	    Param: "param",
+//	}
+//	client.Endpoints.Params.GetWithInlinePath(
 //	    context.TODO(),
-//	    "param",
+//	    request,
 //	)
 func (c *Client) GetWithInlinePath(
 	ctx context.Context,
@@ -116,11 +119,15 @@ func (c *Client) GetWithQuery(
 //
 // Example:
 //
-//	request := &endpoints.GetWithQuery{
-//	    Query: "query",
-//	    Number: 1,
+//	request := &endpoints.GetWithMultipleQuery{
+//	    Query: []string{
+//	        "query",
+//	    },
+//	    Number: []int{
+//	        1,
+//	    },
 //	}
-//	client.Endpoints.Params.GetWithQuery(
+//	client.Endpoints.Params.GetWithAllowMultipleQuery(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -174,12 +181,12 @@ func (c *Client) GetWithPathAndQuery(
 //
 // Example:
 //
-//	request := &endpoints.GetWithPathAndQuery{
+//	request := &endpoints.GetWithInlinePathAndQuery{
+//	    Param: "param",
 //	    Query: "query",
 //	}
-//	client.Endpoints.Params.GetWithPathAndQuery(
+//	client.Endpoints.Params.GetWithInlinePathAndQuery(
 //	    context.TODO(),
-//	    "param",
 //	    request,
 //	)
 func (c *Client) GetWithInlinePathAndQuery(
@@ -229,9 +236,12 @@ func (c *Client) ModifyWithPath(
 //
 // Example:
 //
-//	client.Endpoints.Params.ModifyWithPath(
+//	request := &endpoints.ModifyResourceAtInlinedPath{
+//	    Param: "param",
+//	    Body: "string",
+//	}
+//	client.Endpoints.Params.ModifyWithInlinePath(
 //	    context.TODO(),
-//	    "param",
 //	    request,
 //	)
 func (c *Client) ModifyWithInlinePath(
@@ -354,7 +364,7 @@ func (c *Client) GetWithBooleanPath(
 //
 // Example:
 //
-//	client.Endpoints.Params.GetWithPath(
+//	client.Endpoints.Params.GetWithPathAndErrors(
 //	    context.TODO(),
 //	    "param",
 //	)

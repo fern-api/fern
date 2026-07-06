@@ -68,7 +68,10 @@ func (c *Client) Echo(
 
 // Example:
 //
-//	client.Echo(
+//	request := &pleaseinhere.Type{
+//	    BasicType: pleaseinhere.BasicTypePrimitive,
+//	}
+//	client.CreateType(
 //	    context.TODO(),
 //	    request,
 //	)

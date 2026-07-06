@@ -500,10 +500,10 @@ Uses x-fern-streaming extension with stream-condition to split into streaming an
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingConditionStreamRequest{
+request := &fern.StreamXFernStreamingConditionRequest{
     Query: "query",
 }
-client.StreamXFernStreamingConditionStream(
+client.StreamXFernStreamingCondition(
     context.TODO(),
     request,
 )
@@ -645,11 +645,11 @@ Uses x-fern-streaming with stream-condition. The request body $ref (SharedComple
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
+request := &fern.StreamXFernStreamingSharedSchemaRequest{
     Prompt: "prompt",
     Model: "model",
 }
-client.StreamXFernStreamingSharedSchemaStream(
+client.StreamXFernStreamingSharedSchema(
     context.TODO(),
     request,
 )
@@ -865,7 +865,7 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingUnionStreamRequest{
+request := &fern.StreamXFernStreamingUnionRequest{
     Message: &fern.UnionStreamMessageVariant{
         StreamResponse: fern.Bool(
             false,
@@ -874,7 +874,7 @@ request := &fern.StreamXFernStreamingUnionStreamRequest{
         Message: "message",
     },
 }
-client.StreamXFernStreamingUnionStream(
+client.StreamXFernStreamingUnion(
     context.TODO(),
     request,
 )
@@ -1059,10 +1059,10 @@ Uses x-fern-streaming with stream-condition where the stream field is nullable (
 <dd>
 
 ```go
-request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
+request := &fern.StreamXFernStreamingNullableConditionRequest{
     Query: "query",
 }
-client.StreamXFernStreamingNullableConditionStream(
+client.StreamXFernStreamingNullableCondition(
     context.TODO(),
     request,
 )

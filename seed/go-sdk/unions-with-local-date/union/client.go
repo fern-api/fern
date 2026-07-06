@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Bigunion.Get(
+//	client.Union.Get(
 //	    context.TODO(),
 //	    "id",
 //	)

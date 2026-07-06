@@ -167,7 +167,9 @@ export class EndpointSnippetsGenerator {
 
             // Convert to the expected format for the generator
             const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-            const generatedSnippet = await dynamicSnippetsGenerator.generate(snippetRequest);
+            const generatedSnippet = await dynamicSnippetsGenerator.generate(snippetRequest, {
+                endpointId: endpoint.id
+            });
 
             this.context.logger.debug(
                 `Generated snippet response for endpoint ${endpoint.id}: ${JSON.stringify(generatedSnippet, null, 2)}`

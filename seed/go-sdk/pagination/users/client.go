@@ -187,8 +187,14 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 
 // Example:
 //
-//	request := &fern.ListUsersMixedTypeCursorPaginationRequest{}
-//	client.Users.ListWithMixedTypeCursorPagination(
+//	request := &fern.ListUsersBodyCursorPaginationRequest{
+//	    Pagination: &fern.WithCursor{
+//	        Cursor: fern.String(
+//	            "cursor",
+//	        ),
+//	    },
+//	}
+//	client.Users.ListWithBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -244,7 +250,7 @@ func (c *Client) ListWithTopLevelBodyCursorPagination(
 
 // Example:
 //
-//	request := &fern.ListUsersCursorPaginationRequest{
+//	request := &fern.ListUsersOffsetPaginationRequest{
 //	    Page: fern.Int(
 //	        1,
 //	    ),
@@ -256,7 +262,7 @@ func (c *Client) ListWithTopLevelBodyCursorPagination(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithCursorPagination(
+//	client.Users.ListWithOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -327,11 +333,11 @@ func (c *Client) ListWithOffsetPagination(
 
 // Example:
 //
-//	request := &fern.ListUsersCursorPaginationRequest{
-//	    Page: fern.Int(
+//	request := &fern.ListUsersDoubleOffsetPaginationRequest{
+//	    Page: fern.Float64(
 //	        1.1,
 //	    ),
-//	    PerPage: fern.Int(
+//	    PerPage: fern.Float64(
 //	        1.1,
 //	    ),
 //	    Order: fern.OrderAsc.Ptr(),
@@ -339,7 +345,7 @@ func (c *Client) ListWithOffsetPagination(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithCursorPagination(
+//	client.Users.ListWithDoubleOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -410,8 +416,14 @@ func (c *Client) ListWithDoubleOffsetPagination(
 
 // Example:
 //
-//	request := &fern.ListUsersMixedTypeCursorPaginationRequest{}
-//	client.Users.ListWithMixedTypeCursorPagination(
+//	request := &fern.ListUsersBodyOffsetPaginationRequest{
+//	    Pagination: &fern.WithPage{
+//	        Page: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.Users.ListWithBodyOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -513,7 +525,7 @@ func (c *Client) ListWithOffsetStepPagination(
 
 // Example:
 //
-//	request := &fern.ListUsersOffsetStepPaginationRequest{
+//	request := &fern.ListWithOffsetPaginationHasNextPageRequest{
 //	    Page: fern.Int(
 //	        1,
 //	    ),
@@ -522,7 +534,7 @@ func (c *Client) ListWithOffsetStepPagination(
 //	    ),
 //	    Order: fern.OrderAsc.Ptr(),
 //	}
-//	client.Users.ListWithOffsetStepPagination(
+//	client.Users.ListWithOffsetPaginationHasNextPage(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -665,14 +677,14 @@ func (c *Client) ListWithExtendedResults(
 
 // Example:
 //
-//	request := &fern.ListUsersExtendedRequest{
+//	request := &fern.ListUsersExtendedRequestForOptionalData{
 //	    Cursor: fern.UUID(
 //	        uuid.MustParse(
 //	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 //	        ),
 //	    ),
 //	}
-//	client.Users.ListWithExtendedResults(
+//	client.Users.ListWithExtendedResultsAndOptionalData(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -737,12 +749,12 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 
 // Example:
 //
-//	request := &fern.ListUsersCursorPaginationRequest{
+//	request := &fern.ListUsernamesRequest{
 //	    StartingAfter: fern.String(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithCursorPagination(
+//	client.Users.ListUsernames(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -810,12 +822,12 @@ func (c *Client) ListUsernames(
 
 // Example:
 //
-//	request := &fern.ListUsersCursorPaginationRequest{
+//	request := &fern.ListUsernamesWithOptionalResponseRequest{
 //	    StartingAfter: fern.String(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithCursorPagination(
+//	client.Users.ListUsernamesWithOptionalResponse(
 //	    context.TODO(),
 //	    request,
 //	)

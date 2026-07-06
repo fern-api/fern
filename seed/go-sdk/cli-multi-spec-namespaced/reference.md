@@ -41,8 +41,10 @@ client.V1.ListUsers(
 <dd>
 
 ```go
-client.V1.ListUsers(
+request := &v2.ListUsersRequest{}
+client.V2.ListUsers(
     context.TODO(),
+    request,
 )
 ```
 </dd>

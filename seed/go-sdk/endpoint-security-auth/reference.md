@@ -112,7 +112,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+client.User.GetWithAPIKey(
     context.TODO(),
 )
 ```
@@ -139,7 +139,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+client.User.GetWithOAuth(
     context.TODO(),
 )
 ```
@@ -166,7 +166,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+client.User.GetWithBasic(
     context.TODO(),
 )
 ```
@@ -193,7 +193,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+client.User.GetWithInferredAuth(
     context.TODO(),
 )
 ```
@@ -220,7 +220,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+client.User.GetWithAnyAuth(
     context.TODO(),
 )
 ```
@@ -247,7 +247,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+client.User.GetWithAllAuth(
     context.TODO(),
 )
 ```

@@ -68,7 +68,10 @@ func (a *Acme) Echo(
 
 // Example:
 //
-//	client.Echo(
+//	request := &fern.Type{
+//	    BasicType: fern.BasicTypePrimitive,
+//	}
+//	client.CreateType(
 //	    context.TODO(),
 //	    request,
 //	)

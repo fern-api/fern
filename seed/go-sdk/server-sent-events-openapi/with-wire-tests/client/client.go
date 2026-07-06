@@ -426,10 +426,10 @@ func (c *Client) StreamXFernStreamingConditionStream(
 //
 // Example:
 //
-//	request := &fern.StreamXFernStreamingConditionStreamRequest{
+//	request := &fern.StreamXFernStreamingConditionRequest{
 //	    Query: "query",
 //	}
-//	client.StreamXFernStreamingConditionStream(
+//	client.StreamXFernStreamingCondition(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -501,11 +501,11 @@ func (c *Client) StreamXFernStreamingSharedSchemaStream(
 //
 // Example:
 //
-//	request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
+//	request := &fern.StreamXFernStreamingSharedSchemaRequest{
 //	    Prompt: "prompt",
 //	    Model: "model",
 //	}
-//	client.StreamXFernStreamingSharedSchemaStream(
+//	client.StreamXFernStreamingSharedSchema(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -609,7 +609,7 @@ func (c *Client) StreamXFernStreamingUnionStream(
 //
 // Example:
 //
-//	request := &fern.StreamXFernStreamingUnionStreamRequest{
+//	request := &fern.StreamXFernStreamingUnionRequest{
 //	    Message: &fern.UnionStreamMessageVariant{
 //	        StreamResponse: fern.Bool(
 //	            false,
@@ -618,7 +618,7 @@ func (c *Client) StreamXFernStreamingUnionStream(
 //	        Message: "message",
 //	    },
 //	}
-//	client.StreamXFernStreamingUnionStream(
+//	client.StreamXFernStreamingUnion(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -716,10 +716,10 @@ func (c *Client) StreamXFernStreamingNullableConditionStream(
 //
 // Example:
 //
-//	request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
+//	request := &fern.StreamXFernStreamingNullableConditionRequest{
 //	    Query: "query",
 //	}
-//	client.StreamXFernStreamingNullableConditionStream(
+//	client.StreamXFernStreamingNullableCondition(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -58,7 +58,7 @@ func (c *Client) GetMovie(
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	client.Service.GetMovieDocs(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -80,7 +80,7 @@ func (c *Client) GetMovieDocs(
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	client.Service.GetMovieName(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -102,7 +102,7 @@ func (c *Client) GetMovieName(
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	client.Service.GetMovieMetadata(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -124,7 +124,7 @@ func (c *Client) GetMovieMetadata(
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	client.Service.GetOptionalMovie(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -146,7 +146,7 @@ func (c *Client) GetOptionalMovie(
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	client.Service.GetOptionalMovieDocs(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -168,7 +168,7 @@ func (c *Client) GetOptionalMovieDocs(
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	client.Service.GetOptionalMovieName(
 //	    context.TODO(),
 //	    request,
 //	)
