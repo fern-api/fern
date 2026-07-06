@@ -931,11 +931,9 @@ export async function publishDocs({
                 await runLedgerPublish();
             } catch (error) {
                 const detail = formatLedgerError(error);
-                return context.failAndThrow(
-                    "Failed to publish docs via ledger to " + domain + ": " + detail,
-                    error,
-                    { code: CliError.Code.NetworkError }
-                );
+                return context.failAndThrow("Failed to publish docs via ledger to " + domain + ": " + detail, error, {
+                    code: CliError.Code.NetworkError
+                });
             }
         } else if (docsRegistrationId != null) {
             try {
