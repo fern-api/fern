@@ -51,6 +51,15 @@ class NoAuthClient
     /**
      * POST request with no auth
      *
+     * Example:
+     * ```php
+     * $client->noAuth->postWithNoAuth(
+     *     [
+     *         'key' => "value",
+     *     ],
+     * );
+     * ```
+     *
      * @param mixed $request
      * @param ?array{
      *   baseUrl?: string,

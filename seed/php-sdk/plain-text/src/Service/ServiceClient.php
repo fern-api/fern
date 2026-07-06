@@ -47,6 +47,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getText();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -86,6 +91,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getCsv();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -125,6 +135,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getXml();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

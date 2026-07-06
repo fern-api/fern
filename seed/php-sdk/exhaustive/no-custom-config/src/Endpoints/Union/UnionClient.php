@@ -49,6 +49,16 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->union->getAndReturnUnion(
+     *     Animal::dog(new Dog([
+     *         'name' => 'name',
+     *         'likesToWoof' => true,
+     *     ])),
+     * );
+     * ```
+     *
      * @param Animal $request
      * @param ?array{
      *   baseUrl?: string,

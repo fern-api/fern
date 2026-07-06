@@ -62,6 +62,24 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->createUser(
+     *     new User([
+     *         'id' => 'id',
+     *         'email' => 'email',
+     *         'password' => 'password',
+     *         'profile' => new UserProfile([
+     *             'name' => 'name',
+     *             'verification' => new UserProfileVerification([
+     *                 'verified' => 'verified',
+     *             ]),
+     *             'ssn' => 'ssn',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param User $request
      * @param ?array{
      *   baseUrl?: string,

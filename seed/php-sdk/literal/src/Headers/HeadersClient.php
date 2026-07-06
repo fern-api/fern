@@ -50,6 +50,17 @@ class HeadersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->headers->send(
+     *     new SendLiteralsInHeadersRequest([
+     *         'endpointVersion' => '02-12-2024',
+     *         'async' => true,
+     *         'query' => 'What is the weather today',
+     *     ]),
+     * );
+     * ```
+     *
      * @param SendLiteralsInHeadersRequest $request
      * @param ?array{
      *   baseUrl?: string,
