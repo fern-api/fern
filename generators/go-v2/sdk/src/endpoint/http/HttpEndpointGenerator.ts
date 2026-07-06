@@ -469,6 +469,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     url: go.codeblock("endpointURL"),
                     request: signature.request?.getRequestReference(),
                     response: this.getResponseParameterReference({ endpoint }),
+                    responseIsOptional: this.isResponseOptional({ endpoint }),
                     errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
                     namespaceImportPath: this.context.getNamespaceImportPath(subpackage)
                 })
@@ -1058,6 +1059,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             default:
                 assertNever(responseBody);
         }
+    }
+
+    /**
+     * Returns true when the endpoint's JSON response body may be empty. The IR importer wraps the
+     * primary response body in an optional/nullable container when a no-body 2xx (e.g. a 204
+     * EmptyResponse) coexists with a body-bearing 2xx, so we surface `ResponseIsOptional: true` and
+     * let the caller treat an empty body as a successful (nil-bodied) response rather than erroring.
+     */
+    private isResponseOptional({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
+        const responseBody = endpoint.response?.body;
+        if (responseBody?.type !== "json") {
+            return false;
+        }
+        return this.context.maybeUnwrapOptionalOrNullable(responseBody.value.responseBodyType) != null;
     }
 
     private getResponseReturnStatement({

@@ -16,7 +16,7 @@ auth, retries, TLS, base URL, and global headers — zero configuration required
 
 ```
 cli/api/custom.rs    ← Your command handlers (protected by .fernignore)
-cli/api/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
+cli/api/sdk.rs       ← Generated bridge: client() + block_on()
 cli/api/main.rs      ← Generated entrypoint (calls custom::register)
 api-sdk/             ← Co-generated typed SDK crate
 api-types/           ← Co-generated typed model crate
@@ -38,8 +38,8 @@ pub fn register(app: CliApp) -> CliApp {
             .about("Upload a file to the database")
         ,
         |matches, ctx| {
-            let client = super::sdk_glue::sdk_client(ctx);
-            let result = super::sdk_glue::block_on(
+            let client = super::sdk::client(ctx);
+            let result = super::sdk::block_on(
                 client.file_upload_example.upload_file(),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
@@ -58,7 +58,7 @@ api upload-file
 
 ### 2. Available SDK Clients
 
-The `sdk_glue::sdk_client(ctx)` call returns a `api_sdk::api::Client`
+The `super::sdk::client(ctx)` call returns a `api_sdk::api::Client`
 with the following sub-clients:
 
 | Field | Type | Description |
@@ -69,12 +69,12 @@ with the following sub-clients:
 
 **Get the SDK client** (execution-sharing, fully authenticated):
 ```rust
-let client = super::sdk_glue::sdk_client(ctx);
+let client = super::sdk::client(ctx);
 ```
 
 **Run an async SDK call from a sync handler:**
 ```rust
-let result = super::sdk_glue::block_on(
+let result = super::sdk::block_on(
     client.some_resource.some_method(args),
 )?;
 ```
@@ -89,7 +89,7 @@ use api_sdk::api::*;
 | File | Regenerated? | Notes |
 |------|-------------|-------|
 | `cli/api/custom.rs` | **No** | Protected by `.fernignore` |
-| `cli/api/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
+| `cli/api/sdk.rs` | Yes | Bridges AppContext → SDK client |
 | `cli/api/main.rs` | Yes | Calls `custom::register(app)` |
 | `api-sdk/` | Yes | Co-generated typed SDK crate |
 | `api-types/` | Yes | Co-generated typed models |

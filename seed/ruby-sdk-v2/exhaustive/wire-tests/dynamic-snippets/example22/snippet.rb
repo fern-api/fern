@@ -5,4 +5,6 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.object.get_and_return_with_unknown_field
+client.endpoints.object.get_and_return_with_unknown_field(unknown: {
+  "$ref" => "https://example.com/schema"
+})

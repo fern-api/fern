@@ -30,7 +30,11 @@ require "seed"
 
 client = Seed::Client.new
 
-client.optional.send_optional_body(request: {})
+client.optional.send_optional_body(request: {
+  string: {
+    key: "value"
+  }
+})
 ```
 
 ## Environments

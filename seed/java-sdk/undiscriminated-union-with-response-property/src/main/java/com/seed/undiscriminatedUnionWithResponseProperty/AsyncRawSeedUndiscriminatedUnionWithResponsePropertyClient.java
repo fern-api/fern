@@ -3,9 +3,11 @@
  */
 package com.seed.undiscriminatedUnionWithResponseProperty;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ClientOptions;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ObjectMappers;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.RequestOptions;
+import com.seed.undiscriminatedUnionWithResponseProperty.core.RetryInterceptor;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyApiException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyHttpResponse;
@@ -56,6 +58,15 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<MyUnion>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -74,6 +85,9 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyException(
                             "Network error executing HTTP request", e));
@@ -113,6 +127,15 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<List<MyUnion>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -131,6 +154,9 @@ public class AsyncRawSeedUndiscriminatedUnionWithResponsePropertyClient {
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedUndiscriminatedUnionWithResponsePropertyException(
                             "Network error executing HTTP request", e));

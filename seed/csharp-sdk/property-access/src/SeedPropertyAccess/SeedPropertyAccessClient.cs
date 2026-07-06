@@ -35,6 +35,9 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPropertyAccess.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPropertyAccess.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -48,6 +51,7 @@ public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

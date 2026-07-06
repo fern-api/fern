@@ -197,6 +197,9 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -213,6 +216,7 @@ public partial class PlaylistClient : IPlaylistClient
                         ValueConvert.ToPathParameterString(serviceParam),
                         ValueConvert.ToPathParameterString(playlistId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -280,6 +284,9 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -297,6 +304,7 @@ public partial class PlaylistClient : IPlaylistClient
                         ValueConvert.ToPathParameterString(playlistId)
                     ),
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -363,6 +371,9 @@ public partial class PlaylistClient : IPlaylistClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedTrace.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -379,6 +390,7 @@ public partial class PlaylistClient : IPlaylistClient
                         ValueConvert.ToPathParameterString(serviceParam),
                         ValueConvert.ToPathParameterString(playlistId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

@@ -16,6 +16,11 @@ public partial class TasktestClient : ITasktestClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new global::Seed.CsharpNamespaceConflict.Core.QueryStringBuilder.Builder(
+            capacity: 0
+        )
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new global::Seed.CsharpNamespaceConflict.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -28,6 +33,7 @@ public partial class TasktestClient : ITasktestClient
                 {
                     Method = HttpMethod.Get,
                     Path = "hello",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

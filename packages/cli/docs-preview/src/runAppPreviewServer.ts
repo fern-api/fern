@@ -3,6 +3,7 @@ import {
     applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
     applyTranslatedNavigationOverlays,
+    findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -32,6 +33,7 @@ import express from "express";
 import fs from "fs";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
+import os from "os";
 import path from "path";
 import { type Duplex } from "stream";
 import { WebSocket, WebSocketServer } from "ws";
@@ -39,8 +41,10 @@ import { type BunServer, createBunServer } from "./createBunServer.js";
 import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
+import { GenerationFileManager, isContentOnlyEdit } from "./reloadUtils.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -726,7 +730,7 @@ export async function runAppPreviewServer({
 
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
-    const RELOAD_DEBOUNCE_MS = 1000;
+    const RELOAD_DEBOUNCE_MS = 500;
 
     /**
      * Computes translated definitions for each locale.
@@ -876,18 +880,52 @@ export async function runAppPreviewServer({
                     }
                 }
 
+                const baseApis = docsDefinition.apis as Record<string, APIV1Read.ApiDefinition>;
                 const localeApis = translatedApiDefinitions?.[locale];
-                const translatedApis =
-                    localeApis != null ? { ...docsDefinition.apis, ...localeApis } : docsDefinition.apis;
 
-                // Splicing `apis` alone leaves the sidebar in the default language,
-                // since the nav tree bakes in titles from the base API definition.
+                // A translated spec that drifts from the base — most commonly a changed
+                // OpenAPI tag name (which derives subpackage/endpoint ids), but also a
+                // missing/added endpoint or a changed path — produces an API whose nav
+                // nodes can't all be resolved. Serving such a definition would make the
+                // docs renderer fail to resolve a nav node and return a 500. For those
+                // APIs we serve the base (default-locale) definition and keep the base nav
+                // ids, but still localize the sidebar titles we can match by locator.
+                let servedLocaleApis = localeApis;
+                let rewritableApiIds: ReadonlySet<string> | undefined;
                 if (localeApis != null && updatedRoot != null) {
-                    updatedRoot = applyTranslatedApiTitlesToNavTree(
-                        updatedRoot,
-                        docsDefinition.apis as Record<string, APIV1Read.ApiDefinition>,
-                        localeApis
+                    const incompatibleApiIds = findIncompatibleTranslatedApiIds(updatedRoot, baseApis, localeApis);
+                    if (incompatibleApiIds.size > 0) {
+                        context.logger.warn(
+                            `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for locale ` +
+                                `"${locale}" diverge from the default-locale spec (e.g. changed OpenAPI tag names, ` +
+                                `operationIds, or paths, or a missing/added endpoint), so they can't be fully matched ` +
+                                `to the navigation tree. Serving the default-locale API for those (localized sidebar ` +
+                                `titles are still applied where they can be matched). For fully localized API reference ` +
+                                `content, translate only human-readable text and keep tag names/operationIds/paths ` +
+                                `identical to the base spec.`
+                        );
+                        servedLocaleApis = Object.fromEntries(
+                            Object.entries(localeApis).filter(([apiId]) => !incompatibleApiIds.has(apiId))
+                        );
+                    }
+                    rewritableApiIds = new Set(
+                        Object.keys(localeApis).filter((apiId) => !incompatibleApiIds.has(apiId))
                     );
+                }
+
+                const hasServedLocaleApis = servedLocaleApis != null && Object.keys(servedLocaleApis).length > 0;
+                const translatedApis = hasServedLocaleApis
+                    ? { ...docsDefinition.apis, ...servedLocaleApis }
+                    : docsDefinition.apis;
+
+                // Splicing `apis` alone leaves the sidebar in the default language, since
+                // the nav tree bakes in titles from the base API definition. Localize
+                // titles for every translated API (matched by id or locator); ids are only
+                // repointed for the APIs whose translated definition we actually serve.
+                if (localeApis != null && Object.keys(localeApis).length > 0 && updatedRoot != null) {
+                    updatedRoot = applyTranslatedApiTitlesToNavTree(updatedRoot, baseApis, localeApis, {
+                        rewritableApiIds
+                    });
                 }
 
                 const translatedDefinition: DocsV1Read.DocsDefinition = {
@@ -915,6 +953,11 @@ export async function runAppPreviewServer({
         return translations;
     }
 
+    // Generation counter backed by a temp file so the Next.js process can
+    // detect stale cache entries without an HTTP round-trip.
+    const genFilePath = path.join(os.tmpdir(), `fern-docs-dev-gen-${backendPort}`);
+    const generationManager = new GenerationFileManager(genFilePath);
+
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
@@ -928,22 +971,25 @@ export async function runAppPreviewServer({
             // Rebuild dependency map after reloading project
             await snippetTracker.buildDependencyMap(project);
 
-            // Start validation in background - don't block the reload
-            const validationStartTime = Date.now();
-            void validateProject(project)
-                .then(() => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, true);
-                })
-                .catch((err) => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
-                    // Still log validation errors to help developers
-                    if (err instanceof Error && err.stack) {
-                        context.logger.debug(`Validation error stack: ${err.stack}`);
-                    }
-                });
+            if (!isContentOnlyEdit(editedAbsoluteFilepaths)) {
+                // Start validation in background - don't block the reload
+                const validationStartTime = Date.now();
+                void validateProject(project)
+                    .then(() => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, true);
+                    })
+                    .catch((err) => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, false);
+                        context.logger.error(
+                            `Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`
+                        );
+                        if (err instanceof Error && err.stack) {
+                            context.logger.debug(`Validation error stack: ${err.stack}`);
+                        }
+                    });
+            }
 
             const docsGenStartTime = Date.now();
             const newPreviewResult = await getPreviewDocsDefinition({
@@ -1013,6 +1059,16 @@ export async function runAppPreviewServer({
     }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
+
+    // Watch directories containing docs pages referenced from outside the fern folder
+    // (e.g., `path: ../docs/page.mdx` in docs.yml)
+    if (previewResult != null) {
+        const externalDocsPaths = getExternalDocsWatchPaths(absoluteFilePathToFern, previewResult.docsDefinition);
+        if (externalDocsPaths.length > 0) {
+            context.logger.debug(`Watching external docs directories: ${externalDocsPaths.join(", ")}`);
+            additionalFilepaths.push(...externalDocsPaths);
+        }
+    }
 
     // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
     const watcher = await createDocsPreviewWatcher({
@@ -1156,6 +1212,7 @@ export async function runAppPreviewServer({
         NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
         NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         NEXT_PUBLIC_IS_LOCAL: "1",
+        FERN_DOCS_DEV_GEN_FILE: genFilePath,
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
@@ -1310,6 +1367,8 @@ export async function runAppPreviewServer({
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
 
+                        await generationManager.increment();
+
                         sendData({
                             version: 1,
                             type: "finishReload"
@@ -1329,6 +1388,8 @@ export async function runAppPreviewServer({
                             });
                         }
                     } else {
+                        await generationManager.increment();
+
                         sendData({
                             version: 1,
                             type: "finishReload"
@@ -1336,6 +1397,8 @@ export async function runAppPreviewServer({
                     }
                 } catch (err) {
                     context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
+                    await generationManager.increment();
+
                     sendData({
                         version: 1,
                         type: "finishReload"

@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.11.1
+  changelogEntry:
+    - summary: |
+        Fix misleading "Network error" message when deserialization fails. JSON deserialization
+        errors (e.g. unsupported date formats) are now reported as "Failed to deserialize response"
+        instead of being incorrectly wrapped as network errors.
+      type: fix
+    - summary: |
+        Add RFC 1123 (RFC 2822) date format support to DateTimeDeserializer. Dates like
+        "Thu, 07 May 2026 14:23:38 +0000" are now parsed correctly.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 66
+- version: 4.11.0
+  changelogEntry:
+    - summary: |
+        Fix URL building for paths with non-slash-separated suffixes (e.g.,
+        `/{Sid}.json`). The suffix is now correctly concatenated with the path
+        parameter value instead of being added as a separate path segment,
+        which previously caused an extra `/` before the suffix.
+      type: fix
+    - summary: |
+        Add per-request `maxRetries` override on `RequestOptions`. A non-null
+        per-request value overrides the client-wide `ClientOptions.maxRetries`;
+        when unset, behavior is unchanged. Mirrors the existing per-request
+        `timeout` override pattern and matches the behavior of the TypeScript,
+        Python, Go, C#, PHP, Rust, and Swift SDKs.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
+- version: 4.10.19
+  changelogEntry:
+    - summary: |
+        Remove duplicate JavaDoc descriptions in staged builder implementation methods.
+        Previously, builder methods would display the field description twice in IDE
+        inline documentation.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
 - version: 4.10.18
   changelogEntry:
     - summary: |

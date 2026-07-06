@@ -56,6 +56,45 @@ pnpm seed run --generator go-sdk --path /path/to/project --skip-scripts
 pnpm seed run --generator python-sdk --path ./custom-api --ir-version 58
 ```
 
+#### Running against a real / customer config (faithful repro)
+
+To reproduce a customer-reported bug — or verify a fix on `main` — by running a
+generator on an actual customer's Fern config:
+
+```bash
+cd <fern repo>          # on main, or the branch under test
+pnpm seed run \
+  --generator cli \
+  --path <config-repo>/fern/apis/<api> \   # a single API definition (see below)
+  --output-path /tmp/out \
+  --skip-scripts          # skip the post-gen build (cargo/npm) if you only need to read output
+```
+
+This builds the generator's Docker image from your **current checkout** and runs
+it against the given config. Four things trip people up — none are obvious from
+`--help`:
+
+- **Do NOT pass `--local` for a faithful repro.** In the *seed* CLI, `--local`
+  means "run the generator **natively on the host, with no Docker container at
+  all**" (`runNativeGenerationForSeed`) — it does **not** mean "use a local Docker
+  image." (That's the opposite of `fern generate --local`, where `--local` *does*
+  mean run in a local Docker image. Same flag, opposite meaning across the two
+  CLIs.) Native execution skips the published image's `/dist` staging, so bugs
+  that only manifest in the real container — e.g. the cli generator's embedded-SDK
+  `/dist/asIs/...` files — will silently fail to reproduce. Omit `--local` to run
+  the real Docker image; reach for `--local` only when fast-iterating on the
+  generator's own TypeScript, never for a repro you intend to trust.
+- **You do NOT need `pnpm seed img` first.** Docker-mode `seed run` builds the
+  generator image itself from your working tree (tagged `:local`) before running.
+  Pre-building with `seed img` is redundant.
+- **`--path` must point at a single API definition, not a multi-API workspace
+  root.** For a multi-API workspace, target `fern/apis/<api>`; pointing at the
+  workspace root errors with `Detected empty API definition: fern`. (For a
+  single-API workspace, the `fern/` dir itself is fine.)
+- **The target's `generators.yml` must declare the generator under a group**,
+  matched by its `image` (e.g. `fernapi/fern-cli-generator`). If no group
+  references that image, seed matches nothing and silently does no work.
+
 ### Development Workflow
 ```bash
 # Initial setup

@@ -194,10 +194,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             : new Set<string>();
 
         for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
+            const propertyName = this.getInlinedPathParameterPropertyName(pathParameter, context);
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
             const hasClientDefault = pathParameter.clientDefault != null;
-            const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
@@ -531,7 +531,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const properties = [
             ...this.getPathParamsForRequestWrapper(context).map((pathParameter) =>
-                this.getPropertyNameOfPathParameter(pathParameter)
+                this.getInlinedPathParameterPropertyName(pathParameter, context)
             ),
             ...this.getAllQueryParameters().map((queryParameter) =>
                 collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
@@ -558,7 +558,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const properties: RequestWrapperNonBodyPropertyWithData[] = [
             ...this.getPathParamsForRequestWrapper(context).map((pathParameter) => ({
-                ...this.getPropertyNameOfPathParameter(pathParameter),
+                ...this.getInlinedPathParameterPropertyName(pathParameter, context),
                 originalParameter: {
                     type: "path" as const,
                     parameter: pathParameter
@@ -736,6 +736,66 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getPropertyNameOfPathParameter(pathParameter: FernIr.PathParameter): RequestWrapperNonBodyProperty {
         return this.getPropertyNameOfPathParameterFromName(pathParameter.name);
+    }
+
+    public getInlinedPathParameterPropertyName(
+        pathParameter: FernIr.PathParameter,
+        context: FileContext
+    ): RequestWrapperNonBodyProperty {
+        return this.getInlinedPathParameterPropertyNameFromName(pathParameter.name, context);
+    }
+
+    public getInlinedPathParameterPropertyNameFromName(
+        name: FernIr.NameOrString,
+        context: FileContext
+    ): RequestWrapperNonBodyProperty {
+        const base = this.getPropertyNameOfPathParameterFromName(name);
+        const collidingPathParamPropertyNames = this.getCollidingPathParameterPropertyNames(context);
+        if (!collidingPathParamPropertyNames.has(base.propertyName)) {
+            return base;
+        }
+        const reservedPropertyNames = this.getReservedWrapperPropertyNames(context, base.propertyName);
+        let propertyName = appendPathParamSuffix(base.propertyName);
+        let safeName = appendPathParamSuffix(base.safeName);
+        while (reservedPropertyNames.has(propertyName)) {
+            propertyName = `${propertyName}_`;
+            safeName = `${safeName}_`;
+        }
+        return { propertyName, safeName };
+    }
+
+    /**
+     * Property names already used by other members of the request wrapper (body properties,
+     * path parameters, query parameters, headers, and inlined file properties). Used to
+     * disambiguate the suffixed name of a renamed colliding path parameter.
+     */
+    private getReservedWrapperPropertyNames(context: FileContext, excludedPathParamName: string): Set<string> {
+        const reserved = this.getInlinedBodyPropertyNames(context);
+        for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
+            const propertyName = this.getPropertyNameOfPathParameter(pathParameter).propertyName;
+            if (propertyName !== excludedPathParamName) {
+                reserved.add(propertyName);
+            }
+        }
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+        for (const queryParameter of this.getAllQueryParameters()) {
+            reserved.add(
+                collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
+                    ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter).propertyName
+                    : this.getPropertyNameOfQueryParameter(queryParameter).propertyName
+            );
+        }
+        for (const header of this.getAllNonLiteralHeaders(context)) {
+            reserved.add(this.getPropertyNameOfNonLiteralHeader(header).propertyName);
+        }
+        if (this.inlineFileProperties) {
+            for (const fileProperty of this.getAllFileUploadProperties()) {
+                reserved.add(this.getPropertyNameOfFileParameter(fileProperty).propertyName);
+            }
+        }
+        return reserved;
     }
 
     public getPropertyNameOfPathParameterFromName(name: FernIr.NameOrString): RequestWrapperNonBodyProperty {
@@ -1032,6 +1092,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
      * will use their SDK override names instead of wire values.
      */
     private getCollidingQueryParamWireValues(context: FileContext): Set<string> {
+        const bodyPropertyNames = this.getInlinedBodyPropertyNames(context);
+
+        const collidingWireValues = new Set<string>();
+        for (const queryParameter of this.getAllQueryParameters()) {
+            const normalPropertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+            if (bodyPropertyNames.has(normalPropertyName.propertyName)) {
+                collidingWireValues.add(getWireValue(queryParameter.name));
+            }
+        }
+        return collidingWireValues;
+    }
+
+    /**
+     * Computes the set of property names produced by the (inlined) request body. Used to detect
+     * collisions between non-body parameters (path/query) and body property names.
+     */
+    private getInlinedBodyPropertyNames(context: FileContext): Set<string> {
         const bodyPropertyNames = new Set<string>();
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
@@ -1051,8 +1128,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         }
                     }
                 },
-                reference: () => {
-                    // noop — reference body types do not produce individual property names
+                reference: (referenceToRequestBody) => {
+                    // When flattenRequestParameters is enabled, a named object reference body is
+                    // flattened into the request wrapper, so its properties contribute names that
+                    // can collide with path/query parameters. This mirrors
+                    // getFlattenedReferencedRequestBodyProperties.
+                    if (this.flattenRequestParameters && referenceToRequestBody.requestBodyType.type === "named") {
+                        const typeDeclaration = this.getTypeDeclaration(
+                            referenceToRequestBody.requestBodyType,
+                            context
+                        );
+                        if (typeDeclaration?.shape.type === "object") {
+                            for (const property of typeDeclaration.shape.properties) {
+                                const propName = this.getPropertyNameOfTypeDeclarationProperty(property);
+                                bodyPropertyNames.add(propName.propertyName);
+                            }
+                        }
+                    }
                 },
                 fileUpload: () => {
                     // noop
@@ -1065,15 +1157,34 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }
             });
         }
+        return bodyPropertyNames;
+    }
 
-        const collidingWireValues = new Set<string>();
-        for (const queryParameter of this.getAllQueryParameters()) {
-            const normalPropertyName = this.getPropertyNameOfQueryParameter(queryParameter);
-            if (bodyPropertyNames.has(normalPropertyName.propertyName)) {
-                collidingWireValues.add(getWireValue(queryParameter.name));
+    /**
+     * When path parameters are inlined into the request wrapper (`inlinePathParameters: true`),
+     * a path parameter can share its property name with an inlined body property (e.g. a `{idType}`
+     * path param and an `idType` body field). Emitting both would produce a duplicate interface
+     * member (TS2300). Colliding path parameters are renamed with a `PathParam` suffix so both
+     * values remain independently settable (the path parameter for the URL, the body property for
+     * the request payload).
+     */
+    public getCollidingPathParameterPropertyNames(context: FileContext): Set<string> {
+        const colliding = new Set<string>();
+        const pathParameters = this.getPathParamsForRequestWrapper(context);
+        if (pathParameters.length === 0) {
+            return colliding;
+        }
+        const bodyPropertyNames = this.getInlinedBodyPropertyNames(context);
+        if (bodyPropertyNames.size === 0) {
+            return colliding;
+        }
+        for (const pathParameter of pathParameters) {
+            const propertyName = this.getPropertyNameOfPathParameter(pathParameter).propertyName;
+            if (bodyPropertyNames.has(propertyName)) {
+                colliding.add(propertyName);
             }
         }
-        return collidingWireValues;
+        return colliding;
     }
 
     /**
@@ -1090,4 +1201,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             propertyName: this.retainOriginalCasing ? getOriginalName(name) : this.case.camelUnsafe(name)
         };
     }
+}
+
+function appendPathParamSuffix(name: string): string {
+    return name.includes("_") ? `${name}_path_param` : `${name}PathParam`;
 }

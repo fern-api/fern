@@ -13,6 +13,7 @@ pub(crate) const BOOLEAN_FLAGS: &[&str] = &[
     "dry-run",
     "help",
     "no-extract",
+    "no-pager",
     "no-retry",
     "no-stream",
     "page-all",

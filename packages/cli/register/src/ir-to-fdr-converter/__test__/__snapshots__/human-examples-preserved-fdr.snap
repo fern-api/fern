@@ -185,6 +185,7 @@
             "userSpecifiedExamples": {
               "products_createProduct_example_201": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "products_createProduct_example",
                 "request": {
                   "auth": undefined,
@@ -424,12 +425,9 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
-                "exclusiveMaximum": undefined,
-                "exclusiveMinimum": undefined,
-                "maximum": undefined,
-                "minimum": undefined,
-                "multipleOf": undefined,
-                "type": "double",
+                "description": undefined,
+                "name": "float",
+                "type": "scalar",
               },
             },
           },
@@ -506,12 +504,9 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
-                "exclusiveMaximum": undefined,
-                "exclusiveMinimum": undefined,
-                "maximum": undefined,
-                "minimum": undefined,
-                "multipleOf": undefined,
-                "type": "double",
+                "description": undefined,
+                "name": "float",
+                "type": "scalar",
               },
             },
           },

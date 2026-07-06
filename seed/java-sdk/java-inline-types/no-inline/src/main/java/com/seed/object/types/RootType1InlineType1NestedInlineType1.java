@@ -164,7 +164,6 @@ public final class RootType1InlineType1NestedInlineType1 {
 
         /**
          * <p>lorem ipsum</p>
-         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -175,7 +174,6 @@ public final class RootType1InlineType1NestedInlineType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
          * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -188,7 +186,6 @@ public final class RootType1InlineType1NestedInlineType1 {
 
         /**
          * <p>lorem ipsum</p>
-         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -199,7 +196,6 @@ public final class RootType1InlineType1NestedInlineType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
          * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

@@ -8,6 +8,7 @@ import com.seed.propertyAccess.core.ClientOptions;
 import com.seed.propertyAccess.core.MediaTypes;
 import com.seed.propertyAccess.core.ObjectMappers;
 import com.seed.propertyAccess.core.RequestOptions;
+import com.seed.propertyAccess.core.RetryInterceptor;
 import com.seed.propertyAccess.core.SeedPropertyAccessApiException;
 import com.seed.propertyAccess.core.SeedPropertyAccessException;
 import com.seed.propertyAccess.core.SeedPropertyAccessHttpResponse;
@@ -59,6 +60,15 @@ public class RawSeedPropertyAccessClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -69,6 +79,8 @@ public class RawSeedPropertyAccessClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPropertyAccessApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPropertyAccessException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPropertyAccessException("Network error executing HTTP request", e);
         }

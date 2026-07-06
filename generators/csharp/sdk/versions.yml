@@ -1,4 +1,74 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.71.1
+  changelogEntry:
+    - summary: |
+        Fix SSE stream reconnection correctness to match the reference implementation:
+        (1) Do not reconnect when no terminator is configured (the client cannot
+        distinguish a completed stream from a dropped connection).
+        (2) Apply a default 1-second backoff between reconnect attempts when the
+        server sends no retry: directive (previously zero delay).
+        (3) Use the last *dispatched* event ID for reconnection rather than the
+        last *parsed* id, preventing silent event loss on mid-event drops.
+        (4) Treat reconnect function failures as consumed attempts; throw
+        IOException with the last failure as InnerException when the cap is
+        exhausted, instead of silently truncating the stream.
+        (5) Let OperationCanceledException propagate immediately from reconnectFn
+        instead of swallowing it as a retry attempt.
+        (6) Dispose the old HTTP response only after a new one is successfully
+        obtained, preventing ObjectDisposedException on retry.
+      type: fix
+  createdAt: "2026-07-05"
+  irVersion: 66
+- version: 2.71.0
+  changelogEntry:
+    - summary: |
+        Add opt-in SSE stream reconnection for resumable endpoints.
+        When an SSE endpoint is marked as resumable, the generated SDK
+        automatically reconnects using the Last-Event-ID header.
+        New RequestOptions fields: MaxStreamReconnectAttempts, DisableStreamReconnection.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
+- version: 2.70.0
+  changelogEntry:
+    - summary: |
+        Add support for undocumented/extra parameters: AdditionalQueryParameters from
+        RequestOptions are now applied to all endpoints (previously only endpoints with
+        defined query parameters would merge them). Also add ADDITIONAL_BODY_PROPERTIES
+        feature to README generation.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
+- version: 2.69.2
+  changelogEntry:
+    - summary: |
+        Fix shell injection code scanning alert in OIDC publish workflow by passing
+        API key through env block instead of direct interpolation.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 2.69.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing to compile when a header, query parameter, or
+        auth header example value contains characters that are special inside a C#
+        string literal (e.g. double quotes, backslashes, or control characters). These
+        values are now emitted through `escapeForCSharpString` in the mock-server
+        `.WithHeader(...)` / `.WithParam(...)` matchers instead of being interpolated
+        raw into a double-quoted string.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 2.69.0
+  changelogEntry:
+    - summary: |
+        Add NuGet Trusted Publishing (OIDC) support as a config-gated publish
+        strategy. Set `api-key: OIDC` in generators.yml to emit a GitHub Actions
+        workflow that uses NuGet/login for short-lived OIDC tokens instead of a
+        long-lived API key secret.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 66
 - version: 2.68.12
   changelogEntry:
     - summary: |

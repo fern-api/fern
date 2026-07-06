@@ -28,6 +28,7 @@ export interface GeneratedRequestWrapper extends GeneratedFile<FileContext> {
     getAllQueryParameters: () => FernIr.QueryParameter[];
     getNonBodyKeys: (context: FileContext) => RequestWrapperNonBodyProperty[];
     getNonBodyKeysWithData: (context: FileContext) => RequestWrapperNonBodyPropertyWithData[];
+    getCollidingPathParameterPropertyNames: (context: FileContext) => Set<string>;
     getInlinedRequestBodyPropertyKey: (property: FernIr.InlinedRequestBodyProperty) => RequestWrapperBodyProperty;
     getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperBodyProperty;
     shouldInlinePathParameters: (context: FileContext) => boolean;
@@ -37,6 +38,14 @@ export interface GeneratedRequestWrapper extends GeneratedFile<FileContext> {
     getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfPathParameter: (pathParameter: FernIr.PathParameter) => RequestWrapperNonBodyProperty;
     getPropertyNameOfPathParameterFromName: (name: FernIr.NameOrString) => RequestWrapperNonBodyProperty;
+    getInlinedPathParameterPropertyName: (
+        pathParameter: FernIr.PathParameter,
+        context: FileContext
+    ) => RequestWrapperNonBodyProperty;
+    getInlinedPathParameterPropertyNameFromName: (
+        name: FernIr.NameOrString,
+        context: FileContext
+    ) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeader: (header: FernIr.HttpHeader) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {

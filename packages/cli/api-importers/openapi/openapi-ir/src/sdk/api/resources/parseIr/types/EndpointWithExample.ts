@@ -55,4 +55,9 @@ export interface EndpointWithExample
     examples: FernOpenapiIr.EndpointExample[];
     pagination: FernOpenapiIr.Pagination | undefined;
     retries: FernOpenapiIr.RetriesConfiguration | undefined;
+    /**
+     * Per-operation opt-in IDs for global parameters with apply: explicit.
+     * Populated from x-fern-global-parameter on an operation.
+     */
+    globalParameterIds: string[] | undefined;
 }

@@ -307,8 +307,18 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         const settingsResult = convertOpenApiSpecSettings(openApiSpec.settings as Record<string, unknown> | undefined);
         warnings.push(...settingsResult.warnings);
 
+        const openapiValue =
+            typeof openApiSpec.openapi === "string" ? openApiSpec.openapi : openApiSpec.openapi.git.path;
+        if (typeof openApiSpec.openapi !== "string") {
+            warnings.push({
+                type: "info",
+                message: `Git remote source for openapi spec was converted to a local path '${openapiValue}'. The repo and ref information was discarded.`,
+                suggestion: "Update the path to point to a local file or re-add the git remote configuration manually."
+            });
+        }
+
         const result: schemas.OpenApiSpecSchema = {
-            openapi: openApiSpec.openapi
+            openapi: openapiValue
         };
 
         if (openApiSpec.origin != null) {
@@ -334,8 +344,18 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         const settingsResult = convertOpenApiSpecSettings(asyncApiSpec.settings as Record<string, unknown> | undefined);
         warnings.push(...settingsResult.warnings);
 
+        const asyncapiValue =
+            typeof asyncApiSpec.asyncapi === "string" ? asyncApiSpec.asyncapi : asyncApiSpec.asyncapi.git.path;
+        if (typeof asyncApiSpec.asyncapi !== "string") {
+            warnings.push({
+                type: "info",
+                message: `Git remote source for asyncapi spec was converted to a local path '${asyncapiValue}'. The repo and ref information was discarded.`,
+                suggestion: "Update the path to point to a local file or re-add the git remote configuration manually."
+            });
+        }
+
         const result: schemas.AsyncApiSpecSchema = {
-            asyncapi: asyncApiSpec.asyncapi
+            asyncapi: asyncapiValue
         };
 
         if (asyncApiSpec.origin != null) {
@@ -357,9 +377,18 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         const protoSpec = spec as generatorsYml.ProtobufSpecSchema;
         const protoDef = protoSpec.proto;
 
+        const protoRootValue = typeof protoDef.root === "string" ? protoDef.root : protoDef.root.git.path;
+        if (typeof protoDef.root !== "string") {
+            warnings.push({
+                type: "info",
+                message: `Git remote source for proto root was converted to a local path '${protoRootValue}'. The repo and ref information was discarded.`,
+                suggestion: "Update the path to point to a local file or re-add the git remote configuration manually."
+            });
+        }
+
         const result: schemas.ProtobufSpecSchema = {
             proto: {
-                root: protoDef.root
+                root: protoRootValue
             }
         };
 
@@ -477,9 +506,17 @@ function convertLegacyApiConfig(
 
     if ("proto" in config && config.proto != null) {
         const protoDef = config.proto;
+        const legacyProtoRootValue = typeof protoDef.root === "string" ? protoDef.root : protoDef.root.git.path;
+        if (typeof protoDef.root !== "string") {
+            warnings.push({
+                type: "info",
+                message: `Git remote source for proto root was converted to a local path '${legacyProtoRootValue}'. The repo and ref information was discarded.`,
+                suggestion: "Update the path to point to a local file or re-add the git remote configuration manually."
+            });
+        }
         const result: schemas.ProtobufSpecSchema = {
             proto: {
-                root: protoDef.root
+                root: legacyProtoRootValue
             }
         };
 

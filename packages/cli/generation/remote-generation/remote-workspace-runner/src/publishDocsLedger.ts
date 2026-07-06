@@ -1,6 +1,7 @@
 import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
+    findIncompatibleTranslatedApiIds,
     type TranslatedApiSpec
 } from "@fern-api/docs-resolver";
 import {
@@ -255,6 +256,7 @@ export async function publishDocsViaLedger({
     organization,
     domain,
     basepath,
+    basepathAware,
     previewId,
     customDomains,
     git,
@@ -273,6 +275,8 @@ export async function publishDocsViaLedger({
     organization: string;
     domain: string;
     basepath: string | undefined;
+    /** When true, store the manifest at a basepath-scoped S3 key so multiple sites can coexist on one host. */
+    basepathAware?: boolean;
     previewId: string | undefined;
     customDomains?: string[];
     git?: DocsPublishGitInput;
@@ -336,6 +340,7 @@ export async function publishDocsViaLedger({
         orgId: organization,
         domain,
         basepath: basepath ?? "",
+        ...(basepathAware && { basepathAware: true }),
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
@@ -672,11 +677,48 @@ export async function buildAllTranslationInputs({
                             }
                         }
                     }
+
+                    // A translated spec that drifts from the base — a changed OpenAPI tag name
+                    // (which derives subpackage/endpoint ids), a missing/added endpoint, or a
+                    // changed path — produces an API whose nav nodes can't all be resolved
+                    // against it. Serving it would make the docs renderer fail to resolve a
+                    // node and 500. For those APIs we serve the base (default-locale) definition
+                    // and keep the base nav ids, but still localize the sidebar titles we can
+                    // match by locator.
+                    const incompatibleApiIds = findIncompatibleTranslatedApiIds(
+                        translatedDefinition.config.root,
+                        baseReadApis,
+                        translatedApisForTitles
+                    );
+                    if (incompatibleApiIds.size > 0) {
+                        context.logger.warn(
+                            `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for locale ` +
+                                `"${locale}" diverge from the default-locale spec (e.g. changed OpenAPI tag names, ` +
+                                `operationIds, or paths, or a missing/added endpoint), so they can't be fully matched ` +
+                                `to the navigation tree. Serving the default-locale API for those (localized sidebar ` +
+                                `titles are still applied where they can be matched). For fully localized API reference ` +
+                                `content, translate only human-readable text and keep tag names/operationIds/paths ` +
+                                `identical to the base spec.`
+                        );
+                        for (const apiId of incompatibleApiIds) {
+                            // Serve the base definition (with base ids) for the drifted API so
+                            // the nav nodes still resolve; titles are localized below.
+                            const baseDef = apiDefinitions.get(apiId);
+                            if (baseDef != null) {
+                                localeApiDefinitions.set(apiId, baseDef);
+                            }
+                        }
+                    }
+                    const rewritableApiIds = new Set(
+                        Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
+                    );
+
                     if (Object.keys(translatedApisForTitles).length > 0) {
                         translatedDefinition.config.root = applyTranslatedApiTitlesToNavTree(
                             translatedDefinition.config.root,
                             baseReadApis,
-                            translatedApisForTitles
+                            translatedApisForTitles,
+                            { rewritableApiIds }
                         );
                     }
                 }

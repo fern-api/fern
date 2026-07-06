@@ -18,14 +18,28 @@ export interface FernCliCustomConfig {
      * When true (the default), the generator produces the full custom
      * command infrastructure alongside the CLI binary:
      *   - `<binaryName>-types` library crate (typed serde structs)
-     *   - `<binaryName>-sdk` library crate (HTTP client with `ctx.sdk_client()`)
-     *   - `sdk_glue.rs` (bridges CLI's AppContext to the SDK client)
+     *   - `<binaryName>-sdk` library crate (HTTP client with `ctx.client()`)
+     *   - `sdk.rs` (bridges CLI's AppContext to the SDK client)
      *   - `custom.rs` scaffold (user-authored command handlers)
      *
      * Set to `false` to produce a spec-only CLI with no custom command
      * support.
      */
     customCommands?: boolean;
+
+    /**
+     * Mount all spec-derived commands under a namespace prefix.
+     *
+     * Without `rootGroup`, generated commands are top-level:
+     *   `cli users list`, `cli files get`
+     *
+     * With `rootGroup: "api"`, they nest one level:
+     *   `cli api users list`, `cli api files get`
+     *
+     * Custom commands grafted at root (`command_under(&["recipes"], …)`)
+     * sit beside the namespace node.
+     */
+    rootGroup?: string;
 }
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
@@ -67,6 +81,18 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.customCommands = obj.customCommands;
+    }
+    if ("rootGroup" in obj && obj.rootGroup !== undefined) {
+        if (typeof obj.rootGroup !== "string") {
+            throw new Error(`Invalid customConfig.rootGroup: expected a string, got ${typeof obj.rootGroup}.`);
+        }
+        if (!/^[a-z][a-z0-9_-]*$/.test(obj.rootGroup)) {
+            throw new Error(
+                `Invalid customConfig.rootGroup: "${obj.rootGroup}" contains invalid characters. ` +
+                    "Must start with a lowercase letter and contain only [a-z0-9_-]."
+            );
+        }
+        result.rootGroup = obj.rootGroup;
     }
     return result;
 }

@@ -18,6 +18,9 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUnions.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -30,6 +33,7 @@ public partial class UnionClient : IUnionClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -95,6 +99,9 @@ public partial class UnionClient : IUnionClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedUnions.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedUnions.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -108,6 +115,7 @@ public partial class UnionClient : IUnionClient
                     Method = HttpMethodExtensions.Patch,
                     Path = "",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

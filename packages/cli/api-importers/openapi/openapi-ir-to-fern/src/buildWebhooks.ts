@@ -292,6 +292,7 @@ function convertSignatureVerification(
                 "signature-prefix": signatureVerification.signaturePrefix,
                 "jwks-url": signatureVerification.jwksUrl,
                 "key-id-header": signatureVerification.keyIdHeader,
+                "payload-format": convertPayloadFormat(signatureVerification.payloadFormat),
                 timestamp: convertTimestamp(signatureVerification.timestamp)
             };
         default:

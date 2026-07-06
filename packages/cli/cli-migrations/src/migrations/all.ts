@@ -21,6 +21,7 @@ import migrations_1_0_0 from "./1.0.0/index.js";
 import migrations_2_0_0_rc0 from "./2.0.0-rc0/index.js";
 import migrations_2_13_0 from "./2.13.0/index.js";
 import migrations_3_0_0 from "./3.0.0/index.js";
+import migrations_4_106_1 from "./4.106.1/index.js";
 
 export const ALL_MIGRATIONS: VersionMigrations[] = [
     migrations_0_0_191,
@@ -44,5 +45,6 @@ export const ALL_MIGRATIONS: VersionMigrations[] = [
     migrations_1_0_0,
     migrations_2_0_0_rc0,
     migrations_2_13_0,
-    migrations_3_0_0
+    migrations_3_0_0,
+    migrations_4_106_1
 ];

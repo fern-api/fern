@@ -60,6 +60,7 @@ function createHeader(opts: {
         availability: undefined,
         docs: undefined,
         clientDefault: undefined,
+        defaultValue: undefined,
         v2Examples: undefined
     };
 }
@@ -446,6 +447,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -457,6 +459,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -472,6 +475,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },
@@ -521,6 +525,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -532,6 +537,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -547,6 +553,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },
@@ -910,6 +917,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -921,6 +929,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         })
                                     },
@@ -936,6 +945,7 @@ describe("BaseClientTypeGenerator", () => {
                                             availability: undefined,
                                             docs: undefined,
                                             propertyAccess: undefined,
+                                            defaultValue: undefined,
                                             v2Examples: undefined
                                         }
                                     },

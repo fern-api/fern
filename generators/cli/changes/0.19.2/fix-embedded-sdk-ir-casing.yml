@@ -1,0 +1,9 @@
+- summary: |
+    Fix embedded SDK compilation failures caused by type-name casing
+    divergence between the co-generated types and SDK crates. The embedded
+    SDK IR is now migrated to exactly v66 (the rust generators' pinned IR
+    version) instead of all the way down the migration chain; the v66→v65
+    migration inflated bare-string names into language-agnostic casing
+    (e.g. "OrderId" → "OrderID"), which only the SDK crate echoed, breaking
+    references to the types crate.
+  type: fix

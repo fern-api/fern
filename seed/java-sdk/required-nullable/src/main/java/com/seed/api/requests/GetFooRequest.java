@@ -197,7 +197,6 @@ public final class GetFooRequest {
 
         /**
          * <p>A required baz</p>
-         * <p>A required baz</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

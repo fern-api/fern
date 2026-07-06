@@ -1,4 +1,127 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.21.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI parser crash when a schema property value is an array instead
+        of an object. Some Fern-processed specs (e.g. ElevenLabs) emit a
+        single-element array wrapping the real schema object. The parser now
+        unwraps single-element arrays and falls back to a default schema for
+        other non-object values, instead of aborting with "invalid type: sequence,
+        expected struct OpenApiSchemaObject".
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
+- version: 0.21.0
+  changelogEntry:
+    - summary: |
+        Add `rootGroup` custom config field. When set in `generators.yml`,
+        emits `.command_namespace("<rootGroup>")` on the generated
+        `OpenApiBinding`, mounting all spec-derived commands under a
+        configurable namespace prefix (e.g. `cli api users list` instead of
+        `cli users list`). Requires cli-sdk >= 0.19.0.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 0.20.0
+  changelogEntry:
+    - summary: |
+        Auto-detect `text/event-stream` responses and stream SSE events to stdout
+        in real time, even when the OpenAPI spec omits `x-fern-streaming`. Previously
+        these responses fell through to the binary handler, causing errors or hangs.
+      type: feat
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 0.19.5
+  changelogEntry:
+    - summary: |
+        Generated CLIs now register two-field HTTP Basic auth at the root level
+        (`.auth(BasicAuth::new(...))`) instead of on the `OpenApiBinding`. This
+        makes `<bin> auth status` correctly enumerate the basic scheme, which it
+        previously reported as "No auth schemes are declared" even though
+        credentials were wired and requests authenticated correctly. Request-time
+        behavior is unchanged — the root builder lowers to the same
+        `SchemeBinding::Basic` and still propagates to the binding. (FER-11474)
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
+- version: 0.19.4
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.3
+  changelogEntry:
+    - summary: |
+        Add `cargo:` prefix to workspace members in generated `dist-workspace.toml`
+        so that `dist plan` can parse the file correctly.
+      type: fix
+    - summary: |
+        Strip the `cargo:crates/pipeline-fixture` workspace member from generated
+        `dist-workspace.toml`. That member is a cli-sdk-only release-pipeline fixture
+        that is never vendored into a user's CLI, so leaving it in made `cargo dist
+        plan` / `cargo metadata` fail with "failed to load manifest for workspace
+        member `crates/pipeline-fixture`".
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.2 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure (ENOENT on asIs templates like
+        prelude.rs, http_client.rs) by setting FERN_RUST_ASIS_DIR before
+        invoking the Rust SDK generator in-process, ensuring the bundled
+        rust-sdk-dist/asIs/ directory is discovered correctly.
+      type: fix
+    - summary: |
+        Fix embedded SDK compilation failures caused by type-name casing
+        divergence between the co-generated types and SDK crates. The embedded
+        SDK IR is now migrated to exactly v66 (the rust generators' pinned IR
+        version) instead of all the way down the migration chain; the v66→v65
+        migration inflated bare-string names into language-agnostic casing
+        (e.g. "OrderId" → "OrderID"), which only the SDK crate echoed, breaking
+        references to the types crate.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.1 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure ("failed to read feature configuration")
+        by skipping standalone doc generation (README, CONTRIBUTING, reference.md)
+        when the Rust SDK generator runs in cliEmbedded mode. Also stage features.yml
+        into the CLI dist for future extensibility.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.0 updates.
+      type: internal
+    - summary: |
+        Fix de-conflicted client names in generated sdk.rs (renamed from
+        sdk_glue.rs). Client names are now read directly from the Rust SDK
+        generator's context via in-process orchestration with backward IR
+        migration (v67→v66), eliminating independent re-derivation drift.
+        Also renames module sdk_glue→sdk, sdk_client()→client().
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.18.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.9 updates.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 67
 - version: 0.18.0
   changelogEntry:
     - summary: |

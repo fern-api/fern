@@ -170,7 +170,6 @@ public final class User implements IUser {
 
         /**
          * <p>The unique identifier for the user.</p>
-         * <p>The unique identifier for the user.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -181,7 +180,6 @@ public final class User implements IUser {
         }
 
         /**
-         * <p>The email address of the user.</p>
          * <p>The email address of the user.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -194,7 +192,6 @@ public final class User implements IUser {
 
         /**
          * <p>The password for the user.</p>
-         * <p>The password for the user.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -205,7 +202,6 @@ public final class User implements IUser {
         }
 
         /**
-         * <p>User profile object</p>
          * <p>User profile object</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

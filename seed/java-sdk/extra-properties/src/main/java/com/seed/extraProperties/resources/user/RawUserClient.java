@@ -8,6 +8,7 @@ import com.seed.extraProperties.core.ClientOptions;
 import com.seed.extraProperties.core.MediaTypes;
 import com.seed.extraProperties.core.ObjectMappers;
 import com.seed.extraProperties.core.RequestOptions;
+import com.seed.extraProperties.core.RetryInterceptor;
 import com.seed.extraProperties.core.SeedExtraPropertiesApiException;
 import com.seed.extraProperties.core.SeedExtraPropertiesException;
 import com.seed.extraProperties.core.SeedExtraPropertiesHttpResponse;
@@ -60,6 +61,15 @@ public class RawUserClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -70,6 +80,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExtraPropertiesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedExtraPropertiesException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedExtraPropertiesException("Network error executing HTTP request", e);
         }

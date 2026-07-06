@@ -1289,6 +1289,13 @@ export class DocsDefinitionResolver {
                     navigationConfig: tabbed,
                     parentSlug: slug
                 }),
+            // NOTE: the top-level landing page is intentionally NOT propagated
+            // into versioned navigation. Cloning it into every version node
+            // creates landingPage nodes that shadow real pages sharing the
+            // landing slug (they are visited first during slug collection),
+            // which strips the sidebar from those pages at render time. This
+            // matches the legacy (< 5.58.0) publish behavior that live docs
+            // sites were authored against.
             versioned: (versioned) => this.toVersionedNode(versioned, slug),
             productgroup: (productGroup) =>
                 this.toProductGroupNode({
@@ -1409,6 +1416,13 @@ export class DocsDefinitionResolver {
         if (product.type === "internal") {
             const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
             let child: FernNavigation.V1.ProductChild;
+            // NOTE: `product.landingPage` is intentionally NOT emitted here.
+            // Like the versioned case in toRootChild, landingPage nodes are
+            // visited before the product's own navigation during slug
+            // collection, so a landing page sharing a slug with a page in the
+            // product shadows that page and strips its sidebar at render time.
+            // This matches the legacy (< 5.58.0) publish behavior that live
+            // docs sites were authored against.
             switch (product.navigation.type) {
                 case "tabbed":
                     child = {
@@ -2610,6 +2624,7 @@ export class DocsDefinitionResolver {
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
                 claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
+                ...(!this.parsedDocsConfig.pageActions.options.mcp ? { mcp: false } : {}),
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
                     subtitle: customAction.subtitle,

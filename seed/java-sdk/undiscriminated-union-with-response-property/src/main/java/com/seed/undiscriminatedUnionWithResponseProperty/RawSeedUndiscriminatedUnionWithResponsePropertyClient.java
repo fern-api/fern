@@ -3,9 +3,11 @@
  */
 package com.seed.undiscriminatedUnionWithResponseProperty;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ClientOptions;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ObjectMappers;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.RequestOptions;
+import com.seed.undiscriminatedUnionWithResponseProperty.core.RetryInterceptor;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyApiException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyHttpResponse;
@@ -51,6 +53,15 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -63,6 +74,9 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionWithResponsePropertyException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionWithResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -92,6 +106,15 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -104,6 +127,9 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionWithResponsePropertyException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionWithResponsePropertyException("Network error executing HTTP request", e);
         }

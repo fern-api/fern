@@ -332,8 +332,6 @@ public final class BuilderGenerator {
         methodBuilder.addStatement("return this");
 
         if (enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
-            methodBuilder.addJavadoc(JavaDocUtils.render(
-                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             methodBuilder.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()

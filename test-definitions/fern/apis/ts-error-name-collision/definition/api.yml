@@ -1,0 +1,11 @@
+imports:
+  commons: commons.yml
+
+name: ts-error-name-collision
+error-discrimination:
+  strategy: status-code
+
+errors:
+  - commons.NotFoundError
+  - commons.BadRequestError
+  - commons.InternalServerError

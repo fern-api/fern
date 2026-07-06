@@ -4,7 +4,7 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
  * Language-specific fixture prefixes. Fixtures starting with these prefixes
  * are only available for generators whose workspace name starts with the same prefix.
  */
-export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
+export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "rust", "ts"];
 
 /**
  * Get all available fixtures for a generator, optionally including output folders.

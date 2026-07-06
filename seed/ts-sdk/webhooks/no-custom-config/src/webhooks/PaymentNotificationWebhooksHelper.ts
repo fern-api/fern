@@ -18,6 +18,7 @@ export class PaymentNotificationWebhooksHelper {
         requestBody: string,
         signatureHeader: string,
         keyIdHeader: string | undefined,
+        messageId: string,
         timestampHeader: string,
     ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null) {
@@ -41,7 +42,7 @@ export class PaymentNotificationWebhooksHelper {
             ? signatureHeader.slice(SIGNATURE_PREFIX.length)
             : signatureHeader;
 
-        const payload = requestBody;
+        const payload = [messageId, timestampHeader, requestBody].join(".");
 
         const resolvedKey = await await core.fetchJwks({
             url: "https://api.example.com/.well-known/jwks.json",

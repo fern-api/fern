@@ -34,6 +34,9 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -46,6 +49,7 @@ public partial class SeedApiClient : ISeedApiClient
                 {
                     Method = HttpMethod.Get,
                     Path = "users",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -111,6 +115,9 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -126,6 +133,7 @@ public partial class SeedApiClient : ISeedApiClient
                         "users/{0}",
                         ValueConvert.ToPathParameterString(request.UserId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -190,6 +198,9 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -202,6 +213,7 @@ public partial class SeedApiClient : ISeedApiClient
                 {
                     Method = HttpMethod.Get,
                     Path = "invoices",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -267,6 +279,9 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -282,6 +297,7 @@ public partial class SeedApiClient : ISeedApiClient
                         "invoices/{0}",
                         ValueConvert.ToPathParameterString(request.InvoiceId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

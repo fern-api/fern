@@ -14,11 +14,18 @@ class TreeDescribable(UniversalBaseModel):
         FieldMetadata(alias="treeName"),
         pydantic.Field(alias="treeName", description="Display name of the tree."),
     ] = None
+    """
+    Display name of the tree.
+    """
+
     tree_description: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="treeDescription"),
         pydantic.Field(alias="treeDescription", description="A description of the tree."),
     ] = None
+    """
+    A description of the tree.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

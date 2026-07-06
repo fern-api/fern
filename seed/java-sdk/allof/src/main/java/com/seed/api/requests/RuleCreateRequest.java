@@ -123,7 +123,6 @@ public final class RuleCreateRequest {
 
         /**
          * <p>Execution context for the rule, excluding the prod environment.</p>
-         * <p>Execution context for the rule, excluding the prod environment.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

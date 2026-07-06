@@ -1,0 +1,66 @@
+types:
+  User:
+    properties:
+      id: string
+      name: string
+      email: string
+
+  CreateUserRequest:
+    properties:
+      name: string
+      email: string
+
+  UpdateUserRequest:
+    properties:
+      name: optional<string>
+      email: optional<string>
+
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    list:
+      method: GET
+      path: ""
+      response: list<User>
+      docs: List all users
+
+    get:
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: string
+      response: User
+      docs: Get a user by ID
+
+    create:
+      method: POST
+      path: ""
+      request: CreateUserRequest
+      response: User
+      docs: Create a new user
+
+    update:
+      method: PUT
+      path: /{userId}
+      path-parameters:
+        userId: string
+      request: UpdateUserRequest
+      response: User
+      docs: Update a user
+
+    patch:
+      method: PATCH
+      path: /{userId}
+      path-parameters:
+        userId: string
+      request: UpdateUserRequest
+      response: User
+      docs: Partially update a user
+
+    delete:
+      method: DELETE
+      path: /{userId}
+      path-parameters:
+        userId: string
+      docs: Delete a user

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a request-wrapper collision when an inlined path parameter (`inlinePathParameters: true`)
+    shares its property name with an inlined request-body property (e.g. a `{idType}` path
+    parameter and an `idType` body field). Previously the generated interface emitted a duplicate
+    member and the client destructured the path parameter out of the request, dropping the body
+    property from the payload. The colliding property is now emitted once and used for both the
+    URL path and the request body.
+  type: fix

@@ -207,6 +207,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
+        if (this.hasResumableSseEndpoints) {
+            files.push(AsIsFiles.SseReconnectHelper);
+        }
         if (this.hasPagination()) {
             files.push(AsIsFiles.Page);
             files.push(AsIsFiles.Pager);
@@ -250,6 +253,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         }
         if (this.hasWebSocketEndpoints) {
             Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));
+        }
+        if (this.hasResumableSseEndpoints) {
+            Object.values(AsIsFiles.Test.Sse).forEach((file) => files.push(file));
         }
 
         return files;

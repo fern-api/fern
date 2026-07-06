@@ -8,6 +8,7 @@ import {
     applyTranslatedFrontmatterToNavTree,
     applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
+    findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
@@ -93,6 +94,32 @@ function sanitizePreviewId(id: string): string {
         return "default";
     }
     return sanitized;
+}
+
+/**
+ * Extract a human-readable error detail from an oRPC / ledger publish error.
+ * When the server returns Zod validation issues (via oRPC's BAD_REQUEST),
+ * those are surfaced so the user can see exactly which field failed.
+ */
+function formatLedgerError(error: unknown): string {
+    if (error == null) {
+        return "Unknown error";
+    }
+    const msg = error instanceof Error ? error.message : String(error);
+
+    // oRPC errors carry validation issues in `error.data.issues`.
+    const data = (error as { data?: { issues?: Array<{ message?: string; path?: Array<string | number> }> } }).data;
+    if (data?.issues != null && Array.isArray(data.issues) && data.issues.length > 0) {
+        const issueLines = data.issues
+            .map((issue) => {
+                const path = issue.path?.join(".") ?? "";
+                const message = issue.message ?? "invalid";
+                return path ? `  - ${path}: ${message}` : `  - ${message}`;
+            })
+            .join("\n");
+        return msg + "\n" + issueLines;
+    }
+    return msg;
 }
 
 export class DocsPublishConflictError extends Error {
@@ -874,6 +901,7 @@ export async function publishDocs({
                     organization,
                     domain,
                     basepath: basePath,
+                    basepathAware: isBasepathAware,
                     previewId,
                     customDomains,
                     git: ledgerGit,
@@ -902,7 +930,8 @@ export async function publishDocs({
             try {
                 await runLedgerPublish();
             } catch (error) {
-                return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
+                const detail = formatLedgerError(error);
+                return context.failAndThrow("Failed to publish docs via ledger to " + domain + ": " + detail, error, {
                     code: CliError.Code.NetworkError
                 });
             }
@@ -1126,6 +1155,34 @@ export async function publishDocs({
                                     translatedApisForTitles[baseApiId] = translatedRead;
                                 }
                             }
+
+                            // A translated spec that drifts from the base — a changed OpenAPI tag
+                            // name (which derives subpackage/endpoint ids), a missing/added
+                            // endpoint, or a changed path — produces an API whose nav nodes can't
+                            // all be resolved against it. Repointing the nav at such a definition
+                            // would make the docs renderer fail to resolve a node and 500. For those
+                            // APIs we keep the nav pointed at the base (default-locale) definition,
+                            // but still localize the sidebar titles we can match by locator.
+                            const incompatibleApiIds = findIncompatibleTranslatedApiIds(
+                                updatedRoot,
+                                baseApisForTitles,
+                                translatedApisForTitles
+                            );
+                            if (incompatibleApiIds.size > 0) {
+                                context.logger.warn(
+                                    `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for ` +
+                                        `locale "${locale}" diverge from the default-locale spec (e.g. changed OpenAPI ` +
+                                        `tag names, operationIds, or paths, or a missing/added endpoint), so they can't ` +
+                                        `be fully matched to the navigation tree. Serving the default-locale API for ` +
+                                        `those (localized sidebar titles are still applied where they can be matched). ` +
+                                        `For fully localized API reference content, translate only human-readable text ` +
+                                        `and keep tag names/operationIds/paths identical to the base spec.`
+                                );
+                            }
+                            const rewritableApiIds = new Set(
+                                Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
+                            );
+
                             // Work on a deep clone before the in-place id rewrite below, since
                             // locales run concurrently off the shared base nav tree. Title
                             // patching already clones, so only clone explicitly when it's skipped.
@@ -1134,10 +1191,16 @@ export async function publishDocs({
                                     ? applyTranslatedApiTitlesToNavTree(
                                           updatedRoot,
                                           baseApisForTitles,
-                                          translatedApisForTitles
+                                          translatedApisForTitles,
+                                          { rewritableApiIds }
                                       )
                                     : structuredClone(updatedRoot);
                             for (const [baseApiId, translatedApiId] of localeApiIdMap) {
+                                // Keep the base apiDefinitionId for incompatible APIs so the nav
+                                // resolves against the base definition instead of the divergent one.
+                                if (incompatibleApiIds.has(baseApiId)) {
+                                    continue;
+                                }
                                 updateApiDefinitionIdInTree(updatedRoot, baseApiId, translatedApiId);
                             }
                         }

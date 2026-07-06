@@ -153,6 +153,7 @@
           "userSpecifiedExamples": {
             "createUserExample_Successfully created user_201": {
               "codeSamples": undefined,
+              "contentType": undefined,
               "displayName": "Successfully created user",
               "request": {
                 "auth": undefined,
@@ -396,12 +397,9 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
-                "exclusiveMaximum": undefined,
-                "exclusiveMinimum": undefined,
-                "maximum": undefined,
-                "minimum": undefined,
-                "multipleOf": undefined,
-                "type": "double",
+                "description": undefined,
+                "name": "float",
+                "type": "scalar",
               },
             },
           },

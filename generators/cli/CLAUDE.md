@@ -87,7 +87,7 @@ the path the patched Cargo.toml references).
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
 | [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName` and `customCommands` (unified flag controlling types/SDK/glue generation). |
-| [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` per supported scheme. Synchronous — no disk reads. |
+| [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, and two-field basic go to root (typed builders like `BasicAuth`) so `auth status` enumerates them; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
 | [`./sdk/`](./sdk/) | Hand-authored Rust SDK — the bulk of the CLI's runtime behavior. Edit this when you need to extend what `CliApp` can do. |
@@ -121,7 +121,8 @@ Each scheme in the IR's `auth.schemes` is visited via
 |---|---|---|
 | `bearer` | `.auth_scheme_env("<key>", "<env>")` | `scheme.tokenEnvVar` ?? `<BIN>_TOKEN` |
 | `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
-| `basic` | `.auth_basic_scheme("<key>", <user>, <pass>)` | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}`; `*Omit: true` becomes `AuthCredentialSource::literal("")` |
+| `basic` (both halves bound) | `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))` at root, so `auth status` enumerates it [FER-11474] | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}` |
+| `basic` (`usernameOmit`/`passwordOmit`) | `.auth_provider("<key>", BasicAuthProvider::…)` — stays binding-level; no root path for `BasicAuthProvider` | the bound half's env var; omitted half is a literal `""` |
 | `oauth`, `inferred`, `_other` | Skipped — the SDK has no runtime provider yet | — |
 
 Env-var names come from the IR first because that's where the user's
@@ -197,50 +198,28 @@ The image warms a cargo target cache against the committed
 `Cargo.lock`; mounted fixtures use `cargo build --locked` and would
 otherwise refuse to start when the dep tree drifts.
 
-### Syncing the vendored SDK from cli-sdk
+### The vendored SDK is now the canonical home (cli-sdk is archived)
 
-The SDK at [`./sdk/`](./sdk/) is a **vendored snapshot** of
-[`fern-api/cli-sdk`](https://github.com/fern-api/cli-sdk). A daily
-GitHub Actions workflow (`.github/workflows/sync-cli-sdk.yml`) pulls
-`cli-sdk` `main` HEAD into this directory, opens a PR for human review,
-and relies on seed tests + a human reviewer as the trust boundary.
+The SDK at [`./sdk/`](./sdk/) is the **canonical source** for the CLI
+generator runtime. **Edit it directly here.**
 
-**How the sync works:**
+It was historically a one-way vendored snapshot of
+[`fern-api/cli-sdk`](https://github.com/fern-api/cli-sdk), pulled in by a
+daily GitHub Actions sync. As of the cli-sdk sunset (FER-11468),
+**`fern-api/cli-sdk` is archived (read-only)** and development moved into
+this directory. The daily sync workflow and the sync tooling
+(`sync-sdk.sh`, `sync-manifest.toml`, `read-manifest.py`,
+`strip-fixture-tests.py`) have been removed — there is no upstream to sync
+from anymore, and edits here are no longer clobbered.
 
-[`generators/cli/scripts/sync-sdk.sh`](scripts/sync-sdk.sh) takes a
-local cli-sdk checkout and:
+Two artifacts of the old sync remain and are now maintained by hand:
 
-1. **Rsyncs source files** (`src/`, `tests/`, `cli/openapi-fixture/`)
-   under the same `SDK_IGNORE` rules as `build.mjs` — template-only
-   files (smoke tests, demo binaries, `.github/`, `docs/`, etc.) are
-   excluded.
-2. **Projects `Cargo.toml`** — the vendored manifest is a deterministic
-   projection of cli-sdk's workspace manifest, **not** a copy. A naïve
-   `cp` would re-introduce `[workspace]`, `version.workspace = true`,
-   and ~35 `[[bin]]` entries. The projection:
-   - **Drops** `[workspace]` + `[workspace.package]`
-   - **Keeps only** the `openapi-fixture` and `strip-schema` `[[bin]]`
-     entries
-   - **Rewrites** `version.workspace = true` → literal
-     `version = "<synced>"`
-   - **Injects** the 3 Fern comment blocks that `patchCargoToml.ts`
-     anchors on (`TEMPLATE_TOP_COMMENT`, `TEMPLATE_BIN_COMMENT`, the
-     `strip-schema` "Internal tool…" comment) plus `readme = "README.md"`
-     and `[package.metadata.dist] dist = false`
-   - **Copies verbatim**: `[dependencies]`, `[features]`, `[lib]`,
-     `[profile.dist]`, `[build-dependencies]`, `[dev-dependencies]`
-3. **Regenerates `Cargo.lock`** so `cargo build --locked` is honest.
-4. **Writes `.synced-from`** with `cli-sdk@<sha>` + timestamp for
-   provenance tracking.
-
-**Manual sync** (when you can't wait for the daily cron):
-
-```bash
-# From the fern repo root:
-git clone --depth 1 https://github.com/fern-api/cli-sdk.git /tmp/cli-sdk
-bash generators/cli/scripts/sync-sdk.sh /tmp/cli-sdk
-# Review the diff, then commit.
-```
+- **`sdk/.sdk-ignore.json`** — dev-only globs that `build.mjs` excludes
+  from customer output (smoke tests, demo binaries, `docs/`, etc.). If you
+  add a file under `./sdk/` that should **not** ship in generated CLIs, add
+  its glob here.
+- **`sdk/.synced-from`** — records the final `cli-sdk@<sha>` that was
+  vendored, for provenance.
 
 **Must-rebuild list** (only when `Cargo.lock` changes):
 
@@ -250,10 +229,11 @@ docker build --no-cache -f docker/seed/Dockerfile.cli -t fernapi/cli-seed:latest
 pnpm turbo run dist:cli --filter @fern-api/seed-cli
 ```
 
-**Key invariant**: every `patchCargoToml.ts` anchor must be present in
-the projected `Cargo.toml`. If you rename a comment block in the
-template, update `sync-sdk.sh`'s projection accordingly — the
-`patchCargoToml.test.ts` will catch any mismatch at test time.
+**Note on `sdk/Cargo.toml`**: it is no longer a projection of an upstream
+workspace manifest — it's a plain manifest you edit directly. The
+`patchCargoToml.ts` anchors (`TEMPLATE_TOP_COMMENT`, `TEMPLATE_BIN_COMMENT`,
+the `strip-schema` comment) must still be present; `patchCargoToml.test.ts`
+catches any mismatch at test time.
 
 ## Conventions
 

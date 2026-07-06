@@ -76,6 +76,19 @@ RUN for dir in \
       fi; \
     done
 
+# Patch @sigstore/core to 3.2.1 to fix GHSA-jfc7-64v2-mr8c.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/@sigstore/core; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/@sigstore/core/-/core-3.2.1.tgz -o core-3.2.1.tgz && \
+        mkdir -p core && \
+        tar -xzf core-3.2.1.tgz --strip-components=1 -C core/ && \
+        rm core-3.2.1.tgz; \
+      fi; \
+    done
+
 ARG SENTRY_DSN
 ARG SENTRY_ENVIRONMENT=production
 ARG SENTRY_RELEASE

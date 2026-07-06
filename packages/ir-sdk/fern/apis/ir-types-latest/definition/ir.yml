@@ -8,6 +8,7 @@ imports:
   dynamic: dynamic/ir.yml
   environment: environment.yml
   errors: errors.yml
+  globalParameters: global-parameters.yml
   generator: generator-exec/config.yml
   http: http.yml
   proto: proto.yml
@@ -64,6 +65,15 @@ types:
       errorDiscriminationStrategy: ErrorDiscriminationStrategy
       sdkConfig: SdkConfig
       variables: list<variables.VariableDeclaration>
+      globalParameters:
+        type: optional<list<globalParameters.GlobalParameter>>
+        docs: |
+          Global parameters that are set once at the SDK client level
+          and injected into every relevant request at the declared wire
+          location (header, query, body, or path). Subsumes the header-only
+          semantics of `headers` (x-fern-global-headers) and the path-only
+          semantics of `variables` (x-fern-sdk-variables) with support for
+          body and query locations.
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
       readmeConfig: optional<ReadmeConfig>
       sourceConfig: optional<SourceConfig>

@@ -1,3 +1,4 @@
+import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin, getIrVersionForGenerator } from "@fern-api/core";
@@ -191,7 +192,7 @@ async function createJob({
         id: generatorInvocation.name,
         version: generatorInvocation.version,
         outputMode: generatorInvocation.outputMode,
-        customConfig: generatorInvocation.config,
+        customConfig: stripCliConfigKeys(generatorInvocation.config),
         publishMetadata: generatorInvocation.publishMetadata
     };
 

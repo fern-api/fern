@@ -163,6 +163,7 @@
           "userSpecifiedExamples": {
             "addPlantExample_Successfully created plant_200": {
               "codeSamples": undefined,
+              "contentType": undefined,
               "displayName": "Successfully created plant",
               "request": {
                 "auth": undefined,
@@ -324,12 +325,9 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
-                  "type": "double",
+                  "description": undefined,
+                  "name": "float",
+                  "type": "scalar",
                 },
               },
               "type": "optional",
@@ -506,12 +504,9 @@
                   "type": "primitive",
                   "value": {
                     "default": undefined,
-                    "exclusiveMaximum": undefined,
-                    "exclusiveMinimum": undefined,
-                    "maximum": undefined,
-                    "minimum": undefined,
-                    "multipleOf": undefined,
-                    "type": "double",
+                    "description": undefined,
+                    "name": "float",
+                    "type": "scalar",
                   },
                 },
                 "type": "nullable",

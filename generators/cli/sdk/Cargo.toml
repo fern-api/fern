@@ -86,6 +86,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
 tracing-appender = "0.2"
 unicode-normalization = "0.1.25"
 form_urlencoded = "1"
+jmespath = "0.3"
 
 [package.metadata.dist]
 dist = false

@@ -22,6 +22,123 @@ rather than user-facing changes.
 
 ## [Unreleased]
 
+### 2026-06-22 → 2026-06-26
+
+**10 merged PRs** in window · **7 with architectural impact** · **3 new implicit decisions** surfaced (D-AH, D-AI, D-AJ) · **0 reversals to existing entries** (D-AH reverses an out-of-scope stance in DESIGN.md, not a prior INDEX.md entry) · **0 out-of-band signals**
+
+> [source: GitHub] PRs #197, #198, #199, #200, #206, #209 (arch refresh — skipped), #210, #211, #212, #213, #214 · [source: Linear] FER-10533 (Done), FER-9858 (Done), FER-11379 (Done), FER-11380 (Done), FER-11381 (Done), FER-11348 (Done), FER-10538 (Done) · [source: Slack] unavailable (not connected) · [source: Notion] unavailable (401)
+
+#### Shape changes
+
+- **New building block: `src/pager.rs` — external pager support
+  (PR #200, FER-9858, D-AJ).** Adds `PagerConfig` (env-var resolution:
+  `$<BINARY>_PAGER` > `$PAGER` > platform default) and `spawn_pager()`
+  / `PagerHandle` for piping paginated output through `less`/`more`.
+  Activation triple-gated: `--page-all && TTY && !--no-pager`. Wired
+  into both OpenAPI and GraphQL pagination loops.
+  Touches `src/pager.rs` (new), `src/openapi/executor.rs`,
+  `src/graphql/executor.rs`, `src/openapi/commands.rs`,
+  `src/graphql/commands.rs`.
+  Sources: [FER-9858](https://linear.app/buildwithfern/issue/FER-9858),
+  [PR #200](https://github.com/fern-api/cli-sdk/pull/200).
+
+- **`--debug` HTTP dump extended to GraphQL path (PR #210, FER-11380).**
+  `src/debug.rs` gains `dump_graphql_request()` — a GraphQL-aware
+  variant that shows the raw query text (not JSON-escaped) and
+  pretty-prints redacted variables. Wired in
+  `src/graphql/executor.rs`. Completes the `--debug` coverage across
+  both protocol paths (OpenAPI landed in PR #206, FER-11379).
+  Sources: [FER-11380](https://linear.app/buildwithfern/issue/FER-11380),
+  [PR #210](https://github.com/fern-api/cli-sdk/pull/210),
+  [FER-11379](https://linear.app/buildwithfern/issue/FER-11379),
+  [PR #206](https://github.com/fern-api/cli-sdk/pull/206).
+
+#### Cross-cutting concept changes
+
+- **Rich stderr error display (PR #212, FER-11381).** `write_error_json()`
+  in `src/error.rs` now emits color-coded `error[category]:` labels
+  (api/auth/validation/discovery), optional docs-URL link for API errors
+  (`ErrorDisplayContext.docs_base_url → <base>/<status_code>`), and
+  `Try \`<cmd> --help\`` hint for validation errors. All output sanitized
+  via `sanitize_for_terminal()`. Does not change the JSON-on-stdout
+  contract.
+  Sources: [FER-11381](https://linear.app/buildwithfern/issue/FER-11381),
+  [PR #212](https://github.com/fern-api/cli-sdk/pull/212).
+
+- **`--format raw` and `--format jsonl` output formats (PR #199).**
+  `OutputFormat::Raw` bypasses JSON parsing: response bytes stream to
+  stdout; error responses use the new `CliError::RawSentinel` sentinel
+  to skip the JSON error envelope (bytes already on stdout).
+  `OutputFormat::Jsonl` (alias `ndjson`) renders each top-level array
+  element as a single-line JSON object.
+  Sources: [PR #199](https://github.com/fern-api/cli-sdk/pull/199).
+
+- **`--query` JMESPath response filtering (PR #197, FER-10533, D-AH).**
+  Global `--query` flag applies a JMESPath expression to every response
+  before formatting. Works with all `--format` variants and paginated /
+  streaming responses (null results suppressed as a per-event filter).
+  New dependency: `jmespath = "0.3"`. Reverses earlier out-of-scope
+  stance in `DESIGN.md`.
+  Sources: [FER-10533](https://linear.app/buildwithfern/issue/FER-10533),
+  [PR #197](https://github.com/fern-api/cli-sdk/pull/197).
+
+- **`--format http` output format (PR #214, FER-11348).** Renders the
+  full HTTP response envelope (status line, headers, blank line, body)
+  in standard HTTP/1.1 message format. OpenAPI path only.
+  Sources: [FER-11348](https://linear.app/buildwithfern/issue/FER-11348),
+  [PR #214](https://github.com/fern-api/cli-sdk/pull/214).
+
+#### New implicit decisions
+
+- **D-AH** — `--query` JMESPath filtering (reversal of DESIGN.md
+  out-of-scope). [PR #197](https://github.com/fern-api/cli-sdk/pull/197),
+  [FER-10533](https://linear.app/buildwithfern/issue/FER-10533).
+- **D-AI** — `--format raw` bypasses JSON parsing (`RawSentinel`
+  pattern). [PR #199](https://github.com/fern-api/cli-sdk/pull/199).
+- **D-AJ** — External pager is explicit-only (`--page-all` + TTY +
+  `!--no-pager`). [PR #200](https://github.com/fern-api/cli-sdk/pull/200),
+  [FER-9858](https://linear.app/buildwithfern/issue/FER-9858).
+
+#### Risk surface changes
+
+- **§11 #10 — `jmespath` crate staleness.** `jmespath = "0.3"` last
+  published 2021; unmaintained. No known CVEs but may block future Rust
+  edition / MSRV bumps. [PR #197](https://github.com/fern-api/cli-sdk/pull/197).
+
+#### No architectural impact (3 PRs)
+
+- PR #211 — AssemblyAI demo script fix
+- PR #213 — Auth help display for custom providers (bug fix)
+- PR #198 — YAML output formatting fix (FER-10538, cosmetic)
+
+---
+
+### 2026-06-18 → 2026-06-22
+
+**2 merged PRs** in window · **1 with architectural impact** · **0 new implicit decisions** · **0 reversals** · **0 out-of-band signals**
+
+> [source: GitHub] PRs #202, #204 (arch refresh — skipped) · [source: Linear] unavailable (401) · [source: Slack] unavailable (timeout) · [source: Notion] unavailable (401)
+
+#### Cross-cutting concept changes
+
+- **Explicit-mode `@file://` and `@data://` URI prefixes for file
+  references (PR #202, FER-10532).** Extends the auto-mode `@<path>`
+  baseline (D-AF) with two opt-in encoding schemes from Stainless
+  parity: `@file://<path>` requires valid UTF-8 or errors with a hint
+  at `@data://`; `@data://<path>` always base64-encodes even for UTF-8
+  input. Both work at every existing `@`-aware site (binary body,
+  multipart, object-shorthand JSON, `--json` whole-body). Under an
+  explicit scheme, `-` is a literal filename — only auto-mode `@-`
+  remains the stdin sentinel, preserving retry semantics. Dry-run JSON
+  now reports `binary_body.source.mode` (`"auto"` / `"text"` / `"data"`)
+  for agent auditability. 13 new unit tests + 21 new wire tests.
+  Touches `src/openapi/executor.rs` (+552), `src/openapi/app.rs`,
+  `src/openapi/binding.rs`.
+  Sources: [FER-10532](https://linear.app/buildwithfern/issue/FER-10532),
+  [PR #202](https://github.com/fern-api/cli-sdk/pull/202).
+
+---
+
 ### 2026-06-11 → 2026-06-18
 
 **8 merged PRs** in window · **7 with architectural impact** · **5 new implicit decisions** surfaced (D-AC, D-AD, D-AE, D-AF, D-AG) · **2 new formal ADRs** (ADR-0007, ADR-0008) · **0 reversals** · **2 out-of-band signals**
@@ -830,6 +947,6 @@ see [`automation/README.md`](./automation/README.md) for activation
 steps. Manual invocation works today via the `devin run` command in
 that file.
 
-<!-- last-run: 2026-06-18T01:00:00Z -->
+<!-- last-run: 2026-06-26T16:06:00Z -->
 <!-- The marker above is consumed by the automation playbook to compute
      the next run's window. Each successful run updates it. -->

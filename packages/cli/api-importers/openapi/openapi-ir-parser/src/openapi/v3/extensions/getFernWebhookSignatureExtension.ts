@@ -177,6 +177,7 @@ function convertSignatureSchema(
             signaturePrefix: extension["signature-prefix"],
             jwksUrl: extension["jwks-url"],
             keyIdHeader: extension["key-id-header"],
+            payloadFormat: convertPayloadFormat(extension["payload-format"]),
             timestamp: convertTimestamp(extension.timestamp)
         });
     }

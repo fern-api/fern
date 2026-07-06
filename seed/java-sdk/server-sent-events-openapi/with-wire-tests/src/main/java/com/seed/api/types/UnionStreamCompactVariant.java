@@ -146,7 +146,6 @@ public final class UnionStreamCompactVariant implements IUnionStreamRequestBase 
 
         /**
          * <p>The input prompt.</p>
-         * <p>The input prompt.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -157,7 +156,6 @@ public final class UnionStreamCompactVariant implements IUnionStreamRequestBase 
         }
 
         /**
-         * <p>Compact data payload.</p>
          * <p>Compact data payload.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

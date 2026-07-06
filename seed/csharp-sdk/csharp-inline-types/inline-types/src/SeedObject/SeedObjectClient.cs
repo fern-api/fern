@@ -35,6 +35,9 @@ public partial class SeedObjectClient : ISeedObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedObject.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedObject.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -48,6 +51,7 @@ public partial class SeedObjectClient : ISeedObjectClient
                     Method = HttpMethod.Post,
                     Path = "/root/root",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
@@ -114,6 +118,9 @@ public partial class SeedObjectClient : ISeedObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedObject.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedObject.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -127,6 +134,7 @@ public partial class SeedObjectClient : ISeedObjectClient
                     Method = HttpMethod.Post,
                     Path = "/root/discriminated-union",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
@@ -167,6 +175,9 @@ public partial class SeedObjectClient : ISeedObjectClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedObject.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedObject.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -180,6 +191,7 @@ public partial class SeedObjectClient : ISeedObjectClient
                     Method = HttpMethod.Post,
                     Path = "/root/undiscriminated-union",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     ContentType = "application/json",
                     Options = options,

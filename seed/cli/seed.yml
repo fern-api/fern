@@ -85,6 +85,12 @@ fixtures:
       outputFolder: github-no-publish
       outputMode: github
       outputVersion: "1.0.0"
+  # x-fern-global-parameters — exercises the global parameter codegen
+  # path: IR-driven GlobalParameter[] → detectGlobalParams.ts →
+  # .global_parameter(GlobalParameter { ... }) calls in main.rs.
+  x-fern-global-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
   # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
   # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
   # refuses to guess a single name across multiple titles).
@@ -188,9 +194,10 @@ allowedFailures:
   - public-object
   - query-param-name-conflict
   - query-parameters
-  - query-parameters-openapi
-  - query-parameters-openapi:github-npm
-  - query-parameters-openapi:no-custom-config
+  # query-parameters-openapi:no-custom-config graduated as a regression test
+  # for embedded SDK asIs template resolution (FER-11453).
+  # query-parameters-openapi and query-parameters-openapi:github-npm graduated
+  # after the fernignore cleanup logic was fixed.
   - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable

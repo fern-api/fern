@@ -5,4 +5,6 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.no_auth.post_with_no_auth
+client.no_auth.post_with_no_auth(request: {
+  key: "value"
+})

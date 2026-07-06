@@ -24,6 +24,10 @@ pub struct PaginationConfig {
     pub page_limit: u32,
     /// Delay between page fetches in milliseconds (default: 100).
     pub page_delay_ms: u64,
+    /// Disable the pager even on interactive terminals (`--no-pager`).
+    pub no_pager: bool,
+    /// CLI binary name, used for the `<NAME>_PAGER` env var lookup.
+    pub cli_name: String,
 }
 
 impl Default for PaginationConfig {
@@ -32,6 +36,8 @@ impl Default for PaginationConfig {
             page_all: false,
             page_limit: 10,
             page_delay_ms: 100,
+            no_pager: false,
+            cli_name: String::new(),
         }
     }
 }
@@ -164,6 +170,7 @@ async fn handle_json_response(
     page_all: bool,
     capture_output: bool,
     captured: &mut Vec<Value>,
+    pager: &mut Option<crate::pager::PagerHandle>,
 ) -> Result<(), CliError> {
     if let Ok(json_val) = serde_json::from_str::<Value>(body_text) {
         *pages_fetched += 1;
@@ -172,10 +179,16 @@ async fn handle_json_response(
             captured.push(json_val);
         } else if page_all {
             let is_first_page = *pages_fetched == 1;
-            let mut out = std::io::stdout().lock();
-            pipeline
-                .emit(&mut out, &json_val, true, is_first_page)
-                .context("Failed to write output")?;
+            if let Some(ref mut pager_handle) = pager {
+                pipeline
+                    .emit(pager_handle, &json_val, true, is_first_page)
+                    .context("Failed to write output")?;
+            } else {
+                let mut out = std::io::stdout().lock();
+                pipeline
+                    .emit(&mut out, &json_val, true, is_first_page)
+                    .context("Failed to write output")?;
+            }
         } else {
             let mut out = std::io::stdout().lock();
             pipeline
@@ -251,6 +264,15 @@ pub async fn execute_method(
 
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
+
+    // Spawn an external pager when --page-all is active on a TTY.
+    let pager_label = method.id.as_deref().unwrap_or("graphql");
+    let mut pager_handle = if pagination.page_all && !pagination.no_pager && !capture_output {
+        let pager_config = crate::pager::PagerConfig::from_env(&pagination.cli_name);
+        crate::pager::spawn_pager(&pager_config, pager_label)
+    } else {
+        None
+    };
 
     // GraphQL auth is always Authorization: Bearer — covered by the static
     // denylist in debug.rs. GraphQL introspection schemas carry no security
@@ -418,6 +440,7 @@ pub async fn execute_method(
             pagination.page_all,
             capture_output,
             &mut captured_values,
+            &mut pager_handle,
         )
         .await?;
 
@@ -449,6 +472,9 @@ pub async fn execute_method(
 
         break;
     }
+
+    // Close the pager pipe and wait for it to exit before returning.
+    drop(pager_handle);
 
     if capture_output && !captured_values.is_empty() {
         if captured_values.len() == 1 {
@@ -785,6 +811,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut captured = Vec::new();
 
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
         handle_json_response(
             r#"{"items":["a"]}"#,
             &pipeline,
@@ -792,6 +819,7 @@ mod tests {
             false,
             true,
             &mut captured,
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -806,6 +834,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut captured = Vec::new();
 
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
         handle_json_response(
             "not json at all",
             &pipeline,
@@ -813,6 +842,7 @@ mod tests {
             false,
             false,
             &mut captured,
+            &mut pager_none,
         )
         .await
         .unwrap();

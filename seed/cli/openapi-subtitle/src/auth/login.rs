@@ -677,6 +677,17 @@ pub fn inject_keyring_sources(
     }
 }
 
+/// Wire on-disk token caching into every [`OAuth2TokenProvider`] reachable
+/// from the bindings. Called after [`inject_keyring_sources`] but before
+/// propagation to subcommands.
+pub fn inject_oauth2_caches(cli_name: &str, bindings: &mut [(String, SchemeBinding)]) {
+    for (_scheme_name, binding) in bindings.iter_mut() {
+        if let SchemeBinding::Custom(provider) = binding {
+            provider.inject_token_cache(cli_name);
+        }
+    }
+}
+
 fn append_to_chain(
     existing: AuthCredentialSource,
     addition: AuthCredentialSource,
@@ -997,5 +1008,63 @@ mod tests {
         // it writes to stderr.)
 
         std::env::remove_var("MY_CLI_OAUTH2_TEST");
+    }
+
+    #[test]
+    fn inject_oauth2_caches_wires_cache_into_custom_provider() {
+        use crate::auth::oauth2::{OAuth2Grant, OAuth2TokenProvider};
+
+        let provider = Arc::new(OAuth2TokenProvider::new(
+            "OAuth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "CID".to_string(),
+                client_secret_env: "CSEC".to_string(),
+                scope: None,
+            },
+        ));
+        assert!(!provider.has_cache());
+
+        let mut bindings: Vec<(String, SchemeBinding)> = vec![(
+            "OAuth2".to_string(),
+            SchemeBinding::Custom(provider.clone()),
+        )];
+        inject_oauth2_caches("test-cli", &mut bindings);
+        assert!(provider.has_cache());
+    }
+
+    #[test]
+    fn inject_oauth2_caches_is_noop_for_token_bindings() {
+        let mut bindings: Vec<(String, SchemeBinding)> = vec![(
+            "bearer".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::from_env("MY_TOKEN")),
+        )];
+        // Should not panic or modify Token bindings
+        inject_oauth2_caches("test-cli", &mut bindings);
+        assert!(matches!(bindings[0].1, SchemeBinding::Token(_)));
+    }
+
+    #[test]
+    fn inject_oauth2_caches_idempotent() {
+        use crate::auth::oauth2::{OAuth2Grant, OAuth2TokenProvider};
+
+        let provider = Arc::new(OAuth2TokenProvider::new(
+            "OAuth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "CID".to_string(),
+                client_secret_env: "CSEC".to_string(),
+                scope: None,
+            },
+        ));
+        let mut bindings: Vec<(String, SchemeBinding)> = vec![(
+            "OAuth2".to_string(),
+            SchemeBinding::Custom(provider.clone()),
+        )];
+        inject_oauth2_caches("test-cli", &mut bindings);
+        assert!(provider.has_cache());
+        // Calling again should be a no-op (OnceLock prevents double-set)
+        inject_oauth2_caches("other-cli", &mut bindings);
+        assert!(provider.has_cache());
     }
 }

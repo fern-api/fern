@@ -387,6 +387,7 @@ describe("GeneratedUnionTypeImpl", () => {
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined,
                         availability: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined
                     }
@@ -413,6 +414,7 @@ describe("GeneratedUnionTypeImpl", () => {
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined,
                         availability: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined
                     }
@@ -867,6 +869,7 @@ describe("GeneratedUnionTypeImpl", () => {
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined,
                         availability: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined
                     }

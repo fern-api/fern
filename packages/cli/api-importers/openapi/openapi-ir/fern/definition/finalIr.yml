@@ -46,6 +46,7 @@ types:
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       security: optional<GlobalSecurity>
       globalHeaders: optional<list<GlobalHeader>>
+      globalParameters: optional<list<GlobalParameter>>
       idempotencyHeaders: optional<list<IdempotencyHeader>>
 
   GlobalSecurity: list<map<commons.SecuritySchemeId, list<string>>>
@@ -77,6 +78,39 @@ types:
         type: optional<unknown>
         docs: |
           A client-side default value populated by `x-fern-default` on an `x-fern-global-headers` entry.
+
+  GlobalParameter:
+    properties:
+      name:
+        type: string
+        docs: The canonical name / identifier of the parameter.
+      parameterName:
+        type: optional<string>
+        docs: SDK/CLI alias for the parameter. If specified, used instead of name in generated code.
+      in:
+        type: optional<string>
+        docs: "Location: body, query, header, or path. Defaults to body."
+      target:
+        type: optional<string>
+        docs: Wire-level injection path. Defaults to name if not specified.
+      type:
+        type: optional<string>
+        docs: "Type: string, integer, double, boolean. Defaults to string."
+      env:
+        type: optional<string>
+        docs: Environment variable to read the default value from.
+      default:
+        type: optional<unknown>
+        docs: Client-side default value.
+      optional:
+        type: optional<boolean>
+        docs: Whether the parameter is optional.
+      apply:
+        type: optional<string>
+        docs: "Apply mode: explicit or auto."
+      docs:
+        type: optional<string>
+        docs: Documentation string for the parameter.
 
   IdempotencyHeader:
     properties:
@@ -223,6 +257,7 @@ types:
       signaturePrefix: optional<string>
       jwksUrl: optional<string>
       keyIdHeader: optional<string>
+      payloadFormat: optional<WebhookPayloadFormat>
       timestamp: optional<WebhookTimestamp>
 
   WebhookSignatureAlgorithm:
@@ -361,6 +396,11 @@ types:
       examples: list<EndpointExample>
       pagination: optional<Pagination>
       retries: optional<RetriesConfiguration>
+      globalParameterIds:
+        type: optional<list<string>>
+        docs: |
+          Per-operation opt-in IDs for global parameters with apply: explicit.
+          Populated from x-fern-global-parameter on an operation.
 
   EndpointSecurity: list<map<commons.SecuritySchemeId, list<string>>>
 

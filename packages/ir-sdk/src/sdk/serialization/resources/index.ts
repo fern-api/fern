@@ -14,6 +14,8 @@ export * from "./errors/types/index.js";
 export * as examples from "./examples/index.js";
 export * from "./examples/types/index.js";
 export * as generatorExec from "./generatorExec/index.js";
+export * as globalParameters from "./globalParameters/index.js";
+export * from "./globalParameters/types/index.js";
 export * as http from "./http/index.js";
 export * from "./http/types/index.js";
 export * as ir from "./ir/index.js";

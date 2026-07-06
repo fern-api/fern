@@ -35,6 +35,7 @@ import { convertChannel } from "./converters/convertChannel.js";
 import { getAudiences } from "./converters/convertDeclaration.js";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration.js";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy.js";
+import { convertGlobalParameters } from "./converters/convertGlobalParameters.js";
 import { convertReadmeConfig } from "./converters/convertReadmeConfig.js";
 import { convertWebhookGroup } from "./converters/convertWebhookGroup.js";
 import {
@@ -76,6 +77,10 @@ export declare namespace generateIntermediateRepresentation {
         audiences: Audiences;
         readme: generatorsYml.ReadmeSchema | undefined;
         packageName: string | undefined;
+        /** Template for the User-Agent header value (e.g. "north-python-sdk/{version}"). */
+        userAgentTemplate?: string;
+        /** Organization name from fern.config.json, used for {organization} in user-agent template. */
+        organization?: string;
         version: string | undefined;
         context: TaskContext;
         sourceResolver: SourceResolver;
@@ -95,6 +100,8 @@ export function generateIntermediateRepresentation({
     audiences,
     readme,
     packageName,
+    userAgentTemplate,
+    organization,
     version,
     fdrApiDefinitionId,
     sourceResolver,
@@ -192,6 +199,13 @@ export function generateIntermediateRepresentation({
                       type: rootApiFileContext.parseTypeReference(variable)
                   }))
                 : [],
+        globalParameters:
+            workspace.definition.rootApiFile.contents["global-parameters"] != null
+                ? convertGlobalParameters({
+                      globalParameters: workspace.definition.rootApiFile.contents["global-parameters"],
+                      file: rootApiFileContext
+                  })
+                : undefined,
         serviceTypeReferenceInfo: {
             typesReferencedOnlyByService: {},
             sharedTypes: []
@@ -548,13 +562,27 @@ export function generateIntermediateRepresentation({
             language: "X-Fern-Language",
             sdkName: "X-Fern-SDK-Name",
             sdkVersion: "X-Fern-SDK-Version",
-            userAgent:
-                !hasCustomUserAgentHeader && version != null && packageName != null
-                    ? {
-                          header: "User-Agent",
-                          value: `${packageName}/${version}`
-                      }
-                    : undefined
+            userAgent: (() => {
+                if (hasCustomUserAgentHeader) {
+                    return undefined;
+                }
+                if (userAgentTemplate != null && version != null) {
+                    const vars: Record<string, string> = {
+                        version,
+                        packageName: packageName ?? "",
+                        language: generationLanguage ?? "",
+                        generatorVersion: generationMetadata?.generatorVersion ?? "",
+                        organization: organization ?? "",
+                        apiName: workspace.definition.rootApiFile.contents.name ?? ""
+                    };
+                    const value = userAgentTemplate.replace(/\{(\w+)\}/g, (_, key: string) => vars[key] ?? "");
+                    return { header: "User-Agent" as const, value };
+                }
+                if (version != null && packageName != null) {
+                    return { header: "User-Agent" as const, value: `${packageName}/${version}` };
+                }
+                return undefined;
+            })()
         }
     };
 

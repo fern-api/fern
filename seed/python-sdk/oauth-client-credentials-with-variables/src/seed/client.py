@@ -96,6 +96,8 @@ class SeedOauthClientCredentialsWithVariables:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -111,6 +113,8 @@ class SeedOauthClientCredentialsWithVariables:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -128,13 +132,13 @@ class SeedOauthClientCredentialsWithVariables:
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
@@ -148,6 +152,8 @@ class SeedOauthClientCredentialsWithVariables:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
@@ -166,6 +172,8 @@ class SeedOauthClientCredentialsWithVariables:
                     else httpx.Client(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                     max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                     logging=logging,
                 ),
             )
@@ -181,6 +189,8 @@ class SeedOauthClientCredentialsWithVariables:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         else:
@@ -330,6 +340,8 @@ class AsyncSeedOauthClientCredentialsWithVariables:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -345,6 +357,8 @@ class AsyncSeedOauthClientCredentialsWithVariables:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -362,13 +376,13 @@ class AsyncSeedOauthClientCredentialsWithVariables:
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
@@ -380,6 +394,8 @@ class AsyncSeedOauthClientCredentialsWithVariables:
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
@@ -398,6 +414,8 @@ class AsyncSeedOauthClientCredentialsWithVariables:
                     else httpx.AsyncClient(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                     max_retries=_defaulted_max_retries,
+                    stream_reconnection_enabled=stream_reconnection_enabled,
+                    max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                     logging=logging,
                 ),
             )
@@ -412,6 +430,8 @@ class AsyncSeedOauthClientCredentialsWithVariables:
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             )
         else:

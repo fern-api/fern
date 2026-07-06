@@ -101,7 +101,11 @@ client.union.get_metadata
 <dd>
 
 ```ruby
-client.union.update_metadata(request: {})
+client.union.update_metadata(request: {
+  string: {
+    key: "value"
+  }
+})
 ```
 </dd>
 </dl>
@@ -149,7 +153,11 @@ client.union.update_metadata(request: {})
 <dd>
 
 ```ruby
-client.union.call(union: {})
+client.union.call(union: {
+  string: {
+    key: "value"
+  }
+})
 ```
 </dd>
 </dl>
@@ -394,7 +402,11 @@ client.union.aliased_object_union(request: {
 ```ruby
 client.union.get_with_base_properties(
   name: "name",
-  value: {}
+  value: {
+    value: {
+      key: "value"
+    }
+  }
 )
 ```
 </dd>

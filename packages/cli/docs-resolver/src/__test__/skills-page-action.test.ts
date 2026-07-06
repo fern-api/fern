@@ -26,6 +26,7 @@ function makeParsedPageActions(
             cursor: true,
             claudeCode: true,
             vscode: false,
+            mcp: true,
             custom: [],
             skills
         }

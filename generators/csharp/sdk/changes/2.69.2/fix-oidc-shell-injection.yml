@@ -1,0 +1,4 @@
+- summary: |
+    Fix shell injection code scanning alert in OIDC publish workflow by passing
+    API key through env block instead of direct interpolation.
+  type: fix

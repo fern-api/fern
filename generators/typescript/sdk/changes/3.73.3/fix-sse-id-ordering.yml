@@ -1,0 +1,6 @@
+- summary: |
+    Fix SSE event parsing to buffer data and yield on blank lines per the SSE spec.
+    Previously, the parser yielded events immediately on `data:` lines, causing
+    `id:` and `retry:` fields that follow the `data:` line to be missed or
+    associated with the wrong event.
+  type: fix

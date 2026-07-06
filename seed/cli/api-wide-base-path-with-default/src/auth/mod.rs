@@ -62,8 +62,8 @@ pub use keyring_store::{
     OsKeyringStore,
 };
 pub use login::{
-    build_auth_command, dispatch_auth, inject_keyring_sources, run_token_paste, DynLoginFlow,
-    LoginContext, LoginFlow, TokenPasteLoginFlow,
+    build_auth_command, dispatch_auth, inject_keyring_sources, inject_oauth2_caches,
+    run_token_paste, DynLoginFlow, LoginContext, LoginFlow, TokenPasteLoginFlow,
 };
 pub use oauth_login::{DeviceCodeLoginFlow, OAuth2KeyringProvider, PkceLoginFlow, TokenBundle};
 pub use provider::{

@@ -1201,6 +1201,23 @@ paths:
         "201":
           description: Message sent
 
+  /widgets/ref-response:
+    get:
+      x-fern-sdk-group-name:
+        - widgets
+      x-fern-sdk-method-name: getByRef
+      operationId: widgets_getByRef
+      summary: Get a widget using a response-level $ref
+      parameters:
+        - name: widget_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: '#/components/responses/WidgetResponse'
+
 components:
   schemas:
     NewWidget:
@@ -1229,3 +1246,10 @@ components:
           type: string
         Body:
           type: string
+  responses:
+    WidgetResponse:
+      description: A single widget
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewWidget'

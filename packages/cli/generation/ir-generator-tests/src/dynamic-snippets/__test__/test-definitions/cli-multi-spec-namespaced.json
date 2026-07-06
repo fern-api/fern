@@ -790,5 +790,6 @@
         }
     },
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

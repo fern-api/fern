@@ -332,6 +332,10 @@ pub struct PaginationConfig {
     /// Dotted path in JSON response to find the next page token (default: "nextPageToken").
     /// Supports nested paths like "pagination.next_page_token".
     pub token_response_path: String,
+    /// Disable the pager even on interactive terminals (`--no-pager`).
+    pub no_pager: bool,
+    /// CLI binary name, used for the `<NAME>_PAGER` env var lookup.
+    pub cli_name: String,
 }
 
 impl Default for PaginationConfig {
@@ -342,6 +346,8 @@ impl Default for PaginationConfig {
             page_delay_ms: 100,
             token_query_param: "pageToken".to_string(),
             token_response_path: "nextPageToken".to_string(),
+            no_pager: false,
+            cli_name: String::new(),
         }
     }
 }
@@ -606,6 +612,7 @@ fn parse_and_validate_inputs(
     is_media_upload: bool,
     base_url_override: Option<&str>,
     extra_headers: &[(String, String)],
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
 ) -> Result<ExecutionInput, CliError> {
     let params: Map<String, Value> = if let Some(p) = params_json {
         serde_json::from_str(p)
@@ -628,11 +635,24 @@ fn parse_and_validate_inputs(
         }
     };
 
+    // Declared parameters whose value will be supplied by a resolved
+    // global parameter (targeting the same wire name). These are exempt
+    // from the required-param checks below: their value is injected after
+    // validation (see the `extra_global_params` loop), and a required
+    // global without a resolved value already errored in
+    // `build_global_parameter_overrides`. Without this exemption a
+    // `location: path` global (whose OpenAPI target must be declared as a
+    // required path variable) would always trip the check before its
+    // value is ever applied.
+    let global_param_targets: std::collections::HashSet<&str> =
+        extra_global_params.iter().map(|gp| gp.target.as_str()).collect();
+
     for param_name in &method.parameter_order {
         if let Some(param_def) = method.parameters.get(param_name) {
             if param_def.required
                 && param_def.location.as_deref() == Some("path")
                 && !params.contains_key(param_name)
+                && !global_param_targets.contains(param_name.as_str())
             {
                 let hint = missing_param_hint(param_def, param_name);
                 return Err(CliError::Validation(format!(
@@ -643,7 +663,10 @@ fn parse_and_validate_inputs(
     }
 
     for (param_name, param_def) in &method.parameters {
-        if param_def.required && !params.contains_key(param_name) {
+        if param_def.required
+            && !params.contains_key(param_name)
+            && !global_param_targets.contains(param_name.as_str())
+        {
             // When --json is provided, body-located required params are satisfied
             // by the JSON payload — skip their individual-flag validation.
             if param_def.location.as_deref() == Some("body") && body_json.is_some() {
@@ -746,9 +769,44 @@ fn parse_and_validate_inputs(
         }
     }
 
+    // Inject resolved `x-fern-global-parameters` by location. Header
+    // and body params are stamped here; query and path params are added
+    // to `non_header_params` so `build_url` handles them.
+    for gp in extra_global_params {
+        use crate::openapi::discovery::GlobalParameterLocation;
+        match gp.location {
+            GlobalParameterLocation::Header => {
+                if !header_params.iter().any(|(k, _)| k.eq_ignore_ascii_case(&gp.target)) {
+                    header_params.push((gp.target.clone(), gp.value.clone()));
+                }
+            }
+            GlobalParameterLocation::Query => {
+                if !non_header_params.contains_key(&gp.target) {
+                    non_header_params.insert(
+                        gp.target.clone(),
+                        Value::String(gp.value.clone()),
+                    );
+                }
+            }
+            GlobalParameterLocation::Body => {
+                // Body injection is deferred until after body assembly
+                // so that global body params are merged into both the
+                // `--json` path and the per-field-flags path.
+            }
+            GlobalParameterLocation::Path => {
+                if !non_header_params.contains_key(&gp.target) {
+                    non_header_params.insert(
+                        gp.target.clone(),
+                        Value::String(gp.value.clone()),
+                    );
+                }
+            }
+        }
+    }
+
     // The conflict checks above guarantee that `body_json` and
-    // `body_from_flags` are never both populated, so the body is sourced
-    // from exactly one channel here.
+    // `body_from_flags` are never both populated (before global-param
+    // injection), so the body is sourced from exactly one channel here.
     let body: Option<Value> = if let Some(b) = body_json {
         let mut json_val: Value = serde_json::from_str(b)
             .map_err(|e| CliError::Validation(format!("Invalid --json body: {e}")))?;
@@ -771,6 +829,14 @@ fn parse_and_validate_inputs(
     } else {
         None
     };
+
+    // Merge body-location global parameters into the assembled body.
+    // This runs after body assembly so globals are injected into both
+    // the `--json` and per-field-flags paths. A value the user already
+    // supplied at the target path — including a nested path like
+    // `config.currency` — is never overwritten (per-op wins, enforced by
+    // `set_nested_value_if_absent`, which walks the dotted path).
+    let body = merge_global_body_params(body, extra_global_params);
 
     // Validate the assembled body against the request schema regardless of
     // how it was built (per-field flags, `--json`, or both). The previous
@@ -1236,6 +1302,7 @@ async fn handle_json_response(
     return_path: Option<&str>,
     no_extract: bool,
     method_descriptor: &str,
+    pager: &mut Option<crate::pager::PagerHandle>,
 ) -> Result<bool, CliError> {
     if let Ok(json_val) = serde_json::from_str::<Value>(body_text) {
         let output_val =
@@ -1253,10 +1320,16 @@ async fn handle_json_response(
             captured.push(output_val);
         } else if pagination.page_all {
             let is_first_page = *pages_fetched == 1;
-            let mut out = std::io::stdout().lock();
-            pipeline
-                .emit(&mut out, &output_val, true, is_first_page)
-                .context("Failed to write output")?;
+            if let Some(ref mut pager_handle) = pager {
+                pipeline
+                    .emit(pager_handle, &output_val, true, is_first_page)
+                    .context("Failed to write output")?;
+            } else {
+                let mut out = std::io::stdout().lock();
+                pipeline
+                    .emit(&mut out, &output_val, true, is_first_page)
+                    .context("Failed to write output")?;
+            }
         } else {
             let mut out = std::io::stdout().lock();
             pipeline
@@ -1667,6 +1740,11 @@ fn project_stream_event(
 /// Stream the response body line-by-line, emitting one formatted event
 /// per dispatched payload to stdout. Stops at the configured
 /// terminator (when the spec declared one) or at end-of-body.
+///
+/// When a `--query` expression is set on the pipeline, each event is
+/// projected through the JMESPath expression before formatting. Events
+/// whose projection evaluates to `null` are suppressed, enabling
+/// `--query` as a per-event streaming filter.
 async fn stream_response(
     response: reqwest::Response,
     streaming: &StreamingConfig,
@@ -1683,10 +1761,21 @@ async fn stream_response(
             no_extract,
             method_descriptor,
         )?;
-        let mut out = std::io::stdout().lock();
-        pipeline
-            .emit(&mut out, &value, false, true)
-            .context("Failed to write output")?;
+        // When no --query is set, skip the clone + projection entirely.
+        if pipeline.query.is_none() {
+            let mut out = std::io::stdout().lock();
+            pipeline
+                .emit_raw(&mut out, &value, false, true)
+                .context("Failed to write output")?;
+        } else if let Some(projected) = pipeline
+            .apply_query_streaming(&value)
+            .context("--query evaluation failed")?
+        {
+            let mut out = std::io::stdout().lock();
+            pipeline
+                .emit_raw(&mut out, &projected, false, true)
+                .context("Failed to write output")?;
+        }
         Ok(())
     })
     .await
@@ -1878,6 +1967,7 @@ pub async fn execute_method(
     no_stream: bool,
     debug: bool,
     extra_headers: &[(String, String)],
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
 ) -> Result<Option<Value>, CliError> {
     let binary_flag = method
         .binary_request_body
@@ -1896,7 +1986,7 @@ pub async fn execute_method(
         )));
     }
 
-    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers)?;
+    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers, extra_global_params)?;
 
     // Human-readable identifier for the operation, used in
     // `x-fern-sdk-return-value` extraction errors so the user can find
@@ -1999,6 +2089,20 @@ pub async fn execute_method(
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
     let auth_metadata = endpoint_metadata_for(method);
+
+    // Spawn an external pager when --page-all is active on a TTY.
+    let fallback_label = format!(
+        "{} {}",
+        method.http_method.to_ascii_uppercase(),
+        method.path
+    );
+    let pager_label = method.id.as_deref().unwrap_or(&fallback_label);
+    let mut pager_handle = if pagination.page_all && !pagination.no_pager && !capture_output {
+        let pager_config = crate::pager::PagerConfig::from_env(&pagination.cli_name);
+        crate::pager::spawn_pager(&pager_config, pager_label)
+    } else {
+        None
+    };
 
     // Derive spec-declared sensitive names for the debug dump.
     let additional_sensitive_headers: Vec<&str> = if debug {
@@ -2226,8 +2330,6 @@ pub async fn execute_method(
             .to_string();
 
         if !status.is_success() {
-            let response_headers = response.headers().clone();
-            let error_body = response.text().await.unwrap_or_default();
             tracing::warn!(
                 api_method = method_id,
                 http_method = %method.http_method,
@@ -2235,6 +2337,35 @@ pub async fn execute_method(
                 latency_ms = latency_ms,
                 "API error"
             );
+            // Raw mode: emit error body verbatim, return sentinel.
+            if pipeline.is_raw() && !capture_output {
+                if !pipeline.quiet {
+                    let bytes = response.bytes().await.unwrap_or_default();
+                    let mut stdout = std::io::stdout().lock();
+                    let _ = std::io::Write::write_all(&mut stdout, &bytes);
+                    let _ = std::io::Write::flush(&mut stdout);
+                }
+                return Err(CliError::RawSentinel {
+                    code: status.as_u16(),
+                });
+            }
+            // HTTP mode: emit status line + headers + body, return sentinel.
+            if pipeline.is_http() && !capture_output {
+                if !pipeline.quiet {
+                    let version = response.version();
+                    let resp_headers = response.headers().clone();
+                    let bytes = response.bytes().await.unwrap_or_default();
+                    let mut stdout = std::io::stdout().lock();
+                    let _ = write_http_preamble(&mut stdout, version, status, &resp_headers);
+                    let _ = std::io::Write::write_all(&mut stdout, &bytes);
+                    let _ = std::io::Write::flush(&mut stdout);
+                }
+                return Err(CliError::RawSentinel {
+                    code: status.as_u16(),
+                });
+            }
+            let response_headers = response.headers().clone();
+            let error_body = response.text().await.unwrap_or_default();
             if debug {
                 crate::debug::dump_error_response(
                     status.as_u16(),
@@ -2262,6 +2393,59 @@ pub async fn execute_method(
             page = pages_fetched,
             "API request"
         );
+
+        // Raw mode: stream response bytes to stdout verbatim.
+        if pipeline.is_raw() && !capture_output {
+            if pipeline.quiet {
+                let _ = response.bytes().await;
+            } else {
+                use std::io::Write;
+                let mut stream = response.bytes_stream();
+                while let Some(chunk) = stream.next().await {
+                    let chunk = chunk.context("Failed to read response chunk")?;
+                    // StdoutLock is !Send — re-acquire per chunk.
+                    std::io::stdout()
+                        .lock()
+                        .write_all(&chunk)
+                        .context("Failed to write to stdout")?;
+                }
+                std::io::stdout()
+                    .flush()
+                    .context("Failed to flush stdout")?;
+            }
+            break;
+        }
+
+        // HTTP mode: emit status line + headers + raw body.
+        if pipeline.is_http() && !capture_output {
+            if pipeline.quiet {
+                let _ = response.bytes().await;
+            } else {
+                use std::io::Write;
+                let version = response.version();
+                let resp_headers = response.headers().clone();
+                // Write preamble in its own scope so StdoutLock (!Send) is
+                // dropped before the streaming await below.
+                {
+                    let mut stdout = std::io::stdout().lock();
+                    write_http_preamble(&mut stdout, version, status, &resp_headers)
+                        .context("Failed to write HTTP preamble")?;
+                }
+                let mut stream = response.bytes_stream();
+                while let Some(chunk) = stream.next().await {
+                    let chunk = chunk.context("Failed to read response chunk")?;
+                    // StdoutLock is !Send — re-acquire per chunk.
+                    std::io::stdout()
+                        .lock()
+                        .write_all(&chunk)
+                        .context("Failed to write to stdout")?;
+                }
+                std::io::stdout()
+                    .flush()
+                    .context("Failed to flush stdout")?;
+            }
+            break;
+        }
 
         // Streaming response branch. Selected when:
         // - the operation declares `x-fern-streaming`, AND
@@ -2327,6 +2511,51 @@ pub async fn execute_method(
             break;
         }
 
+        // SSE auto-detection: when the spec omits `x-fern-streaming` but
+        // the server responds with `text/event-stream`, treat the body as
+        // an SSE stream using the same infrastructure. This avoids falling
+        // through to the binary handler (which would dump the stream to a
+        // file or hang).
+        if content_type.contains("text/event-stream") && method.streaming.is_none() {
+            let sse_config = StreamingConfig::Sse { terminator: None };
+            if !no_stream && !capture_output {
+                if debug {
+                    crate::debug::dump_streaming_note(
+                        status.as_u16(),
+                        response.headers(),
+                        &additional_sensitive_headers,
+                    );
+                }
+                stream_response(
+                    response,
+                    &sse_config,
+                    method.return_value.as_deref(),
+                    no_extract,
+                    pipeline,
+                    &method_descriptor,
+                )
+                .await?;
+                break;
+            }
+            let buffered = buffer_streaming_response(
+                response,
+                &sse_config,
+                method.return_value.as_deref(),
+                no_extract,
+                &method_descriptor,
+            )
+            .await?;
+            if capture_output {
+                captured_values.push(buffered);
+            } else {
+                let mut out = std::io::stdout().lock();
+                pipeline
+                    .emit(&mut out, &buffered, false, true)
+                    .context("Failed to write output")?;
+            }
+            break;
+        }
+
         let is_json =
             content_type.contains("application/json") || content_type.contains("text/json");
 
@@ -2361,6 +2590,7 @@ pub async fn execute_method(
                 method.return_value.as_deref(),
                 no_extract,
                 &method_descriptor,
+                &mut pager_handle,
             )
             .await?;
 
@@ -2392,6 +2622,9 @@ pub async fn execute_method(
         break;
     }
 
+    // Close the pager pipe and wait for it to exit before returning.
+    drop(pager_handle);
+
     if capture_output && !captured_values.is_empty() {
         if captured_values.len() == 1 {
             return Ok(Some(captured_values.pop().unwrap()));
@@ -2401,6 +2634,43 @@ pub async fn execute_method(
     }
 
     Ok(None)
+}
+
+/// Format an HTTP version enum as a string (e.g. `HTTP/1.1`).
+fn format_http_version(version: reqwest::Version) -> &'static str {
+    match version {
+        reqwest::Version::HTTP_09 => "HTTP/0.9",
+        reqwest::Version::HTTP_10 => "HTTP/1.0",
+        reqwest::Version::HTTP_11 => "HTTP/1.1",
+        reqwest::Version::HTTP_2 => "HTTP/2",
+        reqwest::Version::HTTP_3 => "HTTP/3",
+        _ => "HTTP/1.1",
+    }
+}
+
+/// Write the HTTP status line and headers preamble to `out`.
+///
+/// Produces output like:
+/// ```text
+/// HTTP/1.1 200 OK\r\n
+/// Content-Type: application/json\r\n
+/// \r\n
+/// ```
+fn write_http_preamble(
+    out: &mut dyn std::io::Write,
+    version: reqwest::Version,
+    status: reqwest::StatusCode,
+    headers: &reqwest::header::HeaderMap,
+) -> std::io::Result<()> {
+    let version_str = format_http_version(version);
+    let reason = status.canonical_reason().unwrap_or("");
+    write!(out, "{} {} {}\r\n", version_str, status.as_u16(), reason)?;
+    for (name, value) in headers.iter() {
+        let val_str = value.to_str().unwrap_or("<binary>");
+        write!(out, "{}: {}\r\n", name, val_str)?;
+    }
+    write!(out, "\r\n")?;
+    Ok(())
 }
 
 /// Serialize a query parameter value according to its OpenAPI style.
@@ -3388,6 +3658,53 @@ fn build_multipart_body(
     Ok((body, content_type))
 }
 
+/// Merge body-location global parameters into an assembled body value.
+/// Handles both the `--json` and per-field-flags body paths. Non-object
+/// bodies (arrays, scalars) are left untouched since we can't inject
+/// named fields into them. When the body is `None`, a new object is
+/// created to carry the global fields.
+fn merge_global_body_params(
+    body: Option<Value>,
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
+) -> Option<Value> {
+    use crate::openapi::discovery::GlobalParameterLocation;
+
+    let has_body_globals = extra_global_params
+        .iter()
+        .any(|gp| gp.location == GlobalParameterLocation::Body);
+    if !has_body_globals {
+        return body;
+    }
+
+    match body {
+        Some(Value::Object(mut m)) => {
+            for gp in extra_global_params
+                .iter()
+                .filter(|gp| gp.location == GlobalParameterLocation::Body)
+            {
+                // Per-op wins: only inject where the user hasn't already
+                // supplied a value at the (possibly nested) target path.
+                set_nested_value_if_absent(&mut m, &gp.target, Value::String(gp.value.clone()));
+            }
+            Some(Value::Object(m))
+        }
+        Some(other) => {
+            // Non-object body — can't inject named fields; leave as-is.
+            Some(other)
+        }
+        None => {
+            let mut m = Map::new();
+            for gp in extra_global_params
+                .iter()
+                .filter(|gp| gp.location == GlobalParameterLocation::Body)
+            {
+                set_nested_value_if_absent(&mut m, &gp.target, Value::String(gp.value.clone()));
+            }
+            Some(Value::Object(m))
+        }
+    }
+}
+
 /// Intentional duplication from `graphql/executor.rs` — no shared module by design.
 fn set_nested_value(obj: &mut Map<String, Value>, path: &str, value: Value) {
     match path.split_once('.') {
@@ -3400,6 +3717,30 @@ fn set_nested_value(obj: &mut Map<String, Value>, path: &str, value: Value) {
                 .or_insert_with(|| Value::Object(Map::new()));
             if let Value::Object(nested_map) = nested {
                 set_nested_value(nested_map, tail, value);
+            }
+        }
+    }
+}
+
+/// Like [`set_nested_value`] but never overwrites a value the user has
+/// already supplied: it no-ops on an existing leaf and never replaces a
+/// non-object node encountered while walking a dotted path. This is what
+/// enforces "per-op wins" for body-location global parameters — a flat
+/// `contains_key(target)` check can't see a nested target like
+/// `config.currency` (the assembled body has no top-level key literally
+/// named `"config.currency"`), so the presence test must walk the path.
+fn set_nested_value_if_absent(obj: &mut Map<String, Value>, path: &str, value: Value) {
+    match path.split_once('.') {
+        None => {
+            obj.entry(path.to_string()).or_insert(value);
+        }
+        Some((head, tail)) => {
+            let nested = obj
+                .entry(head.to_string())
+                .or_insert_with(|| Value::Object(Map::new()));
+            // If the user already put a non-object here, leave it untouched.
+            if let Value::Object(nested_map) = nested {
+                set_nested_value_if_absent(nested_map, tail, value);
             }
         }
     }
@@ -5285,7 +5626,7 @@ mod tests {
         let params_json =
             r#"{"user_id": "123", "X-Custom-Header": "my-value", "limit": "10"}"#;
         let input =
-            parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[]).unwrap();
+            parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[]).unwrap();
 
         // Header param should be in header_params
         assert_eq!(input.header_params.len(), 1);
@@ -5614,7 +5955,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "Acme", "count": "3"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap();
 
         // Body must contain both fields, with `count` coerced to a JSON integer.
@@ -5670,6 +6011,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -5716,7 +6058,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -5758,7 +6100,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -5809,6 +6151,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -5847,7 +6190,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -5886,7 +6229,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -5930,7 +6273,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6003,7 +6346,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "not-an-integer"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6052,6 +6395,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -6099,7 +6443,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"last\":\"Lincoln\"}", "name.first": "Abraham"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6140,7 +6484,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\",\"last\":\"Lincoln\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap();
         let body = input.body.expect("body should be populated");
         assert_eq!(body, json!({ "name": { "first": "Abraham", "last": "Lincoln" } }));
@@ -6184,7 +6528,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .expect("required leaf satisfied by ancestor shorthand should pass");
         let body = input.body.expect("body should be populated");
         assert_eq!(body, json!({ "name": { "first": "Abraham" } }));
@@ -6225,7 +6569,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -8677,6 +9021,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"data":[{"id":1}],"meta":{"total":1}}"#,
@@ -8692,6 +9037,7 @@ mod tests {
             Some("data"),
             false,
             "things.list",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8712,6 +9058,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let body = r#"{"data":[{"id":1}],"meta":{"total":1}}"#;
         let result = handle_json_response(
@@ -8728,6 +9075,7 @@ mod tests {
             Some("data"),
             true, // no_extract
             "things.list",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8743,6 +9091,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let err = handle_json_response(
             r#"{"foo":1}"#,
@@ -8758,6 +9107,7 @@ mod tests {
             Some("data"),
             false,
             "things.list",
+            &mut pager_none,
         )
         .await
         .expect_err("unresolved extract path must surface as a validation error");
@@ -8787,6 +9137,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"data":[{"id":1},{"id":2}],"next":"page-2"}"#,
@@ -8802,6 +9153,7 @@ mod tests {
             Some("data"),
             false,
             "things.list",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8826,6 +9178,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"items":["a"]}"#,
@@ -8841,6 +9194,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8857,6 +9211,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             "not json at all",
@@ -8872,6 +9227,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8893,6 +9249,7 @@ mod tests {
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
 
+        let mut pager = None;
         let result = handle_json_response(
             r#"{"items":[],"nextPageToken":"next-tok"}"#,
             &pagination,
@@ -8907,6 +9264,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager,
         )
         .await
         .unwrap();
@@ -8931,6 +9289,7 @@ mod tests {
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
 
+        let mut pager = None;
         let result = handle_json_response(
             r#"{"items":[],"nextPageToken":"would-be-next"}"#,
             &pagination,
@@ -8945,6 +9304,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager,
         )
         .await
         .unwrap();
@@ -8978,6 +9338,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"entries":[{"id":"1"}],"next_marker":"abc"}"#,
@@ -8993,6 +9354,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9016,6 +9378,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"entries":[{"id":"2"}],"next_marker":""}"#,
@@ -9031,6 +9394,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9051,6 +9415,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"users":[{"id":1},{"id":2},{"id":3}],"meta":{"has_more":true}}"#,
@@ -9066,6 +9431,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9090,6 +9456,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"users":[{"id":1}],"meta":{"has_more":false}}"#,
@@ -9105,6 +9472,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9130,6 +9498,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
         let request_query_params = vec![("limit".to_string(), "50".to_string())];
 
         let result = handle_json_response(
@@ -9146,6 +9515,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9171,6 +9541,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
         let request_query_params = vec![("limit".to_string(), "3".to_string())];
 
         let result = handle_json_response(
@@ -9187,6 +9558,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9697,7 +10069,7 @@ mod tests {
         let doc = RestDescription::default();
         let method = RestMethod::default();
         let err =
-            parse_and_validate_inputs(&doc, &method, Some("{not json}"), None, false, None, &[]).unwrap_err();
+            parse_and_validate_inputs(&doc, &method, Some("{not json}"), None, false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Invalid --params JSON"));
     }
 
@@ -9706,7 +10078,7 @@ mod tests {
         let doc = RestDescription::default();
         let method = RestMethod::default();
         let err =
-            parse_and_validate_inputs(&doc, &method, None, Some("{not json}"), false, None, &[]).unwrap_err();
+            parse_and_validate_inputs(&doc, &method, None, Some("{not json}"), false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Invalid --json body"));
     }
 
@@ -9726,7 +10098,7 @@ mod tests {
             parameters,
             ..Default::default()
         };
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[]).unwrap_err();
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Required parameter 'api_key'"));
     }
 
@@ -10204,6 +10576,71 @@ mod tests {
         .expect("text projection must succeed");
         assert_eq!(value, Value::String("raw line".to_string()));
     }
+
+    // ---------------------------------------------------------------
+    // SSE content-type auto-detection helpers
+    // ---------------------------------------------------------------
+
+    /// Verifies the auto-detection predicate: a response whose
+    /// Content-Type is `text/event-stream` AND whose method has no
+    /// `x-fern-streaming` config should be routed to the SSE branch.
+    #[test]
+    fn test_sse_autodetect_triggers_on_event_stream_content_type() {
+        let content_type = "text/event-stream";
+        let method = RestMethod::default();
+        assert!(
+            content_type.contains("text/event-stream") && method.streaming.is_none(),
+            "auto-detect must trigger when content_type is text/event-stream and streaming is None"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_triggers_with_charset_suffix() {
+        // Servers may send `text/event-stream; charset=utf-8`
+        let content_type = "text/event-stream; charset=utf-8";
+        let method = RestMethod::default();
+        assert!(
+            content_type.contains("text/event-stream") && method.streaming.is_none(),
+            "auto-detect must trigger even with charset parameter"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_skipped_when_streaming_configured() {
+        let content_type = "text/event-stream";
+        let method = RestMethod {
+            streaming: Some(StreamingConfig::Sse { terminator: None }),
+            ..Default::default()
+        };
+        assert!(
+            !(content_type.contains("text/event-stream") && method.streaming.is_none()),
+            "auto-detect must NOT trigger when x-fern-streaming is already set"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_skipped_for_json_content_type() {
+        let content_type = "application/json";
+        let method = RestMethod::default();
+        assert!(
+            !(content_type.contains("text/event-stream") && method.streaming.is_none()),
+            "auto-detect must NOT trigger for application/json"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_synthesized_config_is_sse_no_terminator() {
+        // The auto-detected config must be SSE with no terminator,
+        // matching what `StreamingConfig::Sse { terminator: None }`
+        // produces.
+        let config = StreamingConfig::Sse { terminator: None };
+        match &config {
+            StreamingConfig::Sse { terminator } => {
+                assert!(terminator.is_none(), "auto-detected SSE must have no terminator");
+            }
+            _ => panic!("expected Sse variant"),
+        }
+    }
 }
 
 #[tokio::test]
@@ -10283,6 +10720,7 @@ async fn test_execute_method_dry_run() {
         false, // no_stream
         false, // debug
         &[],
+        &[],
     )
     .await;
 
@@ -10331,6 +10769,7 @@ async fn test_execute_method_missing_path_param() {
         false, // no_retry
         false, // no_stream
         false, // debug
+        &[],
         &[],
     )
     .await;
@@ -10523,4 +10962,501 @@ async fn test_bearer_header_sends_bearer_prefix() {
     let built = request.build().unwrap();
     let header_val = built.headers().get("x-auth").and_then(|v| v.to_str().ok());
     assert_eq!(header_val, Some("Bearer mytoken"));
+}
+
+// ---------------------------------------------------------------
+// HTTP format helpers
+// ---------------------------------------------------------------
+
+#[test]
+fn format_http_version_known_versions() {
+    assert_eq!(format_http_version(reqwest::Version::HTTP_09), "HTTP/0.9");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_10), "HTTP/1.0");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_11), "HTTP/1.1");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_2), "HTTP/2");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_3), "HTTP/3");
+}
+
+#[test]
+fn write_http_preamble_basic() {
+    let mut buf = Vec::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    headers.insert("content-type", "application/json".parse().unwrap());
+    headers.insert("x-request-id", "abc123".parse().unwrap());
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::OK,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.starts_with("HTTP/1.1 200 OK\r\n"),
+        "should start with status line, got: {output}"
+    );
+    assert!(
+        output.contains("content-type: application/json\r\n"),
+        "should include content-type header, got: {output}"
+    );
+    assert!(
+        output.contains("x-request-id: abc123\r\n"),
+        "should include custom header, got: {output}"
+    );
+    assert!(
+        output.ends_with("\r\n\r\n"),
+        "should end with blank line separator, got: {output}"
+    );
+}
+
+#[test]
+fn write_http_preamble_error_status() {
+    let mut buf = Vec::new();
+    let headers = reqwest::header::HeaderMap::new();
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::NOT_FOUND,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.starts_with("HTTP/1.1 404 Not Found\r\n"),
+        "should show 404 status line, got: {output}"
+    );
+}
+
+#[test]
+fn write_http_preamble_no_headers() {
+    let mut buf = Vec::new();
+    let headers = reqwest::header::HeaderMap::new();
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_2,
+        reqwest::StatusCode::NO_CONTENT,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert_eq!(
+        output, "HTTP/2 204 No Content\r\n\r\n",
+        "empty headers should produce status line + blank line"
+    );
+}
+
+#[test]
+fn write_http_preamble_binary_header_value() {
+    let mut buf = Vec::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    // Insert a header value containing non-visible ASCII (bytes that
+    // fail `HeaderValue::to_str`).  `HeaderValue::from_bytes` accepts
+    // any bytes in the 0x20..=0xFF range plus TAB, so we use a raw
+    // byte sequence that includes characters outside the visible ASCII
+    // range accepted by `to_str` (which requires only 0x20..=0x7E
+    // plus TAB).
+    let raw_val =
+        reqwest::header::HeaderValue::from_bytes(&[0x80, 0xAB, 0xFF]).unwrap();
+    headers.insert("x-binary", raw_val);
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::OK,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.contains("x-binary: <binary>\r\n"),
+        "non-UTF8 header value should fall back to <binary>, got: {output}"
+    );
+}
+
+#[test]
+fn write_http_preamble_duplicate_headers() {
+    let mut buf = Vec::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    headers.append("set-cookie", "a=1".parse().unwrap());
+    headers.append("set-cookie", "b=2".parse().unwrap());
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::OK,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.contains("set-cookie: a=1\r\n"),
+        "should include first set-cookie value, got: {output}"
+    );
+    assert!(
+        output.contains("set-cookie: b=2\r\n"),
+        "should include second set-cookie value, got: {output}"
+    );
+}
+
+// ── Global Parameter Injection Tests ──────────────────────────
+
+#[test]
+fn test_global_param_header_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
+        location: GlobalParameterLocation::Header,
+        target: "X-Api-Version".to_string(),
+        value: "2024-01-01".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(input.header_params[0].0, "X-Api-Version");
+    assert_eq!(input.header_params[0].1, "2024-01-01");
+}
+
+#[test]
+fn test_global_param_header_per_op_override_suppresses() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{
+        GlobalParameterLocation, MethodParameter, RestDescription, RestMethod,
+    };
+
+    let mut parameters = std::collections::HashMap::new();
+    parameters.insert(
+        "X-Api-Version".to_string(),
+        MethodParameter {
+            location: Some("header".to_string()),
+            ..Default::default()
+        },
+    );
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        parameters,
+        ..Default::default()
+    };
+    let params_json = r#"{"X-Api-Version": "per-op-v3"}"#;
+    let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
+        location: GlobalParameterLocation::Header,
+        target: "X-Api-Version".to_string(),
+        value: "global-v1".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        Some(params_json),
+        None,
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(
+        input.header_params[0].1, "per-op-v3",
+        "per-op value should win over global"
+    );
+}
+
+#[test]
+fn test_global_param_query_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
+        location: GlobalParameterLocation::Query,
+        target: "api_version".to_string(),
+        value: "2024-01-01".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert!(
+        input.query_params.iter().any(|(k, v)| k == "api_version" && v == "2024-01-01"),
+        "query param should appear in query_params: {:?}",
+        input.query_params
+    );
+}
+
+#[test]
+fn test_global_param_body_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
+        location: GlobalParameterLocation::Body,
+        target: "currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    let body = input.body.expect("body should be populated from global param");
+    assert_eq!(body["currency"], "USD");
+}
+
+#[test]
+fn test_global_param_nested_body_injection_when_absent() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // A nested (dotted) body target is created when the user did not
+    // supply it.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "search".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
+        location: GlobalParameterLocation::Body,
+        target: "config.currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        None,
+        Some(r#"{"query":"shoes"}"#),
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    let body = input.body.expect("body should carry the injected nested global");
+    assert_eq!(body["config"]["currency"], "USD");
+    assert_eq!(body["query"], "shoes");
+}
+
+#[test]
+fn test_global_param_nested_body_does_not_clobber_user_value() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // Regression (FER-11190): a body global with a nested target like
+    // `config.currency` must NOT overwrite a value the user supplied at
+    // that same nested path via `--json`. A flat `contains_key("config.
+    // currency")` check misses the nested key and used to clobber it.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "search".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
+        location: GlobalParameterLocation::Body,
+        target: "config.currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        None,
+        Some(r#"{"config":{"currency":"EUR"}}"#),
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    let body = input.body.expect("body should be present");
+    assert_eq!(
+        body["config"]["currency"], "EUR",
+        "user-supplied nested value must win over the global default"
+    );
+}
+
+#[test]
+fn test_global_param_path_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // Path param supplied by global param only (not in method.parameters),
+    // so no required-param validation fires before injection.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "orgs/{orgId}/users".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "org".to_string(),
+        location: GlobalParameterLocation::Path,
+        target: "orgId".to_string(),
+        value: "my-org-123".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert!(
+        input.full_url.contains("my-org-123"),
+        "path param should be substituted in URL: {}",
+        input.full_url
+    );
+    assert!(
+        !input.full_url.contains("{orgId}"),
+        "template variable should be replaced: {}",
+        input.full_url
+    );
+}
+
+#[test]
+fn test_global_param_path_injection_satisfies_declared_required_param() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{
+        GlobalParameterLocation, MethodParameter, RestDescription, RestMethod,
+    };
+
+    // Regression (FER-11190): the path template variable is ALSO declared
+    // as a required `location: path` parameter (as OpenAPI requires). The
+    // required-param validation must not reject the request when a resolved
+    // global parameter targets that same variable — its value is injected
+    // right after validation.
+    let mut parameters = std::collections::HashMap::new();
+    parameters.insert(
+        "regionId".to_string(),
+        MethodParameter {
+            location: Some("path".to_string()),
+            required: true,
+            ..Default::default()
+        },
+    );
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "regions/{regionId}/items".to_string(),
+        parameter_order: vec!["regionId".to_string()],
+        parameters,
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "region".to_string(),
+        location: GlobalParameterLocation::Path,
+        target: "regionId".to_string(),
+        value: "us".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .expect("resolved global must satisfy the declared required path param");
+    assert!(
+        input.full_url.contains("regions/us/items"),
+        "path param should be substituted from the global value: {}",
+        input.full_url
+    );
+    assert!(
+        !input.full_url.contains("{regionId}"),
+        "template variable should be replaced: {}",
+        input.full_url
+    );
+}
+
+#[test]
+fn test_global_param_multiple_locations() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![
+        ResolvedGlobalParam {
+            name: "tenant".to_string(),
+            location: GlobalParameterLocation::Header,
+            target: "X-Tenant".to_string(),
+            value: "acme".to_string(),
+        },
+        ResolvedGlobalParam {
+            name: "version".to_string(),
+            location: GlobalParameterLocation::Query,
+            target: "version".to_string(),
+            value: "v2".to_string(),
+        },
+        ResolvedGlobalParam {
+            name: "currency".to_string(),
+            location: GlobalParameterLocation::Body,
+            target: "currency".to_string(),
+            value: "EUR".to_string(),
+        },
+    ];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(input.header_params[0].0, "X-Tenant");
+    assert!(
+        input.query_params.iter().any(|(k, v)| k == "version" && v == "v2"),
+        "query param should appear in query_params: {:?}",
+        input.query_params
+    );
+    let body = input.body.expect("body should have currency");
+    assert_eq!(body["currency"], "EUR");
 }

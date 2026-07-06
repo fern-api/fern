@@ -112,7 +112,10 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         const pathParams = [...this.example.servicePathParameters, ...this.example.endpointPathParameters];
 
         return pathParams.map((pathParam) => {
-            const propertyName = generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName;
+            const propertyName = generatedType.getInlinedPathParameterPropertyNameFromName(
+                pathParam.name,
+                context
+            ).propertyName;
             const value = context.type.getGeneratedExample(pathParam.value).build(context, opts);
 
             return ts.factory.createPropertyAssignment(getPropertyKey(propertyName), value);

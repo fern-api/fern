@@ -9,6 +9,7 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.RetryInterceptor;
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.core.SeedExhaustiveHttpResponse;
@@ -81,6 +82,9 @@ public class AsyncRawInlinedRequestsClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
+      if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+        okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+      }
       CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {
         @Override
@@ -103,6 +107,9 @@ public class AsyncRawInlinedRequestsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
+          }
+          catch (JsonProcessingException e) {
+            future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
           }
           catch (IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
@@ -174,6 +181,9 @@ public class AsyncRawInlinedRequestsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
           client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+          okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
+        }
         CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
           @Override
@@ -187,6 +197,9 @@ public class AsyncRawInlinedRequestsClient {
               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
               future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
               return;
+            }
+            catch (JsonProcessingException e) {
+              future.completeExceptionally(new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e));
             }
             catch (IOException e) {
               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));

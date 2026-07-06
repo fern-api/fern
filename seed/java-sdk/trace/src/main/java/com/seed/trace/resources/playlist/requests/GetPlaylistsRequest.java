@@ -189,7 +189,6 @@ public final class GetPlaylistsRequest {
 
         /**
          * <p>i'm another field</p>
-         * <p>i'm another field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -200,8 +199,6 @@ public final class GetPlaylistsRequest {
         }
 
         /**
-         * <p>I'm a multiline
-         * description</p>
          * <p>I'm a multiline
          * description</p>
          * @return Reference to {@code this} so that method calls can be chained together.

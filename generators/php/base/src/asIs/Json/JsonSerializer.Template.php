@@ -43,10 +43,10 @@ class JsonSerializer
      *
      * @param array<mixed> $data The array to be serialized.
      * @param array<mixed> $type The type definition from the annotation.
-     * @return array<mixed> The serialized array.
+     * @return array<mixed>|\stdClass The serialized array, or stdClass if empty map.
      * @throws JsonException If serialization fails.
      */
-    public static function serializeArray(array $data, array $type): array
+    public static function serializeArray(array $data, array $type): array|\stdClass
     {
         return Utils::isMapType($type)
             ? self::serializeMap($data, $type)
@@ -158,7 +158,11 @@ class JsonSerializer
             $type = get_class($data);
             throw new JsonException("Class $type must implement JsonSerializable.");
         }
-        return $data->jsonSerialize();
+        $result = $data->jsonSerialize();
+        if (is_array($result) && empty($result)) {
+            return new \stdClass();
+        }
+        return $result;
     }
 
     /**
@@ -166,11 +170,14 @@ class JsonSerializer
      *
      * @param array<mixed> $data The associative array to serialize.
      * @param array<mixed> $type The type definition for the map.
-     * @return array<string, mixed> The serialized map.
+     * @return array<string, mixed>|\stdClass The serialized map, or stdClass if empty.
      * @throws JsonException If serialization fails.
      */
-    private static function serializeMap(array $data, array $type): array
+    private static function serializeMap(array $data, array $type): array|\stdClass
     {
+        if (empty($data)) {
+            return new \stdClass();
+        }
         $keyType = array_key_first($type);
         if ($keyType === null) {
             throw new JsonException("Unexpected no key in ArrayType.");

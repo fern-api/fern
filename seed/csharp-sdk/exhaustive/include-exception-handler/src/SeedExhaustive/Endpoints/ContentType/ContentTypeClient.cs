@@ -30,6 +30,9 @@ public partial class ContentTypeClient : IContentTypeClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -43,6 +46,7 @@ public partial class ContentTypeClient : IContentTypeClient
                             Method = HttpMethod.Post,
                             Path = "/foo/bar",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             ContentType = "application/json-patch+json",
                             Options = options,
@@ -88,6 +92,9 @@ public partial class ContentTypeClient : IContentTypeClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
                     .Add(_client.Options.Headers)
                     .Add(_client.Options.AdditionalHeaders)
@@ -101,6 +108,7 @@ public partial class ContentTypeClient : IContentTypeClient
                             Method = HttpMethod.Post,
                             Path = "/foo/baz",
                             Body = request,
+                            QueryString = _queryString,
                             Headers = _headers,
                             ContentType = "application/json-patch+json; charset=utf-8",
                             Options = options,

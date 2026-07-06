@@ -3,6 +3,7 @@ import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { HttpMethods } from "../../constants/HttpMethods.js";
+import { FernGlobalParameterExtension } from "../../extensions/x-fern-global-parameter.js";
 import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent.js";
 import { FernPaginationExtension } from "../../extensions/x-fern-pagination.js";
 import { FernStreamingExtension, getDocumentLevelResumable } from "../../extensions/x-fern-streaming.js";
@@ -18,6 +19,7 @@ export declare namespace PathConverter {
         path: string;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
         idToAuthScheme?: Record<string, AuthScheme>;
+        declaredGlobalParameterIds?: Set<string>;
     }
 
     export interface Output {
@@ -32,13 +34,23 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
     private readonly path: string;
     private readonly idToAuthScheme?: Record<string, AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
+    private readonly declaredGlobalParameterIds?: Set<string>;
 
-    constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme, topLevelServers }: PathConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        pathItem,
+        path,
+        idToAuthScheme,
+        topLevelServers,
+        declaredGlobalParameterIds
+    }: PathConverter.Args) {
         super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
+        this.declaredGlobalParameterIds = declaredGlobalParameterIds;
     }
 
     public convert(): PathConverter.Output | undefined {
@@ -206,6 +218,31 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         });
         const subtitle = subtitleExtensionConverter.convert();
 
+        const globalParameterExtensionConverter = new FernGlobalParameterExtension({
+            breadcrumbs: operationBreadcrumbs,
+            operation,
+            context: this.context
+        });
+        let globalParameterIds = globalParameterExtensionConverter.convert();
+
+        // Validate that per-op opt-in IDs reference declared global parameters
+        if (globalParameterIds != null && this.declaredGlobalParameterIds != null) {
+            const validIds: string[] = [];
+            for (const id of globalParameterIds) {
+                if (!this.declaredGlobalParameterIds.has(id)) {
+                    this.context.errorCollector.collect({
+                        message:
+                            `x-fern-global-parameter references undeclared global parameter '${id}'. ` +
+                            `Declared parameters: ${[...this.declaredGlobalParameterIds].join(", ")}`,
+                        path: [...operationBreadcrumbs, "x-fern-global-parameter"]
+                    });
+                } else {
+                    validIds.push(id);
+                }
+            }
+            globalParameterIds = validIds.length > 0 ? validIds : undefined;
+        }
+
         const operationConverter = new OperationConverter({
             context: this.context,
             breadcrumbs: operationBreadcrumbs,
@@ -215,6 +252,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             pathItemParameters: this.pathItem.parameters,
             idempotent: isIdempotent,
             subtitle,
+            globalParameterIds,
             idToAuthScheme: this.idToAuthScheme,
             topLevelServers: this.topLevelServers,
             pathLevelServers: this.pathItem.servers,

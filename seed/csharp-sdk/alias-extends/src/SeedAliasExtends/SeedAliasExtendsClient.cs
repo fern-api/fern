@@ -34,6 +34,9 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedAliasExtends.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedAliasExtends.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -47,6 +50,7 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
                     Method = HttpMethod.Post,
                     Path = "/extends/extended-inline-request-body",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

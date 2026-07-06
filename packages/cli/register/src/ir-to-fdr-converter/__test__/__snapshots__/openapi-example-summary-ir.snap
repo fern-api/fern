@@ -24,6 +24,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -94,6 +95,7 @@
             "head": "/payments",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.listPayments",
           "idempotent": false,
@@ -167,6 +169,7 @@
             "userSpecifiedExamples": {
               "base_Paginated Payment List_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Paginated Payment List",
                 "request": {
                   "auth": undefined,
@@ -270,6 +273,7 @@
             "head": "/payments",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.createPayment",
           "idempotent": false,
@@ -370,6 +374,7 @@
             "userSpecifiedExamples": {
               "Apple Pay Payment_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Apple Pay Payment",
                 "request": {
                   "auth": undefined,
@@ -404,6 +409,7 @@
               },
               "Card Payment_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Card Payment",
                 "request": {
                   "auth": undefined,
@@ -438,6 +444,7 @@
               },
               "base_Payment Response_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "Payment Response",
                 "request": {
                   "auth": undefined,

@@ -20,6 +20,7 @@ pub mod graphql;
 pub mod hooks;
 pub mod man;
 pub mod openapi;
+pub mod pager;
 pub mod stability;
 pub mod validate;
 pub mod sdk_executor;

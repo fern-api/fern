@@ -81,17 +81,24 @@ export function convertResponse({
                 hasNoContentResponse = true;
             }
         } else if (statusCodeNum === 204) {
-            // We already have a response body from another status code,
-            // but also have a 204 no-content response
+            // We already have a response body from another status code, but also have a 204
+            // response. A 204 (No Content) response never carries a body at runtime (RFC 9110
+            // §15.3.5), even when the spec erroneously declares one. Normalize it to a no-content
+            // response so the success body is wrapped optional, and warn about the spec error so
+            // authors can fix it upstream.
             const resolved = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
             const jsonMedia = getApplicationJsonSchemaMediaObjectFromContent({
                 context,
                 content: resolved.content ?? {}
             });
-            // Only mark as no-content if 204 has no JSON body
-            if (jsonMedia == null) {
-                hasNoContentResponse = true;
+            if (jsonMedia != null) {
+                context.logger.warn(
+                    `${operationContext.method.toUpperCase()} ${operationContext.path}: the 204 response declares a body, ` +
+                        `but a 204 (No Content) response cannot include one. Ignoring the declared 204 body and treating ` +
+                        `the success response as optional.`
+                );
             }
+            hasNoContentResponse = true;
         }
     }
 

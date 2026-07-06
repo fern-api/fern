@@ -180,9 +180,8 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             throw new Error("Path parameter does not exist: " + pathParameterKey);
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        return ts.factory.createIdentifier(
-            this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter))
-        );
+        const propertyName = generatedRequestWrapper.getInlinedPathParameterPropertyName(pathParameter, context);
+        return ts.factory.createIdentifier(this.getAliasForNonBodyProperty(propertyName));
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
