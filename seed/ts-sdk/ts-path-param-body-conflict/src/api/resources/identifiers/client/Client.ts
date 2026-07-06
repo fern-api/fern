@@ -29,6 +29,7 @@ export class IdentifiersClient {
      *
      * @example
      *     await client.identifiers.update({
+     *         idTypePathParam: "phone",
      *         idType: "phone",
      *         oldValue: "+13175556789",
      *         newValue: "+13175556798"
@@ -45,19 +46,20 @@ export class IdentifiersClient {
         request: SeedTsPathParamBodyConflict.IdentifierUpdate,
         requestOptions?: IdentifiersClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTsPathParamBodyConflict.IdentifierUpdateResponse>> {
+        const { idTypePathParam, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/identifiers/${core.url.encodePathParam(request.idType)}`,
+                `/identifiers/${core.url.encodePathParam(idTypePathParam)}`,
             ),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

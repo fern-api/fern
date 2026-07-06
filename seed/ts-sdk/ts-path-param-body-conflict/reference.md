@@ -28,6 +28,7 @@ Update an identifier whose path param shares a name with a body property.
 
 ```typescript
 await client.identifiers.update({
+    idTypePathParam: "phone",
     idType: "phone",
     oldValue: "+13175556789",
     newValue: "+13175556798"

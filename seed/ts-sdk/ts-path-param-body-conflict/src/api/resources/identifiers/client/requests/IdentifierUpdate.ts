@@ -3,12 +3,15 @@
 /**
  * @example
  *     {
+ *         idTypePathParam: "phone",
  *         idType: "phone",
  *         oldValue: "+13175556789",
  *         newValue: "+13175556798"
  *     }
  */
 export interface IdentifierUpdate {
+    /** The current identifier type in the URL path. */
+    idTypePathParam: string;
     /** The new identifier type to set in the body. */
     idType: string;
     oldValue: string;
