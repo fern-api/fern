@@ -754,14 +754,48 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (!collidingPathParamPropertyNames.has(base.propertyName)) {
             return base;
         }
-        const bodyPropertyNames = this.getInlinedBodyPropertyNames(context);
+        const reservedPropertyNames = this.getReservedWrapperPropertyNames(context, base.propertyName);
         let propertyName = appendPathParamSuffix(base.propertyName);
         let safeName = appendPathParamSuffix(base.safeName);
-        while (bodyPropertyNames.has(propertyName)) {
+        while (reservedPropertyNames.has(propertyName)) {
             propertyName = `${propertyName}_`;
             safeName = `${safeName}_`;
         }
         return { propertyName, safeName };
+    }
+
+    /**
+     * Property names already used by other members of the request wrapper (body properties,
+     * path parameters, query parameters, headers, and inlined file properties). Used to
+     * disambiguate the suffixed name of a renamed colliding path parameter.
+     */
+    private getReservedWrapperPropertyNames(context: FileContext, excludedPathParamName: string): Set<string> {
+        const reserved = this.getInlinedBodyPropertyNames(context);
+        for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
+            const propertyName = this.getPropertyNameOfPathParameter(pathParameter).propertyName;
+            if (propertyName !== excludedPathParamName) {
+                reserved.add(propertyName);
+            }
+        }
+        const collidingQueryParamWireValues = this.resolveQueryParameterNameConflicts
+            ? this.getCollidingQueryParamWireValues(context)
+            : new Set<string>();
+        for (const queryParameter of this.getAllQueryParameters()) {
+            reserved.add(
+                collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
+                    ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter).propertyName
+                    : this.getPropertyNameOfQueryParameter(queryParameter).propertyName
+            );
+        }
+        for (const header of this.getAllNonLiteralHeaders(context)) {
+            reserved.add(this.getPropertyNameOfNonLiteralHeader(header).propertyName);
+        }
+        if (this.inlineFileProperties) {
+            for (const fileProperty of this.getAllFileUploadProperties()) {
+                reserved.add(this.getPropertyNameOfFileParameter(fileProperty).propertyName);
+            }
+        }
+        return reserved;
     }
 
     public getPropertyNameOfPathParameterFromName(name: FernIr.NameOrString): RequestWrapperNonBodyProperty {

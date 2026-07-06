@@ -426,6 +426,58 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(text).toMatchSnapshot();
         });
 
+        it("disambiguates renamed path parameter when the suffixed name is also taken", () => {
+            const body = createInlinedRequestBody({
+                properties: [
+                    createInlinedRequestBodyProperty("idType", STRING_TYPE),
+                    createInlinedRequestBodyProperty("idTypePathParam", STRING_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                shouldInlinePathParameters: true,
+                endpoint: createHttpEndpoint({
+                    pathParameters: [createPathParameter("idType", "ENDPOINT")],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({
+                shouldInlinePathParameters: true
+            });
+
+            wrapper.writeToFile(context);
+            const text = sourceFile.getText();
+            expect(text).toContain("idTypePathParam_: string");
+            expect(text).toContain("idTypePathParam: string");
+            expect(text).toContain("idType: string");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("disambiguates renamed path parameter when the suffixed name collides with a query parameter", () => {
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("idType", STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                shouldInlinePathParameters: true,
+                endpoint: createHttpEndpoint({
+                    pathParameters: [createPathParameter("idType", "ENDPOINT")],
+                    queryParameters: [createQueryParameter("idTypePathParam", STRING_TYPE)],
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({
+                shouldInlinePathParameters: true
+            });
+
+            wrapper.writeToFile(context);
+            const text = sourceFile.getText();
+            expect(text).toContain("idTypePathParam_: string");
+            expect(text).toMatchSnapshot();
+        });
+
         it("generates interface with inlined request body properties", () => {
             const body = createInlinedRequestBody({
                 properties: [
