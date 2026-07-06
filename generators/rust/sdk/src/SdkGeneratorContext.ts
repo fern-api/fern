@@ -83,7 +83,12 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
                 convertDynamicEndpointSnippetRequest(example)
             );
             const snippet = generated.snippet.trim();
-            return snippet.length > 0 ? snippet : undefined;
+            if (snippet.length === 0 || snippet.includes("```")) {
+                // A triple-backtick in the snippet (e.g. from example string values)
+                // would terminate the rustdoc code fence and break compilation.
+                return undefined;
+            }
+            return snippet;
         } catch (error) {
             this.logger.debug(`Failed to generate usage snippet for endpoint ${endpointId}: ${String(error)}`);
             return undefined;
