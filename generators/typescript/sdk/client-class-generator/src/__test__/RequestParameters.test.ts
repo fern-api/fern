@@ -115,6 +115,10 @@ function createMockGeneratedRequestWrapper(opts?: {
             propertyName: caseConverter.camelUnsafe(pp.name),
             safeName: caseConverter.camelUnsafe(pp.name)
         }),
+        getInlinedPathParameterPropertyName: (pp: FernIr.PathParameter) => ({
+            propertyName: caseConverter.camelUnsafe(pp.name),
+            safeName: caseConverter.camelUnsafe(pp.name)
+        }),
         getPropertyNameOfNonLiteralHeader: (h: FernIr.HttpHeader) => ({
             propertyName: caseConverter.camelUnsafe(h.name),
             safeName: caseConverter.camelUnsafe(h.name)

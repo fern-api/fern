@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.77.1
+  changelogEntry:
+    - summary: |
+        When an inlined path parameter (`inlinePathParameters: true`) shares its property name with an
+        inlined request-body property (e.g. a `{idType}` path parameter and an `idType` body field),
+        the request wrapper now keeps both fields by renaming the path parameter with a `PathParam`
+        suffix (e.g. `idTypePathParam`). Previously the two values were collapsed into a single shared
+        field, which made it impossible to send different values for the URL path and the request body.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
 - version: 3.77.0
   changelogEntry:
     - summary: |

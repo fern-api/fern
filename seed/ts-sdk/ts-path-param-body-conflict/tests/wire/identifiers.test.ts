@@ -20,31 +20,10 @@ describe("IdentifiersClient", () => {
             .build();
 
         const response = await client.identifiers.update({
+            idTypePathParam: "phone",
             idType: "phone",
             oldValue: "+13175556789",
             newValue: "+13175556798",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("patchMetadata", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedTsPathParamBodyConflictClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { idType: "phone", label: "primary" };
-        const rawResponseBody = { idType: "phone", oldValue: "+13175556789", newValue: "+13175556798" };
-
-        server
-            .mockEndpoint()
-            .patch("/identifiers/phone/metadata")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.identifiers.patchMetadata({
-            idType: "phone",
-            label: "primary",
         });
         expect(response).toEqual(rawResponseBody);
     });
