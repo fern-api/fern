@@ -252,12 +252,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
+            const requiredCollidingPathParamPropertyNames = this.getRequiredCollidingPathParamPropertyNames(context);
             FernIr.HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     if (this.flattenRequestParameters) {
                         const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(
                             inlinedRequestBody,
-                            context
+                            context,
+                            requiredCollidingPathParamPropertyNames
                         );
                         properties.push(...inlinedProperties);
                     } else {
@@ -265,7 +267,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             inlinedRequestBody,
                             context
                         })) {
-                            const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
+                            const requestProperty = this.getInlineProperty(
+                                inlinedRequestBody,
+                                property,
+                                context,
+                                requiredCollidingPathParamPropertyNames
+                            );
                             properties.push(requestProperty);
                         }
                     }
@@ -307,7 +314,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 });
                             },
                             bodyProperty: (inlinedProperty) => {
-                                properties.push(this.getInlineProperty(fileUploadRequest, inlinedProperty, context));
+                                properties.push(
+                                    this.getInlineProperty(
+                                        fileUploadRequest,
+                                        inlinedProperty,
+                                        context,
+                                        requiredCollidingPathParamPropertyNames
+                                    )
+                                );
                             },
                             _other: () => {
                                 throw new Error("Unknown FernIr.FileUploadRequestProperty: " + property.type);
@@ -358,13 +372,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private getInlineProperty(
         requestBody: FernIr.InlinedRequestBody | FernIr.FileUploadRequest,
         property: FernIr.InlinedRequestBodyProperty,
-        context: FileContext
+        context: FileContext,
+        requiredCollidingPathParamPropertyNames: Set<string>
     ): GeneratedRequestWrapper.Property {
         const type = this.getTypeForBodyProperty(requestBody, property, context);
         const name = this.getInlinedRequestBodyPropertyKey(property);
-        const isRequiredPathParamProperty = this.getRequiredCollidingPathParamPropertyNames(context).has(
-            name.propertyName
-        );
+        const isRequiredPathParamProperty = requiredCollidingPathParamPropertyNames.has(name.propertyName);
         return {
             name: getPropertyKey(name.propertyName),
             safeName: getPropertyKey(name.safeName),
@@ -948,14 +961,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private getFlattenedInlinedRequestBodyProperties(
         inlinedRequestBody: FernIr.InlinedRequestBody,
-        context: FileContext
+        context: FileContext,
+        requiredCollidingPathParamPropertyNames: Set<string>
     ): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
         for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
             inlinedRequestBody,
             context
         })) {
-            const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
+            const requestProperty = this.getInlineProperty(
+                inlinedRequestBody,
+                property,
+                context,
+                requiredCollidingPathParamPropertyNames
+            );
             properties.push(requestProperty);
         }
         return properties;
@@ -1020,15 +1039,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
 
             const typeNode = propertyType.typeNodeWithoutUndefined;
-            const isRequiredPathParamProperty = this.getRequiredCollidingPathParamPropertyNames(context).has(
-                propertyName.propertyName
-            );
 
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
                 type: typeNode,
-                isOptional: (propertyType.isOptional || hasDefaultValue) && !isRequiredPathParamProperty,
+                isOptional: propertyType.isOptional || hasDefaultValue,
                 docs: property.docs ? [property.docs] : undefined
             });
         }

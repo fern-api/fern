@@ -114,6 +114,9 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         // A colliding path param shares a single wrapper property with a body property. Prefer the
         // body example's value, but fall back to the path param example when the body example
         // doesn't populate the shared property (otherwise a required property would be missing).
+        // The fallback only applies to inlined request bodies; flattened reference bodies always
+        // source the shared property from the body example to avoid duplicate object keys.
+        const canFallBackToPathParamExample = this.requestBody?.type === "inlinedRequestBody";
         const bodyExamplePropertyNames = this.getBodyExamplePropertyNames(generatedType);
 
         return pathParams
@@ -122,7 +125,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                 if (!collidingPathParamPropertyNames.has(propertyName)) {
                     return true;
                 }
-                return !bodyExamplePropertyNames.has(propertyName);
+                return canFallBackToPathParamExample && !bodyExamplePropertyNames.has(propertyName);
             })
             .map((pathParam) => {
                 const propertyName = generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName;

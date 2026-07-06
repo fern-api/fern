@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    When an inlined path parameter shares its name with an optional body property, the merged
+    When an inlined path parameter shares its name with an optional inlined body property, the merged
     request-wrapper property is now required if the path parameter is required. Previously the
     merged property inherited the body property's optionality, so callers could omit it and the
     SDK would build an invalid URL (e.g. `/users/undefined`). Generated examples and wire tests
