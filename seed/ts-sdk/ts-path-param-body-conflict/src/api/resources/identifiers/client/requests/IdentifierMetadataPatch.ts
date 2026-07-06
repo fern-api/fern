@@ -3,12 +3,14 @@
 /**
  * @example
  *     {
- *         idType: "phone",
+ *         idTypePathParam: "phone",
  *         label: "primary"
  *     }
  */
 export interface IdentifierMetadataPatch {
+    /** The identifier type in the URL path. */
+    idTypePathParam: string;
     /** An optional replacement identifier type in the body. */
-    idType: string;
+    idType?: string;
     label?: string;
 }
