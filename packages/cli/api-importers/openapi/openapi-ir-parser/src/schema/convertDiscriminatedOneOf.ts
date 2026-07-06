@@ -65,7 +65,13 @@ export function convertDiscriminatedOneOf({
             // discriminator), merge those objects into a single object to avoid the spurious
             // "value" wrapper that the IR generator adds for non-object variants.
             const nestedVariants = resolvedSchema.oneOf ?? resolvedSchema.anyOf;
-            if (nestedVariants != null && nestedVariants.length > 0 && resolvedSchema.discriminator == null) {
+            if (
+                nestedVariants != null &&
+                nestedVariants.length > 0 &&
+                resolvedSchema.discriminator == null &&
+                resolvedSchema.properties == null &&
+                resolvedSchema.allOf == null
+            ) {
                 const mergedSchema = mergeOneOfVariantsIntoObject({
                     variants: nestedVariants,
                     context,
