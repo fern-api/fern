@@ -140,6 +140,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
         const esmCompilerOptions: CompilerOptions = {
             module: "esnext" as unknown as ModuleKind,
+            moduleResolution: "bundler" as unknown as ModuleResolutionKind,
             outDir: `${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`,
             verbatimModuleSyntax: true
         };
