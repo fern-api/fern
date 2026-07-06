@@ -1,6 +1,5 @@
-import { describe, expect, it } from "vitest";
-
 import type { docsYml } from "@fern-api/configuration-loader";
+import { describe, expect, it } from "vitest";
 
 import type { DocsConfigFileAstNodeTypes } from "../../../docsAst/DocsConfigFileAstVisitor.js";
 import type { RuleContext } from "../../../Rule.js";
