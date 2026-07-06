@@ -83,4 +83,70 @@ export class IdentifiersClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/identifiers/{idType}");
     }
+
+    /**
+     * Patch an identifier whose optional body property shares a name with a required path param.
+     *
+     * @param {SeedTsPathParamBodyConflict.IdentifierMetadataPatch} request
+     * @param {IdentifiersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.identifiers.patchMetadata({
+     *         idTypePathParam: "phone",
+     *         label: "primary"
+     *     })
+     */
+    public patchMetadata(
+        request: SeedTsPathParamBodyConflict.IdentifierMetadataPatch,
+        requestOptions?: IdentifiersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedTsPathParamBodyConflict.IdentifierUpdateResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__patchMetadata(request, requestOptions));
+    }
+
+    private async __patchMetadata(
+        request: SeedTsPathParamBodyConflict.IdentifierMetadataPatch,
+        requestOptions?: IdentifiersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTsPathParamBodyConflict.IdentifierUpdateResponse>> {
+        const { idTypePathParam, ..._body } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/identifiers/${core.url.encodePathParam(idTypePathParam)}/metadata`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedTsPathParamBodyConflict.IdentifierUpdateResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedTsPathParamBodyConflictError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "PATCH",
+            "/identifiers/{idType}/metadata",
+        );
+    }
 }

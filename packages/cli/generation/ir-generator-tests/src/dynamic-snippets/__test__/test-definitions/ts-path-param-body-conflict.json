@@ -439,6 +439,257 @@
                 "type": "json"
             },
             "examples": null
+        },
+        "endpoint_identifiers.patchMetadata": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "patchMetadata",
+                    "camelCase": {
+                        "unsafeName": "patchMetadata",
+                        "safeName": "patchMetadata"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "patch_metadata",
+                        "safeName": "patch_metadata"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PATCH_METADATA",
+                        "safeName": "PATCH_METADATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PatchMetadata",
+                        "safeName": "PatchMetadata"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "identifiers",
+                            "camelCase": {
+                                "unsafeName": "identifiers",
+                                "safeName": "identifiers"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "identifiers",
+                                "safeName": "identifiers"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IDENTIFIERS",
+                                "safeName": "IDENTIFIERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Identifiers",
+                                "safeName": "Identifiers"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "identifiers",
+                        "camelCase": {
+                            "unsafeName": "identifiers",
+                            "safeName": "identifiers"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "identifiers",
+                            "safeName": "identifiers"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IDENTIFIERS",
+                            "safeName": "IDENTIFIERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Identifiers",
+                            "safeName": "Identifiers"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "PATCH",
+                "path": "/identifiers/{idType}/metadata"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "IdentifierMetadataPatch",
+                        "camelCase": {
+                            "unsafeName": "identifierMetadataPatch",
+                            "safeName": "identifierMetadataPatch"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "identifier_metadata_patch",
+                            "safeName": "identifier_metadata_patch"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IDENTIFIER_METADATA_PATCH",
+                            "safeName": "IDENTIFIER_METADATA_PATCH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "IdentifierMetadataPatch",
+                            "safeName": "IdentifierMetadataPatch"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "identifiers",
+                                "camelCase": {
+                                    "unsafeName": "identifiers",
+                                    "safeName": "identifiers"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "identifiers",
+                                    "safeName": "identifiers"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "IDENTIFIERS",
+                                    "safeName": "IDENTIFIERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Identifiers",
+                                    "safeName": "Identifiers"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "identifiers",
+                            "camelCase": {
+                                "unsafeName": "identifiers",
+                                "safeName": "identifiers"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "identifiers",
+                                "safeName": "identifiers"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IDENTIFIERS",
+                                "safeName": "IDENTIFIERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Identifiers",
+                                "safeName": "Identifiers"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "idType",
+                                "camelCase": {
+                                    "unsafeName": "idType",
+                                    "safeName": "idType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id_type",
+                                    "safeName": "id_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID_TYPE",
+                                    "safeName": "ID_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "IDType",
+                                    "safeName": "IDType"
+                                }
+                            },
+                            "wireValue": "idType"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "idType",
+                                "name": {
+                                    "originalName": "idType",
+                                    "camelCase": {
+                                        "unsafeName": "idType",
+                                        "safeName": "idType"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "id_type",
+                                        "safeName": "id_type"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ID_TYPE",
+                                        "safeName": "ID_TYPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "IDType",
+                                        "safeName": "IDType"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "label",
+                                "name": {
+                                    "originalName": "label",
+                                    "camelCase": {
+                                        "unsafeName": "label",
+                                        "safeName": "label"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "label",
+                                        "safeName": "label"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "LABEL",
+                                        "safeName": "LABEL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Label",
+                                        "safeName": "Label"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
         }
     },
     "pathParameters": [],
