@@ -245,6 +245,143 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_products:ProductConfigConfig": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ProductConfigConfig",
+                    "camelCase": {
+                        "unsafeName": "productConfigConfig",
+                        "safeName": "productConfigConfig"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "product_config_config",
+                        "safeName": "product_config_config"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRODUCT_CONFIG_CONFIG",
+                        "safeName": "PRODUCT_CONFIG_CONFIG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ProductConfigConfig",
+                        "safeName": "ProductConfigConfig"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "products",
+                        "camelCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTS",
+                            "safeName": "PRODUCTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Products",
+                            "safeName": "Products"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "currency",
+                        "name": {
+                            "originalName": "currency",
+                            "camelCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CURRENCY",
+                                "safeName": "CURRENCY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Currency",
+                                "safeName": "Currency"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "limit",
+                        "name": {
+                            "originalName": "limit",
+                            "camelCase": {
+                                "unsafeName": "limit",
+                                "safeName": "limit"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "limit",
+                                "safeName": "limit"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LIMIT",
+                                "safeName": "LIMIT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Limit",
+                                "safeName": "Limit"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_:Product": {
             "type": "object",
             "declaration": {
@@ -623,6 +760,193 @@
                 },
                 "metadata": {
                     "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_products.updateConfig": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "updateConfig",
+                    "camelCase": {
+                        "unsafeName": "updateConfig",
+                        "safeName": "updateConfig"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "update_config",
+                        "safeName": "update_config"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPDATE_CONFIG",
+                        "safeName": "UPDATE_CONFIG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpdateConfig",
+                        "safeName": "UpdateConfig"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "products",
+                        "camelCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "products",
+                            "safeName": "products"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTS",
+                            "safeName": "PRODUCTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Products",
+                            "safeName": "Products"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/v1/products/config"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ProductConfig",
+                        "camelCase": {
+                            "unsafeName": "productConfig",
+                            "safeName": "productConfig"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "product_config",
+                            "safeName": "product_config"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCT_CONFIG",
+                            "safeName": "PRODUCT_CONFIG"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ProductConfig",
+                            "safeName": "ProductConfig"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "products",
+                                "camelCase": {
+                                    "unsafeName": "products",
+                                    "safeName": "products"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "products",
+                                    "safeName": "products"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PRODUCTS",
+                                    "safeName": "PRODUCTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Products",
+                                    "safeName": "Products"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "products",
+                            "camelCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "products",
+                                "safeName": "products"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRODUCTS",
+                                "safeName": "PRODUCTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Products",
+                                "safeName": "Products"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "config",
+                                "name": {
+                                    "originalName": "config",
+                                    "camelCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CONFIG",
+                                        "safeName": "CONFIG"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Config",
+                                        "safeName": "Config"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_products:ProductConfigConfig"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
                     "onlyPathParameters": false
                 }
             },
@@ -1191,7 +1515,7 @@
                 "string": "3"
             },
             "optional": true,
-            "apply": null,
+            "apply": "auto",
             "docs": null
         },
         {
@@ -1240,6 +1564,32 @@
             "optional": null,
             "apply": null,
             "docs": "x-fern-default should take precedence over default."
+        },
+        {
+            "id": "updated-since",
+            "name": "updated-since",
+            "location": "query",
+            "target": "updated-since",
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": {
+                            "v1": "DATE_TIME",
+                            "v2": {
+                                "type": "dateTime"
+                            }
+                        }
+                    }
+                }
+            },
+            "env": null,
+            "clientDefault": null,
+            "optional": true,
+            "apply": null,
+            "docs": "A datetime global must serialize to ISO-8601 on the wire, not String(Date)."
         }
     ],
     "generatorConfig": null
