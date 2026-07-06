@@ -56,13 +56,13 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.searchRuleTypes()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -82,16 +82,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.createRule(request: .init(
     ///         name: "name",
     ///         executionContext: .prod
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -109,13 +109,13 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.listUsers()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -132,13 +132,13 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.getEntity()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -155,13 +155,13 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.getOrganization()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -180,10 +180,10 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.createPlant(request: .init(
     ///         species: "species",
     ///         family: "family",
@@ -193,7 +193,7 @@ public final class ApiClient: Sendable {
     ///         sunExposure: .full
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -213,17 +213,17 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.createTree(request: TreeRecord(
     ///         id: "id",
     ///         treeName: "treeName",
     ///         treeSpecies: "treeSpecies"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

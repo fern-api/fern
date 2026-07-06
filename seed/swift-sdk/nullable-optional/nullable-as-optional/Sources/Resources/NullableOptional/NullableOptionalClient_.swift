@@ -12,13 +12,13 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.getUser(userId: "userId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,10 +37,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.createUser(request: CreateUserRequest(
     ///         username: "username",
     ///         email: .value("email"),
@@ -56,7 +56,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         ))
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -76,10 +76,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.updateUser(
     ///         userId: "userId",
     ///         request: UpdateUserRequest(
@@ -98,7 +98,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -118,10 +118,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.listUsers(
     ///         limit: 1,
     ///         offset: 1,
@@ -129,7 +129,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         sortBy: .value("sortBy")
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -154,10 +154,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.searchUsers(
     ///         query: "query",
     ///         department: .value("department"),
@@ -165,7 +165,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         isActive: .value(true)
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -190,10 +190,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
     ///         id: "id",
     ///         nullableRole: .value(.admin),
@@ -309,7 +309,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         ]
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -329,13 +329,13 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.getComplexProfile(profileId: "profileId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -354,10 +354,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.updateComplexProfile(
     ///         profileId: "profileId",
     ///         request: .init(
@@ -396,7 +396,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -416,10 +416,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
     ///         requiredString: "requiredString",
     ///         nullableString: .value("nullableString"),
@@ -477,7 +477,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -497,17 +497,17 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.filterByRole(
     ///         role: .value(.admin),
     ///         status: .active,
     ///         secondaryRole: .value(.admin)
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -531,13 +531,13 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.getNotificationSettings(userId: "userId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -556,10 +556,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.updateTags(
     ///         userId: "userId",
     ///         request: .init(
@@ -578,7 +578,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -598,10 +598,10 @@ public final class NullableOptionalClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import NullableOptional
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableOptionalClient()
-    /// 
+    ///
     ///     _ = try await client.nullableOptional.getSearchResults(request: .init(
     ///         query: "query",
     ///         filters: [
@@ -613,7 +613,7 @@ public final class NullableOptionalClient_: Sendable {
     ///         ])
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

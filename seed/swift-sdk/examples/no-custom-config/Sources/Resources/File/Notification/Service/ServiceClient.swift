@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.file.notification.service.getException(notificationId: "notification-hsy129x")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

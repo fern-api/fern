@@ -10,16 +10,16 @@ public final class DummyClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Streaming
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = StreamingClient()
-    /// 
+    ///
     ///     _ = try await client.dummy.generateStream(request: .init(
     ///         stream: true,
     ///         numEvents: 1
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,16 +37,16 @@ public final class DummyClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Streaming
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = StreamingClient()
-    /// 
+    ///
     ///     _ = try await client.dummy.generate(request: .init(
     ///         stream: false,
     ///         numEvents: 5
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

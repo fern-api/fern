@@ -10,13 +10,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import AnyAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = AnyAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.get()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,13 +33,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import AnyAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = AnyAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getAdmins()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

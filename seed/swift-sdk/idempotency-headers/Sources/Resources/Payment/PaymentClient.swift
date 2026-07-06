@@ -10,16 +10,16 @@ public final class PaymentClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import IdempotencyHeaders
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = IdempotencyHeadersClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.payment.create(request: .init(
     ///         amount: 1,
     ///         currency: .usd
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,13 +37,13 @@ public final class PaymentClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import IdempotencyHeaders
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = IdempotencyHeadersClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.payment.delete(paymentId: "paymentId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

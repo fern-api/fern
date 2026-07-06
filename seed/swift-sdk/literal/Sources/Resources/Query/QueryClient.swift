@@ -10,10 +10,10 @@ public final class QueryClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Literal
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = LiteralClient()
-    /// 
+    ///
     ///     _ = try await client.query.send(
     ///         prompt: .youAreAHelpfulAssistant,
     ///         optionalPrompt: .youAreAHelpfulAssistant,
@@ -26,7 +26,7 @@ public final class QueryClient: Sendable {
     ///         aliasOptionalStream: false
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

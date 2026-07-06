@@ -13,13 +13,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MultiLineDocs
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MultiLineDocsClient()
-    /// 
+    ///
     ///     _ = try await client.user.getUser(userId: "userId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -40,16 +40,16 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MultiLineDocs
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MultiLineDocsClient()
-    /// 
+    ///
     ///     _ = try await client.user.createUser(request: .init(
     ///         name: "name",
     ///         age: 1
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

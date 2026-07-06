@@ -10,16 +10,16 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ContentTypes
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ContentTypesClient()
-    /// 
+    ///
     ///     _ = try await client.service.patch(request: .init(
     ///         application: .value("application"),
     ///         requireAuth: .value(true)
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -41,10 +41,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ContentTypes
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ContentTypesClient()
-    /// 
+    ///
     ///     _ = try await client.service.patchComplex(
     ///         id: "id",
     ///         request: .init(
@@ -72,7 +72,7 @@ public final class ServiceClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -92,10 +92,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ContentTypes
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ContentTypesClient()
-    /// 
+    ///
     ///     _ = try await client.service.namedPatchWithMixed(
     ///         id: "id",
     ///         request: .init(
@@ -105,7 +105,7 @@ public final class ServiceClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -127,10 +127,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ContentTypes
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ContentTypesClient()
-    /// 
+    ///
     ///     _ = try await client.service.optionalMergePatchTest(request: .init(
     ///         requiredField: "requiredField",
     ///         optionalString: "optionalString",
@@ -139,7 +139,7 @@ public final class ServiceClient: Sendable {
     ///         nullableString: .value("nullableString")
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -158,10 +158,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ContentTypes
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ContentTypesClient()
-    /// 
+    ///
     ///     _ = try await client.service.regularPatch(
     ///         id: "id",
     ///         request: .init(
@@ -170,7 +170,7 @@ public final class ServiceClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

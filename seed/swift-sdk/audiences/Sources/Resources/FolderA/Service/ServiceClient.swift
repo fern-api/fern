@@ -10,10 +10,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Audiences
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = AudiencesClient()
-    /// 
+    ///
     ///     _ = try await client.folderA.service.getDirectThread(
     ///         ids: [
     ///             "ids"
@@ -23,7 +23,7 @@ public final class ServiceClient: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class SimpleClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import OauthClientCredentialsReference
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = OauthClientCredentialsReferenceClient()
-    /// 
+    ///
     ///     _ = try await client.simple.getSomething()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

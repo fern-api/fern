@@ -10,10 +10,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import OauthClientCredentials
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = OauthClientCredentialsClient()
-    /// 
+    ///
     ///     _ = try await client.auth.getTokenWithClientCredentials(request: .init(
     ///         clientId: "my_oauth_app_123",
     ///         clientSecret: "sk_live_abcdef123456789",
@@ -22,7 +22,7 @@ public final class AuthClient: Sendable {
     ///         scope: "read:users"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -40,10 +40,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import OauthClientCredentials
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = OauthClientCredentialsClient()
-    /// 
+    ///
     ///     _ = try await client.auth.getTokenWithClientCredentials(request: .init(
     ///         clientId: "my_oauth_app_123",
     ///         clientSecret: "sk_live_abcdef123456789",
@@ -52,7 +52,7 @@ public final class AuthClient: Sendable {
     ///         scope: "read:users"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

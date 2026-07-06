@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MixedCase
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MixedCaseClient()
-    /// 
+    ///
     ///     _ = try await client.service.getResource(resourceId: "rsc-xyz")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,16 +33,16 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MixedCase
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MixedCaseClient()
-    /// 
+    ///
     ///     _ = try await client.service.listResources(
     ///         pageLimit: 10,
     ///         beforeDate: CalendarDate("2023-01-01")!
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

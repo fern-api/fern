@@ -10,17 +10,17 @@ public final class OptionalClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ObjectsWithImports
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ObjectsWithImportsClient()
-    /// 
+    ///
     ///     _ = try await client.optional.sendOptionalBody(request: [
     ///         "string": .object([
     ///             "key": .string("value")
     ///         ])
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -38,15 +38,15 @@ public final class OptionalClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ObjectsWithImports
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ObjectsWithImportsClient()
-    /// 
+    ///
     ///     _ = try await client.optional.sendOptionalTypedBody(request: SendOptionalBodyRequest(
     ///         message: "message"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -67,10 +67,10 @@ public final class OptionalClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ObjectsWithImports
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ObjectsWithImportsClient()
-    /// 
+    ///
     ///     _ = try await client.optional.sendOptionalNullableWithAllOptionalProperties(
     ///         actionId: "actionId",
     ///         id: "id",
@@ -79,7 +79,7 @@ public final class OptionalClient: Sendable {
     ///         ))
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import InferredAuthImplicitApiKey
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = InferredAuthImplicitApiKeyClient()
-    /// 
+    ///
     ///     _ = try await client.nestedNoAuth.api.getSomething()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

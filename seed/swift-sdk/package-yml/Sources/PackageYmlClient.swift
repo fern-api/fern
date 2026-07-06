@@ -58,10 +58,10 @@ public final class PackageYmlClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PackageYml
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PackageYmlClient()
-    /// 
+    ///
     ///     _ = try await client.echo(
     ///         id: "id-ksfd9c1",
     ///         request: EchoRequest(
@@ -70,7 +70,7 @@ public final class PackageYmlClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

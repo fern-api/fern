@@ -10,13 +10,13 @@ public final class NestedApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import OauthClientCredentialsEnvironmentVariables
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = OauthClientCredentialsEnvironmentVariablesClient()
-    /// 
+    ///
     ///     _ = try await client.nested.api.getSomething()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

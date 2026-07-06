@@ -10,13 +10,13 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Unions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionsClient()
-    /// 
+    ///
     ///     _ = try await client.bigunion.get(id: "id")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,17 +33,17 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Unions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.update(request: Shape.circle(
     ///         Circle(
     ///             radius: 1.1
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,10 +10,10 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
     ///         Dog(
     ///             name: "name",
@@ -21,7 +21,7 @@ public final class UnionClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

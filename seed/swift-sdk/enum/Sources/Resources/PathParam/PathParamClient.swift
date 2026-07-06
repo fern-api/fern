@@ -10,16 +10,16 @@ public final class PathParamClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Enum
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EnumClient()
-    /// 
+    ///
     ///     _ = try await client.pathParam.send(
     ///         operand: ">",
     ///         operandOrColor: "red"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

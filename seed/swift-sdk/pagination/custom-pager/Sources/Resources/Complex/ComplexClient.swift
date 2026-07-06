@@ -10,10 +10,10 @@ public final class ComplexClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.complex.search(
     ///         index: "index",
     ///         request: SearchRequest(
@@ -31,7 +31,7 @@ public final class ComplexClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

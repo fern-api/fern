@@ -10,10 +10,10 @@ public final class CatalogClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.catalog.createCatalogImage(request: .init(
     ///         request: CreateCatalogImageRequest(
     ///             catalogObjectId: "catalog_object_id"
@@ -21,7 +21,7 @@ public final class CatalogClient: Sendable {
     ///         imageFile: .init(data: Data("".utf8))
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -40,13 +40,13 @@ public final class CatalogClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.catalog.getCatalogImage(imageId: "image_id")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

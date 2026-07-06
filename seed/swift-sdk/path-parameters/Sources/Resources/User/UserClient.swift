@@ -10,16 +10,16 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.getUser(
     ///         tenantId: "tenant_id",
     ///         userId: "user_id"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -36,10 +36,10 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.createUser(
     ///         tenantId: "tenant_id",
     ///         request: User(
@@ -51,7 +51,7 @@ public final class UserClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -69,10 +69,10 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.updateUser(
     ///         tenantId: "tenant_id",
     ///         userId: "user_id",
@@ -85,7 +85,7 @@ public final class UserClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -103,17 +103,17 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.searchUsers(
     ///         tenantId: "tenant_id",
     ///         userId: "user_id",
     ///         limit: 1
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -135,17 +135,17 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.getUserMetadata(
     ///         tenantId: "tenant_id",
     ///         userId: "user_id",
     ///         version: "1"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -164,10 +164,10 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.getUserSpecifics(
     ///         tenantId: "tenant_id",
     ///         userId: "user_id",
@@ -175,7 +175,7 @@ public final class UserClient: Sendable {
     ///         thought: "thought"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

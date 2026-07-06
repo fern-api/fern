@@ -58,15 +58,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamProtocolNoCollision(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -86,15 +86,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamProtocolCollision(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -114,15 +114,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamDataContext(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -142,15 +142,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamNoContext(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -170,15 +170,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamProtocolWithFlatSchema(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -198,15 +198,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamDataContextWithEnvelopeSchema(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -226,15 +226,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamOasSpecNative(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -254,16 +254,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingConditionStream(request: .init(
     ///         query: "query",
     ///         stream: true
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -283,16 +283,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingConditionStream(request: .init(
     ///         query: "query",
     ///         stream: true
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -312,17 +312,17 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingSharedSchemaStream(request: .init(
     ///         prompt: "prompt",
     ///         model: "model",
     ///         stream: true
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -342,17 +342,17 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingSharedSchemaStream(request: .init(
     ///         prompt: "prompt",
     ///         model: "model",
     ///         stream: true
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -372,16 +372,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.validateCompletion(request: .init(
     ///         prompt: "prompt",
     ///         model: "model"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -401,10 +401,10 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingUnionStream(request: StreamXFernStreamingUnionStreamRequest.message(
     ///         UnionStreamMessageVariant(
     ///             streamResponse: true,
@@ -413,7 +413,7 @@ public final class ApiClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -434,10 +434,10 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingUnionStream(request: StreamXFernStreamingUnionStreamRequest.message(
     ///         UnionStreamMessageVariant(
     ///             streamResponse: false,
@@ -446,7 +446,7 @@ public final class ApiClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -467,15 +467,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.validateUnionRequest(request: UnionStreamRequestBase(
     ///         prompt: "prompt"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -495,16 +495,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingNullableConditionStream(request: .init(
     ///         query: "query",
     ///         stream: true
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -524,16 +524,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingNullableConditionStream(request: .init(
     ///         query: "query",
     ///         stream: true
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -553,15 +553,15 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.streamXFernStreamingSseOnly(request: StreamRequest(
-    /// 
+    ///
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

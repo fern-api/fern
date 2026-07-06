@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -34,13 +34,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -58,13 +58,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -82,13 +82,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -106,13 +106,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -130,13 +130,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -154,13 +154,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

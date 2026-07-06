@@ -10,10 +10,10 @@ public final class ReferenceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Literal
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = LiteralClient()
-    /// 
+    ///
     ///     _ = try await client.reference.send(request: SendRequest(
     ///         prompt: .youAreAHelpfulAssistant,
     ///         query: "What is the weather today",
@@ -31,7 +31,7 @@ public final class ReferenceClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

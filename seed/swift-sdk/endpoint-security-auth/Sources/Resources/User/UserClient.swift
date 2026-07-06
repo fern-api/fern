@@ -10,13 +10,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import EndpointSecurityAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EndpointSecurityAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getWithBearer()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,13 +33,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import EndpointSecurityAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EndpointSecurityAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getWithBearer()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -56,13 +56,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import EndpointSecurityAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EndpointSecurityAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getWithBearer()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -79,13 +79,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import EndpointSecurityAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EndpointSecurityAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getWithBearer()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -102,13 +102,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import EndpointSecurityAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EndpointSecurityAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getWithBearer()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -125,13 +125,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import EndpointSecurityAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EndpointSecurityAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getWithBearer()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -148,13 +148,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import EndpointSecurityAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EndpointSecurityAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.user.getWithBearer()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

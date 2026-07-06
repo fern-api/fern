@@ -14,13 +14,13 @@ public final class V2Client: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.v2.test()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

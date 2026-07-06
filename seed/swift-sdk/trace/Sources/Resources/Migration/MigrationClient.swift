@@ -10,13 +10,13 @@ public final class MigrationClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.migration.getAttemptedMigrations(adminKeyHeader: "admin-key-header")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

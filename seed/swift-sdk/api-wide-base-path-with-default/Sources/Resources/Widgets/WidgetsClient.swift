@@ -10,10 +10,10 @@ public final class WidgetsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.widgets.create(
     ///         apiVersion: "v1beta",
     ///         request: Widget(
@@ -21,7 +21,7 @@ public final class WidgetsClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

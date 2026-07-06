@@ -10,13 +10,13 @@ public final class FolderDServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import CrossPackageTypeNames
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = CrossPackageTypeNamesClient()
-    /// 
+    ///
     ///     _ = try await client.folderA.service.getDirectThread()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,10 +10,10 @@ public final class FooClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import CrossPackageTypeNames
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = CrossPackageTypeNamesClient()
-    /// 
+    ///
     ///     _ = try await client.foo.find(
     ///         optionalString: "optionalString",
     ///         request: .init(
@@ -22,7 +22,7 @@ public final class FooClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import BytesUpload
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = BytesUploadClient()
-    /// 
+    ///
     ///     _ = try await client.service.upload(request: Data("data".utf8))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -34,16 +34,16 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import BytesUpload
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = BytesUploadClient()
-    /// 
+    ///
     ///     _ = try await client.service.uploadWithQueryParams(
     ///         model: "nova-2",
     ///         request: Data("data".utf8)
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

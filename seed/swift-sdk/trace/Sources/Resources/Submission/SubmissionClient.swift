@@ -12,13 +12,13 @@ public final class SubmissionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.submission.createExecutionSession(language: "JAVA")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,13 +37,13 @@ public final class SubmissionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.submission.getExecutionSession(sessionId: "sessionId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -62,13 +62,13 @@ public final class SubmissionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.submission.stopExecutionSession(sessionId: "sessionId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -84,13 +84,13 @@ public final class SubmissionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.submission.getExecutionSessionsState()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

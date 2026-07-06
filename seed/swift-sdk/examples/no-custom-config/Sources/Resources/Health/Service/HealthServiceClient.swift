@@ -12,13 +12,13 @@ public final class HealthServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.health.service.check(id: "id-2sdx82h")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,13 +37,13 @@ public final class HealthServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.health.service.ping()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,10 +10,10 @@ public final class InlinedRequestClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Enum
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EnumClient()
-    /// 
+    ///
     ///     _ = try await client.inlinedRequest.send(request: .init(
     ///         operand: .greaterThan,
     ///         operandOrColor: ColorOrOperand.color(
@@ -21,7 +21,7 @@ public final class InlinedRequestClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

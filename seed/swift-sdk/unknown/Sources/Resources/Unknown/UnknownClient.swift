@@ -10,15 +10,15 @@ public final class UnknownClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UnknownAsAny
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnknownAsAnyClient()
-    /// 
+    ///
     ///     _ = try await client.unknown.post(request: .object([
     ///         "key": .string("value")
     ///     ]))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -36,17 +36,17 @@ public final class UnknownClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UnknownAsAny
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnknownAsAnyClient()
-    /// 
+    ///
     ///     _ = try await client.unknown.postObject(request: MyObject(
     ///         unknown: .object([
     ///             "key": .string("value")
     ///         ])
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import BytesDownload
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = BytesDownloadClient()
-    /// 
+    ///
     ///     _ = try await client.service.simple()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

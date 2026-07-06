@@ -10,17 +10,17 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ExtraProperties
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExtraPropertiesClient()
-    /// 
+    ///
     ///     _ = try await client.user.createUser(request: .init(
     ///         type: .createUserRequest,
     ///         version: .v1,
     ///         name: "Alice"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

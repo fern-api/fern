@@ -10,13 +10,13 @@ public final class ServiceClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.getMovie(movieId: "movie-c06a4ad7")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,10 +33,10 @@ public final class ServiceClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.createMovie(request: Movie(
     ///         id: "movie-c06a4ad7",
     ///         prequel: "movie-cv9b914f",
@@ -60,7 +60,7 @@ public final class ServiceClient_: Sendable {
     ///         revenue: 1000000
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -78,10 +78,10 @@ public final class ServiceClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.getMetadata(
     ///         xApiVersion: "0.0.1",
     ///         shallow: false,
@@ -90,7 +90,7 @@ public final class ServiceClient_: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -114,10 +114,10 @@ public final class ServiceClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.createBigEntity(request: BigEntity(
     ///         castMember: CastMember.actor(
     ///             Actor(
@@ -324,7 +324,7 @@ public final class ServiceClient_: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -342,13 +342,13 @@ public final class ServiceClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.refreshToken()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

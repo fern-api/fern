@@ -56,10 +56,10 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.search(
     ///         limit: 1,
     ///         id: "id",
@@ -142,7 +142,7 @@ public final class ApiClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

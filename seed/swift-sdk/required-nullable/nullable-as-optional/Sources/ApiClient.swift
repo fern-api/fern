@@ -56,16 +56,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.getFoo(
     ///         requiredBaz: "required_baz",
     ///         requiredNullableBaz: .value("required_nullable_baz")
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -92,10 +92,10 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.updateFoo(
     ///         id: "id",
     ///         xIdempotencyKey: "X-Idempotency-Key",
@@ -106,7 +106,7 @@ public final class ApiClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,10 +10,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import InferredAuthImplicitNoExpiry
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = InferredAuthImplicitNoExpiryClient()
-    /// 
+    ///
     ///     _ = try await client.auth.getTokenWithClientCredentials(
     ///         xApiKey: "X-Api-Key",
     ///         request: .init(
@@ -25,7 +25,7 @@ public final class AuthClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -46,10 +46,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import InferredAuthImplicitNoExpiry
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = InferredAuthImplicitNoExpiryClient()
-    /// 
+    ///
     ///     _ = try await client.auth.refreshToken(
     ///         xApiKey: "X-Api-Key",
     ///         request: .init(
@@ -62,7 +62,7 @@ public final class AuthClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

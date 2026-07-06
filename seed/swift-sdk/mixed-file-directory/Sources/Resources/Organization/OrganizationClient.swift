@@ -12,15 +12,15 @@ public final class OrganizationClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MixedFileDirectory
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MixedFileDirectoryClient()
-    /// 
+    ///
     ///     _ = try await client.organization.create(request: CreateOrganizationRequest(
     ///         name: "name"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

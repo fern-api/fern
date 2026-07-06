@@ -10,13 +10,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnString(request: "string")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -34,13 +34,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnInt(request: 1)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -58,13 +58,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -82,13 +82,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnDouble(request: 1.1)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -106,13 +106,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnBool(request: true)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -130,13 +130,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnDatetime(request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -154,13 +154,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnDate(request: CalendarDate("2023-01-15")!)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -178,13 +178,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -202,13 +202,13 @@ public final class PrimitiveClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.primitive.getAndReturnBase64(request: "SGVsbG8gd29ybGQh")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

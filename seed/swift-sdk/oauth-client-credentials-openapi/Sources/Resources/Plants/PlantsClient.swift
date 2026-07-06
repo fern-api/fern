@@ -10,13 +10,13 @@ public final class PlantsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.plants.list()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,13 +33,13 @@ public final class PlantsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.plants.get(plantId: "plantId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

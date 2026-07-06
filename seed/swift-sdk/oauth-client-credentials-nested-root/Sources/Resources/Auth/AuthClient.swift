@@ -10,10 +10,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import OauthClientCredentials
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = OauthClientCredentialsClient()
-    /// 
+    ///
     ///     _ = try await client.auth.getToken(request: .init(
     ///         clientId: "client_id",
     ///         clientSecret: "client_secret",
@@ -22,7 +22,7 @@ public final class AuthClient: Sendable {
     ///         scope: "scope"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

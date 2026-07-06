@@ -10,10 +10,10 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
     ///         page: 1,
     ///         perPage: 1,
@@ -21,7 +21,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
     ///         startingAfter: "starting_after"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -48,13 +48,13 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination(cursor: "cursor")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -74,13 +74,13 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -98,10 +98,10 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
     ///         page: 1,
     ///         perPage: 1,
@@ -109,7 +109,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
     ///         startingAfter: "starting_after"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -136,10 +136,10 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
     ///         page: 1.1,
     ///         perPage: 1.1,
@@ -147,7 +147,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
     ///         startingAfter: "starting_after"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -174,13 +174,13 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -198,16 +198,16 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
     ///         page: 1,
     ///         order: .asc
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -233,16 +233,16 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
     ///         page: 1,
     ///         order: .asc
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -268,13 +268,13 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -294,13 +294,13 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -320,13 +320,13 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(startingAfter: "starting_after")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -348,13 +348,13 @@ public final class InlineUsersInlineUsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

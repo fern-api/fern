@@ -12,10 +12,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.listResources(
     ///         page: 1,
     ///         perPage: 1,
@@ -26,7 +26,7 @@ public final class ServiceClient: Sendable {
     ///         search: "search"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -61,17 +61,17 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.getResource(
     ///         resourceId: "resourceId",
     ///         includeMetadata: true,
     ///         format: "json"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -96,10 +96,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.searchResources(
     ///         limit: 1,
     ///         offset: 1,
@@ -113,7 +113,7 @@ public final class ServiceClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -139,10 +139,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.listUsers(
     ///         page: 1,
     ///         perPage: 1,
@@ -154,7 +154,7 @@ public final class ServiceClient: Sendable {
     ///         fields: "fields"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -191,17 +191,17 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.getUserById(
     ///         userId: "userId",
     ///         fields: "fields",
     ///         includeFields: true
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -226,10 +226,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.createUser(request: CreateUserRequest(
     ///         email: "email",
     ///         emailVerified: true,
@@ -250,7 +250,7 @@ public final class ServiceClient: Sendable {
     ///         connection: "connection"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -270,10 +270,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.updateUser(
     ///         userId: "userId",
     ///         request: UpdateUserRequest(
@@ -297,7 +297,7 @@ public final class ServiceClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -317,13 +317,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.deleteUser(userId: "userId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -341,17 +341,17 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.listConnections(
     ///         strategy: "strategy",
     ///         name: "name",
     ///         fields: "fields"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -378,16 +378,16 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.getConnection(
     ///         connectionId: "connectionId",
     ///         fields: "fields"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -410,10 +410,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.listClients(
     ///         fields: "fields",
     ///         includeFields: true,
@@ -428,7 +428,7 @@ public final class ServiceClient: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -465,17 +465,17 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MyCustomModule
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MyCustomClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.service.getClient(
     ///         clientId: "clientId",
     ///         fields: "fields",
     ///         includeFields: true
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

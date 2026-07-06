@@ -10,16 +10,16 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.updateTestSubmissionStatus(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         request: TestSubmissionStatus.stopped
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -36,10 +36,10 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.sendTestSubmissionUpdate(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         request: TestSubmissionUpdate(
@@ -50,7 +50,7 @@ public final class AdminClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -67,16 +67,16 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.updateWorkspaceSubmissionStatus(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         request: WorkspaceSubmissionStatus.stopped
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -93,10 +93,10 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.sendWorkspaceSubmissionUpdate(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         request: WorkspaceSubmissionUpdate(
@@ -107,7 +107,7 @@ public final class AdminClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -124,10 +124,10 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.storeTracedTestCase(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         testCaseId: "testCaseId",
@@ -221,7 +221,7 @@ public final class AdminClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -238,10 +238,10 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.storeTracedTestCaseV2(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         testCaseId: "testCaseId",
@@ -327,7 +327,7 @@ public final class AdminClient: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -344,10 +344,10 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.storeTracedWorkspace(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         request: .init(
@@ -441,7 +441,7 @@ public final class AdminClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -458,10 +458,10 @@ public final class AdminClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.admin.storeTracedWorkspaceV2(
     ///         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         request: [
@@ -546,7 +546,7 @@ public final class AdminClient: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

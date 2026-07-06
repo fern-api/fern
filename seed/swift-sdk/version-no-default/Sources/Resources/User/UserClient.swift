@@ -10,13 +10,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Version
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = VersionClient()
-    /// 
+    ///
     ///     _ = try await client.user.getUser(userId: "userId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

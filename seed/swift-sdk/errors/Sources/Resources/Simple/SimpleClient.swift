@@ -10,15 +10,15 @@ public final class SimpleClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Errors
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ErrorsClient()
-    /// 
+    ///
     ///     _ = try await client.simple.fooWithoutEndpointError(request: FooRequest(
     ///         bar: "bar"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -36,15 +36,15 @@ public final class SimpleClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Errors
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ErrorsClient()
-    /// 
+    ///
     ///     _ = try await client.simple.foo(request: FooRequest(
     ///         bar: "bar"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -62,15 +62,15 @@ public final class SimpleClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Errors
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ErrorsClient()
-    /// 
+    ///
     ///     _ = try await client.simple.fooWithExamples(request: FooRequest(
     ///         bar: "hello"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

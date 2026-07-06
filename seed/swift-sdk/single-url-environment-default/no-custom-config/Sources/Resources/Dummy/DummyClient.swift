@@ -10,13 +10,13 @@ public final class DummyClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import SingleUrlEnvironmentDefault
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = SingleUrlEnvironmentDefaultClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.dummy.getDummy()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class StatusClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Websocket
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = WebsocketClient()
-    /// 
+    ///
     ///     _ = try await client.status.getStatus()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

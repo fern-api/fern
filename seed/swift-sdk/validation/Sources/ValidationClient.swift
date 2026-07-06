@@ -56,10 +56,10 @@ public final class ValidationClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Validation
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ValidationClient()
-    /// 
+    ///
     ///     _ = try await client.create(request: .init(
     ///         decimal: 2.2,
     ///         even: 100,
@@ -67,7 +67,7 @@ public final class ValidationClient: Sendable {
     ///         shape: .square
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -85,17 +85,17 @@ public final class ValidationClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Validation
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ValidationClient()
-    /// 
+    ///
     ///     _ = try await client.get(
     ///         decimal: 2.2,
     ///         even: 100,
     ///         name: "fern"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

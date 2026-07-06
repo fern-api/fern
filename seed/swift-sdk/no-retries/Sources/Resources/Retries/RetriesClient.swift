@@ -10,13 +10,13 @@ public final class RetriesClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import NoRetries
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NoRetriesClient()
-    /// 
+    ///
     ///     _ = try await client.retries.getUsers()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

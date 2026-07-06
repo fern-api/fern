@@ -12,16 +12,16 @@ public final class FileUploadExampleClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.fileUploadExample.uploadFile(request: .init(
     ///         name: "name",
     ///         file: .init(data: Data("".utf8))
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

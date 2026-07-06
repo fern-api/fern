@@ -10,13 +10,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import HttpHead
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = HttpHeadClient()
-    /// 
+    ///
     ///     _ = try await client.user.head()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -32,13 +32,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import HttpHead
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = HttpHeadClient()
-    /// 
+    ///
     ///     _ = try await client.user.list(limit: 1)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,16 +10,16 @@ public final class ClientsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.clients.create(request: .init(client: Client(
     ///         name: "Acme Corp",
     ///         email: "contact@acme.com"
     ///     )))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

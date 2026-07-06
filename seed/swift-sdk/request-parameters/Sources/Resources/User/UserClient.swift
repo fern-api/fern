@@ -10,10 +10,10 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import RequestParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = RequestParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.createUsername(
     ///         tags: [
     ///             "tags",
@@ -26,7 +26,7 @@ public final class UserClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -46,10 +46,10 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import RequestParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = RequestParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.createUsernameWithReferencedType(
     ///         tags: [
     ///             "tags",
@@ -62,7 +62,7 @@ public final class UserClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -82,15 +82,15 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import RequestParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = RequestParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.createUsernameOptional(request: .value(CreateUsernameBodyOptionalProperties(
-    /// 
+    ///
     ///     )))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -107,10 +107,10 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import RequestParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = RequestParametersClient()
-    /// 
+    ///
     ///     _ = try await client.user.getUsername(
     ///         limit: 1,
     ///         id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
@@ -178,7 +178,7 @@ public final class UserClient: Sendable {
     ///         bigIntParam: "1000000"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

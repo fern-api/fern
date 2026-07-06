@@ -58,10 +58,10 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.createPlant(request: .object([
     ///         "name": .string("Venus Flytrap"), 
     ///         "species": .string("Dionaea muscipula"), 
@@ -76,7 +76,7 @@ public final class ApiClient: Sendable {
     ///         ])
     ///     ]))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -96,10 +96,10 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.updatePlant(
     ///         plantId: "plantId",
     ///         request: .object([
@@ -110,7 +110,7 @@ public final class ApiClient: Sendable {
     ///         ])
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -130,16 +130,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.createPlantWithSchema(request: .init(
     ///         name: "Sundew",
     ///         species: "Drosera capensis"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

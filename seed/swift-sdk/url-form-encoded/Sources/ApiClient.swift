@@ -56,16 +56,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.submitFormData(request: .init(
     ///         username: "johndoe",
     ///         email: "john@example.com"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -83,16 +83,16 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.getToken(request: TokenRequest(
     ///         clientId: "client_id",
     ///         clientSecret: "client_secret"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

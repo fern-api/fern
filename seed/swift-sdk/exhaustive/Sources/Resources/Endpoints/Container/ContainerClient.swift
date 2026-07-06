@@ -10,16 +10,16 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
     ///         "string",
     ///         "string"
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,10 +37,10 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnListOfObjects(request: [
     ///         ObjectWithRequiredField(
     ///             string: "string"
@@ -50,7 +50,7 @@ public final class ContainerClient: Sendable {
     ///         )
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -68,15 +68,15 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: .array([
     ///         .string("string")
     ///     ]))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -94,17 +94,17 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: .array([
     ///         .object([
     ///             "string": .string("string")
     ///         ])
     ///     ]))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -122,15 +122,15 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnMapPrimToPrim(request: [
     ///         "string": "string"
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -148,17 +148,17 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnMapOfPrimToObject(request: [
     ///         "string": ObjectWithRequiredField(
     ///             string: "string"
     ///         )
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -176,17 +176,17 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(request: [
     ///         "string": MixedType.double(
     ///             1.1
     ///         )
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -204,15 +204,15 @@ public final class ContainerClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
     ///         string: "string"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -12,18 +12,18 @@ public final class TestGroupClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.testGroup.testMethodName(
     ///         pathParam: "path_param",
     ///         request: .value(PlainObject(
-    /// 
+    ///
     ///         ))
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class HomepageClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.homepage.getHomepageProblems()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,16 +33,16 @@ public final class HomepageClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.homepage.setHomepageProblems(request: [
     ///         "string",
     ///         "string"
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

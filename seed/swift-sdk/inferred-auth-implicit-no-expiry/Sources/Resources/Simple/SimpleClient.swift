@@ -10,13 +10,13 @@ public final class SimpleClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import InferredAuthImplicitNoExpiry
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = InferredAuthImplicitNoExpiryClient()
-    /// 
+    ///
     ///     _ = try await client.simple.getSomething()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

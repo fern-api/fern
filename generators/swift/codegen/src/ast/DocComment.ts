@@ -113,8 +113,12 @@ export class DocComment extends AstNode {
     private writeMultilineText(writer: Writer, sanitizedText: string) {
         const lines = sanitizedText.split("\n");
         for (const line of lines) {
-            writer.write("/// ");
-            writer.write(line);
+            if (line === "") {
+                writer.write("///");
+            } else {
+                writer.write("/// ");
+                writer.write(line);
+            }
             writer.newLine();
         }
     }

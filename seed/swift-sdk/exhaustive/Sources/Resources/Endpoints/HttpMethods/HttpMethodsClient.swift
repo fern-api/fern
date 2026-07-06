@@ -10,13 +10,13 @@ public final class HttpMethodsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.httpMethods.testGet(id: "id")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,15 +33,15 @@ public final class HttpMethodsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.httpMethods.testPost(request: ObjectWithRequiredField(
     ///         string: "string"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -59,10 +59,10 @@ public final class HttpMethodsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.httpMethods.testPut(
     ///         id: "id",
     ///         request: ObjectWithRequiredField(
@@ -70,7 +70,7 @@ public final class HttpMethodsClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -88,10 +88,10 @@ public final class HttpMethodsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.httpMethods.testPatch(
     ///         id: "id",
     ///         request: ObjectWithOptionalField(
@@ -118,7 +118,7 @@ public final class HttpMethodsClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -136,13 +136,13 @@ public final class HttpMethodsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.httpMethods.testDelete(id: "id")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Variables
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = VariablesClient()
-    /// 
+    ///
     ///     _ = try await client.service.post(endpointParam: "<endpointParam>")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class NestedApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import InferredAuthExplicit
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = InferredAuthExplicitClient()
-    /// 
+    ///
     ///     _ = try await client.nested.api.getSomething()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

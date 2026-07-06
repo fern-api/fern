@@ -10,10 +10,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import InferredAuthImplicit
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = InferredAuthImplicitClient()
-    /// 
+    ///
     ///     _ = try await client.auth.getTokenWithClientCredentials(request: GetTokenRequest(
     ///         clientId: "client_id",
     ///         clientSecret: "client_secret",
@@ -22,7 +22,7 @@ public final class AuthClient: Sendable {
     ///         scope: "scope"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -40,10 +40,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import InferredAuthImplicit
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = InferredAuthImplicitClient()
-    /// 
+    ///
     ///     _ = try await client.auth.refreshToken(request: RefreshTokenRequest(
     ///         clientId: "client_id",
     ///         clientSecret: "client_secret",
@@ -53,7 +53,7 @@ public final class AuthClient: Sendable {
     ///         scope: "scope"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

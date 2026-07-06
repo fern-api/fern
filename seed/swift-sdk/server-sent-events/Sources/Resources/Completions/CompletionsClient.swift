@@ -10,13 +10,13 @@ public final class CompletionsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ServerSentEvents
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ServerSentEventsClient()
-    /// 
+    ///
     ///     _ = try await client.completions.stream(request: .init(query: "foo"))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -34,13 +34,13 @@ public final class CompletionsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ServerSentEvents
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ServerSentEventsClient()
-    /// 
+    ///
     ///     _ = try await client.completions.streamWithoutTerminator(request: .init(query: "query"))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

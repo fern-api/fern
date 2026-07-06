@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PlainText
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PlainTextClient()
-    /// 
+    ///
     ///     _ = try await client.service.getText()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,13 +33,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PlainText
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PlainTextClient()
-    /// 
+    ///
     ///     _ = try await client.service.getCsv()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -56,13 +56,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PlainText
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PlainTextClient()
-    /// 
+    ///
     ///     _ = try await client.service.getXml()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

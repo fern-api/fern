@@ -10,10 +10,10 @@ public final class VendorClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.vendor.updateVendor(
     ///         vendorId: "vendor_id",
     ///         request: UpdateVendorRequest(
@@ -21,7 +21,7 @@ public final class VendorClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -39,13 +39,13 @@ public final class VendorClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.vendor.createVendor(request: .init(name: "name"))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

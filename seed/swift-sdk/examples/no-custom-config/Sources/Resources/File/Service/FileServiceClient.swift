@@ -12,16 +12,16 @@ public final class FileServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Examples
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExamplesClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.file.service.getFile(
     ///         filename: "file.txt",
     ///         xFileApiVersion: "0.0.2"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -14,13 +14,13 @@ public final class EventsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MixedFileDirectory
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MixedFileDirectoryClient()
-    /// 
+    ///
     ///     _ = try await client.user.events.listEvents(limit: 1)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

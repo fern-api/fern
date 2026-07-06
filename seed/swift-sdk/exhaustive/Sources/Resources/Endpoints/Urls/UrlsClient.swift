@@ -10,13 +10,13 @@ public final class UrlsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.urls.withMixedCase()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,13 +33,13 @@ public final class UrlsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.urls.noEndingSlash()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -56,13 +56,13 @@ public final class UrlsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.urls.withEndingSlash()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -79,13 +79,13 @@ public final class UrlsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.urls.withUnderscores()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

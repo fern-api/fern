@@ -56,13 +56,13 @@ public final class UndiscriminatedUnionWithResponsePropertyClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnionWithResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionWithResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.getUnion()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -79,13 +79,13 @@ public final class UndiscriminatedUnionWithResponsePropertyClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnionWithResponseProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionWithResponsePropertyClient()
-    /// 
+    ///
     ///     _ = try await client.listUnions()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

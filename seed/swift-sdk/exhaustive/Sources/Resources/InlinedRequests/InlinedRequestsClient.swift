@@ -12,10 +12,10 @@ public final class InlinedRequestsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlinedRequests.postWithObjectBodyandResponse(request: .init(
     ///         string: "string",
     ///         integer: 1,
@@ -43,7 +43,7 @@ public final class InlinedRequestsClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -63,10 +63,10 @@ public final class InlinedRequestsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.inlinedRequests.postWithArrayBodyAndHeaders(
     ///         xCustomHeader: "X-Custom-Header",
     ///         request: [
@@ -75,7 +75,7 @@ public final class InlinedRequestsClient: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

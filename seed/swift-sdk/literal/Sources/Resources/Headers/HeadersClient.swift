@@ -10,13 +10,13 @@ public final class HeadersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Literal
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = LiteralClient()
-    /// 
+    ///
     ///     _ = try await client.headers.send(request: .init(query: "What is the weather today"))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,10 +10,10 @@ public final class QueryParamClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Enum
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EnumClient()
-    /// 
+    ///
     ///     _ = try await client.queryParam.send(
     ///         operand: .greaterThan,
     ///         operandOrColor: ColorOrOperand.color(
@@ -21,7 +21,7 @@ public final class QueryParamClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -43,10 +43,10 @@ public final class QueryParamClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Enum
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EnumClient()
-    /// 
+    ///
     ///     _ = try await client.queryParam.sendList(
     ///         operand: [
     ///             .greaterThan
@@ -66,7 +66,7 @@ public final class QueryParamClient: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

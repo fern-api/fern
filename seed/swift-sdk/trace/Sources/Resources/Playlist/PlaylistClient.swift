@@ -12,10 +12,10 @@ public final class PlaylistClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.playlist.createPlaylist(
     ///         serviceParam: "1",
     ///         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
@@ -29,7 +29,7 @@ public final class PlaylistClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -53,10 +53,10 @@ public final class PlaylistClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.playlist.getPlaylists(
     ///         serviceParam: "1",
     ///         limit: 1,
@@ -70,7 +70,7 @@ public final class PlaylistClient: Sendable {
     ///         ]
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -99,16 +99,16 @@ public final class PlaylistClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.playlist.getPlaylist(
     ///         serviceParam: "1",
     ///         playlistId: "playlistId"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -127,10 +127,10 @@ public final class PlaylistClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.playlist.updatePlaylist(
     ///         serviceParam: "1",
     ///         playlistId: "playlistId",
@@ -143,7 +143,7 @@ public final class PlaylistClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -163,16 +163,16 @@ public final class PlaylistClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.playlist.deletePlaylist(
     ///         serviceParam: "1",
     ///         playlistId: "playlist_id"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

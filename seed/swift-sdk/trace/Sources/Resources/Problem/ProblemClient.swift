@@ -12,10 +12,10 @@ public final class ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.problem.createProblem(request: CreateProblemRequest(
     ///         problemName: "problemName",
     ///         problemDescription: ProblemDescription(
@@ -94,7 +94,7 @@ public final class ProblemClient: Sendable {
     ///         methodName: "methodName"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -114,10 +114,10 @@ public final class ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.problem.updateProblem(
     ///         problemId: "problemId",
     ///         request: CreateProblemRequest(
@@ -199,7 +199,7 @@ public final class ProblemClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -219,13 +219,13 @@ public final class ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.problem.deleteProblem(problemId: "problemId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -243,10 +243,10 @@ public final class ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.problem.getDefaultStarterFiles(request: .init(
     ///         inputParams: [
     ///             VariableTypeAndName(
@@ -262,7 +262,7 @@ public final class ProblemClient: Sendable {
     ///         methodName: "methodName"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

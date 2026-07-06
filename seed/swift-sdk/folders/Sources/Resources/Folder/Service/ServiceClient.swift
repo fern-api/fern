@@ -10,13 +10,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.folder.service.endpoint()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -32,15 +32,15 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.folder.service.unknownRequest(request: .object([
     ///         "key": .string("value")
     ///     ]))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

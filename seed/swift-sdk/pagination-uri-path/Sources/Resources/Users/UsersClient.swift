@@ -10,13 +10,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PaginationUriPath
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationUriPathClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithUriPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,13 +33,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PaginationUriPath
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationUriPathClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithPathPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

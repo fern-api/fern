@@ -10,10 +10,10 @@ public final class InlinedClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Literal
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = LiteralClient()
-    /// 
+    ///
     ///     _ = try await client.inlined.send(request: .init(
     ///         prompt: .youAreAHelpfulAssistant,
     ///         context: .youreSuperWise,
@@ -29,7 +29,7 @@ public final class InlinedClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

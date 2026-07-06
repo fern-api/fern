@@ -12,13 +12,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import HeaderToken
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = HeaderTokenClient(headerTokenAuth: "YOUR_API_KEY")
-    /// 
+    ///
     ///     _ = try await client.service.getWithBearerToken()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

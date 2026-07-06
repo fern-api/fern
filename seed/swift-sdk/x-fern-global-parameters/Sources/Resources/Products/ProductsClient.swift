@@ -10,16 +10,16 @@ public final class ProductsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.products.search(
     ///         regionId: "regionId",
     ///         request: .init()
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,16 +37,16 @@ public final class ProductsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.products.get(
     ///         regionId: "regionId",
     ///         productId: "productId"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

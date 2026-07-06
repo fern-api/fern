@@ -12,16 +12,16 @@ public final class ImdbClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.imdb.createMovie(request: .init(
     ///         title: "title",
     ///         rating: 1.1
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -39,13 +39,13 @@ public final class ImdbClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.imdb.getMovie(movieId: "movieId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class PathClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Literal
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = LiteralClient()
-    /// 
+    ///
     ///     _ = try await client.path.send(id: "123")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,10 +10,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ApiWideBasePath
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiWideBasePathClient()
-    /// 
+    ///
     ///     _ = try await client.service.post(
     ///         pathParam: "pathParam",
     ///         serviceParam: "serviceParam",
@@ -21,7 +21,7 @@ public final class ServiceClient: Sendable {
     ///         resourceParam: "resourceParam"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

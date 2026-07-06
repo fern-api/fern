@@ -13,10 +13,10 @@ public final class EventsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UnionQueryParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionQueryParametersClient()
-    /// 
+    ///
     ///     _ = try await client.events.subscribe(
     ///         eventType: EventTypeParam.eventTypeEnum(
     ///             .groupCreated
@@ -26,7 +26,7 @@ public final class EventsClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

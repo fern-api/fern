@@ -10,13 +10,13 @@ public final class TypesClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Unions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionsClient()
-    /// 
+    ///
     ///     _ = try await client.types.get(id: "date-example")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,15 +33,15 @@ public final class TypesClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Unions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionsClient()
-    /// 
+    ///
     ///     _ = try await client.types.update(request: UnionWithTime.date(
     ///         CalendarDate("1994-01-01")!
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

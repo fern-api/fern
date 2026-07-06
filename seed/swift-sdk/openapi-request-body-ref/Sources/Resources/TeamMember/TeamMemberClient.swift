@@ -10,16 +10,16 @@ public final class TeamMemberClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.teamMember.updateTeamMember(
     ///         teamMemberId: "team_member_id",
     ///         request: .init()
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

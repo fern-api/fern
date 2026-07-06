@@ -12,13 +12,13 @@ public final class PropertyBasedErrorClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import ErrorProperty
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ErrorPropertyClient()
-    /// 
+    ///
     ///     _ = try await client.propertyBasedError.throwError()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

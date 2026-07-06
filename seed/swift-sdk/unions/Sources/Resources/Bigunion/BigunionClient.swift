@@ -10,13 +10,13 @@ public final class BigunionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Unions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionsClient()
-    /// 
+    ///
     ///     _ = try await client.bigunion.get(id: "id")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -33,17 +33,17 @@ public final class BigunionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Unions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionsClient()
-    /// 
+    ///
     ///     _ = try await client.bigunion.update(request: BigUnion.normalSweet(
     ///         NormalSweet(
     ///             value: "value"
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -61,10 +61,10 @@ public final class BigunionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Unions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UnionsClient()
-    /// 
+    ///
     ///     _ = try await client.bigunion.updateMany(request: [
     ///         BigUnion.normalSweet(
     ///             NormalSweet(
@@ -78,7 +78,7 @@ public final class BigunionClient: Sendable {
     ///         )
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

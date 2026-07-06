@@ -56,10 +56,10 @@ public final class PropertyAccessClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PropertyAccess
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PropertyAccessClient()
-    /// 
+    ///
     ///     _ = try await client.createUser(request: User(
     ///         id: "id",
     ///         email: "email",
@@ -73,7 +73,7 @@ public final class PropertyAccessClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

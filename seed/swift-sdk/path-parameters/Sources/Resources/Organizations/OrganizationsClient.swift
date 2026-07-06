@@ -10,16 +10,16 @@ public final class OrganizationsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.organizations.getOrganization(
     ///         tenantId: "tenant_id",
     ///         organizationId: "organization_id"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -36,17 +36,17 @@ public final class OrganizationsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.organizations.getOrganizationUser(
     ///         tenantId: "tenant_id",
     ///         organizationId: "organization_id",
     ///         userId: "user_id"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -63,17 +63,17 @@ public final class OrganizationsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import PathParameters
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PathParametersClient()
-    /// 
+    ///
     ///     _ = try await client.organizations.searchOrganizations(
     ///         tenantId: "tenant_id",
     ///         organizationId: "organization_id",
     ///         limit: 1
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

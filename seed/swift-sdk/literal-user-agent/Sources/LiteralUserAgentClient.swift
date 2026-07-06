@@ -56,13 +56,13 @@ public final class LiteralUserAgentClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import LiteralUserAgent
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = LiteralUserAgentClient()
-    /// 
+    ///
     ///     _ = try await client.ping()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

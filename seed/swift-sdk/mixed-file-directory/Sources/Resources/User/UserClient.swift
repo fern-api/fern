@@ -14,13 +14,13 @@ public final class UserClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MixedFileDirectory
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MixedFileDirectoryClient()
-    /// 
+    ///
     ///     _ = try await client.user.list(limit: 1)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -10,13 +10,13 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import OauthClientCredentials
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = OauthClientCredentialsClient()
-    /// 
+    ///
     ///     _ = try await client.nestedNoAuth.api.getSomething()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

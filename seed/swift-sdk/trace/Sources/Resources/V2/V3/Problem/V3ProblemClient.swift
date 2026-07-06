@@ -12,13 +12,13 @@ public final class V3ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.v2.v3.problem.getLightweightProblems()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -37,13 +37,13 @@ public final class V3ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.v2.v3.problem.getProblems()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -62,13 +62,13 @@ public final class V3ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.v2.v3.problem.getLatestProblem(problemId: "problemId")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -87,16 +87,16 @@ public final class V3ProblemClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Trace
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = TraceClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.v2.v3.problem.getProblemVersion(
     ///         problemId: "problemId",
     ///         problemVersion: "1"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

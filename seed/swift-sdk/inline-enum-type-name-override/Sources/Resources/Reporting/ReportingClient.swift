@@ -10,13 +10,13 @@ public final class ReportingClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.reporting.load(request: .init())
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

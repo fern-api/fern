@@ -10,10 +10,10 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithOptionalField(request: ObjectWithOptionalField(
     ///         string: "string",
     ///         integer: 1,
@@ -37,7 +37,7 @@ public final class ObjectClient: Sendable {
     ///         bigint: "1000000"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -55,15 +55,15 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithRequiredField(request: ObjectWithRequiredField(
     ///         string: "string"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -81,10 +81,10 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithMapOfMap(request: ObjectWithMapOfMap(
     ///         map: [
     ///             "map": [
@@ -93,7 +93,7 @@ public final class ObjectClient: Sendable {
     ///         ]
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -111,10 +111,10 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnNestedWithOptionalField(request: NestedObjectWithOptionalField(
     ///         string: "string",
     ///         nestedObject: ObjectWithOptionalField(
@@ -141,7 +141,7 @@ public final class ObjectClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -159,10 +159,10 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnNestedWithRequiredField(
     ///         string: "string",
     ///         request: NestedObjectWithRequiredField(
@@ -192,7 +192,7 @@ public final class ObjectClient: Sendable {
     ///         )
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -210,10 +210,10 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(request: [
     ///         NestedObjectWithRequiredField(
     ///             string: "string",
@@ -267,7 +267,7 @@ public final class ObjectClient: Sendable {
     ///         )
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -285,17 +285,17 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithUnknownField(request: ObjectWithUnknownField(
     ///         unknown: .object([
     ///             "$ref": .string("https://example.com/schema")
     ///         ])
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -313,17 +313,17 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(request: ObjectWithDocumentedUnknownType(
     ///         documentedUnknownType: .object([
     ///             "key": .string("value")
     ///         ])
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -341,17 +341,17 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request: [
     ///         "string": .object([
     ///             "key": .string("value")
     ///         ])
     ///     ])
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -372,10 +372,10 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields(
     ///         requiredString: "hello",
     ///         requiredInteger: 0,
@@ -383,7 +383,7 @@ public final class ObjectClient: Sendable {
     ///         requiredLong: 0
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -406,21 +406,21 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject(
     ///         requiredString: "hello",
     ///         requiredObject: NestedObjectWithRequiredField(
     ///             string: "nested",
     ///             nestedObject: ObjectWithOptionalField(
-    /// 
+    ///
     ///             )
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -442,16 +442,16 @@ public final class ObjectClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
     ///         datetimeLikeString: "2023-08-31T14:15:22Z",
     ///         actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

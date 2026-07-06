@@ -20,13 +20,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import FileUpload
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = FileUploadClient()
-    /// 
+    ///
     ///     _ = try await client.service.justFile(request: .init(file: .init(data: Data("".utf8))))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -105,13 +105,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import FileUpload
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = FileUploadClient()
-    /// 
+    ///
     ///     _ = try await client.service.optionalArgs(request: .init(imageFile: .init(data: Data("".utf8))))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -152,10 +152,10 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import FileUpload
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = FileUploadClient()
-    /// 
+    ///
     ///     _ = try await client.service.withRefBody(request: .init(
     ///         imageFile: .init(data: Data("".utf8)),
     ///         request: MyObject(
@@ -163,7 +163,7 @@ public final class ServiceClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -182,13 +182,13 @@ public final class ServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import FileUpload
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = FileUploadClient()
-    /// 
+    ///
     ///     _ = try await client.service.simple()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

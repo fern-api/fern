@@ -10,13 +10,13 @@ public final class PackageClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import NurseryApi
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NurseryApiClient()
-    /// 
+    ///
     ///     _ = try await client.package.test(for: "for")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

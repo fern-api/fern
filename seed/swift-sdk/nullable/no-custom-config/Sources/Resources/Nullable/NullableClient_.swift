@@ -10,10 +10,10 @@ public final class NullableClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Nullable
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableClient()
-    /// 
+    ///
     ///     _ = try await client.nullable.getUsers(
     ///         usernames: [
     ///             "usernames"
@@ -28,7 +28,7 @@ public final class NullableClient_: Sendable {
     ///         extra: .value(true)
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -52,10 +52,10 @@ public final class NullableClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Nullable
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableClient()
-    /// 
+    ///
     ///     _ = try await client.nullable.createUser(request: .init(
     ///         username: "username",
     ///         tags: [
@@ -75,7 +75,7 @@ public final class NullableClient_: Sendable {
     ///         avatar: .value("avatar")
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -93,13 +93,13 @@ public final class NullableClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import Nullable
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = NullableClient()
-    /// 
+    ///
     ///     _ = try await client.nullable.deleteUser(request: .init(username: .value("xy")))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

@@ -12,13 +12,13 @@ public final class ContactsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.contacts.create(request: .init(name: "name"))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -38,13 +38,13 @@ public final class ContactsClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.contacts.get(id: "id")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

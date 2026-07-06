@@ -10,10 +10,10 @@ public final class AuthClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import AnyAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = AnyAuthClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.auth.getToken(request: .init(
     ///         clientId: "client_id",
     ///         clientSecret: "client_secret",
@@ -21,7 +21,7 @@ public final class AuthClient: Sendable {
     ///         grantType: .clientCredentials
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

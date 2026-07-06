@@ -10,10 +10,10 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination(
     ///         page: 1,
     ///         perPage: 1,
@@ -21,7 +21,7 @@ public final class UsersClient: Sendable {
     ///         startingAfter: "starting_after"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -48,13 +48,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithMixedTypeCursorPagination(cursor: "cursor")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -74,13 +74,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithMixedTypeCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -102,16 +102,16 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithTopLevelBodyCursorPagination(request: .init(
     ///         cursor: "initial_cursor",
     ///         filter: "active"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -129,10 +129,10 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination(
     ///         page: 1,
     ///         perPage: 1,
@@ -140,7 +140,7 @@ public final class UsersClient: Sendable {
     ///         startingAfter: "starting_after"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -167,10 +167,10 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination(
     ///         page: 1.1,
     ///         perPage: 1.1,
@@ -178,7 +178,7 @@ public final class UsersClient: Sendable {
     ///         startingAfter: "starting_after"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -205,13 +205,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithMixedTypeCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -229,16 +229,16 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination(
     ///         page: 1,
     ///         order: .asc
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -264,16 +264,16 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination(
     ///         page: 1,
     ///         order: .asc
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -299,13 +299,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -325,13 +325,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -351,13 +351,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination(startingAfter: "starting_after")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -379,13 +379,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination(startingAfter: "starting_after")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -407,13 +407,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithCursorPagination()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -433,13 +433,13 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithOptionalData(page: 1)
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -460,17 +460,17 @@ public final class UsersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Pagination
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = PaginationClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.users.listWithAliasedData(
     ///         page: 1,
     ///         perPage: 1,
     ///         startingAfter: "starting_after"
     ///     )
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

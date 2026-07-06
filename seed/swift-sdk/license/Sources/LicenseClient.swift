@@ -56,13 +56,13 @@ public final class LicenseClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import License
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = LicenseClient()
-    /// 
+    ///
     ///     _ = try await client.get()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

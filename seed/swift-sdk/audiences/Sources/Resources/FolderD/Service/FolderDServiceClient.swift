@@ -10,13 +10,13 @@ public final class FolderDServiceClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Audiences
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = AudiencesClient()
-    /// 
+    ///
     ///     _ = try await client.folderD.service.getDirectThread()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

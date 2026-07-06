@@ -10,13 +10,13 @@ public final class HeadersClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Enum
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = EnumClient()
-    /// 
+    ///
     ///     _ = try await client.headers.send()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

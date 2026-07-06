@@ -10,15 +10,15 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.get(request: MyUnion.string(
     ///         "string"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -36,13 +36,13 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.getMetadata()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -59,10 +59,10 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.updateMetadata(request: MetadataUnion.optionalMetadata(
     ///         [
     ///             "string": .object([
@@ -71,7 +71,7 @@ public final class UnionClient: Sendable {
     ///         ]
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -89,10 +89,10 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.call(request: Request(
     ///         union: MetadataUnion.optionalMetadata(
     ///             [
@@ -103,7 +103,7 @@ public final class UnionClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -121,15 +121,15 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.duplicateTypesUnion(request: UnionWithDuplicateTypes.string(
     ///         "string"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -147,15 +147,15 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.nestedUnions(request: NestedUnionRoot.string(
     ///         "string"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -173,15 +173,15 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.nestedObjectUnions(request: OuterNestedUnion.string(
     ///         "string"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -199,10 +199,10 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.aliasedObjectUnion(request: AliasedObjectUnion.aliasedLeafA(
     ///         LeafObjectA(
     ///             onlyInA: "onlyInA",
@@ -210,7 +210,7 @@ public final class UnionClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -228,10 +228,10 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.getWithBaseProperties(request: UnionWithBaseProperties.namedMetadata(
     ///         NamedMetadata(
     ///             name: "name",
@@ -243,7 +243,7 @@ public final class UnionClient: Sendable {
     ///         )
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -261,10 +261,10 @@ public final class UnionClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import UndiscriminatedUnions
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = UndiscriminatedUnionsClient()
-    /// 
+    ///
     ///     _ = try await client.union.testCamelCaseProperties(request: .init(paymentMethod: PaymentMethodUnion.tokenizeCard(
     ///         TokenizeCard(
     ///             method: "card",
@@ -272,7 +272,7 @@ public final class UnionClient: Sendable {
     ///         )
     ///     )))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

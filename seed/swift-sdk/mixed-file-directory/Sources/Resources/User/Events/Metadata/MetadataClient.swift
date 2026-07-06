@@ -12,13 +12,13 @@ public final class MetadataClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import MixedFileDirectory
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = MixedFileDirectoryClient()
-    /// 
+    ///
     ///     _ = try await client.user.events.metadata.getMetadata(id: "id")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

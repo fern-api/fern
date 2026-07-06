@@ -61,13 +61,13 @@ public final class ApiClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Api
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ApiClient()
-    /// 
+    ///
     ///     _ = try await client.testGet(region: "region")
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

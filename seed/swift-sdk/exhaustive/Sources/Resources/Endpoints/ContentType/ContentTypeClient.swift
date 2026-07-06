@@ -10,10 +10,10 @@ public final class ContentTypeClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.contentType.postJsonPatchContentType(request: ObjectWithOptionalField(
     ///         string: "string",
     ///         integer: 1,
@@ -37,7 +37,7 @@ public final class ContentTypeClient: Sendable {
     ///         bigint: "1000000"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -54,10 +54,10 @@ public final class ContentTypeClient: Sendable {
     /// ```swift
     /// import Foundation
     /// import Exhaustive
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
-    /// 
+    ///
     ///     _ = try await client.endpoints.contentType.postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField(
     ///         string: "string",
     ///         integer: 1,
@@ -81,7 +81,7 @@ public final class ContentTypeClient: Sendable {
     ///         bigint: "1000000"
     ///     ))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///

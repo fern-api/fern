@@ -12,16 +12,16 @@ public final class BasicAuthClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import BasicAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = BasicAuthClient(
     ///         username: "<username>",
     ///         password: "<password>"
     ///     )
-    /// 
+    ///
     ///     _ = try await client.basicAuth.getWithBasicAuth()
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
@@ -40,18 +40,18 @@ public final class BasicAuthClient_: Sendable {
     /// ```swift
     /// import Foundation
     /// import BasicAuth
-    /// 
+    ///
     /// private func main() async throws {
     ///     let client = BasicAuthClient(
     ///         username: "<username>",
     ///         password: "<password>"
     ///     )
-    /// 
+    ///
     ///     _ = try await client.basicAuth.postWithBasicAuth(request: .object([
     ///         "key": .string("value")
     ///     ]))
     /// }
-    /// 
+    ///
     /// try await main()
     /// ```
     ///
