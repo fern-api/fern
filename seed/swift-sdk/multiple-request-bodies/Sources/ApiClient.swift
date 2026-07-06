@@ -83,6 +83,20 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient(token: "<token>")
+    /// 
+    ///     _ = try await client.uploadJsonDocument(request: .init())
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func uploadJsonDocument(request: Requests.UploadDocumentRequest, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
         return try await httpClient.performRequest(
             method: .post,

@@ -97,6 +97,20 @@ public final class ExamplesClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Examples
+    /// 
+    /// private func main() async throws {
+    ///     let client = ExamplesClient(token: "<token>")
+    /// 
+    ///     _ = try await client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func echo(request: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
@@ -107,6 +121,20 @@ public final class ExamplesClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Examples
+    /// 
+    /// private func main() async throws {
+    ///     let client = ExamplesClient(token: "<token>")
+    /// 
+    ///     _ = try await client.echo(request: "primitive")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createType(request: `Type`, requestOptions: RequestOptions? = nil) async throws -> Identifier {
         return try await httpClient.performRequest(
             method: .post,

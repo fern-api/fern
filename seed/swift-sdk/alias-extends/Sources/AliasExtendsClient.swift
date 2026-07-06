@@ -53,6 +53,23 @@ public final class AliasExtendsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import AliasExtends
+    /// 
+    /// private func main() async throws {
+    ///     let client = AliasExtendsClient()
+    /// 
+    ///     _ = try await client.extendedInlineRequestBody(request: .init(
+    ///         parent: "parent",
+    ///         child: "child"
+    ///     ))
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func extendedInlineRequestBody(request: Requests.InlinedChildRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

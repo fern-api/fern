@@ -53,6 +53,20 @@ public final class LicenseClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import License
+    /// 
+    /// private func main() async throws {
+    ///     let client = LicenseClient()
+    /// 
+    ///     _ = try await client.get()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func get(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,

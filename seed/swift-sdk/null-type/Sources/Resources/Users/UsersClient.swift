@@ -9,6 +9,19 @@ public final class UsersClient: Sendable {
 
     /// Gets a user by ID. The deleted_at field uses type null.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.users.get(id: "id")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(

@@ -53,6 +53,20 @@ public final class UndiscriminatedUnionWithResponsePropertyClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import UndiscriminatedUnionWithResponseProperty
+    /// 
+    /// private func main() async throws {
+    ///     let client = UndiscriminatedUnionWithResponsePropertyClient()
+    /// 
+    ///     _ = try await client.getUnion()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getUnion(requestOptions: RequestOptions? = nil) async throws -> UnionResponse {
         return try await httpClient.performRequest(
             method: .get,
@@ -62,6 +76,20 @@ public final class UndiscriminatedUnionWithResponsePropertyClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import UndiscriminatedUnionWithResponseProperty
+    /// 
+    /// private func main() async throws {
+    ///     let client = UndiscriminatedUnionWithResponsePropertyClient()
+    /// 
+    ///     _ = try await client.listUnions()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listUnions(requestOptions: RequestOptions? = nil) async throws -> UnionListResponse {
         return try await httpClient.performRequest(
             method: .get,

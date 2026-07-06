@@ -10,6 +10,26 @@ public final class EventsClient: Sendable {
     /// Subscribe to events with a oneOf-style query parameter that may be a
     /// scalar enum value or a list of enum values.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import UnionQueryParameters
+    /// 
+    /// private func main() async throws {
+    ///     let client = UnionQueryParametersClient()
+    /// 
+    ///     _ = try await client.events.subscribe(
+    ///         eventType: EventTypeParam.eventTypeEnum(
+    ///             .groupCreated
+    ///         ),
+    ///         tags: StringOrListParam.string(
+    ///             "tags"
+    ///         )
+    ///     )
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func subscribe(eventType: EventTypeParam? = nil, tags: StringOrListParam? = nil, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(

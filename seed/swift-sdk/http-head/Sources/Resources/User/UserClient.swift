@@ -7,6 +7,20 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import HttpHead
+    /// 
+    /// private func main() async throws {
+    ///     let client = HttpHeadClient()
+    /// 
+    ///     _ = try await client.user.head()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func head(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .head,
@@ -15,6 +29,20 @@ public final class UserClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import HttpHead
+    /// 
+    /// private func main() async throws {
+    ///     let client = HttpHeadClient()
+    /// 
+    ///     _ = try await client.user.list(limit: 1)
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func list(limit: Int, requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,

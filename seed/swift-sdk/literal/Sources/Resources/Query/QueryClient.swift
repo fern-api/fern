@@ -7,6 +7,30 @@ public final class QueryClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Literal
+    /// 
+    /// private func main() async throws {
+    ///     let client = LiteralClient()
+    /// 
+    ///     _ = try await client.query.send(
+    ///         prompt: .youAreAHelpfulAssistant,
+    ///         optionalPrompt: .youAreAHelpfulAssistant,
+    ///         aliasPrompt: .youAreAHelpfulAssistant,
+    ///         aliasOptionalPrompt: .youAreAHelpfulAssistant,
+    ///         query: "What is the weather today",
+    ///         stream: false,
+    ///         optionalStream: false,
+    ///         aliasStream: false,
+    ///         aliasOptionalStream: false
+    ///     )
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func send(prompt: YouAreAHelpfulAssistant, optionalPrompt: YouAreAHelpfulAssistant? = nil, aliasPrompt: AliasToPrompt, aliasOptionalPrompt: AliasToPrompt? = nil, query: String, stream: Bool, optionalStream: Bool? = nil, aliasStream: AliasToStream, aliasOptionalStream: AliasToStream? = nil, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
         return try await httpClient.performRequest(
             method: .post,

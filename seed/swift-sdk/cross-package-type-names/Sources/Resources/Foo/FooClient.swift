@@ -7,6 +7,26 @@ public final class FooClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import CrossPackageTypeNames
+    /// 
+    /// private func main() async throws {
+    ///     let client = CrossPackageTypeNamesClient()
+    /// 
+    ///     _ = try await client.foo.find(
+    ///         optionalString: "optionalString",
+    ///         request: .init(
+    ///             publicProperty: "publicProperty",
+    ///             privateProperty: 1
+    ///         )
+    ///     )
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func find(optionalString: OptionalString, request: Requests.FindRequest, requestOptions: RequestOptions? = nil) async throws -> ImportingType {
         return try await httpClient.performRequest(
             method: .post,

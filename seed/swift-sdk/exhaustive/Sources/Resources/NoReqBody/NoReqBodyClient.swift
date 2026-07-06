@@ -7,6 +7,20 @@ public final class NoReqBodyClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Exhaustive
+    /// 
+    /// private func main() async throws {
+    ///     let client = ExhaustiveClient(token: "<token>")
+    /// 
+    ///     _ = try await client.noReqBody.getWithNoRequestBody()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithNoRequestBody(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .get,
@@ -16,6 +30,20 @@ public final class NoReqBodyClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Exhaustive
+    /// 
+    /// private func main() async throws {
+    ///     let client = ExhaustiveClient(token: "<token>")
+    /// 
+    ///     _ = try await client.noReqBody.postWithNoRequestBody()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func postWithNoRequestBody(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,

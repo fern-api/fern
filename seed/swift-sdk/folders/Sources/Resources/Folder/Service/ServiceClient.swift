@@ -7,6 +7,20 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.folder.service.endpoint()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func endpoint(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
@@ -15,6 +29,22 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.folder.service.unknownRequest(request: .object([
+    ///         "key": .string("value")
+    ///     ]))
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func unknownRequest(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

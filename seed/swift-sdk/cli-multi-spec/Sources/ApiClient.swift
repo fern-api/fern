@@ -53,6 +53,20 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.listUsers()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listUsers(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
@@ -62,6 +76,20 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.getUser(userId: "userId")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getUser(userId: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .get,
@@ -71,6 +99,20 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.listInvoices()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listInvoices(requestOptions: RequestOptions? = nil) async throws -> [Invoice] {
         return try await httpClient.performRequest(
             method: .get,
@@ -80,6 +122,20 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.getInvoice(invoiceId: "invoiceId")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getInvoice(invoiceId: String, requestOptions: RequestOptions? = nil) async throws -> Invoice {
         return try await httpClient.performRequest(
             method: .get,

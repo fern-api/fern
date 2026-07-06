@@ -9,6 +9,19 @@ public final class SubmissionClient: Sendable {
 
     /// Returns sessionId and execution server URL for session. Spins up server.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    /// 
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    /// 
+    ///     _ = try await client.submission.createExecutionSession(language: "JAVA")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createExecutionSession(language: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
         return try await httpClient.performRequest(
@@ -20,6 +33,19 @@ public final class SubmissionClient: Sendable {
     }
 
     /// Returns execution server URL for session. Returns empty if session isn't registered.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    /// 
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    /// 
+    ///     _ = try await client.submission.getExecutionSession(sessionId: "sessionId")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse? {
@@ -33,6 +59,19 @@ public final class SubmissionClient: Sendable {
 
     /// Stops execution session.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    /// 
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    /// 
+    ///     _ = try await client.submission.stopExecutionSession(sessionId: "sessionId")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func stopExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
@@ -42,6 +81,20 @@ public final class SubmissionClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    /// 
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    /// 
+    ///     _ = try await client.submission.getExecutionSessionsState()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getExecutionSessionsState(requestOptions: RequestOptions? = nil) async throws -> GetExecutionSessionStateResponse {
         return try await httpClient.performRequest(
             method: .get,

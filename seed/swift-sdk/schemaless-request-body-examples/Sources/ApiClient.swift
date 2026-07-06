@@ -55,6 +55,31 @@ public final class ApiClient: Sendable {
 
     /// Creates a plant with example JSON but no request body schema.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.createPlant(request: .object([
+    ///         "name": .string("Venus Flytrap"), 
+    ///         "species": .string("Dionaea muscipula"), 
+    ///         "care": .object([
+    ///             "light": .string("full sun"), 
+    ///             "water": .string("distilled only"), 
+    ///             "humidity": .string("high")
+    ///         ]), 
+    ///         "tags": .array([
+    ///             .string("carnivorous"),
+    ///             .string("tropical")
+    ///         ])
+    ///     ]))
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createPlant(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> CreatePlantResponse {
         return try await httpClient.performRequest(
@@ -68,6 +93,27 @@ public final class ApiClient: Sendable {
 
     /// Updates a plant with example JSON but no request body schema.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.updatePlant(
+    ///         plantId: "plantId",
+    ///         request: .object([
+    ///             "name": .string("Updated Venus Flytrap"), 
+    ///             "care": .object([
+    ///                 "light": .string("partial shade")
+    ///             ])
+    ///         ])
+    ///     )
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func updatePlant(plantId: String, request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> UpdatePlantResponse {
         return try await httpClient.performRequest(
@@ -80,6 +126,22 @@ public final class ApiClient: Sendable {
     }
 
     /// A control endpoint that has both schema and example defined.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.createPlantWithSchema(request: .init(
+    ///         name: "Sundew",
+    ///         species: "Drosera capensis"
+    ///     ))
+    /// }
+    /// 
+    /// try await main()
+    /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createPlantWithSchema(request: Requests.CreatePlantWithSchemaRequest, requestOptions: RequestOptions? = nil) async throws -> CreatePlantWithSchemaResponse {

@@ -53,6 +53,20 @@ public final class AliasClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Alias
+    /// 
+    /// private func main() async throws {
+    ///     let client = AliasClient()
+    /// 
+    ///     _ = try await client.get(typeId: "typeId")
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func get(typeId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,

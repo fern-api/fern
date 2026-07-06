@@ -7,6 +7,20 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import PlainText
+    /// 
+    /// private func main() async throws {
+    ///     let client = PlainTextClient()
+    /// 
+    ///     _ = try await client.service.getText()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getText(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
@@ -16,6 +30,20 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import PlainText
+    /// 
+    /// private func main() async throws {
+    ///     let client = PlainTextClient()
+    /// 
+    ///     _ = try await client.service.getCsv()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getCsv(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get,
@@ -25,6 +53,20 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import PlainText
+    /// 
+    /// private func main() async throws {
+    ///     let client = PlainTextClient()
+    /// 
+    ///     _ = try await client.service.getXml()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getXml(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get,

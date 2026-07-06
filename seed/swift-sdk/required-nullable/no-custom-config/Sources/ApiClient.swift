@@ -53,6 +53,27 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.getFoo(
+    ///         requiredBaz: "required_baz",
+    ///         requiredNullableBaz: .value("required_nullable_baz")
+    ///     )
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter optionalBaz: An optional baz
+    /// - Parameter optionalNullableBaz: An optional baz
+    /// - Parameter requiredBaz: A required baz
+    /// - Parameter requiredNullableBaz: A required baz
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getFoo(optionalBaz: String? = nil, optionalNullableBaz: Nullable<String>? = nil, requiredBaz: String, requiredNullableBaz: Nullable<String>, requestOptions: RequestOptions? = nil) async throws -> Foo {
         return try await httpClient.performRequest(
             method: .get,
@@ -68,6 +89,28 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    /// 
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    /// 
+    ///     _ = try await client.updateFoo(
+    ///         id: "id",
+    ///         xIdempotencyKey: "X-Idempotency-Key",
+    ///         request: .init(
+    ///             nullableText: .value("nullable_text"),
+    ///             nullableNumber: .value(1.1),
+    ///             nonNullableText: "non_nullable_text"
+    ///         )
+    ///     )
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func updateFoo(id: String, xIdempotencyKey: String, request: Requests.UpdateFooRequest, requestOptions: RequestOptions? = nil) async throws -> Foo {
         return try await httpClient.performRequest(
             method: .patch,

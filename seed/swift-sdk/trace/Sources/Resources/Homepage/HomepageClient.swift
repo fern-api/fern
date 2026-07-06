@@ -7,6 +7,20 @@ public final class HomepageClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    /// 
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    /// 
+    ///     _ = try await client.homepage.getHomepageProblems()
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemId] {
         return try await httpClient.performRequest(
             method: .get,
@@ -16,6 +30,23 @@ public final class HomepageClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    /// 
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    /// 
+    ///     _ = try await client.homepage.setHomepageProblems(request: [
+    ///         "string",
+    ///         "string"
+    ///     ])
+    /// }
+    /// 
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func setHomepageProblems(request: [ProblemId], requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
