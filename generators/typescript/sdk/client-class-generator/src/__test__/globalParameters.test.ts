@@ -114,6 +114,41 @@ describe("getGlobalParametersForEndpoint", () => {
             getGlobalParametersForEndpoint({ ir, endpoint, location: FernIr.GlobalParameterLocation.Query })
         ).toEqual([queryParam]);
     });
+
+    it("excludes globals not materialized as an option (reserved-name collision) when a context is given", () => {
+        // A global whose SDK name collides with a built-in option is neither emitted as a
+        // constructor option nor injected — otherwise it would read the built-in's value.
+        const injected = createGlobalParameter({
+            id: "language",
+            location: FernIr.GlobalParameterLocation.Query,
+            apply: FernIr.GlobalParameterApplyMode.Auto
+        });
+        const collides = createGlobalParameter({
+            id: "max-retries",
+            name: { wireValue: "max-retries", name: "maxRetries" },
+            location: FernIr.GlobalParameterLocation.Query,
+            apply: FernIr.GlobalParameterApplyMode.Auto
+        });
+        const ir = {
+            globalParameters: [injected, collides]
+        } as FernIr.IntermediateRepresentation;
+        // Only `language` is materialized; `max-retries` collided and was dropped.
+        const context = {
+            baseClient: {
+                getInjectableGlobalParameterIds: () => new Set<string>(["language"])
+            }
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal FileContext interface
+        } as any;
+
+        expect(
+            getGlobalParametersForEndpoint({
+                ir,
+                endpoint: createHttpEndpoint(),
+                location: FernIr.GlobalParameterLocation.Query,
+                context
+            })
+        ).toEqual([injected]);
+    });
 });
 
 describe("getResolvedGlobalParameterValueExpression", () => {

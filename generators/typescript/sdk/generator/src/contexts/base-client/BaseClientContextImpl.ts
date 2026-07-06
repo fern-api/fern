@@ -60,6 +60,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private basicAuthScheme: FernIr.BasicAuthScheme | undefined;
     private inferredAuthScheme: FernIr.InferredAuthScheme | undefined;
     private readonly authHeaders: FernIr.HeaderAuthScheme[];
+    private injectableGlobalParameterIds: Set<string> | undefined;
 
     constructor({
         intermediateRepresentation,
@@ -303,6 +304,9 @@ export class BaseClientContextImpl implements BaseClientContext {
                 hasEnvironmentOption: !this.requireDefaultEnvironment
             })
         ]);
+        // Recorded so request injection can be filtered by the exact same
+        // "materialized as an option" decision (see getInjectableGlobalParameterIds).
+        const injectableGlobalParameterIds = new Set<string>();
         for (const globalParameter of this.intermediateRepresentation.globalParameters ?? []) {
             // Path-location global parameters are not yet injected into requests (the target is a
             // declared path parameter that the caller still supplies), so we don't expose them as a
@@ -315,6 +319,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                 continue;
             }
             usedOptionNames.add(optionName);
+            injectableGlobalParameterIds.add(globalParameter.id);
             const type = context.type.getReferenceToType(globalParameter.valueType);
             properties.push({
                 kind: StructureKind.PropertySignature,
@@ -392,12 +397,24 @@ export class BaseClientContextImpl implements BaseClientContext {
             docs: ["Default options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."]
         });
 
+        this.injectableGlobalParameterIds = injectableGlobalParameterIds;
+
         return {
             kind: StructureKind.Interface,
             name: OPTIONS_INTERFACE_NAME,
             properties,
             isExported: true
         };
+    }
+
+    public getInjectableGlobalParameterIds(context: FileContext): ReadonlySet<string> {
+        if (this.injectableGlobalParameterIds == null) {
+            // Building the options interface computes and caches the set as a side
+            // effect, applying the exact same collision/path skip logic used for
+            // option emission. The result is deterministic per generation run.
+            this.generateBaseClientOptionsInterface(context);
+        }
+        return this.injectableGlobalParameterIds ?? new Set<string>();
     }
 
     private getBearerAuthOptionKey(bearerAuthScheme: FernIr.BearerAuthScheme): string {

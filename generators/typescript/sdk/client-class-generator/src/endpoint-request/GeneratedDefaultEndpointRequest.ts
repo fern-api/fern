@@ -241,7 +241,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         const bodyGlobalParameters = getGlobalParametersForEndpoint({
             ir: this.ir,
             endpoint: this.endpoint,
-            location: FernIr.GlobalParameterLocation.Body
+            location: FernIr.GlobalParameterLocation.Body,
+            context
         });
         if (bodyGlobalParameters.length === 0) {
             return body;
@@ -435,7 +436,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 globalQueryParameters: getGlobalParametersForEndpoint({
                     ir: this.ir,
                     endpoint: this.endpoint,
-                    location: FernIr.GlobalParameterLocation.Query
+                    location: FernIr.GlobalParameterLocation.Query,
+                    context
                 }).map((param) => ({
                     wireName: param.target,
                     value: getResolvedGlobalParameterValueExpressionForWire(param, context)

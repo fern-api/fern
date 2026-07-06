@@ -38,6 +38,11 @@ x-fern-global-parameters:
     type: integer
     default: 3
     optional: true
+    # `maxRetries` collides with a built-in client option, so it is neither
+    # exposed as a constructor option nor injected. `apply: auto` opts every
+    # endpoint in, proving injection is filtered by the same collision set
+    # (otherwise it would inject `this._options?.maxRetries` on the wire).
+    apply: auto
   - name: api-version
     in: query
     docs: The API version to use for the request.

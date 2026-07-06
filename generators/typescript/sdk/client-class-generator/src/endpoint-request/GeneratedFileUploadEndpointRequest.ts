@@ -434,7 +434,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 globalQueryParameters: getGlobalParametersForEndpoint({
                     ir: this.ir,
                     endpoint: this.endpoint,
-                    location: FernIr.GlobalParameterLocation.Query
+                    location: FernIr.GlobalParameterLocation.Query,
+                    context
                 }).map((param) => ({
                     wireName: param.target,
                     value: getResolvedGlobalParameterValueExpressionForWire(param, context)

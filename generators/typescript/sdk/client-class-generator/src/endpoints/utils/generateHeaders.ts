@@ -100,7 +100,8 @@ export function generateHeaders({
     for (const globalParameter of getGlobalParametersForEndpoint({
         ir: intermediateRepresentation,
         endpoint,
-        location: FernIr.GlobalParameterLocation.Header
+        location: FernIr.GlobalParameterLocation.Header,
+        context
     })) {
         elements.push({
             header: globalParameter.target,

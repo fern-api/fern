@@ -19,6 +19,8 @@ import path from "path";
 import { type Directory, ts } from "ts-morph";
 import { arrayOf, type Code, code, literalOf } from "ts-poet";
 
+import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
+
 import { BaseClientContextImpl } from "../contexts/base-client/BaseClientContextImpl.js";
 
 const DEFAULT_PACKAGE_PATH = "src";
@@ -1065,7 +1067,7 @@ export function ${functionName}(server: MockServer): void {
             if (param.location === FernIr.GlobalParameterLocation.Path) {
                 return;
             }
-            const sdkKey = this.case.camelUnsafe(param.name);
+            const sdkKey = endpointUtils.getSdkOptionKeyForGlobalParameter(param, this.case);
             if (sdkKey in baseOptions || reservedClientOptionNames.has(sdkKey)) {
                 return;
             }
@@ -1612,20 +1614,11 @@ describe("${serviceName}", () => {
         return code`"test"`;
     }
 
-    private globalParameterAppliesToEndpoint(param: FernIr.GlobalParameter, endpoint: FernIr.HttpEndpoint): boolean {
-        const apply = param.apply ?? FernIr.GlobalParameterApplyMode.Explicit;
-        return FernIr.GlobalParameterApplyMode._visit<boolean>(apply, {
-            auto: () => true,
-            explicit: () => (endpoint.globalParameters ?? []).includes(param.id),
-            _other: () => false
-        });
-    }
-
     private getGlobalParameterTestValue(
         param: FernIr.GlobalParameter,
         options: Record<string, Code>
     ): Code | undefined {
-        const sdkKey = this.case.camelUnsafe(param.name);
+        const sdkKey = endpointUtils.getSdkOptionKeyForGlobalParameter(param, this.case);
         const optionValue = options[sdkKey];
         if (optionValue != null) {
             return optionValue;
@@ -1666,7 +1659,7 @@ describe("${serviceName}", () => {
             if (param.location !== FernIr.GlobalParameterLocation.Body) {
                 continue;
             }
-            if (!this.globalParameterAppliesToEndpoint(param, endpoint)) {
+            if (!endpointUtils.globalParameterAppliesToEndpoint(param, endpoint)) {
                 continue;
             }
             const value = this.getGlobalParameterTestValue(param, options);

@@ -51,15 +51,29 @@ export function globalParameterAppliesToEndpoint(
 export function getGlobalParametersForEndpoint({
     ir,
     endpoint,
-    location
+    location,
+    context
 }: {
     ir: FernIr.IntermediateRepresentation;
     endpoint: FernIr.HttpEndpoint;
     location: FernIr.GlobalParameterLocation;
+    /**
+     * When provided, results are filtered to global parameters that are actually
+     * materialized as a client constructor option. A global whose SDK name
+     * collides with a reserved/declared option is not emitted as an option, so it
+     * must not be injected either (otherwise it would read the built-in option's
+     * value). Omit only in isolated unit tests that don't exercise collisions.
+     */
+    context?: FileContext;
 }): FernIr.GlobalParameter[] {
-    return getGlobalParameters(ir).filter(
+    const candidates = getGlobalParameters(ir).filter(
         (param) => param.location === location && globalParameterAppliesToEndpoint(param, endpoint)
     );
+    if (candidates.length === 0 || context == null) {
+        return candidates;
+    }
+    const injectableIds = context.baseClient.getInjectableGlobalParameterIds(context);
+    return candidates.filter((param) => injectableIds.has(param.id));
 }
 
 function createClientDefaultLiteral(value: string | boolean): ts.Expression {
