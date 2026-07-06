@@ -18,6 +18,7 @@ type SPMDetails = {
 export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: SwiftGeneratorAgent;
     private _dynamicSnippetsGenerator: DynamicSnippetsGenerator | undefined;
+    private readonly endpointSnippetsById = new Map<FernIr.EndpointId, string | undefined>();
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -74,13 +75,27 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
     }
 
     public getEndpointSnippet(endpoint: FernIr.HttpEndpoint): string | undefined {
-        const examples = this.ir.dynamic?.endpoints[endpoint.id]?.examples;
-        const example = selectExamplesForSnippets(examples)[0];
-        if (example == null) {
+        if (this.endpointSnippetsById.has(endpoint.id)) {
+            return this.endpointSnippetsById.get(endpoint.id);
+        }
+        const snippet = this.generateEndpointSnippet(endpoint);
+        this.endpointSnippetsById.set(endpoint.id, snippet);
+        return snippet;
+    }
+
+    private generateEndpointSnippet(endpoint: FernIr.HttpEndpoint): string | undefined {
+        try {
+            const examples = this.ir.dynamic?.endpoints[endpoint.id]?.examples;
+            const example = selectExamplesForSnippets(examples)[0];
+            if (example == null) {
+                return undefined;
+            }
+            const response = this.dynamicSnippetsGenerator.generateSync(convertDynamicEndpointSnippetRequest(example));
+            const snippet = response.snippet.trim();
+            return snippet !== "" ? snippet : undefined;
+        } catch (error) {
+            this.logger.debug(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
             return undefined;
         }
-        const response = this.dynamicSnippetsGenerator.generateSync(convertDynamicEndpointSnippetRequest(example));
-        const snippet = response.snippet.trim();
-        return snippet !== "" ? snippet : undefined;
     }
 }
