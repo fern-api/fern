@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.65.3
+  changelogEntry:
+    - summary: |
+        Fix relative .md/.mdx link resolution in translated documentation pages. Previously, translated pages passed an empty markdownFilesToPathName map, so relative markdown links (e.g., ../reference/support-matrix.md) were not resolved to their published slug URLs.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
 - version: 5.65.2
   changelogEntry:
     - summary: |
