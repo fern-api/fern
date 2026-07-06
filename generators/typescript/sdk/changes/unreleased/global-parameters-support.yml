@@ -5,5 +5,7 @@
     typed constructor options on every client and sub-client (`BaseClientOptions`) and injected
     into each applicable request at its declared wire location (header, query, or body). Per-call
     values take precedence over the client option, which in turn falls back to the client-side
-    default. Options whose name collides with a built-in client option are skipped.
+    default. A global parameter whose name collides with a built-in client option is skipped
+    (neither exposed nor injected), and the generator logs a warning so the collision can be
+    resolved in the spec.
   type: feat

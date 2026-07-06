@@ -61,6 +61,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private inferredAuthScheme: FernIr.InferredAuthScheme | undefined;
     private readonly authHeaders: FernIr.HeaderAuthScheme[];
     private injectableGlobalParameterIds: Set<string> | undefined;
+    private hasWarnedGlobalParameterCollisions = false;
 
     constructor({
         intermediateRepresentation,
@@ -307,6 +308,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         // Recorded so request injection can be filtered by the exact same
         // "materialized as an option" decision (see getInjectableGlobalParameterIds).
         const injectableGlobalParameterIds = new Set<string>();
+        const collidingGlobalParameters: { globalParameter: FernIr.GlobalParameter; optionName: string }[] = [];
         for (const globalParameter of this.intermediateRepresentation.globalParameters ?? []) {
             // Path-location global parameters are not yet injected into requests (the target is a
             // declared path parameter that the caller still supplies), so we don't expose them as a
@@ -316,6 +318,7 @@ export class BaseClientContextImpl implements BaseClientContext {
             }
             const optionName = getPropertyKey(this.case.camelUnsafe(globalParameter.name));
             if (usedOptionNames.has(optionName)) {
+                collidingGlobalParameters.push({ globalParameter, optionName });
                 continue;
             }
             usedOptionNames.add(optionName);
@@ -398,6 +401,22 @@ export class BaseClientContextImpl implements BaseClientContext {
         });
 
         this.injectableGlobalParameterIds = injectableGlobalParameterIds;
+
+        // Warn (once per generation) about global parameters we had to drop because their
+        // SDK-facing name collides with a built-in or already-declared client option. Such
+        // a global is neither exposed as a constructor option nor injected into requests, so
+        // the user must deconflict it in the spec (e.g. via `parameter-name`).
+        if (collidingGlobalParameters.length > 0 && !this.hasWarnedGlobalParameterCollisions) {
+            this.hasWarnedGlobalParameterCollisions = true;
+            for (const { globalParameter, optionName } of collidingGlobalParameters) {
+                context.logger.warn(
+                    `Global parameter "${globalParameter.id}" maps to client option "${optionName}", which collides ` +
+                        "with a built-in or already-declared client option. It will not be exposed as a constructor " +
+                        "option or injected into requests. Rename it in your spec (e.g. via `parameter-name`) to resolve " +
+                        "the collision."
+                );
+            }
+        }
 
         return {
             kind: StructureKind.Interface,
