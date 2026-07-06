@@ -931,10 +931,8 @@ export async function publishDocs({
                 await runLedgerPublish();
             } catch (error) {
                 const detail = formatLedgerError(error);
-                const hint =
-                    "\n\nIf this persists, set FERN_DOCS_DEPLOY_MODE=legacy in your environment to use the legacy publish path while the issue is investigated.";
                 return context.failAndThrow(
-                    "Failed to publish docs via ledger to " + domain + ": " + detail + hint,
+                    "Failed to publish docs via ledger to " + domain + ": " + detail,
                     error,
                     { code: CliError.Code.NetworkError }
                 );
