@@ -408,26 +408,29 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (!this.includePathParametersInEndpointSignature({ endpoint })) {
             return { requiredArguments: [], optionalArguments: [] };
         }
-        // Path parameters with a client default are optional in the generated signature and are
-        // placed after the request body, so their snippet arguments must be ordered the same way.
-        const pathParameterNamesWithClientDefault = new Set(
-            endpoint.allPathParameters
-                .filter((pathParam) => this.defaultValueExtractor.extractClientDefault(pathParam.clientDefault) != null)
-                .map((pathParam) => getOriginalName(pathParam.name))
+        // Build a lookup from parameter name to its example value so we can iterate
+        // in allPathParameters order (which matches the method signature) rather than
+        // the example concatenation order (root + service + endpoint), which may differ.
+        const examplesByName = new Map(
+            [
+                ...example.rootPathParameters,
+                ...example.servicePathParameters,
+                ...example.endpointPathParameters
+            ].map((param) => [getOriginalName(param.name), param])
         );
-        const pathParameters = [
-            ...example.rootPathParameters,
-            ...example.servicePathParameters,
-            ...example.endpointPathParameters
-        ];
         const requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         const optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
-        for (const pathParameter of pathParameters) {
+        for (const pathParam of endpoint.allPathParameters) {
+            const paramName = getOriginalName(pathParam.name);
+            const exampleParam = examplesByName.get(paramName);
+            if (exampleParam == null) {
+                continue;
+            }
             const snippet = this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: pathParameter.value,
+                exampleTypeReference: exampleParam.value,
                 parseDatetimes
             });
-            if (pathParameterNamesWithClientDefault.has(getOriginalName(pathParameter.name))) {
+            if (this.defaultValueExtractor.extractClientDefault(pathParam.clientDefault) != null) {
                 optionalArguments.push(snippet);
             } else {
                 requiredArguments.push(snippet);

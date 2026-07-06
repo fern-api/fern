@@ -1,0 +1,7 @@
+- summary: |
+    Fix path parameter argument ordering in generated snippets and WireMock tests.
+    Snippet arguments now follow endpoint.allPathParameters (URL) order instead of the
+    example concatenation order (root + service + endpoint), which could differ when
+    root or service path parameters are declared in a different YAML key order than
+    their URL order.
+  type: fix

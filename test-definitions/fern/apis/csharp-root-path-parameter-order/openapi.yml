@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: csharp-root-path-parameter-order
+  version: ""
+x-fern-base-path:
+  path: /{tenant}/api/{version}
+  paths-include-base-path: true
+  parameters:
+    version:
+      type: string
+      default: v1
+    tenant:
+      type: string
+      default: acme
+paths:
+  /{tenant}/api/{version}/widgets:
+    post:
+      operationId: widgets_create
+      tags:
+        - Widgets
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Widget"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+components:
+  schemas:
+    Widget:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+  securitySchemes: {}
