@@ -395,7 +395,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     docs: ["Additional query string parameters to include in the request."]
                 },
                 {
-                    name: endpointUtils.REQUEST_OPTIONS_ADDITIONAL_BODY_PROPERTIES_PROPERTY_NAME,
+                    name: endpointUtils.REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
                     type: "Record<string, unknown>",
                     hasQuestionToken: true,
                     docs: ["A dictionary containing additional parameters to spread into the request's body."]

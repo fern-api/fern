@@ -3,7 +3,7 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export const REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
 export const REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME = "queryParams";
-export const REQUEST_OPTIONS_ADDITIONAL_BODY_PROPERTIES_PROPERTY_NAME = "bodyProperties";
+export const REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME = "additionalBodyParameters";
 
 export const getRequestOptionsParameter = ({
     requestOptionsReference

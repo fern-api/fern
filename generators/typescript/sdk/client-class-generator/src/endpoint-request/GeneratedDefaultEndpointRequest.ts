@@ -15,7 +15,7 @@ import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
-    REQUEST_OPTIONS_ADDITIONAL_BODY_PROPERTIES_PROPERTY_NAME,
+    REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../endpoints/utils/requestOptionsParameter.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
@@ -277,28 +277,32 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             referenceToRequestBody,
             context
         );
-        return this.mergeAdditionalBodyProperties(serializedRequestBody, context);
+        return this.mergeAdditionalBodyParameters(serializedRequestBody, context);
     }
 
     /**
-     * Wraps the serialized request body so that caller-supplied `requestOptions.bodyProperties`
+     * Wraps the serialized request body so that caller-supplied `requestOptions.additionalBodyParameters`
      * are spread on top of the endpoint body (per-call properties win). When the option is absent
      * at runtime the helper returns the body unchanged, so this is a no-op for callers that don't
      * use it. Only emitted for endpoints that carry a body, so bodyless requests are never
      * fabricated into an object.
      */
-    private mergeAdditionalBodyProperties(body: ts.Expression, context: FileContext): ts.Expression {
+    private mergeAdditionalBodyParameters(body: ts.Expression, context: FileContext): ts.Expression {
         context.importsManager.addImportFromRoot("core/requestBody", {
-            namedImports: ["mergeBodyProperties"]
+            namedImports: ["mergeAdditionalBodyParameters"]
         });
-        return ts.factory.createCallExpression(ts.factory.createIdentifier("mergeBodyProperties"), undefined, [
-            body,
-            ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_BODY_PROPERTIES_PROPERTY_NAME)
-            )
-        ]);
+        return ts.factory.createCallExpression(
+            ts.factory.createIdentifier("mergeAdditionalBodyParameters"),
+            undefined,
+            [
+                body,
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME)
+                )
+            ]
+        );
     }
 
     private getSerializedRequestBodyWithoutNullCheck(

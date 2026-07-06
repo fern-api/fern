@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { mergeBodyProperties } from "../../../../core/requestBody.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import * as environments from "../../../../environments.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as SeedTrace from "../../../index.js";
@@ -82,12 +82,12 @@ export class PlaylistClient {
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.PlaylistCreateRequest.jsonOrThrow(_body, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -371,12 +371,12 @@ export class PlaylistClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

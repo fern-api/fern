@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { mergeBodyProperties } from "../../../../core/requestBody.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
@@ -46,7 +46,7 @@ export class DummyClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 {
                     ...serializers.GenerateStreamRequest.jsonOrThrow(request, {
                         unrecognizedObjectKeys: "strip",
@@ -54,7 +54,7 @@ export class DummyClient {
                     }),
                     stream: true,
                 },
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             responseType: "streaming",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -129,7 +129,7 @@ export class DummyClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 {
                     ...serializers.Generateequest.jsonOrThrow(request, {
                         unrecognizedObjectKeys: "strip",
@@ -137,7 +137,7 @@ export class DummyClient {
                     }),
                     stream: false,
                 },
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

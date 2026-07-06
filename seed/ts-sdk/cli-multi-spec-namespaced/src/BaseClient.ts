@@ -45,7 +45,7 @@ export interface BaseRequestOptions {
     /** Additional query string parameters to include in the request. */
     queryParams?: Record<string, unknown>;
     /** A dictionary containing additional parameters to spread into the request's body. */
-    bodyProperties?: Record<string, unknown>;
+    additionalBodyParameters?: Record<string, unknown>;
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** Options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints. */

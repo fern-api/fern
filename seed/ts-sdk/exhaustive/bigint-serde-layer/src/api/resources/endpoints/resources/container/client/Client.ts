@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import { mergeBodyProperties } from "../../../../../../core/requestBody.js";
+import { mergeAdditionalBodyParameters } from "../../../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
@@ -58,12 +58,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -142,12 +142,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -214,12 +214,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -291,12 +291,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -365,12 +365,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -441,12 +441,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -525,12 +525,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Request.jsonOrThrow(
                     request,
                     { unrecognizedObjectKeys: "strip", omitUndefined: true },
                 ),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -602,12 +602,12 @@ export class ContainerClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

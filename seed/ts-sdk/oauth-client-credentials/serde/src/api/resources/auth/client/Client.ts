@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { mergeBodyProperties } from "../../../../core/requestBody.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
@@ -57,7 +57,7 @@ export class AuthClient {
             contentType: "application/x-www-form-urlencoded",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "form",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 {
                     ...serializers.GetTokenRequest.jsonOrThrow(request, {
                         unrecognizedObjectKeys: "strip",
@@ -66,7 +66,7 @@ export class AuthClient {
                     audience: "https://api.example.com",
                     grant_type: "client_credentials",
                 },
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -133,7 +133,7 @@ export class AuthClient {
             contentType: "application/x-www-form-urlencoded",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "form",
-            body: mergeBodyProperties(
+            body: mergeAdditionalBodyParameters(
                 {
                     ...serializers.RefreshTokenRequest.jsonOrThrow(request, {
                         unrecognizedObjectKeys: "strip",
@@ -142,7 +142,7 @@ export class AuthClient {
                     audience: "https://api.example.com",
                     grant_type: "refresh_token",
                 },
-                requestOptions?.bodyProperties,
+                requestOptions?.additionalBodyParameters,
             ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

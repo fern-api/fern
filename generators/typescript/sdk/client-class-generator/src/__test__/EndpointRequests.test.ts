@@ -633,7 +633,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
             expect(args.requestType).toBe("json");
         });
 
-        it("spreads requestOptions.bodyProperties on top of an inlined request body", () => {
+        it("spreads requestOptions.additionalBodyParameters on top of an inlined request body", () => {
             const sdkRequest = createSdkRequestWrapper();
             const inlinedBody = createInlinedRequestBody({
                 properties: [createInlinedRequestBodyProperty("name", STRING_TYPE)]
@@ -658,11 +658,11 @@ describe("GeneratedDefaultEndpointRequest", () => {
             const args = request.getFetcherRequestArgs(context);
             assert(args.body != null, "body should not be null");
             expect(getTextOfTsNode(args.body)).toBe(
-                "mergeBodyProperties(serializers.TestRequest.jsonOrThrow(request), requestOptions?.bodyProperties)"
+                "mergeAdditionalBodyParameters(serializers.TestRequest.jsonOrThrow(request), requestOptions?.additionalBodyParameters)"
             );
         });
 
-        it("spreads requestOptions.bodyProperties on top of a reference request body", () => {
+        it("spreads requestOptions.additionalBodyParameters on top of a reference request body", () => {
             const sdkRequest = createSdkRequestBody();
             const referenceBody = FernIr.HttpRequestBody.reference({
                 requestBodyType: STRING_TYPE,
@@ -687,7 +687,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
             const args = request.getFetcherRequestArgs(context);
             assert(args.body != null, "body should not be null");
             expect(getTextOfTsNode(args.body)).toBe(
-                "mergeBodyProperties(serializers.testEndpoint.Request.jsonOrThrow(request), requestOptions?.bodyProperties)"
+                "mergeAdditionalBodyParameters(serializers.testEndpoint.Request.jsonOrThrow(request), requestOptions?.additionalBodyParameters)"
             );
         });
 

@@ -1,14 +1,18 @@
 /**
- * Spreads caller-supplied `bodyProperties` (from `requestOptions.bodyProperties`) on top of the
- * request body. Caller-supplied properties win over the endpoint body. When no additional body
- * properties are provided, the original body is returned unchanged so serialization is unaffected.
+ * Spreads caller-supplied `additionalBodyParameters` (from `requestOptions.additionalBodyParameters`)
+ * on top of the request body. Caller-supplied properties win over the endpoint body. When no
+ * additional body parameters are provided, the original body is returned unchanged so serialization
+ * is unaffected.
  */
-export function mergeBodyProperties(body: unknown, bodyProperties: Record<string, unknown> | undefined): unknown {
-    if (bodyProperties == null) {
+export function mergeAdditionalBodyParameters(
+    body: unknown,
+    additionalBodyParameters: Record<string, unknown> | undefined,
+): unknown {
+    if (additionalBodyParameters == null) {
         return body;
     }
     if (typeof body === "object" && body != null) {
-        return { ...body, ...bodyProperties };
+        return { ...body, ...additionalBodyParameters };
     }
-    return { ...bodyProperties };
+    return { ...additionalBodyParameters };
 }
