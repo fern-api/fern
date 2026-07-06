@@ -6,6 +6,7 @@ import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { getEndpointRequest } from "../utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { getInlinedPathParameterNames } from "../utils/pathParameterNaming.js";
 import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
 
 export declare namespace HttpEndpointGenerator {
@@ -401,7 +402,8 @@ export class HttpEndpointGenerator {
         const defaultExtractor = new DefaultValueExtractor(this.context);
         for (const pathParam of endpoint.allPathParameters) {
             const parameterName = this.getPathParameterName({
-                pathParameter: pathParam
+                pathParameter: pathParam,
+                endpoint
             });
             const clientDefault = defaultExtractor.extractClientDefault(pathParam.clientDefault);
             if (clientDefault != null) {
@@ -414,8 +416,18 @@ export class HttpEndpointGenerator {
         return pathParameterReferences;
     }
 
-    private getPathParameterName({ pathParameter }: { pathParameter: FernIr.PathParameter }): string {
-        return this.case.snakeSafe(pathParameter.name);
+    private getPathParameterName({
+        pathParameter,
+        endpoint
+    }: {
+        pathParameter: FernIr.PathParameter;
+        endpoint: FernIr.HttpEndpoint;
+    }): string {
+        return getInlinedPathParameterNames({
+            pathParameter,
+            endpoint,
+            caseConverter: this.case
+        }).attributeName;
     }
 
     private loadResponseBodyFromJson({
@@ -465,7 +477,7 @@ export class HttpEndpointGenerator {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
-            const paramName = this.case.snakeSafe(pathParam.name);
+            const paramName = this.getPathParameterName({ pathParameter: pathParam, endpoint });
             const typeString = this.typeReferenceToYardString(pathParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }

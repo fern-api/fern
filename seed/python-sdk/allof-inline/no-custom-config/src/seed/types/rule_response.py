@@ -17,21 +17,37 @@ class RuleResponse(UniversalBaseModel):
         FieldMetadata(alias="createdBy"),
         pydantic.Field(alias="createdBy", description="The user who created this resource."),
     ] = None
+    """
+    The user who created this resource.
+    """
+
     created_date_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="createdDateTime"),
         pydantic.Field(alias="createdDateTime", description="When this resource was created."),
     ] = None
+    """
+    When this resource was created.
+    """
+
     modified_by: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="modifiedBy"),
         pydantic.Field(alias="modifiedBy", description="The user who last modified this resource."),
     ] = None
+    """
+    The user who last modified this resource.
+    """
+
     modified_date_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="modifiedDateTime"),
         pydantic.Field(alias="modifiedDateTime", description="When this resource was last modified."),
     ] = None
+    """
+    When this resource was last modified.
+    """
+
     id: str
     name: str
     status: RuleResponseStatus

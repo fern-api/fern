@@ -33,6 +33,7 @@ import express from "express";
 import fs from "fs";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
+import os from "os";
 import path from "path";
 import { type Duplex } from "stream";
 import { WebSocket, WebSocketServer } from "ws";
@@ -43,6 +44,7 @@ import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from ".
 import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
+import { GenerationFileManager, isContentOnlyEdit } from "./reloadUtils.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -728,7 +730,7 @@ export async function runAppPreviewServer({
 
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
-    const RELOAD_DEBOUNCE_MS = 1000;
+    const RELOAD_DEBOUNCE_MS = 500;
 
     /**
      * Computes translated definitions for each locale.
@@ -951,6 +953,11 @@ export async function runAppPreviewServer({
         return translations;
     }
 
+    // Generation counter backed by a temp file so the Next.js process can
+    // detect stale cache entries without an HTTP round-trip.
+    const genFilePath = path.join(os.tmpdir(), `fern-docs-dev-gen-${backendPort}`);
+    const generationManager = new GenerationFileManager(genFilePath);
+
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
@@ -964,22 +971,25 @@ export async function runAppPreviewServer({
             // Rebuild dependency map after reloading project
             await snippetTracker.buildDependencyMap(project);
 
-            // Start validation in background - don't block the reload
-            const validationStartTime = Date.now();
-            void validateProject(project)
-                .then(() => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, true);
-                })
-                .catch((err) => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
-                    // Still log validation errors to help developers
-                    if (err instanceof Error && err.stack) {
-                        context.logger.debug(`Validation error stack: ${err.stack}`);
-                    }
-                });
+            if (!isContentOnlyEdit(editedAbsoluteFilepaths)) {
+                // Start validation in background - don't block the reload
+                const validationStartTime = Date.now();
+                void validateProject(project)
+                    .then(() => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, true);
+                    })
+                    .catch((err) => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, false);
+                        context.logger.error(
+                            `Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`
+                        );
+                        if (err instanceof Error && err.stack) {
+                            context.logger.debug(`Validation error stack: ${err.stack}`);
+                        }
+                    });
+            }
 
             const docsGenStartTime = Date.now();
             const newPreviewResult = await getPreviewDocsDefinition({
@@ -1202,6 +1212,7 @@ export async function runAppPreviewServer({
         NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
         NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         NEXT_PUBLIC_IS_LOCAL: "1",
+        FERN_DOCS_DEV_GEN_FILE: genFilePath,
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
@@ -1356,6 +1367,8 @@ export async function runAppPreviewServer({
                             context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
 
+                        await generationManager.increment();
+
                         sendData({
                             version: 1,
                             type: "finishReload"
@@ -1375,6 +1388,8 @@ export async function runAppPreviewServer({
                             });
                         }
                     } else {
+                        await generationManager.increment();
+
                         sendData({
                             version: 1,
                             type: "finishReload"
@@ -1382,6 +1397,8 @@ export async function runAppPreviewServer({
                     }
                 } catch (err) {
                     context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
+                    await generationManager.increment();
+
                     sendData({
                         version: 1,
                         type: "finishReload"

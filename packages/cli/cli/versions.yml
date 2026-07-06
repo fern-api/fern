@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.65.2
+  changelogEntry:
+    - summary: |
+        Improve error messages when ledger docs publishing fails: surface the
+        server-side validation issues (field paths and messages) so the exact
+        failing field is visible without needing server-side log access.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 5.65.1
+  changelogEntry:
+    - summary: |
+        Improve `fern docs dev` reload performance for content edits (35s → 4-5s).
+        Reduces debounce from 1000ms to 300ms, skips background validation for
+        markdown-only changes, and writes a generation counter file for the docs
+        bundle to detect stale cache entries without HTTP round-trips.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
 - version: 5.65.0
   changelogEntry:
     - summary: |

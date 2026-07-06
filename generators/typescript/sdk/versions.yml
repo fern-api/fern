@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.77.2
+  changelogEntry:
+    - summary: |
+        Fix ESM spec violations for extensionless imports in generated SDKs. The
+        `rename-to-esm-files.js` script now resolves bare directory imports
+        (e.g. `from "./oauth"` → `from "./oauth/index.mjs"`) and extensionless
+        file imports (e.g. `from "./client"` → `from "./client.mjs"`), which
+        previously broke Node's ESM loader and Turbopack (Next 16). Also sets
+        `moduleResolution: "bundler"` in `tsconfig.esm.json` for correct ESM
+        semantics.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 3.77.1
+  changelogEntry:
+    - summary: |
+        When an inlined path parameter (`inlinePathParameters: true`) shares its property name with an
+        inlined request-body property (e.g. a `{idType}` path parameter and an `idType` body field),
+        the request wrapper now keeps both fields by renaming the path parameter with a `PathParam`
+        suffix (e.g. `idTypePathParam`). Previously the two values were collapsed into a single shared
+        field, which made it impossible to send different values for the URL path and the request body.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
 - version: 3.77.0
   changelogEntry:
     - summary: |

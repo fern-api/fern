@@ -4,6 +4,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { generateFields } from "@fern-api/ruby-model";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getInlinedPathParameterNames } from "../endpoint/utils/pathParameterNaming.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -37,12 +38,22 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         });
 
         for (const pathParameter of this.endpoint.allPathParameters) {
+            const { attributeName, wireName, isRenamed } = getInlinedPathParameterNames({
+                pathParameter,
+                endpoint: this.endpoint,
+                caseConverter: this.case
+            });
             properties.push({
                 ...pathParameter,
-                name: {
-                    name: pathParameter.name,
-                    wireValue: getOriginalName(pathParameter.name)
-                },
+                name: isRenamed
+                    ? {
+                          name: attributeName,
+                          wireValue: wireName
+                      }
+                    : {
+                          name: pathParameter.name,
+                          wireValue: getOriginalName(pathParameter.name)
+                      },
                 propertyAccess: undefined,
                 availability: undefined
             });
