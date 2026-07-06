@@ -1,0 +1,69 @@
+{
+  "mappings": [
+    {
+      "id": "871f98dc-4884-4a4a-88a6-c5ddc3e7ca12",
+      "name": "update - default",
+      "request": {
+        "urlPathTemplate": "/identifiers/{idType}",
+        "method": "PATCH",
+        "pathParameters": {
+          "idType": {
+            "equalTo": "phone"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"idType\": \"phone\",\n  \"oldValue\": \"+13175556789\",\n  \"newValue\": \"+13175556798\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "871f98dc-4884-4a4a-88a6-c5ddc3e7ca12",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b29b7a6c-5b6d-429f-8861-ebe3e43528a6",
+      "name": "patchMetadata - default",
+      "request": {
+        "urlPathTemplate": "/identifiers/{idType}/metadata",
+        "method": "PATCH",
+        "pathParameters": {
+          "idType": {
+            "equalTo": "phone"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"idType\": \"phone\",\n  \"oldValue\": \"+13175556789\",\n  \"newValue\": \"+13175556798\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b29b7a6c-5b6d-429f-8861-ebe3e43528a6",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 2
+  }
+}

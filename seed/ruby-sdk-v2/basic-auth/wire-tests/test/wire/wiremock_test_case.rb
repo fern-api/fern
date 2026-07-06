@@ -74,7 +74,7 @@ class WireMockTestCase < Minitest::Test
     requests = result["requests"] || []
 
     refute_empty requests, "No requests found for test_id #{test_id}"
-    actual_header = requests.first.dig("request", "headers", "Authorization")
+    actual_header = requests.first.dig("headers", "Authorization")
 
     assert_equal expected_value, actual_header, "Expected Authorization header '#{expected_value}', got '#{actual_header}'"
   end
