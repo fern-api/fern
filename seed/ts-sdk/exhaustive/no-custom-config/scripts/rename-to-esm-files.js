@@ -45,10 +45,15 @@ async function updateFiles(files) {
     console.log(`Updated imports in ${updatedFiles.length} files.`);
 }
 
+const KNOWN_EXTENSIONS = new Set([".js", ".mjs", ".cjs", ".jsx", ".json", ".ts", ".mts", ".cts", ".tsx", ".node"]);
+
 function hasFileExtension(importPath) {
     const basename = path.basename(importPath);
     const dotIndex = basename.lastIndexOf(".");
-    return dotIndex > 0;
+    if (dotIndex <= 0) {
+        return false;
+    }
+    return KNOWN_EXTENSIONS.has(basename.slice(dotIndex).toLowerCase());
 }
 
 function resolveExtensionlessImport(dir, importPath) {
@@ -95,7 +100,7 @@ async function updateFileContents(file) {
             staticReplacements.push({
                 start: match.index,
                 end: match.index + match[0].length,
-                replacement: `${match[1]}${match[2].replace(importPath, resolved)}${match[4]}`,
+                replacement: `${match[1]}${match[2]}${resolved}${match[4]}`,
             });
         }
     }
@@ -104,7 +109,7 @@ async function updateFileContents(file) {
     }
 
     // Handle extensionless dynamic imports
-    const dynamicExtensionless = /(yield\s+import|await\s+import|import)\s*\(\s*['"](\.\.\/?\/[^'"]+?)['"]\s*\)/g;
+    const dynamicExtensionless = /(yield\s+import|await\s+import|import)\s*\(\s*['"](\.\.?\/[^'"]+?)['"]\s*\)/g;
     const dynamicReplacements = [];
     while ((match = dynamicExtensionless.exec(newContent)) !== null) {
         const importPath = match[2];
