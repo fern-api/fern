@@ -14,12 +14,11 @@ import {
     type Reference
 } from "@fern-typescript/commons";
 import type { FileContext, GeneratedSdkClientClass } from "@fern-typescript/contexts";
+import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
 import { camelCase, upperFirst } from "lodash-es";
 import path from "path";
 import { type Directory, ts } from "ts-morph";
 import { arrayOf, type Code, code, literalOf } from "ts-poet";
-
-import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
 
 import { BaseClientContextImpl } from "../contexts/base-client/BaseClientContextImpl.js";
 
