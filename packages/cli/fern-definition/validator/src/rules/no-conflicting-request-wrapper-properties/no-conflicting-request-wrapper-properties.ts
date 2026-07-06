@@ -1,6 +1,11 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
-import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
+import {
+    DefinitionFileSchema,
+    isInlineRequestBody,
+    isVariablePathParameter,
+    RawSchemas
+} from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     constructFernFileContext,
@@ -8,6 +13,7 @@ import {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     doesRequestHaveNonBodyProperties,
     getAllPropertiesForObject,
+    getEndpointPathParameters,
     getHeaderName,
     getQueryParameterName,
     ObjectPropertyWithPath,
@@ -66,6 +72,8 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
 
 type RequestWrapperProperty =
     | ServiceHeaderRequestWrapperProperty
+    | ServicePathParameterRequestWrapperProperty
+    | EndpointPathParameterRequestWrapperProperty
     | EndpointQueryParameterRequestWrapperProperty
     | EndpointHeaderRequestWrapperProperty
     | InlinedBodyRequestWrapperProperty
@@ -75,6 +83,16 @@ interface ServiceHeaderRequestWrapperProperty {
     type: "service-header";
     headerKey: string;
     header: RawSchemas.HttpHeaderSchema;
+}
+
+interface ServicePathParameterRequestWrapperProperty {
+    type: "service-path-parameter";
+    pathParameterKey: string;
+}
+
+interface EndpointPathParameterRequestWrapperProperty {
+    type: "endpoint-path-parameter";
+    pathParameterKey: string;
 }
 
 interface EndpointQueryParameterRequestWrapperProperty {
@@ -140,6 +158,28 @@ function getRequestWrapperPropertiesByName({
         }
     }
 
+    if (service["path-parameters"] != null) {
+        for (const [pathParameterKey, pathParameter] of Object.entries(service["path-parameters"])) {
+            if (isVariablePathParameter(pathParameter)) {
+                continue;
+            }
+            addProperty(pathParameterKey, {
+                type: "service-path-parameter",
+                pathParameterKey
+            });
+        }
+    }
+
+    for (const [pathParameterKey, pathParameter] of Object.entries(getEndpointPathParameters(endpoint))) {
+        if (isVariablePathParameter(pathParameter)) {
+            continue;
+        }
+        addProperty(pathParameterKey, {
+            type: "endpoint-path-parameter",
+            pathParameterKey
+        });
+    }
+
     if (service.headers != null) {
         for (const [headerKey, header] of Object.entries(service.headers)) {
             addProperty(getHeaderName({ headerKey, header }).name, {
@@ -201,6 +241,10 @@ function convertRequestWrapperPropertyToString(property: RequestWrapperProperty)
     switch (property.type) {
         case "service-header":
             return `Service header "${property.headerKey}"`;
+        case "service-path-parameter":
+            return `Service path parameter "${property.pathParameterKey}"`;
+        case "endpoint-path-parameter":
+            return `Path parameter "${property.pathParameterKey}"`;
         case "endpoint-header":
             return `Endpoint header "${property.headerKey}"`;
         case "endpoint-query-parameter":
