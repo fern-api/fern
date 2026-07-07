@@ -1,0 +1,5 @@
+- summary: |
+    Add a `timeout` config option as an alias for `timeout_in_seconds`. Both keys
+    are in seconds and `timeout_in_seconds` continues to work, with `timeout`
+    taking precedence when both are set.
+  type: feat
