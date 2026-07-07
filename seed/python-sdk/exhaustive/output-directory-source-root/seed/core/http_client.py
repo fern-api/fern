@@ -313,11 +313,10 @@ class HttpClient:
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout", request_options.get("timeout_in_seconds"))
-            if request_options is not None
-            and (
-                request_options.get("timeout") is not None or request_options.get("timeout_in_seconds") is not None
-            )
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
         timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
@@ -477,11 +476,10 @@ class HttpClient:
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout", request_options.get("timeout_in_seconds"))
-            if request_options is not None
-            and (
-                request_options.get("timeout") is not None or request_options.get("timeout_in_seconds") is not None
-            )
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
         timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
@@ -610,11 +608,10 @@ class AsyncHttpClient:
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout", request_options.get("timeout_in_seconds"))
-            if request_options is not None
-            and (
-                request_options.get("timeout") is not None or request_options.get("timeout_in_seconds") is not None
-            )
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
         timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
@@ -777,11 +774,10 @@ class AsyncHttpClient:
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout", request_options.get("timeout_in_seconds"))
-            if request_options is not None
-            and (
-                request_options.get("timeout") is not None or request_options.get("timeout_in_seconds") is not None
-            )
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
         timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT

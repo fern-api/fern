@@ -1,4 +1,4 @@
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Tuple, cast
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import httpx
@@ -734,6 +734,14 @@ def test_sync_request_options_timeout_falls_back_to_base() -> None:
     http_client, dummy_client = _sync_client_with_base_timeout(60)
     http_client.request(path="/test", method="GET", request_options=None)
     assert dummy_client.last_request_kwargs["timeout"] == 60
+
+
+def test_sync_request_options_timeout_none_falls_back_to_deprecated() -> None:
+    """An explicit `timeout=None` (dynamic caller) falls back to the deprecated `timeout_in_seconds`."""
+    http_client, dummy_client = _sync_client_with_base_timeout(60)
+    request_options = cast(RequestOptions, {"timeout": None, "timeout_in_seconds": 45})
+    http_client.request(path="/test", method="GET", request_options=request_options)
+    assert dummy_client.last_request_kwargs["timeout"] == 45
 
 
 @pytest.mark.asyncio
