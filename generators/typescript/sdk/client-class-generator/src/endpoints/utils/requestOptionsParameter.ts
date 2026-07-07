@@ -18,17 +18,24 @@ export const getRequestOptionsParameter = ({
 };
 
 export const getTimeoutExpression = ({
-    defaultTimeoutInSeconds,
+    defaultTimeout,
     timeoutInSecondsReference,
     referenceToOptions
 }: {
-    defaultTimeoutInSeconds: number | "infinity" | undefined;
+    /** Effective default timeout in milliseconds (`"infinity"` disables it). */
+    defaultTimeout: number | "infinity" | undefined;
     timeoutInSecondsReference: (args: {
         referenceToRequestOptions: ts.Expression;
         isNullable: boolean;
     }) => ts.Expression;
     referenceToOptions: ts.Expression;
 }): ts.Expression => {
+    // The generated SDK's runtime timeout option is expressed in seconds and multiplied by 1000
+    // at the call site, so convert the resolved millisecond default back into seconds for the
+    // emitted literal. This keeps generated output identical to the seconds-based config.
+    const defaultTimeoutInSeconds =
+        defaultTimeout === "infinity" ? "infinity" : defaultTimeout != null ? defaultTimeout / 1000 : undefined;
+
     const requestOptionsTimeout = timeoutInSecondsReference({
         referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
         isNullable: true

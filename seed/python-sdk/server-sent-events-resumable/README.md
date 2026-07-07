@@ -158,7 +158,7 @@ client = SeedServerSentEventsResumable(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.completions.stream(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

@@ -165,7 +165,7 @@ function createImpl(opts?: {
     request?: GeneratedEndpointRequest;
     response?: GeneratedEndpointResponse;
     includeCredentialsOnCrossOriginRequests?: boolean;
-    defaultTimeoutInSeconds?: number | "infinity" | undefined;
+    defaultTimeout?: number | "infinity" | undefined;
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
     omitUndefined?: boolean;
@@ -182,7 +182,7 @@ function createImpl(opts?: {
         response: opts?.response ?? createMockResponse(),
         generatedSdkClientClass: opts?.generatedSdkClientClass ?? createMockClientClass(),
         includeCredentialsOnCrossOriginRequests: opts?.includeCredentialsOnCrossOriginRequests ?? false,
-        defaultTimeoutInSeconds: opts?.defaultTimeoutInSeconds,
+        defaultTimeout: opts?.defaultTimeout,
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,

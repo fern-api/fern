@@ -1,4 +1,34 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.65.8
+  changelogEntry:
+    - summary: |
+        Docs configs with a `path` input library no longer crash `fern docs dev` and
+        `fern generate --docs`. `parseLibrariesConfiguration` now accepts both `git`
+        and `path` library inputs instead of throwing on `path`, so a site whose
+        library docs were generated locally with `fern docs md generate --local` can
+        be previewed and published.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.7
+  changelogEntry:
+    - summary: |
+        `fern check` now fails when `docs.yml` contains both `navigation` and `products`.
+        These are mutually exclusive (as `navigation` and `versions` already were): in a
+        multi-product site the navigation lives in each product's referenced file, so a
+        top-level `navigation` block silently overrides the products and renders empty
+        navigation.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.6
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/generator-cli` to 0.9.44 so every local-only commit is signed
+        when pushing to GitHub, not just HEAD.
+      type: chore
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 5.65.5
   changelogEntry:
     - summary: |

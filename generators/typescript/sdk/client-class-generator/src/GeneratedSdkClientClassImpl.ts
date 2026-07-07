@@ -68,7 +68,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeout: number | "infinity" | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -142,7 +142,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         allowCustomFetcher,
         generateWebSocketClients,
         requireDefaultEnvironment,
-        defaultTimeoutInSeconds,
+        defaultTimeout,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -257,7 +257,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         response: getGeneratedEndpointResponse({ response }),
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
-                        defaultTimeoutInSeconds,
+                        defaultTimeout,
                         includeSerdeLayer,
                         retainOriginalCasing: this.retainOriginalCasing,
                         omitUndefined: this.omitUndefined,
@@ -276,7 +276,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.fileDownload(fileDownload)
@@ -302,7 +302,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.streaming(streamingResponse)
                             }),
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -322,7 +322,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.streaming(streamParameter.streamResponse)
                             }),
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -341,7 +341,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
-                            defaultTimeoutInSeconds,
+                            defaultTimeout,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
                                 response: FernIr.HttpResponseBody.bytes(bytesResponse)

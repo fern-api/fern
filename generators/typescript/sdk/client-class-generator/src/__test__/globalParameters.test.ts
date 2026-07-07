@@ -65,22 +65,22 @@ describe("getSdkOptionKeyForGlobalParameter", () => {
 });
 
 describe("globalParameterAppliesToEndpoint", () => {
-    it("applies auto parameters to every endpoint", () => {
-        const param = createGlobalParameter({ id: "currency", apply: FernIr.GlobalParameterApplyMode.Auto });
-        expect(globalParameterAppliesToEndpoint(param, createHttpEndpoint())).toBe(true);
-    });
-
-    it("applies explicit parameters only when the endpoint opts in", () => {
-        const param = createGlobalParameter({ id: "currency", apply: FernIr.GlobalParameterApplyMode.Explicit });
-        expect(globalParameterAppliesToEndpoint(param, createHttpEndpoint())).toBe(false);
+    // Applicability is resolved at IR-generation time, so the generator is a pure
+    // membership check against the endpoint's resolved `globalParameters` set —
+    // `apply` mode is no longer consulted here.
+    it("applies when the parameter id is in the endpoint's resolved set", () => {
+        const param = createGlobalParameter({ id: "currency" });
         expect(globalParameterAppliesToEndpoint(param, createHttpEndpoint({ globalParameters: ["currency"] }))).toBe(
             true
         );
     });
 
-    it("defaults to explicit when apply is not specified", () => {
+    it("does not apply when the parameter id is absent from the resolved set", () => {
         const param = createGlobalParameter({ id: "currency" });
         expect(globalParameterAppliesToEndpoint(param, createHttpEndpoint())).toBe(false);
+        expect(globalParameterAppliesToEndpoint(param, createHttpEndpoint({ globalParameters: ["language"] }))).toBe(
+            false
+        );
     });
 });
 
@@ -88,28 +88,26 @@ describe("getGlobalParametersForEndpoint", () => {
     it("filters by location and applicability", () => {
         const headerParam = createGlobalParameter({
             id: "x-custom-header",
-            location: FernIr.GlobalParameterLocation.Header,
-            apply: FernIr.GlobalParameterApplyMode.Auto
+            location: FernIr.GlobalParameterLocation.Header
         });
         const queryParam = createGlobalParameter({
             id: "language",
-            location: FernIr.GlobalParameterLocation.Query,
-            apply: FernIr.GlobalParameterApplyMode.Auto
+            location: FernIr.GlobalParameterLocation.Query
         });
-        const explicitQueryParam = createGlobalParameter({
+        const excludedQueryParam = createGlobalParameter({
             id: "verbose",
-            location: FernIr.GlobalParameterLocation.Query,
-            apply: FernIr.GlobalParameterApplyMode.Explicit
+            location: FernIr.GlobalParameterLocation.Query
         });
         const ir = {
-            globalParameters: [headerParam, queryParam, explicitQueryParam]
+            globalParameters: [headerParam, queryParam, excludedQueryParam]
         } as FernIr.IntermediateRepresentation;
 
-        const endpoint = createHttpEndpoint();
+        // The endpoint's resolved set includes the header and one query param, but not `verbose`.
+        const endpoint = createHttpEndpoint({ globalParameters: ["x-custom-header", "language"] });
         expect(
             getGlobalParametersForEndpoint({ ir, endpoint, location: FernIr.GlobalParameterLocation.Header })
         ).toEqual([headerParam]);
-        // The explicit query param is excluded because the endpoint did not opt in.
+        // `verbose` is excluded because it is not in the endpoint's resolved set.
         expect(
             getGlobalParametersForEndpoint({ ir, endpoint, location: FernIr.GlobalParameterLocation.Query })
         ).toEqual([queryParam]);
@@ -120,14 +118,12 @@ describe("getGlobalParametersForEndpoint", () => {
         // constructor option nor injected — otherwise it would read the built-in's value.
         const injected = createGlobalParameter({
             id: "language",
-            location: FernIr.GlobalParameterLocation.Query,
-            apply: FernIr.GlobalParameterApplyMode.Auto
+            location: FernIr.GlobalParameterLocation.Query
         });
         const collides = createGlobalParameter({
             id: "max-retries",
             name: { wireValue: "max-retries", name: "maxRetries" },
-            location: FernIr.GlobalParameterLocation.Query,
-            apply: FernIr.GlobalParameterApplyMode.Auto
+            location: FernIr.GlobalParameterLocation.Query
         });
         const ir = {
             globalParameters: [injected, collides]
@@ -143,7 +139,7 @@ describe("getGlobalParametersForEndpoint", () => {
         expect(
             getGlobalParametersForEndpoint({
                 ir,
-                endpoint: createHttpEndpoint(),
+                endpoint: createHttpEndpoint({ globalParameters: ["language", "max-retries"] }),
                 location: FernIr.GlobalParameterLocation.Query,
                 context
             })

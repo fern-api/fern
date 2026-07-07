@@ -32,20 +32,17 @@ export function getSdkOptionKeyForGlobalParameter(param: FernIr.GlobalParameter,
 }
 
 /**
- * Whether a global parameter is injected into the given endpoint. `auto`
- * applies to every operation; `explicit` (the default) applies only to
- * operations that opted in via `x-fern-global-parameter`.
+ * Whether a global parameter is injected into the given endpoint. Applicability
+ * is resolved once at IR-generation time (explicit opt-ins ∪ matching `apply: auto`
+ * parameters, with body-location parameters gated on the request-body schema
+ * containing the target path), so `endpoint.globalParameters` is the fully-resolved
+ * membership set and the generator only needs a membership check.
  */
 export function globalParameterAppliesToEndpoint(
     param: FernIr.GlobalParameter,
     endpoint: FernIr.HttpEndpoint
 ): boolean {
-    const apply = param.apply ?? FernIr.GlobalParameterApplyMode.Explicit;
-    return FernIr.GlobalParameterApplyMode._visit<boolean>(apply, {
-        auto: () => true,
-        explicit: () => (endpoint.globalParameters ?? []).includes(param.id),
-        _other: () => false
-    });
+    return (endpoint.globalParameters ?? []).includes(param.id);
 }
 
 export function getGlobalParametersForEndpoint({
