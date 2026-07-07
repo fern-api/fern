@@ -27,10 +27,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * The resolved value of the {@code default-timeout} config key. It is either a finite {@link Duration}
- * or {@code "infinity"} (which disables the timeout). The raw config value may be a number of seconds,
- * an ISO-8601 duration string (e.g. {@code "PT30S"}), or the literal {@code "infinity"}. The parsing
- * rules here mirror the v2 (TypeScript) generator so both stay aligned.
+ * The resolved value of the {@code default-timeout} config key. It is either a finite {@link Duration} or
+ * {@code "infinity"} (which disables the timeout). The raw config value may be a number of seconds, an ISO-8601
+ * duration string (e.g. {@code "PT30S"}), or the literal {@code "infinity"}. The parsing rules here mirror the v2
+ * (TypeScript) generator so both stay aligned.
  */
 @JsonDeserialize(using = DefaultTimeout.Deserializer.class)
 public final class DefaultTimeout {
@@ -61,9 +61,9 @@ public final class DefaultTimeout {
     }
 
     /**
-     * The whole-second value passed to OkHttp's {@code callTimeout}, where {@code 0} disables the
-     * timeout. {@code "infinity"} therefore maps to {@code 0}; a finite duration is truncated toward
-     * zero (matching {@link Duration#getSeconds()}).
+     * The whole-second value passed to OkHttp's {@code callTimeout}, where {@code 0} disables the timeout.
+     * {@code "infinity"} therefore maps to {@code 0}; a finite duration is truncated toward zero (matching
+     * {@link Duration#getSeconds()}).
      */
     public int toCallTimeoutSeconds() {
         return duration == null ? 0 : (int) duration.getSeconds();
