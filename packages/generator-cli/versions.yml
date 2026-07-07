@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.43
+  changelogEntry:
+    - summary: |
+        Fix replay lockfile not advancing in the no-patches flow when zero new
+        patches are detected. The lockfile's current_generation was saved to disk
+        but never committed, causing previousGenerationSha to remain stale and
+        autoversion diffs to accumulate across runs.
+      type: fix
+  createdAt: "2026-07-07"
 - version: 0.9.42
   changelogEntry:
     - summary: |
