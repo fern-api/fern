@@ -204,6 +204,7 @@ public final class ClientOptions {
 
             Logger logger = Logger.from(this.logging);
             httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
+            httpClientBuilder.addInterceptor(new ResponseDecompressionInterceptor());
 
             for (Interceptor interceptor : this.interceptors) {
                 httpClientBuilder.addInterceptor(interceptor);
