@@ -2,6 +2,7 @@ package internal
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"errors"
@@ -107,6 +108,10 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 
 	// Close the response body after we're done.
 	defer func() { _ = resp.Body.Close() }()
+
+	if err := decompressResponse(resp); err != nil {
+		return nil, err
+	}
 
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
@@ -261,6 +266,52 @@ func newFormURLEncodedRequestBody(request interface{}, bodyProperties map[string
 		values.Set(key, fmt.Sprintf("%v", val))
 	}
 	return strings.NewReader(values.Encode()), nil
+}
+
+// decompressResponse wraps the response body with a gzip reader when the
+// server responds with a gzip-encoded body that the underlying HTTP client
+// did not transparently decompress (e.g. when an Accept-Encoding header is
+// set explicitly on the request).
+func decompressResponse(resp *http.Response) error {
+	if resp.Uncompressed || resp.Body == nil || resp.Body == http.NoBody {
+		return nil
+	}
+	if !strings.EqualFold(resp.Header.Get("Content-Encoding"), "gzip") {
+		return nil
+	}
+	gzipReader, err := gzip.NewReader(resp.Body)
+	if err != nil {
+		if err == io.EOF {
+			// The response body is empty, so there is nothing to decompress.
+			return nil
+		}
+		return err
+	}
+	resp.Body = &gzipReadCloser{gzipReader: gzipReader, body: resp.Body}
+	resp.Header.Del("Content-Encoding")
+	resp.Header.Del("Content-Length")
+	resp.ContentLength = -1
+	resp.Uncompressed = true
+	return nil
+}
+
+// gzipReadCloser reads decompressed content from the gzip reader and
+// closes both the gzip reader and the underlying response body.
+type gzipReadCloser struct {
+	gzipReader *gzip.Reader
+	body       io.ReadCloser
+}
+
+func (g *gzipReadCloser) Read(p []byte) (int, error) {
+	return g.gzipReader.Read(p)
+}
+
+func (g *gzipReadCloser) Close() error {
+	gzipErr := g.gzipReader.Close()
+	if bodyErr := g.body.Close(); bodyErr != nil {
+		return bodyErr
+	}
+	return gzipErr
 }
 
 // decodeError decodes the error from the given HTTP response. Note that

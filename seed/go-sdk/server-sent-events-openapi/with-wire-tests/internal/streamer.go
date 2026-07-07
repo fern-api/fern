@@ -134,6 +134,11 @@ func (s *Streamer[T]) streamOnce(
 		return nil, nil, err
 	}
 
+	if err := decompressResponse(resp); err != nil {
+		defer func() { _ = resp.Body.Close() }()
+		return nil, nil, err
+	}
+
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
