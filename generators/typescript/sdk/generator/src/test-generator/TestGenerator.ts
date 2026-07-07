@@ -24,6 +24,22 @@ import { BaseClientContextImpl } from "../contexts/base-client/BaseClientContext
 
 const DEFAULT_PACKAGE_PATH = "src";
 
+/**
+ * A nested tree of body global-parameter targets used to build the mock's expected
+ * defaults object: a branch is another tree, a leaf is the resolved test value.
+ */
+type BodyMockDefaultsTree = Map<string, BodyMockDefaultsTree | Code>;
+
+function bodyMockDefaultsTreeToCode(tree: BodyMockDefaultsTree): Code {
+    let inner: Code | undefined;
+    for (const [key, value] of tree.entries()) {
+        const valueCode = value instanceof Map ? bodyMockDefaultsTreeToCode(value) : value;
+        const entry = code`${literalOf(key)}: ${valueCode}`;
+        inner = inner == null ? entry : code`${inner}, ${entry}`;
+    }
+    return code`{ ${inner ?? code``} }`;
+}
+
 export declare namespace TestGenerator {
     interface Args {
         ir: FernIr.IntermediateRepresentation;
@@ -1639,8 +1655,9 @@ describe("${serviceName}", () => {
     /**
      * Body-location global parameters are injected into the request body by the SDK, so the
      * mock server must expect the same injected value. This mirrors the SDK's injection with
-     * the runtime helper `setGlobalBodyParameterIfAbsent`, using the resolved global value
-     * (client option when set in the test client, otherwise the client-side default).
+     * the runtime helper `mergeGlobalBodyParameters`, deep-merging the resolved global values
+     * (client option when set in the test client, otherwise the client-side default) underneath
+     * the request body.
      */
     private applyBodyGlobalParametersToMockRequest({
         endpoint,
@@ -1653,7 +1670,8 @@ describe("${serviceName}", () => {
         options: Record<string, Code>;
         context: FileContext;
     }): Code {
-        let result = rawRequestBody;
+        const tree: BodyMockDefaultsTree = new Map();
+        let hasEntry = false;
         for (const param of this.ir.globalParameters ?? []) {
             if (param.location !== FernIr.GlobalParameterLocation.Body) {
                 continue;
@@ -1669,14 +1687,30 @@ describe("${serviceName}", () => {
             if (segments.length === 0) {
                 continue;
             }
-            context.importsManager.addImportFromRoot(
-                "core/globalParameters",
-                { namedImports: ["setGlobalBodyParameterIfAbsent"] },
-                this.relativePackagePath
-            );
-            result = code`setGlobalBodyParameterIfAbsent(${result}, ${literalOf(segments)}, ${value})`;
+            hasEntry = true;
+            let cursor = tree;
+            for (let i = 0; i < segments.length - 1; i++) {
+                const segment = segments[i] as string;
+                const existing = cursor.get(segment);
+                if (existing instanceof Map) {
+                    cursor = existing;
+                } else {
+                    const next: BodyMockDefaultsTree = new Map();
+                    cursor.set(segment, next);
+                    cursor = next;
+                }
+            }
+            cursor.set(segments[segments.length - 1] as string, value);
         }
-        return result;
+        if (!hasEntry) {
+            return rawRequestBody;
+        }
+        context.importsManager.addImportFromRoot(
+            "core/requestBody",
+            { namedImports: ["mergeGlobalBodyParameters"] },
+            this.relativePackagePath
+        );
+        return code`mergeGlobalBodyParameters(${rawRequestBody}, ${bodyMockDefaultsTreeToCode(tree)})`;
     }
 
     private getMockBodyMethod(endpoint: FernIr.HttpEndpoint): string {

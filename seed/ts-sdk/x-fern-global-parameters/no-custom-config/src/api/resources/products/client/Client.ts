@@ -2,9 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { setGlobalBodyParameterIfAbsent } from "../../../../core/globalParameters.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters, mergeGlobalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedApi from "../../../index.js";
@@ -69,7 +69,14 @@ export class ProductsClient {
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",
-            body: setGlobalBodyParameterIfAbsent(_body, ["config", "currency"], this._options?.currency ?? "USD"),
+            body: mergeGlobalBodyParameters(
+                mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
+                {
+                    config: {
+                        currency: this._options?.currency ?? "USD",
+                    },
+                },
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -126,7 +133,14 @@ export class ProductsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: setGlobalBodyParameterIfAbsent(request, ["config", "currency"], this._options?.currency ?? "USD"),
+            body: mergeGlobalBodyParameters(
+                mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
+                {
+                    config: {
+                        currency: this._options?.currency ?? "USD",
+                    },
+                },
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

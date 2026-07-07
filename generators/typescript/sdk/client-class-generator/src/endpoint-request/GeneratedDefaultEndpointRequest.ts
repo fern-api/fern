@@ -49,6 +49,24 @@ interface LiteralPropertyValue {
     propertyValue: boolean | string;
 }
 
+/**
+ * A nested tree of body global-parameter targets: a branch is another tree, a leaf
+ * is the resolved value expression to inject at that path.
+ */
+type BodyDefaultsTree = Map<string, BodyDefaultsTree | ts.Expression>;
+
+function bodyDefaultsTreeToObjectLiteral(tree: BodyDefaultsTree): ts.ObjectLiteralExpression {
+    return ts.factory.createObjectLiteralExpression(
+        Array.from(tree.entries()).map(([key, value]) =>
+            ts.factory.createPropertyAssignment(
+                getPropertyKey(key),
+                value instanceof Map ? bodyDefaultsTreeToObjectLiteral(value) : value
+            )
+        ),
+        true
+    );
+}
+
 export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly packageId: PackageId;
@@ -224,10 +242,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     /**
-     * Wraps the serialized request body with `setGlobalBodyParameterIfAbsent`
-     * calls for each applicable `in: body` global parameter, injecting the
-     * resolved client value at the parameter's dotted target path. The helper
-     * only writes when the leaf is absent, so a per-call body value wins.
+     * Deep-merges applicable `in: body` global parameters underneath the serialized
+     * request body via `mergeGlobalBodyParameters`. The globals form a defaults object
+     * (keyed by each parameter's dotted target path) that the caller's body is spread
+     * on top of, so a per-call body value always wins.
      */
     private injectBodyGlobalParameters(
         body: ts.Expression | undefined,
@@ -252,29 +270,59 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             return body;
         }
 
-        context.importsManager.addImportFromRoot("core/globalParameters", {
-            namedImports: ["setGlobalBodyParameterIfAbsent"]
+        const defaultsObject = this.buildBodyGlobalParameterDefaults(bodyGlobalParameters);
+        if (defaultsObject == null) {
+            return body;
+        }
+
+        context.importsManager.addImportFromRoot("core/requestBody", {
+            namedImports: ["mergeGlobalBodyParameters"]
         });
 
-        let wrapped: ts.Expression = body ?? ts.factory.createIdentifier("undefined");
+        return ts.factory.createCallExpression(ts.factory.createIdentifier("mergeGlobalBodyParameters"), undefined, [
+            body,
+            defaultsObject
+        ]);
+    }
+
+    /**
+     * Builds the global-defaults object literal passed to `mergeGlobalBodyParameters`,
+     * nesting each parameter's resolved value under its dotted target path (so targets
+     * sharing a prefix merge into a single object). Returns `undefined` when no
+     * parameter has a usable target.
+     */
+    private buildBodyGlobalParameterDefaults(
+        bodyGlobalParameters: FernIr.GlobalParameter[]
+    ): ts.ObjectLiteralExpression | undefined {
+        const tree: BodyDefaultsTree = new Map();
+        let hasEntry = false;
         for (const globalParameter of bodyGlobalParameters) {
             const pathSegments = globalParameter.target.split(".").filter((segment) => segment.length > 0);
             if (pathSegments.length === 0) {
                 continue;
             }
-            wrapped = ts.factory.createCallExpression(
-                ts.factory.createIdentifier("setGlobalBodyParameterIfAbsent"),
-                undefined,
-                [
-                    wrapped,
-                    ts.factory.createArrayLiteralExpression(
-                        pathSegments.map((segment) => ts.factory.createStringLiteral(segment))
-                    ),
-                    getResolvedGlobalParameterValueExpression(globalParameter, this.case)
-                ]
+            hasEntry = true;
+            let cursor = tree;
+            for (let i = 0; i < pathSegments.length - 1; i++) {
+                const segment = pathSegments[i] as string;
+                const existing = cursor.get(segment);
+                if (existing instanceof Map) {
+                    cursor = existing;
+                } else {
+                    const next: BodyDefaultsTree = new Map();
+                    cursor.set(segment, next);
+                    cursor = next;
+                }
+            }
+            cursor.set(
+                pathSegments[pathSegments.length - 1] as string,
+                getResolvedGlobalParameterValueExpression(globalParameter, this.case)
             );
         }
-        return wrapped;
+        if (!hasEntry) {
+            return undefined;
+        }
+        return bodyDefaultsTreeToObjectLiteral(tree);
     }
 
     private getFallbackContentType(): string | undefined {

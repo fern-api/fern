@@ -11,7 +11,6 @@ export namespace AsIsManager {
     export interface Init {
         useBigInt: boolean;
         generateWireTests: boolean;
-        hasGlobalParameters: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
         generatorType: "sdk" | "model" | "express";
@@ -23,7 +22,6 @@ export namespace AsIsManager {
 export class AsIsManager {
     private readonly useBigInt: boolean;
     private readonly generateWireTests: boolean;
-    private readonly hasGlobalParameters: boolean;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generatorType: "sdk" | "model" | "express";
@@ -33,7 +31,6 @@ export class AsIsManager {
     constructor({
         useBigInt,
         generateWireTests,
-        hasGlobalParameters,
         relativePackagePath,
         relativeTestPath,
         generatorType,
@@ -42,7 +39,6 @@ export class AsIsManager {
     }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
-        this.hasGlobalParameters = hasGlobalParameters;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.generatorType = generatorType;
@@ -59,9 +55,6 @@ export class AsIsManager {
             oxfmtrcJson: { "oxfmtrc.json": ".oxfmtrc.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
-                globalParameters: {
-                    "core/globalParameters.ts": `${this.relativePackagePath}/core/globalParameters.ts`
-                },
                 mergeAdditionalBodyParameters: { "core/requestBody.ts": `${this.relativePackagePath}/core/requestBody.ts` },
                 json: {
                     vanilla: { "core/json.vanilla.ts": `${this.relativePackagePath}/core/json.ts` },
@@ -95,9 +88,6 @@ export class AsIsManager {
         if (this.generatorType === "sdk" || this.generatorType === "model") {
             filesToCopy.push(asIsFiles.core.mergeHeaders);
             filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
-            if (this.hasGlobalParameters && this.generatorType === "sdk") {
-                filesToCopy.push(asIsFiles.core.globalParameters);
-            }
             if (this.useBigInt) {
                 filesToCopy.push(asIsFiles.tests.bigintSetup);
                 filesToCopy.push(asIsFiles.core.json.bigint);
