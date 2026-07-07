@@ -1,6 +1,13 @@
 import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+export interface InlinedBodyPropertyName {
+    /** Ruby attribute name used for the wrapper field and endpoint keyword argument. */
+    attributeName: string;
+    /** Whether the property name was restored to its wire-derived name. */
+    isRenamed: boolean;
+}
+
 export interface InlinedPathParameterNames {
     /** Ruby attribute name used for the wrapper field and endpoint keyword argument. */
     attributeName: string;
@@ -62,6 +69,66 @@ function getInlinedBodyPropertyNames({
     for (const property of [...endpoint.requestBody.properties, ...(endpoint.requestBody.extendedProperties ?? [])]) {
         names.add(caseConverter.snakeSafe(property.name));
         names.add(getWireValue(property.name));
+        names.add(caseConverter.snakeSafe(getWireValue(property.name)));
     }
     return names;
+}
+
+/**
+ * The OpenAPI importer de-conflicts an inlined body property whose name collides with a
+ * path parameter by prefixing it with the request name (e.g. an `idType` body field becomes
+ * `identifierUpdateIdType` when there is an `{idType}` path parameter). Since colliding path
+ * parameters are renamed with a `_path_param` suffix, the wire-derived name is free again,
+ * so the body property is restored to it (e.g. `id_type`).
+ */
+export function getInlinedBodyPropertyName({
+    property,
+    endpoint,
+    caseConverter
+}: {
+    property: FernIr.ObjectProperty;
+    endpoint: FernIr.HttpEndpoint;
+    caseConverter: CaseConverter;
+}): InlinedBodyPropertyName {
+    const attributeName = caseConverter.snakeSafe(property.name);
+    const propertyWireValue = getWireValue(property.name);
+    const wireAttributeName = caseConverter.snakeSafe(propertyWireValue);
+    if (attributeName === wireAttributeName) {
+        return { attributeName, isRenamed: false };
+    }
+    const collidesWithRenamedPathParameter = endpoint.allPathParameters.some((pathParameter) => {
+        const pathParameterNames = getInlinedPathParameterNames({ pathParameter, endpoint, caseConverter });
+        return (
+            pathParameterNames.isRenamed &&
+            (getOriginalName(pathParameter.name) === propertyWireValue ||
+                caseConverter.snakeSafe(pathParameter.name) === wireAttributeName)
+        );
+    });
+    if (!collidesWithRenamedPathParameter) {
+        return { attributeName, isRenamed: false };
+    }
+    const reservedNames = new Set<string>();
+    for (const pathParameter of endpoint.allPathParameters) {
+        reservedNames.add(getInlinedPathParameterNames({ pathParameter, endpoint, caseConverter }).attributeName);
+    }
+    for (const queryParameter of endpoint.queryParameters) {
+        reservedNames.add(caseConverter.snakeSafe(queryParameter.name));
+    }
+    for (const header of endpoint.headers) {
+        reservedNames.add(caseConverter.snakeSafe(header.name));
+    }
+    if (endpoint.requestBody?.type === "inlinedRequestBody") {
+        for (const otherProperty of [
+            ...endpoint.requestBody.properties,
+            ...(endpoint.requestBody.extendedProperties ?? [])
+        ]) {
+            if (otherProperty !== property) {
+                reservedNames.add(caseConverter.snakeSafe(otherProperty.name));
+            }
+        }
+    }
+    if (reservedNames.has(wireAttributeName)) {
+        return { attributeName, isRenamed: false };
+    }
+    return { attributeName: wireAttributeName, isRenamed: true };
 }

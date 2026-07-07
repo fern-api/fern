@@ -1,4 +1,4 @@
-import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractFormatter, CaseConverter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
@@ -11,6 +11,11 @@ const INSTANCE_CLIENT_VAR_NAME = "@client";
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
+    private caseConverter: CaseConverter = new CaseConverter({
+        generationLanguage: "ruby",
+        keywords: undefined,
+        smartCasing: true
+    });
 
     constructor({ context, formatter }: { context: DynamicSnippetsGeneratorContext; formatter?: AbstractFormatter }) {
         this.context = context;
@@ -541,7 +546,14 @@ export class EndpointSnippetGenerator {
         if (request.body != null && snippet.requestBody != null) {
             switch (request.body.type) {
                 case "properties":
-                    args.push(...this.getMethodArgsForPropertiesRequest({ request: request.body, snippet }));
+                    args.push(
+                        ...this.getMethodArgsForPropertiesRequest({
+                            request: request.body,
+                            snippet,
+                            inlinedRequest: request,
+                            pathParameters
+                        })
+                    );
                     break;
                 case "referenced": {
                     // Handle referenced body types (like BillOutData)
@@ -611,6 +623,7 @@ export class EndpointSnippetGenerator {
         for (const property of request.body.value) {
             names.add(this.context.getPropertyName(property.name.name));
             names.add(property.name.wireValue);
+            names.add(this.caseConverter.snakeSafe(property.name.wireValue));
         }
         return names;
     }
@@ -664,10 +677,14 @@ export class EndpointSnippetGenerator {
 
     private getMethodArgsForPropertiesRequest({
         request,
-        snippet
+        snippet,
+        inlinedRequest,
+        pathParameters
     }: {
         request: FernIr.dynamic.InlinedRequestBody.Properties;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        inlinedRequest?: FernIr.dynamic.InlinedRequest;
+        pathParameters?: FernIr.dynamic.NamedParameter[];
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
         const record = this.context.getRecord(snippet.requestBody) ?? {};
@@ -684,13 +701,67 @@ export class EndpointSnippetGenerator {
             }
             args.push(
                 ruby.keywordArgument({
-                    name: this.context.getPropertyName(parameter.name.name),
+                    name: this.getBodyPropertyArgName({
+                        property: parameter.name,
+                        allBodyProperties: request.value,
+                        inlinedRequest,
+                        pathParameters
+                    }),
                     value
                 })
             );
         }
 
         return args;
+    }
+
+    /**
+     * The OpenAPI importer de-conflicts an inlined body property whose name collides with a
+     * path parameter by prefixing it with the request name (e.g. an `idType` body field
+     * becomes `identifier_update_id_type`). The generated SDK restores such properties to
+     * their wire-derived name (`id_type`) because the colliding path parameter is renamed
+     * with a `_path_param` suffix, so snippets must use the restored keyword too.
+     */
+    private getBodyPropertyArgName({
+        property,
+        allBodyProperties,
+        inlinedRequest,
+        pathParameters
+    }: {
+        property: FernIr.dynamic.NamedParameter["name"];
+        allBodyProperties: FernIr.dynamic.NamedParameter[];
+        inlinedRequest?: FernIr.dynamic.InlinedRequest;
+        pathParameters?: FernIr.dynamic.NamedParameter[];
+    }): string {
+        const name = this.context.getPropertyName(property.name);
+        const wireAttributeName = this.caseConverter.snakeSafe(property.wireValue);
+        if (name === wireAttributeName || pathParameters == null) {
+            return name;
+        }
+        const collidesWithPathParameter = pathParameters.some(
+            (pathParameter) =>
+                pathParameter.name.wireValue === property.wireValue ||
+                this.context.getPropertyName(pathParameter.name.name) === wireAttributeName
+        );
+        if (!collidesWithPathParameter) {
+            return name;
+        }
+        const reservedNames = new Set<string>();
+        for (const otherProperty of allBodyProperties) {
+            if (otherProperty.name.wireValue !== property.wireValue) {
+                reservedNames.add(this.context.getPropertyName(otherProperty.name.name));
+            }
+        }
+        for (const queryParameter of inlinedRequest?.queryParameters ?? []) {
+            reservedNames.add(this.context.getPropertyName(queryParameter.name.name));
+        }
+        for (const header of inlinedRequest?.headers ?? []) {
+            reservedNames.add(this.context.getPropertyName(header.name.name));
+        }
+        if (reservedNames.has(wireAttributeName)) {
+            return name;
+        }
+        return wireAttributeName;
     }
 
     private getMethodArgsForBodyRequest({

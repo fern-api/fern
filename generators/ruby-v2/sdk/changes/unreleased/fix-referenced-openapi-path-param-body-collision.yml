@@ -1,0 +1,8 @@
+- summary: |
+    Restore the wire-derived name of inlined request body properties that the OpenAPI
+    importer de-conflicted because of a path parameter collision. For a spec with an
+    `{idType}` path parameter and an `idType` body field, the endpoint now exposes
+    `id_type_path_param` (path) and `id_type` (body) instead of `id_type_path_param`
+    and `identifier_update_id_type`. Generated snippets and wire tests use the same
+    keyword names.
+  type: fix

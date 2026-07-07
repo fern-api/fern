@@ -1,0 +1,49 @@
+{
+  "mappings": [
+    {
+      "id": "bc8cb1e2-3f27-4287-a079-d119f9051c89",
+      "name": "Modify Profile Identifier - Accepted",
+      "request": {
+        "urlPathTemplate": "/Stores/{storeId}/Profiles/{profileId}/Identifiers/{idType}",
+        "method": "PATCH",
+        "headers": {
+          "Authorization": {
+            "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
+          }
+        },
+        "pathParameters": {
+          "storeId": {
+            "equalTo": "mem_store_00000000000000000000000000"
+          },
+          "profileId": {
+            "equalTo": "mem_profile_00000000000000000000000000"
+          },
+          "idType": {
+            "equalTo": "email"
+          }
+        }
+      },
+      "response": {
+        "status": 202,
+        "body": "{\n  \"message\": \"Identifier update accepted.\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "bc8cb1e2-3f27-4287-a079-d119f9051c89",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 1
+  }
+}

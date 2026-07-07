@@ -55,6 +55,10 @@ scripts:
         - bundle exec rake test
 
 fixtures:
+  ruby-openapi-path-param-body-conflict:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   ruby-path-param-body-conflict:
     - outputFolder: .
       customConfig:

@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: Ruby OpenAPI Path Param Body Conflict
+  version: 1.0.0
+security:
+  - basicAuth: []
+paths:
+  /Stores/{storeId}/Profiles/{profileId}/Identifiers/{idType}:
+    patch:
+      operationId: UpdateProfileIdentifier
+      summary: Modify Profile Identifier
+      description: Replace one of the stored values associated with the identifier type on a profile.
+      tags:
+        - Identifiers
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: mem_store_00000000000000000000000000
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: mem_profile_00000000000000000000000000
+        - name: idType
+          in: path
+          required: true
+          schema:
+            type: string
+          example: email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdentifierUpdate'
+            example:
+              idType: phone
+              oldValue: '+13175556789'
+              newValue: '+13175556798'
+      responses:
+        '202':
+          description: Identifier update accepted.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    example: Identifier update accepted.
+              examples:
+                Accepted:
+                  value:
+                    message: Identifier update accepted.
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    IdentifierUpdate:
+      type: object
+      additionalProperties: false
+      required:
+        - idType
+        - oldValue
+        - newValue
+      properties:
+        idType:
+          type: string
+          description: The identifier type to update (e.g., email, phone).
+          example: phone
+        oldValue:
+          type: string
+          description: Existing stored value to replace.
+          example: '+13175556789'
+        newValue:
+          type: string
+          description: New value to store for the identifier.
+          example: '+13175556798'
