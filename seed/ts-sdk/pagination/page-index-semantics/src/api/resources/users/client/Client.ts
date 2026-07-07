@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
@@ -211,7 +212,7 @@ export class UsersClient {
                     contentType: "application/json",
                     queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
                     requestType: "json",
-                    body: request,
+                    body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -288,7 +289,7 @@ export class UsersClient {
                     contentType: "application/json",
                     queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
                     requestType: "json",
-                    body: request,
+                    body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -524,7 +525,7 @@ export class UsersClient {
                     contentType: "application/json",
                     queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
                     requestType: "json",
-                    body: request,
+                    body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,

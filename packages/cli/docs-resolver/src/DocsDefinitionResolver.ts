@@ -9,8 +9,10 @@ import {
     visitDiscriminatedUnion
 } from "@fern-api/core-utils";
 import {
+    collectCodeSrcUrls,
     isValidRelativeSlug,
     parseImagePaths,
+    prefetchCodeSrcUrls,
     type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -171,6 +173,7 @@ export class DocsDefinitionResolver {
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
     private buildTranslatedApiDefinitions: boolean;
+    private markdownFilesToPathName: Record<AbsoluteFilePath, string> = {} as Record<AbsoluteFilePath, string>;
 
     constructor({
         domain,
@@ -342,6 +345,15 @@ export class DocsDefinitionResolver {
         return this.translatedApiSpecs;
     }
 
+    /**
+     * Returns the map of absolute file paths to their fully qualified slug pathnames.
+     * Used by translation processing to resolve relative .md/.mdx links.
+     * Must be called after `resolve()`.
+     */
+    public getMarkdownFilesToPathName(): Record<AbsoluteFilePath, string> {
+        return this.markdownFilesToPathName;
+    }
+
     private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
         const translations = this.parsedDocsConfig.translations;
         if (translations == null || translations.length === 0) {
@@ -473,7 +485,24 @@ export class DocsDefinitionResolver {
         const refStart = performance.now();
         // Use a Set for O(1) deduplication instead of O(N) array scan
         const seenReferencedFiles = new Set<AbsoluteFilePath>();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+        const pageEntries = Object.entries(this.parsedDocsConfig.pages);
+
+        // Pre-fetch all external <Code src="https://..."/> URLs in parallel to avoid
+        // sequential HTTP blocking (can save 30+ seconds for docs with many external code snippets)
+        const allCodeSrcUrls: string[] = [];
+        for (const [, markdown] of pageEntries) {
+            allCodeSrcUrls.push(...collectCodeSrcUrls(markdown));
+        }
+        const prefetchStart = Date.now();
+        const urlCache = await prefetchCodeSrcUrls(allCodeSrcUrls, this.taskContext);
+        if (urlCache.size > 0) {
+            const uniqueCount = new Set(allCodeSrcUrls).size;
+            this.taskContext.logger.info(
+                `Prefetched ${uniqueCount} external code URLs in ${Date.now() - prefetchStart}ms`
+            );
+        }
+
+        for (const [relativePath, markdown] of pageEntries) {
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
             const result = await replaceReferencedMarkdown({
                 markdown,
@@ -492,7 +521,8 @@ export class DocsDefinitionResolver {
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                context: this.taskContext
+                context: this.taskContext,
+                urlCache
             });
 
             const newMarkdown = transformAtPrefixImports({
@@ -592,6 +622,7 @@ export class DocsDefinitionResolver {
         const pathNameStart = performance.now();
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
+        this.markdownFilesToPathName = markdownFilesToPathName;
         const pathNameTime = performance.now() - pathNameStart;
         this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
 

@@ -62,6 +62,7 @@ export class AsIsManager {
                 globalParameters: {
                     "core/globalParameters.ts": `${this.relativePackagePath}/core/globalParameters.ts`
                 },
+                mergeAdditionalBodyParameters: { "core/requestBody.ts": `${this.relativePackagePath}/core/requestBody.ts` },
                 json: {
                     vanilla: { "core/json.vanilla.ts": `${this.relativePackagePath}/core/json.ts` },
                     bigint: { "core/json.bigint.ts": `${this.relativePackagePath}/core/json.ts` }
@@ -105,6 +106,7 @@ export class AsIsManager {
             }
         }
         if (this.generatorType === "sdk") {
+            filesToCopy.push(asIsFiles.core.mergeAdditionalBodyParameters);
             if (this.generateWireTests) {
                 filesToCopy.push(asIsFiles.tests.mockServer);
             }

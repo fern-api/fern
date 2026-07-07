@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.71.2
+  changelogEntry:
+    - summary: |
+        Fix mock-server tests and XML-doc `<example>` snippets calling client methods with
+        path parameters in the wrong order (CS1503) when a user-authored example lists its
+        path-parameters in a different order than the URL path template. The generated method
+        signature follows the IR's canonical (URL-template) order, but the snippet writer was
+        consuming the example's path-parameters positionally in the author's declared order.
+        Example values are now bound to each parameter by name and emitted in the endpoint's
+        canonical path-parameter order, matching the generated signature.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 66
 - version: 2.71.1
   changelogEntry:
     - summary: |

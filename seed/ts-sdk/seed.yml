@@ -524,10 +524,6 @@ fixtures:
         namespaceExport: SeedErrors
         naming:
           client: SeedErrors
-  ts-path-param-body-conflict:
-    - outputFolder: .
-      customConfig:
-        inlinePathParameters: true
   ts-react-query:
     - outputFolder: .
       customConfig:

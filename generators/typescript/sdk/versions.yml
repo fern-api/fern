@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.77.3
+  changelogEntry:
+    - summary: |
+        Revert the automatic renaming of inlined path parameters that collide with request
+        body properties (introduced in 3.77.1). These collisions are now rejected at the CLI
+        level: `fern check` errors and asks the user to deconflict the names (e.g. via
+        `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 3.77.2
   changelogEntry:
     - summary: |
