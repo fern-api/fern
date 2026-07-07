@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.72.1
+  changelogEntry:
+    - summary: |
+        Bump the bundled `@fern-api/generator-cli` to 0.9.44 so every local-only commit
+        is signed when pushing to GitHub, not just HEAD. Replay branches contain multiple
+        commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only the HEAD
+        commit was recreated via the GitHub API and signed, leaving earlier commits on
+        the PR unverified.
+      type: chore
+  createdAt: "2026-07-07"
+  irVersion: 66
 - version: 2.72.0
   changelogEntry:
     - summary: |
