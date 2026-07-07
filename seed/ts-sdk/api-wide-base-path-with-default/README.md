@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/api-wide-base-path-with-default";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.widgets.create({
     name: "name"
 });

@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAcceptClient } from "@fern/accept-header";
 
-const client = new SeedAcceptClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedAcceptClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.service.endpoint();
 ```
 
