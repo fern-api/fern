@@ -1207,6 +1207,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         clientGeneratorContext.getPoetClassNameFactory().getLoggingInterceptorClassName(),
                         "logger")
+                .addStatement(
+                        "$L.addInterceptor(new $T())",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext
+                                .getPoetClassNameFactory()
+                                .getResponseDecompressionInterceptorClassName())
                 .addCode("\n");
 
         // Apply custom interceptors when custom-interceptors is enabled
