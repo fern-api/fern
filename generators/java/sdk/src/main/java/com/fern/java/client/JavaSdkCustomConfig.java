@@ -16,10 +16,12 @@
 
 package com.fern.java.client;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ICustomConfig;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
@@ -73,8 +75,36 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("offset-semantics")
     Optional<String> offsetSemantics();
 
+    /**
+     * The default network timeout for generated clients, expressed as a {@link Duration}. The unit is intentionally
+     * omitted from the key name because {@code Duration} is the idiomatic Java representation. Accepts an ISO-8601
+     * duration string (e.g. {@code "PT30S"}) or a plain number of seconds.
+     */
+    @JsonProperty("default-timeout")
+    Optional<Duration> defaultTimeout();
+
+    /**
+     * @deprecated Use {@code default-timeout} ({@link #defaultTimeout()}) instead. This key is retained for backwards
+     *     compatibility: when it is set (and {@code default-timeout} is not), its value is interpreted as a number of
+     *     seconds and converted to a {@link Duration}.
+     */
+    @Deprecated
     @JsonProperty("default-timeout-in-seconds")
     Optional<Integer> defaultTimeoutInSeconds();
+
+    /**
+     * Resolves the effective default timeout, preferring the idiomatic {@code default-timeout} key and falling back to
+     * the deprecated {@code default-timeout-in-seconds} (interpreted as seconds) when only the latter is set. Returns
+     * {@link Optional#empty()} when neither key is configured, in which case callers should apply the default of 60
+     * seconds.
+     */
+    @JsonIgnore
+    default Optional<Duration> resolveDefaultTimeout() {
+        if (defaultTimeout().isPresent()) {
+            return defaultTimeout();
+        }
+        return defaultTimeoutInSeconds().map(seconds -> Duration.ofSeconds((long) seconds));
+    }
 
     @Override
     @Value.Default

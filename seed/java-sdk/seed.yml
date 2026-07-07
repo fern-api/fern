@@ -349,6 +349,12 @@ fixtures:
     - customConfig:
         default-timeout-in-seconds: 120
       outputFolder: default
+    - customConfig:
+        default-timeout: 120
+      outputFolder: default-timeout-seconds
+    - customConfig:
+        default-timeout: PT2M
+      outputFolder: default-timeout-duration-string
   java-with-property-conflict:
     - outputFolder: default
   java-path-param-key-conflict:

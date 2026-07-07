@@ -36,7 +36,10 @@ export const BaseJavaCustomConfigSchema = z.object({
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
     "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
-    "default-timeout-in-seconds": z.number().optional(),
+    // The default network timeout, expressed as a java.time.Duration. The unit is intentionally
+    // omitted from the key name because Duration is the idiomatic Java representation. Accepts either
+    // a number of seconds or an ISO-8601 duration string (e.g. "PT30S").
+    "default-timeout": z.union([z.number(), z.string()]).optional(),
     "gradle-distribution-url": z.string().optional(),
     "gradle-plugin-management": z.string().optional(),
     "gradle-central-dependency-management": z.boolean().optional(),
@@ -50,7 +53,56 @@ export const BaseJavaCustomConfigSchema = z.object({
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional(),
-    maxRetries: z.number().int().min(0).optional()
+    maxRetries: z.number().int().min(0).optional(),
+    // Deprecated: use "default-timeout" instead. Retained for backwards compatibility; when set (and
+    // "default-timeout" is not) its value is interpreted as a number of seconds.
+    "default-timeout-in-seconds": z.number().optional()
 });
 
 export type BaseJavaCustomConfigSchema = z.infer<typeof BaseJavaCustomConfigSchema>;
+
+const DEFAULT_TIMEOUT_IN_SECONDS = 60;
+
+/**
+ * Parses a `default-timeout` value (a `java.time.Duration`) into a number of seconds. Accepts a plain
+ * number of seconds, a numeric string, or an ISO-8601 duration string (e.g. `"PT30S"`, `"PT1M30S"`,
+ * `"P1DT2H"`). Returns `undefined` when the value cannot be parsed.
+ */
+export function parseDurationToSeconds(value: number | string): number | undefined {
+    if (typeof value === "number") {
+        return Number.isFinite(value) ? value : undefined;
+    }
+    const trimmed = value.trim();
+    if (/^[+-]?\d+(\.\d+)?$/.test(trimmed)) {
+        return Number(trimmed);
+    }
+    const match = /^([+-])?P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$/i.exec(trimmed);
+    if (match == null || (match[2] == null && match[3] == null && match[4] == null && match[5] == null)) {
+        return undefined;
+    }
+    const sign = match[1] === "-" ? -1 : 1;
+    const days = match[2] != null ? Number(match[2]) : 0;
+    const hours = match[3] != null ? Number(match[3]) : 0;
+    const minutes = match[4] != null ? Number(match[4]) : 0;
+    const seconds = match[5] != null ? Number(match[5]) : 0;
+    return sign * (days * 86400 + hours * 3600 + minutes * 60 + seconds);
+}
+
+/**
+ * Resolves the effective default timeout (in seconds), preferring the idiomatic `default-timeout` key
+ * and falling back to the deprecated `default-timeout-in-seconds` (interpreted as seconds) when only
+ * the latter is set. Defaults to 60 seconds when neither key is configured. This mirrors the v1
+ * (Java) resolver, keeping the two generators aligned.
+ */
+export function resolveDefaultTimeoutInSeconds(
+    config: Pick<BaseJavaCustomConfigSchema, "default-timeout" | "default-timeout-in-seconds"> | undefined
+): number {
+    const defaultTimeout = config?.["default-timeout"];
+    if (defaultTimeout != null) {
+        const seconds = parseDurationToSeconds(defaultTimeout);
+        if (seconds != null) {
+            return seconds;
+        }
+    }
+    return config?.["default-timeout-in-seconds"] ?? DEFAULT_TIMEOUT_IN_SECONDS;
+}
