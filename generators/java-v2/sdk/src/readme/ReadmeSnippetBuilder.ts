@@ -1,5 +1,5 @@
 import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
-import { java, resolveDefaultTimeoutInSeconds } from "@fern-api/java-ast";
+import { defaultTimeoutToCallTimeoutSeconds, java, resolveDefaultTimeout } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -402,7 +402,9 @@ ${clientClassName} client = ${clientClassName}.builder()
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
-        const timeoutValue = String(resolveDefaultTimeoutInSeconds(this.context.customConfig));
+        const timeoutValue = String(
+            defaultTimeoutToCallTimeoutSeconds(resolveDefaultTimeout(this.context.customConfig))
+        );
 
         const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
         const requestOptionsInitialization = java.TypeLiteral.builder({

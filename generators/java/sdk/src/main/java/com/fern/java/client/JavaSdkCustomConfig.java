@@ -76,17 +76,18 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     Optional<String> offsetSemantics();
 
     /**
-     * The default network timeout for generated clients, expressed as a {@link Duration}. The unit is intentionally
-     * omitted from the key name because {@code Duration} is the idiomatic Java representation. Accepts an ISO-8601
-     * duration string (e.g. {@code "PT30S"}) or a plain number of seconds.
+     * The default network timeout for generated clients, expressed as a {@link java.time.Duration}. The unit is
+     * intentionally omitted from the key name because {@code Duration} is the idiomatic Java representation. Accepts a
+     * plain number of seconds, an ISO-8601 duration string (e.g. {@code "PT30S"}), or the literal {@code "infinity"} to
+     * disable the timeout.
      */
     @JsonProperty("default-timeout")
-    Optional<Duration> defaultTimeout();
+    Optional<DefaultTimeout> defaultTimeout();
 
     /**
      * @deprecated Use {@code default-timeout} ({@link #defaultTimeout()}) instead. This key is retained for backwards
      *     compatibility: when it is set (and {@code default-timeout} is not), its value is interpreted as a number of
-     *     seconds and converted to a {@link Duration}.
+     *     seconds.
      */
     @Deprecated
     @JsonProperty("default-timeout-in-seconds")
@@ -99,11 +100,11 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
      * seconds.
      */
     @JsonIgnore
-    default Optional<Duration> resolveDefaultTimeout() {
+    default Optional<DefaultTimeout> resolveDefaultTimeout() {
         if (defaultTimeout().isPresent()) {
             return defaultTimeout();
         }
-        return defaultTimeoutInSeconds().map(seconds -> Duration.ofSeconds((long) seconds));
+        return defaultTimeoutInSeconds().map(seconds -> DefaultTimeout.ofDuration(Duration.ofSeconds((long) seconds)));
     }
 
     @Override

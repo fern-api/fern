@@ -355,6 +355,9 @@ fixtures:
     - customConfig:
         default-timeout: PT2M
       outputFolder: default-timeout-duration-string
+    - customConfig:
+        default-timeout: infinity
+      outputFolder: default-timeout-infinity
   java-with-property-conflict:
     - outputFolder: default
   java-path-param-key-conflict:

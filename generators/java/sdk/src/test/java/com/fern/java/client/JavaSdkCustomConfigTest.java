@@ -38,30 +38,54 @@ class JavaSdkCustomConfigTest {
 
         assertThat(config.defaultTimeout()).isEmpty();
         assertThat(config.defaultTimeoutInSeconds()).contains(120);
-        assertThat(config.resolveDefaultTimeout()).contains(Duration.ofSeconds(120));
+        assertThat(config.resolveDefaultTimeout()).contains(DefaultTimeout.ofDuration(Duration.ofSeconds(120)));
+        assertThat(config.resolveDefaultTimeout().get().toCallTimeoutSeconds()).isEqualTo(120);
     }
 
     @Test
     void newDurationKeyAcceptsNumberOfSeconds() {
         JavaSdkCustomConfig config = parse(Map.of("default-timeout", 30));
 
-        assertThat(config.defaultTimeout()).contains(Duration.ofSeconds(30));
-        assertThat(config.resolveDefaultTimeout()).contains(Duration.ofSeconds(30));
+        assertThat(config.defaultTimeout()).contains(DefaultTimeout.ofDuration(Duration.ofSeconds(30)));
+        assertThat(config.resolveDefaultTimeout().get().toCallTimeoutSeconds()).isEqualTo(30);
     }
 
     @Test
     void newDurationKeyAcceptsIso8601String() {
         JavaSdkCustomConfig config = parse(Map.of("default-timeout", "PT45S"));
 
-        assertThat(config.defaultTimeout()).contains(Duration.ofSeconds(45));
-        assertThat(config.resolveDefaultTimeout()).contains(Duration.ofSeconds(45));
+        assertThat(config.defaultTimeout()).contains(DefaultTimeout.ofDuration(Duration.ofSeconds(45)));
+        assertThat(config.resolveDefaultTimeout().get().toCallTimeoutSeconds()).isEqualTo(45);
+    }
+
+    @Test
+    void newDurationKeyAcceptsCompoundIso8601String() {
+        JavaSdkCustomConfig config = parse(Map.of("default-timeout", "PT1M30S"));
+
+        assertThat(config.resolveDefaultTimeout().get().toCallTimeoutSeconds()).isEqualTo(90);
+    }
+
+    @Test
+    void newDurationKeyAcceptsNumericString() {
+        JavaSdkCustomConfig config = parse(Map.of("default-timeout", "75"));
+
+        assertThat(config.resolveDefaultTimeout().get().toCallTimeoutSeconds()).isEqualTo(75);
+    }
+
+    @Test
+    void newKeyAcceptsInfinityToDisableTimeout() {
+        JavaSdkCustomConfig config = parse(Map.of("default-timeout", "infinity"));
+
+        assertThat(config.defaultTimeout()).contains(DefaultTimeout.infinity());
+        assertThat(config.resolveDefaultTimeout().get().isInfinity()).isTrue();
+        assertThat(config.resolveDefaultTimeout().get().toCallTimeoutSeconds()).isEqualTo(0);
     }
 
     @Test
     void newDurationKeyTakesPrecedenceOverDeprecatedKey() {
         JavaSdkCustomConfig config = parse(Map.of("default-timeout", "PT10S", "default-timeout-in-seconds", 120));
 
-        assertThat(config.resolveDefaultTimeout()).contains(Duration.ofSeconds(10));
+        assertThat(config.resolveDefaultTimeout()).contains(DefaultTimeout.ofDuration(Duration.ofSeconds(10)));
     }
 
     @Test
