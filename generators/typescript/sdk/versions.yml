@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.78.2
+  changelogEntry:
+    - summary: |
+        Fix a regression where `| undefined` was dropped from the value type of generated
+        `Record` types backed by optional map values (e.g. optional `additionalProperties`).
+        Optional map values now correctly generate `Record<string, T | undefined>` with
+        serialization `record(string(), T.optional())`, while `unknown`/`any` map values
+        keep the redundant `| undefined` stripped (`Record<string, unknown>`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 3.78.1
   changelogEntry:
     - summary: |
