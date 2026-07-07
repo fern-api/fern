@@ -55,7 +55,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
-            defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
             defaultTimeout: resolveTimeoutInMilliseconds(parsed),
             skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
             extraDependencies: parsed?.extraDependencies ?? {},
