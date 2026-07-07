@@ -16,7 +16,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
 
         expect(violations).toEqual([
             {
-                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "foo"
   - Service header "foo"`,
                 nodePath: ["service", "endpoints", "a"],
@@ -25,7 +25,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "bar"
   - Service header "bar"`,
                 nodePath: ["service", "endpoints", "a"],
@@ -34,7 +34,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "foo"
   - Service header "foo"`,
                 nodePath: ["service", "endpoints", "b"],
@@ -43,7 +43,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "bar"
   - Service header "bar"`,
                 nodePath: ["service", "endpoints", "b"],
@@ -52,7 +52,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name request. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name request. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "request"
   - Path parameter "request"`,
                 nodePath: ["service", "endpoints", "b"],
@@ -61,7 +61,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "foo"
   - Service header "foo"
   - Query Parameter "foo"`,
@@ -71,7 +71,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "bar"
   - Service header "bar"`,
                 nodePath: ["service", "endpoints", "c"],
@@ -80,7 +80,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "foo"
   - Service header "foo"
   - Body property: <Request Body> -> (extends) ObjectWithFoo -> foo`,
@@ -90,7 +90,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name bar. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service path parameter "bar"
   - Service header "bar"
   - Body property: <Request Body> -> bar`,
@@ -100,7 +100,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name baz. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name baz. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Service header "baz"
   - Endpoint header "baz"`,
                 nodePath: ["service", "endpoints", "d"],
@@ -109,7 +109,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name body. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name body. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Body property "body"
   - Query Parameter "body"`,
                 nodePath: ["service", "endpoints", "c"],
@@ -118,7 +118,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties resolve to the same generated name organizationId after camelCase normalization. This causes broken generated code. Use the "name" property to disambiguate.
+                message: `Multiple request properties resolve to the same generated name organizationId after camelCase normalization. This causes broken generated code. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to disambiguate.
   - Service header "Organization-Id" (name: "organizationId")
   - Query Parameter "organization_id" (name: "organization_id")`,
                 nodePath: ["service", "endpoints", "list"],
@@ -127,7 +127,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties have the name idType. This is not suitable for code generation. Use the "name" property to deconflict.
+                message: `Multiple request properties have the name idType. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.
   - Path parameter "idType"
   - Body property: <Request Body> -> idType`,
                 nodePath: ["service", "endpoints", "update"],
@@ -136,7 +136,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 severity: "fatal"
             },
             {
-                message: `Multiple request properties resolve to the same generated name userId after camelCase normalization. This causes broken generated code. Use the "name" property to disambiguate.
+                message: `Multiple request properties resolve to the same generated name userId after camelCase normalization. This causes broken generated code. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to disambiguate.
   - Path parameter "user_id" (name: "user_id")
   - Body property: <Request Body> -> userId (name: "userId")`,
                 nodePath: ["service", "endpoints", "updateSnake"],

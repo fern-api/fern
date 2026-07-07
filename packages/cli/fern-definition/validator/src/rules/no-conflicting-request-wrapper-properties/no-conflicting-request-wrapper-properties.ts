@@ -49,7 +49,7 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                             message:
                                 `Multiple request properties have the name ${chalk.bold(
                                     name
-                                )}. This is not suitable for code generation. Use the "name" property to deconflict.\n` +
+                                )}. This is not suitable for code generation. Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to deconflict.\n` +
                                 propertiesWithName
                                     .map((property) => `  - ${convertRequestWrapperPropertyToString(property)}`)
                                     .join("\n")
@@ -301,7 +301,7 @@ function getCamelCaseNormalizedCollisions(nameToProperties: Record<string, Reque
                 `Multiple request properties resolve to the same generated name ${chalk.bold(
                     normalizedName
                 )} after camelCase normalization. This causes broken generated code. ` +
-                `Use the "name" property to disambiguate.\n` +
+                `Use the "name" property (or "x-fern-parameter-name" in OpenAPI) to disambiguate.\n` +
                 entries
                     .map(
                         (entry) =>
