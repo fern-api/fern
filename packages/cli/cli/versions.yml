@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.66.0
+  changelogEntry:
+    - summary: |
+        Resolve `x-fern-global-parameters` applicability once at IR-generation time.
+        `HttpEndpoint.globalParameters` now holds the fully resolved set of global
+        parameters that apply to each endpoint (explicit opt-ins plus matching
+        `apply: auto` parameters), with body-location parameters gated on the
+        endpoint's request-body schema actually containing the dotted target path.
+        An explicit opt-in whose request body lacks the target is dropped with a
+        generation-time warning.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 5.65.8
   changelogEntry:
     - summary: |
