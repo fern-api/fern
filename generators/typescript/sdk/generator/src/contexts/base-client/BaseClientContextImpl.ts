@@ -400,6 +400,12 @@ export class BaseClientContextImpl implements BaseClientContext {
                     docs: ["Additional query string parameters to include in the request."]
                 },
                 {
+                    name: endpointUtils.REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
+                    type: "Record<string, unknown>",
+                    hasQuestionToken: true,
+                    docs: ["A dictionary containing additional parameters to spread into the request's body."]
+                },
+                {
                     name: "headers",
                     type: `Record<string, string | ${getTextOfTsNode(supplier._getReferenceToType(ts.factory.createTypeReferenceNode("string | null | undefined")))} | null | undefined>`,
                     hasQuestionToken: true,
