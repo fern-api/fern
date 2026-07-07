@@ -260,6 +260,9 @@ fixtures:
     - customConfig:
         inline-path-parameters: false
       outputFolder: no-inline-path-parameters
+  csharp-path-param-order:
+    - customConfig: null
+      outputFolder: no-custom-config
   csharp-grpc-proto:
     - customConfig: null
       outputFolder: no-custom-config
