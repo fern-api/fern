@@ -2,6 +2,9 @@
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "latest",
+    "generatorConfig": {
+        "optional-auth": true
+    },
     "originGitCommit": "DUMMY",
     "invokedBy": "manual",
     "requestedVersion": "0.0.1",
