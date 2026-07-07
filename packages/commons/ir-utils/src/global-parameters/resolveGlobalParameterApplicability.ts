@@ -204,7 +204,11 @@ function propertiesContainPath({
     if (rest.length === 0) {
         return true;
     }
-    return typeReferenceContainsPath({ typeReference: match.valueType, segments: rest, types, seen });
+    // Consuming a path segment starts a fresh traversal level: revisiting a type at a deeper
+    // segment is a legitimate, finite descent (bounded by the remaining segments) through a
+    // recursive schema, so `seen` is reset here. The guard only exists to stop segment-less
+    // loops (alias chains, optional/nullable unwrapping, `extends`) within a single level.
+    return typeReferenceContainsPath({ typeReference: match.valueType, segments: rest, types, seen: new Set() });
 }
 
 function typeReferenceContainsPath({

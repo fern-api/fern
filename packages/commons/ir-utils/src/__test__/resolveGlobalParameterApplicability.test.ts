@@ -273,15 +273,31 @@ describe("resolveGlobalParameterApplicability", () => {
             expect(endpoints[0]?.globalParameters).toEqual(["currency"]);
         });
 
-        it("terminates on cyclic type references", () => {
+        it("resolves a path that descends through a recursive type more than once", () => {
             const ep = endpoint({ id: "e", requestBody: referenceBody(named("Node")) });
             const { endpoints } = resolve({
                 globalParameters: [
-                    globalParam({ id: "missing", location: "body", target: "next.next.value", apply: "auto" })
+                    globalParam({ id: "deep", location: "body", target: "next.next.value", apply: "auto" })
                 ],
                 endpoints: [ep],
                 types: {
-                    Node: objectType({ properties: { next: named("Node") } })
+                    Node: objectType({ properties: { next: named("Node"), value: stringType() } })
+                }
+            });
+            // `next.next.value` is a finite, structurally-present path through the recursive
+            // `Node` type — the cycle guard must not produce a false negative here.
+            expect(endpoints[0]?.globalParameters).toEqual(["deep"]);
+        });
+
+        it("terminates (returns not-found) on a self-referential alias cycle within one segment", () => {
+            const ep = endpoint({ id: "e", requestBody: referenceBody(named("A")) });
+            const { endpoints } = resolve({
+                globalParameters: [globalParam({ id: "missing", location: "body", target: "value", apply: "auto" })],
+                endpoints: [ep],
+                types: {
+                    // A -> B -> A is a segment-less loop; it must terminate rather than hang.
+                    A: aliasType(named("B")),
+                    B: aliasType(named("A"))
                 }
             });
             expect(endpoints[0]?.globalParameters).toBeUndefined();
