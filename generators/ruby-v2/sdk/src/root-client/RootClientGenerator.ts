@@ -6,6 +6,7 @@ import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
 import { RawClient } from "../endpoint/http/RawClient.js";
+import { OAuthProviderGenerator } from "../oauth/OAuthProviderGenerator.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
@@ -129,6 +130,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
         }
 
+        const oauthAuth = this.context.getOAuthAuth();
+        if (oauthAuth != null) {
+            method.addStatement(this.getOAuthInitializationStatement(oauthAuth));
+        }
+
+        const hasAuthProvider = inferredAuth != null || oauthAuth != null;
+
         if (isMultiUrl) {
             method.addStatement(
                 ruby.codeblock((writer) => {
@@ -243,7 +251,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.write(`headers: `);
                     writer.writeNode(this.getRawClientHeaders());
                 }
-                if (inferredAuth != null) {
+                if (hasAuthProvider) {
                     writer.writeLine(`.merge(@auth_provider.auth_headers),`);
                 } else {
                     writer.writeLine(",");
@@ -382,6 +390,116 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
     }
 
+    private getOAuthProviderClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: OAuthProviderGenerator.CLASS_NAME,
+            modules: [this.context.getRootModule().name, "Internal"],
+            fullyQualified: true
+        });
+    }
+
+    private getOAuthAdditionalParameterNames(scheme: FernIr.OAuthScheme): string[] {
+        return new OAuthProviderGenerator({ context: this.context, scheme }).getAdditionalRequestPropertyNames();
+    }
+
+    /**
+     * Builds the fully-qualified module path (e.g. `["Seed", "Identity"]`) of the
+     * generated subpackage client that owns the OAuth token endpoint, so the root
+     * client instantiates the correct `<Root>::<Subpackage...>::Client`. Falls back
+     * to the root `Auth` subpackage when the service filepath is unavailable.
+     */
+    private getAuthClientModules(service: FernIr.HttpService | undefined): string[] {
+        const rootModuleName = this.context.getRootModule().name;
+        const allParts = service?.name?.fernFilepath?.allParts;
+        if (allParts != null && allParts.length > 0) {
+            return [rootModuleName, ...allParts.map((part) => this.case.pascalSafe(part))];
+        }
+        return [rootModuleName, "Auth"];
+    }
+
+    private getOAuthInitializationStatement(scheme: FernIr.OAuthScheme): ruby.AstNode {
+        if (scheme.configuration.type !== "clientCredentials") {
+            return ruby.codeblock("");
+        }
+        const additionalParams = this.getOAuthAdditionalParameterNames(scheme);
+
+        // Determine the auth subpackage/client that owns the token endpoint.
+        const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        const authClientModules = this.getAuthClientModules(service);
+
+        const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        const tokenEndpointBaseUrlId = tokenEndpoint?.baseUrl;
+
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+
+        return ruby.codeblock((writer) => {
+            // Create an unauthenticated raw client for the auth endpoint.
+            // OAuth client-credentials sends the credentials in the token request body,
+            // so the auth client itself needs no auth headers.
+            writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
+            writer.write(`auth_raw_client = `);
+            writer.writeNode(this.context.getRawClientClassReference());
+            writer.writeLine(`.new(`);
+            writer.indent();
+
+            if (isMultiUrl) {
+                const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
+                const authBaseUrlId = tokenEndpointBaseUrlId ?? multiUrlEnvs?.baseUrls[0]?.id;
+                const authBaseUrlName = authBaseUrlId != null ? this.context.getBaseUrlName(authBaseUrlId) : undefined;
+                if (authBaseUrlName != null) {
+                    writer.writeLine(`base_url: base_url || environment&.dig(:${authBaseUrlName}),`);
+                } else {
+                    writer.writeLine(`base_url: base_url,`);
+                }
+            } else {
+                writer.write(`base_url: base_url`);
+                if (defaultEnvironmentReference != null) {
+                    writer.write(" || ");
+                    writer.writeNode(defaultEnvironmentReference);
+                }
+                writer.writeLine(`,`);
+            }
+            writer.writeLine(`headers: {`);
+            writer.indent();
+            writer.writeLine(`"X-Fern-Language" => "Ruby"`);
+            writer.dedent();
+            writer.writeLine(`}`);
+            writer.dedent();
+            writer.writeLine(`)`);
+            writer.newLine();
+
+            // Create the auth client
+            writer.writeLine(`# Create the auth client for token retrieval`);
+            writer.write(`auth_client = `);
+            writer.writeNode(
+                ruby.classReference({
+                    name: "Client",
+                    modules: authClientModules,
+                    fullyQualified: true
+                })
+            );
+            writer.writeLine(`.new(client: auth_raw_client)`);
+            writer.newLine();
+
+            // Create the OAuth provider with the auth client and credentials
+            writer.writeLine(`# Create the OAuth provider with the auth client and credentials`);
+            writer.write(`@auth_provider = `);
+            writer.writeNode(this.getOAuthProviderClassReference());
+            writer.writeLine(`.new(`);
+            writer.indent();
+            writer.writeLine(`auth_client: auth_client,`);
+            writer.write(`options: { base_url: base_url, client_id: client_id, client_secret: client_secret`);
+            for (const param of additionalParams) {
+                writer.write(`, ${param}: ${param}`);
+            }
+            writer.writeLine(` }`);
+            writer.dedent();
+            writer.writeLine(`)`);
+        });
+    }
+
     private getAuthenticationParameters(): ruby.KeywordParameter[] {
         const parameters: ruby.KeywordParameter[] = [];
 
@@ -461,6 +579,49 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             docs: undefined
                         });
                         parameters.push(param);
+                    }
+                    break;
+                }
+                case "oauth": {
+                    if (scheme.configuration.type !== "clientCredentials") {
+                        break;
+                    }
+                    const clientIdEnvVar = scheme.configuration.clientIdEnvVar;
+                    const clientSecretEnvVar = scheme.configuration.clientSecretEnvVar;
+
+                    parameters.push(
+                        ruby.parameters.keyword({
+                            name: "client_id",
+                            type: clientIdEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                            initializer:
+                                clientIdEnvVar != null
+                                    ? ruby.codeblock(`ENV.fetch("${clientIdEnvVar}", nil)`)
+                                    : undefined,
+                            docs: undefined
+                        })
+                    );
+                    parameters.push(
+                        ruby.parameters.keyword({
+                            name: "client_secret",
+                            type:
+                                clientSecretEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                            initializer:
+                                clientSecretEnvVar != null
+                                    ? ruby.codeblock(`ENV.fetch("${clientSecretEnvVar}", nil)`)
+                                    : undefined,
+                            docs: undefined
+                        })
+                    );
+
+                    for (const additionalName of this.getOAuthAdditionalParameterNames(scheme)) {
+                        parameters.push(
+                            ruby.parameters.keyword({
+                                name: additionalName,
+                                type: ruby.Type.string(),
+                                initializer: undefined,
+                                docs: undefined
+                            })
+                        );
                     }
                     break;
                 }

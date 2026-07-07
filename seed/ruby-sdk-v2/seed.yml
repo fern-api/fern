@@ -124,7 +124,7 @@ features:
   requestOptions: true
   idempotency: false
   autoPagination: false
-  oauth: false
+  oauth: true
   authEnvVarScanning: true
   websocket: false
   streamingJson: false
