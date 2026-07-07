@@ -438,7 +438,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
-            caseConverter
+            caseConverter,
+            optionalAuth: this.config.optionalAuth
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
