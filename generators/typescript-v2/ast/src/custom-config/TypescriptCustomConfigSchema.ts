@@ -34,7 +34,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
     generateWebSocketClients: z.optional(z.boolean()),
-    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    // Default request timeout, expressed in milliseconds (idiomatic for JS/TS, e.g.
+    // `setTimeout` / `AbortSignal.timeout(ms)`). Use "infinity" to disable the timeout.
+    defaultTimeout: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
     extraDevDependencies: z.optional(z.record(z.string())),
@@ -102,6 +104,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     experimentalGenerateReadWriteOnlyTypes: z.optional(z.boolean()),
 
     // deprecated
+    // @deprecated Use `defaultTimeout` (milliseconds) instead. Converted to milliseconds (× 1000).
+    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    // @deprecated Use `defaultTimeout` (milliseconds) instead. Converted to milliseconds (× 1000).
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     includeApiReference: z.optional(z.boolean()),
     // @deprecated Use generateWebSocketClients instead
@@ -124,4 +129,30 @@ export function resolveNoSerdeLayer(config: TypescriptCustomConfigSchema | undef
         return !config.serdeLayer;
     }
     return !!config?.noSerdeLayer;
+}
+
+/**
+ * Resolves the effective default request timeout in milliseconds from config.
+ *
+ * Precedence:
+ * 1. `defaultTimeout` (already in milliseconds)
+ * 2. `defaultTimeoutInSeconds` (deprecated, converted × 1000)
+ * 3. `timeoutInSeconds` (deprecated, converted × 1000)
+ *
+ * `"infinity"` is preserved as-is (disables the timeout). Returns `undefined`
+ * when no timeout is configured, so callers can fall back to their own default.
+ */
+export function resolveTimeoutInMilliseconds(
+    config: TypescriptCustomConfigSchema | undefined
+): number | "infinity" | undefined {
+    if (config?.defaultTimeout != null) {
+        return config.defaultTimeout;
+    }
+    if (config?.defaultTimeoutInSeconds != null) {
+        return config.defaultTimeoutInSeconds === "infinity" ? "infinity" : config.defaultTimeoutInSeconds * 1000;
+    }
+    if (config?.timeoutInSeconds != null) {
+        return config.timeoutInSeconds === "infinity" ? "infinity" : config.timeoutInSeconds * 1000;
+    }
+    return undefined;
 }
