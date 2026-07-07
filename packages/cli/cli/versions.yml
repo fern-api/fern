@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.65.4
+  changelogEntry:
+    - summary: |
+        `fern check` now errors when a path parameter shares a name with another request
+        property (an inlined request body property, query parameter, or header), including
+        collisions that only appear after camelCase normalization. These collisions produce
+        broken or ambiguous generated SDK code; use `x-fern-parameter-name` (OpenAPI) or the
+        `name` property (Fern definition) to deconflict.
+      type: fix
+    - summary: |
+        The OpenAPI importer no longer silently renames a request body property that
+        collides with a path parameter. These collisions now surface as `fern check`
+        errors, forcing explicit deconfliction (e.g. via `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 5.65.3
   changelogEntry:
     - summary: |
