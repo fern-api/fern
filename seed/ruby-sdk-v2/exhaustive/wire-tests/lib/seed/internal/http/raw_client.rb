@@ -186,7 +186,7 @@ module Seed
         # even when an Accept-Encoding header is set explicitly on the request.
         # @api private
         module DecodeContent
-          def decode_content
+          def decode_content # rubocop:disable Naming/PredicateMethod
             true
           end
         end

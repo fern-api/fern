@@ -95,7 +95,7 @@ describe Seed::Internal::Http::RawClient do
       request_lines = server_thread.value
       server.close
 
-      assert request_lines.any? { |line| line.casecmp("accept-encoding: gzip\r\n").zero? }
+      assert(request_lines.any? { |line| line.casecmp("accept-encoding: gzip\r\n").zero? })
       assert_equal "200", response.code
       assert_equal body, response.body
     end
