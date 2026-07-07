@@ -440,9 +440,7 @@ describe("toBinaryUploadRequest", () => {
 
         it("should throw Error for null in binary upload", async () => {
             await expect(toBinaryUploadRequest(null as unknown as Uploadable)).rejects.toThrow(Error);
-            await expect(toBinaryUploadRequest(null as unknown as Uploadable)).rejects.toThrow(
-                /but received null/,
-            );
+            await expect(toBinaryUploadRequest(null as unknown as Uploadable)).rejects.toThrow(/but received null/);
         });
     });
 
