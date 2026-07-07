@@ -1,7 +1,7 @@
 import { Rule, RuleViolation } from "../../Rule.js";
 
-export const OnlyVersionedNavigation: Rule = {
-    name: "only-versioned-navigation",
+export const NavigationConflicts: Rule = {
+    name: "navigation-conflicts",
     create: () => {
         return {
             file: async ({ config }) => {

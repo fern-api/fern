@@ -3,11 +3,11 @@ import { describe, expect, it } from "vitest";
 
 import type { DocsConfigFileAstNodeTypes } from "../../../docsAst/DocsConfigFileAstVisitor.js";
 import type { RuleContext } from "../../../Rule.js";
-import { OnlyVersionedNavigation } from "../only-versioned-navigation.js";
+import { NavigationConflicts } from "../navigation-conflicts.js";
 
 async function runRuleOnConfig(partialConfig: Partial<docsYml.RawSchemas.DocsConfiguration>) {
     const config: docsYml.RawSchemas.DocsConfiguration = { instances: [], ...partialConfig };
-    const visitor = await OnlyVersionedNavigation.create({} as RuleContext);
+    const visitor = await NavigationConflicts.create({} as RuleContext);
     const fileVisitor = visitor.file;
     if (fileVisitor == null) {
         throw new Error("Expected the rule to define a `file` visitor");
@@ -16,7 +16,7 @@ async function runRuleOnConfig(partialConfig: Partial<docsYml.RawSchemas.DocsCon
     return fileVisitor(node);
 }
 
-describe("only-versioned-navigation", () => {
+describe("navigation-conflicts", () => {
     it("allows navigation on its own", async () => {
         const violations = await runRuleOnConfig({
             navigation: [{ page: "Home", path: "./home.mdx" }]

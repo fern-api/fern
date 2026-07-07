@@ -3,10 +3,10 @@ import { AccentColorContrastRule } from "./rules/accent-color-contrast/index.js"
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared/index.js";
 import { FilepathsExistRule } from "./rules/filepaths-exist/index.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
+import { NavigationConflicts } from "./rules/navigation-conflicts/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
-import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation/index.js";
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
@@ -28,7 +28,7 @@ const allRules = [
     ValidOpenApiExamples, // Validate human examples in OpenAPI specs
     NoNonComponentRefsRule, // Check non-component references (will skip v2 files)
     ValidLocalReferencesRule, // Validate that local references actually exist
-    OnlyVersionedNavigation,
+    NavigationConflicts,
     ValidateVersionFileRule,
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
