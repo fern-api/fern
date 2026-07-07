@@ -54,6 +54,7 @@ function aliasType(aliasOf: TypeReference): TypeDeclaration {
 function inlinedBody(properties: Record<string, TypeReference>): HttpRequestBody {
     return {
         type: "inlinedRequestBody",
+        extends: [],
         properties: Object.entries(properties).map(([name, valueType]) => ({ name, valueType }))
     } as unknown as HttpRequestBody;
 }
@@ -222,6 +223,25 @@ describe("resolveGlobalParameterApplicability", () => {
                 types: { Config: objectType({ properties: { currency: stringType() } }) }
             });
             expect(endpoints[0]?.globalParameters).toBeUndefined();
+        });
+
+        it("resolves inherited properties via an inlined body's extends (OpenAPI path, no extendedProperties)", () => {
+            const ep = endpoint({ id: "e", requestBody: inlinedBody({ query: stringType() }) });
+            // Simulate the OpenAPI importer: inlined body declares `extends` but leaves
+            // `extendedProperties` empty. The inherited `config.currency` must still resolve.
+            const body = ep.requestBody as unknown as { extends: { typeId: string }[] };
+            body.extends = [{ typeId: "Base" }];
+            const { endpoints } = resolve({
+                globalParameters: [
+                    globalParam({ id: "currency", location: "body", target: "config.currency", apply: "auto" })
+                ],
+                endpoints: [ep],
+                types: {
+                    Base: objectType({ properties: { config: named("Config") } }),
+                    Config: objectType({ properties: { currency: stringType() } })
+                }
+            });
+            expect(endpoints[0]?.globalParameters).toEqual(["currency"]);
         });
 
         it("resolves inherited properties via extends", () => {

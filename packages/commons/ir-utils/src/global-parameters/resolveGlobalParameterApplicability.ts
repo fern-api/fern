@@ -151,6 +151,7 @@ function requestBodyContainsPath({
     }
     switch (requestBody.type) {
         case "inlinedRequestBody": {
+            const seen = new Set<string>();
             const properties: PropertyEntry[] = [
                 ...requestBody.properties.map((property) => ({
                     wireValue: getWireValue(property.name),
@@ -161,7 +162,12 @@ function requestBodyContainsPath({
                     valueType: property.valueType
                 }))
             ];
-            return propertiesContainPath({ properties, segments, types, seen: new Set() });
+            // In the OpenAPI path, `extendedProperties` is not populated (that pass only runs
+            // for the Fern definition), so inherited properties must be collected from `extends`.
+            for (const extension of requestBody.extends) {
+                properties.push(...collectPropertiesFromNamedType({ typeId: extension.typeId, types, seen }));
+            }
+            return propertiesContainPath({ properties, segments, types, seen });
         }
         case "reference":
             return typeReferenceContainsPath({
@@ -280,6 +286,26 @@ function resolveObjectProperties({
         default:
             return assertNever(typeReference);
     }
+}
+
+function collectPropertiesFromNamedType({
+    typeId,
+    types,
+    seen
+}: {
+    typeId: string;
+    types: Record<string, TypeDeclaration>;
+    seen: Set<string>;
+}): PropertyEntry[] {
+    if (seen.has(typeId)) {
+        return [];
+    }
+    seen.add(typeId);
+    const declaration = types[typeId];
+    if (declaration == null || declaration.shape.type !== "object") {
+        return [];
+    }
+    return collectObjectProperties({ object: declaration.shape, types, seen });
 }
 
 function collectObjectProperties({
