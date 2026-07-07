@@ -1636,7 +1636,7 @@ function isGitLibraryInput(
     return "git" in input;
 }
 
-function parseLibrariesConfiguration(
+export function parseLibrariesConfiguration(
     libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> | undefined
 ): Record<string, docsYml.ParsedLibraryConfiguration> | undefined {
     if (libraries == null) {
@@ -1644,17 +1644,10 @@ function parseLibrariesConfiguration(
     }
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
-        if (!isGitLibraryInput(config.input)) {
-            throw new CliError({
-                message: `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`,
-                code: CliError.Code.ConfigError
-            });
-        }
         result[name] = {
-            input: {
-                git: config.input.git,
-                subpath: config.input.subpath
-            },
+            input: isGitLibraryInput(config.input)
+                ? { git: config.input.git, subpath: config.input.subpath }
+                : { path: config.input.path },
             output: {
                 path: config.output.path
             },

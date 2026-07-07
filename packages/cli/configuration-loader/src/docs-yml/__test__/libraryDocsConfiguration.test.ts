@@ -1,4 +1,7 @@
+import { docsYml } from "@fern-api/configuration";
 import { describe, expect, it } from "vitest";
+
+import { parseLibrariesConfiguration } from "../parseDocsConfiguration.js";
 
 /**
  * Tests for library docs configuration parsing.
@@ -292,51 +295,24 @@ describe("library docs configuration", () => {
     });
 
     describe("parseLibrariesConfiguration", () => {
-        interface LibraryConfiguration {
-            input: {
-                git: string;
-                subpath: string | undefined;
-            };
-            output: {
-                path: string;
-            };
-            lang: "python" | "cpp";
+        function isGitInput(
+            input: docsYml.ParsedLibraryConfiguration["input"]
+        ): input is docsYml.ParsedLibraryGitInput {
+            return "git" in input;
         }
 
-        // Helper to simulate the parsing logic
-        function parseLibrariesConfiguration(
-            libraries:
-                | Record<
-                      string,
-                      { input: { git: string; subpath?: string }; output: { path: string }; lang: "python" | "cpp" }
-                  >
-                | undefined
-        ): Record<string, LibraryConfiguration> | undefined {
-            if (libraries == null) {
-                return undefined;
-            }
-            const result: Record<string, LibraryConfiguration> = {};
-            for (const [name, config] of Object.entries(libraries)) {
-                result[name] = {
-                    input: {
-                        git: config.input.git,
-                        subpath: config.input.subpath
-                    },
-                    output: {
-                        path: config.output.path
-                    },
-                    lang: config.lang
-                };
-            }
-            return result;
+        function isPathInput(
+            input: docsYml.ParsedLibraryConfiguration["input"]
+        ): input is docsYml.ParsedLibraryPathInput {
+            return "path" in input;
         }
 
         it("should return undefined for undefined input", () => {
             expect(parseLibrariesConfiguration(undefined)).toBeUndefined();
         });
 
-        it("should parse single library configuration", () => {
-            const rawLibraries = {
+        it("should parse single git library configuration", () => {
+            const rawLibraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> = {
                 "my-sdk": {
                     input: {
                         git: "https://github.com/acme/sdk-python"
@@ -344,7 +320,7 @@ describe("library docs configuration", () => {
                     output: {
                         path: "./static/sdk-docs"
                     },
-                    lang: "python" as const
+                    lang: "python"
                 }
             };
 
@@ -353,52 +329,16 @@ describe("library docs configuration", () => {
             expect(result).toBeDefined();
             const mySdk = result?.["my-sdk"];
             expect(mySdk).toBeDefined();
-            expect(mySdk?.input.git).toBe("https://github.com/acme/sdk-python");
-            expect(mySdk?.input.subpath).toBeUndefined();
+            expect(mySdk != null && isGitInput(mySdk.input) && mySdk.input.git).toBe(
+                "https://github.com/acme/sdk-python"
+            );
+            expect(mySdk != null && isGitInput(mySdk.input) ? mySdk.input.subpath : "unset").toBeUndefined();
             expect(mySdk?.output.path).toBe("./static/sdk-docs");
             expect(mySdk?.lang).toBe("python");
         });
 
-        it("should parse multiple library configurations", () => {
-            const rawLibraries = {
-                "python-sdk": {
-                    input: {
-                        git: "https://github.com/acme/sdk-python"
-                    },
-                    output: {
-                        path: "./static/python-docs"
-                    },
-                    lang: "python" as const
-                },
-                "cpp-sdk": {
-                    input: {
-                        git: "https://github.com/acme/sdk-cpp",
-                        subpath: "src/lib"
-                    },
-                    output: {
-                        path: "./static/cpp-docs"
-                    },
-                    lang: "cpp" as const
-                }
-            };
-
-            const result = parseLibrariesConfiguration(rawLibraries);
-
-            expect(result).toBeDefined();
-            expect(Object.keys(result ?? {})).toHaveLength(2);
-
-            const pythonSdk = result?.["python-sdk"];
-            expect(pythonSdk?.input.git).toBe("https://github.com/acme/sdk-python");
-            expect(pythonSdk?.lang).toBe("python");
-
-            const cppSdk = result?.["cpp-sdk"];
-            expect(cppSdk?.input.git).toBe("https://github.com/acme/sdk-cpp");
-            expect(cppSdk?.input.subpath).toBe("src/lib");
-            expect(cppSdk?.lang).toBe("cpp");
-        });
-
-        it("should preserve subpath when provided", () => {
-            const rawLibraries = {
+        it("should preserve subpath for git input when provided", () => {
+            const rawLibraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> = {
                 "my-sdk": {
                     input: {
                         git: "https://github.com/acme/monorepo",
@@ -407,14 +347,75 @@ describe("library docs configuration", () => {
                     output: {
                         path: "./docs/sdk"
                     },
-                    lang: "python" as const
+                    lang: "python"
                 }
             };
 
             const result = parseLibrariesConfiguration(rawLibraries);
 
             const mySdk = result?.["my-sdk"];
-            expect(mySdk?.input.subpath).toBe("packages/sdk/python");
+            expect(mySdk != null && isGitInput(mySdk.input) ? mySdk.input.subpath : undefined).toBe(
+                "packages/sdk/python"
+            );
+        });
+
+        it("should preserve path input instead of throwing", () => {
+            const rawLibraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> = {
+                "my-sdk": {
+                    input: {
+                        path: "./libs/python-sdk"
+                    },
+                    output: {
+                        path: "./static/sdk-docs"
+                    },
+                    lang: "python"
+                }
+            };
+
+            expect(() => parseLibrariesConfiguration(rawLibraries)).not.toThrow();
+
+            const result = parseLibrariesConfiguration(rawLibraries);
+            const mySdk = result?.["my-sdk"];
+            expect(mySdk != null && isPathInput(mySdk.input) ? mySdk.input.path : undefined).toBe("./libs/python-sdk");
+            expect(mySdk?.output.path).toBe("./static/sdk-docs");
+            expect(mySdk?.lang).toBe("python");
+        });
+
+        it("should parse a mix of git and path libraries", () => {
+            const rawLibraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> = {
+                "git-sdk": {
+                    input: {
+                        git: "https://github.com/acme/sdk-python"
+                    },
+                    output: {
+                        path: "./static/python-docs"
+                    },
+                    lang: "python"
+                },
+                "path-sdk": {
+                    input: {
+                        path: "./libs/cpp-sdk"
+                    },
+                    output: {
+                        path: "./static/cpp-docs"
+                    },
+                    lang: "cpp"
+                }
+            };
+
+            const result = parseLibrariesConfiguration(rawLibraries);
+
+            expect(Object.keys(result ?? {})).toHaveLength(2);
+
+            const gitSdk = result?.["git-sdk"];
+            expect(gitSdk != null && isGitInput(gitSdk.input) && gitSdk.input.git).toBe(
+                "https://github.com/acme/sdk-python"
+            );
+
+            const pathSdk = result?.["path-sdk"];
+            expect(pathSdk != null && isPathInput(pathSdk.input) ? pathSdk.input.path : undefined).toBe(
+                "./libs/cpp-sdk"
+            );
         });
     });
 

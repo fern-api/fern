@@ -1,0 +1,8 @@
+- summary: |
+    Fix `fern docs dev` and `fern generate --docs` crashing with a blank page when
+    `docs.yml` contains a library with a `path` input. Library `path` inputs are now
+    preserved during parsing instead of throwing; the docs renderer only consumes the
+    library `output.path`, so this is behavior-preserving. This also resolves the
+    contradiction where `fern docs md generate --local` required a `path` input that
+    the dev server and generator rejected.
+  type: fix

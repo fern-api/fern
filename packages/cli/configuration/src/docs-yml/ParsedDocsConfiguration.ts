@@ -525,18 +525,27 @@ export type ParsedApiReferenceLayoutItem =
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;
 
+/** Library source located in a git repository. */
+export interface ParsedLibraryGitInput {
+    /** GitHub URL to the repository containing the library source code */
+    git: string;
+    /** Optional path within the repository to the library source */
+    subpath: string | undefined;
+}
+
+/** Library source located at a local path. Only consumed by `fern docs md generate --local`. */
+export interface ParsedLibraryPathInput {
+    /** Local path to the library source */
+    path: string;
+}
+
 /**
  * Parsed configuration for a library documentation source.
  * Used by `fern docs md generate` to generate MDX files from library source code.
  */
 export interface ParsedLibraryConfiguration {
     /** Configuration for the library source location */
-    input: {
-        /** GitHub URL to the repository containing the library source code */
-        git: string;
-        /** Optional path within the repository to the library source */
-        subpath: string | undefined;
-    };
+    input: ParsedLibraryGitInput | ParsedLibraryPathInput;
     /** Configuration for the library documentation output */
     output: {
         /** The output directory where MDX files will be generated */
