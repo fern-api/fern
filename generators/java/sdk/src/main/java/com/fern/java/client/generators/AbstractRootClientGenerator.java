@@ -1674,7 +1674,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 // Collect custom properties info for OAuth token supplier
                 OAuthAccessTokenRequestProperties requestProperties =
                         clientCredentials.getTokenEndpoint().getRequestProperties();
-                List<String> customPropertyNames = new ArrayList<>();
+                List<OAuthCustomProperty> customPropertyNames = new ArrayList<>();
                 // The scopes request property (if mapped) is a required property on the token request and
                 // must be passed through to the OAuth token supplier, ordered before the remaining custom
                 // properties so the generated staged builder receives them in declaration order.
@@ -1688,7 +1688,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .getName())
                             .getCamelCase()
                             .getSafeName();
-                    customPropertyNames.add(scopesPropName);
+                    customPropertyNames.add(new OAuthCustomProperty(
+                            scopesPropName,
+                            getRequestPropertyTypeName(
+                                    requestProperties.getScopes().get())));
                 }
                 if (requestProperties.getCustomProperties().isPresent()) {
                     for (RequestProperty customProp :
@@ -1703,7 +1706,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                         .getName())
                                 .getCamelCase()
                                 .getSafeName();
-                        customPropertyNames.add(propName);
+                        customPropertyNames.add(
+                                new OAuthCustomProperty(propName, getRequestPropertyTypeName(customProp)));
                     }
                 }
 
@@ -1717,7 +1721,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 for (var header : httpEndpoint.getHeaders()) {
                     String headerName =
                             NameUtils.getName(header.getName()).getCamelCase().getSafeName();
-                    customPropertyNames.add(headerName);
+                    TypeName headerType = clientGeneratorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(false, header.getValueType());
+                    customPropertyNames.add(new OAuthCustomProperty(headerName, headerType));
                 }
 
                 Subpackage subpackage = clientGeneratorContext
@@ -1771,8 +1778,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
 
                     // Create setters for custom properties
-                    for (String propName : customPropertyNames) {
-                        createSetter(propName, Optional.empty(), Optional.empty());
+                    for (OAuthCustomProperty customProp : customPropertyNames) {
+                        createSetter(customProp.name, Optional.empty(), Optional.empty(), Optional.of(customProp.type));
                     }
 
                     if (generatorContext.isEndpointSecurity()) {
@@ -1840,8 +1847,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         // Build OAuthTokenSupplier constructor call with custom properties
                         CodeBlock.Builder oauthConstructorArgs =
                                 CodeBlock.builder().add("this.clientId, this.clientSecret");
-                        for (String customPropName : customPropertyNames) {
-                            oauthConstructorArgs.add(", this.$L", customPropName);
+                        for (OAuthCustomProperty customProp : customPropertyNames) {
+                            oauthConstructorArgs.add(", this.$L", customProp.name);
                         }
                         oauthConstructorArgs.add(", authClient");
 
@@ -1862,7 +1869,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     OAuthClientCredentials clientCredentials,
                     String tokenOverridePropertyName,
                     String tokenPrefix,
-                    List<String> customPropertyNames,
+                    List<OAuthCustomProperty> customPropertyNames,
                     ClassName authClientClassName,
                     ClassName oauthTokenSupplierClassName) {
 
@@ -1912,18 +1919,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .build());
 
                 // Add custom property fields to credentials auth
-                for (String propName : customPropertyNames) {
-                    credentialsAuthBuilder.addField(FieldSpec.builder(String.class, propName)
+                for (OAuthCustomProperty customProp : customPropertyNames) {
+                    credentialsAuthBuilder.addField(FieldSpec.builder(customProp.type, customProp.name)
                             .addModifiers(Modifier.PRIVATE)
                             .initializer("null")
                             .build());
 
                     // Add setter for custom property
-                    credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(propName)
+                    credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(customProp.name)
                             .addModifiers(Modifier.PUBLIC)
-                            .addParameter(String.class, propName)
+                            .addParameter(customProp.type, customProp.name)
                             .returns(credentialsAuthClassName)
-                            .addStatement("this.$L = $L", propName, propName)
+                            .addStatement("this.$L = $L", customProp.name, customProp.name)
                             .addStatement("return this")
                             .build());
                 }
@@ -1950,8 +1957,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
                 // Build OAuthTokenSupplier constructor call with custom properties
                 CodeBlock.Builder oauthConstructorArgs = CodeBlock.builder().add("this.clientId, this.clientSecret");
-                for (String customPropName : customPropertyNames) {
-                    oauthConstructorArgs.add(", this.$L", customPropName);
+                for (OAuthCustomProperty customProp : customPropertyNames) {
+                    oauthConstructorArgs.add(", this.$L", customProp.name);
                 }
                 oauthConstructorArgs.add(", authClient");
 
@@ -2270,6 +2277,39 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 }
                 return false;
             }
+
+            private TypeName getRequestPropertyTypeName(RequestProperty requestProperty) {
+                TypeReference valueType = requestProperty
+                        .getProperty()
+                        .visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                            @Override
+                            public TypeReference visitQuery(QueryParameter query) {
+                                return query.getValueType();
+                            }
+
+                            @Override
+                            public TypeReference visitBody(ObjectProperty body) {
+                                return body.getValueType();
+                            }
+
+                            @Override
+                            public TypeReference _visitUnknown(Object unknownType) {
+                                return null;
+                            }
+                        });
+                return clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
+            }
+        }
+
+        /** A get-token request property carried through to the OAuth token supplier, with its resolved Java type. */
+        private final class OAuthCustomProperty {
+            private final String name;
+            private final TypeName type;
+
+            private OAuthCustomProperty(String name, TypeName type) {
+                this.name = name;
+                this.type = type;
+            }
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {
@@ -2359,13 +2399,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         private void createSetter(
                 String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
+            createSetter(fieldName, environmentVariable, literal, Optional.empty());
+        }
+
+        private void createSetter(
+                String fieldName,
+                Optional<EnvironmentVariable> environmentVariable,
+                Optional<Literal> literal,
+                Optional<TypeName> customType) {
             // Skip if already created to prevent duplicate fields/methods
             if (createdFields.contains(fieldName)) {
                 return;
             }
             createdFields.add(fieldName);
 
-            FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName).addModifiers(Modifier.PRIVATE);
+            TypeName fieldType = customType.orElse(ClassName.get(String.class));
+            FieldSpec.Builder field = FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
             if (environmentVariable.isPresent()) {
                 field.initializer("System.getenv($S)", environmentVariable.get().get());
             } else if (literal.isPresent()) {
@@ -2395,7 +2444,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, fieldName)
+                    .addParameter(fieldType, fieldName)
                     .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                     .addJavadoc("Sets $L", fieldName)
                     .addStatement("this.$L = $L", fieldName, fieldName)

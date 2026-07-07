@@ -287,14 +287,14 @@ public class SeedOauthClientCredentialsClientBuilder {
 
         private final String clientSecret;
 
-        private String scope = null;
+        private Optional<String> scope = null;
 
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
         }
 
-        public _CredentialsAuth scope(String scope) {
+        public _CredentialsAuth scope(Optional<String> scope) {
             this.scope = scope;
             return this;
         }

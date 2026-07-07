@@ -34,10 +34,8 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeSpec.Builder;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
@@ -104,7 +102,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getCamelCase()
                 .getSafeName();
 
-        List<Map.Entry<String, String>> customPropertiesWithNames = new ArrayList<>();
+        List<OAuthTokenSupplierProperty> customPropertiesWithNames = new ArrayList<>();
         // The scopes request property (if mapped) is a required property on the token request and
         // must be set on the staged builder, ordered before the remaining custom properties.
         if (requestProperties.getScopes().isPresent()
@@ -117,7 +115,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                             .getName())
                     .getCamelCase()
                     .getSafeName();
-            customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(scopesPropName, scopesPropName));
+            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                    scopesPropName,
+                    getPropertyTypeName(requestProperties.getScopes().get())));
         }
         if (requestProperties.getCustomProperties().isPresent()) {
             for (RequestProperty customProp :
@@ -132,14 +132,17 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                 .getName())
                         .getCamelCase()
                         .getSafeName();
-                customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(propName, propName));
+                customPropertiesWithNames.add(
+                        new OAuthTokenSupplierProperty(propName, getPropertyTypeName(customProp)));
             }
         }
 
         for (var header : httpEndpoint.getHeaders()) {
             String headerName =
                     NameUtils.getName(header.getName()).getCamelCase().getSafeName();
-            customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(headerName, headerName));
+            TypeName headerType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, header.getValueType());
+            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(headerName, headerType));
         }
 
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
@@ -235,8 +238,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addParameter(String.class, CLIENT_ID_FIELD_NAME)
                 .addParameter(String.class, CLIENT_SECRET_FIELD_NAME);
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
-            constructorBuilder.addParameter(String.class, customProp.getKey());
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            constructorBuilder.addParameter(customProp.type, customProp.name);
         }
 
         constructorBuilder
@@ -244,8 +247,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", CLIENT_ID_FIELD_NAME, CLIENT_ID_FIELD_NAME)
                 .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME);
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
-            constructorBuilder.addStatement("this.$L = $L", customProp.getKey(), customProp.getKey());
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            constructorBuilder.addStatement("this.$L = $L", customProp.name, customProp.name);
         }
 
         constructorBuilder.addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME);
@@ -261,9 +264,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(String.class, CLIENT_SECRET_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .build());
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
             oauthTypeSpecBuilder.addField(
-                    FieldSpec.builder(String.class, customProp.getKey(), Modifier.PRIVATE, Modifier.FINAL)
+                    FieldSpec.builder(customProp.type, customProp.name, Modifier.PRIVATE, Modifier.FINAL)
                             .build());
         }
 
@@ -326,7 +329,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             TypeName fetchTokenRequestType,
             String clientIdPropertyName,
             String clientSecretPropertyName,
-            List<Map.Entry<String, String>> customPropertiesWithNames,
+            List<OAuthTokenSupplierProperty> customPropertiesWithNames,
             HttpEndpoint httpEndpoint) {
         // Required properties (clientId/clientSecret) must come first for staged builders,
         // followed by optional custom properties (like scope) which are in _FinalStage
@@ -335,8 +338,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
                 .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
 
-        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
-            requestBuilderCode.add(".$L($L)", customProp.getValue(), customProp.getKey());
+        for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            requestBuilderCode.add(".$L($L)", customProp.name, customProp.name);
         }
 
         requestBuilderCode.add(".build()");
@@ -406,6 +409,39 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         // Check if the type (or inner type) is Long (wrapper class) or long (primitive)
         String typeString = typeToCheck.toString();
         return typeString.equals("java.lang.Long") || typeString.equals("Long") || typeString.equals("long");
+    }
+
+    private TypeName getPropertyTypeName(RequestProperty requestProperty) {
+        TypeReference valueType = requestProperty
+                .getProperty()
+                .visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                    @Override
+                    public TypeReference visitQuery(QueryParameter query) {
+                        return query.getValueType();
+                    }
+
+                    @Override
+                    public TypeReference visitBody(ObjectProperty body) {
+                        return body.getValueType();
+                    }
+
+                    @Override
+                    public TypeReference _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
+        return clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
+    }
+
+    /** A get-token request property carried through to the token supplier, with its resolved Java type. */
+    private static final class OAuthTokenSupplierProperty {
+        private final String name;
+        private final TypeName type;
+
+        private OAuthTokenSupplierProperty(String name, TypeName type) {
+            this.name = name;
+            this.type = type;
+        }
     }
 
     private boolean isLiteralProperty(RequestProperty requestProperty) {

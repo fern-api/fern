@@ -1,0 +1,10 @@
+- summary: |
+    Fix the OAuth `OAuthTokenSupplier` generator to derive each get-token request
+    property's Java type from its IR `TypeReference` (via `PoetTypeNameMapper`)
+    instead of hardcoding `String`. Previously a non-string token-request property
+    (e.g. `permissions: Optional<List<String>>`) generated a `String` field and a
+    `.permissions(String)` builder call that did not match the request builder's
+    typed setter, breaking compilation of the entire SDK. The generated custom
+    property fields, constructor parameters, client-builder setters, and request
+    builder calls now use the property's real type.
+  type: fix
