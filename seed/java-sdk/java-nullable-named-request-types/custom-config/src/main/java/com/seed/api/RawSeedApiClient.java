@@ -31,16 +31,16 @@ public class RawSeedApiClient {
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request) {
-        return postWithNullableNamedRequestBodyType(id, request, null);
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request) {
+        return postWithNullableNamedRequestBodyType(pathId, request, null);
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNullableNamedRequestBodyType")
-                .addPathSegment(id);
+                .addPathSegment(pathId);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -83,33 +83,35 @@ public class RawSeedApiClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
-    public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(String id) {
+    public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(String pathId) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build());
+                pathId, NonNullableObject.builder().build());
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, RequestOptions requestOptions) {
+            String pathId, RequestOptions requestOptions) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build(), requestOptions);
+                pathId, NonNullableObject.builder().build(), requestOptions);
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request) {
-        return postWithNonNullableNamedRequestBodyType(id, request, null);
+            String pathId, NonNullableObject request) {
+        return postWithNonNullableNamedRequestBodyType(pathId, request, null);
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String pathId, NonNullableObject request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNonNullableNamedRequestBodyType")
-                .addPathSegment(id);
+                .addPathSegment(pathId);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -152,6 +154,8 @@ public class RawSeedApiClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }

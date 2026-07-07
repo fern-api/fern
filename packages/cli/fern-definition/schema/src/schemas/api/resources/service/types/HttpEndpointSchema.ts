@@ -21,4 +21,9 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     transport?: FernDefinition.ServiceTransport;
     source?: FernDefinition.SourceSchema;
     retries?: FernDefinition.RetriesConfiguration;
+    /**
+     * List of global parameter IDs that this endpoint opts into.
+     * Used with apply: explicit mode.
+     */
+    "global-parameters"?: string[];
 }

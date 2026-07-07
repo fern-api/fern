@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.42.0
+  changelogEntry:
+    - summary: |
+        Wire up OAuth client-credentials authentication in the generated client. When an
+        OAuth client-credentials scheme is defined, the generated `ClientConfig` now carries
+        the resolved token endpoint and the `HttpClient` automatically fetches, caches, and
+        refreshes a bearer token before making authenticated requests. Previously the OAuth
+        scaffolding was present but never connected to the request flow.
+
+        The token exchange now honors the token endpoint's configured request/response
+        property mapping instead of a hardcoded `client_id`/`client_secret`/`grant_type`
+        shape: the request body is built from the configured property names (e.g. camelCase
+        `clientId`/`clientSecret`), literal properties such as `grant_type` are only sent when
+        the contract declares them, and the access token / expiry are read from the configured
+        response property names.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 66
 - version: 0.41.2
   changelogEntry:
     - summary: |

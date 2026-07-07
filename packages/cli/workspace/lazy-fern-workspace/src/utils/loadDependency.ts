@@ -383,6 +383,7 @@ async function getAreRootApiFilesEquivalent(
         },
         "path-parameters": noop,
         variables: noop,
+        "global-parameters": noop,
         pagination: noop
     });
     return {

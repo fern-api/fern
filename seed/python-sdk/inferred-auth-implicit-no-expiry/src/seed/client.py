@@ -90,9 +90,7 @@ class SeedInferredAuthImplicitNoExpiry:
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         inferred_auth_token_provider = InferredAuthTokenProvider(
             x_api_key=x_api_key,
@@ -259,9 +257,7 @@ class AsyncSeedInferredAuthImplicitNoExpiry:
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         inferred_auth_token_provider = AsyncInferredAuthTokenProvider(
             x_api_key=x_api_key,

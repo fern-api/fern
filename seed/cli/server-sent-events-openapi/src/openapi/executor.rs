@@ -612,6 +612,7 @@ fn parse_and_validate_inputs(
     is_media_upload: bool,
     base_url_override: Option<&str>,
     extra_headers: &[(String, String)],
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
 ) -> Result<ExecutionInput, CliError> {
     let params: Map<String, Value> = if let Some(p) = params_json {
         serde_json::from_str(p)
@@ -634,11 +635,24 @@ fn parse_and_validate_inputs(
         }
     };
 
+    // Declared parameters whose value will be supplied by a resolved
+    // global parameter (targeting the same wire name). These are exempt
+    // from the required-param checks below: their value is injected after
+    // validation (see the `extra_global_params` loop), and a required
+    // global without a resolved value already errored in
+    // `build_global_parameter_overrides`. Without this exemption a
+    // `location: path` global (whose OpenAPI target must be declared as a
+    // required path variable) would always trip the check before its
+    // value is ever applied.
+    let global_param_targets: std::collections::HashSet<&str> =
+        extra_global_params.iter().map(|gp| gp.target.as_str()).collect();
+
     for param_name in &method.parameter_order {
         if let Some(param_def) = method.parameters.get(param_name) {
             if param_def.required
                 && param_def.location.as_deref() == Some("path")
                 && !params.contains_key(param_name)
+                && !global_param_targets.contains(param_name.as_str())
             {
                 let hint = missing_param_hint(param_def, param_name);
                 return Err(CliError::Validation(format!(
@@ -649,7 +663,10 @@ fn parse_and_validate_inputs(
     }
 
     for (param_name, param_def) in &method.parameters {
-        if param_def.required && !params.contains_key(param_name) {
+        if param_def.required
+            && !params.contains_key(param_name)
+            && !global_param_targets.contains(param_name.as_str())
+        {
             // When --json is provided, body-located required params are satisfied
             // by the JSON payload — skip their individual-flag validation.
             if param_def.location.as_deref() == Some("body") && body_json.is_some() {
@@ -752,9 +769,44 @@ fn parse_and_validate_inputs(
         }
     }
 
+    // Inject resolved `x-fern-global-parameters` by location. Header
+    // and body params are stamped here; query and path params are added
+    // to `non_header_params` so `build_url` handles them.
+    for gp in extra_global_params {
+        use crate::openapi::discovery::GlobalParameterLocation;
+        match gp.location {
+            GlobalParameterLocation::Header => {
+                if !header_params.iter().any(|(k, _)| k.eq_ignore_ascii_case(&gp.target)) {
+                    header_params.push((gp.target.clone(), gp.value.clone()));
+                }
+            }
+            GlobalParameterLocation::Query => {
+                if !non_header_params.contains_key(&gp.target) {
+                    non_header_params.insert(
+                        gp.target.clone(),
+                        Value::String(gp.value.clone()),
+                    );
+                }
+            }
+            GlobalParameterLocation::Body => {
+                // Body injection is deferred until after body assembly
+                // so that global body params are merged into both the
+                // `--json` path and the per-field-flags path.
+            }
+            GlobalParameterLocation::Path => {
+                if !non_header_params.contains_key(&gp.target) {
+                    non_header_params.insert(
+                        gp.target.clone(),
+                        Value::String(gp.value.clone()),
+                    );
+                }
+            }
+        }
+    }
+
     // The conflict checks above guarantee that `body_json` and
-    // `body_from_flags` are never both populated, so the body is sourced
-    // from exactly one channel here.
+    // `body_from_flags` are never both populated (before global-param
+    // injection), so the body is sourced from exactly one channel here.
     let body: Option<Value> = if let Some(b) = body_json {
         let mut json_val: Value = serde_json::from_str(b)
             .map_err(|e| CliError::Validation(format!("Invalid --json body: {e}")))?;
@@ -777,6 +829,14 @@ fn parse_and_validate_inputs(
     } else {
         None
     };
+
+    // Merge body-location global parameters into the assembled body.
+    // This runs after body assembly so globals are injected into both
+    // the `--json` and per-field-flags paths. A value the user already
+    // supplied at the target path — including a nested path like
+    // `config.currency` — is never overwritten (per-op wins, enforced by
+    // `set_nested_value_if_absent`, which walks the dotted path).
+    let body = merge_global_body_params(body, extra_global_params);
 
     // Validate the assembled body against the request schema regardless of
     // how it was built (per-field flags, `--json`, or both). The previous
@@ -1907,6 +1967,7 @@ pub async fn execute_method(
     no_stream: bool,
     debug: bool,
     extra_headers: &[(String, String)],
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
 ) -> Result<Option<Value>, CliError> {
     let binary_flag = method
         .binary_request_body
@@ -1925,7 +1986,7 @@ pub async fn execute_method(
         )));
     }
 
-    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers)?;
+    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers, extra_global_params)?;
 
     // Human-readable identifier for the operation, used in
     // `x-fern-sdk-return-value` extraction errors so the user can find
@@ -3597,6 +3658,53 @@ fn build_multipart_body(
     Ok((body, content_type))
 }
 
+/// Merge body-location global parameters into an assembled body value.
+/// Handles both the `--json` and per-field-flags body paths. Non-object
+/// bodies (arrays, scalars) are left untouched since we can't inject
+/// named fields into them. When the body is `None`, a new object is
+/// created to carry the global fields.
+fn merge_global_body_params(
+    body: Option<Value>,
+    extra_global_params: &[crate::openapi::app::ResolvedGlobalParam],
+) -> Option<Value> {
+    use crate::openapi::discovery::GlobalParameterLocation;
+
+    let has_body_globals = extra_global_params
+        .iter()
+        .any(|gp| gp.location == GlobalParameterLocation::Body);
+    if !has_body_globals {
+        return body;
+    }
+
+    match body {
+        Some(Value::Object(mut m)) => {
+            for gp in extra_global_params
+                .iter()
+                .filter(|gp| gp.location == GlobalParameterLocation::Body)
+            {
+                // Per-op wins: only inject where the user hasn't already
+                // supplied a value at the (possibly nested) target path.
+                set_nested_value_if_absent(&mut m, &gp.target, Value::String(gp.value.clone()));
+            }
+            Some(Value::Object(m))
+        }
+        Some(other) => {
+            // Non-object body — can't inject named fields; leave as-is.
+            Some(other)
+        }
+        None => {
+            let mut m = Map::new();
+            for gp in extra_global_params
+                .iter()
+                .filter(|gp| gp.location == GlobalParameterLocation::Body)
+            {
+                set_nested_value_if_absent(&mut m, &gp.target, Value::String(gp.value.clone()));
+            }
+            Some(Value::Object(m))
+        }
+    }
+}
+
 /// Intentional duplication from `graphql/executor.rs` — no shared module by design.
 fn set_nested_value(obj: &mut Map<String, Value>, path: &str, value: Value) {
     match path.split_once('.') {
@@ -3609,6 +3717,30 @@ fn set_nested_value(obj: &mut Map<String, Value>, path: &str, value: Value) {
                 .or_insert_with(|| Value::Object(Map::new()));
             if let Value::Object(nested_map) = nested {
                 set_nested_value(nested_map, tail, value);
+            }
+        }
+    }
+}
+
+/// Like [`set_nested_value`] but never overwrites a value the user has
+/// already supplied: it no-ops on an existing leaf and never replaces a
+/// non-object node encountered while walking a dotted path. This is what
+/// enforces "per-op wins" for body-location global parameters — a flat
+/// `contains_key(target)` check can't see a nested target like
+/// `config.currency` (the assembled body has no top-level key literally
+/// named `"config.currency"`), so the presence test must walk the path.
+fn set_nested_value_if_absent(obj: &mut Map<String, Value>, path: &str, value: Value) {
+    match path.split_once('.') {
+        None => {
+            obj.entry(path.to_string()).or_insert(value);
+        }
+        Some((head, tail)) => {
+            let nested = obj
+                .entry(head.to_string())
+                .or_insert_with(|| Value::Object(Map::new()));
+            // If the user already put a non-object here, leave it untouched.
+            if let Value::Object(nested_map) = nested {
+                set_nested_value_if_absent(nested_map, tail, value);
             }
         }
     }
@@ -5494,7 +5626,7 @@ mod tests {
         let params_json =
             r#"{"user_id": "123", "X-Custom-Header": "my-value", "limit": "10"}"#;
         let input =
-            parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[]).unwrap();
+            parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[]).unwrap();
 
         // Header param should be in header_params
         assert_eq!(input.header_params.len(), 1);
@@ -5823,7 +5955,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "Acme", "count": "3"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap();
 
         // Body must contain both fields, with `count` coerced to a JSON integer.
@@ -5879,6 +6011,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -5925,7 +6058,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -5967,7 +6100,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6018,6 +6151,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -6056,7 +6190,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6095,7 +6229,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6139,7 +6273,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6212,7 +6346,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "not-an-integer"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6261,6 +6395,7 @@ mod tests {
             false,
             None,
             &[],
+            &[],
         )
         .unwrap_err();
         match err {
@@ -6308,7 +6443,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"last\":\"Lincoln\"}", "name.first": "Abraham"}"#;
-        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -6349,7 +6484,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\",\"last\":\"Lincoln\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .unwrap();
         let body = input.body.expect("body should be populated");
         assert_eq!(body, json!({ "name": { "first": "Abraham", "last": "Lincoln" } }));
@@ -6393,7 +6528,7 @@ mod tests {
         };
 
         let params_json = r#"{"name": "{\"first\":\"Abraham\"}"}"#;
-        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
             .expect("required leaf satisfied by ancestor shorthand should pass");
         let body = input.body.expect("body should be populated");
         assert_eq!(body, json!({ "name": { "first": "Abraham" } }));
@@ -6434,7 +6569,7 @@ mod tests {
             ..Default::default()
         };
 
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[])
             .unwrap_err();
         match err {
             CliError::Validation(msg) => {
@@ -9934,7 +10069,7 @@ mod tests {
         let doc = RestDescription::default();
         let method = RestMethod::default();
         let err =
-            parse_and_validate_inputs(&doc, &method, Some("{not json}"), None, false, None, &[]).unwrap_err();
+            parse_and_validate_inputs(&doc, &method, Some("{not json}"), None, false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Invalid --params JSON"));
     }
 
@@ -9943,7 +10078,7 @@ mod tests {
         let doc = RestDescription::default();
         let method = RestMethod::default();
         let err =
-            parse_and_validate_inputs(&doc, &method, None, Some("{not json}"), false, None, &[]).unwrap_err();
+            parse_and_validate_inputs(&doc, &method, None, Some("{not json}"), false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Invalid --json body"));
     }
 
@@ -9963,7 +10098,7 @@ mod tests {
             parameters,
             ..Default::default()
         };
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[]).unwrap_err();
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &[]).unwrap_err();
         assert!(err.to_string().contains("Required parameter 'api_key'"));
     }
 
@@ -10585,6 +10720,7 @@ async fn test_execute_method_dry_run() {
         false, // no_stream
         false, // debug
         &[],
+        &[],
     )
     .await;
 
@@ -10633,6 +10769,7 @@ async fn test_execute_method_missing_path_param() {
         false, // no_retry
         false, // no_stream
         false, // debug
+        &[],
         &[],
     )
     .await;
@@ -10967,4 +11104,359 @@ fn write_http_preamble_duplicate_headers() {
         output.contains("set-cookie: b=2\r\n"),
         "should include second set-cookie value, got: {output}"
     );
+}
+
+// ── Global Parameter Injection Tests ──────────────────────────
+
+#[test]
+fn test_global_param_header_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
+        location: GlobalParameterLocation::Header,
+        target: "X-Api-Version".to_string(),
+        value: "2024-01-01".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(input.header_params[0].0, "X-Api-Version");
+    assert_eq!(input.header_params[0].1, "2024-01-01");
+}
+
+#[test]
+fn test_global_param_header_per_op_override_suppresses() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{
+        GlobalParameterLocation, MethodParameter, RestDescription, RestMethod,
+    };
+
+    let mut parameters = std::collections::HashMap::new();
+    parameters.insert(
+        "X-Api-Version".to_string(),
+        MethodParameter {
+            location: Some("header".to_string()),
+            ..Default::default()
+        },
+    );
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        parameters,
+        ..Default::default()
+    };
+    let params_json = r#"{"X-Api-Version": "per-op-v3"}"#;
+    let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
+        location: GlobalParameterLocation::Header,
+        target: "X-Api-Version".to_string(),
+        value: "global-v1".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        Some(params_json),
+        None,
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(
+        input.header_params[0].1, "per-op-v3",
+        "per-op value should win over global"
+    );
+}
+
+#[test]
+fn test_global_param_query_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "api-version".to_string(),
+        location: GlobalParameterLocation::Query,
+        target: "api_version".to_string(),
+        value: "2024-01-01".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert!(
+        input.query_params.iter().any(|(k, v)| k == "api_version" && v == "2024-01-01"),
+        "query param should appear in query_params: {:?}",
+        input.query_params
+    );
+}
+
+#[test]
+fn test_global_param_body_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
+        location: GlobalParameterLocation::Body,
+        target: "currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    let body = input.body.expect("body should be populated from global param");
+    assert_eq!(body["currency"], "USD");
+}
+
+#[test]
+fn test_global_param_nested_body_injection_when_absent() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // A nested (dotted) body target is created when the user did not
+    // supply it.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "search".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
+        location: GlobalParameterLocation::Body,
+        target: "config.currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        None,
+        Some(r#"{"query":"shoes"}"#),
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    let body = input.body.expect("body should carry the injected nested global");
+    assert_eq!(body["config"]["currency"], "USD");
+    assert_eq!(body["query"], "shoes");
+}
+
+#[test]
+fn test_global_param_nested_body_does_not_clobber_user_value() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // Regression (FER-11190): a body global with a nested target like
+    // `config.currency` must NOT overwrite a value the user supplied at
+    // that same nested path via `--json`. A flat `contains_key("config.
+    // currency")` check misses the nested key and used to clobber it.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "search".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "currency".to_string(),
+        location: GlobalParameterLocation::Body,
+        target: "config.currency".to_string(),
+        value: "USD".to_string(),
+    }];
+    let input = parse_and_validate_inputs(
+        &doc,
+        &method,
+        None,
+        Some(r#"{"config":{"currency":"EUR"}}"#),
+        false,
+        None,
+        &[],
+        &global_params,
+    )
+    .unwrap();
+    let body = input.body.expect("body should be present");
+    assert_eq!(
+        body["config"]["currency"], "EUR",
+        "user-supplied nested value must win over the global default"
+    );
+}
+
+#[test]
+fn test_global_param_path_injection() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    // Path param supplied by global param only (not in method.parameters),
+    // so no required-param validation fires before injection.
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "orgs/{orgId}/users".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "org".to_string(),
+        location: GlobalParameterLocation::Path,
+        target: "orgId".to_string(),
+        value: "my-org-123".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert!(
+        input.full_url.contains("my-org-123"),
+        "path param should be substituted in URL: {}",
+        input.full_url
+    );
+    assert!(
+        !input.full_url.contains("{orgId}"),
+        "template variable should be replaced: {}",
+        input.full_url
+    );
+}
+
+#[test]
+fn test_global_param_path_injection_satisfies_declared_required_param() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{
+        GlobalParameterLocation, MethodParameter, RestDescription, RestMethod,
+    };
+
+    // Regression (FER-11190): the path template variable is ALSO declared
+    // as a required `location: path` parameter (as OpenAPI requires). The
+    // required-param validation must not reject the request when a resolved
+    // global parameter targets that same variable — its value is injected
+    // right after validation.
+    let mut parameters = std::collections::HashMap::new();
+    parameters.insert(
+        "regionId".to_string(),
+        MethodParameter {
+            location: Some("path".to_string()),
+            required: true,
+            ..Default::default()
+        },
+    );
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        path: "regions/{regionId}/items".to_string(),
+        parameter_order: vec!["regionId".to_string()],
+        parameters,
+        ..Default::default()
+    };
+    let global_params = vec![ResolvedGlobalParam {
+        name: "region".to_string(),
+        location: GlobalParameterLocation::Path,
+        target: "regionId".to_string(),
+        value: "us".to_string(),
+    }];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .expect("resolved global must satisfy the declared required path param");
+    assert!(
+        input.full_url.contains("regions/us/items"),
+        "path param should be substituted from the global value: {}",
+        input.full_url
+    );
+    assert!(
+        !input.full_url.contains("{regionId}"),
+        "template variable should be replaced: {}",
+        input.full_url
+    );
+}
+
+#[test]
+fn test_global_param_multiple_locations() {
+    use crate::openapi::app::ResolvedGlobalParam;
+    use crate::openapi::discovery::{GlobalParameterLocation, RestDescription, RestMethod};
+
+    let doc = RestDescription {
+        base_url: Some("https://api.example.com/".to_string()),
+        ..Default::default()
+    };
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        path: "things".to_string(),
+        ..Default::default()
+    };
+    let global_params = vec![
+        ResolvedGlobalParam {
+            name: "tenant".to_string(),
+            location: GlobalParameterLocation::Header,
+            target: "X-Tenant".to_string(),
+            value: "acme".to_string(),
+        },
+        ResolvedGlobalParam {
+            name: "version".to_string(),
+            location: GlobalParameterLocation::Query,
+            target: "version".to_string(),
+            value: "v2".to_string(),
+        },
+        ResolvedGlobalParam {
+            name: "currency".to_string(),
+            location: GlobalParameterLocation::Body,
+            target: "currency".to_string(),
+            value: "EUR".to_string(),
+        },
+    ];
+    let input =
+        parse_and_validate_inputs(&doc, &method, None, None, false, None, &[], &global_params)
+            .unwrap();
+    assert_eq!(input.header_params.len(), 1);
+    assert_eq!(input.header_params[0].0, "X-Tenant");
+    assert!(
+        input.query_params.iter().any(|(k, v)| k == "version" && v == "v2"),
+        "query param should appear in query_params: {:?}",
+        input.query_params
+    );
+    let body = input.body.expect("body should have currency");
+    assert_eq!(body["currency"], "EUR");
 }

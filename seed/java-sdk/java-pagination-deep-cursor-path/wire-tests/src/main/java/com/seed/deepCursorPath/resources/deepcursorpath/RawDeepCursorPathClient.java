@@ -119,6 +119,8 @@ public class RawDeepCursorPathClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedDeepCursorPathApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedDeepCursorPathException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedDeepCursorPathException("Network error executing HTTP request", e);
         }
@@ -193,6 +195,8 @@ public class RawDeepCursorPathClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedDeepCursorPathApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedDeepCursorPathException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedDeepCursorPathException("Network error executing HTTP request", e);
         }
@@ -280,6 +284,8 @@ public class RawDeepCursorPathClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedDeepCursorPathApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedDeepCursorPathException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedDeepCursorPathException("Network error executing HTTP request", e);
         }

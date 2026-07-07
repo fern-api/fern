@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { RustFile } from "@fern-api/rust-base";
+import { OAuthTokenExchange, RustFile } from "@fern-api/rust-base";
 import { Attribute, CodeBlock, Expression, PrimitiveType, PUBLIC, rust, UseStatement } from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -75,6 +75,18 @@ export class ClientConfigGenerator {
             rust.field({
                 name: "client_secret",
                 type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
+                name: "oauth_token_endpoint",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
+                name: "oauth_token_exchange",
+                type: rust.Type.option(
+                    rust.Type.reference(rust.reference({ name: "crate::OAuthTokenExchangeConfig" }))
+                ),
                 visibility: PUBLIC
             }),
             rust.field({
@@ -173,6 +185,24 @@ export class ClientConfigGenerator {
                         value: Expression.none()
                     },
                     {
+                        name: "oauth_token_endpoint",
+                        value: (() => {
+                            const tokenEndpoint = this.context.getOAuthTokenEndpointPath();
+                            return tokenEndpoint != null
+                                ? Expression.raw(`Some(${JSON.stringify(tokenEndpoint)}.to_string())`)
+                                : Expression.none();
+                        })()
+                    },
+                    {
+                        name: "oauth_token_exchange",
+                        value: (() => {
+                            const exchange = this.context.getOAuthTokenExchange();
+                            return exchange != null
+                                ? Expression.raw(this.buildOAuthTokenExchangeExpr(exchange))
+                                : Expression.none();
+                        })()
+                    },
+                    {
                         name: "timeout",
                         value: Expression.functionCall("Duration::from_secs", [Expression.numberLiteral(60)])
                     },
@@ -217,4 +247,24 @@ export class ClientConfigGenerator {
         });
     }
 
+    private buildOAuthTokenExchangeExpr(exchange: OAuthTokenExchange): string {
+        const extraProperties =
+            exchange.extraRequestProperties.length > 0
+                ? `HashMap::from([
+${exchange.extraRequestProperties
+    .map(
+        (property) =>
+            `                (${JSON.stringify(property.name)}.to_string(), ${JSON.stringify(property.value)}.to_string()),`
+    )
+    .join("\n")}
+            ])`
+                : "HashMap::new()";
+        return `Some(crate::OAuthTokenExchangeConfig {
+            client_id_property: ${JSON.stringify(exchange.clientIdProperty)}.to_string(),
+            client_secret_property: ${JSON.stringify(exchange.clientSecretProperty)}.to_string(),
+            extra_request_properties: ${extraProperties},
+            access_token_property: ${JSON.stringify(exchange.accessTokenProperty)}.to_string(),
+            expires_in_property: ${JSON.stringify(exchange.expiresInProperty)}.to_string(),
+        })`;
+    }
 }

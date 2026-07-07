@@ -29,6 +29,7 @@ export * from "./FileSchema.js";
 export * from "./FormUrlEncodedRequest.js";
 export * from "./FullEndpointExample.js";
 export * from "./GlobalHeader.js";
+export * from "./GlobalParameter.js";
 export * from "./GlobalSecurity.js";
 export * from "./Header.js";
 export * from "./HeaderExample.js";

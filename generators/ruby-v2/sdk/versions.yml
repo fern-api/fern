@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.13.4
+  changelogEntry:
+    - summary: |
+        Revert the automatic renaming of path parameters that collide with request body
+        properties (introduced in 1.13.3). These collisions are now rejected at the CLI
+        level: `fern check` errors and asks the user to deconflict the names (e.g. via
+        `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 1.13.3
+  changelogEntry:
+    - summary: |
+        Rename inlined path parameters that collide with request body properties (e.g. an
+        `{idType}` path param and an `idType` body field) with a `_path_param` suffix so both
+        values remain independently settable and the body property is no longer stripped from
+        the serialized request body.
+      type: fix
+    - summary: |
+        Fix the wire test helper `verify_authorization_header` to read the Authorization header
+        from the correct path in WireMock's `/requests/find` response.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 66
 - version: 1.13.2
   changelogEntry:
     - summary: |

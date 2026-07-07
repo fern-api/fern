@@ -102,6 +102,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedErrorsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedErrorsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedErrorsException("Network error executing HTTP request", e);
         }
@@ -175,6 +177,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedErrorsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedErrorsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedErrorsException("Network error executing HTTP request", e);
         }
@@ -248,6 +252,8 @@ public class RawSimpleClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedErrorsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedErrorsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedErrorsException("Network error executing HTTP request", e);
         }

@@ -1,0 +1,9 @@
+- summary: |
+    Add support for `x-fern-global-parameters` in the CLI generator. Global
+    parameters are registered as CLI flags with env-var and default-value
+    bindings, resolved at invocation time, and injected into outgoing requests
+    at the correct location (header, query, body, or path). Supports both
+    `apply: auto` (all operations) and `apply: explicit` (per-operation opt-in
+    via `x-fern-global-parameter`). Per-operation parameter values take
+    precedence over global defaults.
+  type: feat

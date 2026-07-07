@@ -1,4 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.16.1
+  changelogEntry:
+    - summary: |
+        Emit attribute docstrings for aliased Pydantic model fields (e.g. fields renamed
+        from camelCase wire names to snake_case) so IDEs surface the field description
+        on hover, matching the behavior of non-aliased fields.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 5.16.0
+  changelogEntry:
+    - summary: |
+        Implement transparent SSE stream auto-reconnection for `resumable: true`
+        endpoints, bringing the Python SDK to parity with TypeScript and Go. When a
+        resumable stream ends prematurely, `EventSource` now re-issues the original
+        request with a `Last-Event-ID` header and resumes from the last *dispatched*
+        event id (never a parsed-but-undispatched id, avoiding silent event loss).
+        Reconnection is gated on a configured stream terminator, honors
+        `stream_reconnection_enabled` and `max_stream_reconnection_attempts` (with
+        reset-on-progress), backs off 1s by default (or the server `retry:` value,
+        clamped to 30s), guards against empty reconnect bodies, and remains
+        cancellable during the backoff delay. Supported for both sync and async
+        clients.
+      type: feat
+  createdAt: "2026-07-05"
+  irVersion: 67
+- version: 5.15.2
+  changelogEntry:
+    - summary: |
+        Fix `ImportError` when a type uses `extends` to inherit from a base type that
+        is part of a circular reference cycle (e.g. `Acai extends Berry` where
+        `Berry → Animal → Cat → Fruit → Acai`). Python inheritance requires a
+        top-level import of the base class, which cannot coexist with the ghost
+        reference imports needed for circular forward-ref resolution. The generator
+        now automatically falls back to inlining the base type's properties instead
+        of using Python class inheritance when it detects a circular extends chain.
+      type: fix
+    - summary: |
+        When a custom `httpx.Client` or `httpx.AsyncClient` is passed to the generated SDK client,
+        the timeout configured on that httpx client is now respected. Previously, the SDK would
+        extract only the `read` timeout component and pass it explicitly to each request, which
+        overrode the full timeout configuration (including separate connect/read/write/pool timeouts).
+        Now, when no explicit `timeout` is provided to the SDK constructor, requests defer to the
+        httpx client's own timeout settings via `httpx.USE_CLIENT_DEFAULT`.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.15.1
   changelogEntry:
     - summary: |

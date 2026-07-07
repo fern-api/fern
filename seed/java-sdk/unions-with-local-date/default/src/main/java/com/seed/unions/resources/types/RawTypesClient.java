@@ -72,6 +72,8 @@ public class RawTypesClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);
         }
@@ -127,6 +129,8 @@ public class RawTypesClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);
         }

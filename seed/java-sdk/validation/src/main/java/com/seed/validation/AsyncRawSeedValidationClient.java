@@ -92,6 +92,9 @@ public class AsyncRawSeedValidationClient {
                     future.completeExceptionally(new SeedValidationApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedValidationException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedValidationException("Network error executing HTTP request", e));
@@ -156,6 +159,9 @@ public class AsyncRawSeedValidationClient {
                     future.completeExceptionally(new SeedValidationApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedValidationException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedValidationException("Network error executing HTTP request", e));

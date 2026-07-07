@@ -3443,4 +3443,58 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             "__snapshots__/multi-content-type-examples-ir.snap"
         );
     });
+
+    it("should render float primitive type as float (not double)", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/float-primitive-type")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "float-primitive-type"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/float-primitive-type-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/float-primitive-type-ir.snap");
+    });
 });

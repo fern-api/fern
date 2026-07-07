@@ -88,6 +88,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }
@@ -143,6 +145,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }
@@ -198,6 +202,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }
@@ -248,6 +254,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }
@@ -296,6 +304,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }
@@ -345,6 +355,8 @@ public class RawSeedObjectClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedObjectException("Network error executing HTTP request", e);
         }

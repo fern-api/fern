@@ -41,6 +41,12 @@ export interface HttpEndpoint extends FernIr.Declaration {
     source: FernIr.HttpEndpointSource | undefined;
     audiences: FernIr.AudienceReference[] | undefined;
     retries: FernIr.RetriesConfiguration | undefined;
+    /**
+     * When a global parameter has `apply: explicit`, only endpoints
+     * listed here receive the injection. Populated from the per-operation
+     * `x-fern-global-parameter` extension.
+     */
+    globalParameters: FernIr.GlobalParameterId[] | undefined;
     /** Whether this endpoint is shown in the API playground */
     apiPlayground: boolean | undefined;
 }

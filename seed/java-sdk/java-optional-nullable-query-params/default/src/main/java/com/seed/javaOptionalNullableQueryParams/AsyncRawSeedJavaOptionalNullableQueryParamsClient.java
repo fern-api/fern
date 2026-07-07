@@ -3,6 +3,7 @@
  */
 package com.seed.javaOptionalNullableQueryParams;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.javaOptionalNullableQueryParams.core.ClientOptions;
 import com.seed.javaOptionalNullableQueryParams.core.ObjectMappers;
 import com.seed.javaOptionalNullableQueryParams.core.QueryStringMapper;
@@ -129,6 +130,9 @@ public class AsyncRawSeedJavaOptionalNullableQueryParamsClient {
                     future.completeExceptionally(new SeedJavaOptionalNullableQueryParamsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaOptionalNullableQueryParamsException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedJavaOptionalNullableQueryParamsException(
                             "Network error executing HTTP request", e));

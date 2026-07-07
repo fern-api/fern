@@ -133,6 +133,7 @@ class PydanticModel:
         # default value as a plain initializer outside the Annotated pattern.
         use_annotated_pattern = is_aliased
 
+        field_docstring: Optional[AST.Docstring] = None
         if use_annotated_pattern:
             is_pure_v2 = self._version == PydanticVersionCompatibility.V2
 
@@ -183,6 +184,11 @@ class PydanticModel:
                     initializer = default_value
             else:
                 initializer = None
+
+            # The description inside Annotated[..., pydantic.Field(description=...)] is not
+            # surfaced by IDEs on hover, so also emit an attribute docstring below the field.
+            if field.description is not None:
+                field_docstring = AST.Docstring(field.description)
         else:
             # No alias - use the original behavior
             initializer = get_field_name_initializer(
@@ -194,7 +200,9 @@ class PydanticModel:
             )
 
         self._class_declaration.add_class_var(
-            AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer)
+            AST.VariableDeclaration(
+                name=field.name, type_hint=field.type_hint, initializer=initializer, docstring=field_docstring
+            )
         )
 
         self._fields.append(field)

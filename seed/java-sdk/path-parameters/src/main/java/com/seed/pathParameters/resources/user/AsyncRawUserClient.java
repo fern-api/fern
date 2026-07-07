@@ -100,6 +100,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedPathParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPathParametersException("Network error executing HTTP request", e));
@@ -172,6 +175,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedPathParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPathParametersException("Network error executing HTTP request", e));
@@ -246,6 +252,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedPathParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPathParametersException("Network error executing HTTP request", e));
@@ -328,6 +337,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedPathParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPathParametersException("Network error executing HTTP request", e));
@@ -417,6 +429,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedPathParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPathParametersException("Network error executing HTTP request", e));
@@ -514,6 +529,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedPathParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPathParametersException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPathParametersException("Network error executing HTTP request", e));

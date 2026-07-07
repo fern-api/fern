@@ -1,0 +1,6 @@
+- summary: |
+    Revert the automatic renaming of path parameters that collide with request body
+    properties (introduced in 1.13.3). These collisions are now rejected at the CLI
+    level: `fern check` errors and asks the user to deconflict the names (e.g. via
+    `x-fern-parameter-name`).
+  type: fix

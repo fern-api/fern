@@ -3,6 +3,7 @@
  */
 package com.seed.examples.resources.health.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
@@ -81,6 +82,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedExamplesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExamplesException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));
                 }
@@ -147,6 +151,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedExamplesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExamplesException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));
                 }

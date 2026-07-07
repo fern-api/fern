@@ -1075,9 +1075,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 if isinstance(self._context.custom_config.timeout_in_seconds, int)
                                 else AST.Expression(AST.TypeHint.none())
                             ),
-                            right=AST.Expression(
-                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}.timeout.read"
-                            ),
+                            right=AST.Expression(AST.TypeHint.none()),
                             test=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
                             ),

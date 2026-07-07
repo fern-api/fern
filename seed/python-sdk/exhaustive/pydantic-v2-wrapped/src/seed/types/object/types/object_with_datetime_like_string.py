@@ -23,10 +23,17 @@ class ObjectWithDatetimeLikeString(UniversalBaseModel):
             alias="datetimeLikeString", description="A string field that happens to contain a datetime-like value"
         ),
     ]
+    """
+    A string field that happens to contain a datetime-like value
+    """
+
     actual_datetime: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="actualDatetime"),
         pydantic.Field(alias="actualDatetime", description="An actual datetime field for comparison"),
     ]
+    """
+    An actual datetime field for comparison
+    """
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "ae60c79e",
+            "id": {
+                "method": "POST",
+                "path": "/v1/products/{regionId}/search",
+                "identifier_override": "endpoint_products.search"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.products.requests.SearchProductsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.products().search(\n            \"regionId\",\n            SearchProductsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.products.requests.SearchProductsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.products().search(\n            \"regionId\",\n            SearchProductsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b2e2011b",
+            "id": {
+                "method": "GET",
+                "path": "/v1/products/{regionId}/{productId}",
+                "identifier_override": "endpoint_products.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.products.requests.GetProductsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.products().get(\n            \"regionId\",\n            \"productId\",\n            GetProductsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.products.requests.GetProductsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.products().get(\n            \"regionId\",\n            \"productId\",\n            GetProductsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

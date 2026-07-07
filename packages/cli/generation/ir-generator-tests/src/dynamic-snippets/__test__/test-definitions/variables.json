@@ -145,5 +145,6 @@
             }
         }
     ],
+    "globalParameters": null,
     "generatorConfig": null
 }

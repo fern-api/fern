@@ -3,6 +3,7 @@
  */
 package com.seed.queryParameters.resources.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.queryParameters.core.ClientOptions;
 import com.seed.queryParameters.core.ObjectMappers;
 import com.seed.queryParameters.core.QueryStringMapper;
@@ -93,6 +94,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedQueryParametersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedQueryParametersException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedQueryParametersException("Network error executing HTTP request", e);
         }

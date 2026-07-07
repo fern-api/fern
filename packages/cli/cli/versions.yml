@@ -1,4 +1,145 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.65.5
+  changelogEntry:
+    - summary: |
+        Improve `fern docs dev` initial build time by pre-fetching external `<Code src="https://..."/>` URLs
+        in parallel instead of sequentially, and optimizing image processing with early-exit checks and
+        streaming scanning. For large docs sites with many external code snippets, this reduces initial
+        build time from ~57s to ~14s (75% faster).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.4
+  changelogEntry:
+    - summary: |
+        `fern check` now errors when a path parameter shares a name with another request
+        property (an inlined request body property, query parameter, or header), including
+        collisions that only appear after camelCase normalization. These collisions produce
+        broken or ambiguous generated SDK code; use `x-fern-parameter-name` (OpenAPI) or the
+        `name` property (Fern definition) to deconflict.
+      type: fix
+    - summary: |
+        The OpenAPI importer no longer silently renames a request body property that
+        collides with a path parameter. These collisions now surface as `fern check`
+        errors, forcing explicit deconfliction (e.g. via `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.3
+  changelogEntry:
+    - summary: |
+        Fix relative .md/.mdx link resolution in translated documentation pages. Previously, translated pages passed an empty markdownFilesToPathName map, so relative markdown links (e.g., ../reference/support-matrix.md) were not resolved to their published slug URLs.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 5.65.2
+  changelogEntry:
+    - summary: |
+        Improve error messages when ledger docs publishing fails: surface the
+        server-side validation issues (field paths and messages) so the exact
+        failing field is visible without needing server-side log access.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 5.65.1
+  changelogEntry:
+    - summary: |
+        Improve `fern docs dev` reload performance for content edits (35s → 4-5s).
+        Reduces debounce from 1000ms to 300ms, skips background validation for
+        markdown-only changes, and writes a generation counter file for the docs
+        bundle to detect stale cache entries without HTTP round-trips.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 5.65.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-global-parameters` OpenAPI extension. Allows declaring
+        global defaults for request body, query, header, and path fields that are set
+        once at the SDK client level and injected at the declared wire location, with
+        per-call values winning. IR bumped to 67.10.0.
+      type: feat
+  createdAt: "2026-07-03"
+  irVersion: 67
+- version: 5.64.3
+  changelogEntry:
+    - summary: |
+        Fix pages losing their sidebar when a top-level `landing-page` shares a slug
+        with a page in versioned navigation. Reverts a 5.58.0 change: the top-level
+        `landing-page` is no longer copied into each version, and product-level
+        `landing-page` config is no longer applied to products inside product groups
+        (restoring pre-5.58.0 rendering). `landing-page` in version files is
+        unaffected.
+      type: fix
+  createdAt: "2026-07-03"
+  irVersion: 67
+- version: 5.64.2
+  changelogEntry:
+    - summary: |
+        OpenAPI import: an endpoint that declares both a body-bearing 2xx response and a 204 No
+        Content response now correctly produces an optional success body, even when the 204
+        erroneously declares a response body. Per RFC 9110 a 204 cannot carry a body, so the
+        declared 204 body is ignored (with a warning) and the success response type is wrapped
+        optional. Previously the 204 was dropped and the return type stayed non-optional, so a real
+        204 (empty body) failed to decode in generated SDKs. Applies to both the legacy and v3
+        OpenAPI importers.
+      type: fix
+  createdAt: "2026-07-03"
+  irVersion: 67
+- version: 5.64.1
+  changelogEntry:
+    - summary: |
+        Fix GraphQL namespace types (e.g. Inventory, Geography) being excluded from the
+        type registry and missing parent operations for query pages. Namespace types are
+        now registered so their fields render correctly on landing pages.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
+- version: 5.64.0
+  changelogEntry:
+    - summary: |
+        Fix proto `target` path resolution when using remote git sources. Previously the target
+        was resolved relative to the workspace instead of the cloned repository, causing
+        "file missing" errors.
+      type: fix
+    - summary: |
+        Support commit SHA references in git source `ref` field. Previously only branch names
+        and tags were supported; commit SHAs now work via fetch+checkout.
+      type: feat
+  createdAt: "2026-07-02"
+  irVersion: 67
+- version: 5.63.1
+  changelogEntry:
+    - summary: |
+        Prevent --version AUTO from embedding literal 'AUTO' in generated SDK code during remote generation. The magic placeholder is now substituted before IR generation in the remote path, matching the local generation fix.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.63.0
+  changelogEntry:
+    - summary: |
+        Extend dynamic IR OAuth types with custom properties and populate them in
+        DynamicSnippetsConverter, enabling dynamic snippet generators to include
+        custom OAuth token endpoint request parameters in generated code examples.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.2
+  changelogEntry:
+    - summary: |
+        Strip CLI-only config keys (e.g. `user-agent`) from the custom config
+        before forwarding to generator containers, preventing strict validation
+        errors in generators that reject unknown keys.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 5.62.1
+  changelogEntry:
+    - summary: |
+        Fix float primitive types rendering as 'double' in documentation. Float types now correctly render as 'float'.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
 - version: 5.62.0
   changelogEntry:
     - summary: |

@@ -3,6 +3,7 @@
  */
 package com.seed.nurseryApi.resources.package_;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.ObjectMappers;
 import com.seed.nurseryApi.core.QueryStringMapper;
@@ -69,6 +70,8 @@ public class RawPackageClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedNurseryApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedNurseryApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedNurseryApiException("Network error executing HTTP request", e);
         }

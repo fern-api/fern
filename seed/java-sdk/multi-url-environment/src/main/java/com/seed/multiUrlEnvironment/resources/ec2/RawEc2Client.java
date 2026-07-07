@@ -79,6 +79,8 @@ public class RawEc2Client {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMultiUrlEnvironmentApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedMultiUrlEnvironmentException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedMultiUrlEnvironmentException("Network error executing HTTP request", e);
         }

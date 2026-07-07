@@ -110,6 +110,9 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedJavaStreamingAcceptHeaderApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaStreamingAcceptHeaderException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedJavaStreamingAcceptHeaderException("Network error executing HTTP request", e));
@@ -193,6 +196,9 @@ public class AsyncRawDummyClient {
                     future.completeExceptionally(new SeedJavaStreamingAcceptHeaderApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaStreamingAcceptHeaderException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedJavaStreamingAcceptHeaderException("Network error executing HTTP request", e));

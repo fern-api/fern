@@ -89,6 +89,9 @@ public class AsyncRawSeedPropertyAccessClient {
                     future.completeExceptionally(new SeedPropertyAccessApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPropertyAccessException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPropertyAccessException("Network error executing HTTP request", e));

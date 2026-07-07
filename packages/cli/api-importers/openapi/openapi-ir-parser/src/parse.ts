@@ -71,6 +71,7 @@ export function parse({
         securitySchemes: {},
         security: undefined,
         globalHeaders: [],
+        globalParameters: undefined,
         idempotencyHeaders: [],
         groups: {}
     };
@@ -272,6 +273,13 @@ function extractApiNameFromUrl(url: string): string {
  * Merges two security arrays and removes duplicates.
  * Security items are considered equal if they have the same keys and values.
  */
+function mergeOptionalArrays<T>(a: T[] | undefined, b: T[] | undefined): T[] | undefined {
+    if (a == null && b == null) {
+        return undefined;
+    }
+    return [...(a ?? []), ...(b ?? [])];
+}
+
 function mergeDistinctSecurity(
     security1: GlobalSecurity | undefined,
     security2: GlobalSecurity | undefined
@@ -419,6 +427,7 @@ function merge(
             },
             security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+            globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
                     ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])]
@@ -589,6 +598,7 @@ function merge(
             },
             security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+            globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
                     ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])]
@@ -639,6 +649,7 @@ function merge(
         },
         security: mergeDistinctSecurity(ir1.security, ir2.security),
         globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+        globalParameters: mergeOptionalArrays(ir1.globalParameters, ir2.globalParameters),
         idempotencyHeaders:
             ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,
         groups: {

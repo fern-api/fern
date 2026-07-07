@@ -3,6 +3,7 @@
  */
 package com.seed.oauthClientCredentialsWithVariables.resources.nestednoauth.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.ObjectMappers;
 import com.seed.oauthClientCredentialsWithVariables.core.RequestOptions;
@@ -76,6 +77,9 @@ public class AsyncRawApiClient {
                     future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesException(
                             "Network error executing HTTP request", e));

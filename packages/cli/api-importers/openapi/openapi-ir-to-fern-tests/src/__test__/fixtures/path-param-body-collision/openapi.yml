@@ -1,0 +1,34 @@
+openapi: 3.0.0
+info:
+  title: Collision Test
+  version: 1.0.0
+paths:
+  /Identifiers/{idType}:
+    patch:
+      operationId: updateIdentifier
+      parameters:
+        - name: idType
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdentifierUpdate"
+      responses:
+        "204":
+          description: No content
+components:
+  schemas:
+    IdentifierUpdate:
+      type: object
+      required: [idType, oldValue, newValue]
+      properties:
+        idType:
+          type: string
+        oldValue:
+          type: string
+        newValue:
+          type: string

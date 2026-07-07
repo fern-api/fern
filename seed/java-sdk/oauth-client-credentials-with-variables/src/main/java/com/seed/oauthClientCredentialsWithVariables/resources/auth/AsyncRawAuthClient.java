@@ -94,6 +94,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesException(
                             "Network error executing HTTP request", e));
@@ -168,6 +171,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesException(
                             "Network error executing HTTP request", e));

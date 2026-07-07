@@ -3,6 +3,7 @@
  */
 package com.seed._enum.resources.headers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.ObjectMappers;
 import com.seed._enum.core.RequestOptions;
@@ -88,6 +89,9 @@ public class AsyncRawHeadersClient {
                     future.completeExceptionally(new SeedEnumApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedEnumException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedEnumException("Network error executing HTTP request", e));
                 }

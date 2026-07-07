@@ -3,6 +3,7 @@
  */
 package com.seed.literal.resources.query;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.QueryStringMapper;
@@ -108,6 +109,9 @@ public class AsyncRawQueryClient {
                     future.completeExceptionally(new SeedLiteralApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedLiteralException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedLiteralException("Network error executing HTTP request", e));
                 }

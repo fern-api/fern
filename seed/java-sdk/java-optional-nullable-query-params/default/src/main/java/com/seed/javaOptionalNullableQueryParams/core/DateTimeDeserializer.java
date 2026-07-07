@@ -19,7 +19,8 @@ import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalQueries;
 
 /**
- * Custom deserializer that handles converting ISO8601 dates into {@link OffsetDateTime} objects.
+ * Custom deserializer that handles converting date-time strings into {@link OffsetDateTime} objects.
+ * Supports ISO 8601 format, space-separated variants, and RFC 1123 (RFC 2822) format.
  */
 class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
     private static final SimpleModule MODULE;
@@ -48,9 +49,15 @@ class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
             try {
                 temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(value, OffsetDateTime::from, LocalDateTime::from);
             } catch (DateTimeParseException e) {
-                // Fall back to space-separated format (e.g. "2025-02-15 10:30:00+00:00").
-                temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(
-                        value.replace(' ', 'T'), OffsetDateTime::from, LocalDateTime::from);
+                try {
+                    // Fall back to space-separated format (e.g. "2025-02-15 10:30:00+00:00").
+                    temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(
+                            value.replace(' ', 'T'), OffsetDateTime::from, LocalDateTime::from);
+                } catch (DateTimeParseException e2) {
+                    // Fall back to RFC 1123 format (e.g. "Thu, 07 May 2026 14:23:38 +0000").
+                    temporal = DateTimeFormatter.RFC_1123_DATE_TIME.parseBest(
+                            value, OffsetDateTime::from, LocalDateTime::from);
+                }
             }
 
             if (temporal.query(TemporalQueries.offset()) == null) {

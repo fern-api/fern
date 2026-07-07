@@ -3,6 +3,7 @@
  */
 package com.seed.unionQueryParameters.resources.events;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.unionQueryParameters.core.ClientOptions;
 import com.seed.unionQueryParameters.core.ObjectMappers;
 import com.seed.unionQueryParameters.core.QueryStringMapper;
@@ -111,6 +112,9 @@ public class AsyncRawEventsClient {
                     future.completeExceptionally(new SeedUnionQueryParametersApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedUnionQueryParametersException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedUnionQueryParametersException("Network error executing HTTP request", e));

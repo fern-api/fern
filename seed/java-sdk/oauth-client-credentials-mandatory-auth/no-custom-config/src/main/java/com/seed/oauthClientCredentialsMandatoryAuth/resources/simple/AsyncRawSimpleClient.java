@@ -3,6 +3,7 @@
  */
 package com.seed.oauthClientCredentialsMandatoryAuth.resources.simple;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.ClientOptions;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.ObjectMappers;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.RequestOptions;
@@ -75,6 +76,9 @@ public class AsyncRawSimpleClient {
                     future.completeExceptionally(new SeedOauthClientCredentialsMandatoryAuthApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedOauthClientCredentialsMandatoryAuthException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedOauthClientCredentialsMandatoryAuthException(
                             "Network error executing HTTP request", e));

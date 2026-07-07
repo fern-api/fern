@@ -28,6 +28,7 @@ import {
     NameAndWireValueOrString,
     NamedType,
     NameOrString,
+    OAuthScheme,
     ObjectProperty,
     ObjectTypeDeclaration,
     PathParameter,
@@ -148,6 +149,7 @@ export class DynamicSnippetsConverter {
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments != null ? this.convertEnvironments(this.ir.environments) : undefined,
             variables: this.convertVariables(),
+            globalParameters: this.ir.globalParameters,
             generatorConfig: this.generatorConfig
         };
     }
@@ -755,11 +757,14 @@ export class DynamicSnippetsConverter {
                         variable: undefined
                     }
                 });
-            case "oauth":
+            case "oauth": {
+                const customProperties = this.getOAuthCustomProperties(scheme);
                 return DynamicSnippets.Auth.oauth({
                     clientId: this.fullCasingsGenerator.generateName("clientId"),
-                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret")
+                    clientSecret: this.fullCasingsGenerator.generateName("clientSecret"),
+                    customProperties: customProperties.length > 0 ? customProperties : undefined
                 });
+            }
             case "inferred":
                 return DynamicSnippets.Auth.inferred({
                     parameters: this.getInferredAuthParameters(scheme)
@@ -788,11 +793,15 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.AuthValues.header({
                     value: scheme.headerPlaceholder ?? "<value>"
                 });
-            case "oauth":
+            case "oauth": {
+                const customPropertyValues = this.getOAuthCustomPropertyValues(scheme);
                 return DynamicSnippets.AuthValues.oauth({
                     clientId: "<clientId>",
-                    clientSecret: "<clientSecret>"
+                    clientSecret: "<clientSecret>",
+                    customPropertyValues:
+                        Object.keys(customPropertyValues).length > 0 ? customPropertyValues : undefined
                 });
+            }
             case "inferred":
                 return DynamicSnippets.AuthValues.inferred({
                     values: this.getInferredAuthValues(scheme)
@@ -898,6 +907,50 @@ export class DynamicSnippetsConverter {
         }
 
         return properties;
+    }
+
+    private getOAuthCustomProperties(scheme: OAuthScheme): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
+                continue;
+            }
+            parameters.push({
+                name: this.inflateNameAndWireValue(customProperty.property.name),
+                typeReference: this.convertTypeReference(customProperty.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            parameters.push({
+                name: this.inflateNameAndWireValue(scopes.property.name),
+                typeReference: this.convertTypeReference(scopes.property.valueType),
+                propertyAccess: undefined,
+                variable: undefined
+            });
+        }
+        return parameters;
+    }
+
+    private getOAuthCustomPropertyValues(scheme: OAuthScheme): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
+        const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
+        for (const customProperty of customProperties) {
+            if (isExcludedOAuthProperty(customProperty.property.valueType)) {
+                continue;
+            }
+            const wireValue = getWireValue(customProperty.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes != null && !isExcludedOAuthProperty(scopes.property.valueType)) {
+            const wireValue = getWireValue(scopes.property.name);
+            values[wireValue] = `<${wireValue}>`;
+        }
+        return values;
     }
 
     private convertEnvironments(environmentsConfig: EnvironmentsConfig): DynamicSnippets.EnvironmentsConfig {
@@ -1083,4 +1136,16 @@ export class DynamicSnippetsConverter {
         }
         return requests;
     }
+}
+
+/**
+ * Literal and optional properties should not be propagated as constructor
+ * parameters or snippet values. Literals are hardcoded in the request class,
+ * and optional properties are not included as required constructor parameters.
+ */
+function isExcludedOAuthProperty(typeReference: TypeReference): boolean {
+    if (typeReference.type !== "container") {
+        return false;
+    }
+    return typeReference.container.type === "literal" || typeReference.container.type === "optional";
 }

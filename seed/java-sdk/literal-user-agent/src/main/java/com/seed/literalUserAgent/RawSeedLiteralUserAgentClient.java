@@ -3,6 +3,7 @@
  */
 package com.seed.literalUserAgent;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.literalUserAgent.core.ClientOptions;
 import com.seed.literalUserAgent.core.ObjectMappers;
 import com.seed.literalUserAgent.core.RequestOptions;
@@ -67,6 +68,8 @@ public class RawSeedLiteralUserAgentClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedLiteralUserAgentApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedLiteralUserAgentException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedLiteralUserAgentException("Network error executing HTTP request", e);
         }

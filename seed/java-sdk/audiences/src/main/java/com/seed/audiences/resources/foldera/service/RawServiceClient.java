@@ -3,6 +3,7 @@
  */
 package com.seed.audiences.resources.foldera.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.ObjectMappers;
 import com.seed.audiences.core.QueryStringMapper;
@@ -72,6 +73,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedAudiencesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedAudiencesException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedAudiencesException("Network error executing HTTP request", e);
         }
