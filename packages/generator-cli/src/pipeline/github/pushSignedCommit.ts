@@ -6,6 +6,13 @@ import type { PipelineLogger } from "../PipelineLogger";
 
 const MAX_CONCURRENT_PUSH_RETRIES = 3;
 
+/**
+ * Upper bound on how many local-only commits are individually recreated as signed API
+ * commits. Chains longer than this (which should never happen for pipeline-created
+ * branches) fall back to signing HEAD only, matching the previous behavior.
+ */
+const MAX_SIGNED_CHAIN_LENGTH = 20;
+
 export interface CommitAuthor {
     name: string;
     email: string;
@@ -46,15 +53,18 @@ export interface PushSignedCommitOptions {
 }
 
 /**
- * Pushes the current branch HEAD to GitHub as a signed commit by:
+ * Pushes the current branch HEAD to GitHub as signed commits by:
  * 1. Pushing the local commit to a temporary ref (uploads tree + blob objects).
- * 2. Creating a new commit via the GitHub REST API (which GitHub signs with the App's key
- *    when the octokit instance is authenticated with a GitHub App installation token).
- * 3. Updating the branch ref to point to the signed commit.
+ * 2. Recreating every local-only commit (oldest first) via the GitHub REST API (which
+ *    GitHub signs with the App's key when the octokit instance is authenticated with a
+ *    GitHub App installation token), re-parenting each onto its signed predecessor. This
+ *    covers multi-commit branches (e.g. `[fern-generated]` + `[fern-replay]`) so every
+ *    commit on the PR shows as Verified, not just HEAD.
+ * 3. Updating the branch ref to point to the signed head commit.
  * 4. Deleting the temporary ref.
  * 5. Fast-forwarding the local branch to the signed commit SHA.
  *
- * Returns the SHA of the signed commit on the remote (which differs from the local HEAD SHA).
+ * Returns the SHA of the signed head commit on the remote (which differs from the local HEAD SHA).
  */
 export async function pushSignedCommit({
     repository,
@@ -71,34 +81,21 @@ export async function pushSignedCommit({
     let tempRefPushed = false;
 
     try {
-        let [localHeadSha, treeSha, message, parents] = await Promise.all([
-            repository.getHeadSha(),
-            repository.getHeadTreeHash(),
-            repository.getHeadCommitMessage(),
-            repository.getHeadParents()
-        ]);
+        let localHeadSha = await repository.getHeadSha();
 
         await repository.pushObjectToRef(localHeadSha, tempRef);
         tempRefPushed = true;
 
         for (let attempt = 0; attempt < MAX_CONCURRENT_PUSH_RETRIES; attempt++) {
-            // GitHub's web-flow signer keys off `committer`. The Git Data API defaults
-            // `committer` to `author` when `author` is provided, so sending `author` alone
-            // suppresses auto-signing. Omitting both lets GitHub fill them in from the
-            // authenticated signing-capable principal (App installation, OAuth — never a PAT)
-            // and stamp the "Verified" signature; the App's bot identity keeps the Fern bot
-            // noreply email, so attribution-based tooling (replay commit detection,
-            // findExistingUpdatablePR) still matches.
-            const identityFields = author != null ? { author, committer: author } : {};
-            const { data: signedCommit } = await octokit.git.createCommit({
+            const signedSha = await signLocalCommitChain({
+                repository,
+                octokit,
                 owner,
                 repo,
-                message,
-                tree: treeSha,
-                parents,
-                ...identityFields
+                localHeadSha,
+                author,
+                logger
             });
-            const signedSha = signedCommit.sha;
 
             try {
                 await upsertBranchRef({ octokit, owner, repo, branch, sha: signedSha, force });
@@ -115,12 +112,7 @@ export async function pushSignedCommit({
                         `Non-fast-forward on refs/heads/${branch} (attempt ${attempt + 1}/${MAX_CONCURRENT_PUSH_RETRIES}); rebasing locally and retrying.`
                     );
                     await repository.pullWithRebase(branch);
-                    [localHeadSha, treeSha, message, parents] = await Promise.all([
-                        repository.getHeadSha(),
-                        repository.getHeadTreeHash(),
-                        repository.getHeadCommitMessage(),
-                        repository.getHeadParents()
-                    ]);
+                    localHeadSha = await repository.getHeadSha();
                     // The rebased commit is not a descendant of the original tempRef tip,
                     // so force-push is required to overwrite it.
                     await repository.pushObjectToRef(localHeadSha, tempRef, { force: true });
@@ -142,6 +134,74 @@ export async function pushSignedCommit({
             }
         }
     }
+}
+
+/**
+ * Recreates every local-only commit (oldest first) as a signed commit via the GitHub API,
+ * re-parenting each onto the signed replacement of its predecessor. Returns the signed SHA
+ * corresponding to the local HEAD.
+ */
+async function signLocalCommitChain({
+    repository,
+    octokit,
+    owner,
+    repo,
+    localHeadSha,
+    author,
+    logger
+}: {
+    repository: ClonedRepository;
+    octokit: Octokit;
+    owner: string;
+    repo: string;
+    localHeadSha: string;
+    author?: CommitAuthor;
+    logger: PipelineLogger;
+}): Promise<string> {
+    let chain = await repository.getLocalOnlyCommits();
+    if (chain.length === 0 || chain[chain.length - 1] !== localHeadSha) {
+        // No remote-tracking refs to compare against (or HEAD moved unexpectedly) —
+        // sign HEAD only, matching the previous single-commit behavior.
+        chain = [localHeadSha];
+    } else if (chain.length > MAX_SIGNED_CHAIN_LENGTH) {
+        logger.warn(
+            `Local commit chain has ${chain.length} commits (limit ${MAX_SIGNED_CHAIN_LENGTH}); signing HEAD only.`
+        );
+        chain = [localHeadSha];
+    }
+
+    // GitHub's web-flow signer keys off `committer`. The Git Data API defaults
+    // `committer` to `author` when `author` is provided, so sending `author` alone
+    // suppresses auto-signing. Omitting both lets GitHub fill them in from the
+    // authenticated signing-capable principal (App installation, OAuth — never a PAT)
+    // and stamp the "Verified" signature; the App's bot identity keeps the Fern bot
+    // noreply email, so attribution-based tooling (replay commit detection,
+    // findExistingUpdatablePR) still matches.
+    const identityFields = author != null ? { author, committer: author } : {};
+
+    const signedShaByLocalSha = new Map<string, string>();
+    let signedSha = localHeadSha;
+    for (const sha of chain) {
+        const [treeSha, message, parents] = await Promise.all([
+            repository.getCommitTreeHash(sha),
+            repository.getCommitMessage(sha),
+            repository.getCommitParents(sha)
+        ]);
+        const { data: signedCommit } = await octokit.git.createCommit({
+            owner,
+            repo,
+            message,
+            tree: treeSha,
+            parents: parents.map((parent) => signedShaByLocalSha.get(parent) ?? parent),
+            ...identityFields
+        });
+        signedShaByLocalSha.set(sha, signedCommit.sha);
+        signedSha = signedCommit.sha;
+    }
+    if (chain.length > 1) {
+        logger.debug(`Signed ${chain.length} local commits via the GitHub API`);
+    }
+    return signedSha;
 }
 
 async function upsertBranchRef({
