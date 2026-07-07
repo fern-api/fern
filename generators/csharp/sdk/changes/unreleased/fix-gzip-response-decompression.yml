@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Decompress gzip and deflate encoded response bodies in the generated `RawClient`.
+    `HttpClientHandler.AutomaticDecompression` defaults to `None`, so responses to
+    requests with a spec-defined `Accept-Encoding: gzip` header were previously
+    returned as raw gzip bytes.
+  type: fix

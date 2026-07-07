@@ -240,6 +240,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.QueryStringBuilderTests,
             AsIsFiles.Test.QueryStringConverterTests,
             AsIsFiles.Test.WithRawResponseTests,
+            AsIsFiles.Test.RawClientTests.GzipResponseTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
