@@ -78,6 +78,9 @@ function toMultipartDataPart(file) {
 function getFileWithMetadata(file_1) {
     return __awaiter(this, arguments, void 0, function* (file, { noSniffFileSize } = {}) {
         var _a, _b, _c, _d, _e;
+        if (file == null) {
+            throw new Error(`Expected file to be a Blob, Buffer, ReadableStream, or an object with a "path" or "data" property, but received ${file === null ? "null" : "undefined"}.`);
+        }
         if (isFileLike(file)) {
             return getFileWithMetadata({
                 data: file,

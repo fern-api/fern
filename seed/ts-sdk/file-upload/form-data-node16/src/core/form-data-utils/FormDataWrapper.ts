@@ -76,7 +76,7 @@ export class Node18FormData implements CrossPlatformFormData {
     public async appendFile(key: string, value: Uploadable): Promise<void> {
         if (value == null) {
             throw new Error(
-                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`
+                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`,
             );
         }
         const { data, filename } = await toMultipartDataPart(value);
@@ -142,7 +142,7 @@ export class Node16FormData implements CrossPlatformFormData {
     public async appendFile(key: string, value: Uploadable): Promise<void> {
         if (value == null) {
             throw new Error(
-                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`
+                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`,
             );
         }
         const { data, filename } = await toMultipartDataPart(value);
@@ -188,7 +188,7 @@ export class WebFormData implements CrossPlatformFormData {
     public async appendFile(key: string, value: Uploadable): Promise<void> {
         if (value == null) {
             throw new Error(
-                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`
+                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`,
             );
         }
         const { data, filename, contentType } = await toMultipartDataPart(value);
