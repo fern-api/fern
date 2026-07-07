@@ -31,7 +31,15 @@ export interface SdkCustomConfig {
     includeOtherInUnionTypes: boolean;
     enableForwardCompatibleEnums: boolean;
     requireDefaultEnvironment: boolean;
+    /** @deprecated Use {@link defaultTimeout} (milliseconds) instead. */
     defaultTimeoutInSeconds: number | "infinity" | undefined;
+    /**
+     * Effective default request timeout in milliseconds. Resolved from the
+     * `defaultTimeout` config key, falling back to the deprecated
+     * `defaultTimeoutInSeconds` / `timeoutInSeconds` keys (× 1000).
+     * `"infinity"` disables the timeout; `undefined` applies the built-in default.
+     */
+    defaultTimeout: number | "infinity" | undefined;
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
     extraDevDependencies: Record<string, string>;
