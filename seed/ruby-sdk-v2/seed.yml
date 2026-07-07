@@ -55,10 +55,6 @@ scripts:
         - bundle exec rake test
 
 fixtures:
-  ruby-path-param-body-conflict:
-    - outputFolder: .
-      customConfig:
-        enableWireTests: true
   basic-auth:
     - outputFolder: wire-tests
       customConfig:

@@ -28,39 +28,41 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<ResponseBody> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request) {
-        return this.rawClient.postWithNullableNamedRequestBodyType(id, request).thenApply(response -> response.body());
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request) {
+        return this.rawClient
+                .postWithNullableNamedRequestBodyType(pathId, request)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<ResponseBody> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNullableNamedRequestBodyType(id, request, requestOptions)
+                .postWithNullableNamedRequestBodyType(pathId, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(String id) {
-        return this.rawClient.postWithNonNullableNamedRequestBodyType(id).thenApply(response -> response.body());
+    public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(String pathId) {
+        return this.rawClient.postWithNonNullableNamedRequestBodyType(pathId).thenApply(response -> response.body());
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, RequestOptions requestOptions) {
+            String pathId, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, requestOptions)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request) {
-        return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, request)
+                .postWithNonNullableNamedRequestBodyType(pathId, requestOptions)
                 .thenApply(response -> response.body());
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String pathId, NonNullableObject request) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, request, requestOptions)
+                .postWithNonNullableNamedRequestBodyType(pathId, request)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
+            String pathId, NonNullableObject request, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithNonNullableNamedRequestBodyType(pathId, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 

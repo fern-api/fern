@@ -27,37 +27,39 @@ public class SeedApiClient {
     }
 
     public ResponseBody postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request) {
-        return this.rawClient.postWithNullableNamedRequestBodyType(id, request).body();
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request) {
+        return this.rawClient
+                .postWithNullableNamedRequestBodyType(pathId, request)
+                .body();
     }
 
     public ResponseBody postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNullableNamedRequestBodyType(id, request, requestOptions)
+                .postWithNullableNamedRequestBodyType(pathId, request, requestOptions)
                 .body();
     }
 
-    public ResponseBody postWithNonNullableNamedRequestBodyType(String id) {
-        return this.rawClient.postWithNonNullableNamedRequestBodyType(id).body();
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String pathId) {
+        return this.rawClient.postWithNonNullableNamedRequestBodyType(pathId).body();
     }
 
-    public ResponseBody postWithNonNullableNamedRequestBodyType(String id, RequestOptions requestOptions) {
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String pathId, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, requestOptions)
+                .postWithNonNullableNamedRequestBodyType(pathId, requestOptions)
                 .body();
     }
 
-    public ResponseBody postWithNonNullableNamedRequestBodyType(String id, NonNullableObject request) {
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String pathId, NonNullableObject request) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, request)
+                .postWithNonNullableNamedRequestBodyType(pathId, request)
                 .body();
     }
 
     public ResponseBody postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String pathId, NonNullableObject request, RequestOptions requestOptions) {
         return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(id, request, requestOptions)
+                .postWithNonNullableNamedRequestBodyType(pathId, request, requestOptions)
                 .body();
     }
 
