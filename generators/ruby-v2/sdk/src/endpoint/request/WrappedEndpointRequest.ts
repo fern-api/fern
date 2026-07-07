@@ -1,11 +1,10 @@
-import { GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
-import { getInlinedPathParameterNames } from "../utils/pathParameterNaming.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -249,14 +248,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private getPathParameterNames(): string[] {
-        return this.endpoint.allPathParameters.map(
-            (pathParameter) =>
-                getInlinedPathParameterNames({
-                    pathParameter,
-                    endpoint: this.endpoint,
-                    caseConverter: this.case
-                }).attributeName
-        );
+        return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
     }
 
     private getQueryParameterNames(): string[] {
@@ -279,16 +271,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private getNonBodyParameterWireNames(): string[] {
         const wireNames: string[] = [];
 
-        // Path parameters use originalName as wireValue, unless renamed to avoid a
-        // collision with an inlined body property
+        // Path parameters use originalName as wireValue
         for (const pathParam of this.endpoint.allPathParameters) {
-            wireNames.push(
-                getInlinedPathParameterNames({
-                    pathParameter: pathParam,
-                    endpoint: this.endpoint,
-                    caseConverter: this.case
-                }).wireName
-            );
+            wireNames.push(getOriginalName(pathParam.name));
         }
 
         // Query parameters have explicit wireValue

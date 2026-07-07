@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.postWithNullableNamedRequestBodyType(id, request) -> ResponseBody</code></summary>
+<details><summary><code>client.postWithNullableNamedRequestBodyType(pathId, request) -> ResponseBody</code></summary>
 <dl>
 <dd>
 
@@ -35,7 +35,7 @@ client.postWithNullableNamedRequestBodyType(
 <dl>
 <dd>
 
-**id:** `String` 
+**pathId:** `String` 
     
 </dd>
 </dl>
@@ -55,7 +55,7 @@ client.postWithNullableNamedRequestBodyType(
 </dl>
 </details>
 
-<details><summary><code>client.postWithNonNullableNamedRequestBodyType(id, request) -> ResponseBody</code></summary>
+<details><summary><code>client.postWithNonNullableNamedRequestBodyType(pathId, request) -> ResponseBody</code></summary>
 <dl>
 <dd>
 
@@ -88,7 +88,7 @@ client.postWithNonNullableNamedRequestBodyType(
 <dl>
 <dd>
 
-**id:** `String` 
+**pathId:** `String` 
     
 </dd>
 </dl>
@@ -96,7 +96,7 @@ client.postWithNonNullableNamedRequestBodyType(
 <dl>
 <dd>
 
-**nonNullableObjectId:** `Optional<String>` 
+**id:** `Optional<String>` 
     
 </dd>
 </dl>
