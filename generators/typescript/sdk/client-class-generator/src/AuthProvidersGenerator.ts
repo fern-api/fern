@@ -21,6 +21,9 @@ export declare namespace AuthProvidersGenerator {
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
         shouldUseWrapper: boolean;
+        // When true, treat auth as optional even when the spec mandates it,
+        // so the client can be constructed without providing credentials.
+        optionalAuth?: boolean;
     }
 }
 
@@ -31,8 +34,10 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
         authScheme,
         neverThrowErrors,
         includeSerdeLayer,
-        shouldUseWrapper
+        shouldUseWrapper,
+        optionalAuth = false
     }: AuthProvidersGenerator.Init) {
+        const isAuthMandatory = ir.sdkConfig.isAuthMandatory && !optionalAuth;
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
                 case "any":
@@ -55,7 +60,7 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        isAuthMandatory,
                         shouldUseWrapper
                     });
                 case "bearer":
@@ -63,7 +68,7 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        isAuthMandatory,
                         shouldUseWrapper
                     });
                 case "header":
@@ -71,7 +76,7 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        isAuthMandatory,
                         shouldUseWrapper
                     });
                 case "oauth":

@@ -206,6 +206,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     #   "all": defaults on query params, headers, request body params, and pydantic model fields
     use_request_defaults: Optional[Literal["none", "parameters", "all"]] = None
 
+    # When true, makes client auth parameters optional even when the spec
+    # mandates auth on all endpoints (isAuthMandatory=true). Useful for
+    # hand-maintained wrapper clients that authenticate via external means.
+    optional_auth: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -223,6 +228,10 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["default_max_retries"] = obj.pop("maxRetries")
             if "retryStatusCodes" in obj and "retry_status_codes" not in obj:
                 obj["retry_status_codes"] = obj.pop("retryStatusCodes")
+            if "optional-auth" in obj and "optional_auth" not in obj:
+                obj["optional_auth"] = obj.pop("optional-auth")
+            if "optionalAuth" in obj and "optional_auth" not in obj:
+                obj["optional_auth"] = obj.pop("optionalAuth")
 
         obj = super().parse_obj(obj)
 
