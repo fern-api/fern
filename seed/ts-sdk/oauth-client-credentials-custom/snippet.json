@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    cid: \"cid\",\n    csr: \"csr\",\n    scp: \"scp\",\n    entity_id: \"entity_id\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    cid: \"cid\",\n    csr: \"csr\",\n    scp: \"scp\",\n    entity_id: \"entity_id\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nestedNoAuth.api.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nestedNoAuth.api.getSomething();\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nested.api.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nested.api.getSomething();\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials-custom\";\n\nconst client = new SeedOauthClientCredentialsClient({ baseUrl: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n"
             }
         }
     ],

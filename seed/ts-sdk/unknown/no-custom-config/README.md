@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUnknownAsAnyClient } from "@fern/unknown";
 
-const client = new SeedUnknownAsAnyClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedUnknownAsAnyClient({ baseUrl: "YOUR_BASE_URL" });
 await client.unknown.post({
     "key": "value"
 });
