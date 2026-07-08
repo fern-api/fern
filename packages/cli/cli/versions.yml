@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.67.1
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` leaking the literal "AUTO" string into self-hosted generated
+        SDKs. Both the IR version field (which drives the User-Agent header and
+        X-Fern-SDK-Version) and the IR publishing config (which drives package.json and
+        version.ts) now use the language-mapped magic version placeholder
+        ("0.0.0-fern-placeholder") instead of the raw "AUTO" version, so these fields are
+        stamped with the computed version after post-generation replacement rather than "AUTO".
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
 - version: 5.67.0
   changelogEntry:
     - summary: |
