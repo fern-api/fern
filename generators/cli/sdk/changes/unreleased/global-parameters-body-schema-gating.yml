@@ -1,0 +1,10 @@
+- summary: |
+    Gate `body`-location `x-fern-global-parameters` on the request-body
+    schema. A body global is now injected into an operation only when that
+    operation's request-body schema structurally contains the parameter's
+    dotted target path (e.g. `config.currency`); it is skipped otherwise
+    (including operations with no JSON request body, such as multipart or
+    binary uploads). This matches the SDK generators, which resolve the same
+    applicability at IR-generation time. `header`/`query`/`path` globals are
+    unaffected and continue to apply to every applicable operation.
+  type: fix

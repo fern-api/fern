@@ -5,12 +5,14 @@
 //! loaded spec and executor so that custom command handlers can call the
 //! API programmatically.
 
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider, SchemeBinding};
 use crate::error::CliError;
 use crate::formatter;
-use crate::openapi::discovery::{GlobalParameter, JsonSchema, RestDescription, RestMethod, RestResource};
+use crate::openapi::discovery::{
+    GlobalParameter, JsonSchema, JsonSchemaProperty, RestDescription, RestMethod, RestResource,
+};
 use crate::openapi::executor;
 
 /// Split a slash-delimited prefix string into its path components, dropping
@@ -613,6 +615,116 @@ pub(crate) fn global_param_apply_mode_admits(
     }
 }
 
+/// Bound on request-body schema recursion when checking body-target
+/// containment. Matches the `MAX_ALL_OF_DEPTH` cap used by `help.rs`.
+const MAX_BODY_SCHEMA_DEPTH: u8 = 8;
+
+/// Collect the merged object properties contributed by a named component
+/// schema, following `allOf` composition and `$ref` branches
+/// (last-branch-wins, mirroring `help.rs::merge_schema_properties`).
+/// `visited` guards against cyclic `$ref` chains within a single descent.
+fn collect_named_schema_object_properties(
+    schemas: &HashMap<String, JsonSchema>,
+    ref_name: &str,
+    out: &mut BTreeMap<String, JsonSchemaProperty>,
+    visited: &mut HashSet<String>,
+    depth: u8,
+) {
+    if depth >= MAX_BODY_SCHEMA_DEPTH || visited.contains(ref_name) {
+        return;
+    }
+    let Some(schema) = schemas.get(ref_name) else {
+        return;
+    };
+    visited.insert(ref_name.to_string());
+    if let Some(inner_ref) = schema.schema_ref.as_deref() {
+        collect_named_schema_object_properties(schemas, inner_ref, out, visited, depth + 1);
+    }
+    for branch in &schema.all_of {
+        collect_property_object_properties(schemas, branch, out, visited, depth + 1);
+    }
+    for (name, prop) in &schema.properties {
+        out.insert(name.clone(), prop.clone());
+    }
+    visited.remove(ref_name);
+}
+
+/// Collect the object properties contributed by a single property node,
+/// resolving its `$ref`, merging its `allOf` branches, and adding its own
+/// inline `properties`.
+fn collect_property_object_properties(
+    schemas: &HashMap<String, JsonSchema>,
+    prop: &JsonSchemaProperty,
+    out: &mut BTreeMap<String, JsonSchemaProperty>,
+    visited: &mut HashSet<String>,
+    depth: u8,
+) {
+    if depth >= MAX_BODY_SCHEMA_DEPTH {
+        return;
+    }
+    if let Some(ref_name) = prop.schema_ref.as_deref() {
+        collect_named_schema_object_properties(schemas, ref_name, out, visited, depth + 1);
+    }
+    for branch in &prop.all_of {
+        collect_property_object_properties(schemas, branch, out, visited, depth + 1);
+    }
+    for (name, nested) in &prop.properties {
+        out.insert(name.clone(), nested.clone());
+    }
+}
+
+/// Whether the request-body schema named `body_ref` structurally contains
+/// the dotted `target` path (e.g. `config.currency`). Descends object
+/// properties one segment at a time, resolving `$ref`/`allOf` at each level.
+/// The `$ref` cycle guard is reset per consumed segment: revisiting a type
+/// at a deeper segment is a finite descent bounded by the remaining
+/// segments (mirrors the IR resolver's per-segment reset).
+fn request_body_contains_path(schemas: &HashMap<String, JsonSchema>, body_ref: &str, target: &str) -> bool {
+    let segments: Vec<&str> = target.split('.').filter(|s| !s.is_empty()).collect();
+    if segments.is_empty() {
+        return false;
+    }
+    let mut current: BTreeMap<String, JsonSchemaProperty> = BTreeMap::new();
+    let mut visited = HashSet::new();
+    collect_named_schema_object_properties(schemas, body_ref, &mut current, &mut visited, 0);
+
+    for (idx, segment) in segments.iter().enumerate() {
+        let Some(prop) = current.get(*segment).cloned() else {
+            return false;
+        };
+        if idx == segments.len() - 1 {
+            return true;
+        }
+        let mut next: BTreeMap<String, JsonSchemaProperty> = BTreeMap::new();
+        let mut visited = HashSet::new();
+        collect_property_object_properties(schemas, &prop, &mut next, &mut visited, 0);
+        current = next;
+    }
+    false
+}
+
+/// Whether a body-location global's dotted target is structurally present in
+/// `method`'s request-body schema. Non-body locations are never schema-gated
+/// — mirroring the IR applicability pass, which gates only body-location
+/// parameters on the request-body schema (header/query globals apply to every
+/// operation, like global headers). A body-location global on an operation
+/// with no JSON request-body schema (e.g. multipart/binary uploads, or no
+/// body at all) is not present, so it is skipped.
+pub(crate) fn global_param_body_target_present_in_schema(
+    decl: &GlobalParameter,
+    method: &RestMethod,
+    schemas: &HashMap<String, JsonSchema>,
+) -> bool {
+    use crate::openapi::discovery::GlobalParameterLocation;
+    match decl.location {
+        GlobalParameterLocation::Body => match method.request.as_ref().and_then(|r| r.schema_ref.as_deref()) {
+            Some(body_ref) => request_body_contains_path(schemas, body_ref, &decl.target),
+            None => false,
+        },
+        GlobalParameterLocation::Header | GlobalParameterLocation::Query | GlobalParameterLocation::Path => true,
+    }
+}
+
 /// Whether a per-operation parameter supplied by the caller overrides the
 /// global targeting the same wire location (per-op wins). Shared by both
 /// injection paths.
@@ -653,6 +765,13 @@ pub(crate) fn build_global_parameter_overrides(
     for p in &doc.global_parameters {
         // Apply mode: auto injects on all ops, explicit only on opted-in ops.
         if !global_param_apply_mode_admits(p, method) {
+            continue;
+        }
+
+        // Body-location globals additionally require the operation's
+        // request-body schema to contain the dotted target path (mirrors
+        // the IR applicability pass). Header/query/path are not gated.
+        if !global_param_body_target_present_in_schema(p, method, &doc.schemas) {
             continue;
         }
 
@@ -2037,6 +2156,12 @@ impl AppContext {
                 let decl = entry.doc.global_parameters.iter().find(|d| d.name == gp.name);
                 if let Some(d) = decl {
                     if !global_param_apply_mode_admits(d, method) {
+                        return false;
+                    }
+                    // Body-location globals require the request-body schema
+                    // to contain the dotted target path (mirrors the IR
+                    // applicability pass); header/query/path are not gated.
+                    if !global_param_body_target_present_in_schema(d, method, &entry.doc.schemas) {
                         return false;
                     }
                 }
@@ -5183,10 +5308,21 @@ paths:
     #[test]
     fn test_build_global_parameter_overrides_explicit_mode_included() {
         use crate::openapi::discovery::{
-            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
-            RestDescription, RestMethod,
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, JsonSchema,
+            JsonSchemaProperty, RestDescription, RestMethod, SchemaRef,
         };
 
+        let mut schemas = std::collections::HashMap::new();
+        schemas.insert(
+            "TestRequest".to_string(),
+            JsonSchema {
+                properties: std::collections::HashMap::from([(
+                    "currency".to_string(),
+                    JsonSchemaProperty::default(),
+                )]),
+                ..Default::default()
+            },
+        );
         let doc = RestDescription {
             global_parameters: vec![GlobalParameter {
                 name: "currency".into(),
@@ -5199,10 +5335,15 @@ paths:
                 apply: GlobalParameterApplyMode::Explicit,
                 docs: None,
             }],
+            schemas,
             ..Default::default()
         };
         let method = RestMethod {
             global_parameter_opt_ins: vec!["currency".to_string()],
+            request: Some(SchemaRef {
+                schema_ref: Some("TestRequest".to_string()),
+                ..Default::default()
+            }),
             ..Default::default()
         };
         let cmd = clap::Command::new("test")
@@ -5371,5 +5512,172 @@ paths:
             overrides.is_empty(),
             "optional with no value should be omitted: {overrides:?}"
         );
+    }
+
+    /// Build a `RestDescription`/`RestMethod` pair whose request-body schema
+    /// (named `TestRequest`) contains the given top-level property names, for
+    /// exercising body-location schema gating.
+    #[cfg(test)]
+    fn doc_and_method_with_body_props(
+        param_target: &str,
+        body_props: &[&str],
+    ) -> (
+        crate::openapi::discovery::RestDescription,
+        crate::openapi::discovery::RestMethod,
+    ) {
+        use crate::openapi::discovery::{
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, JsonSchema,
+            JsonSchemaProperty, RestDescription, RestMethod, SchemaRef,
+        };
+
+        let properties: std::collections::HashMap<String, JsonSchemaProperty> = body_props
+            .iter()
+            .map(|p| ((*p).to_string(), JsonSchemaProperty::default()))
+            .collect();
+        let mut schemas = std::collections::HashMap::new();
+        schemas.insert(
+            "TestRequest".to_string(),
+            JsonSchema {
+                properties,
+                ..Default::default()
+            },
+        );
+        let doc = RestDescription {
+            global_parameters: vec![GlobalParameter {
+                name: "currency".into(),
+                parameter_name: None,
+                location: GlobalParameterLocation::Body,
+                target: param_target.into(),
+                env: None,
+                default: Some("USD".into()),
+                optional: false,
+                apply: GlobalParameterApplyMode::Auto,
+                docs: None,
+            }],
+            schemas,
+            ..Default::default()
+        };
+        let method = RestMethod {
+            request: Some(SchemaRef {
+                schema_ref: Some("TestRequest".to_string()),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+        (doc, method)
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_body_target_present_injects() {
+        let (doc, method) = doc_and_method_with_body_props("currency", &["currency", "region"]);
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:currency").long("currency").default_value("USD"));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
+            .expect("body target present should inject");
+        assert_eq!(overrides.len(), 1);
+        assert_eq!(overrides[0].target, "currency");
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_body_target_absent_skips() {
+        // `currency` is required + auto, but the request-body schema does not
+        // declare it, so it is skipped — and crucially raises no "required
+        // global has no value" error (schema gating precedes the required check).
+        let (doc, method) = doc_and_method_with_body_props("currency", &["region"]);
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:currency").long("currency").default_value("USD"));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
+            .expect("body target absent should skip without required-error");
+        assert!(
+            overrides.is_empty(),
+            "body global whose target is absent from the schema must not inject: {overrides:?}"
+        );
+    }
+
+    #[test]
+    fn test_build_global_parameter_overrides_body_no_request_body_skips() {
+        // Body-location global on an operation with no JSON request body
+        // (e.g. multipart/binary upload) is skipped.
+        let (doc, mut method) = doc_and_method_with_body_props("currency", &["currency"]);
+        method.request = None;
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:currency").long("currency").default_value("USD"));
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let params = serde_json::Map::new();
+        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
+            .expect("no request body should skip body global");
+        assert!(overrides.is_empty(), "no request body → no body-global injection: {overrides:?}");
+    }
+
+    #[test]
+    fn test_request_body_contains_path_nested_via_ref() {
+        use crate::openapi::discovery::{JsonSchema, JsonSchemaProperty};
+
+        // TestRequest.config -> $ref Config; Config.currency: {}
+        let mut schemas = std::collections::HashMap::new();
+        schemas.insert(
+            "TestRequest".to_string(),
+            JsonSchema {
+                properties: std::collections::HashMap::from([(
+                    "config".to_string(),
+                    JsonSchemaProperty {
+                        schema_ref: Some("Config".to_string()),
+                        ..Default::default()
+                    },
+                )]),
+                ..Default::default()
+            },
+        );
+        schemas.insert(
+            "Config".to_string(),
+            JsonSchema {
+                properties: std::collections::HashMap::from([(
+                    "currency".to_string(),
+                    JsonSchemaProperty::default(),
+                )]),
+                ..Default::default()
+            },
+        );
+
+        assert!(request_body_contains_path(&schemas, "TestRequest", "config.currency"));
+        assert!(!request_body_contains_path(&schemas, "TestRequest", "config.region"));
+        assert!(!request_body_contains_path(&schemas, "TestRequest", "missing"));
+        // A non-object leaf has no children, so descending further fails.
+        assert!(!request_body_contains_path(&schemas, "TestRequest", "config.currency.deep"));
+    }
+
+    #[test]
+    fn test_request_body_contains_path_terminates_on_cyclic_ref() {
+        use crate::openapi::discovery::{JsonSchema, JsonSchemaProperty};
+
+        // Node.next -> $ref Node (self-cycle). The `$ref` guard is reset per
+        // consumed segment, so a finite path through the cycle resolves while
+        // an unbounded one still terminates (returns false rather than looping).
+        let mut schemas = std::collections::HashMap::new();
+        schemas.insert(
+            "Node".to_string(),
+            JsonSchema {
+                properties: std::collections::HashMap::from([
+                    (
+                        "next".to_string(),
+                        JsonSchemaProperty {
+                            schema_ref: Some("Node".to_string()),
+                            ..Default::default()
+                        },
+                    ),
+                    ("value".to_string(), JsonSchemaProperty::default()),
+                ]),
+                ..Default::default()
+            },
+        );
+
+        assert!(request_body_contains_path(&schemas, "Node", "value"));
+        assert!(request_body_contains_path(&schemas, "Node", "next.value"));
+        assert!(request_body_contains_path(&schemas, "Node", "next.next.value"));
+        assert!(!request_body_contains_path(&schemas, "Node", "next.next.missing"));
     }
 }
