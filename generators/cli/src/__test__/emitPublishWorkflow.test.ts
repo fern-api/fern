@@ -167,6 +167,13 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain("gcc-aarch64-linux-gnu");
     });
 
+    it("sets musl-gcc as the linker and CC for musl targets", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("CARGO_TARGET_${TARGET_UPPER}_LINKER=musl-gcc");
+        expect(yaml).toContain("CC=musl-gcc");
+    });
+
     it("includes repository.url in package.json when repoUrl is provided", async () => {
         const yaml = await emitAndRead(baseInfo, "acme", "https://github.com/acme/acme-cli");
 
