@@ -171,6 +171,9 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
 scripts:
   - image: fernapi/php-seed
     commands:
