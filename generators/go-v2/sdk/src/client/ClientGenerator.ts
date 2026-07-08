@@ -461,7 +461,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         optionsByVariableId: Map<string, ServerVariableOption>;
     }): void {
         const args: string[] = [];
-        const format = template.replace(/\{([^}]+)\}/g, (match, id: string) => {
+        // Escape any literal percent signs (e.g. percent-encoded URL segments) before
+        // introducing %s verbs, so they aren't misinterpreted by fmt.Sprintf.
+        const escaped = template.replace(/%/g, "%%");
+        const format = escaped.replace(/\{([^}]+)\}/g, (match, id: string) => {
             const option = optionsByVariableId.get(id);
             if (option == null) {
                 return match;
