@@ -965,7 +965,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.writeNode(oauthTokenProviderClassReference);
         // When wrapped in a credential guard (any-composed auth), clientId/clientSecret
         // are non-null inside the block, so the `?? ''` fallback would be redundant.
-        const clientIdFallback = guarded || oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
+        const clientIdFallback =
+            guarded || oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
         const clientSecretFallback =
             guarded || oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
         const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
