@@ -292,6 +292,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -314,6 +315,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -336,6 +338,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},

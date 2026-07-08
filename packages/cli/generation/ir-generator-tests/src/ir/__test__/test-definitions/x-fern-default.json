@@ -34,6 +34,7 @@
                     }
                 }
             },
+            "variable": null,
             "env": null,
             "clientDefault": {
                 "type": "string",
@@ -243,6 +244,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": {
                                 "type": "string",

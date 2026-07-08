@@ -351,6 +351,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": "",
@@ -387,6 +388,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": 10,
@@ -422,6 +424,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": false,
@@ -460,6 +463,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": "ASC",
@@ -496,6 +500,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -532,6 +537,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": "default-value",
@@ -568,6 +574,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,

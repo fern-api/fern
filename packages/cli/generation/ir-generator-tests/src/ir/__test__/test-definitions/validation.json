@@ -678,6 +678,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": 1.1,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -706,6 +707,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": 42,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -733,6 +735,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": "fern",
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -757,6 +760,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "variable": null,
                                 "defaultValue": "SQUARE",
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -1105,6 +1109,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": 1.1,
@@ -1135,6 +1140,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": 42,
@@ -1164,6 +1170,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": "fern",

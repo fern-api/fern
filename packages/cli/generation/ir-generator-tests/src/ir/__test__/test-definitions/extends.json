@@ -709,6 +709,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
