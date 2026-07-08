@@ -2097,6 +2097,27 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .initializer("$T.empty()", Optional.class)
                         .build());
 
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                                "initialRetryDelayMillis")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                                "maxRetryDelayMillis")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Double.class)),
+                                "retryJitterFactor")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
                 builderStageBuilder.addField(FieldSpec.builder(OkHttpClient.class, "httpClient")
                         .addModifiers(Modifier.PRIVATE)
                         .build());
@@ -2169,6 +2190,40 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return this")
                         .build());
 
+                // Add initialRetryDelayMillis() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("initialRetryDelayMillis")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Sets the initial delay (in milliseconds) used for exponential backoff between retries. "
+                                        + "Defaults to 1000 milliseconds.")
+                        .addParameter(long.class, "initialRetryDelayMillis")
+                        .returns(builderStageClassName)
+                        .addStatement("this.initialRetryDelayMillis = $T.of(initialRetryDelayMillis)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add maxRetryDelayMillis() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("maxRetryDelayMillis")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Sets the maximum delay (in milliseconds) between retries. "
+                                + "Defaults to 60000 milliseconds.")
+                        .addParameter(long.class, "maxRetryDelayMillis")
+                        .returns(builderStageClassName)
+                        .addStatement("this.maxRetryDelayMillis = $T.of(maxRetryDelayMillis)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add retryJitterFactor() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("retryJitterFactor")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Sets the jitter factor (between 0 and 1) applied to retry delays. "
+                                + "Defaults to 0.2.")
+                        .addParameter(double.class, "retryJitterFactor")
+                        .returns(builderStageClassName)
+                        .addStatement("this.retryJitterFactor = $T.of(retryJitterFactor)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
                 // Add httpClient() method
                 builderStageBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
                         .addModifiers(Modifier.PUBLIC)
@@ -2230,6 +2285,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
                         .endControlFlow()
+                        .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
+                        .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxRetryDelayMillis.isPresent())")
+                        .addStatement("auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.retryJitterFactor.isPresent())")
+                        .addStatement("auth.retryJitterFactor(this.retryJitterFactor.get())")
+                        .endControlFlow()
                         .beginControlFlow("if (this.httpClient != null)")
                         .addStatement("auth.httpClient(this.httpClient)")
                         .endControlFlow()
@@ -2269,6 +2333,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
+                        .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxRetryDelayMillis.isPresent())")
+                        .addStatement("auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.retryJitterFactor.isPresent())")
+                        .addStatement("auth.retryJitterFactor(this.retryJitterFactor.get())")
                         .endControlFlow()
                         .beginControlFlow("if (this.httpClient != null)")
                         .addStatement("auth.httpClient(this.httpClient)")
