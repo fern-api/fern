@@ -8,6 +8,10 @@ export interface BaseClientOptions {
     environment?: core.Supplier<environments.SeedApiEnvironment | environments.SeedApiEnvironmentUrls>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
+    /** The region to route requests to. Allowed values: us-east-1, us-west-2, eu-west-1. Defaults to "us-east-1". */
+    region?: string;
+    /** The serverUrlEnvironment to route requests to. Allowed values: prod, staging, dev. Defaults to "prod". */
+    serverUrlEnvironment?: string;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -58,8 +62,19 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         options?.headers,
     );
 
+    let environment = options?.environment;
+    if (options?.region != null || options?.serverUrlEnvironment != null) {
+        const _region = options?.region ?? "us-east-1";
+        const _serverUrlEnvironment = options?.serverUrlEnvironment ?? "prod";
+        environment = {
+            base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`,
+            auth: `https://auth.${_region}.example.com`,
+        };
+    }
+
     return {
         ...options,
+        environment,
         logging: core.logging.createLogger(options?.logging),
         headers,
     } as NormalizedClientOptions<T>;

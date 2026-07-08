@@ -531,6 +531,9 @@ fixtures:
   server-sent-events-openapi:
     - outputFolder: no-custom-config
       customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
 
 scripts:
   - image: fernapi/ts-seed
