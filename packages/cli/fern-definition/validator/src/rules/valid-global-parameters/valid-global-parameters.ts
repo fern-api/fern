@@ -31,10 +31,11 @@ export const ValidGlobalParametersRule: Rule = {
                                 message: `Global parameter '${key}' has invalid apply mode '${param.apply}'; expected one of: explicit, auto, always`
                             });
                         }
-                        if (param.apply === "always" && param.in != null && !APPLY_ALWAYS_LOCATIONS.has(param.in)) {
+                        const effectiveLocation = param.in ?? "body";
+                        if (param.apply === "always" && !APPLY_ALWAYS_LOCATIONS.has(effectiveLocation)) {
                             violations.push({
                                 severity: "error",
-                                message: `Global parameter '${key}' uses apply mode 'always', which is only valid for query and header parameters (got location '${param.in}')`
+                                message: `Global parameter '${key}' uses apply mode 'always', which is only valid for query and header parameters (got location '${effectiveLocation}')`
                             });
                         }
                         if (param.type != null && !VALID_TYPES.has(param.type)) {
