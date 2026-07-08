@@ -1868,7 +1868,7 @@
               "type": "null"
             }
           ],
-          "description": "How the parameter is applied: explicit or auto.\nexplicit requires per-operation opt-in via x-fern-global-parameter.\nauto injects on every operation with the target field."
+          "description": "How the parameter is injected on the wire: explicit, auto, or always.\nDefaults to explicit. explicit requires per-operation opt-in via\nx-fern-global-parameter and only injects where the operation declares\nthe matching surface. auto injects on every operation that declares the\nmatching surface. always injects on every operation unconditionally and\nis only valid for query and header parameters."
         },
         "parameter-name": {
           "oneOf": [
