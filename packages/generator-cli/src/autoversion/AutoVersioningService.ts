@@ -864,8 +864,7 @@ export class AutoVersioningService {
 
         const goModulePathPattern = /"[^"]*(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/[^"]*"/;
         const goModuleDirectivePattern = /^\s*module\s+(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/\S+/;
-        const isGoModulePathLine =
-            goModulePathPattern.test(content) || goModuleDirectivePattern.test(content.trim());
+        const isGoModulePathLine = goModulePathPattern.test(content) || goModuleDirectivePattern.test(content.trim());
         if (!isGoModulePathLine) {
             return undefined;
         }

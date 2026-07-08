@@ -318,9 +318,9 @@ describe("AutoVersioningService", () => {
 
         // No suffix churn should survive — the whole file section collapses to nothing.
         expect(cleaned).not.toContain("/v4/");
-        expect(cleaned).not.toContain("core \"github.com/anduril/lattice-sdk-go/core\"");
-        expect(cleaned).not.toContain("internal \"github.com/anduril/lattice-sdk-go/internal\"");
-        expect(cleaned).not.toContain("option \"github.com/anduril/lattice-sdk-go/option\"");
+        expect(cleaned).not.toContain('core "github.com/anduril/lattice-sdk-go/core"');
+        expect(cleaned).not.toContain('internal "github.com/anduril/lattice-sdk-go/internal"');
+        expect(cleaned).not.toContain('option "github.com/anduril/lattice-sdk-go/option"');
         expect(cleaned).not.toContain("client.go");
     });
 
@@ -372,8 +372,8 @@ describe("AutoVersioningService", () => {
 
         // Suffix-only churn is gone...
         expect(cleaned).not.toContain("/v4/");
-        expect(cleaned).not.toContain("core \"github.com/anduril/lattice-sdk-go/core\"");
-        expect(cleaned).not.toContain("internal \"github.com/anduril/lattice-sdk-go/internal\"");
+        expect(cleaned).not.toContain('core "github.com/anduril/lattice-sdk-go/core"');
+        expect(cleaned).not.toContain('internal "github.com/anduril/lattice-sdk-go/internal"');
         // ...but the genuinely new import (no matching suffix-bearing deletion) survives.
         expect(cleaned).toContain('+\tnewpkg "github.com/anduril/lattice-sdk-go/newpkg"');
     });
