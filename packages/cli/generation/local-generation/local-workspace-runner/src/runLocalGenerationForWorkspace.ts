@@ -15,7 +15,13 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
+import {
+    AutoVersioningCache,
+    extractLanguageFromGeneratorName,
+    isAutoVersion,
+    MAGIC_VERSION,
+    mapMagicVersionForLanguage
+} from "@fern-api/generator-cli/autoversion";
 import {
     buildReplayTelemetryProps,
     logReplaySummary,
@@ -587,7 +593,7 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
     });
 }
 
-function getPublishConfig({
+export function getPublishConfig({
     generatorInvocation,
     org,
     version,
@@ -604,6 +610,19 @@ function getPublishConfig({
     context: TaskContext;
     generateTests?: boolean;
 }): FernIr.PublishingConfig | undefined {
+    // When version is AUTO, substitute the language-mapped magic placeholder
+    // ("0.0.0-fern-placeholder") so the version stamped into the generated SDK's
+    // publish target (and therefore package.json, version.ts, the User-Agent header,
+    // and X-Fern-SDK-Version) is a safe placeholder that the post-generation step can
+    // cleanly replace — instead of the literal "AUTO" string.
+    const publishLanguage = generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
+    const substituteAutoVersion = (candidate: string | undefined): string | undefined =>
+        candidate != null && isAutoVersion(candidate)
+            ? mapMagicVersionForLanguage(MAGIC_VERSION, publishLanguage)
+            : candidate;
+    const effectiveVersion = substituteAutoVersion(version);
+    const effectiveUserProvidedVersion = substituteAutoVersion(userProvidedVersion);
+
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         const parsed = parseRepository(generatorInvocation.raw.github.uri);
 
@@ -616,7 +635,11 @@ function getPublishConfig({
             token: generatorInvocation.raw.github.token,
             mode: irMode,
             branch: generatorInvocation.raw.github.branch,
-            target: getPublishTarget({ outputSchema: generatorInvocation.raw.output, version, packageName })
+            target: getPublishTarget({
+                outputSchema: generatorInvocation.raw.output,
+                version: effectiveVersion,
+                packageName
+            })
         });
     }
 
@@ -624,38 +647,40 @@ function getPublishConfig({
         let publishTarget: PublishTarget | undefined = undefined;
         if (generatorInvocation.language === "python") {
             publishTarget = PublishTarget.pypi({
-                version,
+                version: effectiveVersion,
                 packageName
             });
-            context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
+            context.logger.debug(`Created PyPiPublishTarget: version ${effectiveVersion} package name: ${packageName}`);
         } else if (generatorInvocation.language === "typescript") {
             // Only populate the npm publish target when the user explicitly passed
             // `--version`. We intentionally do NOT thread auto-computed versions or
             // package names on their own — doing so would cause unrelated behavior
             // changes (e.g. auto-bumping a version from the npm registry) for users
             // who rely on managing `package.json` themselves.
-            if (userProvidedVersion != null) {
+            if (effectiveUserProvidedVersion != null) {
                 const tsPackageName =
                     packageName ??
                     (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
                         ? (generatorInvocation.raw.config as { packageJson?: { name?: string } }).packageJson?.name
                         : undefined);
                 publishTarget = PublishTarget.npm({
-                    version: userProvidedVersion,
+                    version: effectiveUserProvidedVersion,
                     packageName: tsPackageName,
                     tokenEnvironmentVariable: ""
                 });
                 context.logger.debug(
-                    `Created NpmPublishTarget: version ${userProvidedVersion} package name: ${tsPackageName}`
+                    `Created NpmPublishTarget: version ${effectiveUserProvidedVersion} package name: ${tsPackageName}`
                 );
             }
         } else if (generatorInvocation.language === "rust") {
             // Use Crates publish target for Rust (Cargo/crates.io)
             publishTarget = PublishTarget.crates({
-                version,
+                version: effectiveVersion,
                 packageName
             });
-            context.logger.debug(`Created CratesPublishTarget: version ${version} package name: ${packageName}`);
+            context.logger.debug(
+                `Created CratesPublishTarget: version ${effectiveVersion} package name: ${packageName}`
+            );
         } else if (generatorInvocation.language === "go") {
             // Only populate the go publish target when the user explicitly passed
             // `--version`. We intentionally do NOT thread auto-computed versions
@@ -663,7 +688,7 @@ function getPublishConfig({
             // (module versions are set via git tags), so the only reason to
             // populate this is when the user asked us to stamp the SDK with a
             // specific version (e.g. for the `X-Fern-SDK-Version` header).
-            if (userProvidedVersion != null) {
+            if (effectiveUserProvidedVersion != null) {
                 const goModulePath = (() => {
                     const config = generatorInvocation.raw?.config;
                     if (typeof config !== "object" || config === null) {
@@ -676,11 +701,11 @@ function getPublishConfig({
                     return module.path;
                 })();
                 publishTarget = PublishTarget.go({
-                    version: userProvidedVersion,
+                    version: effectiveUserProvidedVersion,
                     modulePath: goModulePath
                 });
                 context.logger.debug(
-                    `Created GoPublishTarget: version ${userProvidedVersion} module path: ${goModulePath}`
+                    `Created GoPublishTarget: version ${effectiveUserProvidedVersion} module path: ${goModulePath}`
                 );
             }
         } else if (generatorInvocation.language === "java") {
@@ -721,7 +746,7 @@ function getPublishConfig({
             const coordinate = mavenCoordinate ? `${mavenCoordinate.groupId}:${mavenCoordinate.artifactId}` : undefined;
 
             if (coordinate) {
-                const mavenVersion = version ?? "0.0.0";
+                const mavenVersion = effectiveVersion ?? "0.0.0";
                 publishTarget = PublishTarget.maven({
                     coordinate,
                     version: mavenVersion,
