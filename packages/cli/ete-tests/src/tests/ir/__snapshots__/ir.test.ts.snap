@@ -990,6 +990,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -1035,6 +1036,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -20149,6 +20151,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 }
             },
+            "variable": null,
             "env": null,
             "clientDefault": null,
             "defaultValue": null,
@@ -21246,6 +21249,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 }
             },
+            "variable": null,
             "env": null,
             "clientDefault": null,
             "defaultValue": null,
@@ -23267,6 +23271,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 }
             },
+            "variable": null,
             "env": null,
             "clientDefault": null,
             "defaultValue": null,
@@ -27356,6 +27361,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -31328,6 +31334,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
