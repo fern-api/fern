@@ -1833,14 +1833,12 @@ public partial class SeedApiClient : ISeedApiClient
     /// client.StreamXFernStreamingUnionStreamAsync(
     ///     new StreamXFernStreamingUnionStreamRequest(
     ///         new StreamXFernStreamingUnionStreamRequest.Message(
-    ///             new UnionStreamMessageVariant
-    ///             {
-    ///                 Prompt = "prompt",
-    ///                 Message = "message",
-    ///                 StreamResponse = true,
-    ///             }
+    ///             new UnionStreamMessageVariant { Prompt = "prompt", Message = "message" }
     ///         )
     ///     )
+    ///     {
+    ///         StreamResponse = true,
+    ///     }
     /// );
     /// </code></example>
     public WithRawResponseStream<CompletionStreamChunk> StreamXFernStreamingUnionStreamAsync(
@@ -1862,14 +1860,12 @@ public partial class SeedApiClient : ISeedApiClient
     /// await client.StreamXFernStreamingUnionAsync(
     ///     new StreamXFernStreamingUnionRequest(
     ///         new StreamXFernStreamingUnionRequest.Message(
-    ///             new UnionStreamMessageVariant
-    ///             {
-    ///                 Prompt = "prompt",
-    ///                 Message = "message",
-    ///                 StreamResponse = false,
-    ///             }
+    ///             new UnionStreamMessageVariant { Prompt = "prompt", Message = "message" }
     ///         )
     ///     )
+    ///     {
+    ///         StreamResponse = false,
+    ///     }
     /// );
     /// </code></example>
     public WithRawResponseTask<CompletionFullResponse> StreamXFernStreamingUnionAsync(

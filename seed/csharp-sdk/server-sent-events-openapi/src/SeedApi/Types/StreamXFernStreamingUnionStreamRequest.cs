@@ -245,9 +245,10 @@ public record StreamXFernStreamingUnionStreamRequest
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            // Strip properties owned by the union (discriminant and base properties) to prevent them from leaking into AdditionalProperties
             var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
             jsonObject?.Remove("type");
+            jsonObject?.Remove("stream_response");
             var jsonWithoutDiscriminator =
                 jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
 

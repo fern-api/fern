@@ -21,12 +21,6 @@ public record UnionStreamMessageVariant : IJsonOnDeserialized
     public required string Message { get; set; }
 
     /// <summary>
-    /// Whether to stream the response.
-    /// </summary>
-    [JsonPropertyName("stream_response")]
-    public bool? StreamResponse { get; set; }
-
-    /// <summary>
     /// The input prompt.
     /// </summary>
     [JsonPropertyName("prompt")]
