@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPaginationUriPathClient } from "@fern/pagination-uri-path";
 
-const client = new SeedPaginationUriPathClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedPaginationUriPathClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const pageableResponse = await client.users.listWithUriPagination();
 for await (const item of pageableResponse) {
     console.log(item);
@@ -85,7 +85,7 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 ```typescript
 import { SeedPaginationUriPathClient } from "@fern/pagination-uri-path";
 
-const client = new SeedPaginationUriPathClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedPaginationUriPathClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const pageableResponse = await client.users.listWithUriPagination();
 for await (const item of pageableResponse) {
     console.log(item);

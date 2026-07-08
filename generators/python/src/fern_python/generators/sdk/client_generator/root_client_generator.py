@@ -220,6 +220,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
         has_inferred_auth = self._get_inferred_auth_scheme() is not None
 
+        # Resolve the actual bearer token parameter name (e.g. "api_key" instead of default "token")
+        bearer_token_param_name = self._get_wrapper_bearer_token_kwarg_name(
+            client_wrapper_generator=client_wrapper_generator
+        )
+
         base_url_example_value: Optional[AST.Expression] = None
         if has_inferred_auth:
             base_url_param = client_wrapper_generator._get_base_url_constructor_parameter()
@@ -244,6 +249,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 else self._root_client_constructor_params
             ),
             oauth_token_override=is_oauth_client_credentials,
+            bearer_token_param_name=bearer_token_param_name,
             # OAuth token-override and inferred-auth SDKs should always use kwargs-style snippets;
             # positional snippets are unstable and can degrade badly when defaults are expressions
             # like os.getenv("...").
@@ -1887,6 +1893,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             async_class_name: str,
             constructor_parameters: Sequence[ConstructorParameter],
             oauth_token_override: bool = False,
+            bearer_token_param_name: str = "token",
             use_kwargs_snippets: bool = False,
             base_url_example_value: Optional[AST.Expression] = None,
             sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
@@ -1907,6 +1914,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._sync_constructor_overloads = sync_constructor_overloads
             self._async_constructor_overloads = async_constructor_overloads
             self._oauth_token_override = oauth_token_override
+            self._bearer_token_param_name = bearer_token_param_name
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
 
@@ -1958,9 +1966,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     if p.initializer is None and (p.type_hint is None or not p.type_hint.is_optional)
                 ]
 
-                # If there is inferred auth, use a nicer placeholder for those credentials (usually api_key),
+                # If there is inferred auth, use a nicer placeholder for those credentials,
                 # but still include other required parameters (e.g. base_url).
-                inferred_auth_param_names = {"api_key"}
+                inferred_auth_param_names = {self._bearer_token_param_name}
                 kwargs: List[typing.Tuple[str, AST.Expression]] = []
                 for p in required_params:
                     # Skip internal/private params in examples.
@@ -2013,7 +2021,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 oauth_param_names = {
                     "client_id",
                     "client_secret",
-                    RootClientGenerator.TOKEN_PARAMETER_NAME,
+                    self._bearer_token_param_name,
                     RootClientGenerator.TOKEN_GETTER_PARAM_NAME,
                 }
                 default_args = []
@@ -2042,7 +2050,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 if self._use_kwargs_snippets:
                     token_kwargs: List[typing.Tuple[str, AST.Expression]] = [
                         ("base_url", AST.Expression('"https://yourhost.com/path/to/api"')),
-                        ("token", AST.Expression('"YOUR_BEARER_TOKEN"')),
+                        (self._bearer_token_param_name, AST.Expression('"YOUR_BEARER_TOKEN"')),
                     ]
                     async_instantiations.append(
                         AST.Expression(
@@ -2057,7 +2065,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 else:
                     token_args = [
                         AST.Expression('base_url="https://yourhost.com/path/to/api"'),
-                        AST.Expression('token="YOUR_BEARER_TOKEN"'),
+                        AST.Expression(f'{self._bearer_token_param_name}="YOUR_BEARER_TOKEN"'),
                     ]
                     async_instantiations.append(
                         AST.Expression(

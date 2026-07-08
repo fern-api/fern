@@ -1069,16 +1069,23 @@ return core.makePassthroughRequest(input, init, {
 
         if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
             const firstEnvironment = context.environments.getReferenceToFirstEnvironmentEnum();
-            const environment =
-                firstEnvironment != null
-                    ? firstEnvironment.getExpression()
-                    : ts.factory.createStringLiteral("YOUR_BASE_URL");
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
-                    environment
-                )
-            );
+            if (firstEnvironment != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
+                        firstEnvironment.getExpression()
+                    )
+                );
+            } else {
+                // When no environments are defined, use baseUrl instead of environment
+                // to avoid confusing users who don't have a concept of environments.
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+                        ts.factory.createStringLiteral("YOUR_BASE_URL")
+                    )
+                );
+            }
         }
 
         // Delegate auth snippet properties to the auth provider
