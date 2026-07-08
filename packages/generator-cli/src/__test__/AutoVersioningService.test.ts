@@ -378,6 +378,32 @@ describe("AutoVersioningService", () => {
         expect(cleaned).toContain('+\tnewpkg "github.com/anduril/lattice-sdk-go/newpkg"');
     });
 
+    // The generated Go SDK also embeds its own module path (with the `/vN` suffix) mid-line as the
+    // `X-Fern-SDK-Name` header value, where the closing quote is followed by more characters (`)`),
+    // not end-of-line. The suffix must still be stripped there so this no-op churn does not reach
+    // the AI analyzer. Regression for a gap found during end-to-end testing against a real Go SDK.
+    it("testCleanDiffForAI_stripsGoModulePathSuffixInMidLineHeaderValue", () => {
+        const diff =
+            "diff --git a/core/request_option.go b/core/request_option.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/core/request_option.go\n" +
+            "+++ b/core/request_option.go\n" +
+            "@@ -52,3 +52,3 @@ func (r *RequestOptions) cloneHeader() http.Header {\n" +
+            '-\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go/v4")\n' +
+            '+\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go")\n' +
+            " \treturn headers\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // Both sides of the header-value suffix churn are removed — nothing reaches the analyzer.
+        expect(cleaned).not.toContain("/v4");
+        expect(cleaned).not.toContain('"github.com/anduril/lattice-sdk-go"');
+        expect(cleaned).not.toContain("request_option.go");
+    });
+
     it("testExtractPreviousVersion_invalidVersionFormat_returnsUndefined", () => {
         const diff =
             "diff --git a/config.txt b/config.txt\n" +

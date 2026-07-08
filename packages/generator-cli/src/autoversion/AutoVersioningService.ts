@@ -869,9 +869,11 @@ export class AutoVersioningService {
             return undefined;
         }
 
-        // Only strip /vN when it appears as a Go module version suffix
-        // (followed by / or end of quoted string or end of line)
-        const suffixPattern = /\/v\d+(?=\/|"\s*$|$)/g;
+        // Only strip /vN when it appears as a Go module version suffix: followed by a path
+        // separator (`/v4/core`), a closing quote (the module path may be embedded mid-line,
+        // e.g. the `X-Fern-SDK-Name` header value `"github.com/org/sdk/v4"`), or end of line
+        // (the bare `module` directive).
+        const suffixPattern = /\/v\d+(?=\/|"|$)/g;
         return {
             strippedContent: content.replace(suffixPattern, ""),
             hasSuffix: suffixPattern.test(content)
