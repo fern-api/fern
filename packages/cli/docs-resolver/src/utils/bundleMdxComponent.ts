@@ -148,6 +148,9 @@ export default {
     input: ${JSON.stringify(absoluteFilePath)},
     platform: "browser",
     logLevel: "silent",
+    // Don't auto-discover a tsconfig — a parent tsconfig.json (e.g. in a
+    // monorepo) may extend configs that aren't installed in the docs project.
+    tsconfig: false,
     // Relative imports resolve against the other uploaded component files in
     // the docs renderer, and renderer-provided modules (and their subpaths,
     // e.g. react/jsx-runtime) are supplied by the renderer itself.
