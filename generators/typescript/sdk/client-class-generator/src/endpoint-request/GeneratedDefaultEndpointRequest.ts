@@ -184,21 +184,22 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getBuildRequestStatements(context: FileContext): ts.Statement[] {
-        const statements: ts.Statement[] = [];
-
-        if (this.requestParameter != null) {
-            statements.push(
-                ...this.requestParameter.getInitialStatements(context, {
-                    variablesInScope: this.getEndpointParameters(context).map((param) => param.name)
-                })
-            );
-        }
+        const statements: ts.Statement[] = [...this.getInitialRequestStatements(context)];
 
         statements.push(...this.getQueryParams(context).getBuildStatements(context));
 
         statements.push(...this.initializeHeaders(context));
 
         return statements;
+    }
+
+    public getInitialRequestStatements(context: FileContext): ts.Statement[] {
+        if (this.requestParameter == null) {
+            return [];
+        }
+        return this.requestParameter.getInitialStatements(context, {
+            variablesInScope: this.getEndpointParameters(context).map((param) => param.name)
+        });
     }
 
     public getBuildHeaderStatements(context: FileContext): ts.Statement[] {

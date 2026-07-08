@@ -5,6 +5,7 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface GeneratedEndpointRequest {
     getBuildRequestStatements: (context: FileContext) => ts.Statement[];
+    getInitialRequestStatements: (context: FileContext) => ts.Statement[];
     getBuildHeaderStatements: (context: FileContext) => ts.Statement[];
     getRequestParameter(context: FileContext): ts.TypeNode | undefined;
     getEndpointParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];

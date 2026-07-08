@@ -502,6 +502,9 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: "MyPager"
+  ts-pagination-uri-path-params:
+    - outputFolder: .
+      customConfig: null
   cross-package-type-names:
     - outputFolder: no-custom-config
       customConfig: null

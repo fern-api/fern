@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/accounts/{accountId}/users/uri",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithUriPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationUriPathParamsClient } from \"@fern/ts-pagination-uri-path-params\";\n\nconst client = new SeedTsPaginationUriPathParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithUriPagination({\n    \"X-Api-Version\": \"X-Api-Version\",\n    accountId: \"accountId\",\n    pageSize: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithUriPagination({\n    \"X-Api-Version\": \"X-Api-Version\",\n    accountId: \"accountId\",\n    pageSize: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/accounts/{accountId}/users/path",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithPathPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationUriPathParamsClient } from \"@fern/ts-pagination-uri-path-params\";\n\nconst client = new SeedTsPaginationUriPathParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithPathPagination({\n    accountId: \"accountId\",\n    pageSize: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithPathPagination({\n    accountId: \"accountId\",\n    pageSize: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            }
+        }
+    ],
+    "types": {}
+}

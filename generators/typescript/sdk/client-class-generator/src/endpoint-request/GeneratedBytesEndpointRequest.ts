@@ -197,12 +197,12 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         return ts.factory.createUnionTypeNode(types);
     }
 
-    public getBuildRequestStatements(context: FileContext): ts.Statement[] {
-        const statements: ts.Statement[] = [];
+    public getInitialRequestStatements(_context: FileContext): ts.Statement[] {
+        return this.requestParameter?.getInitialStatements() ?? [];
+    }
 
-        if (this.requestParameter != null) {
-            statements.push(...this.requestParameter.getInitialStatements());
-        }
+    public getBuildRequestStatements(context: FileContext): ts.Statement[] {
+        const statements: ts.Statement[] = [...this.getInitialRequestStatements(context)];
 
         const queryParams = this.getQueryParams(context);
         if (queryParams != null) {
