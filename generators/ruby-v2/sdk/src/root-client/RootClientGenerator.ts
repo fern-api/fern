@@ -760,7 +760,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = RESERVED_OPTION_NAMES.has(snake) ? `server_url_${snake}` : snake;
-            return { variable, optionName, localName: `_${optionName}` };
+            return { variable, optionName, localName: `${optionName}_value` };
         });
     }
 
@@ -854,21 +854,24 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 const templates = templatedEnvironment.urlTemplates;
                 const staticUrls = templatedEnvironment.urls;
+                const entries = environments.baseUrls.map((baseUrl) => {
+                    const key = this.case.snakeSafe(baseUrl.name);
+                    const template = templates[baseUrl.id];
+                    const value =
+                        template != null
+                            ? this.urlTemplateToRubyString(template, options)
+                            : JSON.stringify(staticUrls[baseUrl.id] ?? "");
+                    return `${key}: ${value}`;
+                });
                 return ruby.codeblock((writer) => {
                     writer.writeLine(`if ${condition}`);
                     writer.indent();
                     writeLocalDeclarations(writer);
                     writer.writeLine(`environment = {`);
                     writer.indent();
-                    for (const baseUrl of environments.baseUrls) {
-                        const key = this.case.snakeSafe(baseUrl.name);
-                        const template = templates[baseUrl.id];
-                        const value =
-                            template != null
-                                ? this.urlTemplateToRubyString(template, options)
-                                : JSON.stringify(staticUrls[baseUrl.id] ?? "");
-                        writer.writeLine(`${key}: ${value},`);
-                    }
+                    entries.forEach((entry, index) => {
+                        writer.writeLine(`${entry}${index < entries.length - 1 ? "," : ""}`);
+                    });
                     writer.dedent();
                     writer.writeLine(`}`);
                     writer.dedent();

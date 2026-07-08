@@ -103,11 +103,11 @@ module Seed
     # @return [void]
     def initialize(base_url: nil, environment: Seed::Environment::REGIONAL_API_SERVER, region: nil, server_url_environment: nil, max_retries: 2)
       if !region.nil? || !server_url_environment.nil?
-        _region = region.nil? ? "us-east-1" : region
-        _server_url_environment = server_url_environment.nil? ? "prod" : server_url_environment
+        region_value = region.nil? ? "us-east-1" : region
+        server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
         environment = {
-          base: "https://api.#{_region}.#{_server_url_environment}.example.com/v1",
-          auth: "https://auth.#{_region}.example.com",
+          base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
+          auth: "https://auth.#{region_value}.example.com"
         }
       end
 
