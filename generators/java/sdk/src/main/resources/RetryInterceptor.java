@@ -11,15 +11,30 @@ import okhttp3.Response;
 
 public class RetryInterceptor implements Interceptor {
 
-    private static final Duration INITIAL_RETRY_DELAY = Duration.ofMillis(1000);
-    private static final Duration MAX_RETRY_DELAY = Duration.ofMillis(60000);
-    private static final double JITTER_FACTOR = 0.2;
+    private static final Duration DEFAULT_INITIAL_RETRY_DELAY = Duration.ofMillis(1000);
+    private static final Duration DEFAULT_MAX_RETRY_DELAY = Duration.ofMillis(60000);
+    private static final double DEFAULT_JITTER_FACTOR = 0.2;
 
     private final int maxRetries;
+    private final Duration initialRetryDelay;
+    private final Duration maxRetryDelay;
+    private final double jitterFactor;
     private final Random random = new Random();
 
     public RetryInterceptor(int maxRetries) {
+        this(maxRetries, Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    public RetryInterceptor(
+            int maxRetries,
+            Optional<Long> initialRetryDelayMillis,
+            Optional<Long> maxRetryDelayMillis,
+            Optional<Double> jitterFactor) {
         this.maxRetries = maxRetries;
+        this.initialRetryDelay =
+                initialRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_INITIAL_RETRY_DELAY);
+        this.maxRetryDelay = maxRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_MAX_RETRY_DELAY);
+        this.jitterFactor = jitterFactor.orElse(DEFAULT_JITTER_FACTOR);
     }
 
     @Override
@@ -73,7 +88,7 @@ public class RetryInterceptor implements Interceptor {
             Optional<Duration> secondsDelay = tryParseLong(retryAfter)
                 .map(seconds -> seconds * 1000)
                 .filter(delayMs -> delayMs > 0)
-                .map(delayMs -> Math.min(delayMs, MAX_RETRY_DELAY.toMillis()))
+                .map(delayMs -> Math.min(delayMs, maxRetryDelay.toMillis()))
                 .map(Duration::ofMillis);
             if (secondsDelay.isPresent()) {
                 return secondsDelay.get();
@@ -83,7 +98,7 @@ public class RetryInterceptor implements Interceptor {
             Optional<Duration> dateDelay = tryParseHttpDate(retryAfter)
                 .map(resetTime -> resetTime.toInstant().toEpochMilli() - System.currentTimeMillis())
                 .filter(delayMs -> delayMs > 0)
-                .map(delayMs -> Math.min(delayMs, MAX_RETRY_DELAY.toMillis()))
+                .map(delayMs -> Math.min(delayMs, maxRetryDelay.toMillis()))
                 .map(Duration::ofMillis);
             if (dateDelay.isPresent()) {
                 return dateDelay.get();
@@ -97,7 +112,7 @@ public class RetryInterceptor implements Interceptor {
             Optional<Duration> rateLimitDelay = tryParseLong(rateLimitReset)
                 .map(resetTimeSeconds -> (resetTimeSeconds * 1000) - System.currentTimeMillis())
                 .filter(delayMs -> delayMs > 0)
-                .map(delayMs -> Math.min(delayMs, MAX_RETRY_DELAY.toMillis()))
+                .map(delayMs -> Math.min(delayMs, maxRetryDelay.toMillis()))
                 .map(this::addPositiveJitter)
                 .map(Duration::ofMillis);
             if (rateLimitDelay.isPresent()) {
@@ -106,8 +121,8 @@ public class RetryInterceptor implements Interceptor {
         }
 
         // Fall back to exponential backoff, with symmetric jitter
-        long baseDelay = INITIAL_RETRY_DELAY.toMillis() * (1L << retryAttempt); // 2^retryAttempt
-        long cappedDelay = Math.min(baseDelay, MAX_RETRY_DELAY.toMillis());
+        long baseDelay = initialRetryDelay.toMillis() * (1L << retryAttempt); // 2^retryAttempt
+        long cappedDelay = Math.min(baseDelay, maxRetryDelay.toMillis());
         return Duration.ofMillis(addSymmetricJitter(cappedDelay));
     }
 
@@ -144,7 +159,7 @@ public class RetryInterceptor implements Interceptor {
      * Used for X-RateLimit-Reset header delays.
      */
     private long addPositiveJitter(long delayMs) {
-        double jitterMultiplier = 1.0 + (random.nextDouble() * JITTER_FACTOR);
+        double jitterMultiplier = 1.0 + (random.nextDouble() * jitterFactor);
         return (long) (delayMs * jitterMultiplier);
     }
 
@@ -153,7 +168,7 @@ public class RetryInterceptor implements Interceptor {
      * Used for exponential backoff delays.
      */
     private long addSymmetricJitter(long delayMs) {
-        double jitterMultiplier = 1.0 + ((random.nextDouble() - 0.5) * JITTER_FACTOR);
+        double jitterMultiplier = 1.0 + ((random.nextDouble() - 0.5) * jitterFactor);
         return (long) (delayMs * jitterMultiplier);
     }
 

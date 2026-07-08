@@ -456,6 +456,27 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build());
 
         clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                        "initialRetryDelayMillis")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                        "maxRetryDelayMillis")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Double.class)),
+                        "retryJitterFactor")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
                         ParameterizedTypeName.get(
                                 ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class)),
                         "customHeaders")
@@ -596,6 +617,35 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addParameter(int.class, "maxRetries")
                 .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                 .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("initialRetryDelayMillis")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the initial delay (in milliseconds) used for exponential backoff between retries. "
+                        + "Defaults to 1000 milliseconds.")
+                .addParameter(long.class, "initialRetryDelayMillis")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.initialRetryDelayMillis = $T.of(initialRetryDelayMillis)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("maxRetryDelayMillis")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the maximum delay (in milliseconds) between retries. "
+                        + "Defaults to 60000 milliseconds.")
+                .addParameter(long.class, "maxRetryDelayMillis")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.maxRetryDelayMillis = $T.of(maxRetryDelayMillis)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("retryJitterFactor")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.")
+                .addParameter(double.class, "retryJitterFactor")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.retryJitterFactor = $T.of(retryJitterFactor)", Optional.class)
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
@@ -989,6 +1039,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         + "@param builder The ClientOptions.Builder to configure")
                 .beginControlFlow("if (this.maxRetries.isPresent())")
                 .addStatement("builder.maxRetries(this.maxRetries.get())")
+                .endControlFlow()
+                .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
+                .addStatement("builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
+                .endControlFlow()
+                .beginControlFlow("if (this.maxRetryDelayMillis.isPresent())")
+                .addStatement("builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get())")
+                .endControlFlow()
+                .beginControlFlow("if (this.retryJitterFactor.isPresent())")
+                .addStatement("builder.retryJitterFactor(this.retryJitterFactor.get())")
                 .endControlFlow()
                 .build();
         clientBuilder.addMethod(setRetriesMethod);
