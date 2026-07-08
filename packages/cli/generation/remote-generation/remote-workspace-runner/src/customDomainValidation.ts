@@ -39,7 +39,9 @@ function normalizeBasepath(pathname: string): string {
 
 /**
  * Validates that the Fern instance URL and every custom domain share the same
- * basepath.
+ * basepath. Navigation links and redirects are generated relative to the
+ * instance url's basepath, so a custom domain served at a different basepath
+ * would resolve them against the wrong prefix and break.
  */
 export function validateBasepathAlignment(
     instanceUrl: string,
@@ -52,8 +54,10 @@ export function validateBasepathAlignment(
         if (urlBasepath !== customDomainBasepath) {
             context.failAndThrow(
                 `Basepath mismatch between Fern url and custom-domain. The instance 'url' and 'custom-domain' ` +
-                    `must share the same basepath. Instance url '${instanceUrl}' has basepath '${urlBasepath}' ` +
-                    `but custom-domain '${customDomain}' has basepath '${customDomainBasepath}'.`,
+                    `must share the same basepath, since navigation links and redirects are generated relative ` +
+                    `to the basepath and would break on a custom domain with a different one. Instance url ` +
+                    `'${instanceUrl}' has basepath '${urlBasepath}' but custom-domain '${customDomain}' has ` +
+                    `basepath '${customDomainBasepath}'.`,
                 undefined,
                 { code: CliError.Code.ConfigError }
             );
