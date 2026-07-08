@@ -184,7 +184,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
 
         const { optionalParameters } = this.getConstructorParameters();
-        if (optionalParameters.some((parameter) => parameter.environmentVariable != null)) {
+        if (
+            !this.isAnyAuthWithMultipleSchemes() &&
+            optionalParameters.some((parameter) => parameter.environmentVariable != null)
+        ) {
             this.getFromEnvironmentOrThrowMethod(class_);
         }
         return new CSharpFile({

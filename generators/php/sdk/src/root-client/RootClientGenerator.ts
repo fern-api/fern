@@ -479,7 +479,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     if (anyAuthMultiScheme) {
                         writer.controlFlow("if", php.codeblock(oauthCredGuard));
                     }
-                    this.writeOAuthProviderSetup(writer, oauth, isMultiUrl);
+                    this.writeOAuthProviderSetup(writer, oauth, isMultiUrl, anyAuthMultiScheme);
                     if (anyAuthMultiScheme) {
                         writer.endControlFlow();
                     }
@@ -490,7 +490,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     if (guardInferred) {
                         writer.controlFlow("if", php.codeblock(inferredCredGuard));
                     }
-                    this.writeInferredAuthProviderSetup(writer, inferredAuth, isMultiUrl, constructorParameters);
+                    this.writeInferredAuthProviderSetup(
+                        writer,
+                        inferredAuth,
+                        isMultiUrl,
+                        constructorParameters,
+                        guardInferred
+                    );
                     if (guardInferred) {
                         writer.endControlFlow();
                     }
@@ -918,7 +924,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
-    private writeOAuthProviderSetup(writer: php.Writer, oauth: FernIr.OAuthScheme, isMultiUrl: boolean): void {
+    private writeOAuthProviderSetup(
+        writer: php.Writer,
+        oauth: FernIr.OAuthScheme,
+        isMultiUrl: boolean,
+        guarded = false
+    ): void {
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -952,9 +963,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$this->oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
-        const clientIdFallback = oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
+        // When wrapped in a credential guard (any-composed auth), clientId/clientSecret
+        // are non-null inside the block, so the `?? ''` fallback would be redundant.
+        const clientIdFallback = guarded || oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
         const clientSecretFallback =
-            oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
+            guarded || oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
         const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
         const extraArgs = getOAuthTokenRequestProperties(
             this.context,
@@ -1037,7 +1050,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer: php.Writer,
         inferredAuth: FernIr.InferredAuthScheme,
         isMultiUrl: boolean,
-        constructorParameters: ConstructorParameters
+        constructorParameters: ConstructorParameters,
+        guarded = false
     ): void {
         const tokenEndpointReference = inferredAuth.tokenEndpoint.endpoint;
         const subpackageId = tokenEndpointReference.subpackageId;
@@ -1093,7 +1107,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                                 const isOptionalParam = constructorParameters.optional.some(
                                     (p: ConstructorParameter) => p.name === paramName
                                 );
-                                if (isOptionalParam) {
+                                if (isOptionalParam && !guarded) {
                                     writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
                                 } else {
                                     writer.writeLine(`'${paramName}' => $${paramName},`);
@@ -1113,7 +1127,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             const isOptionalParam = constructorParameters.optional.some(
                                 (p: ConstructorParameter) => p.name === paramName
                             );
-                            if (isOptionalParam) {
+                            if (isOptionalParam && !guarded) {
                                 writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
                             } else {
                                 writer.writeLine(`'${paramName}' => $${paramName},`);

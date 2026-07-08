@@ -91,8 +91,8 @@ class SeedClient
             $authRawClient = new RawClient(['headers' => []]);
             $authClient = new AuthClient($authRawClient);
             $inferredAuthOptions = [
-                'clientId' => $clientId ?? '',
-                'clientSecret' => $clientSecret ?? '',
+                'clientId' => $clientId,
+                'clientSecret' => $clientSecret,
                 'audience' => 'https://api.example.com',
                 'grantType' => 'client_credentials',
             ];
