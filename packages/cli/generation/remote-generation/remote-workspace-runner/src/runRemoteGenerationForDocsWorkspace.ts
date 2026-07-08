@@ -118,8 +118,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             : (maybeInstance.customDomain ?? [])
     ).map(stripCustomDomainProtocol);
 
-    // The Fern instance url and every custom domain must share the same basepath, otherwise
-    // docs won't resolve once the customer cuts their DNS over to Fern.
+    // The Fern instance url and every custom domain must share the same basepath.
     validateBasepathAlignment(maybeInstance.url, customDomains, context);
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
