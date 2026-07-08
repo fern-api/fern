@@ -593,16 +593,31 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 );
                 writer.writeLine();
 
-                // For samePropertiesAsObject variants, we need to strip the discriminant
-                // from the JSON before deserializing to avoid it leaking into
-                // AdditionalProperties. However, if the subtype itself has a property
-                // with the same wire name as the discriminant, we must use the full JSON
-                // to preserve that property.
+                // For samePropertiesAsObject variants, we strip the properties the union itself
+                // owns — the discriminant and any base properties — from the JSON before
+                // deserializing the variant, so they do not leak into the variant's
+                // AdditionalProperties. The discriminant is preserved for a variant that declares a
+                // property with the same wire name; base properties are always suppressed on the
+                // variant leaf (see ObjectGenerator), so they are always stripped here.
                 const samePropertiesAsObjectTypes = this.unionDeclaration.types.filter(
                     (type): type is FernIr.SingleUnionType & { shape: { propertiesType: "samePropertiesAsObject" } } =>
                         type.shape.propertiesType === "samePropertiesAsObject"
                 );
+                // Only the base properties actually suppressed from a variant leaf must be stripped
+                // here (see ObjectGenerator). A base property no variant declares was never rendered
+                // on any leaf, so stripping it would needlessly change output for unrelated unions.
+                const basePropertyWireNamesSet = new Set<string>();
+                for (const type of samePropertiesAsObjectTypes) {
+                    for (const wireName of this.context.getBasePropertyWireNamesToOmitForType(type.shape.typeId)) {
+                        basePropertyWireNamesSet.add(wireName);
+                    }
+                }
+                const basePropertyWireNames = [...basePropertyWireNamesSet];
+                const hasBaseProperties = basePropertyWireNames.length > 0;
+                // Variants whose JSON must have the discriminant (and base properties) removed.
                 const variantsNeedingStrippedJson = new Set<string>();
+                // Variants that declare the discriminant themselves, so only base properties are removed.
+                const variantsNeedingBasePropertiesStrippedJson = new Set<string>();
                 for (const type of samePropertiesAsObjectTypes) {
                     const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
                     const hasDiscriminantProperty =
@@ -612,17 +627,36 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         );
                     if (!hasDiscriminantProperty) {
                         variantsNeedingStrippedJson.add(getWireValue(type.discriminantValue));
+                    } else if (hasBaseProperties) {
+                        variantsNeedingBasePropertiesStrippedJson.add(getWireValue(type.discriminantValue));
                     }
                 }
-                const needsStrippedJson = variantsNeedingStrippedJson.size > 0;
-                if (needsStrippedJson) {
+                if (variantsNeedingStrippedJson.size > 0) {
                     writer.writeLine(
-                        "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
+                        hasBaseProperties
+                            ? "// Strip properties owned by the union (discriminant and base properties) to prevent them from leaking into AdditionalProperties"
+                            : "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
                     );
                     writer.writeLine("var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);");
                     writer.writeLine(`jsonObject?.Remove("${discriminatorPropName}");`);
+                    for (const wireName of basePropertyWireNames) {
+                        writer.writeLine(`jsonObject?.Remove("${wireName}");`);
+                    }
                     writer.writeTextStatement(
                         "var jsonWithoutDiscriminator = jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json"
+                    );
+                    writer.writeLine();
+                }
+                if (variantsNeedingBasePropertiesStrippedJson.size > 0) {
+                    writer.writeLine(
+                        "// Strip base properties owned by the union to prevent them from leaking into AdditionalProperties"
+                    );
+                    writer.writeLine("var basePropertiesJsonObject = System.Text.Json.Nodes.JsonObject.Create(json);");
+                    for (const wireName of basePropertyWireNames) {
+                        writer.writeLine(`basePropertiesJsonObject?.Remove("${wireName}");`);
+                    }
+                    writer.writeTextStatement(
+                        "var jsonWithoutBaseProperties = basePropertiesJsonObject != null ? JsonSerializer.SerializeToElement(basePropertiesJsonObject, options) : json"
                     );
                     writer.writeLine();
                 }
@@ -638,10 +672,15 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         writer.write(" => ");
                         switch (type.shape.propertiesType) {
                             case "samePropertiesAsObject":
-                                // Use stripped JSON only if the subtype doesn't have a property
-                                // matching the discriminant name
+                                // Use the JSON variant with union-owned properties removed. The
+                                // discriminant is preserved for a variant that declares it itself,
+                                // in which case only the base properties are stripped.
                                 if (variantsNeedingStrippedJson.has(getWireValue(type.discriminantValue))) {
                                     writer.write("jsonWithoutDiscriminator");
+                                } else if (
+                                    variantsNeedingBasePropertiesStrippedJson.has(getWireValue(type.discriminantValue))
+                                ) {
+                                    writer.write("jsonWithoutBaseProperties");
                                 } else {
                                     writer.write("json");
                                 }
@@ -934,12 +973,61 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
         }
     }
     public shouldGenerateSnippet(): boolean {
+        // Serialization-test generation still opts out for unions with base properties; enabling
+        // those round-trip tests is tracked separately. Example/snippet generation (doGenerateSnippet)
+        // does handle base properties and is called independently of this gate.
         if (this.unionDeclaration.baseProperties.length > 0) {
-            // example union types don't come with base properties,
-            // so there's no way to generate snippets for them
             return false;
         }
         return true;
+    }
+
+    /**
+     * Builds object-initializer entries for the union's base properties, sourced from the selected
+     * variant's example object. The inferred base properties live on both the union envelope and the
+     * variant object in the IR example; the variant leaf suppresses them (see ObjectGenerator), so
+     * the envelope snippet must set them here — otherwise required base properties like `Name` would
+     * be missing and the example would not compile.
+     */
+    private generateBasePropertySnippetProperties({
+        exampleUnion,
+        parseDatetimes
+    }: {
+        exampleUnion: ExampleUnionType;
+        parseDatetimes: boolean;
+    }): { name: string; value: ast.AstNode }[] {
+        if (this.unionDeclaration.baseProperties.length === 0) {
+            return [];
+        }
+        const shape = exampleUnion.singleUnionType.shape;
+        const exampleProperties = shape.type === "samePropertiesAsObject" ? shape.object.properties : [];
+        const exampleByWireValue = new Map(exampleProperties.map((property) => [getWireValue(property.name), property]));
+
+        const properties: { name: string; value: ast.AstNode }[] = [];
+        for (const baseProperty of this.unionDeclaration.baseProperties) {
+            const exampleProperty = exampleByWireValue.get(getWireValue(baseProperty.name));
+            if (exampleProperty == null) {
+                // Optional base properties absent from the example are simply omitted.
+                continue;
+            }
+            properties.push({
+                name: this.getBasePropertyName(baseProperty.name),
+                value: this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: exampleProperty.value,
+                    parseDatetimes
+                })
+            });
+        }
+        return properties;
+    }
+
+    /**
+     * Mirrors ObjectGenerator's property-name collision handling: a property may not share the
+     * enclosing class's name, so it is suffixed with `_` in that case.
+     */
+    private getBasePropertyName(name: FernIr.NameAndWireValueOrString): string {
+        const propertyName = this.case.pascalSafe(name);
+        return propertyName === this.classReference.name ? `${propertyName}_` : propertyName;
     }
 
     public doGenerateSnippet({
@@ -949,16 +1037,14 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
         exampleUnion: ExampleUnionType;
         parseDatetimes: boolean;
     }): ast.CodeBlock {
-        if (this.shouldGenerateSnippet() === false) {
-            this.context.logger.warn(
-                `Generating snippet for union type ${this.classReference.name} but it has base properties, which is not supported.`
-            );
-        }
         const innerValue = this.generateInnerValueSnippet({ unionType: exampleUnion.singleUnionType, parseDatetimes });
         const innerObjectInstantiation = this.generateInnerUnionClassSnippet({ exampleUnion, innerValue });
+        const baseProperties = this.generateBasePropertySnippetProperties({ exampleUnion, parseDatetimes });
         const instantiateClass = this.csharp.instantiateClass({
             classReference: this.classReference,
-            arguments_: [innerObjectInstantiation]
+            arguments_: [innerObjectInstantiation],
+            properties: baseProperties.length > 0 ? baseProperties : undefined,
+            multiline: baseProperties.length > 0
         });
         return this.csharp.codeblock((writer: Writer) => writer.writeNode(instantiateClass));
     }

@@ -5,7 +5,8 @@ import {
     CaseConverter,
     FernGeneratorExec,
     GeneratorNotificationService,
-    getOriginalName
+    getOriginalName,
+    getWireValue
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
@@ -117,6 +118,19 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
      * Lazily-initialized map from parent typeId to the set of its direct inline child typeIds.
      */
     private _inlineTypeChildrenMap?: Map<TypeId, Set<TypeId>>;
+
+    /**
+     * Lazily-initialized map from a discriminated-union variant's object typeId to the set of
+     * property wire names that the owning union already declares as base properties.
+     *
+     * When `infer-discriminated-union-base-properties` lifts the shared fields of a discriminated
+     * union onto the union itself (its `baseProperties`), the concrete variant objects still carry
+     * those same fields (directly or via `extends`). Generating them on both the union envelope and
+     * each variant leaf forces callers to set required fields twice and causes the envelope value to
+     * silently overwrite the leaf value during serialization. Variant leaves therefore suppress the
+     * base properties the union already owns; this map records which wire names to drop per variant.
+     */
+    private _unionVariantBasePropertyOmissions?: Map<TypeId, Set<string>>;
 
     /** Provides access to C# code generation utilities */
     public get csharp(): Generation["csharp"] {
@@ -1109,6 +1123,84 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         this.buildInlineTypeMaps();
         // buildInlineTypeMaps always initializes the maps, so this is safe after the call
         return this._inlineTypeChildrenMap ?? new Map();
+    }
+
+    /**
+     * Returns the wire names of every property an object type declares directly or via `extends`.
+     * Empty for non-object (or unknown) types.
+     */
+    private getDeclaredPropertyWireNames(typeId: TypeId): Set<string> {
+        const typeDeclaration = this.ir.types[typeId];
+        const wireNames = new Set<string>();
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "object") {
+            return wireNames;
+        }
+        for (const property of [
+            ...typeDeclaration.shape.properties,
+            ...(typeDeclaration.shape.extendedProperties ?? [])
+        ]) {
+            wireNames.add(getWireValue(property.name));
+        }
+        return wireNames;
+    }
+
+    private buildUnionVariantBasePropertyOmissions(): Map<TypeId, Set<string>> {
+        if (this._unionVariantBasePropertyOmissions != null) {
+            return this._unionVariantBasePropertyOmissions;
+        }
+        const omissions = new Map<TypeId, Set<string>>();
+        for (const typeDeclaration of Object.values(this.ir.types)) {
+            if (typeDeclaration.shape.type !== "union") {
+                continue;
+            }
+            const baseProperties = typeDeclaration.shape.baseProperties;
+            if (baseProperties.length === 0) {
+                continue;
+            }
+            const baseWireNames = new Set(baseProperties.map((property) => getWireValue(property.name)));
+            for (const unionType of typeDeclaration.shape.types) {
+                // Only object-backed variants (`samePropertiesAsObject`) render the base
+                // properties as their own fields; `singleProperty`/`noProperties` variants
+                // carry no such duplication.
+                if (unionType.shape.propertiesType !== "samePropertiesAsObject") {
+                    continue;
+                }
+                // Only suppress base properties the variant object actually declares (directly or
+                // via `extends`). A union may declare base properties that a given variant does not
+                // carry — those must not be touched, so unrelated variant objects are unaffected.
+                const declaredWireNames = this.getDeclaredPropertyWireNames(unionType.shape.typeId);
+                const overlap = new Set<string>();
+                for (const wireName of baseWireNames) {
+                    if (declaredWireNames.has(wireName)) {
+                        overlap.add(wireName);
+                    }
+                }
+                if (overlap.size === 0) {
+                    continue;
+                }
+                const existing = omissions.get(unionType.shape.typeId);
+                if (existing == null) {
+                    omissions.set(unionType.shape.typeId, overlap);
+                } else {
+                    for (const wireName of overlap) {
+                        existing.add(wireName);
+                    }
+                }
+            }
+        }
+        this._unionVariantBasePropertyOmissions = omissions;
+        return omissions;
+    }
+
+    /**
+     * Returns the set of property wire names that should be suppressed when generating the object
+     * type for the given typeId, because it is a discriminated-union variant whose union already
+     * declares those fields as base properties. Empty for any type that is not such a variant.
+     *
+     * See {@link _unionVariantBasePropertyOmissions} for the rationale.
+     */
+    public getBasePropertyWireNamesToOmitForType(typeId: TypeId): Set<string> {
+        return this.buildUnionVariantBasePropertyOmissions().get(typeId) ?? new Set();
     }
 
     /**
