@@ -383,6 +383,11 @@ export async function upgrade({
         });
     }
 
+    if (resolvedTargetVersion == null) {
+        cliContext.logger.info("No upgrade available.");
+        return;
+    }
+
     // Early return if already at target version
     if (cliContext.environment.packageVersion === resolvedTargetVersion || isLocalDev) {
         // We're at the target version - load config and run migrations

@@ -5,7 +5,7 @@ import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
-import { FDR_ORIGIN, describeFetchError, parseErrorDetail } from "../docs-theme/themeOrigin.js";
+import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/themeOrigin.js";
 
 interface OrgConfigResponse {
     orgId: string;
