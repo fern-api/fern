@@ -75,9 +75,4 @@ public partial class SeedAnyAuthClient : ISeedAnyAuthClient
     public IAuthClient Auth { get; }
 
     public IUserClient User { get; }
-
-    private static string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
-    }
 }
