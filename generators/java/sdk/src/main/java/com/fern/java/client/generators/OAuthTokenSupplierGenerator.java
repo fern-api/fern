@@ -293,8 +293,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(Object.class, TOKEN_LOCK_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .initializer("new $T()", Object.class)
                         .build())
-                .addField(FieldSpec.builder(
-                                String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
+                .addField(FieldSpec.builder(String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
                         .build())
                 .addMethod(constructorBuilder.build())
                 .addMethod(buildFetchTokenMethod(
@@ -307,9 +306,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addMethod(getMethodSpecBuilder.build());
         if (refreshRequired) {
             oauthTypeSpecBuilder
-                    .addField(FieldSpec.builder(
-                                    Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
-                            .build())
+                    .addField(
+                            FieldSpec.builder(Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
+                                    .build())
                     .addField(FieldSpec.builder(
                                     long.class,
                                     BUFFER_IN_MINUTES_CONSTANT_NAME,

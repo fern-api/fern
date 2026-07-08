@@ -234,9 +234,9 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
         if (refreshRequired) {
             typeSpecBuilder
-                    .addField(FieldSpec.builder(
-                                    Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
-                            .build())
+                    .addField(
+                            FieldSpec.builder(Instant.class, EXPIRES_AT_FIELD_NAME, Modifier.PRIVATE, Modifier.VOLATILE)
+                                    .build())
                     .addField(FieldSpec.builder(
                                     long.class,
                                     BUFFER_IN_MINUTES_CONSTANT_NAME,
