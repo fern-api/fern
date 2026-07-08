@@ -373,9 +373,17 @@ export class OAuthProviderGenerator extends FileGenerator<RubyFile, SdkCustomCon
         }
 
         this.tokenEndpoint.requestBody?._visit({
-            reference: () => undefined,
+            reference: (reference) => {
+                for (const property of this.getReferencedRequestBodyProperties(reference.requestBodyType)) {
+                    properties.push({
+                        snakeName: this.case.snakeUnsafe(property.name),
+                        isOptional: this.isOptional(property.valueType),
+                        literal: this.maybeLiteral(property.valueType)
+                    });
+                }
+            },
             inlinedRequestBody: (request) => {
-                for (const property of request.properties) {
+                for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     properties.push({
                         snakeName: this.case.snakeUnsafe(property.name),
                         isOptional: this.isOptional(property.valueType),
@@ -399,6 +407,30 @@ export class OAuthProviderGenerator extends FileGenerator<RubyFile, SdkCustomCon
         });
 
         return properties;
+    }
+
+    /**
+     * Resolves a referenced (named) token-endpoint request body to the object
+     * properties it contributes. The request body type is dereferenced against
+     * the IR: aliases are followed to their underlying declaration and objects
+     * enumerate both their own `properties` and any `extendedProperties`
+     * inherited from parents (mirroring how the inlined-body branch and the
+     * wrapped-request generator enumerate properties). Non-object shapes (enums,
+     * unions, primitives, etc.) contribute no request properties.
+     */
+    private getReferencedRequestBodyProperties(typeReference: FernIr.TypeReference): FernIr.ObjectProperty[] {
+        if (typeReference.type !== "named") {
+            return [];
+        }
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+        const shape = typeDeclaration.shape;
+        if (shape.type === "alias") {
+            return this.getReferencedRequestBodyProperties(shape.aliasOf);
+        }
+        if (shape.type === "object") {
+            return [...shape.properties, ...(shape.extendedProperties ?? [])];
+        }
+        return [];
     }
 
     private getRequestPropertyWireSnake(requestProperty: FernIr.RequestProperty): string {

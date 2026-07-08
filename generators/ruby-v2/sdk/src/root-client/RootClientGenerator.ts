@@ -125,14 +125,22 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             returnType: ruby.Type.void()
         });
 
+        // Both inferred-auth and OAuth attach their Authorization header through a
+        // single `@auth_provider`. When BOTH schemes are present (e.g. `auth: any`
+        // with an OAuth and an InferredAuth scheme), emitting both init blocks makes
+        // the second `@auth_provider = ...` clobber the first, silently dropping a
+        // scheme. Until the ruby-v2 request architecture supports a composite/routing
+        // provider, pick exactly ONE provider deterministically: the provider-based
+        // scheme that appears first in `ir.auth.schemes` (which mirrors the declared
+        // `any` order and how the TS/Rust `AnyAuthProvider` tries schemes in order).
         const inferredAuth = this.context.getInferredAuth();
-        if (inferredAuth != null) {
-            method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
-        }
-
         const oauthAuth = this.context.getOAuthAuth();
-        if (oauthAuth != null) {
+        const useOAuthProvider = this.shouldUseOAuthProvider(inferredAuth, oauthAuth);
+
+        if (oauthAuth != null && useOAuthProvider) {
             method.addStatement(this.getOAuthInitializationStatement(oauthAuth));
+        } else if (inferredAuth != null) {
+            method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
         }
 
         const hasAuthProvider = inferredAuth != null || oauthAuth != null;
@@ -263,6 +271,36 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         );
 
         return method;
+    }
+
+    /**
+     * Decides which single provider to instantiate when both an inferred-auth and
+     * an OAuth scheme are present. Only one `@auth_provider` can be materialized in
+     * the current architecture, so we choose the scheme that appears first in
+     * `ir.auth.schemes` (the declared `any` order). When only one of the two is
+     * present, the choice is trivial. Returns `true` when the OAuth provider should
+     * win.
+     */
+    private shouldUseOAuthProvider(
+        inferredAuth: FernIr.InferredAuthScheme | undefined,
+        oauthAuth: FernIr.OAuthScheme | undefined
+    ): boolean {
+        if (oauthAuth == null) {
+            return false;
+        }
+        if (inferredAuth == null) {
+            return true;
+        }
+        // Both present: first provider-based scheme in the declared order wins.
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
     }
 
     private getInferredAuthInitializationStatement(scheme: FernIr.InferredAuthScheme): ruby.AstNode {

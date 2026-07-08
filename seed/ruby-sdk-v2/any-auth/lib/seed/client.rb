@@ -17,25 +17,6 @@ module Seed
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "X-Fern-Language" => "Ruby",
-          "X-Client-Id" => client_id,
-          "X-Client-Secret" => client_secret
-        }
-      )
-
-      # Create the auth client for token retrieval
-      auth_client = Seed::Auth::Client.new(client: auth_raw_client)
-
-      # Create the auth provider with the auth client and credentials
-      @auth_provider = Seed::Internal::InferredAuthProvider.new(
-        auth_client: auth_client,
-        options: { base_url: base_url, client_id: client_id, client_secret: client_secret }
-      )
-
-      # Create an unauthenticated client for the auth endpoint
-      auth_raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url,
-        headers: {
           "X-Fern-Language" => "Ruby"
         }
       )

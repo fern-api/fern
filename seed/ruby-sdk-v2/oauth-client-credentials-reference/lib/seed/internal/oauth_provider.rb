@@ -50,7 +50,10 @@ module Seed
       #
       # @return [String]
       private def refresh
-        request_params = {}
+        request_params = {
+          client_id: @options[:client_id],
+          client_secret: @options[:client_secret]
+        }
 
         token_response = @auth_client.get_token(**request_params)
 
