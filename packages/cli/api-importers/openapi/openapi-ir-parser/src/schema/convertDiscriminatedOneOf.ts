@@ -185,7 +185,7 @@ function warnAboutUnmappedOneOfMembers({
                         `will fail to serialize or deserialize. Add it to the discriminator mapping to include it.`
                 );
             }
-        } else {
+        } else if ((member.type as string) !== "null") {
             context.logger.warn(
                 `Discriminated union "${location}" contains an inline oneOf/anyOf member that is not referenced by the ` +
                     `discriminator mapping. This variant will be omitted from the generated union, so payloads using it will fail ` +

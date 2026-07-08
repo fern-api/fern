@@ -100,6 +100,21 @@ describe("warn about unmapped oneOf members", () => {
         expect(relevant).toBeDefined();
     });
 
+    it("does not warn for an inline null-type member (OpenAPI 3.1 nullable pattern)", () => {
+        const warn = vi.fn();
+        const doc = buildDoc({ text: "#/components/schemas/TextNode" });
+        // Replace the NullNode $ref with an inline `{ type: "null" }` member.
+        (doc.components?.schemas?.Node as OpenAPIV3.SchemaObject).oneOf = [
+            { $ref: "#/components/schemas/TextNode" },
+            { type: "null" } as unknown as OpenAPIV3.SchemaObject
+        ];
+        parseWith(warn, doc);
+
+        const warnings = warn.mock.calls.map((call) => String(call[0]));
+        const relevant = warnings.find((message) => message.includes("inline oneOf/anyOf member"));
+        expect(relevant).toBeUndefined();
+    });
+
     it("does not warn when every oneOf member is present in the mapping", () => {
         const warn = vi.fn();
         parseWith(
