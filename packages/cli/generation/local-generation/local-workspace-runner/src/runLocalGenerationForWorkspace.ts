@@ -169,6 +169,17 @@ export async function runLocalGenerationForWorkspace({
                 const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
+                // When version is AUTO, stamp the language-mapped magic placeholder into the IR
+                // instead of the literal "AUTO". The IR version drives the User-Agent header and
+                // X-Fern-SDK-Version; the post-generation step replaces the placeholder with the
+                // real computed version, whereas a literal "AUTO" would ship unreplaced.
+                const irLanguage =
+                    generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
+                const effectiveIrVersion =
+                    version != null && isAutoVersion(version)
+                        ? mapMagicVersionForLanguage(MAGIC_VERSION, irLanguage)
+                        : version;
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -180,7 +191,7 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                    version: effectiveIrVersion,
                     packageName,
                     userAgentTemplate,
                     organization: projectConfig.organization,
