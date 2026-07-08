@@ -895,7 +895,11 @@ class ClientWrapperGenerator:
             # For OAuth flows, the OAuthTokenProvider needs to create a SyncClientWrapper without a token
             # to fetch the initial token. For plain bearer auth, use the is_auth_mandatory flag.
             # This matches TypeScript's behavior where the auth client doesn't require a token.
-            is_token_optional = self._has_oauth() or not self._context.ir.sdk_config.is_auth_mandatory or self._context.custom_config.optional_auth
+            is_token_optional = (
+                self._has_oauth()
+                or not self._context.ir.sdk_config.is_auth_mandatory
+                or self._context.custom_config.optional_auth
+            )
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
@@ -960,7 +964,8 @@ class ClientWrapperGenerator:
                     private_member_name=names.get_username_member_name(basic_auth_scheme),
                     type_hint=(
                         ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                        if self._context.ir.sdk_config.is_auth_mandatory and not self._context.custom_config.optional_auth
+                        if self._context.ir.sdk_config.is_auth_mandatory
+                        and not self._context.custom_config.optional_auth
                         else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
                     ),
                     initializer=AST.Expression(
@@ -972,7 +977,8 @@ class ClientWrapperGenerator:
                             parameters=[],
                             return_type=(
                                 AST.TypeHint.str_()
-                                if self._context.ir.sdk_config.is_auth_mandatory and not self._context.custom_config.optional_auth
+                                if self._context.ir.sdk_config.is_auth_mandatory
+                                and not self._context.custom_config.optional_auth
                                 else AST.TypeHint.optional(AST.TypeHint.str_())
                             ),
                         ),
@@ -980,7 +986,8 @@ class ClientWrapperGenerator:
                             self._get_required_getter_body_writer(
                                 member_name=names.get_username_member_name(basic_auth_scheme)
                             )
-                            if self._context.ir.sdk_config.is_auth_mandatory and not self._context.custom_config.optional_auth
+                            if self._context.ir.sdk_config.is_auth_mandatory
+                            and not self._context.custom_config.optional_auth
                             else self._get_optional_getter_body_writer(
                                 member_name=names.get_username_member_name(basic_auth_scheme)
                             )
@@ -1012,7 +1019,8 @@ class ClientWrapperGenerator:
                     private_member_name=names.get_password_member_name(basic_auth_scheme),
                     type_hint=(
                         ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                        if self._context.ir.sdk_config.is_auth_mandatory and not self._context.custom_config.optional_auth
+                        if self._context.ir.sdk_config.is_auth_mandatory
+                        and not self._context.custom_config.optional_auth
                         else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
                     ),
                     initializer=AST.Expression(
@@ -1024,7 +1032,8 @@ class ClientWrapperGenerator:
                             parameters=[],
                             return_type=(
                                 AST.TypeHint.str_()
-                                if self._context.ir.sdk_config.is_auth_mandatory and not self._context.custom_config.optional_auth
+                                if self._context.ir.sdk_config.is_auth_mandatory
+                                and not self._context.custom_config.optional_auth
                                 else AST.TypeHint.optional(AST.TypeHint.str_())
                             ),
                         ),
@@ -1032,7 +1041,8 @@ class ClientWrapperGenerator:
                             self._get_required_getter_body_writer(
                                 member_name=names.get_password_member_name(basic_auth_scheme)
                             )
-                            if self._context.ir.sdk_config.is_auth_mandatory and not self._context.custom_config.optional_auth
+                            if self._context.ir.sdk_config.is_auth_mandatory
+                            and not self._context.custom_config.optional_auth
                             else self._get_optional_getter_body_writer(
                                 member_name=names.get_password_member_name(basic_auth_scheme)
                             )
