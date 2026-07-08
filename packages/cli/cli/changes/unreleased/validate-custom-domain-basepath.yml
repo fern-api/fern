@@ -1,0 +1,5 @@
+- summary: |
+    Validate that a docs instance's `url` and `custom-domain` share the same basepath for all
+    sites, not just basepath-aware ones. A mismatch causes docs to 404 after DNS cutover, so the
+    CLI now fails with a clear error instead of publishing a broken configuration.
+  type: fix

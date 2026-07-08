@@ -39,12 +39,11 @@ function normalizeBasepath(pathname: string): string {
 
 /**
  * Validates that the Fern instance URL and every custom domain share the same
- * basepath when basepath-aware mode is enabled (via `multi-source: true` or
- * the deprecated `experimental.basepath-aware: true`).
+ * basepath.
  *
  * Without this check, docs published under a Fern URL with one basepath but
  * fronted by a custom domain with a different basepath will 404 after the
- * customer's DNS cutover, since the basepath-aware S3 keys won't line up.
+ * customer's DNS cutover, since the S3 keys won't line up.
  */
 export function validateBasepathAlignment(
     instanceUrl: string,
@@ -56,11 +55,10 @@ export function validateBasepathAlignment(
         const customDomainBasepath = getBasepath(customDomain);
         if (urlBasepath !== customDomainBasepath) {
             context.failAndThrow(
-                `Basepath mismatch between Fern url and custom-domain. When basepath-aware mode is enabled ` +
-                    `(via 'multi-source: true' or the deprecated 'experimental.basepath-aware: true'), the ` +
-                    `instance 'url' and 'custom-domain' must share the same basepath, otherwise docs will ` +
-                    `fail to resolve after DNS cutover. Instance url '${instanceUrl}' has basepath ` +
-                    `'${urlBasepath}' but custom-domain '${customDomain}' has basepath '${customDomainBasepath}'.`,
+                `Basepath mismatch between Fern url and custom-domain. The instance 'url' and 'custom-domain' ` +
+                    `must share the same basepath, otherwise docs will fail to resolve after DNS cutover. ` +
+                    `Instance url '${instanceUrl}' has basepath '${urlBasepath}' but custom-domain ` +
+                    `'${customDomain}' has basepath '${customDomainBasepath}'.`,
                 undefined,
                 { code: CliError.Code.ConfigError }
             );
