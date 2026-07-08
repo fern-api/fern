@@ -15,19 +15,19 @@
  */
 export interface ListUsersRequest {
     /** Page index of the results to return. First page is 0. */
-    page?: number;
+    page?: number | undefined;
     /** Number of results per page. */
-    per_page?: number;
+    per_page?: number | undefined;
     /** Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). */
-    include_totals?: boolean;
+    include_totals?: boolean | undefined;
     /** Field to sort by. Use field:order where order is 1 for ascending and -1 for descending. */
-    sort?: string;
+    sort?: string | undefined;
     /** Connection filter */
-    connection?: string;
+    connection?: string | undefined;
     /** Query string following Lucene query string syntax */
-    q?: string;
+    q?: string | undefined;
     /** Search engine version (v1, v2, or v3) */
-    search_engine?: string;
+    search_engine?: string | undefined;
     /** Comma-separated list of fields to include or exclude */
-    fields?: string;
+    fields?: string | undefined;
 }

@@ -7,5 +7,5 @@
  *     }
  */
 export interface SearchUsersRequest {
-    limit?: number;
+    limit?: number | undefined;
 }

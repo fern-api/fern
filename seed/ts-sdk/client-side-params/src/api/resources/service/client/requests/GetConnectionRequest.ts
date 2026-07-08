@@ -8,5 +8,5 @@
  */
 export interface GetConnectionRequest {
     /** Comma-separated list of fields to include */
-    fields?: string;
+    fields?: string | undefined;
 }

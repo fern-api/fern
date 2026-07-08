@@ -24,7 +24,7 @@ export interface ListResourcesRequest {
     /** Whether to include total count */
     include_totals: boolean;
     /** Comma-separated list of fields to include */
-    fields?: string;
+    fields?: string | undefined;
     /** Search query */
-    search?: string;
+    search?: string | undefined;
 }

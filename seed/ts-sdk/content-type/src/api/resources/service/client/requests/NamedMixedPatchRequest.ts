@@ -9,7 +9,7 @@
  *     }
  */
 export interface NamedMixedPatchRequest {
-    appId?: string;
+    appId?: string | undefined;
     instructions: string | null;
     active: boolean | null;
 }

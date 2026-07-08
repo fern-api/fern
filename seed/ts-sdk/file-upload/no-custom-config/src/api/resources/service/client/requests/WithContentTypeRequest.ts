@@ -7,5 +7,5 @@ export interface WithContentTypeRequest {
     file: core.file.Uploadable;
     foo: string;
     bar: SeedFileUpload.MyObject;
-    foo_bar?: SeedFileUpload.MyObject;
+    foo_bar?: SeedFileUpload.MyObject | undefined;
 }

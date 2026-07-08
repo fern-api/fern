@@ -4,18 +4,18 @@ import type * as core from "../../../../../core/index.js";
 import type * as SeedFileUpload from "../../../../index.js";
 
 export interface MyRequest {
-    maybe_string?: string;
+    maybe_string?: string | undefined;
     integer: number;
     file: core.file.Uploadable;
     file_list: core.file.Uploadable[];
     maybe_file?: core.file.Uploadable | undefined;
     maybe_file_list?: core.file.Uploadable[] | undefined;
-    maybe_integer?: number;
-    optional_list_of_strings?: string[];
+    maybe_integer?: number | undefined;
+    optional_list_of_strings?: string[] | undefined;
     list_of_objects: SeedFileUpload.MyObject[];
-    optional_metadata?: unknown;
-    optional_object_type?: SeedFileUpload.ObjectType;
-    optional_id?: SeedFileUpload.Id;
+    optional_metadata?: unknown | undefined;
+    optional_object_type?: SeedFileUpload.ObjectType | undefined;
+    optional_id?: SeedFileUpload.Id | undefined;
     alias_object: SeedFileUpload.MyAliasObject;
     list_of_alias_object: SeedFileUpload.MyAliasObject[];
     alias_list_of_object: SeedFileUpload.MyCollectionAliasObject;

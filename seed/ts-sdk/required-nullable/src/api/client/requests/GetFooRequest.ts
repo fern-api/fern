@@ -9,9 +9,9 @@
  */
 export interface GetFooRequest {
     /** An optional baz */
-    optional_baz?: string;
+    optional_baz?: string | undefined;
     /** An optional baz */
-    optional_nullable_baz?: string | null;
+    optional_nullable_baz?: (string | null) | undefined;
     /** A required baz */
     required_baz: string;
     /** A required baz */

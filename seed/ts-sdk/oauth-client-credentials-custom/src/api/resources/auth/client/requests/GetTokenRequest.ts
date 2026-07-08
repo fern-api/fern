@@ -15,5 +15,5 @@ export interface GetTokenRequest {
     csr: string;
     scp: string;
     entity_id: string;
-    scope?: string;
+    scope?: string | undefined;
 }

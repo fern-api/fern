@@ -5,7 +5,7 @@ import type * as SeedFileUpload from "../../../../index.js";
 
 export interface LiteralEnumRequest {
     file: File | fs.ReadStream | Blob;
-    model_type?: SeedFileUpload.ModelType;
-    open_enum?: SeedFileUpload.OpenEnumType;
-    maybe_name?: string;
+    model_type?: SeedFileUpload.ModelType | undefined;
+    open_enum?: SeedFileUpload.OpenEnumType | undefined;
+    maybe_name?: string | undefined;
 }

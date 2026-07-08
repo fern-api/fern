@@ -15,5 +15,5 @@ export interface ListUsersBodyCursorPaginationRequest {
      * The object that contains the cursor used for pagination
      * in order to fetch the next page of results.
      */
-    pagination?: SeedPagination.inlineUsers.WithCursor;
+    pagination?: SeedPagination.inlineUsers.WithCursor | undefined;
 }

@@ -11,7 +11,7 @@ import type * as SeedApi from "../../../../index.js";
  */
 export interface TestMethodNameTestGroupRequest {
     path_param: string;
-    query_param_object?: SeedApi.PlainObject | null;
-    query_param_integer?: number | null;
+    query_param_object?: (SeedApi.PlainObject | null) | undefined;
+    query_param_integer?: (number | null) | undefined;
     body: SeedApi.PlainObject | null;
 }

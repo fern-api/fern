@@ -13,13 +13,13 @@ import type * as SeedPagination from "../../../../index.js";
  */
 export interface ListUsersDoubleOffsetPaginationRequest {
     /** Defaults to first page */
-    page?: number;
+    page?: number | undefined;
     /** Defaults to per page */
-    per_page?: number;
-    order?: SeedPagination.Order;
+    per_page?: number | undefined;
+    order?: SeedPagination.Order | undefined;
     /**
      * The cursor used for pagination in order to fetch
      * the next page of results.
      */
-    starting_after?: string;
+    starting_after?: string | undefined;
 }

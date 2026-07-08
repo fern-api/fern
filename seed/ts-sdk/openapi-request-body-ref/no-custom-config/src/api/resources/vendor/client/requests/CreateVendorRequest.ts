@@ -7,7 +7,7 @@
  *     }
  */
 export interface CreateVendorRequest {
-    idempotency_key?: string;
+    idempotency_key?: string | undefined;
     name: string;
-    address?: string;
+    address?: string | undefined;
 }

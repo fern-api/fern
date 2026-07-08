@@ -10,5 +10,5 @@ export interface OutboundCallConversationsRequest {
     /** The phone number to call in E.164 format. */
     to_phone_number: string;
     /** If true, validates the outbound call setup without placing a call. */
-    dry_run?: boolean;
+    dry_run?: boolean | undefined;
 }

@@ -11,5 +11,5 @@
 export interface GetTokenRequest {
     client_id: string;
     client_secret: string;
-    scope?: string;
+    scope?: string | undefined;
 }

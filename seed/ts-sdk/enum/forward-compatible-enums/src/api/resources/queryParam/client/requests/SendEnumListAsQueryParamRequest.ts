@@ -13,7 +13,7 @@ import type * as SeedEnum from "../../../../index.js";
  */
 export interface SendEnumListAsQueryParamRequest {
     operand: SeedEnum.Operand | SeedEnum.Operand[];
-    maybeOperand?: SeedEnum.Operand | SeedEnum.Operand[];
+    maybeOperand?: (SeedEnum.Operand | SeedEnum.Operand[]) | undefined;
     operandOrColor: SeedEnum.ColorOrOperand | SeedEnum.ColorOrOperand[];
-    maybeOperandOrColor?: SeedEnum.ColorOrOperand | SeedEnum.ColorOrOperand[];
+    maybeOperandOrColor?: (SeedEnum.ColorOrOperand | SeedEnum.ColorOrOperand[]) | undefined;
 }

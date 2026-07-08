@@ -8,5 +8,5 @@
  */
 export interface CreateContactRequest {
     name: string;
-    email?: string;
+    email?: string | undefined;
 }

@@ -7,6 +7,6 @@
  *     }
  */
 export interface TestGetRequest {
-    region?: string;
-    limit?: string;
+    region?: string | undefined;
+    limit?: string | undefined;
 }

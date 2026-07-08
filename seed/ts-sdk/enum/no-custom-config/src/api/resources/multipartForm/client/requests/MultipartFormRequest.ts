@@ -4,7 +4,7 @@ import type * as SeedEnum from "../../../../index.js";
 
 export interface MultipartFormRequest {
     color: SeedEnum.Color;
-    maybeColor?: SeedEnum.Color;
+    maybeColor?: SeedEnum.Color | undefined;
     colorList: SeedEnum.Color[];
-    maybeColorList?: SeedEnum.Color[];
+    maybeColorList?: SeedEnum.Color[] | undefined;
 }

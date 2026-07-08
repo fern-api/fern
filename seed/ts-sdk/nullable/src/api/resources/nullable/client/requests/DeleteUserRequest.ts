@@ -8,5 +8,5 @@
  */
 export interface DeleteUserRequest {
     /** The user to delete. */
-    username?: string | null;
+    username?: (string | null) | undefined;
 }

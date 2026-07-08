@@ -12,6 +12,6 @@ import type * as SeedFileUpload from "../../../../index.js";
  *     }
  */
 export interface WithRefBodyRequest {
-    image_file?: File | fs.ReadStream | Blob | undefined;
+    image_file?: (File | fs.ReadStream | Blob) | undefined;
     request: SeedFileUpload.MyObject;
 }

@@ -8,8 +8,8 @@
  */
 export interface SearchProductsRequest {
     regionId: string;
-    query?: string;
-    config?: SearchProductsRequest.Config;
+    query?: string | undefined;
+    config?: SearchProductsRequest.Config | undefined;
 }
 
 export namespace SearchProductsRequest {

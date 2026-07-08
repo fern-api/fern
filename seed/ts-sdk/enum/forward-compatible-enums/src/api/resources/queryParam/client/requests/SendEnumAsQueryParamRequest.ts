@@ -11,7 +11,7 @@ import type * as SeedEnum from "../../../../index.js";
  */
 export interface SendEnumAsQueryParamRequest {
     operand: SeedEnum.Operand;
-    maybeOperand?: SeedEnum.Operand;
+    maybeOperand?: SeedEnum.Operand | undefined;
     operandOrColor: SeedEnum.ColorOrOperand;
-    maybeOperandOrColor?: SeedEnum.ColorOrOperand;
+    maybeOperandOrColor?: SeedEnum.ColorOrOperand | undefined;
 }

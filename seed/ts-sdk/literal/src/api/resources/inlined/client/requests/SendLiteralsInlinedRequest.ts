@@ -17,9 +17,9 @@ import type * as SeedLiteral from "../../../../index.js";
  *     }
  */
 export interface SendLiteralsInlinedRequest {
-    context?: "You're super wise";
+    context?: "You're super wise" | undefined;
     query: string;
-    temperature?: number;
-    maybeContext?: SeedLiteral.SomeAliasedLiteral;
+    temperature?: number | undefined;
+    maybeContext?: SeedLiteral.SomeAliasedLiteral | undefined;
     objectWithLiteral: SeedLiteral.ATopLevelLiteral;
 }

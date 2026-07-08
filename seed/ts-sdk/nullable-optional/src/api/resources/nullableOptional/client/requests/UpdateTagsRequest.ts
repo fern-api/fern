@@ -10,6 +10,6 @@
  */
 export interface UpdateTagsRequest {
     tags: string[] | null;
-    categories?: string[];
-    labels?: string[] | null;
+    categories?: string[] | undefined;
+    labels?: (string[] | null) | undefined;
 }

@@ -5,8 +5,8 @@
  *     {}
  */
 export interface LoadRequest {
-    cache?: LoadRequest.Cache;
-    status?: LoadRequest.Status;
+    cache?: LoadRequest.Cache | undefined;
+    status?: LoadRequest.Status | undefined;
 }
 
 export namespace LoadRequest {

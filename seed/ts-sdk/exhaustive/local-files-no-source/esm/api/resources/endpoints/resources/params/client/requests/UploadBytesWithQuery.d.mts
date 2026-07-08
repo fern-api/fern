@@ -1,3 +1,3 @@
 export interface UploadBytesWithQuery {
-    _fields?: string;
+    _fields?: string | undefined;
 }

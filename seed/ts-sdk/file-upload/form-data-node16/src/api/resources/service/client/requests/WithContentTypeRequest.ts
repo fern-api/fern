@@ -7,5 +7,5 @@ export interface WithContentTypeRequest {
     file: File | fs.ReadStream | Blob;
     foo: string;
     bar: SeedFileUpload.MyObject;
-    foo_bar?: SeedFileUpload.MyObject;
+    foo_bar?: SeedFileUpload.MyObject | undefined;
 }

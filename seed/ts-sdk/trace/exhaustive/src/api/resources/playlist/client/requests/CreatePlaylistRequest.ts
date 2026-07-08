@@ -15,6 +15,6 @@ import type * as SeedTrace from "../../../../index.js";
  */
 export interface CreatePlaylistRequest {
     datetime: string;
-    optionalDatetime?: string;
+    optionalDatetime?: string | undefined;
     body: SeedTrace.PlaylistCreateRequest;
 }

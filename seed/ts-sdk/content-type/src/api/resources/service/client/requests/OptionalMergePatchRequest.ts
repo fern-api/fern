@@ -12,8 +12,8 @@
  */
 export interface OptionalMergePatchRequest {
     requiredField: string;
-    optionalString?: string;
-    optionalInteger?: number;
-    optionalBoolean?: boolean;
+    optionalString?: string | undefined;
+    optionalInteger?: number | undefined;
+    optionalBoolean?: boolean | undefined;
     nullableString: string | null;
 }

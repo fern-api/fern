@@ -9,7 +9,7 @@
  */
 export interface ListWithCustomPagerRequest {
     /** The maximum number of results to return. */
-    limit?: number;
+    limit?: number | undefined;
     /** The cursor used for pagination. */
-    starting_after?: string;
+    starting_after?: string | undefined;
 }

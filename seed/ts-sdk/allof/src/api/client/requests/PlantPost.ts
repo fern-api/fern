@@ -15,9 +15,9 @@ export interface PlantPost extends SeedApi.PlantBase {
     /** Required sun exposure level. */
     sunExposure: PlantPost.SunExposure;
     /** Date the plant was planted. */
-    plantedAt?: string;
+    plantedAt?: string | undefined;
     /** Preferred soil type. */
-    soilType?: string;
+    soilType?: string | undefined;
 }
 
 export namespace PlantPost {

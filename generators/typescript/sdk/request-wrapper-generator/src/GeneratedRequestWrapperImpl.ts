@@ -10,6 +10,7 @@ import {
     getSdkParameterPropertyName,
     getTextOfTsNode,
     PackageId,
+    stripTopLevelUndefined,
     TypeReferenceNode
 } from "@fern-typescript/commons";
 import {
@@ -130,10 +131,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ...this.getRequestProperties(context).map<PropertySignatureStructure>((property) => {
                 // When the serde layer is disabled, widen optional properties to `T | undefined`
                 // (mirroring the object type generator) so they satisfy exactOptionalPropertyTypes.
+                // Strip any existing top-level `undefined` first so we don't emit `T | undefined | undefined`
+                // for properties (e.g. optional file uploads) whose type already includes it.
                 const typeNode =
                     property.isOptional && !this.includeSerdeLayer
                         ? ts.factory.createUnionTypeNode([
-                              property.type,
+                              stripTopLevelUndefined(property.type),
                               ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                           ])
                         : property.type;

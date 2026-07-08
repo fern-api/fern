@@ -8,6 +8,6 @@
  *     }
  */
 export interface CreateWithBodyAndQuery {
-    _fields?: string;
+    _fields?: string | undefined;
     string: string;
 }

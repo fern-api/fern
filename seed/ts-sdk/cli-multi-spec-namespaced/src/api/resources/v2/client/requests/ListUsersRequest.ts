@@ -5,5 +5,5 @@
  *     {}
  */
 export interface ListUsersRequest {
-    pageSize?: number;
+    pageSize?: number | undefined;
 }

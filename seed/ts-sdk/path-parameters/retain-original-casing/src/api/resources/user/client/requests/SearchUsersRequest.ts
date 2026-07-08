@@ -9,5 +9,5 @@
  */
 export interface SearchUsersRequest {
     user_id: string;
-    limit?: number;
+    limit?: number | undefined;
 }

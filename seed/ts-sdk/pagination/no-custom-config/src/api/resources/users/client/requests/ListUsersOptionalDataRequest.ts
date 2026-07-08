@@ -8,5 +8,5 @@
  */
 export interface ListUsersOptionalDataRequest {
     /** Defaults to first page */
-    page?: number;
+    page?: number | undefined;
 }

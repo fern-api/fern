@@ -7,6 +7,7 @@ import {
     getTextOfTsNode,
     isExpressionUndefined,
     maybeAddDocsStructure,
+    stripTopLevelUndefined,
     TypeReferenceNode
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedObjectType } from "@fern-typescript/contexts";
@@ -45,51 +46,6 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
     }
 
-    /**
-     * Unwraps parenthesized type nodes to get to the underlying type.
-     */
-    private unwrapParens(node: ts.TypeNode): ts.TypeNode {
-        let current = node;
-        while (ts.isParenthesizedTypeNode(current)) {
-            current = current.type;
-        }
-        return current;
-    }
-
-    /**
-     * Checks if a type node is the undefined keyword.
-     */
-    private isUndefinedKeyword(node: ts.TypeNode): boolean {
-        const unwrapped = this.unwrapParens(node);
-        return unwrapped.kind === ts.SyntaxKind.UndefinedKeyword;
-    }
-
-    /**
-     * Strips top-level undefined from a union type node.
-     * This prevents double unions like (T | undefined) | undefined.
-     */
-    private stripTopLevelUndefined(node: ts.TypeNode): ts.TypeNode {
-        const unwrapped = this.unwrapParens(node);
-        if (ts.isUnionTypeNode(unwrapped)) {
-            const nonUndefined = unwrapped.types.filter((t) => !this.isUndefinedKeyword(t));
-            switch (nonUndefined.length) {
-                case 0:
-                    return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
-                case 1: {
-                    const only = nonUndefined[0];
-                    if (only == null) {
-                        // Defensive fallback; should be unreachable given length === 1
-                        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
-                    }
-                    return only;
-                }
-                default:
-                    return ts.factory.createUnionTypeNode(nonUndefined);
-            }
-        }
-        return node;
-    }
-
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
@@ -113,7 +69,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     if (irProperty) {
                         const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
                         const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
-                        const baseType = this.stripTopLevelUndefined(inlineUnionRef.typeNodeWithoutUndefined);
+                        const baseType = stripTopLevelUndefined(inlineUnionRef.typeNodeWithoutUndefined);
                         propertyValue = hasQuestionToken
                             ? shouldIncludeUndefined
                                 ? ts.factory.createUnionTypeNode([
@@ -145,7 +101,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                   const baseTypeCandidate =
                                       inlineUnionRef.requestTypeNodeWithoutUndefined ??
                                       inlineUnionRef.typeNodeWithoutUndefined;
-                                  const baseType = this.stripTopLevelUndefined(baseTypeCandidate);
+                                  const baseType = stripTopLevelUndefined(baseTypeCandidate);
                                   propertyValue = hasQuestionToken
                                       ? shouldIncludeUndefined
                                           ? ts.factory.createUnionTypeNode([
@@ -178,7 +134,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                   const baseTypeCandidate =
                                       inlineUnionRef.responseTypeNodeWithoutUndefined ??
                                       inlineUnionRef.typeNodeWithoutUndefined;
-                                  const baseType = this.stripTopLevelUndefined(baseTypeCandidate);
+                                  const baseType = stripTopLevelUndefined(baseTypeCandidate);
                                   propertyValue = hasQuestionToken
                                       ? shouldIncludeUndefined
                                           ? ts.factory.createUnionTypeNode([
@@ -244,7 +200,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             const shouldIncludeUndefined = value.isOptional && !this.includeSerdeLayer;
             const undefinedKw = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
 
-            const baseType = this.stripTopLevelUndefined(value.typeNodeWithoutUndefined);
+            const baseType = stripTopLevelUndefined(value.typeNodeWithoutUndefined);
             const typeNodeToUse = this.noOptionalProperties
                 ? value.typeNode
                 : shouldIncludeUndefined
@@ -252,7 +208,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                   : baseType;
 
             const baseReqCandidate = value.requestTypeNodeWithoutUndefined ?? value.typeNodeWithoutUndefined;
-            const baseReq = this.stripTopLevelUndefined(baseReqCandidate);
+            const baseReq = stripTopLevelUndefined(baseReqCandidate);
             const requestTypeNodeToUse = this.noOptionalProperties
                 ? value.requestTypeNode
                 : shouldIncludeUndefined
@@ -260,7 +216,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                   : baseReq;
 
             const baseRespCandidate = value.responseTypeNodeWithoutUndefined ?? value.typeNodeWithoutUndefined;
-            const baseResp = this.stripTopLevelUndefined(baseRespCandidate);
+            const baseResp = stripTopLevelUndefined(baseRespCandidate);
             const responseTypeNodeToUse = this.noOptionalProperties
                 ? value.responseTypeNode
                 : shouldIncludeUndefined
