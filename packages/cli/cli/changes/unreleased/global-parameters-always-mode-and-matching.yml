@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `always` apply mode for `x-fern-global-parameters` and gate `auto`
+    and `explicit` injection on whether the operation declares the matching
+    surface (query/header by wire name — headers case-insensitively; path by
+    target parameter; body by dotted target path). `explicit` additionally
+    requires the per-operation opt-in, and an opt-in that does not match is
+    dropped with a warning. `always` injects into every operation
+    unconditionally and is only valid for `query` and `header` parameters.
+  type: feat

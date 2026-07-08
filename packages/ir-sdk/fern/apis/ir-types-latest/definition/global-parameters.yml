@@ -18,14 +18,28 @@ types:
 
   GlobalParameterApplyMode:
     docs: |
-      Controls how the global parameter is applied to operations.
-      `explicit`: only applied to operations that opt in via
-      the per-operation `x-fern-global-parameter` extension.
-      `auto`: applied to every operation whose request schema
-      contains the target field.
+      Controls which operations the global parameter is injected into on
+      the wire. Independent of the SDK client variable, which is always
+      exposed as a root-client option regardless of the apply mode.
+
+      An operation "matches" a parameter when it declares the corresponding
+      surface: for `body`, its request schema contains the dotted target
+      path; for `query`/`header`, it declares a parameter with that wire
+      name (headers match case-insensitively, query names exactly); for
+      `path`, its path declares the target parameter.
+
+      `explicit`: injected only into operations that opt in via the
+      per-operation `x-fern-global-parameter` extension AND match. An
+      opt-in that does not match is dropped with a warning.
+      `auto`: injected into every operation that matches.
+      `always`: injected into every operation unconditionally, without
+      requiring a match. Only valid for `query` and `header` parameters
+      (a `body`/`path` parameter cannot be injected where the operation
+      has no corresponding surface).
     enum:
       - explicit
       - auto
+      - always
 
   GlobalParameter:
     docs: |

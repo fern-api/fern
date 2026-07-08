@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const GlobalParameterApplyMode: core.serialization.Schema<
     serializers.GlobalParameterApplyMode.Raw,
     FernIr.GlobalParameterApplyMode
-> = core.serialization.enum_(["explicit", "auto"]);
+> = core.serialization.enum_(["explicit", "auto", "always"]);
 
 export declare namespace GlobalParameterApplyMode {
-    export type Raw = "explicit" | "auto";
+    export type Raw = "explicit" | "auto" | "always";
 }

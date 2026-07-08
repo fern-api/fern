@@ -1,7 +1,8 @@
 import { Rule, RuleViolation } from "../../Rule.js";
 
 const VALID_LOCATIONS = new Set(["body", "query", "header", "path"]);
-const VALID_APPLY_MODES = new Set(["explicit", "auto"]);
+const VALID_APPLY_MODES = new Set(["explicit", "auto", "always"]);
+const APPLY_ALWAYS_LOCATIONS = new Set(["query", "header"]);
 const VALID_TYPES = new Set(["string", "integer", "double", "number", "boolean"]);
 
 export const ValidGlobalParametersRule: Rule = {
@@ -27,7 +28,13 @@ export const ValidGlobalParametersRule: Rule = {
                         if (param.apply != null && !VALID_APPLY_MODES.has(param.apply)) {
                             violations.push({
                                 severity: "error",
-                                message: `Global parameter '${key}' has invalid apply mode '${param.apply}'; expected one of: explicit, auto`
+                                message: `Global parameter '${key}' has invalid apply mode '${param.apply}'; expected one of: explicit, auto, always`
+                            });
+                        }
+                        if (param.apply === "always" && param.in != null && !APPLY_ALWAYS_LOCATIONS.has(param.in)) {
+                            violations.push({
+                                severity: "error",
+                                message: `Global parameter '${key}' uses apply mode 'always', which is only valid for query and header parameters (got location '${param.in}')`
                             });
                         }
                         if (param.type != null && !VALID_TYPES.has(param.type)) {

@@ -24,6 +24,8 @@ function convertApplyMode(apply: string | undefined): FernIr.GlobalParameterAppl
             return FernIr.GlobalParameterApplyMode.Explicit;
         case "auto":
             return FernIr.GlobalParameterApplyMode.Auto;
+        case "always":
+            return FernIr.GlobalParameterApplyMode.Always;
         case undefined:
             return undefined;
         default:

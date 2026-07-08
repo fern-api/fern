@@ -25,9 +25,12 @@ export interface GlobalParameterDeclarationSchema extends FernDefinition.WithDoc
     /** Whether the parameter is optional. */
     optional?: boolean;
     /**
-     * How the parameter is applied: explicit or auto.
-     * explicit requires per-operation opt-in via x-fern-global-parameter.
-     * auto injects on every operation with the target field.
+     * How the parameter is injected on the wire: explicit, auto, or always.
+     * Defaults to explicit. explicit requires per-operation opt-in via
+     * x-fern-global-parameter and only injects where the operation declares
+     * the matching surface. auto injects on every operation that declares the
+     * matching surface. always injects on every operation unconditionally and
+     * is only valid for query and header parameters.
      */
     apply?: string;
     /**

@@ -113,12 +113,39 @@ function convertApplyMode(
             return FernIr.GlobalParameterApplyMode.Explicit;
         case "auto":
             return FernIr.GlobalParameterApplyMode.Auto;
+        case "always":
+            return FernIr.GlobalParameterApplyMode.Always;
         default:
             context.errorCollector.collect({
-                message: `Invalid global parameter apply mode '${apply}'; expected one of: explicit, auto`,
+                message: `Invalid global parameter apply mode '${apply}'; expected one of: explicit, auto, always`,
                 path: breadcrumbs
             });
             return undefined;
+    }
+}
+
+function validateApplyModeForLocation({
+    apply,
+    location,
+    breadcrumbs,
+    context
+}: {
+    apply: FernIr.GlobalParameterApplyMode | undefined;
+    location: FernIr.GlobalParameterLocation;
+    breadcrumbs: string[];
+    context: AbstractConverterContext<object>;
+}): void {
+    if (
+        apply === FernIr.GlobalParameterApplyMode.Always &&
+        location !== FernIr.GlobalParameterLocation.Query &&
+        location !== FernIr.GlobalParameterLocation.Header
+    ) {
+        context.errorCollector.collect({
+            message:
+                `Global parameter apply mode 'always' is only valid for query and header parameters, ` +
+                `but this parameter is in '${location}'.`,
+            path: breadcrumbs
+        });
     }
 }
 
@@ -200,6 +227,8 @@ export function convertGlobalParametersExtension({
         .map(({ param, index }) => {
             const breadcrumbs = ["x-fern-global-parameters", `${index}`];
             const location = convertLocation(param.in, [...breadcrumbs, "in"], context);
+            const apply = convertApplyMode(param.apply, [...breadcrumbs, "apply"], context);
+            validateApplyModeForLocation({ apply, location, breadcrumbs: [...breadcrumbs, "apply"], context });
             const sdkName = param["parameter-name"] ?? param.name;
             return {
                 id: param.name,
@@ -213,7 +242,7 @@ export function convertGlobalParametersExtension({
                 env: param.env,
                 clientDefault: convertDefaultToLiteral(param.default, param.type, breadcrumbs, context),
                 optional: param.optional,
-                apply: convertApplyMode(param.apply, [...breadcrumbs, "apply"], context),
+                apply,
                 docs: param.docs
             };
         });

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.11.0] - 2026-07-08
+
+- Feature: Add `always` to `GlobalParameterApplyMode`. Global parameters now
+  inject on the wire only into operations that declare the matching surface
+  (`query`/`header` by wire name — headers case-insensitively; `path` by target
+  parameter; `body` by dotted target path), for both `auto` and `explicit`
+  modes. `explicit` additionally requires the per-operation opt-in, and an
+  opt-in that does not match is dropped with a warning. The new `always` mode
+  injects into every operation unconditionally and is valid only for `query`
+  and `header` parameters. This changes the previous behavior where `auto`
+  `query`/`header` parameters applied to every operation regardless of whether
+  the operation declared the parameter.
+
 ## [v67.10.2] - 2026-07-07
 
 - Docs: Clarify `HttpEndpoint.globalParameters` semantics — it is now the fully

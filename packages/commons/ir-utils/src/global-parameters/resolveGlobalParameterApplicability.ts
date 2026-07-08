@@ -2,7 +2,9 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     GlobalParameter,
     GlobalParameterId,
+    GlobalParameterLocation,
     HttpEndpoint,
+    HttpHeader,
     HttpRequestBody,
     IntermediateRepresentation,
     ObjectTypeDeclaration,
@@ -24,8 +26,9 @@ interface PropertyEntry {
 
 export interface ResolveGlobalParameterApplicabilityOptions {
     /**
-     * Invoked once per explicit opt-in that is dropped because the endpoint's
-     * request-body schema does not contain the (body-location) target path.
+     * Invoked once per explicit opt-in that is dropped because the endpoint does
+     * not declare the surface the parameter targets (a body property at the
+     * dotted path, or a query/header/path parameter with that name).
      */
     onWarning?: (message: string) => void;
 }
@@ -38,15 +41,21 @@ export interface ResolveGlobalParameterApplicabilityOptions {
  * extension); after it, it is the resolved set that every generator can consume
  * with a simple membership check.
  *
- * Resolution rules, per parameter location:
- * - `body`: included iff the endpoint's request-body schema contains the dotted
- *   target path. This gate applies to both `auto` and `explicit` parameters. An
- *   `explicit` opt-in whose schema lacks the target is dropped with a warning.
- * - `header` / `query`: `auto` applies to every endpoint (these live outside the
- *   request body, mirroring global headers); `explicit` applies only where the
- *   endpoint opted in.
- * - `path`: `auto` applies to endpoints whose path declares the target parameter;
- *   `explicit` applies only where the endpoint opted in.
+ * An endpoint "matches" a parameter when it declares the corresponding surface:
+ * - `body`: its request-body schema contains the dotted target path.
+ * - `query`: it declares a query parameter whose wire name equals the target
+ *   (exact match).
+ * - `header`: it (or its service) declares a header whose wire name equals the
+ *   target (case-insensitive match).
+ * - `path`: its path declares the target parameter.
+ *
+ * A parameter is injected into an endpoint when:
+ * - `apply: always` (valid for `query`/`header` only): unconditionally, without
+ *   requiring a match;
+ * - `apply: auto`: the endpoint matches;
+ * - `apply: explicit` (the default): the endpoint opted in via the per-operation
+ *   `x-fern-global-parameter` extension AND matches. An opt-in that does not
+ *   match is dropped with a warning.
  */
 export function resolveGlobalParameterApplicability(
     ir: Pick<IntermediateRepresentation, "globalParameters" | "services" | "types">,
@@ -61,6 +70,7 @@ export function resolveGlobalParameterApplicability(
         for (const endpoint of service.endpoints) {
             endpoint.globalParameters = resolveForEndpoint({
                 endpoint,
+                serviceHeaders: service.headers,
                 globalParameters,
                 types: ir.types,
                 onWarning
@@ -71,11 +81,13 @@ export function resolveGlobalParameterApplicability(
 
 function resolveForEndpoint({
     endpoint,
+    serviceHeaders,
     globalParameters,
     types,
     onWarning
 }: {
     endpoint: HttpEndpoint;
+    serviceHeaders: HttpHeader[];
     globalParameters: GlobalParameter[];
     types: Record<string, TypeDeclaration>;
     onWarning?: (message: string) => void;
@@ -85,41 +97,28 @@ function resolveForEndpoint({
     const resolved: GlobalParameterId[] = [];
 
     for (const param of globalParameters) {
-        const isAuto = param.apply === "auto";
+        const applyMode = param.apply ?? "explicit";
         let applies: boolean;
-        switch (param.location) {
-            case "body": {
-                const schemaHasTarget = requestBodyContainsPath({
-                    requestBody: endpoint.requestBody,
-                    dottedTarget: param.target,
-                    types
-                });
-                if (isAuto) {
-                    applies = schemaHasTarget;
-                } else if (optIns.has(param.id)) {
-                    applies = schemaHasTarget;
-                    if (!schemaHasTarget) {
-                        onWarning?.(
-                            `Endpoint "${endpoint.id}" opts into global parameter "${param.id}" ` +
-                                `(in: body, target: "${param.target}") via x-fern-global-parameter, but its ` +
-                                `request body schema does not contain that path. The parameter will not be ` +
-                                `injected for this endpoint.`
-                        );
+        if (applyMode === "always") {
+            // `always` injects unconditionally. It is only valid for query/header
+            // (enforced upstream at import/validation time); a body/path parameter
+            // has no surface to inject into where the endpoint declares none.
+            applies = true;
+        } else {
+            const matches = endpointMatchesParameter({ param, endpoint, serviceHeaders, types });
+            if (applyMode === "auto") {
+                applies = matches;
+            } else {
+                // explicit: opt-in required, and the opt-in must match
+                if (optIns.has(param.id)) {
+                    applies = matches;
+                    if (!matches) {
+                        onWarning?.(buildUnmatchedOptInWarning({ endpoint, param }));
                     }
                 } else {
                     applies = false;
                 }
-                break;
             }
-            case "header":
-            case "query":
-                applies = isAuto || optIns.has(param.id);
-                break;
-            case "path":
-                applies = isAuto ? endpointPathContainsParameter(endpoint, param.target) : optIns.has(param.id);
-                break;
-            default:
-                assertNever(param.location);
         }
         if (applies) {
             resolved.push(param.id);
@@ -127,6 +126,70 @@ function resolveForEndpoint({
     }
 
     return resolved.length > 0 ? resolved : undefined;
+}
+
+/**
+ * Whether the endpoint declares the surface the parameter targets (see the
+ * per-location "matches" rules on {@link resolveGlobalParameterApplicability}).
+ */
+function endpointMatchesParameter({
+    param,
+    endpoint,
+    serviceHeaders,
+    types
+}: {
+    param: GlobalParameter;
+    endpoint: HttpEndpoint;
+    serviceHeaders: HttpHeader[];
+    types: Record<string, TypeDeclaration>;
+}): boolean {
+    switch (param.location) {
+        case "body":
+            return requestBodyContainsPath({ requestBody: endpoint.requestBody, dottedTarget: param.target, types });
+        case "query":
+            return endpointDeclaresQueryParameter(endpoint, param.target);
+        case "header":
+            return endpointDeclaresHeader(endpoint, serviceHeaders, param.target);
+        case "path":
+            return endpointPathContainsParameter(endpoint, param.target);
+        default:
+            return assertNever(param.location);
+    }
+}
+
+function buildUnmatchedOptInWarning({ endpoint, param }: { endpoint: HttpEndpoint; param: GlobalParameter }): string {
+    return (
+        `Endpoint "${endpoint.id}" opts into global parameter "${param.id}" ` +
+        `(in: ${param.location}, target: "${param.target}") via x-fern-global-parameter, but the endpoint ` +
+        `does not declare ${describeUnmatchedSurface(param.location)}. The parameter will not be injected ` +
+        `for this endpoint.`
+    );
+}
+
+function describeUnmatchedSurface(location: GlobalParameterLocation): string {
+    switch (location) {
+        case "body":
+            return "a request body property at that path";
+        case "query":
+            return "a query parameter with that name";
+        case "header":
+            return "a header with that name";
+        case "path":
+            return "a path parameter with that name";
+        default:
+            return assertNever(location);
+    }
+}
+
+function endpointDeclaresQueryParameter(endpoint: HttpEndpoint, target: string): boolean {
+    return endpoint.queryParameters.some((queryParameter) => getWireValue(queryParameter.name) === target);
+}
+
+function endpointDeclaresHeader(endpoint: HttpEndpoint, serviceHeaders: HttpHeader[], target: string): boolean {
+    const targetLower = target.toLowerCase();
+    return [...serviceHeaders, ...endpoint.headers].some(
+        (header) => getWireValue(header.name).toLowerCase() === targetLower
+    );
 }
 
 function endpointPathContainsParameter(endpoint: HttpEndpoint, target: string): boolean {

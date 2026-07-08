@@ -76,34 +76,42 @@ function endpoint({
     id,
     optIns = [],
     requestBody,
-    pathParameters = []
+    pathParameters = [],
+    headers = [],
+    queryParameters = []
 }: {
     id: string;
     optIns?: string[];
     requestBody?: HttpRequestBody;
     pathParameters?: string[];
+    headers?: string[];
+    queryParameters?: string[];
 }): HttpEndpoint {
     return {
         id,
         globalParameters: optIns,
         requestBody,
-        allPathParameters: pathParameters.map((name) => ({ name }))
+        allPathParameters: pathParameters.map((name) => ({ name })),
+        headers: headers.map((name) => ({ name })),
+        queryParameters: queryParameters.map((name) => ({ name }))
     } as unknown as HttpEndpoint;
 }
 
 function resolve({
     globalParameters,
     endpoints,
-    types = {}
+    types = {},
+    serviceHeaders = []
 }: {
     globalParameters: GlobalParameter[];
     endpoints: HttpEndpoint[];
     types?: Record<string, TypeDeclaration>;
+    serviceHeaders?: string[];
 }): { endpoints: HttpEndpoint[]; warnings: string[] } {
     const warnings: string[] = [];
     const ir = {
         globalParameters,
-        services: { service_root: { endpoints } },
+        services: { service_root: { endpoints, headers: serviceHeaders.map((name) => ({ name })) } },
         types
     } as unknown as IntermediateRepresentation;
     resolveGlobalParameterApplicability(ir, { onWarning: (message) => warnings.push(message) });
@@ -305,36 +313,98 @@ describe("resolveGlobalParameterApplicability", () => {
     });
 
     describe("header / query location", () => {
-        it("applies an auto header/query param to every endpoint regardless of body", () => {
-            const ep = endpoint({ id: "e" });
+        it("applies an auto query param only to endpoints declaring that query parameter", () => {
+            const withParam = endpoint({ id: "with", queryParameters: ["lang"] });
+            const withoutParam = endpoint({ id: "without", queryParameters: ["other"] });
             const { endpoints } = resolve({
-                globalParameters: [
-                    globalParam({ id: "lang", location: "query", target: "lang", apply: "auto" }),
-                    globalParam({ id: "trace", location: "header", target: "trace", apply: "auto" })
-                ],
-                endpoints: [ep]
-            });
-            expect(endpoints[0]?.globalParameters).toEqual(["lang", "trace"]);
-        });
-
-        it("applies an explicit header/query param only where opted in", () => {
-            const optedIn = endpoint({ id: "in", optIns: ["lang"] });
-            const notOptedIn = endpoint({ id: "out" });
-            const { endpoints } = resolve({
-                globalParameters: [globalParam({ id: "lang", location: "query", target: "lang", apply: "explicit" })],
-                endpoints: [optedIn, notOptedIn]
+                globalParameters: [globalParam({ id: "lang", location: "query", target: "lang", apply: "auto" })],
+                endpoints: [withParam, withoutParam]
             });
             expect(endpoints[0]?.globalParameters).toEqual(["lang"]);
             expect(endpoints[1]?.globalParameters).toBeUndefined();
         });
 
-        it("treats a missing apply mode as explicit", () => {
+        it("applies an auto header param only to endpoints declaring that header (case-insensitive)", () => {
+            const withHeader = endpoint({ id: "with", headers: ["X-Trace-Id"] });
+            const withoutHeader = endpoint({ id: "without", headers: ["X-Other"] });
+            const { endpoints } = resolve({
+                globalParameters: [
+                    globalParam({ id: "trace", location: "header", target: "x-trace-id", apply: "auto" })
+                ],
+                endpoints: [withHeader, withoutHeader]
+            });
+            expect(endpoints[0]?.globalParameters).toEqual(["trace"]);
+            expect(endpoints[1]?.globalParameters).toBeUndefined();
+        });
+
+        it("matches a header declared at the service level", () => {
             const ep = endpoint({ id: "e" });
             const { endpoints } = resolve({
-                globalParameters: [globalParam({ id: "lang", location: "query", target: "lang" })],
+                globalParameters: [
+                    globalParam({ id: "trace", location: "header", target: "X-Trace-Id", apply: "auto" })
+                ],
+                endpoints: [ep],
+                serviceHeaders: ["X-Trace-Id"]
+            });
+            expect(endpoints[0]?.globalParameters).toEqual(["trace"]);
+        });
+
+        it("applies an explicit query param only where opted in AND declared", () => {
+            const optedInAndDeclared = endpoint({ id: "in", optIns: ["lang"], queryParameters: ["lang"] });
+            const declaredNotOptedIn = endpoint({ id: "declared", queryParameters: ["lang"] });
+            const { endpoints, warnings } = resolve({
+                globalParameters: [globalParam({ id: "lang", location: "query", target: "lang", apply: "explicit" })],
+                endpoints: [optedInAndDeclared, declaredNotOptedIn]
+            });
+            expect(endpoints[0]?.globalParameters).toEqual(["lang"]);
+            expect(endpoints[1]?.globalParameters).toBeUndefined();
+            expect(warnings).toHaveLength(0);
+        });
+
+        it("drops an explicit query opt-in with a warning when the endpoint does not declare the parameter", () => {
+            const ep = endpoint({ id: "endpoint_x", optIns: ["lang"], queryParameters: ["other"] });
+            const { endpoints, warnings } = resolve({
+                globalParameters: [globalParam({ id: "lang", location: "query", target: "lang", apply: "explicit" })],
                 endpoints: [ep]
             });
             expect(endpoints[0]?.globalParameters).toBeUndefined();
+            expect(warnings).toHaveLength(1);
+            expect(warnings[0]).toContain("endpoint_x");
+            expect(warnings[0]).toContain("lang");
+            expect(warnings[0]).toContain("query parameter");
+        });
+
+        it("treats a missing apply mode as explicit (requires opt-in and match)", () => {
+            const declaredNoOptIn = endpoint({ id: "e", queryParameters: ["lang"] });
+            const { endpoints } = resolve({
+                globalParameters: [globalParam({ id: "lang", location: "query", target: "lang" })],
+                endpoints: [declaredNoOptIn]
+            });
+            expect(endpoints[0]?.globalParameters).toBeUndefined();
+        });
+    });
+
+    describe("always apply mode", () => {
+        it("applies an always query param to every endpoint regardless of declaration", () => {
+            const declared = endpoint({ id: "declared", queryParameters: ["lang"] });
+            const undeclared = endpoint({ id: "undeclared" });
+            const { endpoints } = resolve({
+                globalParameters: [globalParam({ id: "lang", location: "query", target: "lang", apply: "always" })],
+                endpoints: [declared, undeclared]
+            });
+            expect(endpoints[0]?.globalParameters).toEqual(["lang"]);
+            expect(endpoints[1]?.globalParameters).toEqual(["lang"]);
+        });
+
+        it("applies an always header param to every endpoint regardless of declaration", () => {
+            const ep = endpoint({ id: "e" });
+            const { endpoints } = resolve({
+                globalParameters: [
+                    globalParam({ id: "trace", location: "header", target: "X-Trace-Id", apply: "always" })
+                ],
+                endpoints: [ep]
+            });
+            expect(endpoints[0]?.globalParameters).toEqual(["trace"]);
         });
     });
 
@@ -350,20 +420,35 @@ describe("resolveGlobalParameterApplicability", () => {
             expect(endpoints[1]?.globalParameters).toBeUndefined();
         });
 
-        it("applies an explicit path param based on opt-in, not path membership", () => {
-            const ep = endpoint({ id: "e", optIns: ["region"], pathParameters: [] });
-            const { endpoints } = resolve({
+        it("keeps an explicit path opt-in only when the path declares the parameter", () => {
+            const ep = endpoint({ id: "e", optIns: ["region"], pathParameters: ["regionId"] });
+            const { endpoints, warnings } = resolve({
                 globalParameters: [
                     globalParam({ id: "region", location: "path", target: "regionId", apply: "explicit" })
                 ],
                 endpoints: [ep]
             });
             expect(endpoints[0]?.globalParameters).toEqual(["region"]);
+            expect(warnings).toHaveLength(0);
+        });
+
+        it("drops an explicit path opt-in with a warning when the path does not declare the parameter", () => {
+            const ep = endpoint({ id: "endpoint_y", optIns: ["region"], pathParameters: [] });
+            const { endpoints, warnings } = resolve({
+                globalParameters: [
+                    globalParam({ id: "region", location: "path", target: "regionId", apply: "explicit" })
+                ],
+                endpoints: [ep]
+            });
+            expect(endpoints[0]?.globalParameters).toBeUndefined();
+            expect(warnings).toHaveLength(1);
+            expect(warnings[0]).toContain("endpoint_y");
+            expect(warnings[0]).toContain("path parameter");
         });
     });
 
     it("preserves global-parameter declaration order in the resolved set", () => {
-        const ep = endpoint({ id: "e", optIns: ["b"] });
+        const ep = endpoint({ id: "e", optIns: ["b"], queryParameters: ["a", "b"], headers: ["c"] });
         const { endpoints } = resolve({
             globalParameters: [
                 globalParam({ id: "a", location: "query", target: "a", apply: "auto" }),
