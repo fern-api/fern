@@ -2,17 +2,17 @@
 
 module Seed
   class Client
-    # @param client_id [String]
-    # @param client_secret [String]
     # @param base_url [String, nil]
     # @param token [String]
     # @param api_key [String]
+    # @param client_id [String, nil]
+    # @param client_secret [String, nil]
     # @param username [String]
     # @param password [String]
     # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(client_id:, client_secret:, base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), username: ENV.fetch("MY_USERNAME", nil), password: ENV.fetch("MY_PASSWORD", nil), max_retries: 2)
+    def initialize(base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), client_id: ENV.fetch("MY_CLIENT_ID", nil), client_secret: ENV.fetch("MY_CLIENT_SECRET", nil), username: ENV.fetch("MY_USERNAME", nil), password: ENV.fetch("MY_PASSWORD", nil), max_retries: 2)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -28,6 +28,23 @@ module Seed
 
       # Create the auth provider with the auth client and credentials
       @auth_provider = Seed::Internal::InferredAuthProvider.new(
+        auth_client: auth_client,
+        options: { base_url: base_url, client_id: client_id, client_secret: client_secret }
+      )
+
+      # Create an unauthenticated client for the auth endpoint
+      auth_raw_client = Seed::Internal::Http::RawClient.new(
+        base_url: base_url,
+        headers: {
+          "X-Fern-Language" => "Ruby"
+        }
+      )
+
+      # Create the auth client for token retrieval
+      auth_client = Seed::Auth::Client.new(client: auth_raw_client)
+
+      # Create the OAuth provider with the auth client and credentials
+      @auth_provider = Seed::Internal::OAuthProvider.new(
         auth_client: auth_client,
         options: { base_url: base_url, client_id: client_id, client_secret: client_secret }
       )

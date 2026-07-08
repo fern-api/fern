@@ -630,7 +630,33 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
         }
 
-        return parameters;
+        return this.dedupeAuthenticationParameters(parameters);
+    }
+
+    /**
+     * Deduplicates authentication keyword parameters by name. When multiple auth
+     * schemes contribute a parameter with the same name (e.g. an inferred-auth
+     * scheme and an OAuth scheme both exposing `client_id`/`client_secret`), the
+     * constructor must only declare it once. When duplicates differ, the parameter
+     * that has an initializer (an optional, env-var-backed parameter) is preferred
+     * over a required one so a single credential can satisfy either scheme.
+     */
+    private dedupeAuthenticationParameters(parameters: ruby.KeywordParameter[]): ruby.KeywordParameter[] {
+        const result: ruby.KeywordParameter[] = [];
+        const indexByName = new Map<string, number>();
+        for (const parameter of parameters) {
+            const existingIndex = indexByName.get(parameter.name);
+            if (existingIndex == null) {
+                indexByName.set(parameter.name, result.length);
+                result.push(parameter);
+                continue;
+            }
+            const existing = result[existingIndex];
+            if (existing != null && existing.initializer == null && parameter.initializer != null) {
+                result[existingIndex] = parameter;
+            }
+        }
+        return result;
     }
 
     /**
