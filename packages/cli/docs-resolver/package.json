@@ -44,6 +44,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
+    "@fern-api/logging-execa": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",

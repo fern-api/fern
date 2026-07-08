@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.67.0
+  changelogEntry:
+    - summary: |
+        Custom MDX components (`experimental.mdx-components`) can now import third-party
+        libraries. The CLI bundles component files with rolldown (via npx) at docs build
+        time, inlining dependencies resolved from the docs project's node_modules.
+      type: feat
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.66.1
+  changelogEntry:
+    - summary: |
+        Validate that a docs instance's `url` and `custom-domain` share the same basepath for all
+        sites, not just basepath-aware ones. Navigation links and redirects are generated relative to
+        the basepath, so the CLI now fails with a clear error when they differ.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.66.0
+  changelogEntry:
+    - summary: |
+        Resolve `x-fern-global-parameters` applicability once at IR-generation time.
+        `HttpEndpoint.globalParameters` now holds the fully resolved set of global
+        parameters that apply to each endpoint (explicit opt-ins plus matching
+        `apply: auto` parameters), with body-location parameters gated on the
+        endpoint's request-body schema actually containing the dotted target path.
+        An explicit opt-in whose request body lacks the target is dropped with a
+        generation-time warning.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 5.65.8
   changelogEntry:
     - summary: |
