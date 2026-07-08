@@ -9,9 +9,16 @@ import {
 } from "./requestOptionsParameter.js";
 
 export declare namespace GeneratedQueryParams {
+    /** A global parameter (`in: query`) injected at the client-options tier. */
+    export interface GlobalQueryParameter {
+        wireName: string;
+        value: ts.Expression;
+    }
+
     export interface Init {
         queryParameters: FernIr.QueryParameter[] | undefined;
         referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
+        globalQueryParameters?: GlobalQueryParameter[];
     }
 }
 
@@ -20,10 +27,16 @@ export class GeneratedQueryParams {
 
     private queryParameters: FernIr.QueryParameter[] | undefined;
     private referenceToQueryParameterProperty: (queryParameterKey: string, context: FileContext) => ts.Expression;
+    private globalQueryParameters: GeneratedQueryParams.GlobalQueryParameter[];
 
-    constructor({ queryParameters, referenceToQueryParameterProperty }: GeneratedQueryParams.Init) {
+    constructor({
+        queryParameters,
+        referenceToQueryParameterProperty,
+        globalQueryParameters = []
+    }: GeneratedQueryParams.Init) {
         this.queryParameters = queryParameters;
         this.referenceToQueryParameterProperty = referenceToQueryParameterProperty;
+        this.globalQueryParameters = globalQueryParameters;
     }
 
     public getBuildStatements(context: FileContext): ts.Statement[] {
@@ -344,6 +357,18 @@ export class GeneratedQueryParams {
 
         // core.url.queryBuilder()
         let chain: ts.Expression = context.coreUtilities.urlUtils.queryBuilder._invoke();
+
+        // Global query parameters are added at the lowest precedence tier: declared
+        // endpoint query params (below) and per-call `requestOptions.queryParams`
+        // (via mergeAdditional) both override them by key. Null/undefined values
+        // are skipped by the builder, so optional globals with no value are omitted.
+        for (const globalQueryParameter of this.globalQueryParameters) {
+            chain = ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("add")),
+                undefined,
+                [ts.factory.createStringLiteral(globalQueryParameter.wireName), globalQueryParameter.value]
+            );
+        }
 
         if (hasDefinedParams) {
             // .addMany(_queryParams) — adds all params with default "repeat" format

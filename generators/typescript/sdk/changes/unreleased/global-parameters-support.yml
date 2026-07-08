@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add support for the `x-fern-global-parameters` extension. Global parameters are exposed as
+    typed constructor options on every client and sub-client (`BaseClientOptions`) and injected
+    into each applicable request at its declared wire location (header, query, or body). Per-call
+    values take precedence over the client option, which in turn falls back to the client-side
+    default. A global parameter whose name collides with a built-in client option is skipped
+    (neither exposed nor injected), and the generator logs a warning so the collision can be
+    resolved in the spec.
+
+    Body global parameters are injected via the shared `mergeGlobalBodyParameters` helper as the
+    lowest-precedence layer, composed underneath the endpoint body and any per-call
+    `requestOptions.additionalBodyParameters` — i.e. `{ ...globalDefaults, ...body,
+    ...additionalBodyParameters }`. Global defaults only fill in keys the body does not set (an
+    explicit `null`/`undefined` in the body wins), and a bodyless or non-object request body is
+    never fabricated into a JSON payload.
+  type: feat

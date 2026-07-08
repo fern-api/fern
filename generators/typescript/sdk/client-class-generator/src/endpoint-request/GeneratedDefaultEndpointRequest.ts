@@ -15,6 +15,11 @@ import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
+    getGlobalParametersForEndpoint,
+    getResolvedGlobalParameterValueExpression,
+    getResolvedGlobalParameterValueExpressionForWire
+} from "../endpoints/utils/globalParameters.js";
+import {
     REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../endpoints/utils/requestOptionsParameter.js";
@@ -42,6 +47,24 @@ export declare namespace GeneratedDefaultEndpointRequest {
 interface LiteralPropertyValue {
     propertyWireKey: string;
     propertyValue: boolean | string;
+}
+
+/**
+ * A nested tree of body global-parameter targets: a branch is another tree, a leaf
+ * is the resolved value expression to inject at that path.
+ */
+type BodyDefaultsTree = Map<string, BodyDefaultsTree | ts.Expression>;
+
+function bodyDefaultsTreeToObjectLiteral(tree: BodyDefaultsTree): ts.ObjectLiteralExpression {
+    return ts.factory.createObjectLiteralExpression(
+        Array.from(tree.entries()).map(([key, value]) =>
+            ts.factory.createPropertyAssignment(
+                getPropertyKey(key),
+                value instanceof Map ? bodyDefaultsTreeToObjectLiteral(value) : value
+            )
+        ),
+        true
+    );
 }
 
 export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest {
@@ -212,10 +235,94 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
             queryString: queryParams.getQueryStringExpression(context),
-            body: this.getSerializedRequestBodyWithNullCheck(context),
+            body: this.injectBodyGlobalParameters(this.getSerializedRequestBodyWithNullCheck(context), context),
             contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
             requestType: this.getRequestType()
         };
+    }
+
+    /**
+     * Deep-merges applicable `in: body` global parameters underneath the serialized
+     * request body via `mergeGlobalBodyParameters`. The globals form a defaults object
+     * (keyed by each parameter's dotted target path) that the caller's body is spread
+     * on top of, so a per-call body value always wins.
+     */
+    private injectBodyGlobalParameters(
+        body: ts.Expression | undefined,
+        context: FileContext
+    ): ts.Expression | undefined {
+        // Only inject when the endpoint declares a request body — never fabricate a
+        // body on a bodyless endpoint (e.g. an `apply: auto` body global must not add
+        // a body to a GET). The runtime helper additionally leaves non-object bodies
+        // and a runtime-`undefined` body (an omitted optional reference body) alone,
+        // so an injected global never turns a bodyless request into one with a payload.
+        if (body == null || this.requestBody == null) {
+            return body;
+        }
+
+        const bodyGlobalParameters = getGlobalParametersForEndpoint({
+            ir: this.ir,
+            endpoint: this.endpoint,
+            location: FernIr.GlobalParameterLocation.Body,
+            context
+        });
+        if (bodyGlobalParameters.length === 0) {
+            return body;
+        }
+
+        const defaultsObject = this.buildBodyGlobalParameterDefaults(bodyGlobalParameters);
+        if (defaultsObject == null) {
+            return body;
+        }
+
+        context.importsManager.addImportFromRoot("core/requestBody", {
+            namedImports: ["mergeGlobalBodyParameters"]
+        });
+
+        return ts.factory.createCallExpression(ts.factory.createIdentifier("mergeGlobalBodyParameters"), undefined, [
+            body,
+            defaultsObject
+        ]);
+    }
+
+    /**
+     * Builds the global-defaults object literal passed to `mergeGlobalBodyParameters`,
+     * nesting each parameter's resolved value under its dotted target path (so targets
+     * sharing a prefix merge into a single object). Returns `undefined` when no
+     * parameter has a usable target.
+     */
+    private buildBodyGlobalParameterDefaults(
+        bodyGlobalParameters: FernIr.GlobalParameter[]
+    ): ts.ObjectLiteralExpression | undefined {
+        const tree: BodyDefaultsTree = new Map();
+        let hasEntry = false;
+        for (const globalParameter of bodyGlobalParameters) {
+            const pathSegments = globalParameter.target.split(".").filter((segment) => segment.length > 0);
+            if (pathSegments.length === 0) {
+                continue;
+            }
+            hasEntry = true;
+            let cursor = tree;
+            for (let i = 0; i < pathSegments.length - 1; i++) {
+                const segment = pathSegments[i] as string;
+                const existing = cursor.get(segment);
+                if (existing instanceof Map) {
+                    cursor = existing;
+                } else {
+                    const next: BodyDefaultsTree = new Map();
+                    cursor.set(segment, next);
+                    cursor = next;
+                }
+            }
+            cursor.set(
+                pathSegments[pathSegments.length - 1] as string,
+                getResolvedGlobalParameterValueExpression(globalParameter, this.case)
+            );
+        }
+        if (!hasEntry) {
+            return undefined;
+        }
+        return bodyDefaultsTreeToObjectLiteral(tree);
     }
 
     private getFallbackContentType(): string | undefined {
@@ -407,7 +514,16 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
                 queryParameters: this.requestParameter?.getAllQueryParameters(context),
-                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context),
+                globalQueryParameters: getGlobalParametersForEndpoint({
+                    ir: this.ir,
+                    endpoint: this.endpoint,
+                    location: FernIr.GlobalParameterLocation.Query,
+                    context
+                }).map((param) => ({
+                    wireName: param.target,
+                    value: getResolvedGlobalParameterValueExpressionForWire(param, context)
+                }))
             });
         }
         return this.queryParams;

@@ -65,6 +65,17 @@ function convertBaseType(typeString: string | undefined): FernIr.TypeReference {
                     validation: undefined
                 })
             });
+        case "date":
+            return FernIr.TypeReference.primitive({
+                v1: "DATE",
+                v2: FernIr.PrimitiveTypeV2.date({})
+            });
+        case "datetime":
+        case "date-time":
+            return FernIr.TypeReference.primitive({
+                v1: "DATE_TIME",
+                v2: FernIr.PrimitiveTypeV2.dateTime({})
+            });
         case "string":
         case undefined:
         default:

@@ -14,6 +14,10 @@ import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
 import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
+import {
+    getGlobalParametersForEndpoint,
+    getResolvedGlobalParameterValueExpressionForWire
+} from "../endpoints/utils/globalParameters.js";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter.js";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest.js";
@@ -426,7 +430,16 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
                 queryParameters: this.requestParameter?.getAllQueryParameters(context),
-                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context),
+                globalQueryParameters: getGlobalParametersForEndpoint({
+                    ir: this.ir,
+                    endpoint: this.endpoint,
+                    location: FernIr.GlobalParameterLocation.Query,
+                    context
+                }).map((param) => ({
+                    wireName: param.target,
+                    value: getResolvedGlobalParameterValueExpressionForWire(param, context)
+                }))
             });
         }
         return this.queryParams;

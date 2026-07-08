@@ -38,6 +38,11 @@ x-fern-global-parameters:
     type: integer
     default: 3
     optional: true
+    # `maxRetries` collides with a built-in client option, so it is neither
+    # exposed as a constructor option nor injected. `apply: auto` opts every
+    # endpoint in, proving injection is filtered by the same collision set
+    # (otherwise it would inject `this._options?.maxRetries` on the wire).
+    apply: auto
   - name: api-version
     in: query
     docs: The API version to use for the request.
@@ -47,6 +52,11 @@ x-fern-global-parameters:
     default: auto-generated
     x-fern-default: trace-default
     docs: x-fern-default should take precedence over default.
+  - name: updated-since
+    in: query
+    type: date-time
+    optional: true
+    docs: A datetime global must serialize to ISO-8601 on the wire, not String(Date).
 paths:
   "/v1/products/{regionId}/search":
     post:
@@ -55,6 +65,12 @@ paths:
       x-fern-global-parameter:
         - region
         - currency
+        - language
+        - x-custom-header
+        - verbose
+        - api-version
+        - x-trace-id
+        - updated-since
       operationId: searchProducts
       parameters:
         - in: path
@@ -89,6 +105,44 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Product"
+  "/v1/products/config":
+    post:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: updateConfig
+      # currency is `apply: auto`, so it targets this endpoint's body (config.currency)
+      # automatically. The request body is an OPTIONAL reference, so when the caller omits
+      # it the runtime body is `undefined` — the body global must NOT fabricate a body.
+      operationId: updateConfig
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductConfig"
+      responses:
+        "200":
+          description: Updated
+  "/v1/products/image":
+    post:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: uploadImage
+      x-fern-global-parameter:
+        - language
+        - verbose
+        - x-custom-header
+      operationId: uploadProductImage
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Uploaded
   "/v1/products/{regionId}/{productId}":
     get:
       x-fern-sdk-group-name: products
@@ -115,6 +169,16 @@ paths:
                 $ref: "#/components/schemas/Product"
 components:
   schemas:
+    ProductConfig:
+      type: object
+      properties:
+        config:
+          type: object
+          properties:
+            currency:
+              type: string
+            limit:
+              type: integer
     Product:
       type: object
       properties:

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support `date` and `date-time` value types for `x-fern-global-parameters`. Both the OpenAPI
+    importer and the Fern Definition converter now map these to the corresponding IR primitives so
+    downstream generators can serialize datetime globals to their wire representation.
+  type: feat

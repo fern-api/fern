@@ -116,6 +116,7 @@ function createMinimalEndpoint(opts?: { errors?: FernIr.ResponseError[] }): Fern
         pathParameters: [],
         allPathParameters: [],
         queryParameters: [],
+        globalParameters: undefined,
         requestBody: undefined,
         v2RequestBodies: undefined,
         sdkRequest: undefined,

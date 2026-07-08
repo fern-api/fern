@@ -293,6 +293,7 @@ export function createHttpEndpoint(opts?: {
     allPathParameters?: FernIr.PathParameter[];
     requestBody?: FernIr.HttpRequestBody;
     sdkRequest?: FernIr.SdkRequest;
+    globalParameters?: FernIr.GlobalParameterId[];
     docs?: string;
 }): FernIr.HttpEndpoint {
     return {
@@ -310,6 +311,7 @@ export function createHttpEndpoint(opts?: {
         pathParameters: opts?.pathParameters ?? [],
         allPathParameters: opts?.allPathParameters ?? opts?.pathParameters ?? [],
         queryParameters: opts?.queryParameters ?? [],
+        globalParameters: opts?.globalParameters,
         requestBody: opts?.requestBody,
         v2RequestBodies: undefined,
         sdkRequest: opts?.sdkRequest,
