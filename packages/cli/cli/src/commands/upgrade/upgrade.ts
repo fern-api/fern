@@ -377,10 +377,17 @@ export async function upgrade({
 
     // Apply org-level CLI version floor (if set)
     if (!isLocalDev) {
-        resolvedTargetVersion = await applyOrgVersionFloor({
-            cliContext,
-            resolvedTargetVersion
-        });
+        try {
+            const floorResult = await applyOrgVersionFloor({
+                cliContext,
+                resolvedTargetVersion
+            });
+            if (floorResult != null) {
+                resolvedTargetVersion = floorResult;
+            }
+        } catch {
+            // Silently ignore org config failures (e.g. network errors, missing auth)
+        }
     }
 
     if (resolvedTargetVersion == null) {
