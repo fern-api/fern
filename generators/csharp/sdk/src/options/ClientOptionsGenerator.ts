@@ -4,7 +4,7 @@ import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-
+import { getServerVariableOptions } from "../root-client/serverVariables.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator.js";
@@ -42,7 +42,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             optional: false,
             includeInitializer: true
         };
-        this.createBaseUrlField(class_);
+        const serverVariableOptions = getServerVariableOptions(this.context.ir.environments, this.case);
+        this.createBaseUrlField(class_, serverVariableOptions.length > 0);
+        this.addServerVariableFields(class_, serverVariableOptions);
         this.baseOptionsGenerator.getHttpClientField(class_, optionArgs);
 
         // Headers property is used for lazy auth header evaluation in root client
@@ -105,7 +107,38 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.Types.ClientOptions.name}.cs`));
     }
 
-    private createBaseUrlField(classOrInterface: ast.Interface | ast.Class): ast.Field | undefined {
+    /**
+     * Exposes each server URL variable (e.g. region/edge) as an optional string property on
+     * ClientOptions. The root client interpolates these into the environment URL(s) at
+     * construction time; when omitted, the variable's IR default is used.
+     */
+    private addServerVariableFields(
+        class_: ast.Class,
+        serverVariableOptions: ReturnType<typeof getServerVariableOptions>
+    ): void {
+        for (const { variable, optionName } of serverVariableOptions) {
+            const docs: string[] = [];
+            if (variable.values != null && variable.values.length > 0) {
+                docs.push(`The ${optionName} to route requests to. Allowed values: ${variable.values.join(", ")}.`);
+            }
+            if (variable.default != null) {
+                docs.push(`Defaults to "${variable.default}".`);
+            }
+            class_.addField({
+                origin: class_.explicit(optionName),
+                access: ast.Access.Public,
+                get: true,
+                init: true,
+                type: this.Primitive.string.asOptional(),
+                summary: docs.length > 0 ? docs.join(" ") : undefined
+            });
+        }
+    }
+
+    private createBaseUrlField(
+        classOrInterface: ast.Interface | ast.Class,
+        hasServerVariables = false
+    ): ast.Field | undefined {
         const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
         let defaultEnvironment: FernIr.NameOrString | undefined = undefined;
         if (defaultEnvironmentId != null) {
@@ -143,7 +176,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                         origin: classOrInterface.explicit("BaseUrl"),
                         access: ast.Access.Public,
                         get: true,
-                        init: true,
+                        ...(hasServerVariables ? { set: true } : { init: true }),
                         useRequired: makeRequired,
                         type: this.Primitive.string,
                         summary: this.baseOptionsGenerator.members.baseUrlSummary,
@@ -162,7 +195,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                         origin: classOrInterface.explicit("Environment"),
                         access: ast.Access.Public,
                         get: true,
-                        init: true,
+                        ...(hasServerVariables ? { set: true } : { init: true }),
                         useRequired: makeRequired,
                         type: this.Types.Environments,
                         summary: "The Environment for the API.",

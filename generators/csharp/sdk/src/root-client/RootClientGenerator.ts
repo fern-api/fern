@@ -2,7 +2,7 @@ import { fail } from "node:assert";
 import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
-import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, lazy, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -25,6 +25,11 @@ import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 import { buildUserAgentHeaderEntry } from "./buildUserAgentHeaderEntry.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
+import {
+    getServerVariableOptions,
+    type ServerVariableOption,
+    urlTemplateToInterpolatedString
+} from "./serverVariables.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -465,6 +470,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                     }
 
+                    this.writeServerVariableInterpolation(innerWriter);
+
                     // Add platform headers to clientOptions
                     innerWriter.write("var platformHeaders = ");
                     innerWriter.writeNodeStatement(
@@ -753,6 +760,79 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
             })
         };
+    }
+
+    /**
+     * Rebuilds the environment base URL(s) from the API's URL template(s) when the user
+     * sets any server URL variable (e.g. region/edge) at construction time. Each `{id}`
+     * placeholder is substituted with the provided value, falling back to the variable's
+     * IR default when omitted. Emits nothing when the API declares no server variables.
+     */
+    private writeServerVariableInterpolation(writer: Writer): void {
+        const config = this.context.ir.environments;
+        const options = getServerVariableOptions(config, this.case);
+        if (options.length === 0 || config == null) {
+            return;
+        }
+        const environments = config.environments;
+        const condition = options.map(({ optionName }) => `clientOptions.${optionName} != null`).join(" || ");
+
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
+                if (templatedEnvironment?.urlTemplate == null) {
+                    return;
+                }
+                writer.controlFlow("if", this.csharp.codeblock(condition));
+                this.writeServerVariableLocals(writer, options);
+                writer.writeTextStatement(
+                    `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(templatedEnvironment.urlTemplate, options)}`
+                );
+                writer.endControlFlow();
+                break;
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
+                if (templatedEnvironment?.urlTemplates == null) {
+                    return;
+                }
+                const urlTemplates = templatedEnvironment.urlTemplates;
+                const staticUrls = templatedEnvironment.urls;
+                writer.controlFlow("if", this.csharp.codeblock(condition));
+                this.writeServerVariableLocals(writer, options);
+                writer.write("clientOptions.Environment = ");
+                writer.writeNodeStatement(
+                    this.csharp.instantiateClass({
+                        classReference: this.Types.Environments,
+                        arguments_: environments.baseUrls.map((baseUrl) => {
+                            const template = urlTemplates[baseUrl.id];
+                            return {
+                                name: this.case.pascalSafe(baseUrl.name),
+                                assignment:
+                                    template != null
+                                        ? this.csharp.codeblock(urlTemplateToInterpolatedString(template, options))
+                                        : this.csharp.codeblock(
+                                              this.csharp.string_({ string: staticUrls[baseUrl.id] ?? "" })
+                                          )
+                            };
+                        }),
+                        multiline: true
+                    })
+                );
+                writer.endControlFlow();
+                break;
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    private writeServerVariableLocals(writer: Writer, options: ServerVariableOption[]): void {
+        for (const { variable, optionName, localName } of options) {
+            writer.writeTextStatement(
+                `var ${localName} = clientOptions.${optionName} ?? "${escapeForCSharpString(variable.default ?? "")}"`
+            );
+        }
     }
 
     public generateExampleClientInstantiationSnippet({
