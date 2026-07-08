@@ -300,6 +300,111 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 	return nil
 }
 
+// serverURLVariable pairs an IR server URL variable with the idiomatic Go
+// client-option name it is exposed under (e.g. the variable "region" is exposed
+// as the "Region" option, and a variable named "environment" is exposed as
+// "ServerURLEnvironment" to avoid colliding with the reserved Environment option).
+type serverURLVariable struct {
+	variable *common.ServerVariable
+	// optionName is the exported Go identifier used for the RequestOptions field,
+	// the option struct, and the With<Name> helper (e.g. "Region").
+	optionName string
+	// paramName is the unexported parameter name used by the With<Name> helper
+	// (e.g. "region").
+	paramName string
+}
+
+// reservedRequestOptionNames are the RequestOptions field names that a server
+// URL variable must not shadow. A variable whose idiomatic name collides with
+// one of these is exposed under a "ServerURL"-prefixed name instead.
+var reservedRequestOptionNames = map[string]struct{}{
+	"BaseURL":                    {},
+	"Environment":                {},
+	"HTTPClient":                 {},
+	"HTTPHeader":                 {},
+	"BodyProperties":             {},
+	"QueryParameters":            {},
+	"MaxAttempts":                {},
+	"MaxBufSize":                 {},
+	"MaxStreamReconnectAttempts": {},
+	"DisableStreamReconnection":  {},
+	"DisableRetries":             {},
+}
+
+// serverURLVariablesFromConfig returns the server URL variables declared on the
+// API's environments, paired with the client-option name each is exposed under.
+// Variables are de-duplicated by id (taken from the first environment that
+// declares them) and de-collided against reserved RequestOptions field names.
+func serverURLVariablesFromConfig(environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+	variables := collectServerURLVariables(environmentsConfig)
+	result := make([]*serverURLVariable, 0, len(variables))
+	for _, variable := range variables {
+		if variable == nil || variable.Name == nil {
+			continue
+		}
+		optionName := variable.Name.PascalCase.UnsafeName
+		paramName := variable.Name.CamelCase.SafeName
+		if _, ok := reservedRequestOptionNames[optionName]; ok {
+			optionName = "ServerURL" + variable.Name.PascalCase.UnsafeName
+			paramName = "serverURL" + variable.Name.PascalCase.UnsafeName
+		}
+		result = append(result, &serverURLVariable{
+			variable:   variable,
+			optionName: optionName,
+			paramName:  paramName,
+		})
+	}
+	return result
+}
+
+// collectServerURLVariables extracts the server URL variables from the first
+// environment that declares them, handling both single- and multiple-base-URL
+// environments and de-duplicating by id.
+func collectServerURLVariables(environmentsConfig *common.EnvironmentsConfig) []*common.ServerVariable {
+	if environmentsConfig == nil || environmentsConfig.Environments == nil {
+		return nil
+	}
+	seen := make(map[string]struct{})
+	var result []*common.ServerVariable
+	add := func(variables []*common.ServerVariable) {
+		for _, variable := range variables {
+			if variable == nil {
+				continue
+			}
+			if _, ok := seen[variable.Id]; ok {
+				continue
+			}
+			seen[variable.Id] = struct{}{}
+			result = append(result, variable)
+		}
+	}
+	if single := environmentsConfig.Environments.SingleBaseUrl; single != nil {
+		for _, environment := range single.Environments {
+			if len(environment.UrlVariables) > 0 {
+				add(environment.UrlVariables)
+				break
+			}
+		}
+	}
+	if multiple := environmentsConfig.Environments.MultipleBaseUrls; multiple != nil {
+		for _, environment := range multiple.Environments {
+			if len(environment.UrlVariables) > 0 {
+				// Preserve a deterministic order across base URLs.
+				baseURLIds := make([]string, 0, len(environment.UrlVariables))
+				for baseURLId := range environment.UrlVariables {
+					baseURLIds = append(baseURLIds, baseURLId)
+				}
+				sort.Strings(baseURLIds)
+				for _, baseURLId := range baseURLIds {
+					add(environment.UrlVariables[baseURLId])
+				}
+				break
+			}
+		}
+	}
+	return result
+}
+
 // WriteRequestOptionsDefinition writes the RequestOption interface and
 // *RequestOptions type. These types are always deposited in the core
 // package to prevent import cycles in the generated SDK.
@@ -424,6 +529,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 		)
 	}
+	// Generate a field for each server URL variable (e.g. region), used to
+	// interpolate the environment's URL template(s) at client construction.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(environmentsConfig) {
+		f.P(serverURLVariable.optionName, " string")
+	}
 	f.P("}")
 	f.P()
 
@@ -454,7 +564,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(environmentsConfig))
 	}
 
 	// Generate the ToHeader method.
@@ -609,7 +719,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(environmentsConfig)); err != nil {
 		return err
 	}
 
@@ -649,6 +759,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	asIdempotentRequestOption bool,
 	isMultiURL bool,
 	inferredParams []inferredAuthParam,
+	serverURLVariables []*serverURLVariable,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -679,6 +790,12 @@ func (f *fileWriter) writeRequestOptionStructs(
 
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	for _, serverURLVariable := range serverURLVariables {
+		if err := f.writeOptionStruct(serverURLVariable.optionName, "string", true, asIdempotentRequestOption); err != nil {
 			return err
 		}
 	}
@@ -1039,6 +1156,24 @@ func (f *fileWriter) WriteRequestOptions(
 		f.P("func WithEnvironment(environment ", f.scope.AddImport(rootImportPath), ".Environment) *core.EnvironmentOption {")
 		f.P("return &core.EnvironmentOption{")
 		f.P("Environment: environment,")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate a functional option for each server URL variable (e.g. region).
+	// Setting one rebuilds the base URL(s) from the environment's URL template(s)
+	// at client construction time.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(environmentsConfig) {
+		originalName := serverURLVariable.variable.Id
+		if serverURLVariable.variable.Name != nil {
+			originalName = serverURLVariable.variable.Name.OriginalName
+		}
+		f.P("// With", serverURLVariable.optionName, " sets the \"", originalName, "\" server URL variable, which is")
+		f.P("// substituted into the base URL template(s) at construction time.")
+		f.P("func With", serverURLVariable.optionName, "(", serverURLVariable.paramName, " string) *core.", serverURLVariable.optionName, "Option {")
+		f.P("return &core.", serverURLVariable.optionName, "Option{")
+		f.P(serverURLVariable.optionName, ": ", serverURLVariable.paramName, ",")
 		f.P("}")
 		f.P("}")
 		f.P()

@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+	fmt "fmt"
 
 	fern "github.com/server-url-templating/fern"
 	core "github.com/server-url-templating/fern/core"
@@ -21,6 +22,27 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.Region != "" || options.ServerURLEnvironment != "" {
+		region := options.Region
+		if region == "" {
+			region = "us-east-1"
+		}
+		serverURLEnvironment := options.ServerURLEnvironment
+		if serverURLEnvironment == "" {
+			serverURLEnvironment = "prod"
+		}
+		options.Environment = fern.Environment{
+			Auth: fmt.Sprintf(
+				"https://auth.%s.example.com",
+				region,
+			),
+			Base: fmt.Sprintf(
+				"https://api.%s.%s.example.com/v1",
+				region,
+				serverURLEnvironment,
+			),
+		}
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,

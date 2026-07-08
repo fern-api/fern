@@ -28,6 +28,8 @@ type RequestOptions struct {
 	MaxStreamReconnectAttempts uint
 	DisableStreamReconnection  bool
 	DisableRetries             bool
+	Region                     string
+	ServerURLEnvironment       string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -152,4 +154,22 @@ type EnvironmentOption struct {
 
 func (e *EnvironmentOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Environment = e.Environment
+}
+
+// RegionOption implements the RequestOption interface.
+type RegionOption struct {
+	Region string
+}
+
+func (r *RegionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Region = r.Region
+}
+
+// ServerURLEnvironmentOption implements the RequestOption interface.
+type ServerURLEnvironmentOption struct {
+	ServerURLEnvironment string
+}
+
+func (s *ServerURLEnvironmentOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ServerURLEnvironment = s.ServerURLEnvironment
 }
