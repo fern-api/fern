@@ -85,6 +85,13 @@ import { installDependencies } from "./commands/install-dependencies/installDepe
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
+import {
+    checkVersionAgainstOrgFloor,
+    fetchOrgCliVersionMin,
+    getOrgConfig,
+    setOrgCliVersion,
+    unsetOrgCliVersion
+} from "./commands/org/orgConfig.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
@@ -296,6 +303,7 @@ async function tryRunCli(cliContext: CliContext) {
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
+    addOrgCommand(cli, cliContext);
 
     addProtocGenFernCommand(cli, cliContext);
     addInstallDependenciesCommand(cli, cliContext);
@@ -1399,6 +1407,25 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     directFromOpenapi: argv.fromOpenapi,
                     commandLineApiWorkspace: argv.api
                 });
+
+                // Check org-level CLI version floor
+                const { getToken } = await import("@fern-api/auth");
+                const token = await getToken();
+                if (token != null) {
+                    const orgFloor = await fetchOrgCliVersionMin({
+                        cliContext,
+                        orgId: project.config.organization,
+                        token: token.value
+                    });
+                    if (orgFloor != null) {
+                        checkVersionAgainstOrgFloor({
+                            cliContext,
+                            projectVersion: cliContext.environment.packageVersion,
+                            orgFloor,
+                            orgId: project.config.organization
+                        });
+                    }
+                }
             } catch (error) {
                 if (project == null) {
                     const reason = error instanceof Error ? error.message.slice(0, 100) : "project load failed";
@@ -3762,6 +3789,60 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
             }
         }
     );
+}
+
+function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("org", "Manage org-level configuration", (yargs) => {
+        yargs.command(
+            "set <key> <value>",
+            "Set an org-level config value (admin only)",
+            (y) =>
+                y
+                    .positional("key", { type: "string", demandOption: true })
+                    .positional("value", { type: "string", demandOption: true })
+                    .option("org", { type: "string", description: "Override org ID" }),
+            async (argv) => {
+                cliContext.instrumentPostHogEvent({ command: "fern org set" });
+                if (argv.key !== "cli-version") {
+                    cliContext.failAndThrow(`Unknown config key "${argv.key}". Supported: cli-version`);
+                    return;
+                }
+                await setOrgCliVersion({ cliContext, version: argv.value, org: argv.org });
+            }
+        );
+
+        yargs.command(
+            "get",
+            "View org-level config",
+            (y) =>
+                y
+                    .option("org", { type: "string", description: "Override org ID" })
+                    .option("json", { type: "boolean", description: "Output as JSON" }),
+            async (argv) => {
+                cliContext.instrumentPostHogEvent({ command: "fern org get" });
+                await getOrgConfig({ cliContext, org: argv.org, json: argv.json });
+            }
+        );
+
+        yargs.command(
+            "unset <key>",
+            "Remove an org-level config value (admin only)",
+            (y) =>
+                y
+                    .positional("key", { type: "string", demandOption: true })
+                    .option("org", { type: "string", description: "Override org ID" }),
+            async (argv) => {
+                cliContext.instrumentPostHogEvent({ command: "fern org unset" });
+                if (argv.key !== "cli-version") {
+                    cliContext.failAndThrow(`Unknown config key "${argv.key}". Supported: cli-version`);
+                    return;
+                }
+                await unsetOrgCliVersion({ cliContext, org: argv.org });
+            }
+        );
+
+        return yargs;
+    });
 }
 
 function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {

@@ -1,0 +1,5 @@
+- summary: |
+    Add `fern org set/get/unset` commands for org-level CLI version floor.
+    `fern upgrade` now respects the org minimum version, and `fern check`
+    warns when the project is below the org floor.
+  type: feat

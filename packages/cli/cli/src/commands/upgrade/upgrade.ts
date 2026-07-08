@@ -14,6 +14,7 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
+import { fetchOrgCliVersionMin } from "../org/orgConfig.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -374,6 +375,14 @@ export async function upgrade({
         }
     }
 
+    // Apply org-level CLI version floor (if set)
+    if (!isLocalDev) {
+        resolvedTargetVersion = await applyOrgVersionFloor({
+            cliContext,
+            resolvedTargetVersion
+        });
+    }
+
     // Early return if already at target version
     if (cliContext.environment.packageVersion === resolvedTargetVersion || isLocalDev) {
         // We're at the target version - load config and run migrations
@@ -495,4 +504,71 @@ export async function upgrade({
         }
         throw error;
     }
+}
+
+/**
+ * Checks the org-level CLI version floor and returns a version that satisfies it.
+ * If the org has a floor and the resolved target is below it, bumps to the floor.
+ * Silently falls back if the org config endpoint is unreachable.
+ */
+async function applyOrgVersionFloor({
+    cliContext,
+    resolvedTargetVersion
+}: {
+    cliContext: CliContext;
+    resolvedTargetVersion: string | undefined;
+}): Promise<string | undefined> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
+        return resolvedTargetVersion;
+    }
+
+    let orgId: string;
+    try {
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
+        orgId = projectConfig.organization;
+    } catch {
+        return resolvedTargetVersion;
+    }
+
+    const { getToken } = await import("@fern-api/auth");
+    const token = await getToken();
+    if (token == null) {
+        return resolvedTargetVersion;
+    }
+
+    const orgFloor = await fetchOrgCliVersionMin({ cliContext, orgId, token: token.value });
+    if (orgFloor == null) {
+        return resolvedTargetVersion;
+    }
+
+    if (resolvedTargetVersion == null) {
+        // No upgrade was resolved via latest — check if current version is below floor
+        try {
+            if (isVersionAhead(orgFloor, cliContext.environment.packageVersion)) {
+                cliContext.logger.info(
+                    `Org "${orgId}" requires minimum CLI version ${chalk.green(orgFloor)}. Upgrading.`
+                );
+                return orgFloor;
+            }
+        } catch {
+            // version comparison failed
+        }
+        return resolvedTargetVersion;
+    }
+
+    // If resolved target is below the org floor, bump to floor
+    try {
+        if (isVersionAhead(orgFloor, resolvedTargetVersion)) {
+            cliContext.logger.info(
+                `Org "${orgId}" requires minimum CLI version ${chalk.green(orgFloor)} (resolved ${resolvedTargetVersion}).`
+            );
+            return orgFloor;
+        }
+    } catch {
+        // version comparison failed
+    }
+    return resolvedTargetVersion;
 }
