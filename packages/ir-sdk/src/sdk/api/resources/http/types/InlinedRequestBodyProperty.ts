@@ -6,6 +6,13 @@ export interface InlinedRequestBodyProperty extends FernIr.WithDocsAndAvailabili
     name: FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
     /**
+     * When set, this body property is bound to the referenced client-level
+     * SDK variable (see `x-fern-sdk-variable`): the SDK auto-fills it from
+     * that variable and it becomes optional at the call site (a per-call
+     * value still wins).
+     */
+    variable: FernIr.VariableId | undefined;
+    /**
      * The documentation default value for this property. Populated from the
      * OpenAPI `default` field on the property's schema (or from the Fern
      * Definition `default` on the property). Used by docs to render

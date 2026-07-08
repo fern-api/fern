@@ -7,12 +7,14 @@ import { Declaration } from "../../commons/types/Declaration.js";
 import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 import { Literal } from "../../types/types/Literal.js";
+import { VariableId } from "../../variables/types/VariableId.js";
 
 export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.Raw, FernIr.HttpHeader> =
     core.serialization
         .objectWithoutOptionalProperties({
             name: NameAndWireValueOrString,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
+            variable: VariableId.optional(),
             env: core.serialization.string().optional(),
             clientDefault: Literal.optional(),
             defaultValue: core.serialization.unknown().optional(),
@@ -24,6 +26,7 @@ export declare namespace HttpHeader {
     export interface Raw extends Declaration.Raw {
         name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
+        variable?: VariableId.Raw | null;
         env?: string | null;
         clientDefault?: Literal.Raw | null;
         defaultValue?: unknown | null;

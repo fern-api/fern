@@ -176,7 +176,10 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,
-                    properties: requestBodyTypeShape.properties,
+                    properties: requestBodyTypeShape.properties.map((property) => ({
+                        ...property,
+                        variable: undefined
+                    })),
                     extraProperties: requestBodyTypeShape.extraProperties,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
@@ -369,6 +372,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         }
         return FileUploadRequestProperty.bodyProperty({
             ...property,
+            variable: undefined,
             contentType: encoding?.contentType ?? contentType,
             style: getMultipartPartEncoding({ encoding }),
             name: property.name
@@ -506,7 +510,10 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     ),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,
-                    properties: requestBodyTypeShape.properties,
+                    properties: requestBodyTypeShape.properties.map((property) => ({
+                        ...property,
+                        variable: undefined
+                    })),
                     extraProperties: requestBodyTypeShape.extraProperties,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject: modifiedMediaTypeObject,

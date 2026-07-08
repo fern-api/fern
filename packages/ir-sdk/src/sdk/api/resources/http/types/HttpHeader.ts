@@ -5,6 +5,14 @@ import type * as FernIr from "../../../index.js";
 export interface HttpHeader extends FernIr.Declaration {
     name: FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
+    /**
+     * When set, this header is bound to the referenced client-level SDK
+     * variable (see `x-fern-sdk-variable`): the SDK auto-fills the header
+     * from that variable and the header becomes optional at the call site
+     * (a per-call value still wins). A single variable may be bound by
+     * parameters across locations.
+     */
+    variable: FernIr.VariableId | undefined;
     env: string | undefined;
     /**
      * A client-side default value for this header. When present, the header

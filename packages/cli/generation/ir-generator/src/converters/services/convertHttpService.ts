@@ -453,6 +453,7 @@ export function convertHttpHeader({
             name
         }),
         valueType: file.parseTypeReference(header),
+        variable: undefined,
         env: typeof header === "string" ? undefined : header.env,
         clientDefault: convertDefaultToLiteral(clientDefaultValue),
         defaultValue,

@@ -521,6 +521,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 }),
                 docs: resolvedHeader.description,
                 valueType,
+                variable: undefined,
                 env: undefined,
                 v2Examples,
                 availability: undefined,

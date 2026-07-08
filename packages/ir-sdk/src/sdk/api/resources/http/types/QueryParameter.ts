@@ -7,6 +7,13 @@ export interface QueryParameter extends FernIr.Declaration {
     valueType: FernIr.TypeReference;
     allowMultiple: boolean;
     /**
+     * When set, this query parameter is bound to the referenced client-level
+     * SDK variable (see `x-fern-sdk-variable`): the SDK auto-fills it from
+     * that variable and it becomes optional at the call site (a per-call
+     * value still wins).
+     */
+    variable: FernIr.VariableId | undefined;
+    /**
      * A client-side default value for this query parameter. When present,
      * the parameter is optional in the generated SDK and this literal value
      * is sent when the caller does not provide one. Populated from the

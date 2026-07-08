@@ -36,6 +36,7 @@ export function convertQueryParameter({
             name
         }),
         valueType,
+        variable: undefined,
         allowMultiple:
             typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
                 ? queryParameter["allow-multiple"]
