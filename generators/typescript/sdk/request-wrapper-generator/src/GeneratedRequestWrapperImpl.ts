@@ -128,9 +128,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
         requestInterface.properties.push(
             ...this.getRequestProperties(context).map<PropertySignatureStructure>((property) => {
+                // When the serde layer is disabled, widen optional properties to `T | undefined`
+                // (mirroring the object type generator) so they satisfy exactOptionalPropertyTypes.
+                const typeNode =
+                    property.isOptional && !this.includeSerdeLayer
+                        ? ts.factory.createUnionTypeNode([
+                              property.type,
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                          ])
+                        : property.type;
                 return {
                     kind: StructureKind.PropertySignature,
-                    type: getTextOfTsNode(property.type),
+                    type: getTextOfTsNode(typeNode),
                     name: getPropertyKey(property.name),
                     hasQuestionToken: property.isOptional,
                     docs: property.docs

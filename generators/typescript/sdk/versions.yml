@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.2
+  changelogEntry:
+    - summary: |
+        Apply `exactOptionalPropertyTypes` support to inline request types. With `noSerdeLayer: true`,
+        optional request properties are now generated as `propName?: Type | undefined`, matching the
+        object type generator. Previously only type declarations got the `| undefined`, so request
+        wrappers were unassignable from values that explicitly set optional fields to `undefined`.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
 - version: 3.79.1
   changelogEntry:
     - summary: |
