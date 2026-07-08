@@ -834,8 +834,8 @@
           },
           "audiences": [],
           "globalParameters": [
-            "region",
-            "currency"
+            "currency",
+            "region"
           ],
           "id": "endpoint_products.search",
           "name": "search",
@@ -1708,6 +1708,30 @@
         "type": "string"
       },
       "docs": "x-fern-default should take precedence over default."
+    },
+    {
+      "id": "tenant",
+      "name": "tenant",
+      "location": "body",
+      "target": "metadata.tenantId",
+      "valueType": {
+        "container": {
+          "optional": {
+            "primitive": {
+              "v1": "STRING",
+              "v2": {
+                "type": "string"
+              }
+            },
+            "type": "primitive"
+          },
+          "type": "optional"
+        },
+        "type": "container"
+      },
+      "optional": true,
+      "apply": "explicit",
+      "docs": "Explicit body global; only applies where the body declares metadata.tenantId."
     }
   ],
   "serviceTypeReferenceInfo": {

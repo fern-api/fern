@@ -249,8 +249,22 @@ export class Generation {
         maxRetries: () => this.customConfig.maxRetries,
         /** Controls which HTTP status codes trigger automatic retries. Default: "legacy". */
         retryStatusCodes: () => this.customConfig.retryStatusCodes ?? "legacy",
-        /** Override the default request timeout (in seconds) for the generated SDK client. `"infinity"` disables the default timeout. Default: 30. */
-        defaultTimeoutInSeconds: () => this.customConfig["default-timeout-in-seconds"],
+        /**
+         * Override the default request timeout (in milliseconds) for the generated SDK client. `"infinity"` disables
+         * the default timeout. Resolves the new `default-timeout-in-milliseconds` key when set, otherwise falls back
+         * to the deprecated `default-timeout-in-seconds` (converted to milliseconds). Default: 30000.
+         */
+        defaultTimeoutInMilliseconds: (): number | "infinity" | undefined => {
+            const milliseconds = this.customConfig["default-timeout-in-milliseconds"];
+            if (milliseconds != null) {
+                return milliseconds;
+            }
+            const seconds = this.customConfig["default-timeout-in-seconds"];
+            if (seconds == null) {
+                return undefined;
+            }
+            return seconds === "infinity" ? "infinity" : seconds * 1000;
+        },
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.

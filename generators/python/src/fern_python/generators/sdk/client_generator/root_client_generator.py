@@ -793,9 +793,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
             )
 
+        resolved_timeout = self._context.custom_config.resolved_timeout
         timeout_phrase = (
-            f"the timeout is {self._context.custom_config.timeout_in_seconds} seconds"
-            if isinstance(self._context.custom_config.timeout_in_seconds, int)
+            f"the timeout is {resolved_timeout} seconds"
+            if isinstance(resolved_timeout, int)
             else "there is no timeout set"
         )
         parameters.append(
@@ -1070,6 +1071,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             timeout_local_variable = "_defaulted_timeout"
+            resolved_timeout = self._context.custom_config.resolved_timeout
             writer.write(f"{timeout_local_variable} = ")
             writer.write_node(
                 AST.Expression(
@@ -1077,8 +1079,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
                         right=AST.ConditionalExpression(
                             left=(
-                                AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
-                                if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                                AST.Expression(f"{resolved_timeout}")
+                                if isinstance(resolved_timeout, int)
                                 else AST.Expression(AST.TypeHint.none())
                             ),
                             right=AST.Expression(AST.TypeHint.none()),

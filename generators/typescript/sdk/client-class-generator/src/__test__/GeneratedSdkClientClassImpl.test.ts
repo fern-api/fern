@@ -110,7 +110,7 @@ function createClientClass(opts?: {
     allowCustomFetcher?: boolean;
     generateWebSocketClients?: boolean;
     requireDefaultEnvironment?: boolean;
-    defaultTimeoutInSeconds?: number | "infinity" | undefined;
+    defaultTimeout?: number | "infinity" | undefined;
     includeContentHeadersOnFileDownloadResponse?: boolean;
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
@@ -142,7 +142,7 @@ function createClientClass(opts?: {
         allowCustomFetcher: opts?.allowCustomFetcher ?? false,
         generateWebSocketClients: opts?.generateWebSocketClients ?? false,
         requireDefaultEnvironment: opts?.requireDefaultEnvironment ?? false,
-        defaultTimeoutInSeconds: opts?.defaultTimeoutInSeconds,
+        defaultTimeout: opts?.defaultTimeout,
         includeContentHeadersOnFileDownloadResponse: opts?.includeContentHeadersOnFileDownloadResponse ?? false,
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,

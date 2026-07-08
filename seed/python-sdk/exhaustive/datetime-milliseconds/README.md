@@ -177,7 +177,7 @@ client = SeedExhaustive(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

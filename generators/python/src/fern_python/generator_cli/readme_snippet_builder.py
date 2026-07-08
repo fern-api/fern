@@ -162,7 +162,7 @@ class ReadmeSnippetBuilder:
 
 # Override timeout for a specific method
 client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}request_options={{
-    "timeout_in_seconds": 1
+    "timeout": 1
 }})
 """
                     )

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.44
+  changelogEntry:
+    - summary: |
+        Sign every local-only commit when pushing to GitHub, not just HEAD. Replay branches
+        contain multiple commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only
+        the HEAD commit was recreated via the GitHub API and signed, leaving earlier commits
+        on the PR unverified.
+      type: fix
+  createdAt: "2026-07-07"
 - version: 0.9.43
   changelogEntry:
     - summary: |

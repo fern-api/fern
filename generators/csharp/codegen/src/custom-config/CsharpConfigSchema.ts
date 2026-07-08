@@ -127,7 +127,13 @@ export const CsharpConfigSchema = z.object({
         .union([z.number().positive(), z.literal("infinity")])
         .optional()
         .describe(
-            "The default timeout for network requests, in seconds. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+            "(Deprecated) The default timeout for network requests, in seconds. Use `default-timeout-in-milliseconds` instead. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+        ),
+    "default-timeout-in-milliseconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "The default timeout for network requests, in milliseconds. Set to `infinity` to disable the default timeout. Takes precedence over the deprecated `default-timeout-in-seconds`. SDK users can still override this per-request via request options."
         )
 });
 

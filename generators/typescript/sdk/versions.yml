@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.0
+  changelogEntry:
+    - summary: |
+        Add a `defaultTimeout` custom config option, expressed in milliseconds, which is idiomatic for
+        JavaScript/TypeScript (`setTimeout`, `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the
+        timeout. The seconds-based `defaultTimeoutInSeconds` and `timeoutInSeconds` keys are now
+        deprecated but continue to work: their values are converted to milliseconds (× 1000). Precedence
+        is `defaultTimeout` > `defaultTimeoutInSeconds` > `timeoutInSeconds`. Generated SDK output is
+        unchanged for existing configs.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.2
+  changelogEntry:
+    - summary: |
+        Fix a regression where `| undefined` was dropped from the value type of generated
+        `Record` types backed by optional map values (e.g. optional `additionalProperties`).
+        Optional map values now correctly generate `Record<string, T | undefined>` with
+        serialization `record(string(), T.optional())`, while `unknown`/`any` map values
+        keep the redundant `| undefined` stripped (`Record<string, unknown>`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.1
+  changelogEntry:
+    - summary: |
+        Fix `TypeError: Cannot use 'in' operator to search for 'path' in undefined`
+        crash when `null` or `undefined` is passed to a file upload parameter at
+        runtime. The error is now a clear `TypeError` describing the expected types
+        instead of a cryptic `in` operator failure.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.0
+  changelogEntry:
+    - summary: |
+        Add an `additionalBodyParameters` request option that spreads additional parameters into an
+        endpoint's JSON request body. Caller-supplied properties override matching keys in the endpoint
+        body, matching the behavior of the Python, Swift, and Ruby SDKs. Omitting the option leaves the
+        request body unchanged and never fabricates a body for bodyless requests.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 3.77.3
   changelogEntry:
     - summary: |
