@@ -98,6 +98,9 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.rust-target }}" == *-linux-musl ]]; then
+            TARGET_UPPER=$(echo "${{ matrix.rust-target }}" | tr '[:lower:]-' '[:upper:]_')
+            export "CARGO_TARGET_${TARGET_UPPER}_LINKER=musl-gcc"
+            export CC=musl-gcc
             cargo build --release --target ${{ matrix.rust-target }} \
               --no-default-features --features rustls
           else
