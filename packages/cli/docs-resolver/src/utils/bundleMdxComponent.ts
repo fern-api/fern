@@ -111,7 +111,17 @@ export async function maybeBundleMdxComponent({
             }
         );
         if (result.failed) {
-            throw new Error(result.stderr !== "" ? result.stderr : result.stdout);
+            const output = [result.stderr, result.stdout]
+                .filter((text) => text !== "")
+                .join("\n")
+                .slice(0, 2000);
+            throw new Error(
+                `rolldown exited with code ${result.exitCode}.` +
+                    " Bundling custom components requires network access to download rolldown (via npx)" +
+                    ` and the imported libraries (${thirdPartyImports.join(", ")}) to be installed` +
+                    " in the docs project's node_modules." +
+                    (output !== "" ? `\n${output}` : "")
+            );
         }
 
         return await readFile(outputFilePath, "utf-8");

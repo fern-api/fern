@@ -35,6 +35,15 @@ describe("getThirdPartyImports", () => {
         ).toEqual([]);
     });
 
+    it("detects bare re-exports", () => {
+        expect(
+            getThirdPartyImports(`
+                export * from "some-lib";
+                export { thing } from "@scope/other-lib";
+            `)
+        ).toEqual(["some-lib", "@scope/other-lib"]);
+    });
+
     it("detects dynamic imports and requires", () => {
         expect(
             getThirdPartyImports(`
