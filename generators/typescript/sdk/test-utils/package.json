@@ -35,11 +35,11 @@
     "ts-morph": "catalog:"
   },
   "peerDependencies": {
-    "@fern-fern/ir-sdk": "67.10.1"
+    "@fern-fern/ir-sdk": "67.10.2"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-fern/ir-sdk": "67.10.1",
+    "@fern-fern/ir-sdk": "67.10.2",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
