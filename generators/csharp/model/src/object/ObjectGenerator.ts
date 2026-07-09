@@ -11,7 +11,7 @@ type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
 type TypeReference = FernIr.TypeReference;
 
-import { generateFields } from "../generateFields.js";
+import { generateFields, getGeneratedPropertyName } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
 
@@ -423,11 +423,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         className: string;
         objectProperty: NameAndWireValueOrString;
     }): string {
-        const propertyName = this.case.pascalSafe(objectProperty);
-        if (propertyName === className) {
-            return `${propertyName}_`;
-        }
-        return propertyName;
+        return getGeneratedPropertyName({ context: this.context, className, name: objectProperty });
     }
 
     private shouldAddProtobufMappers(typeDeclaration: TypeDeclaration): boolean {

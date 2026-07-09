@@ -9,7 +9,7 @@ type ExampleUnionType = FernIr.ExampleUnionType;
 type TypeDeclaration = FernIr.TypeDeclaration;
 type UnionTypeDeclaration = FernIr.UnionTypeDeclaration;
 
-import { generateFields } from "../generateFields.js";
+import { generateFields, getGeneratedPropertyName } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { ObjectGenerator } from "../object/ObjectGenerator.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
@@ -983,11 +983,12 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     }
 
     /**
-     * Builds object-initializer entries for the union's base properties, sourced from the selected
-     * variant's example object. The inferred base properties live on both the union envelope and the
-     * variant object in the IR example; the variant leaf suppresses them (see ObjectGenerator), so
-     * the envelope snippet must set them here — otherwise required base properties like `Name` would
-     * be missing and the example would not compile.
+     * Builds object-initializer entries for the base properties that were suppressed from the
+     * selected variant leaf. Those fields no longer live on the leaf (see ObjectGenerator), so the
+     * envelope snippet must set them — otherwise a required base property like `Name` would be
+     * missing and the example would not compile. Base properties that remain on the leaf (e.g. for a
+     * variant shared with a union that doesn't own them) are left to the leaf snippet, so the
+     * example doesn't set them redundantly.
      */
     private generateBasePropertySnippetProperties({
         exampleUnion,
@@ -1000,12 +1001,23 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             return [];
         }
         const shape = exampleUnion.singleUnionType.shape;
-        const exampleProperties = shape.type === "samePropertiesAsObject" ? shape.object.properties : [];
-        const exampleByWireValue = new Map(exampleProperties.map((property) => [getWireValue(property.name), property]));
+        if (shape.type !== "samePropertiesAsObject") {
+            return [];
+        }
+        const wireNamesToOmit = this.context.getBasePropertyWireNamesToOmitForType(shape.typeId);
+        if (wireNamesToOmit.size === 0) {
+            return [];
+        }
+        const exampleByWireValue = new Map(shape.object.properties.map((property) => [getWireValue(property.name), property]));
 
         const properties: { name: string; value: ast.AstNode }[] = [];
         for (const baseProperty of this.unionDeclaration.baseProperties) {
-            const exampleProperty = exampleByWireValue.get(getWireValue(baseProperty.name));
+            const wireName = getWireValue(baseProperty.name);
+            if (!wireNamesToOmit.has(wireName)) {
+                // Still present on the leaf; the leaf snippet sets it.
+                continue;
+            }
+            const exampleProperty = exampleByWireValue.get(wireName);
             if (exampleProperty == null) {
                 // Optional base properties absent from the example are simply omitted.
                 continue;
@@ -1022,12 +1034,11 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     }
 
     /**
-     * Mirrors ObjectGenerator's property-name collision handling: a property may not share the
-     * enclosing class's name, so it is suffixed with `_` in that case.
+     * The envelope's C# property name for a base property. Uses the shared naming helper so the
+     * object-initializer name matches the field the union envelope actually generates.
      */
     private getBasePropertyName(name: FernIr.NameAndWireValueOrString): string {
-        const propertyName = this.case.pascalSafe(name);
-        return propertyName === this.classReference.name ? `${propertyName}_` : propertyName;
+        return getGeneratedPropertyName({ context: this.context, className: this.classReference.name, name });
     }
 
     public doGenerateSnippet({

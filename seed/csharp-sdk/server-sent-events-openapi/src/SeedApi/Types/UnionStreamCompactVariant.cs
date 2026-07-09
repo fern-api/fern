@@ -21,6 +21,12 @@ public record UnionStreamCompactVariant : IJsonOnDeserialized
     public required string Data { get; set; }
 
     /// <summary>
+    /// Whether to stream the response.
+    /// </summary>
+    [JsonPropertyName("stream_response")]
+    public bool? StreamResponse { get; set; }
+
+    /// <summary>
     /// The input prompt.
     /// </summary>
     [JsonPropertyName("prompt")]

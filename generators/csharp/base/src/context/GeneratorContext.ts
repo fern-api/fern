@@ -132,6 +132,17 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
      */
     private _unionVariantBasePropertyOmissions?: Map<TypeId, Set<string>>;
 
+    /**
+     * Lazily-initialized reference analysis used to decide whether a discriminated-union variant
+     * object is safe to strip base properties from. `variantReferrers` maps a typeId to the set of
+     * union typeIds that reference it as a `samePropertiesAsObject` variant; `nonVariantReferenced`
+     * holds every typeId referenced in any other position (object property, base-property type,
+     * `extends` parent, union member, alias target, etc.). A variant object is only suppressed when
+     * it is never referenced standalone; being a variant of several unions is fine as long as they
+     * all declare the same base property, so a type used anywhere else keeps all of its fields.
+     */
+    private _typeReferenceInfo?: { variantReferrers: Map<TypeId, Set<TypeId>>; nonVariantReferenced: Set<TypeId> };
+
     /** Provides access to C# code generation utilities */
     public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
@@ -1126,66 +1137,143 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     /**
-     * Returns the wire names of every property an object type declares directly or via `extends`.
-     * Empty for non-object (or unknown) types.
+     * Returns a map of wire name to value type for every property an object type declares directly
+     * or via `extends`. Empty for non-object (or unknown) types.
      */
-    private getDeclaredPropertyWireNames(typeId: TypeId): Set<string> {
+    private getDeclaredPropertyTypes(typeId: TypeId): Map<string, TypeReference> {
         const typeDeclaration = this.ir.types[typeId];
-        const wireNames = new Set<string>();
+        const propertyTypes = new Map<string, TypeReference>();
         if (typeDeclaration == null || typeDeclaration.shape.type !== "object") {
-            return wireNames;
+            return propertyTypes;
         }
         for (const property of [
             ...typeDeclaration.shape.properties,
             ...(typeDeclaration.shape.extendedProperties ?? [])
         ]) {
-            wireNames.add(getWireValue(property.name));
+            propertyTypes.set(getWireValue(property.name), property.valueType);
         }
-        return wireNames;
+        return propertyTypes;
+    }
+
+    /**
+     * Structural equality for two type references. Used to confirm a variant's property is a
+     * genuine duplicate of a union base property (same wire name AND same type) before suppressing
+     * it — a same-named but differently-typed field is left untouched.
+     */
+    private typeReferencesEqual(a: TypeReference, b: TypeReference): boolean {
+        return JSON.stringify(a) === JSON.stringify(b);
+    }
+
+    /**
+     * Scans every type declaration once, recording for each typeId which unions reference it as a
+     * `samePropertiesAsObject` variant, and whether it is referenced in any non-variant position.
+     * See {@link _typeReferenceInfo}.
+     */
+    private buildTypeReferenceInfo(): { variantReferrers: Map<TypeId, Set<TypeId>>; nonVariantReferenced: Set<TypeId> } {
+        if (this._typeReferenceInfo != null) {
+            return this._typeReferenceInfo;
+        }
+        const variantReferrers = new Map<TypeId, Set<TypeId>>();
+        const nonVariantReferenced = new Set<TypeId>();
+        const addVariantReferrer = (variantTypeId: TypeId, unionTypeId: TypeId): void => {
+            const referrers = variantReferrers.get(variantTypeId) ?? new Set<TypeId>();
+            referrers.add(unionTypeId);
+            variantReferrers.set(variantTypeId, referrers);
+        };
+        const addNonVariant = (typeRef: TypeReference): void => {
+            for (const referencedTypeId of this.extractNamedTypeIdsFromTypeReference(typeRef)) {
+                nonVariantReferenced.add(referencedTypeId);
+            }
+        };
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            typeDeclaration.shape._visit({
+                alias: (alias) => addNonVariant(alias.aliasOf),
+                enum: () => undefined,
+                object: (object) => {
+                    // A type used as an `extends` parent is consumed outside any union variant.
+                    for (const extended of object.extends) {
+                        nonVariantReferenced.add(extended.typeId);
+                    }
+                    for (const property of [...object.properties, ...(object.extendedProperties ?? [])]) {
+                        addNonVariant(property.valueType);
+                    }
+                },
+                union: (union) => {
+                    for (const extended of union.extends) {
+                        nonVariantReferenced.add(extended.typeId);
+                    }
+                    for (const baseProperty of union.baseProperties) {
+                        addNonVariant(baseProperty.valueType);
+                    }
+                    for (const unionType of union.types) {
+                        unionType.shape._visit({
+                            samePropertiesAsObject: (declaredTypeName) =>
+                                addVariantReferrer(declaredTypeName.typeId, typeId),
+                            singleProperty: (singleProperty) => addNonVariant(singleProperty.type),
+                            noProperties: () => undefined,
+                            _other: () => undefined
+                        });
+                    }
+                },
+                undiscriminatedUnion: (undiscriminatedUnion) => {
+                    for (const member of undiscriminatedUnion.members) {
+                        addNonVariant(member.type);
+                    }
+                },
+                _other: () => undefined
+            });
+        }
+        this._typeReferenceInfo = { variantReferrers, nonVariantReferenced };
+        return this._typeReferenceInfo;
     }
 
     private buildUnionVariantBasePropertyOmissions(): Map<TypeId, Set<string>> {
         if (this._unionVariantBasePropertyOmissions != null) {
             return this._unionVariantBasePropertyOmissions;
         }
+        const { variantReferrers, nonVariantReferenced } = this.buildTypeReferenceInfo();
+
+        // Base properties, keyed by wire name, for every discriminated union that declares any.
+        const unionBaseProperties = new Map<TypeId, Map<string, TypeReference>>();
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            if (typeDeclaration.shape.type !== "union" || typeDeclaration.shape.baseProperties.length === 0) {
+                continue;
+            }
+            const byWireName = new Map<string, TypeReference>();
+            for (const baseProperty of typeDeclaration.shape.baseProperties) {
+                byWireName.set(getWireValue(baseProperty.name), baseProperty.valueType);
+            }
+            unionBaseProperties.set(typeId, byWireName);
+        }
+
         const omissions = new Map<TypeId, Set<string>>();
-        for (const typeDeclaration of Object.values(this.ir.types)) {
-            if (typeDeclaration.shape.type !== "union") {
+        for (const [variantTypeId, owningUnionTypeIds] of variantReferrers) {
+            // Never touch a variant object that is also used outside a union variant (standalone,
+            // an `extends` parent, an undiscriminated-union member, etc.) — dropping fields there
+            // would remove data the other usage needs.
+            if (nonVariantReferenced.has(variantTypeId)) {
                 continue;
             }
-            const baseProperties = typeDeclaration.shape.baseProperties;
-            if (baseProperties.length === 0) {
+            const declaredPropertyTypes = this.getDeclaredPropertyTypes(variantTypeId);
+            if (declaredPropertyTypes.size === 0) {
                 continue;
             }
-            const baseWireNames = new Set(baseProperties.map((property) => getWireValue(property.name)));
-            for (const unionType of typeDeclaration.shape.types) {
-                // Only object-backed variants (`samePropertiesAsObject`) render the base
-                // properties as their own fields; `singleProperty`/`noProperties` variants
-                // carry no such duplication.
-                if (unionType.shape.propertiesType !== "samePropertiesAsObject") {
-                    continue;
+            // A property is safe to drop only if EVERY union that carries this variant declares it
+            // as a base property with the same type. Otherwise some envelope would be missing the
+            // field and rely on the leaf to carry it. A same-named field with a different type is a
+            // distinct property and is likewise preserved.
+            const overlap = new Set<string>();
+            for (const [wireName, declaredType] of declaredPropertyTypes) {
+                const ownedByEveryUnion = [...owningUnionTypeIds].every((unionTypeId) => {
+                    const baseType = unionBaseProperties.get(unionTypeId)?.get(wireName);
+                    return baseType != null && this.typeReferencesEqual(baseType, declaredType);
+                });
+                if (ownedByEveryUnion) {
+                    overlap.add(wireName);
                 }
-                // Only suppress base properties the variant object actually declares (directly or
-                // via `extends`). A union may declare base properties that a given variant does not
-                // carry — those must not be touched, so unrelated variant objects are unaffected.
-                const declaredWireNames = this.getDeclaredPropertyWireNames(unionType.shape.typeId);
-                const overlap = new Set<string>();
-                for (const wireName of baseWireNames) {
-                    if (declaredWireNames.has(wireName)) {
-                        overlap.add(wireName);
-                    }
-                }
-                if (overlap.size === 0) {
-                    continue;
-                }
-                const existing = omissions.get(unionType.shape.typeId);
-                if (existing == null) {
-                    omissions.set(unionType.shape.typeId, overlap);
-                } else {
-                    for (const wireName of overlap) {
-                        existing.add(wireName);
-                    }
-                }
+            }
+            if (overlap.size > 0) {
+                omissions.set(variantTypeId, overlap);
             }
         }
         this._unionVariantBasePropertyOmissions = omissions;

@@ -154,7 +154,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamXFernStreamingUnionStreamAsync(\n    new StreamXFernStreamingUnionStreamRequest(\n        new StreamXFernStreamingUnionStreamRequest.Message(\n            new UnionStreamMessageVariant { Prompt = \"prompt\", Message = \"message\" }\n        )\n    )\n    {\n        StreamResponse = true,\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamXFernStreamingUnionStreamAsync(\n    new StreamXFernStreamingUnionStreamRequest(\n        new StreamXFernStreamingUnionStreamRequest.Message(\n            new UnionStreamMessageVariant\n            {\n                Prompt = \"prompt\",\n                Message = \"message\",\n                StreamResponse = true,\n            }\n        )\n    )\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         },
         {
@@ -166,7 +166,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.StreamXFernStreamingUnionAsync(\n    new StreamXFernStreamingUnionRequest(\n        new StreamXFernStreamingUnionRequest.Message(\n            new UnionStreamMessageVariant { Prompt = \"prompt\", Message = \"message\" }\n        )\n    )\n    {\n        StreamResponse = false,\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.StreamXFernStreamingUnionAsync(\n    new StreamXFernStreamingUnionRequest(\n        new StreamXFernStreamingUnionRequest.Message(\n            new UnionStreamMessageVariant\n            {\n                Prompt = \"prompt\",\n                Message = \"message\",\n                StreamResponse = false,\n            }\n        )\n    )\n);\n"
             }
         },
         {

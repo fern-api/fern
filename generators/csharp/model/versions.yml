@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.10.1
+  changelogEntry:
+    - summary: |
+        Suppress a discriminated union's base properties on its `samePropertiesAsObject` variant
+        objects when the variant duplicates them, so common fields are owned solely by the union
+        envelope. Only applies when the variant object is used exclusively as a variant of unions
+        that all declare the property with a matching type; standalone or shared variant objects
+        keep all of their fields.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
 - version: 0.10.0
   changelogEntry:
     - summary: |

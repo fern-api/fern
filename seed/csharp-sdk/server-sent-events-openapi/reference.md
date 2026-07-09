@@ -697,12 +697,14 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 client.StreamXFernStreamingUnionStreamAsync(
     new StreamXFernStreamingUnionStreamRequest(
         new StreamXFernStreamingUnionStreamRequest.Message(
-            new UnionStreamMessageVariant { Prompt = "prompt", Message = "message" }
+            new UnionStreamMessageVariant
+            {
+                Prompt = "prompt",
+                Message = "message",
+                StreamResponse = true,
+            }
         )
     )
-    {
-        StreamResponse = true,
-    }
 );
 ```
 </dd>
@@ -760,12 +762,14 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 await client.StreamXFernStreamingUnionAsync(
     new StreamXFernStreamingUnionRequest(
         new StreamXFernStreamingUnionRequest.Message(
-            new UnionStreamMessageVariant { Prompt = "prompt", Message = "message" }
+            new UnionStreamMessageVariant
+            {
+                Prompt = "prompt",
+                Message = "message",
+                StreamResponse = false,
+            }
         )
     )
-    {
-        StreamResponse = false,
-    }
 );
 ```
 </dd>
