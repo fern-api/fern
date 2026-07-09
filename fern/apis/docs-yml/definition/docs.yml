@@ -722,10 +722,24 @@ types:
         value: stable
       - name: GenerallyAvailable
         value: generally-available
+      - name: ReleaseCandidate
+        value: release-candidate
+      - name: PublicBeta
+        value: public-beta
+      - name: PrivateBeta
+        value: private-beta
+      - name: LimitedAvailability
+        value: limited-availability
+      - name: CanaryRelease
+        value: canary-release
       - name: InDevelopment
         value: in-development
       - name: PreRelease
         value: pre-release
+      - name: Experimental
+        value: experimental
+      - name: Internal
+        value: internal
       - name: Deprecated
         value: deprecated
       - name: Beta
@@ -734,6 +748,10 @@ types:
         value: alpha
       - name: Preview
         value: preview
+      - name: Sunset
+        value: sunset
+      - name: Retired
+        value: retired
       - name: Legacy
         value: legacy
 

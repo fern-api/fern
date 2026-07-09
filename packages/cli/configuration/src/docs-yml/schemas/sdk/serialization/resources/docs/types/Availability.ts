@@ -8,12 +8,21 @@ export const Availability: core.serialization.Schema<serializers.Availability.Ra
     core.serialization.enum_([
         "stable",
         "generally-available",
+        "release-candidate",
+        "public-beta",
+        "private-beta",
+        "limited-availability",
+        "canary-release",
         "in-development",
         "pre-release",
+        "experimental",
+        "internal",
         "deprecated",
         "beta",
         "alpha",
         "preview",
+        "sunset",
+        "retired",
         "legacy",
     ]);
 
@@ -21,11 +30,20 @@ export declare namespace Availability {
     export type Raw =
         | "stable"
         | "generally-available"
+        | "release-candidate"
+        | "public-beta"
+        | "private-beta"
+        | "limited-availability"
+        | "canary-release"
         | "in-development"
         | "pre-release"
+        | "experimental"
+        | "internal"
         | "deprecated"
         | "beta"
         | "alpha"
         | "preview"
+        | "sunset"
+        | "retired"
         | "legacy";
 }

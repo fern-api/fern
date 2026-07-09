@@ -13,10 +13,24 @@ export function convertDocsAvailability(
             return FernNavigation.V1.NavigationV1Availability.Stable;
         case "generally-available":
             return FernNavigation.V1.NavigationV1Availability.GenerallyAvailable;
+        case "release-candidate":
+            return FernNavigation.V1.NavigationV1Availability.ReleaseCandidate;
+        case "public-beta":
+            return FernNavigation.V1.NavigationV1Availability.PublicBeta;
+        case "private-beta":
+            return FernNavigation.V1.NavigationV1Availability.PrivateBeta;
+        case "limited-availability":
+            return FernNavigation.V1.NavigationV1Availability.LimitedAvailability;
+        case "canary-release":
+            return FernNavigation.V1.NavigationV1Availability.CanaryRelease;
         case "in-development":
             return FernNavigation.V1.NavigationV1Availability.InDevelopment;
         case "pre-release":
             return FernNavigation.V1.NavigationV1Availability.PreRelease;
+        case "experimental":
+            return FernNavigation.V1.NavigationV1Availability.Experimental;
+        case "internal":
+            return FernNavigation.V1.NavigationV1Availability.Internal;
         case "deprecated":
             return FernNavigation.V1.NavigationV1Availability.Deprecated;
         case "beta":
@@ -25,6 +39,10 @@ export function convertDocsAvailability(
             return FernNavigation.V1.NavigationV1Availability.Alpha;
         case "preview":
             return FernNavigation.V1.NavigationV1Availability.Preview;
+        case "sunset":
+            return FernNavigation.V1.NavigationV1Availability.Sunset;
+        case "retired":
+            return FernNavigation.V1.NavigationV1Availability.Retired;
         case "legacy":
             return FernNavigation.V1.NavigationV1Availability.Legacy;
         default:

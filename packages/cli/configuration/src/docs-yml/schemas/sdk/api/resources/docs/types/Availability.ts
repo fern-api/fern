@@ -3,12 +3,21 @@
 export const Availability = {
     Stable: "stable",
     GenerallyAvailable: "generally-available",
+    ReleaseCandidate: "release-candidate",
+    PublicBeta: "public-beta",
+    PrivateBeta: "private-beta",
+    LimitedAvailability: "limited-availability",
+    CanaryRelease: "canary-release",
     InDevelopment: "in-development",
     PreRelease: "pre-release",
+    Experimental: "experimental",
+    Internal: "internal",
     Deprecated: "deprecated",
     Beta: "beta",
     Alpha: "alpha",
     Preview: "preview",
+    Sunset: "sunset",
+    Retired: "retired",
     Legacy: "legacy",
 } as const;
 export type Availability = (typeof Availability)[keyof typeof Availability];

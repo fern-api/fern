@@ -1,0 +1,6 @@
+- summary: |
+    Expand the docs.yml `availability` setting to support the full set of lifecycle
+    values (e.g. `release-candidate`, `public-beta`, `private-beta`,
+    `limited-availability`, `canary-release`, `experimental`, `internal`, `sunset`,
+    `retired`), which render as availability badges in the documentation navigation.
+  type: feat
