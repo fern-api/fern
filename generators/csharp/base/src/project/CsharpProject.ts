@@ -1176,5 +1176,8 @@ const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
  * Extend this list as more packages become in-box in future .NET versions.
  */
 const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
-    { name: "System.Text.Json", version: "9.0.9" }
+    { name: "System.Text.Json", version: "9.0.9" },
+    // Provides System.Runtime.InteropServices.RuntimeInformation (used for the
+    // X-Fern-Runtime-Version / X-Fern-Platform headers) on legacy TFMs; in-box on net8.0+.
+    { name: "System.Runtime.InteropServices.RuntimeInformation", version: "4.3.0" }
 ];
