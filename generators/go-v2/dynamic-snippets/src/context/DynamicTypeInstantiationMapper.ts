@@ -393,7 +393,13 @@ export class DynamicTypeInstantiationMapper {
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const baseFields = this.getBaseFields({
             discriminatedUnionTypeInstance,
-            singleDiscriminatedUnionType: unionVariant
+            singleDiscriminatedUnionType: unionVariant,
+            // When `dedupeUnionBaseProperties` removes a base property from the union's top-level
+            // fields (exposing it through a discriminant-switching getter instead), that field no
+            // longer exists on the struct, so setting it at the union root would fail to compile.
+            // Those base properties are always carried by the variant's own object, so the value is
+            // still present in the snippet. See getDedupedBasePropertyWireValues.
+            excludeWireValues: this.getDedupedBasePropertyWireValues(discriminatedUnion)
         });
         switch (unionVariant.type) {
             case "samePropertiesAsObject": {
@@ -410,18 +416,7 @@ export class DynamicTypeInstantiationMapper {
                             name: this.context.getFieldName(unionVariant.discriminantValue.name),
                             value: this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })
                         },
-                        // When `dedupeUnionBaseProperties` is enabled, the Go model no longer declares
-                        // top-level fields for base properties that every variant already carries — it
-                        // exposes them through discriminant-switching getters instead (see the Go model
-                        // generator's unionInheritedBasePropertyNames). Emitting them at the union root
-                        // here would reference fields that no longer exist and fail to compile. A
-                        // `samePropertiesAsObject` variant's own object already carries every base
-                        // property (set by `convertNamed` above), so dropping the redundant root copy
-                        // is safe: on marshal the Go model reads a samePropertiesAsObject variant from
-                        // the variant itself, not the top-level copy. Left as-is when the flag is off to
-                        // preserve the existing generated surface. The singleProperty/noProperties cases
-                        // below always keep the base fields because those variants do not carry them.
-                        ...(this.context.customConfig?.dedupeUnionBaseProperties ? [] : baseFields)
+                        ...baseFields
                     ]
                 });
             }
@@ -468,19 +463,25 @@ export class DynamicTypeInstantiationMapper {
 
     private getBaseFields({
         discriminatedUnionTypeInstance,
-        singleDiscriminatedUnionType
+        singleDiscriminatedUnionType,
+        excludeWireValues
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
+        // Base properties whose top-level struct field has been removed by
+        // `dedupeUnionBaseProperties`; setting them at the union root would not compile.
+        excludeWireValues?: Set<string>;
     }): go.StructField[] {
-        const properties = this.context.associateByWireValue({
-            parameters: singleDiscriminatedUnionType.properties ?? [],
-            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
+        const properties = this.context
+            .associateByWireValue({
+                parameters: singleDiscriminatedUnionType.properties ?? [],
+                values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
 
-            // We're only selecting the base properties here. The rest of the properties
-            // are handled by the union variant.
-            ignoreMissingParameters: true
-        });
+                // We're only selecting the base properties here. The rest of the properties
+                // are handled by the union variant.
+                ignoreMissingParameters: true
+            })
+            .filter((property) => !(excludeWireValues?.has(property.name.wireValue) ?? false));
         return properties.map((property) => {
             this.context.errors.scope(property.name.wireValue);
             try {
@@ -492,6 +493,66 @@ export class DynamicTypeInstantiationMapper {
                 this.context.errors.unscope();
             }
         });
+    }
+
+    /**
+     * Returns the wire values of the union base properties that the Go model generator drops as
+     * top-level struct fields when `dedupeUnionBaseProperties` is enabled — mirroring the model's
+     * `unionInheritedBasePropertyNames`. A base property is deduped only when every variant is a
+     * `samePropertiesAsObject` variant whose object declares that same property; in that case the
+     * value is carried by the variant object and the top-level field is replaced by a
+     * discriminant-switching getter. Base properties that a variant does not carry (e.g. explicit
+     * union `base-properties` that live only on the union) keep their top-level field and must still
+     * be set at the union root, so they are excluded from the result.
+     */
+    private getDedupedBasePropertyWireValues(
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType
+    ): Set<string> {
+        if (!this.context.customConfig?.dedupeUnionBaseProperties) {
+            return new Set();
+        }
+        const variants = Object.values(discriminatedUnion.types);
+        if (variants.length === 0 || !variants.every((variant) => variant.type === "samePropertiesAsObject")) {
+            return new Set();
+        }
+        // Base properties are the same across variants; take them from the first variant.
+        const baseWireValues = (variants[0]?.properties ?? []).map((property) => property.name.wireValue);
+        if (baseWireValues.length === 0) {
+            return new Set();
+        }
+        const declaredByEveryVariant = variants.map((variant) =>
+            this.getObjectDeclaredPropertyWireValues(variant.typeId)
+        );
+        return new Set(
+            baseWireValues.filter((wireValue) => declaredByEveryVariant.every((declared) => declared.has(wireValue)))
+        );
+    }
+
+    /**
+     * Collects the wire values of every property declared by the object with the given type id,
+     * following its `extends` chain (matching the model's inherited-property resolution).
+     */
+    private getObjectDeclaredPropertyWireValues(typeId: FernIr.dynamic.TypeId): Set<string> {
+        const wireValues = new Set<string>();
+        const visited = new Set<string>();
+        const collect = (id: FernIr.dynamic.TypeId): void => {
+            if (visited.has(id)) {
+                return;
+            }
+            visited.add(id);
+            const named = this.context.resolveNamedType({ typeId: id });
+            if (named?.type !== "object") {
+                return;
+            }
+            for (const property of named.properties) {
+                wireValues.add(property.name.wireValue);
+            }
+            for (const extended of named.extends ?? []) {
+                collect(extended);
+            }
+        };
+        collect(typeId);
+        return wireValues;
     }
 
     private convertObject({
