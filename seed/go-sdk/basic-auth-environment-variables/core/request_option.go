@@ -6,6 +6,7 @@ import (
 	base64 "encoding/base64"
 	http "net/http"
 	url "net/url"
+	runtime "runtime"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -64,6 +65,9 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers.Set("X-Fern-SDK-Name", "github.com/basic-auth-environment-variables/fern")
 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
 	headers.Set("User-Agent", "github.com/basic-auth-environment-variables/fern/0.0.1")
+	headers.Set("X-Fern-Runtime", "go")
+	headers.Set("X-Fern-Runtime-Version", runtime.Version())
+	headers.Set("X-Fern-Platform", runtime.GOOS)
 	return headers
 }
 

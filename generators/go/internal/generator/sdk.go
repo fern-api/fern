@@ -17,6 +17,14 @@ import (
 // goLanguageHeader is the identifier used for the X-Fern-Language platform header.
 const goLanguageHeader = "Go"
 
+// Platform observability headers reported by generated SDKs.
+const (
+	runtimeHeader        = "X-Fern-Runtime"
+	runtimeValue         = "go"
+	runtimeVersionHeader = "X-Fern-Runtime-Version"
+	platformHeader       = "X-Fern-Platform"
+)
+
 var (
 	//go:embed sdk/core/api_error.go
 	apiErrorFile string
@@ -637,6 +645,10 @@ func (f *fileWriter) writePlatformHeaders(
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
 			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
 		}
+		runtimePackage := f.scope.AddImport("runtime")
+		f.P(fmt.Sprintf("headers.Set(%q, %q)", runtimeHeader, runtimeValue))
+		f.P(fmt.Sprintf("headers.Set(%q, %s.Version())", runtimeVersionHeader, runtimePackage))
+		f.P(fmt.Sprintf("headers.Set(%q, %s.GOOS)", platformHeader, runtimePackage))
 		f.P("return headers")
 		f.P("}")
 	}
