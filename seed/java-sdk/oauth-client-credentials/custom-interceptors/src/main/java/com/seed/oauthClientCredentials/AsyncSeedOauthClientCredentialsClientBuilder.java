@@ -299,6 +299,11 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
             return this;
         }
 
+        public _CredentialsAuth scope(String scope) {
+            this.scope = Optional.ofNullable(scope);
+            return this;
+        }
+
         @Override
         public AsyncSeedOauthClientCredentialsClient build() {
             validateConfiguration();

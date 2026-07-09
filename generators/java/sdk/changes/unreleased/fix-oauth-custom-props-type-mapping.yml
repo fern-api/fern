@@ -7,4 +7,9 @@
     typed setter, breaking compilation of the entire SDK. The generated custom
     property fields, constructor parameters, client-builder setters, and request
     builder calls now use the property's real type.
+
+    To preserve backward compatibility, any get-token custom property whose real
+    type is `Optional<X>` also gets an unwrapped setter overload accepting `X`
+    directly (mirroring the request model's convenience setters), so existing
+    callers such as `.scope("value")` continue to compile unchanged.
   type: fix

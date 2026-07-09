@@ -288,8 +288,18 @@ public class SeedOauthClientCredentialsClientBuilder {
             return this;
         }
 
+        public _CredentialsAuth scope(String scope) {
+            this.scope = Optional.ofNullable(scope);
+            return this;
+        }
+
         public _CredentialsAuth permissions(Optional<List<String>> permissions) {
             this.permissions = permissions;
+            return this;
+        }
+
+        public _CredentialsAuth permissions(List<String> permissions) {
+            this.permissions = Optional.ofNullable(permissions);
             return this;
         }
 

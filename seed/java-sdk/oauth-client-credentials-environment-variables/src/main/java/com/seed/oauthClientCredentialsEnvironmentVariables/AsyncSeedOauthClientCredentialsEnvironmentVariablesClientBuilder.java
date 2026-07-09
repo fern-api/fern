@@ -272,6 +272,11 @@ public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
             return this;
         }
 
+        public _CredentialsAuth scope(String scope) {
+            this.scope = Optional.ofNullable(scope);
+            return this;
+        }
+
         @Override
         public AsyncSeedOauthClientCredentialsEnvironmentVariablesClient build() {
             validateConfiguration();

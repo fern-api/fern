@@ -1933,6 +1933,28 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .addStatement("this.$L = $L", customProp.name, customProp.name)
                             .addStatement("return this")
                             .build());
+
+                    // For an Optional<X> property, also expose an unwrapped setter accepting X directly, so
+                    // existing callers (e.g. .scope("value")) keep compiling. Mirrors the convenience overloads
+                    // the request model generates for optional fields.
+                    if (customProp.type instanceof ParameterizedTypeName) {
+                        ParameterizedTypeName parameterizedPropType = (ParameterizedTypeName) customProp.type;
+                        if (parameterizedPropType.rawType.equals(ClassName.get(Optional.class))
+                                && parameterizedPropType.typeArguments.size() == 1) {
+                            TypeName unwrappedType = parameterizedPropType.typeArguments.get(0);
+                            credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(customProp.name)
+                                    .addModifiers(Modifier.PUBLIC)
+                                    .addParameter(unwrappedType, customProp.name)
+                                    .returns(credentialsAuthClassName)
+                                    .addStatement(
+                                            "this.$L = $T.ofNullable($L)",
+                                            customProp.name,
+                                            Optional.class,
+                                            customProp.name)
+                                    .addStatement("return this")
+                                    .build());
+                        }
+                    }
                 }
 
                 // Constructor
@@ -2455,6 +2477,30 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         environmentVariable.get().get());
             }
             clientBuilder.addMethod(setter.build());
+
+            // For an Optional<X> property, also expose an unwrapped setter accepting X directly, so
+            // existing callers (e.g. .scope("value")) keep compiling. Mirrors the convenience overloads
+            // the request model generates for optional fields.
+            if (fieldType instanceof ParameterizedTypeName) {
+                ParameterizedTypeName parameterizedFieldType = (ParameterizedTypeName) fieldType;
+                if (parameterizedFieldType.rawType.equals(ClassName.get(Optional.class))
+                        && parameterizedFieldType.typeArguments.size() == 1) {
+                    TypeName unwrappedType = parameterizedFieldType.typeArguments.get(0);
+                    MethodSpec.Builder unwrappedSetter = MethodSpec.methodBuilder(fieldName)
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(unwrappedType, fieldName)
+                            .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                            .addJavadoc("Sets $L", fieldName)
+                            .addStatement("this.$L = $T.ofNullable($L)", fieldName, Optional.class, fieldName)
+                            .addStatement(isExtensible ? "return self()" : "return this");
+                    if (environmentVariable.isPresent()) {
+                        unwrappedSetter.addJavadoc(
+                                ".\nDefaults to the $L environment variable.",
+                                environmentVariable.get().get());
+                    }
+                    clientBuilder.addMethod(unwrappedSetter.build());
+                }
+            }
         }
 
         private void createTokenOverrideSetter(String fieldName) {
