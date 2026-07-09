@@ -49,11 +49,12 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain("id-token: write");
     });
 
-    it("uses npx npm@latest publish wrapper instead of bare npm publish", async () => {
+    it("uses a bare npm publish wrapper on a pinned Node toolchain (no npm@latest)", async () => {
         const yaml = await emitAndRead(baseInfo);
 
-        expect(yaml).toContain('npx -y npm@latest publish "$@"');
-        expect(yaml).not.toMatch(/^\s+npm publish/m);
+        expect(yaml).toContain('npm publish "$@"');
+        expect(yaml).not.toContain("npm@latest");
+        expect(yaml).toContain('node-version: "lts/Krypton"');
     });
 
     it("includes backport detection for stable releases", async () => {

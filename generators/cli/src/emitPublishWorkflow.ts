@@ -225,6 +225,7 @@ ${matrixIncludes}
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
+          node-version: "lts/Krypton"
           registry-url: "${npmPublishInfo.registryUrl}"
 
       - name: Install musl build tools
@@ -285,8 +286,8 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
-          publish() {  # use latest npm to ensure OIDC support
-            npx -y npm@latest publish "\$@"
+          publish() {
+            npm publish "\$@"
           }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
@@ -319,6 +320,7 @@ ${matrixIncludes}
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
+          node-version: "lts/Krypton"
           registry-url: "${npmPublishInfo.registryUrl}"
 
       - name: Publish launcher package${tokenEnvBlock}
@@ -393,8 +395,8 @@ ${launcherPlatformEntries}
           LAUNCHER
 
           cd "\${PKG_DIR}"
-          publish() {  # use latest npm to ensure OIDC support
-            npx -y npm@latest publish "\$@"
+          publish() {
+            npm publish "\$@"
           }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
