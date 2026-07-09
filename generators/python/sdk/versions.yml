@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.17.1
+  changelogEntry:
+    - summary: |
+        Generated code snippets (README, OAuth token override examples) now use
+        the custom bearer token parameter name from the API spec (e.g. `api_key`)
+        instead of always using the default `token`.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.17.0
+  changelogEntry:
+    - summary: |
+        Add a `timeout` config option as an alias for `timeout_in_seconds`. Both keys
+        are in seconds and `timeout_in_seconds` continues to work, with `timeout`
+        taking precedence when both are set.
+      type: feat
+    - summary: |
+        Add a `timeout` key to the generated SDK's `RequestOptions` as an alias for the
+        per-request `timeout_in_seconds`. Both are in seconds; `timeout_in_seconds` keeps
+        working, with `timeout` taking precedence when both are provided.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 5.16.1
   changelogEntry:
     - summary: |

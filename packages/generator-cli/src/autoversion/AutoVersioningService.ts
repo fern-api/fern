@@ -614,7 +614,9 @@ export class AutoVersioningService {
             }
         }
 
-        let processedContent = this.removeVersionChangePairs(contentLines, mappedMagicVersion);
+        let processedContent = this.removeGoModulePathSuffixPairs(contentLines);
+
+        processedContent = this.removeVersionChangePairs(processedContent, mappedMagicVersion);
 
         processedContent = this.removeRemainingMagicVersionLines(processedContent, mappedMagicVersion);
 
@@ -786,33 +788,96 @@ export class AutoVersioningService {
      * so non-Go diffs like API URL version changes are not affected.
      */
     private isGoModulePathSuffixChange(minusLine: string, plusLine: string): boolean {
-        const minusContent = minusLine.substring(1);
-        const plusContent = plusLine.substring(1);
+        const minus = this.analyzeGoModulePathLine(minusLine);
+        const plus = this.analyzeGoModulePathLine(plusLine);
+        if (minus == null || plus == null) {
+            return false;
+        }
+        if (minus.strippedContent !== plus.strippedContent) {
+            return false;
+        }
+        // At least one line must actually contain a /vN suffix for this to be a suffix change
+        return minus.hasSuffix || plus.hasSuffix;
+    }
 
-        // Only apply to lines containing quoted Go module paths or go.mod module directives
+    /**
+     * Removes Go module path `/vN` suffix-only churn from a diff section, regardless of how the
+     * deletion and addition lines are laid out. `removeVersionChangePairs` only removes a deletion
+     * when it can pair it with a *nearby* addition and keeps every line in between — so a diff that
+     * groups all deletions before all additions (as Go import blocks do) leaks the suffix churn for
+     * every line except the first. That churn then reaches the AI diff analyzer, which sees the
+     * previously published `/vN` module path changing on every import and misclassifies a
+     * no-op regeneration as a breaking change (spurious major bump).
+     *
+     * This pass matches each suffix-bearing deletion with any suffix-only-equivalent addition in
+     * the section (by suffix-stripped content) and drops both, so only genuine content changes to
+     * Go module path lines survive.
+     */
+    private removeGoModulePathSuffixPairs(lines: string[]): string[] {
+        const additions: { index: number; strippedContent: string }[] = [];
+        for (let index = 0; index < lines.length; index++) {
+            const line = lines[index];
+            if (line == null || !this.isAdditionLine(line)) {
+                continue;
+            }
+            const info = this.analyzeGoModulePathLine(line);
+            if (info != null) {
+                additions.push({ index, strippedContent: info.strippedContent });
+            }
+        }
+
+        const removed = new Set<number>();
+        const usedAdditions = new Set<number>();
+        for (let index = 0; index < lines.length; index++) {
+            const line = lines[index];
+            if (line == null || !this.isDeletionLine(line)) {
+                continue;
+            }
+            const info = this.analyzeGoModulePathLine(line);
+            if (info == null || !info.hasSuffix) {
+                continue;
+            }
+            const match = additions.find(
+                (addition) => !usedAdditions.has(addition.index) && addition.strippedContent === info.strippedContent
+            );
+            if (match != null) {
+                usedAdditions.add(match.index);
+                removed.add(index);
+                removed.add(match.index);
+            }
+        }
+
+        if (removed.size === 0) {
+            return lines;
+        }
+        return lines.filter((_, index) => !removed.has(index));
+    }
+
+    /**
+     * If a diff line (with its leading +/- stripped) references a Go module path — either a quoted
+     * import path or a `module` directive — returns its content with any `/vN` module-version
+     * suffixes removed, plus whether a suffix was present. Returns undefined for non-Go lines so
+     * unrelated diffs (e.g. API URL version segments) are never touched.
+     */
+    private analyzeGoModulePathLine(line: string): { strippedContent: string; hasSuffix: boolean } | undefined {
+        const content = line.substring(1);
+
         const goModulePathPattern = /"[^"]*(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/[^"]*"/;
         const goModuleDirectivePattern = /^\s*module\s+(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/\S+/;
-        const hasGoModulePath =
-            goModulePathPattern.test(minusContent) ||
-            goModulePathPattern.test(plusContent) ||
-            goModuleDirectivePattern.test(minusContent.trim()) ||
-            goModuleDirectivePattern.test(plusContent.trim());
-        if (!hasGoModulePath) {
-            return false;
+        const isGoModulePathLine = goModulePathPattern.test(content) || goModuleDirectivePattern.test(content.trim());
+        if (!isGoModulePathLine) {
+            return undefined;
         }
 
-        // Only strip /vN when it appears as a Go module version suffix
-        // (followed by / or end of quoted string or end of line)
-        const suffixPattern = /\/v\d+(?=\/|"\s*$|$)/g;
-        const minusWithoutSuffix = minusContent.replace(suffixPattern, "");
-        const plusWithoutSuffix = plusContent.replace(suffixPattern, "");
-
-        if (minusWithoutSuffix !== plusWithoutSuffix) {
-            return false;
-        }
-
-        // At least one line must actually contain a /vN suffix for this to be a suffix change
-        return /\/v\d+(?=\/|"\s*$|$)/.test(minusContent) || /\/v\d+(?=\/|"\s*$|$)/.test(plusContent);
+        // Only strip /vN when it appears as a Go module version suffix: followed by a path
+        // separator (`/v4/core`), a closing quote (the module path may be embedded mid-line,
+        // e.g. the `X-Fern-SDK-Name` header value `"github.com/org/sdk/v4"`), or end of line
+        // (the bare `module` directive).
+        const suffixPattern = /\/v\d+(?=\/|"|$)/g;
+        return {
+            strippedContent: content.replace(suffixPattern, ""),
+            hasSuffix: suffixPattern.test(content)
+        };
     }
 
     /**

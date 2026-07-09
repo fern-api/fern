@@ -81,10 +81,13 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
         FieldSpec authClientField = FieldSpec.builder(
                         authClientClassName, "authClient", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
-        FieldSpec accessTokenField =
-                FieldSpec.builder(String.class, "accessToken", Modifier.PRIVATE).build();
-        FieldSpec expiresAtField =
-                FieldSpec.builder(Instant.class, "expiresAt", Modifier.PRIVATE).build();
+        // accessToken/expiresAt are volatile: getToken() reads them on a lock-free fast path (outside
+        // refreshLock), so the writes made under the lock in refresh() must be safely published to other
+        // threads. Without volatile the double-checked locking below is the classic broken-DCL idiom.
+        FieldSpec accessTokenField = FieldSpec.builder(String.class, "accessToken", Modifier.PRIVATE, Modifier.VOLATILE)
+                .build();
+        FieldSpec expiresAtField = FieldSpec.builder(Instant.class, "expiresAt", Modifier.PRIVATE, Modifier.VOLATILE)
+                .build();
         FieldSpec refreshLockField = FieldSpec.builder(Object.class, "refreshLock", Modifier.PRIVATE, Modifier.FINAL)
                 .initializer("new Object()")
                 .build();

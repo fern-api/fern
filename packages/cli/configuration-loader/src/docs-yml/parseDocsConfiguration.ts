@@ -1644,17 +1644,11 @@ function parseLibrariesConfiguration(
     }
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
-        if (!isGitLibraryInput(config.input)) {
-            throw new CliError({
-                message: `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`,
-                code: CliError.Code.ConfigError
-            });
-        }
+        const input: docsYml.ParsedLibraryInputConfiguration = isGitLibraryInput(config.input)
+            ? { type: "git", git: config.input.git, subpath: config.input.subpath }
+            : { type: "path", path: config.input.path };
         result[name] = {
-            input: {
-                git: config.input.git,
-                subpath: config.input.subpath
-            },
+            input,
             output: {
                 path: config.output.path
             },

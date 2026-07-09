@@ -26,7 +26,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         response: GeneratedEndpointResponse;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeout: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -45,7 +45,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
-    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly defaultTimeout: number | "infinity" | undefined;
     private readonly request: GeneratedEndpointRequest;
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -59,7 +59,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
         response,
-        defaultTimeoutInSeconds,
+        defaultTimeout,
         request,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -72,7 +72,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.response = response;
-        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.defaultTimeout = defaultTimeout;
         this.request = request;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -295,7 +295,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             url: this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
-                defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+                defaultTimeout: this.defaultTimeout,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                     this.generatedSdkClientClass
                 ),

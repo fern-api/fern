@@ -23,9 +23,11 @@ public final class InferredAuthTokenSupplier implements Supplier<Map<String, Str
 
     private final AuthClient authClient;
 
-    private Map<String, String> cachedHeaders;
+    private final Object tokenLock = new Object();
 
-    private Instant expiresAt;
+    private volatile Map<String, String> cachedHeaders;
+
+    private volatile Instant expiresAt;
 
     public InferredAuthTokenSupplier(String clientId, String clientSecret, String scope, AuthClient authClient) {
         this.clientId = clientId;
@@ -46,14 +48,21 @@ public final class InferredAuthTokenSupplier implements Supplier<Map<String, Str
 
     @java.lang.Override
     public Map<String, String> get() {
-        if (cachedHeaders == null || expiresAt.isBefore(Instant.now())) {
-            TokenResponse tokenResponse = fetchToken();
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Authorization", "Bearer " + tokenResponse.getAccessToken());
-            this.cachedHeaders = headers;
-            this.expiresAt = getExpiresAt(tokenResponse.getExpiresIn());
+        Map<String, String> cachedHeadersSnapshot = this.cachedHeaders;
+        Instant cachedExpiresAt = this.expiresAt;
+        if (cachedHeadersSnapshot != null && cachedExpiresAt != null && !cachedExpiresAt.isBefore(Instant.now())) {
+            return cachedHeadersSnapshot;
         }
-        return cachedHeaders;
+        synchronized (tokenLock) {
+            if (cachedHeaders == null || expiresAt.isBefore(Instant.now())) {
+                TokenResponse tokenResponse = fetchToken();
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + tokenResponse.getAccessToken());
+                this.cachedHeaders = headers;
+                this.expiresAt = getExpiresAt(tokenResponse.getExpiresIn());
+            }
+            return cachedHeaders;
+        }
     }
 
     private Instant getExpiresAt(long expiresInSeconds) {

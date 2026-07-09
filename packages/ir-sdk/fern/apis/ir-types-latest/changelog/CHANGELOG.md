@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.10.2] - 2026-07-07
+
+- Docs: Clarify `HttpEndpoint.globalParameters` semantics — it is now the fully
+  resolved set of global parameters that apply to the endpoint, computed at
+  IR-generation time (explicit opt-ins ∪ matching `apply: auto` parameters, with
+  body-location parameters gated on the request-body schema containing the dotted
+  target path). Generators should consume it as a membership check rather than
+  re-deriving applicability from `apply` modes.
+
 ## [v67.10.1] - 2026-07-02
 
 - Docs: Clarify `GlobalParameter.name` semantics — `wireValue` is the canonical

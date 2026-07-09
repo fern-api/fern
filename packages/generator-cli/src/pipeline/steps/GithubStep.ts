@@ -162,12 +162,22 @@ export class GithubStep extends BaseStep {
             }
         }
 
+        const createdChangelog = await this.ensureChangelogFile(resolved);
+
         if (!skipCommit) {
             await this.ensureFernignore();
 
             this.logger.debug("Committing changes...");
             await repository.commitAllChanges(resolved.commitMessage);
             this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+        } else if (createdChangelog) {
+            // Replay already produced the generation commit (skipCommit) but it did not include
+            // changelog.md. Stage and commit only the reconstructed changelog so the
+            // "See full changelog" link resolves at the pushed head SHA — without re-committing
+            // generation output (which the skipCommit invariant forbids).
+            this.logger.debug("Committing reconstructed changelog.md on top of the replay commit...");
+            await repository.add("changelog.md");
+            await repository.commit(resolved.commitMessage);
         }
 
         // When skipIfNoDiff is enabled, detect no-diff before pushing.
@@ -221,9 +231,22 @@ export class GithubStep extends BaseStep {
         }
 
         const headSha = await repository.getHeadSha();
-        const changelogUrl = resolved.changelogEntry
-            ? `https://${remote}/${owner}/${repo}/blob/${headSha}/changelog.md`
-            : undefined;
+        // Only emit the "See full changelog" link when changelog.md is actually tracked in the
+        // committed tree at the pushed head SHA — otherwise the link 404s.
+        const changelogCommitted = (await repository.listTrackedFiles()).includes("changelog.md");
+        const changelogUrl = resolveChangelogUrl({
+            changelogEntry: resolved.changelogEntry,
+            changelogCommitted,
+            remote,
+            owner,
+            repo,
+            headSha
+        });
+        if (resolved.changelogEntry && !changelogCommitted) {
+            this.logger.warn(
+                'changelog.md is not present in the committed tree; omitting the "See full changelog" link.'
+            );
+        }
         const { prTitle, prBody } = parseCommitMessageForPR(
             resolved.commitMessage,
             resolved.changelogEntry,
@@ -314,6 +337,7 @@ export class GithubStep extends BaseStep {
             await repository.checkout(this.config.branch);
         }
 
+        await this.ensureChangelogFile(resolved);
         await this.ensureFernignore();
 
         this.logger.debug("Committing changes...");
@@ -368,6 +392,7 @@ export class GithubStep extends BaseStep {
             await repository.checkout(this.config.branch);
         }
 
+        await this.ensureChangelogFile(resolved);
         await this.ensureFernignore();
 
         this.logger.debug("Committing changes...");
@@ -455,6 +480,35 @@ export class GithubStep extends BaseStep {
         } catch {
             this.logger.debug("Creating .fernignore file...");
             await writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+        }
+    }
+
+    /**
+     * Guarantees `changelog.md` is present in the output directory whenever a changelog entry
+     * exists for this run, so the file lands in the committed tree that GithubStep pushes and the
+     * "See full changelog" link resolves. AutoVersionStep normally writes this file via
+     * `prependChangelogEntry`; this is a safety net for paths where that write never reached the
+     * directory GithubStep commits (e.g. non-replay self-hosted generation), which previously left
+     * the link pointing at a non-existent blob (404).
+     *
+     * Returns `true` when it created the file, `false` when the file already existed (or there is
+     * no changelog entry to write).
+     */
+    private async ensureChangelogFile(resolved: ResolvedPrFields): Promise<boolean> {
+        const entry = resolved.changelogEntry?.trim();
+        if (entry == null || entry.length === 0) {
+            return false;
+        }
+        const changelogPath = join(this.outputDir, "changelog.md");
+        try {
+            await access(changelogPath);
+            // Already written (e.g. by AutoVersionStep) — don't duplicate the entry.
+            return false;
+        } catch {
+            const version = resolved.newVersion ?? resolved.previousVersion;
+            await writeFile(changelogPath, buildChangelogFileContents(entry, version), "utf-8");
+            this.logger.debug(`Wrote changelog.md${version != null ? ` for ${version}` : ""}.`);
+            return true;
         }
     }
 
@@ -638,4 +692,42 @@ export function resolveBranchAction({
         return "checkout-remote";
     }
     return "create-from-head";
+}
+
+/**
+ * Builds the contents of a fresh `changelog.md` from a changelog entry, mirroring the format
+ * produced by AutoVersionStep's `prependChangelogEntry`. Used as a safety net so the file always
+ * exists in the committed tree that GithubStep pushes.
+ */
+export function buildChangelogFileContents(entry: string, version: string | undefined): string {
+    const trimmed = entry.trim();
+    const now = new Date().toISOString().slice(0, 10);
+    const header = version != null ? `## [${version}] - ${now}\n` : `## ${now}\n`;
+    return `# Changelog\n\n${header}${trimmed}\n\n`;
+}
+
+/**
+ * Resolves the "See full changelog" link. Returns `undefined` (so the link is omitted) unless
+ * there is a changelog entry AND `changelog.md` is actually tracked in the committed tree at the
+ * pushed head SHA — otherwise the link would 404.
+ */
+export function resolveChangelogUrl({
+    changelogEntry,
+    changelogCommitted,
+    remote,
+    owner,
+    repo,
+    headSha
+}: {
+    changelogEntry: string | undefined;
+    changelogCommitted: boolean;
+    remote: string;
+    owner: string;
+    repo: string;
+    headSha: string;
+}): string | undefined {
+    if (changelogEntry == null || changelogEntry.trim().length === 0 || !changelogCommitted) {
+        return undefined;
+    }
+    return `https://${remote}/${owner}/${repo}/blob/${headSha}/changelog.md`;
 }
