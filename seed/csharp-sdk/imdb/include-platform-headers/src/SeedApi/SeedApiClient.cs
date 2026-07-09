@@ -15,16 +15,7 @@ public partial class SeedApiClient : ISeedApiClient
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedApi" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Fernimdb/0.0.1" },
-                { "X-Fern-Runtime", "dotnet" },
-                {
-                    "X-Fern-Runtime-Version",
-                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
-                },
-                {
-                    "X-Fern-Platform",
-                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
-                },
+                { "User-Agent", BuildUserAgent() },
             }
         );
         foreach (var header in platformHeaders)
@@ -47,4 +38,33 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     public IImdbClient Imdb { get; }
+
+    private static string BuildUserAgent()
+    {
+        var os =
+            global::System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                global::System.Runtime.InteropServices.OSPlatform.Windows
+            )
+                ? "windows"
+            : global::System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                global::System.Runtime.InteropServices.OSPlatform.Linux
+            )
+                ? "linux"
+            : global::System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                global::System.Runtime.InteropServices.OSPlatform.OSX
+            )
+                ? "osx"
+            : "";
+        var arch = global::System
+            .Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString()
+            .ToLowerInvariant();
+        var platform =
+            os.Length > 0 && arch.Length > 0 ? $" ({os}; {arch})"
+            : os.Length > 0 ? $" ({os})"
+            : arch.Length > 0 ? $" ({arch})"
+            : "";
+        var runtimeVersion = global::System.Environment.Version.ToString();
+        var runtime = runtimeVersion.Length > 0 ? $" .NET/{runtimeVersion}" : " .NET";
+        return $"SeedApi/{Version.Current}{platform}{runtime}";
+    }
 }

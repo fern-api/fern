@@ -1,10 +1,10 @@
 - summary: |
-    Add opt-in support for the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and
-    `X-Fern-Platform` observability headers on generated SDK clients.
-    `X-Fern-Runtime` reports `dotnet`, `X-Fern-Runtime-Version` reports
-    `RuntimeInformation.FrameworkDescription`, and `X-Fern-Platform` reports
-    `RuntimeInformation.OSDescription`, all computed at runtime. These are gated
-    behind a new `include-platform-headers` config option and are disabled by
-    default, so existing generated output is unchanged. When enabled they are
-    still subject to the `omit-fern-headers` config option.
+    Add opt-in support for a structured `User-Agent` header on generated SDK
+    clients of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+    (e.g. `my-sdk/1.2.0 (linux; x64) .NET/8.0.4`). The OS, architecture, and
+    runtime version are resolved at runtime via
+    `System.Runtime.InteropServices.RuntimeInformation` and `System.Environment`.
+    This is gated behind a new `include-platform-headers` config option and is
+    disabled by default, so existing generated output is unchanged. When enabled
+    it remains subject to the `omit-fern-headers` config option.
   type: feat
