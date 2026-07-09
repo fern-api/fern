@@ -534,6 +534,9 @@ fixtures:
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
 
 scripts:
   - image: fernapi/ts-seed
