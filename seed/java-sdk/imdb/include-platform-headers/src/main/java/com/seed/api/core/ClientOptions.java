@@ -3,7 +3,10 @@
  */
 package com.seed.api.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -38,12 +41,9 @@ public final class ClientOptions {
         this.headers.putAll(headers);
         this.headers.putAll(new HashMap<String, String>() {
             {
-                put("User-Agent", "com.fern:imdb/0.0.1");
+                put("User-Agent", getUserAgent());
                 put("X-Fern-Language", "JAVA");
                 put("X-Fern-SDK-Name", "com.seed.fern:api-sdk");
-                put("X-Fern-Runtime", "jvm");
-                put("X-Fern-Runtime-Version", System.getProperty("java.version"));
-                put("X-Fern-Platform", System.getProperty("os.name"));
             }
         });
         this.headerSuppliers = headerSuppliers;
@@ -66,6 +66,28 @@ public final class ClientOptions {
             values.putAll(requestOptions.getHeaders());
         }
         return values;
+    }
+
+    private static String getUserAgent() {
+        String userAgent = "com.fern:imdb/0.0.1";
+        String os = System.getProperty("os.name");
+        String arch = System.getProperty("os.arch");
+        List<String> platformParts = new ArrayList<>();
+        if (os != null && !os.isEmpty()) {
+            platformParts.add(os.toLowerCase(Locale.ROOT));
+        }
+        if (arch != null && !arch.isEmpty()) {
+            platformParts.add(arch);
+        }
+        if (!platformParts.isEmpty()) {
+            userAgent += " (" + String.join("; ", platformParts) + ")";
+        }
+        String javaVersion = System.getProperty("java.version");
+        userAgent += " Java";
+        if (javaVersion != null && !javaVersion.isEmpty()) {
+            userAgent += "/" + javaVersion;
+        }
+        return userAgent;
     }
 
     public int timeout(RequestOptions requestOptions) {

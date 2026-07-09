@@ -1,11 +1,13 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add opt-in support for the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and
-    `X-Fern-Platform` observability headers on generated SDK clients. These report
-    the runtime (`jvm`), the JVM version (`System.getProperty("java.version")`),
-    and the operating system (`System.getProperty("os.name")`), computed at runtime.
-    They are gated behind a new `includePlatformHeaders` config option and are
-    disabled by default, so existing generated output is unchanged. When enabled,
-    they are still subject to `omit-fern-headers`.
+    Add opt-in support for a structured `User-Agent` header on generated SDK clients,
+    of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+    (e.g. `com.fern:sdk/0.0.1 (linux; amd64) Java/17.0.13`). The os
+    (`System.getProperty("os.name")`, lowercased), arch (`System.getProperty("os.arch")`),
+    and runtime version (`System.getProperty("java.version")`) are resolved at runtime;
+    any segment that cannot be determined is omitted rather than emitted as `null`.
+    This is gated behind a new `includePlatformHeaders` config option and is disabled by
+    default, so existing generated output is unchanged. When enabled, the header is still
+    subject to `omit-fern-headers`.
   type: feat

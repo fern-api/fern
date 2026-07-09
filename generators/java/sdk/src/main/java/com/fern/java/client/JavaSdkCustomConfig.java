@@ -111,7 +111,6 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
 
     /**
      * If true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests.
-     * Also omits the runtime/platform observability headers when {@link #includePlatformHeaders()} is enabled.
      */
     @Value.Default
     @JsonProperty("omit-fern-headers")
@@ -120,9 +119,10 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     }
 
     /**
-     * If true, adds the runtime/platform observability headers (X-Fern-Runtime, X-Fern-Runtime-Version,
-     * X-Fern-Platform) to generated SDK requests. Opt-in and disabled by default so existing generated output is
-     * unchanged. When enabled, these headers are still subject to {@link #omitFernHeaders()}.
+     * If true, emits a structured {@code User-Agent} header of the form {@code {sdkName}/{sdkVersion} ({os}; {arch})
+     * {runtime}/{runtimeVersion}}, with the os, arch, and runtime version resolved at runtime. Opt-in and disabled by
+     * default so existing generated output is unchanged. When enabled, the header is still subject to
+     * {@link #omitFernHeaders()}.
      */
     @Value.Default
     @JsonProperty("includePlatformHeaders")
