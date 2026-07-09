@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.23.0
+  changelogEntry:
+    - summary: |
+        Remove the current-working-directory sandbox on output paths. `--output`
+        and `--output-dir` now write wherever they are pointed — including
+        absolute paths and locations outside the current directory — instead of
+        failing with "resolves to ... which is outside the current directory".
+        Control-character rejection and the `O_NOFOLLOW` refusal of a
+        final-component symlink are retained; `--output` still requires its parent
+        directory to exist.
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 67
 - version: 0.22.1
   changelogEntry:
     - summary: |
