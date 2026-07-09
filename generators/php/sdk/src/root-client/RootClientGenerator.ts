@@ -294,6 +294,18 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     value: php.codeblock(`'${userAgent.value}'`)
                 });
             }
+            headerEntries.push({
+                key: php.codeblock("'X-Fern-Runtime'"),
+                value: php.codeblock("'php'")
+            });
+            headerEntries.push({
+                key: php.codeblock("'X-Fern-Runtime-Version'"),
+                value: php.codeblock("PHP_VERSION")
+            });
+            headerEntries.push({
+                key: php.codeblock("'X-Fern-Platform'"),
+                value: php.codeblock("PHP_OS")
+            });
         }
 
         if (this.context.ir.apiVersion != null) {
