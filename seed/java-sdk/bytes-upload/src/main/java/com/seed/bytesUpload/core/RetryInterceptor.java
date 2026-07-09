@@ -140,8 +140,15 @@ public class RetryInterceptor implements Interceptor {
         }
 
         // Fall back to exponential backoff, with symmetric jitter
-        long baseDelay = initialRetryDelay.toMillis() * (1L << retryAttempt); // 2^retryAttempt
-        long cappedDelay = Math.min(baseDelay, maxRetryDelay.toMillis());
+        long initialDelayMillis = initialRetryDelay.toMillis();
+        long maxDelayMillis = maxRetryDelay.toMillis();
+        long cappedDelay;
+        if (retryAttempt >= Long.SIZE - 1 || initialDelayMillis > (maxDelayMillis >> retryAttempt)) {
+            // initialDelayMillis * 2^retryAttempt would exceed maxDelayMillis (or overflow)
+            cappedDelay = maxDelayMillis;
+        } else {
+            cappedDelay = Math.min(initialDelayMillis << retryAttempt, maxDelayMillis); // 2^retryAttempt
+        }
         return Duration.ofMillis(addSymmetricJitter(cappedDelay));
     }
 
