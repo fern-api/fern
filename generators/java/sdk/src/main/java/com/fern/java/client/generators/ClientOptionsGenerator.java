@@ -94,6 +94,27 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static final FieldSpec INITIAL_RETRY_DELAY_MILLIS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                    "initialRetryDelayMillis",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec MAX_RETRY_DELAY_MILLIS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                    "maxRetryDelayMillis",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec RETRY_JITTER_FACTOR_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Double.class)),
+                    "retryJitterFactor",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
     private static final String LOGGING_FIELD_NAME = "logging";
 
     private static MethodSpec createGetter(FieldSpec fieldSpec) {
@@ -288,6 +309,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(MAX_RETRIES_FIELD.type, MAX_RETRIES_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.type, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .build())
+                .addParameter(
+                        ParameterSpec.builder(MAX_RETRY_DELAY_MILLIS_FIELD.type, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                                .build())
+                .addParameter(ParameterSpec.builder(RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name)
                         .build());
 
         // Only add webSocketFactory parameter if WebSocket channels are present
@@ -332,7 +361,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
-                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name);
+                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                .addStatement(
+                        "this.$L = $L", INITIAL_RETRY_DELAY_MILLIS_FIELD.name, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement("this.$L = $L", MAX_RETRY_DELAY_MILLIS_FIELD.name, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement("this.$L = $L", RETRY_JITTER_FACTOR_FIELD.name, RETRY_JITTER_FACTOR_FIELD.name);
 
         // Only add webSocketFactory assignment if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -364,7 +397,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(TIMEOUT_FIELD)
-                .addField(MAX_RETRIES_FIELD);
+                .addField(MAX_RETRIES_FIELD)
+                .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
+                .addField(MAX_RETRY_DELAY_MILLIS_FIELD)
+                .addField(RETRY_JITTER_FACTOR_FIELD);
 
         // Only add webSocketFactory field if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -451,12 +487,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
 
         MethodSpec maxRetriesGetter = createGetter(MAX_RETRIES_FIELD);
+        MethodSpec initialRetryDelayMillisGetter = createGetter(INITIAL_RETRY_DELAY_MILLIS_FIELD);
+        MethodSpec maxRetryDelayMillisGetter = createGetter(MAX_RETRY_DELAY_MILLIS_FIELD);
+        MethodSpec retryJitterFactorGetter = createGetter(RETRY_JITTER_FACTOR_FIELD);
 
         clientOptionsBuilder
                 .addMethod(timeoutGetter)
                 .addMethod(httpClientGetter)
                 .addMethod(httpClientWithTimeoutGetter)
-                .addMethod(maxRetriesGetter);
+                .addMethod(maxRetriesGetter)
+                .addMethod(initialRetryDelayMillisGetter)
+                .addMethod(maxRetryDelayMillisGetter)
+                .addMethod(retryJitterFactorGetter);
 
         // Only add webSocketFactory getter if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -657,6 +699,20 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("$L", getDefaultMaxRetries())
                         .build())
                 .addField(FieldSpec.builder(
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.type,
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                                Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                MAX_RETRY_DELAY_MILLIS_FIELD.type, MAX_RETRY_DELAY_MILLIS_FIELD.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
                                 TIMEOUT_FIELD.name,
                                 Modifier.PRIVATE)
@@ -723,6 +779,45 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, MAX_RETRIES_FIELD.name)
                         .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the initial delay (in milliseconds) used for exponential backoff "
+                                + "between retries. Defaults to 1000 milliseconds.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.LONG, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                                Optional.class,
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the maximum delay (in milliseconds) between retries. "
+                                + "Defaults to 60000 milliseconds.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.LONG, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                                Optional.class,
+                                MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(RETRY_JITTER_FACTOR_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the jitter factor (between 0 and 1) applied to retry delays. "
+                                + "Defaults to 0.2.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.DOUBLE, RETRY_JITTER_FACTOR_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                RETRY_JITTER_FACTOR_FIELD.name,
+                                Optional.class,
+                                RETRY_JITTER_FACTOR_FIELD.name)
                         .addStatement("return this")
                         .build())
                 .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
@@ -1065,6 +1160,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        RETRY_JITTER_FACTOR_FIELD.name,
+                        RETRY_JITTER_FACTOR_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", LOGGING_FIELD_NAME, LOGGING_FIELD_NAME);
 
         for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
@@ -1127,6 +1234,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         StringBuilder returnStringBuilder = new StringBuilder();
         returnStringBuilder.append("return new $T($L, $L, $L, $L, this.timeout.get(), this.");
         returnStringBuilder.append(MAX_RETRIES_FIELD.name);
+        returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
+        returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
+        returnStringBuilder.append(", this.").append(RETRY_JITTER_FACTOR_FIELD.name);
 
         // Add webSocketFactory if present
         if (webSocketFactoryField != null) {
@@ -1191,9 +1301,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class)
                 .addCode(
-                        ".addInterceptor(new $T(this.$L));\n",
+                        ".addInterceptor(new $T(this.$L, this.$L, this.$L, this.$L));\n",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
-                        MAX_RETRIES_FIELD.name)
+                        MAX_RETRIES_FIELD.name,
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                        RETRY_JITTER_FACTOR_FIELD.name)
                 .endControlFlow()
                 .addCode("\n")
                 .addStatement(
