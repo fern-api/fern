@@ -295,15 +295,29 @@ func decompressResponse(resp *http.Response) error {
 	return nil
 }
 
+// maxDecompressedBodySize caps the number of decompressed bytes read from a
+// gzip response body to guard against decompression bombs.
+const maxDecompressedBodySize = 1 << 30 // 1 GiB
+
 // gzipReadCloser reads decompressed content from the gzip reader and
-// closes both the gzip reader and the underlying response body.
+// closes both the gzip reader and the underlying response body. It limits
+// the total number of decompressed bytes to maxDecompressedBodySize.
 type gzipReadCloser struct {
 	gzipReader *gzip.Reader
 	body       io.ReadCloser
+	read       int64
 }
 
 func (g *gzipReadCloser) Read(p []byte) (int, error) {
-	return g.gzipReader.Read(p)
+	if g.read >= maxDecompressedBodySize {
+		return 0, fmt.Errorf("decompressed response body exceeds %d bytes", int64(maxDecompressedBodySize))
+	}
+	n, err := g.gzipReader.Read(p)
+	g.read += int64(n)
+	if err == nil && g.read > maxDecompressedBodySize {
+		return n, fmt.Errorf("decompressed response body exceeds %d bytes", int64(maxDecompressedBodySize))
+	}
+	return n, err
 }
 
 func (g *gzipReadCloser) Close() error {
