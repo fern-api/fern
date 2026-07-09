@@ -10,6 +10,10 @@ export interface Runtime {
     readonly version: {
         _getReferenceTo: () => ts.Expression;
     };
+
+    readonly os: {
+        _getReferenceTo: () => ts.Expression;
+    };
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
@@ -35,6 +39,12 @@ export class RuntimeImpl extends CoreUtility implements Runtime {
         _getReferenceTo: this.withExportedName(
             "RUNTIME",
             (RUNTIME) => () => ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "version")
+        )
+    };
+    public readonly os = {
+        _getReferenceTo: this.withExportedName(
+            "RUNTIME",
+            (RUNTIME) => () => ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "os")
         )
     };
 }

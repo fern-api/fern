@@ -198,7 +198,8 @@ export type BaseClientOptions = {
 
             fernHeaderEntries.push(
                 ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
-                ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
+                ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()],
+                ["X-Fern-Platform", context.coreUtilities.runtime.os._getReferenceTo()]
             );
         }
 

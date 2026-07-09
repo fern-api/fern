@@ -155,6 +155,9 @@ function createMockContext(opts?: {
                 },
                 version: {
                     _getReferenceTo: () => ts.factory.createIdentifier("core.RUNTIME.version")
+                },
+                os: {
+                    _getReferenceTo: () => ts.factory.createIdentifier("core.RUNTIME.os")
                 }
             },
             logging: {

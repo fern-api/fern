@@ -6,7 +6,7 @@ exports.RUNTIME = void 0;
  */
 exports.RUNTIME = evaluateRuntime();
 function evaluateRuntime() {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     /**
      * A constant that indicates whether the environment the code is running is a Web Browser.
      */
@@ -59,6 +59,7 @@ function evaluateRuntime() {
         return {
             type: "deno",
             version: Deno.version.deno,
+            os: (_e = Deno.build) === null || _e === void 0 ? void 0 : _e.os,
         };
     }
     /**
@@ -69,6 +70,7 @@ function evaluateRuntime() {
         return {
             type: "bun",
             version: Bun.version,
+            os: typeof process !== "undefined" ? process.platform : undefined,
         };
     }
     /**
@@ -90,12 +92,13 @@ function evaluateRuntime() {
      * Edge Runtime warns about Node.js APIs even when they are guarded).
      */
     const _process = typeof process !== "undefined" ? process : undefined;
-    const isNode = typeof _process !== "undefined" && typeof ((_e = _process.versions) === null || _e === void 0 ? void 0 : _e.node) === "string";
+    const isNode = typeof _process !== "undefined" && typeof ((_f = _process.versions) === null || _f === void 0 ? void 0 : _f.node) === "string";
     if (isNode) {
         return {
             type: "node",
             version: _process.versions.node,
             parsedVersion: Number(_process.versions.node.split(".")[0]),
+            os: _process.platform,
         };
     }
     return {

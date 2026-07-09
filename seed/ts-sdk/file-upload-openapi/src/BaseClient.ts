@@ -53,6 +53,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             "User-Agent": "@fern/file-upload-openapi/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
+            "X-Fern-Platform": core.RUNTIME.os,
         },
         options?.headers,
     );

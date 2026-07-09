@@ -2,6 +2,9 @@ interface DenoGlobal {
     version: {
         deno: string;
     };
+    build?: {
+        os?: string;
+    };
 }
 
 interface BunGlobal {
@@ -24,6 +27,12 @@ export interface Runtime {
     type: "browser" | "web-worker" | "deno" | "bun" | "node" | "react-native" | "unknown" | "workerd" | "edge-runtime";
     version?: string;
     parsedVersion?: number;
+    /**
+     * The operating system the SDK is running on, when it can be determined
+     * (e.g. "linux", "darwin", "win32" on server runtimes). Undefined in
+     * environments where the OS is not observable (e.g. browsers).
+     */
+    os?: string;
 }
 
 function evaluateRuntime(): Runtime {
@@ -85,6 +94,7 @@ function evaluateRuntime(): Runtime {
         return {
             type: "deno",
             version: Deno.version.deno,
+            os: Deno.build?.os,
         };
     }
 
@@ -96,6 +106,7 @@ function evaluateRuntime(): Runtime {
         return {
             type: "bun",
             version: Bun.version,
+            os: typeof process !== "undefined" ? process.platform : undefined,
         };
     }
 
@@ -127,6 +138,7 @@ function evaluateRuntime(): Runtime {
             type: "node",
             version: _process.versions.node,
             parsedVersion: Number(_process.versions.node.split(".")[0]),
+            os: _process.platform,
         };
     }
 
