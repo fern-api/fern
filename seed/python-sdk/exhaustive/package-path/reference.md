@@ -2765,7 +2765,7 @@ client = SeedExhaustive(
 )
 
 client.endpoints.params.create_with_body_and_query(
-    _fields="_fields",
+    fields="_fields",
     string="string",
 )
 

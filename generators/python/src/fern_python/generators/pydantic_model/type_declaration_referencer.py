@@ -1,11 +1,11 @@
 from typing import Dict, Tuple, Union
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
-from fern_python.utils import resolve_name
-
-import fern.ir.resources as ir_types
+from fern_python.utils import resolve_name, resolve_name_preserving_underscores
 
 
 class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):
@@ -45,7 +45,7 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
                 export_strategy=ExportStrategy(export_all=True),
             ),
             Filepath.DirectoryFilepathPart(
-                module_name=resolve_name(fern_filepath_part).snake_case.safe_name,
+                module_name=resolve_name_preserving_underscores(fern_filepath_part).snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )

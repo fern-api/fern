@@ -1,6 +1,8 @@
 import os
 from typing import Any, Dict, Optional, Tuple, Union
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.reference_node.reference_node import ReferenceNode
 from fern_python.codegen.ast.references.module import Module
@@ -27,9 +29,7 @@ from fern_python.generators.sdk.environment_generators.single_base_url_environme
 )
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
-from fern_python.utils import get_wire_value, resolve_name
-
-import fern.ir.resources as ir_types
+from fern_python.utils import get_wire_value, resolve_name, resolve_name_preserving_underscores
 
 
 class SnippetTestFactory:
@@ -283,12 +283,14 @@ class SnippetTestFactory:
         for pathpart in fern_filepath.package_path:
             directories += (
                 Filepath.DirectoryFilepathPart(
-                    module_name=resolve_name(pathpart).snake_case.safe_name,
+                    module_name=resolve_name_preserving_underscores(pathpart).snake_case.safe_name,
                 ),
             )
 
         module_name = (
-            resolve_name(fern_filepath.file).snake_case.safe_name if fern_filepath.file is not None else "root"
+            resolve_name_preserving_underscores(fern_filepath.file).snake_case.safe_name
+            if fern_filepath.file is not None
+            else "root"
         )
         return Filepath(
             directories=directories,
@@ -519,7 +521,7 @@ class SnippetTestFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
+        return ".".join([resolve_name_preserving_underscores(component).snake_case.safe_name for component in components]) + "."
 
     def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> None:
         fern_filepath = service.name.fern_filepath

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
+import fern.ir.resources as ir_types
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .generated_root_client import GeneratedRootClient
 from .request_body_parameters import (
@@ -10,6 +11,7 @@ from .request_body_parameters import (
     InlinedRequestBodyParameters,
     ReferencedRequestBodyParameters,
 )
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
@@ -45,9 +47,13 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
 )
 from fern_python.generators.sdk.names import get_root_path_parameter_member_name, get_variable_member_name
 from fern_python.snippet import SnippetWriter
-from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
-
-import fern.ir.resources as ir_types
+from fern_python.utils.name_resolver import (
+    get_name_from_wire_value,
+    get_original_name,
+    get_wire_value,
+    resolve_name,
+    resolve_name_preserving_underscores,
+)
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -987,7 +993,7 @@ class EndpointFunctionGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
+        return ".".join([resolve_name_preserving_underscores(component).snake_case.safe_name for component in components]) + "."
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
