@@ -1008,7 +1008,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
         if (wireNamesToOmit.size === 0) {
             return [];
         }
-        const exampleByWireValue = new Map(shape.object.properties.map((property) => [getWireValue(property.name), property]));
+        const exampleByWireValue = new Map(
+            shape.object.properties.map((property) => [getWireValue(property.name), property])
+        );
 
         const properties: { name: string; value: ast.AstNode }[] = [];
         for (const baseProperty of this.unionDeclaration.baseProperties) {

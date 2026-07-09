@@ -1169,7 +1169,10 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
      * `samePropertiesAsObject` variant, and whether it is referenced in any non-variant position.
      * See {@link _typeReferenceInfo}.
      */
-    private buildTypeReferenceInfo(): { variantReferrers: Map<TypeId, Set<TypeId>>; nonVariantReferenced: Set<TypeId> } {
+    private buildTypeReferenceInfo(): {
+        variantReferrers: Map<TypeId, Set<TypeId>>;
+        nonVariantReferenced: Set<TypeId>;
+    } {
         if (this._typeReferenceInfo != null) {
             return this._typeReferenceInfo;
         }
