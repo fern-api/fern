@@ -16,15 +16,6 @@ public partial class SeedLiteralUserAgentClient : ISeedLiteralUserAgentClient
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedLiteralUserAgent" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "X-Fern-Runtime", "dotnet" },
-                {
-                    "X-Fern-Runtime-Version",
-                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
-                },
-                {
-                    "X-Fern-Platform",
-                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
-                },
             }
         );
         if (clientOptions.UserAgent != null)

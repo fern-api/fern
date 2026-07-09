@@ -24,15 +24,6 @@ public partial class SeedHeaderTokenEnvironmentVariableClient
                 { "X-Fern-SDK-Name", "SeedHeaderTokenEnvironmentVariable" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernheader-auth-environment-variable/0.0.1" },
-                { "X-Fern-Runtime", "dotnet" },
-                {
-                    "X-Fern-Runtime-Version",
-                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
-                },
-                {
-                    "X-Fern-Platform",
-                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
-                },
             }
         );
         foreach (var header in platformHeaders)

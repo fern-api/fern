@@ -16,15 +16,6 @@ public partial class SeedMultiUrlEnvironmentClient : ISeedMultiUrlEnvironmentCli
                 { "X-Fern-SDK-Name", "SeedMultiUrlEnvironment" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernmulti-url-environment/0.0.1" },
-                { "X-Fern-Runtime", "dotnet" },
-                {
-                    "X-Fern-Runtime-Version",
-                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
-                },
-                {
-                    "X-Fern-Platform",
-                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
-                },
             }
         );
         foreach (var header in platformHeaders)

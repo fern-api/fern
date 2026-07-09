@@ -22,15 +22,6 @@ public partial class SeedOauthClientCredentialsMandatoryAuthClient
                 { "X-Fern-SDK-Name", "SeedOauthClientCredentialsMandatoryAuth" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernoauth-client-credentials-mandatory-auth/0.0.1" },
-                { "X-Fern-Runtime", "dotnet" },
-                {
-                    "X-Fern-Runtime-Version",
-                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
-                },
-                {
-                    "X-Fern-Platform",
-                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
-                },
             }
         );
         foreach (var header in platformHeaders)

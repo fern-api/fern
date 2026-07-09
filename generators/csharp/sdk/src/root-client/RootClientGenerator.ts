@@ -378,20 +378,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             if (userAgentEntry != null) {
                 platformHeaderEntries.push(userAgentEntry);
             }
-            platformHeaderEntries.push({
-                key: this.csharp.codeblock('"X-Fern-Runtime"'),
-                value: this.csharp.codeblock('"dotnet"')
-            });
-            platformHeaderEntries.push({
-                key: this.csharp.codeblock('"X-Fern-Runtime-Version"'),
-                value: this.csharp.codeblock(
-                    "global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription"
-                )
-            });
-            platformHeaderEntries.push({
-                key: this.csharp.codeblock('"X-Fern-Platform"'),
-                value: this.csharp.codeblock("global::System.Runtime.InteropServices.RuntimeInformation.OSDescription")
-            });
+            if (this.settings.includePlatformHeaders) {
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock('"X-Fern-Runtime"'),
+                    value: this.csharp.codeblock('"dotnet"')
+                });
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock('"X-Fern-Runtime-Version"'),
+                    value: this.csharp.codeblock(
+                        "global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription"
+                    )
+                });
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock('"X-Fern-Platform"'),
+                    value: this.csharp.codeblock(
+                        "global::System.Runtime.InteropServices.RuntimeInformation.OSDescription"
+                    )
+                });
+            }
         }
 
         const platformHeaderDictionary = this.csharp.dictionary({
