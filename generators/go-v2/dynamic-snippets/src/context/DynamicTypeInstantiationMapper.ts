@@ -505,9 +505,7 @@ export class DynamicTypeInstantiationMapper {
      * union `base-properties` that live only on the union) keep their top-level field and must still
      * be set at the union root, so they are excluded from the result.
      */
-    private getDedupedBasePropertyWireValues(
-        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType
-    ): Set<string> {
+    private getDedupedBasePropertyWireValues(discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType): Set<string> {
         if (!this.context.customConfig?.dedupeUnionBaseProperties) {
             return new Set();
         }
