@@ -50,6 +50,7 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 };
 
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
+const GET_PLATFORM_USER_AGENT = "getPlatformUserAgent";
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly case: CaseConverter;
@@ -174,6 +175,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             class_.addMethod(this.getFromEnvOrThrowMethod());
         }
 
+        const userAgent = this.context.getUserAgent();
+        if (
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.customConfig.includePlatformHeaders &&
+            userAgent != null
+        ) {
+            class_.addMethod(this.getPlatformUserAgentMethod(userAgent.value));
+        }
+
         return this.newRootClientFile(class_);
     }
 
@@ -291,21 +301,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             if (userAgent != null) {
                 headerEntries.push({
                     key: php.codeblock(`'${userAgent.header}'`),
-                    value: php.codeblock(`'${userAgent.value}'`)
-                });
-            }
-            if (this.context.customConfig.includePlatformHeaders) {
-                headerEntries.push({
-                    key: php.codeblock("'X-Fern-Runtime'"),
-                    value: php.codeblock("'php'")
-                });
-                headerEntries.push({
-                    key: php.codeblock("'X-Fern-Runtime-Version'"),
-                    value: php.codeblock("PHP_VERSION")
-                });
-                headerEntries.push({
-                    key: php.codeblock("'X-Fern-Platform'"),
-                    value: php.codeblock("PHP_OS")
+                    value: this.context.customConfig.includePlatformHeaders
+                        ? php.codeblock(`self::${GET_PLATFORM_USER_AGENT}()`)
+                        : php.codeblock(`'${userAgent.value}'`)
                 });
             }
         }
@@ -632,6 +630,25 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.write("return $value ? (string) $value : throw new ");
                 writer.writeNode(this.context.getExceptionClassReference());
                 writer.writeTextStatement("($message)");
+            })
+        });
+    }
+
+    private getPlatformUserAgentMethod(baseUserAgent: string): php.Method {
+        const escapedBase = baseUserAgent.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+        return php.method({
+            access: "private",
+            static_: true,
+            name: GET_PLATFORM_USER_AGENT,
+            return_: php.Type.string(),
+            parameters: [],
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement(
+                    "$parts = array_values(array_filter([strtolower(PHP_OS), php_uname('m')], fn ($value) => is_string($value) && $value !== ''))"
+                );
+                writer.writeTextStatement("$platform = count($parts) > 0 ? ' (' . implode('; ', $parts) . ')' : ''");
+                writer.writeTextStatement("$runtime = PHP_VERSION !== '' ? 'PHP/' . PHP_VERSION : 'PHP'");
+                writer.writeTextStatement(`return '${escapedBase}' . $platform . ' ' . $runtime`);
             })
         });
     }
