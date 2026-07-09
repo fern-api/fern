@@ -3,7 +3,7 @@
 import type * as core from "../../../../../core/index.js";
 
 export interface JustFileWithOptionalQueryParamsRequest {
-    maybeString?: string;
-    maybeInteger?: number;
+    maybeString?: string | undefined;
+    maybeInteger?: number | undefined;
     file: core.file.Uploadable;
 }

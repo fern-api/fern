@@ -52,11 +52,11 @@ export interface GetUsersRequest {
     bytes: string;
     user: SeedQueryParameters.User;
     user_list: SeedQueryParameters.User[];
-    optional_deadline?: string;
+    optional_deadline?: string | undefined;
     key_value: Record<string, string>;
-    optional_string?: string;
+    optional_string?: string | undefined;
     nested_user: SeedQueryParameters.NestedUser;
-    optional_user?: SeedQueryParameters.User;
+    optional_user?: SeedQueryParameters.User | undefined;
     exclude_user: SeedQueryParameters.User | SeedQueryParameters.User[];
     filter: string | string[];
 }

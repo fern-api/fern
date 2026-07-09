@@ -11,9 +11,9 @@ import type * as SeedExhaustive from "../index.js";
  */
 export interface ListItemsRequest {
     /** The cursor for pagination */
-    cursor?: string;
+    cursor?: string | undefined;
     /** Maximum number of items to return */
-    limit?: number;
+    limit?: number | undefined;
 }
 
 /**
@@ -94,12 +94,12 @@ export interface ModifyResourceAtInlinedPath {
  *     }
  */
 export interface CreateWithBodyAndQuery {
-    _fields?: string;
+    _fields?: string | undefined;
     body: SeedExhaustive.types.ObjectWithRequiredField;
 }
 
 export interface UploadBytesWithQuery {
-    _fields?: string;
+    _fields?: string | undefined;
 }
 
 /**
@@ -150,7 +150,7 @@ export interface PostWithObjectBody {
  *     }
  */
 export interface PostWithArrayBodyAndHeaders {
-    "X-Custom-Header"?: string;
+    "X-Custom-Header"?: string | undefined;
     body: string[];
 }
 

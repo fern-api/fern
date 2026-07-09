@@ -9,7 +9,7 @@
  */
 export interface GetClientRequest {
     /** Comma-separated list of fields to include */
-    fields?: string;
+    fields?: string | undefined;
     /** Whether specified fields are included or excluded */
-    include_fields?: boolean;
+    include_fields?: boolean | undefined;
 }

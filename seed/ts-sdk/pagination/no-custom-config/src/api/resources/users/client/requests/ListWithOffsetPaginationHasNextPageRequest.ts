@@ -19,12 +19,12 @@ import type * as SeedPagination from "../../../../index.js";
  */
 export interface ListWithOffsetPaginationHasNextPageRequest {
     /** Defaults to first page */
-    page?: number;
+    page?: number | undefined;
     /**
      * The maximum number of elements to return.
      * This is also used as the step size in this
      * paginated endpoint.
      */
-    limit?: number;
-    order?: SeedPagination.Order;
+    limit?: number | undefined;
+    order?: SeedPagination.Order | undefined;
 }

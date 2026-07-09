@@ -18,12 +18,12 @@ import type * as SeedLiteral from "../../../../index.js";
  */
 export interface SendLiteralsInQueryRequest {
     prompt: "You are a helpful assistant";
-    optional_prompt?: "You are a helpful assistant";
+    optional_prompt?: "You are a helpful assistant" | undefined;
     alias_prompt: SeedLiteral.AliasToPrompt;
-    alias_optional_prompt?: SeedLiteral.AliasToPrompt;
+    alias_optional_prompt?: SeedLiteral.AliasToPrompt | undefined;
     query: string;
     stream: false;
-    optional_stream?: false;
+    optional_stream?: false | undefined;
     alias_stream: SeedLiteral.AliasToStream;
-    alias_optional_stream?: SeedLiteral.AliasToStream;
+    alias_optional_stream?: SeedLiteral.AliasToStream | undefined;
 }

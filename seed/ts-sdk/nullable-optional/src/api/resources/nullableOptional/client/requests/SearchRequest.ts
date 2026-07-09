@@ -12,6 +12,6 @@
  */
 export interface SearchRequest {
     query: string;
-    filters?: Record<string, string | null>;
+    filters?: Record<string, string | null> | undefined;
     includeTypes: string[] | null;
 }

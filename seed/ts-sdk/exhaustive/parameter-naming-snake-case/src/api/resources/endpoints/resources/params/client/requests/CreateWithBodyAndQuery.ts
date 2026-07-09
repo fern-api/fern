@@ -12,6 +12,6 @@ import type * as SeedExhaustive from "../../../../../../index.js";
  *     }
  */
 export interface CreateWithBodyAndQuery {
-    fields?: string;
+    fields?: string | undefined;
     body: SeedExhaustive.types.ObjectWithRequiredField;
 }

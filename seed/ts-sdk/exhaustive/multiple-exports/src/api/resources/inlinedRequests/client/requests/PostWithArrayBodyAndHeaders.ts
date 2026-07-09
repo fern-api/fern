@@ -8,6 +8,6 @@
  *     }
  */
 export interface PostWithArrayBodyAndHeaders {
-    "X-Custom-Header"?: string;
+    "X-Custom-Header"?: string | undefined;
     body: string[];
 }

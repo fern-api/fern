@@ -5,5 +5,5 @@ import type * as SeedFileUpload from "../../../../index.js";
 
 export interface WithJsonPropertyRequest {
     file: File | fs.ReadStream | Blob;
-    json?: SeedFileUpload.MyObject;
+    json?: SeedFileUpload.MyObject | undefined;
 }

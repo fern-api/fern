@@ -17,5 +17,5 @@ export interface CreateUserRequest {
      * The age of the user.
      * This property is not required.
      */
-    age?: number;
+    age?: number | undefined;
 }

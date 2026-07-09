@@ -12,6 +12,6 @@
 export interface SearchUsersRequest {
     query: string;
     department: string | null;
-    role?: string;
-    isActive?: boolean | null;
+    role?: string | undefined;
+    isActive?: (boolean | null) | undefined;
 }

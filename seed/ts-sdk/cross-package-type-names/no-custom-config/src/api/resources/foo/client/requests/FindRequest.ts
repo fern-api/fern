@@ -11,7 +11,7 @@ import type * as SeedCrossPackageTypeNames from "../../../../index.js";
  *     }
  */
 export interface FindRequest {
-    optionalString?: SeedCrossPackageTypeNames.OptionalString;
-    publicProperty?: string;
-    privateProperty?: number;
+    optionalString?: SeedCrossPackageTypeNames.OptionalString | undefined;
+    publicProperty?: string | undefined;
+    privateProperty?: number | undefined;
 }

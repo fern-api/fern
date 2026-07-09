@@ -5,13 +5,13 @@
  *     {}
  */
 export interface BulkUpdateTasksRequest {
-    filterAssignedTo?: string | null;
-    filterIsComplete?: string | null;
-    filterDate?: string | null;
+    filterAssignedTo?: (string | null) | undefined;
+    filterIsComplete?: (string | null) | undefined;
+    filterDate?: (string | null) | undefined;
     /** Comma-separated list of fields to include in the response. */
-    _fields?: string;
-    assigned_to?: string;
-    date?: string;
-    is_complete?: boolean;
-    text?: string;
+    _fields?: string | undefined;
+    assigned_to?: string | undefined;
+    date?: string | undefined;
+    is_complete?: boolean | undefined;
+    text?: string | undefined;
 }

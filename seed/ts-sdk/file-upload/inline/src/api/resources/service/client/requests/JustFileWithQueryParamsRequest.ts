@@ -3,10 +3,10 @@
 import type * as core from "../../../../../core/index.js";
 
 export interface JustFileWithQueryParamsRequest {
-    maybeString?: string;
+    maybeString?: string | undefined;
     integer: number;
-    maybeInteger?: number;
+    maybeInteger?: number | undefined;
     listOfStrings: string | string[];
-    optionalListOfStrings?: string | string[];
+    optionalListOfStrings?: (string | string[]) | undefined;
     file: core.file.Uploadable;
 }

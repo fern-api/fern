@@ -10,6 +10,6 @@ import type * as SeedUnionQueryParameters from "../../../../index.js";
  *     }
  */
 export interface SubscribeEventsRequest {
-    event_type?: SeedUnionQueryParameters.EventTypeParam;
-    tags?: SeedUnionQueryParameters.StringOrListParam;
+    event_type?: SeedUnionQueryParameters.EventTypeParam | undefined;
+    tags?: SeedUnionQueryParameters.StringOrListParam | undefined;
 }

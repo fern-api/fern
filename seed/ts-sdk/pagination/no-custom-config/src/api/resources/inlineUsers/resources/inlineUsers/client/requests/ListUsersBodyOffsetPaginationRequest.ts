@@ -15,5 +15,5 @@ export interface ListUsersBodyOffsetPaginationRequest {
      * The object that contains the offset used for pagination
      * in order to fetch the next page of results.
      */
-    pagination?: SeedPagination.inlineUsers.WithPage;
+    pagination?: SeedPagination.inlineUsers.WithPage | undefined;
 }

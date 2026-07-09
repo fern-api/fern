@@ -5,5 +5,5 @@ import type * as SeedFileUpload from "../../../../index.js";
 
 export interface WithJsonPropertyRequest {
     file: core.file.Uploadable;
-    json?: SeedFileUpload.MyObject;
+    json?: SeedFileUpload.MyObject | undefined;
 }

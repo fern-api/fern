@@ -11,7 +11,7 @@
  *     }
  */
 export interface GetPlaylistsRequest {
-    limit?: number;
+    limit?: number | undefined;
     /** i'm another field */
     otherField: string;
     /**
@@ -19,6 +19,6 @@ export interface GetPlaylistsRequest {
      * description
      */
     multiLineDocs: string;
-    optionalMultipleField?: string | string[];
+    optionalMultipleField?: (string | string[]) | undefined;
     multipleField: string | string[];
 }

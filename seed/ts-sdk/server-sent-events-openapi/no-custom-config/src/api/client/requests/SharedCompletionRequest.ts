@@ -13,5 +13,5 @@ export interface SharedCompletionRequest {
     /** The model to use. */
     model: string;
     /** Whether to stream the response. */
-    stream?: boolean;
+    stream?: boolean | undefined;
 }

@@ -11,9 +11,9 @@
  *     }
  */
 export interface GetUsersRequest {
-    usernames?: string | string[];
-    avatar?: string;
-    activated?: boolean | boolean[];
-    tags?: (string | null) | (string | null)[];
-    extra?: boolean | null;
+    usernames?: (string | string[]) | undefined;
+    avatar?: string | undefined;
+    activated?: (boolean | boolean[]) | undefined;
+    tags?: ((string | null) | (string | null)[]) | undefined;
+    extra?: (boolean | null) | undefined;
 }

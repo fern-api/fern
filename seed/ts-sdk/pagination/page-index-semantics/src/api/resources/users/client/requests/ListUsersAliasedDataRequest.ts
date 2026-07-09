@@ -10,12 +10,12 @@
  */
 export interface ListUsersAliasedDataRequest {
     /** Defaults to first page */
-    page?: number;
+    page?: number | undefined;
     /** Defaults to per page */
-    per_page?: number;
+    per_page?: number | undefined;
     /**
      * The cursor used for pagination in order to fetch
      * the next page of results.
      */
-    starting_after?: string;
+    starting_after?: string | undefined;
 }

@@ -19,6 +19,6 @@ export interface SearchResourcesRequest {
     /** Offset for pagination */
     offset: number;
     /** Search query text */
-    query?: string;
-    filters?: Record<string, unknown>;
+    query?: string | undefined;
+    filters?: Record<string, unknown> | undefined;
 }

@@ -8,5 +8,5 @@ import type * as core from "../../../../../core/index.js";
  */
 export interface OptionalArgsRequest {
     image_file?: core.file.Uploadable | undefined;
-    request?: unknown;
+    request?: unknown | undefined;
 }

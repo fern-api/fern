@@ -15,19 +15,19 @@
  */
 export interface ListClientsRequest {
     /** Comma-separated list of fields to include */
-    fields?: string;
+    fields?: string | undefined;
     /** Whether specified fields are included or excluded */
-    include_fields?: boolean;
+    include_fields?: boolean | undefined;
     /** Page number (zero-based) */
-    page?: number;
+    page?: number | undefined;
     /** Number of results per page */
-    per_page?: number;
+    per_page?: number | undefined;
     /** Include total count in response */
-    include_totals?: boolean;
+    include_totals?: boolean | undefined;
     /** Filter by global clients */
-    is_global?: boolean;
+    is_global?: boolean | undefined;
     /** Filter by first party clients */
-    is_first_party?: boolean;
+    is_first_party?: boolean | undefined;
     /** Filter by application type (spa, native, regular_web, non_interactive) */
-    app_type?: string[];
+    app_type?: string[] | undefined;
 }

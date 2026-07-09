@@ -9,6 +9,6 @@ import type * as SeedExhaustive from "../../../../../../index.mjs";
  *     }
  */
 export interface CreateWithBodyAndQuery {
-    _fields?: string;
+    _fields?: string | undefined;
     body: SeedExhaustive.types.ObjectWithRequiredField;
 }

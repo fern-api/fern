@@ -12,5 +12,5 @@ import type * as SeedApi from "../../../../index.js";
  *     }
  */
 export interface ClientRequest {
-    client?: SeedApi.Client;
+    client?: SeedApi.Client | undefined;
 }

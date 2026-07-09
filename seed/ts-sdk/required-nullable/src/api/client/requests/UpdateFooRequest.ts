@@ -12,9 +12,9 @@
 export interface UpdateFooRequest {
     "X-Idempotency-Key": string;
     /** Can be explicitly set to null to clear the value */
-    nullable_text?: string | null;
+    nullable_text?: (string | null) | undefined;
     /** Can be explicitly set to null to clear the value */
-    nullable_number?: number | null;
+    nullable_number?: (number | null) | undefined;
     /** Regular non-nullable field */
-    non_nullable_text?: string;
+    non_nullable_text?: string | undefined;
 }

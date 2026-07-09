@@ -9,7 +9,7 @@
  */
 export interface ListItemsRequest {
     /** The cursor for pagination */
-    cursor?: string;
+    cursor?: string | undefined;
     /** Maximum number of items to return */
-    limit?: number;
+    limit?: number | undefined;
 }

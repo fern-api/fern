@@ -5,5 +5,5 @@
  *     {}
  */
 export interface SearchRuleTypesRequest {
-    query?: string;
+    query?: string | undefined;
 }

@@ -11,5 +11,5 @@ export interface ListUsernamesWithOptionalResponseRequest {
      * The cursor used for pagination in order to fetch
      * the next page of results.
      */
-    starting_after?: string;
+    starting_after?: string | undefined;
 }

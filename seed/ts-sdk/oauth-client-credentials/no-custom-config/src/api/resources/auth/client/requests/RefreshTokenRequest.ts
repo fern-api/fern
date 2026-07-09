@@ -13,5 +13,5 @@ export interface RefreshTokenRequest {
     client_id: string;
     client_secret: string;
     refresh_token: string;
-    scope?: string;
+    scope?: string | undefined;
 }

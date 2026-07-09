@@ -12,7 +12,7 @@ export interface ListUsersTopLevelBodyCursorPaginationRequest {
      * The cursor used for pagination in order to fetch
      * the next page of results.
      */
-    cursor?: string;
+    cursor?: string | undefined;
     /** An optional filter to apply to the results. */
-    filter?: string;
+    filter?: string | undefined;
 }

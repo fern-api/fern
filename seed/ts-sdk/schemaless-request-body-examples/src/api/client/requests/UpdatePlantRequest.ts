@@ -14,5 +14,5 @@
  */
 export interface UpdatePlantRequest {
     plantId: string;
-    body?: unknown;
+    body?: unknown | undefined;
 }

@@ -23,6 +23,7 @@ export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode.js";
 export { InlineConsts } from "./codegen-utils/inlineConsts.js";
 export { isExpressionUndefined } from "./codegen-utils/isExpressionUndefined.js";
 export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs.js";
+export { stripTopLevelUndefined } from "./codegen-utils/stripTopLevelUndefined.js";
 export { toCamelCase } from "./codegen-utils/toCamelCase.js";
 export { writerToString } from "./codegen-utils/writerToString.js";
 export { type CoreUtilities } from "./core-utilities/CoreUtilities.js";
