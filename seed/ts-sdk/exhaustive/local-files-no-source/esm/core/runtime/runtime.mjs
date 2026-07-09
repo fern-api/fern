@@ -3,7 +3,7 @@
  */
 export const RUNTIME = evaluateRuntime();
 function evaluateRuntime() {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e, _f, _g;
     /**
      * A constant that indicates whether the environment the code is running is a Web Browser.
      */
@@ -57,6 +57,7 @@ function evaluateRuntime() {
             type: "deno",
             version: Deno.version.deno,
             os: (_e = Deno.build) === null || _e === void 0 ? void 0 : _e.os,
+            arch: (_f = Deno.build) === null || _f === void 0 ? void 0 : _f.arch,
         };
     }
     /**
@@ -68,6 +69,7 @@ function evaluateRuntime() {
             type: "bun",
             version: Bun.version,
             os: typeof process !== "undefined" ? process.platform : undefined,
+            arch: typeof process !== "undefined" ? process.arch : undefined,
         };
     }
     /**
@@ -89,16 +91,55 @@ function evaluateRuntime() {
      * Edge Runtime warns about Node.js APIs even when they are guarded).
      */
     const _process = typeof process !== "undefined" ? process : undefined;
-    const isNode = typeof _process !== "undefined" && typeof ((_f = _process.versions) === null || _f === void 0 ? void 0 : _f.node) === "string";
+    const isNode = typeof _process !== "undefined" && typeof ((_g = _process.versions) === null || _g === void 0 ? void 0 : _g.node) === "string";
     if (isNode) {
         return {
             type: "node",
             version: _process.versions.node,
             parsedVersion: Number(_process.versions.node.split(".")[0]),
             os: _process.platform,
+            arch: _process.arch,
         };
     }
     return {
         type: "unknown",
     };
+}
+/**
+ * Display names for the language runtimes whose version is meaningful to encode
+ * in a User-Agent. Environments where a version string is not useful (e.g.
+ * browsers, where `version` is the full navigator UA) are intentionally mapped
+ * to `undefined` so they are omitted from the User-Agent.
+ */
+const RUNTIME_DISPLAY_NAMES = {
+    node: "Node",
+    deno: "Deno",
+    bun: "Bun",
+    browser: undefined,
+    "web-worker": undefined,
+    "react-native": undefined,
+    workerd: undefined,
+    "edge-runtime": undefined,
+    unknown: undefined,
+};
+/**
+ * Builds a structured User-Agent string of the form
+ *   `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+ * where the platform group and runtime segment are omitted gracefully when the
+ * underlying values cannot be determined (e.g. in a browser).
+ */
+export function getUserAgent(sdkName, sdkVersion) {
+    let userAgent = `${sdkName}/${sdkVersion}`;
+    const platform = [RUNTIME.os, RUNTIME.arch].filter((part) => part != null && part.length > 0);
+    if (platform.length > 0) {
+        userAgent += ` (${platform.join("; ")})`;
+    }
+    const runtimeName = RUNTIME_DISPLAY_NAMES[RUNTIME.type];
+    if (runtimeName != null) {
+        userAgent += ` ${runtimeName}`;
+        if (RUNTIME.version != null && RUNTIME.version.length > 0) {
+            userAgent += `/${RUNTIME.version}`;
+        }
+    }
+    return userAgent;
 }

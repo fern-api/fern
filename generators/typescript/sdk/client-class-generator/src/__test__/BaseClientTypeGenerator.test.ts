@@ -158,6 +158,16 @@ function createMockContext(opts?: {
                 },
                 os: {
                     _getReferenceTo: () => ts.factory.createIdentifier("core.RUNTIME.os")
+                },
+                arch: {
+                    _getReferenceTo: () => ts.factory.createIdentifier("core.RUNTIME.arch")
+                },
+                userAgent: {
+                    _invoke: (sdkName: ts.Expression, sdkVersion: ts.Expression) =>
+                        ts.factory.createCallExpression(ts.factory.createIdentifier("core.getUserAgent"), undefined, [
+                            sdkName,
+                            sdkVersion
+                        ])
                 }
             },
             logging: {
@@ -711,7 +721,7 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).toContain("2.0.0");
         });
 
-        it("omits X-Fern-Platform by default (includePlatformHeaders false)", () => {
+        it("emits a bare User-Agent + discrete runtime headers by default (includePlatformHeaders false)", () => {
             const gen = createGenerator({ omitFernHeaders: false });
             const context = createMockContext();
             gen.writeToFile(context);
@@ -720,12 +730,15 @@ describe("BaseClientTypeGenerator", () => {
                 s.includes("normalizeClientOptions")
             );
             expect(normalizeFunc).toBeDefined();
-            // Runtime headers are still emitted, but the platform header is opt-in.
+            // Default output is unchanged: bare User-Agent + discrete runtime headers,
+            // and no structured User-Agent / platform header.
+            expect(normalizeFunc).toContain('"@test/sdk/1.0.0"');
             expect(normalizeFunc).toContain("X-Fern-Runtime");
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
             expect(normalizeFunc).not.toContain("X-Fern-Platform");
         });
 
-        it("includes X-Fern-Platform when includePlatformHeaders is true", () => {
+        it("emits a structured User-Agent and drops discrete runtime headers when includePlatformHeaders is true", () => {
             const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true });
             const context = createMockContext();
             gen.writeToFile(context);
@@ -733,11 +746,34 @@ describe("BaseClientTypeGenerator", () => {
             const normalizeFunc = context._captured.statements.find((s: string) =>
                 s.includes("normalizeClientOptions")
             );
-            expect(normalizeFunc).toContain("X-Fern-Platform");
-            expect(normalizeFunc).toContain("core.RUNTIME.os");
+            // The rich User-Agent consolidates the platform + runtime information.
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"@test/sdk"');
+            expect(normalizeFunc).toContain("User-Agent");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+            expect(normalizeFunc).not.toContain("X-Fern-Platform");
         });
 
-        it("omits X-Fern-Platform when omitFernHeaders is true even if includePlatformHeaders is true", () => {
+        it("structured User-Agent supersedes the IR default userAgent when includePlatformHeaders is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "@test/sdk/1.0.0"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            // The rich User-Agent wins over the auto-populated `{package}/{version}` value.
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).not.toContain('"@test/sdk/1.0.0"');
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("omits all fern headers when omitFernHeaders is true even if includePlatformHeaders is true", () => {
             const gen = createGenerator({ omitFernHeaders: true, includePlatformHeaders: true });
             const context = createMockContext();
             gen.writeToFile(context);
@@ -745,7 +781,9 @@ describe("BaseClientTypeGenerator", () => {
             const normalizeFunc = context._captured.statements.find((s: string) =>
                 s.includes("normalizeClientOptions")
             );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
             expect(normalizeFunc).not.toContain("X-Fern-Platform");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
         });
 
         it("omits fern headers when omitFernHeaders is true", () => {

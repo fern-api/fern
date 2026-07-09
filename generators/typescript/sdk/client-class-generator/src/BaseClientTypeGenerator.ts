@@ -188,7 +188,22 @@ export type BaseClientOptions = {
                 );
             }
 
-            if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
+            // When includePlatformHeaders is enabled we emit a single structured
+            // User-Agent (`{sdkName}/{version} ({os}; {arch}) {runtime}/{version}`)
+            // that consolidates the platform + runtime information. This supersedes
+            // the default `{package}/{version}` User-Agent, and the discrete
+            // X-Fern-Runtime / X-Fern-Runtime-Version headers are dropped.
+            const useRichUserAgent = this.includePlatformHeaders && context.npmPackage != null;
+
+            if (useRichUserAgent && context.npmPackage != null) {
+                fernHeaderEntries.push([
+                    "User-Agent",
+                    context.coreUtilities.runtime.userAgent._invoke(
+                        ts.factory.createStringLiteral(context.npmPackage.packageName),
+                        ts.factory.createStringLiteral(context.npmPackage.version)
+                    )
+                ]);
+            } else if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
                 fernHeaderEntries.push([
                     this.ir.sdkConfig.platformHeaders.userAgent.header,
                     ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
@@ -200,13 +215,11 @@ export type BaseClientOptions = {
                 ]);
             }
 
-            fernHeaderEntries.push(
-                ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
-                ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
-            );
-
-            if (this.includePlatformHeaders) {
-                fernHeaderEntries.push(["X-Fern-Platform", context.coreUtilities.runtime.os._getReferenceTo()]);
+            if (!useRichUserAgent) {
+                fernHeaderEntries.push(
+                    ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
+                    ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
+                );
             }
         }
 
