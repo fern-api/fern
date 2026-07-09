@@ -14,7 +14,6 @@ namespace SeedCsharpNamespaceCollision.Test.Core.RawClientTests;
 public class GzipResponseTests
 {
     private WireMockServer _server;
-    private HttpClient _httpClient;
     private RawClient _rawClient;
     private string _baseUrl;
 
@@ -23,8 +22,7 @@ public class GzipResponseTests
     {
         _server = WireMockServer.Start();
         _baseUrl = _server.Url ?? "";
-        _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
-        _rawClient = new RawClient(new ClientOptions { HttpClient = _httpClient, MaxRetries = 0 });
+        _rawClient = new RawClient(new ClientOptions { MaxRetries = 0 });
     }
 
     [Test]
@@ -36,7 +34,7 @@ public class GzipResponseTests
                 WireMockRequest
                     .Create()
                     .WithPath("/gzip")
-                    .WithHeader("Accept-Encoding", "gzip")
+                    .WithHeader("Accept-Encoding", "gzip*")
                     .UsingGet()
             )
             .RespondWith(
@@ -53,6 +51,29 @@ public class GzipResponseTests
             Method = HttpMethod.Get,
             Path = "/gzip",
             Headers = new Dictionary<string, string> { ["Accept-Encoding"] = "gzip" },
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.That(content, Is.EqualTo(body));
+        Assert.That(response.Raw.Content.Headers.ContentEncoding, Is.Empty);
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldReturnUncompressedResponseUnchanged()
+    {
+        const string body = "{\"message\": \"plain response\"}";
+        _server
+            .Given(WireMockRequest.Create().WithPath("/plain").UsingGet())
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody(body));
+
+        var request = new EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/plain",
         };
 
         var response = await _rawClient.SendRequestAsync(request);
@@ -78,6 +99,5 @@ public class GzipResponseTests
     {
         _server.Stop();
         _server.Dispose();
-        _httpClient.Dispose();
     }
 }

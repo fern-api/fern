@@ -1,4 +1,3 @@
-using global::System.IO.Compression;
 using global::System.Net.Http;
 using global::System.Net.Http.Headers;
 using global::System.Text;
@@ -150,7 +149,6 @@ internal partial class RawClient(ClientOptions clientOptions)
             var response = await httpClient
                 .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                 .ConfigureAwait(false);
-            await DecompressResponseAsync(response, cancellationToken).ConfigureAwait(false);
             return new global::SeedIdempotencyHeaders.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
@@ -185,68 +183,11 @@ internal partial class RawClient(ClientOptions clientOptions)
             }
         }
 
-        await DecompressResponseAsync(retryResponse!, cancellationToken).ConfigureAwait(false);
         return new global::SeedIdempotencyHeaders.Core.ApiResponse
         {
             StatusCode = (int)retryResponse!.StatusCode,
             Raw = retryResponse,
         };
-    }
-
-    /// <summary>
-    /// Replaces the response content with a decompressing stream when the server responds
-    /// with a gzip or deflate encoded body that the HTTP client did not decompress
-    /// automatically (e.g. when an Accept-Encoding header is set explicitly on the request).
-    /// </summary>
-    private static async SystemTask DecompressResponseAsync(
-        HttpResponseMessage response,
-        CancellationToken cancellationToken
-    )
-    {
-        var contentEncoding = response.Content?.Headers.ContentEncoding;
-        if (contentEncoding == null || contentEncoding.Count != 1)
-        {
-            return;
-        }
-
-        var encoding = contentEncoding.First();
-#if NET5_0_OR_GREATER
-        var contentStream = await response
-            .Content!.ReadAsStreamAsync(cancellationToken)
-            .ConfigureAwait(false);
-#else
-        var contentStream = await response.Content!.ReadAsStreamAsync().ConfigureAwait(false);
-#endif
-        Stream decompressedStream;
-        if (
-            string.Equals(encoding, "gzip", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(encoding, "x-gzip", StringComparison.OrdinalIgnoreCase)
-        )
-        {
-            decompressedStream = new GZipStream(contentStream, CompressionMode.Decompress);
-        }
-        else if (string.Equals(encoding, "deflate", StringComparison.OrdinalIgnoreCase))
-        {
-            decompressedStream = new DeflateStream(contentStream, CompressionMode.Decompress);
-        }
-        else
-        {
-            return;
-        }
-
-        var decompressedContent = new StreamContent(decompressedStream);
-        foreach (var header in response.Content!.Headers)
-        {
-            if (
-                string.Equals(header.Key, "Content-Encoding", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(header.Key, "Content-Length", StringComparison.OrdinalIgnoreCase)
-            )
-            {
-                continue;
-            }
-            decompressedContent.Headers.TryAddWithoutValidation(header.Key, header.Value);
-        }
-        response.Content = decompressedContent;
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)

@@ -1,8 +1,8 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
 - summary: |
-    Decompress gzip and deflate encoded response bodies in the generated `RawClient`.
-    `HttpClientHandler.AutomaticDecompression` defaults to `None`, so responses to
-    requests with a spec-defined `Accept-Encoding: gzip` header were previously
-    returned as raw gzip bytes.
+    Enable automatic response decompression on the default HttpClient. The default client
+    is now created with an HttpClientHandler configured with AutomaticDecompression
+    (DecompressionMethods.All on .NET 5+, GZip | Deflate on older targets), so responses
+    with a Content-Encoding of gzip or deflate are decompressed transparently — including
+    when an Accept-Encoding request header is set explicitly by the API spec. User-supplied
+    HttpClients provided via ClientOptions are not modified.
   type: fix
