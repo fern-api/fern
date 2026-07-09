@@ -47,7 +47,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
-            'User-Agent' => self::getPlatformUserAgent(),
+            'User-Agent' => sprintf('%s (%s; %s) PHP/%s', 'seed/seed/0.0.1', strtolower(PHP_OS), php_uname('m'), PHP_VERSION),
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
@@ -65,16 +65,5 @@ class SeedClient
         );
 
         $this->imdb = new ImdbClient($this->client, $this->options);
-    }
-
-    /**
-     * @return string
-     */
-    private static function getPlatformUserAgent(): string
-    {
-        $parts = array_values(array_filter([strtolower(PHP_OS), php_uname('m')], fn ($value) => is_string($value) && $value !== ''));
-        $platform = count($parts) > 0 ? ' (' . implode('; ', $parts) . ')' : '';
-        $runtime = PHP_VERSION !== '' ? 'PHP/' . PHP_VERSION : 'PHP';
-        return 'seed/seed/0.0.1' . $platform . ' ' . $runtime;
     }
 }
