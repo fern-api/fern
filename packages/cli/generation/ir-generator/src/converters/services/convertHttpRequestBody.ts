@@ -193,6 +193,7 @@ function convertInlinedRequestProperty({
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
         valueType: file.parseTypeReference(propertyDefinition),
+        variable: undefined,
         defaultValue: typeof propertyDefinition !== "string" ? propertyDefinition.default : undefined,
         v2Examples: {
             userSpecifiedExamples: {},

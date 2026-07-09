@@ -590,6 +590,7 @@
                 },
                 "type": "primitive",
               },
+              "variable": undefined,
             },
             {
               "_visit": [Function],
@@ -621,6 +622,7 @@
                 "type": "named",
                 "typeId": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
               },
+              "variable": undefined,
             },
             {
               "_visit": [Function],
@@ -688,6 +690,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
             {
               "_visit": [Function],
@@ -723,6 +726,7 @@
                 },
                 "type": "primitive",
               },
+              "variable": undefined,
             },
             {
               "_visit": [Function],
@@ -778,6 +782,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
             {
               "_visit": [Function],
@@ -806,6 +811,7 @@
                 },
                 "type": "primitive",
               },
+              "variable": undefined,
             },
             {
               "_visit": [Function],
@@ -843,6 +849,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
           ],
           "v2Examples": {

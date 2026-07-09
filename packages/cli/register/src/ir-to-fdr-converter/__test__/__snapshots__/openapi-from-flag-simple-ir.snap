@@ -544,6 +544,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
           ],
           "requestBody": undefined,

@@ -31,6 +31,7 @@ export function convertGlobalHeadersExtension({
             wireValue: header.header
         }),
         valueType: header.optional ? AbstractConverter.OPTIONAL_STRING : AbstractConverter.STRING,
+        variable: undefined,
         env: header.env,
         v2Examples: header.optional ? undefined : constructGlobalHeaderExample({ header, context }),
         availability: undefined,

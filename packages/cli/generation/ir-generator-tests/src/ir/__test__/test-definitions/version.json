@@ -16,6 +16,7 @@
                     }
                 }
             },
+            "variable": null,
             "env": null,
             "clientDefault": null,
             "defaultValue": null,

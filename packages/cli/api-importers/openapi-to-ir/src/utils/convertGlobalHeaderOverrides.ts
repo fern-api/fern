@@ -36,6 +36,7 @@ export function convertGlobalHeaderOverrides({
                     wireValue: headerKey
                 }),
                 valueType: AbstractConverter.STRING,
+                variable: undefined,
                 env: undefined,
                 v2Examples: {
                     userSpecifiedExamples: {},
@@ -54,6 +55,7 @@ export function convertGlobalHeaderOverrides({
                     wireValue: headerKey
                 }),
                 valueType: AbstractConverter.STRING,
+                variable: undefined,
                 env: headerSchema.env,
                 v2Examples: {
                     userSpecifiedExamples: {},

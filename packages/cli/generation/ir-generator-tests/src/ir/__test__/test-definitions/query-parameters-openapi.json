@@ -515,6 +515,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -539,6 +540,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -559,6 +561,7 @@
                                     "v2": null
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -579,6 +582,7 @@
                                     "v2": null
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -603,6 +607,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -629,6 +634,7 @@
                                 "default": null,
                                 "inline": null
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -661,6 +667,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -687,6 +694,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -734,6 +742,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -764,6 +773,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -796,6 +806,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -828,6 +839,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -860,6 +872,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -890,6 +903,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -920,6 +934,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -950,6 +965,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -982,6 +998,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1008,6 +1025,7 @@
                                 "default": null,
                                 "inline": null
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,

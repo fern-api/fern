@@ -1,0 +1,6 @@
+- summary: |
+    Extend `x-fern-sdk-variable` binding beyond path parameters. `HttpHeader`,
+    `QueryParameter`, and `InlinedRequestBodyProperty` now carry an optional
+    `variable` reference in the IR, allowing a single client-level SDK variable
+    to be bound to header, query, and body parameters (in addition to path).
+  type: feat

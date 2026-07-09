@@ -9653,6 +9653,7 @@
                             }
                         }
                     },
+                    "variable": null,
                     "env": null,
                     "clientDefault": null,
                     "defaultValue": null,
@@ -12934,6 +12935,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -12964,6 +12966,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -12990,6 +12993,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "env": null,
                             "clientDefault": null,
                             "defaultValue": null,

@@ -471,6 +471,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -502,6 +503,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -524,6 +526,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -546,6 +549,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": "test",
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -775,6 +779,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1344,6 +1349,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": 10,
@@ -1364,6 +1370,7 @@
                                     "v2": null
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1384,6 +1391,7 @@
                                     "v2": null
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1404,6 +1412,7 @@
                                     "v2": null
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1424,6 +1433,7 @@
                                     "v2": null
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1452,6 +1462,7 @@
                                 "default": null,
                                 "inline": null
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1486,6 +1497,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1512,6 +1524,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1553,6 +1566,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1583,6 +1597,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1611,6 +1626,7 @@
                                 "default": null,
                                 "inline": null
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1645,6 +1661,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1673,6 +1690,7 @@
                                 "default": null,
                                 "inline": null
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1697,6 +1715,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": true,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -1721,6 +1740,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": 9223372036854776000,
@@ -1744,6 +1764,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "allowMultiple": false,
                             "clientDefault": null,
                             "defaultValue": "18446744073709551615",

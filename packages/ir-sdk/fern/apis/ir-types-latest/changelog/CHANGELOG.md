@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.11.0] - 2026-07-08
+
+- Feature: Allow SDK variables (`x-fern-sdk-variables`) to bind to header, query,
+  and inlined-request-body parameters, not just path parameters. `HttpHeader`,
+  `QueryParameter`, and `InlinedRequestBodyProperty` now each carry an optional
+  `variable` reference (mirroring the existing `PathParameter.variable`). When a
+  parameter is bound to a variable, the SDK auto-fills it from the client-level
+  variable and the parameter is optional at the call site (a per-call value still
+  wins). A single variable may be bound by parameters across multiple locations.
+
 ## [v67.10.2] - 2026-07-07
 
 - Docs: Clarify `HttpEndpoint.globalParameters` semantics — it is now the fully

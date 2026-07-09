@@ -712,6 +712,7 @@ export class OperationConverter extends AbstractOperationConverter {
             }
             const baseHeader: Omit<FernIr.HttpHeader, "name"> = {
                 valueType: AbstractConverter.STRING,
+                variable: undefined,
                 availability: undefined,
                 docs: undefined,
                 env: undefined,

@@ -255,6 +255,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "env": null,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -284,6 +285,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -306,6 +308,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -327,6 +330,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -348,6 +352,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -376,6 +381,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -758,6 +764,7 @@
                                     }
                                 }
                             },
+                            "variable": null,
                             "env": null,
                             "clientDefault": null,
                             "defaultValue": null,
@@ -787,6 +794,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -809,6 +817,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -831,6 +840,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -852,6 +862,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -873,6 +884,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},
@@ -901,6 +913,7 @@
                                         }
                                     }
                                 },
+                                "variable": null,
                                 "defaultValue": null,
                                 "v2Examples": {
                                     "userSpecifiedExamples": {},

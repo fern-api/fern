@@ -18,6 +18,7 @@ function makeHeader(wireValue: string): FernIr.HttpHeader {
             v1: "STRING",
             v2: FernIr.PrimitiveTypeV2.string({ default: undefined, validation: undefined })
         }),
+        variable: undefined,
         env: undefined,
         availability: undefined,
         docs: undefined,

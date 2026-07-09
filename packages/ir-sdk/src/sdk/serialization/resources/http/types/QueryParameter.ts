@@ -7,6 +7,7 @@ import { Declaration } from "../../commons/types/Declaration.js";
 import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 import { Literal } from "../../types/types/Literal.js";
+import { VariableId } from "../../variables/types/VariableId.js";
 
 export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryParameter.Raw, FernIr.QueryParameter> =
     core.serialization
@@ -14,6 +15,7 @@ export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryPa
             name: NameAndWireValueOrString,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             allowMultiple: core.serialization.boolean(),
+            variable: VariableId.optional(),
             clientDefault: Literal.optional(),
             defaultValue: core.serialization.unknown().optional(),
             v2Examples: V2SchemaExamples.optional(),
@@ -26,6 +28,7 @@ export declare namespace QueryParameter {
         name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
         allowMultiple: boolean;
+        variable?: VariableId.Raw | null;
         clientDefault?: Literal.Raw | null;
         defaultValue?: unknown | null;
         v2Examples?: V2SchemaExamples.Raw | null;

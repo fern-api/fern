@@ -422,6 +422,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
             {
               "allowMultiple": false,
@@ -473,6 +474,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
             {
               "allowMultiple": false,
@@ -524,6 +526,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
             {
               "allowMultiple": true,
@@ -575,6 +578,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
             {
               "allowMultiple": false,
@@ -617,6 +621,7 @@
                 },
                 "type": "container",
               },
+              "variable": undefined,
             },
           ],
           "requestBody": undefined,

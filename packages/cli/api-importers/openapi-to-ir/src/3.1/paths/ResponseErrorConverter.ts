@@ -304,6 +304,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 }),
                 docs: resolvedHeader.description,
                 valueType,
+                variable: undefined,
                 env: undefined,
                 v2Examples,
                 availability: undefined,

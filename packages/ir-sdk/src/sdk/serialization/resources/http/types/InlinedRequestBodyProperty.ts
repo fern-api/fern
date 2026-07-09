@@ -7,6 +7,7 @@ import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOr
 import { WithDocsAndAvailability } from "../../commons/types/WithDocsAndAvailability.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 import { ObjectPropertyAccess } from "../../types/types/ObjectPropertyAccess.js";
+import { VariableId } from "../../variables/types/VariableId.js";
 
 export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
     serializers.InlinedRequestBodyProperty.Raw,
@@ -15,6 +16,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: NameAndWireValueOrString,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
+        variable: VariableId.optional(),
         defaultValue: core.serialization.unknown().optional(),
         v2Examples: V2SchemaExamples.optional(),
         propertyAccess: ObjectPropertyAccess.optional(),
@@ -25,6 +27,7 @@ export declare namespace InlinedRequestBodyProperty {
     export interface Raw extends WithDocsAndAvailability.Raw {
         name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
+        variable?: VariableId.Raw | null;
         defaultValue?: unknown | null;
         v2Examples?: V2SchemaExamples.Raw | null;
         propertyAccess?: ObjectPropertyAccess.Raw | null;
