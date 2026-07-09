@@ -1,8 +1,10 @@
 - summary: |
-    Add the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and `X-Fern-Platform`
-    headers to generated SDK clients for better runtime/platform observability.
-    `X-Fern-Runtime` reports `go`, `X-Fern-Runtime-Version` reports
-    `runtime.Version()`, and `X-Fern-Platform` reports `runtime.GOOS`, all
-    computed at runtime. Like the other Fern platform headers, they are gated by
-    the `omitFernHeaders` config option and omitted when it is set.
+    Add opt-in support for the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and
+    `X-Fern-Platform` headers on generated SDK clients for better runtime/platform
+    observability. `X-Fern-Runtime` reports `go`, `X-Fern-Runtime-Version` reports
+    `runtime.Version()`, and `X-Fern-Platform` reports `runtime.GOOS`, all computed
+    at runtime. These headers are gated behind a new `includePlatformHeaders` config
+    option and are disabled by default, so existing generated output is unchanged.
+    When enabled they are still subject to `omitFernHeaders` and are omitted when it
+    is set.
   type: feat

@@ -645,10 +645,12 @@ func (f *fileWriter) writePlatformHeaders(
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
 			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
 		}
-		runtimePackage := f.scope.AddImport("runtime")
-		f.P(fmt.Sprintf("headers.Set(%q, %q)", runtimeHeader, runtimeValue))
-		f.P(fmt.Sprintf("headers.Set(%q, %s.Version())", runtimeVersionHeader, runtimePackage))
-		f.P(fmt.Sprintf("headers.Set(%q, %s.GOOS)", platformHeader, runtimePackage))
+		if f.includePlatformHeaders {
+			runtimePackage := f.scope.AddImport("runtime")
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", runtimeHeader, runtimeValue))
+			f.P(fmt.Sprintf("headers.Set(%q, %s.Version())", runtimeVersionHeader, runtimePackage))
+			f.P(fmt.Sprintf("headers.Set(%q, %s.GOOS)", platformHeader, runtimePackage))
+		}
 		f.P("return headers")
 		f.P("}")
 	}
