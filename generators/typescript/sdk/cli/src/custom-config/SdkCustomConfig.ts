@@ -69,6 +69,7 @@ export interface SdkCustomConfig {
     fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
+    includePlatformHeaders: boolean | undefined;
     useDefaultRequestParameterValues: boolean | undefined;
     packageManager: "pnpm" | "yarn";
     generateReadWriteOnlyTypes: boolean;

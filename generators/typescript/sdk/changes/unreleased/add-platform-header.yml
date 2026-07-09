@@ -1,7 +1,9 @@
 - summary: |
-    Add the `X-Fern-Platform` header to generated SDK clients, reporting the
+    Add opt-in support for the `X-Fern-Platform` header, which reports the
     operating system the SDK is running on (e.g. `linux`, `darwin`, `win32` on
-    server runtimes) when it can be determined. Like the other Fern observability
-    headers it is gated by the `omitFernHeaders` config option and is omitted in
-    environments where the OS is not observable (e.g. browsers).
+    server runtimes) when it can be determined. This is gated behind a new
+    `includePlatformHeaders` config option and is disabled by default, so
+    existing generated output is unchanged. When enabled it is still subject to
+    `omitFernHeaders` and is omitted in environments where the OS is not
+    observable (e.g. browsers).
   type: feat

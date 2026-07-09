@@ -12,6 +12,7 @@ export declare namespace BaseClientTypeGenerator {
         generateIdempotentRequestOptions: boolean;
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
+        includePlatformHeaders: boolean;
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
@@ -25,6 +26,7 @@ export class BaseClientTypeGenerator {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
+    private readonly includePlatformHeaders: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly caseConverter: CaseConverter;
@@ -33,6 +35,7 @@ export class BaseClientTypeGenerator {
         generateIdempotentRequestOptions,
         ir,
         omitFernHeaders,
+        includePlatformHeaders,
         retainOriginalCasing,
         parameterNaming,
         caseConverter
@@ -40,6 +43,7 @@ export class BaseClientTypeGenerator {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
+        this.includePlatformHeaders = includePlatformHeaders;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
         this.caseConverter = caseConverter;
@@ -198,9 +202,12 @@ export type BaseClientOptions = {
 
             fernHeaderEntries.push(
                 ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
-                ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()],
-                ["X-Fern-Platform", context.coreUtilities.runtime.os._getReferenceTo()]
+                ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
             );
+
+            if (this.includePlatformHeaders) {
+                fernHeaderEntries.push(["X-Fern-Platform", context.coreUtilities.runtime.os._getReferenceTo()]);
+            }
         }
 
         const rootHeaders = this.getRootHeaders(context);

@@ -44,7 +44,6 @@ function normalizeClientOptions(options) {
         "X-Fern-Language": "JavaScript",
         "X-Fern-Runtime": core.RUNTIME.type,
         "X-Fern-Runtime-Version": core.RUNTIME.version,
-        "X-Fern-Platform": core.RUNTIME.os,
     }, options === null || options === void 0 ? void 0 : options.headers);
     return Object.assign(Object.assign({}, options), { logging: core.logging.createLogger(options === null || options === void 0 ? void 0 : options.logging), headers });
 }

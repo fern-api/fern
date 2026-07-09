@@ -216,11 +216,13 @@ function createGenerator(opts?: {
     generateIdempotentRequestOptions?: boolean;
     ir?: FernIr.IntermediateRepresentation;
     omitFernHeaders?: boolean;
+    includePlatformHeaders?: boolean;
 }): BaseClientTypeGenerator {
     return new BaseClientTypeGenerator({
         generateIdempotentRequestOptions: opts?.generateIdempotentRequestOptions ?? false,
         ir: opts?.ir ?? createIR(),
         omitFernHeaders: opts?.omitFernHeaders ?? false,
+        includePlatformHeaders: opts?.includePlatformHeaders ?? false,
         retainOriginalCasing: false,
         parameterNaming: "default",
         caseConverter
@@ -707,6 +709,43 @@ describe("BaseClientTypeGenerator", () => {
             );
             expect(normalizeFunc).toContain("@acme/sdk");
             expect(normalizeFunc).toContain("2.0.0");
+        });
+
+        it("omits X-Fern-Platform by default (includePlatformHeaders false)", () => {
+            const gen = createGenerator({ omitFernHeaders: false });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toBeDefined();
+            // Runtime headers are still emitted, but the platform header is opt-in.
+            expect(normalizeFunc).toContain("X-Fern-Runtime");
+            expect(normalizeFunc).not.toContain("X-Fern-Platform");
+        });
+
+        it("includes X-Fern-Platform when includePlatformHeaders is true", () => {
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain("X-Fern-Platform");
+            expect(normalizeFunc).toContain("core.RUNTIME.os");
+        });
+
+        it("omits X-Fern-Platform when omitFernHeaders is true even if includePlatformHeaders is true", () => {
+            const gen = createGenerator({ omitFernHeaders: true, includePlatformHeaders: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("X-Fern-Platform");
         });
 
         it("omits fern headers when omitFernHeaders is true", () => {

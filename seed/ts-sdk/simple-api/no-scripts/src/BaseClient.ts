@@ -62,7 +62,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     options: T
 ): NormalizedClientOptions<T> {
     const headers = mergeHeaders(
-        { "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "@fern/simple-api", "X-Fern-SDK-Version": "0.0.1", "User-Agent": "@fern/simple-api/0.0.1", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version, "X-Fern-Platform": core.RUNTIME.os },
+        { "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "@fern/simple-api", "X-Fern-SDK-Version": "0.0.1", "User-Agent": "@fern/simple-api/0.0.1", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version },
         options?.headers
     );
 
