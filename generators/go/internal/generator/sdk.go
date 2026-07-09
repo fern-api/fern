@@ -17,13 +17,9 @@ import (
 // goLanguageHeader is the identifier used for the X-Fern-Language platform header.
 const goLanguageHeader = "Go"
 
-// Platform observability headers reported by generated SDKs.
-const (
-	runtimeHeader        = "X-Fern-Runtime"
-	runtimeValue         = "go"
-	runtimeVersionHeader = "X-Fern-Runtime-Version"
-	platformHeader       = "X-Fern-Platform"
-)
+// platformUserAgentFunc is the name of the generated helper that builds the
+// structured User-Agent header value when includePlatformHeaders is enabled.
+const platformUserAgentFunc = "platformUserAgent"
 
 var (
 	//go:embed sdk/core/api_error.go
@@ -643,18 +639,53 @@ func (f *fileWriter) writePlatformHeaders(
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
-			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
-		}
-		if f.includePlatformHeaders {
-			runtimePackage := f.scope.AddImport("runtime")
-			f.P(fmt.Sprintf("headers.Set(%q, %q)", runtimeHeader, runtimeValue))
-			f.P(fmt.Sprintf("headers.Set(%q, %s.Version())", runtimeVersionHeader, runtimePackage))
-			f.P(fmt.Sprintf("headers.Set(%q, %s.GOOS)", platformHeader, runtimePackage))
+			if f.includePlatformHeaders {
+				// Consolidate runtime/platform observability into a single structured
+				// User-Agent header, computed at runtime.
+				f.P(fmt.Sprintf("headers.Set(%q, %s(%q))", sdkConfig.PlatformHeaders.UserAgent.Header(), platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value))
+			} else {
+				f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
+			}
 		}
 		f.P("return headers")
 		f.P("}")
+		if f.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
+			f.writePlatformUserAgentFunc()
+		}
 	}
 	return nil
+}
+
+// writePlatformUserAgentFunc generates a helper that augments the base
+// User-Agent value with the operating system, architecture, and Go runtime
+// version, all resolved at runtime. Unknown components are omitted rather than
+// reported as empty, and it never panics.
+func (f *fileWriter) writePlatformUserAgentFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	runtimePackage := f.scope.AddImport("runtime")
+	stringsPackage := f.scope.AddImport("strings")
+	f.P()
+	f.P("// ", platformUserAgentFunc, " builds a structured User-Agent header value of the form")
+	f.P("// \"{base} ({os}; {arch}) Go/{version}\". The operating system, architecture, and")
+	f.P("// Go runtime version are resolved at runtime; unknown components are omitted.")
+	f.P("func ", platformUserAgentFunc, "(base string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("b.WriteString(base)")
+	f.P("goos, goarch := ", runtimePackage, ".GOOS, ", runtimePackage, ".GOARCH")
+	f.P("switch {")
+	f.P("case goos != \"\" && goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s; %s)\", goos, goarch))")
+	f.P("case goos != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goos))")
+	f.P("case goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goarch))")
+	f.P("}")
+	f.P("b.WriteString(\" Go\")")
+	f.P("if version := ", stringsPackage, ".TrimPrefix(", runtimePackage, ".Version(), \"go\"); version != \"\" {")
+	f.P("b.WriteString(\"/\" + version)")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
 }
 
 func (f *fileWriter) writeRequestOptionStructs(

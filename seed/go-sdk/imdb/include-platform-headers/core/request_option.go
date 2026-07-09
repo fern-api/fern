@@ -3,9 +3,11 @@
 package core
 
 import (
+	fmt "fmt"
 	http "net/http"
 	url "net/url"
 	runtime "runtime"
+	strings "strings"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -67,11 +69,30 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/imdb/fern")
 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
-	headers.Set("User-Agent", "github.com/imdb/fern/0.0.1")
-	headers.Set("X-Fern-Runtime", "go")
-	headers.Set("X-Fern-Runtime-Version", runtime.Version())
-	headers.Set("X-Fern-Platform", runtime.GOOS)
+	headers.Set("User-Agent", platformUserAgent("github.com/imdb/fern/0.0.1"))
 	return headers
+}
+
+// platformUserAgent builds a structured User-Agent header value of the form
+// "{base} ({os}; {arch}) Go/{version}". The operating system, architecture, and
+// Go runtime version are resolved at runtime; unknown components are omitted.
+func platformUserAgent(base string) string {
+	var b strings.Builder
+	b.WriteString(base)
+	goos, goarch := runtime.GOOS, runtime.GOARCH
+	switch {
+	case goos != "" && goarch != "":
+		b.WriteString(fmt.Sprintf(" (%s; %s)", goos, goarch))
+	case goos != "":
+		b.WriteString(fmt.Sprintf(" (%s)", goos))
+	case goarch != "":
+		b.WriteString(fmt.Sprintf(" (%s)", goarch))
+	}
+	b.WriteString(" Go")
+	if version := strings.TrimPrefix(runtime.Version(), "go"); version != "" {
+		b.WriteString("/" + version)
+	}
+	return b.String()
 }
 
 // BaseURLOption implements the RequestOption interface.
