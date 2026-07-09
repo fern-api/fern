@@ -1,10 +1,12 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add opt-in support for the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and
-    `X-Fern-Platform` observability headers. When enabled they report the runtime
-    (`ruby`), the Ruby version (`RUBY_VERSION`), and the operating system
-    (`RbConfig::CONFIG["host_os"]`) on every request. This is gated behind a new
+    Add opt-in support for a structured `User-Agent` header on generated clients.
+    When enabled it reports the SDK name/version, operating system, CPU
+    architecture, and Ruby runtime version, e.g.
+    `my-sdk/0.0.1 (linux; x86_64) Ruby/3.2.0`. The operating system, architecture,
+    and version are resolved at runtime; unknown components are omitted rather
+    than emitted as placeholders. This is gated behind a new
     `includePlatformHeaders` config option and is disabled by default, so existing
     generated output is unchanged. When enabled it is still subject to the
     `omitFernHeaders` option.

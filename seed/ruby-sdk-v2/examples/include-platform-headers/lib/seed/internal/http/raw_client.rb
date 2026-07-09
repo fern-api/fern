@@ -31,10 +31,50 @@ module Seed
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "seed",
             "X-Fern-SDK-Version": "0.0.1",
-            "X-Fern-Runtime": "ruby",
-            "X-Fern-Runtime-Version": RUBY_VERSION,
-            "X-Fern-Platform": RbConfig::CONFIG["host_os"]
+            "User-Agent": user_agent
           }.merge(headers)
+        end
+
+        # Builds a structured User-Agent header value, resolving the operating
+        # system, architecture, and Ruby version at runtime. Unknown components
+        # are omitted rather than emitted as placeholder values.
+        # @return [String] The User-Agent header value.
+        def user_agent
+          os = normalize_os(RbConfig::CONFIG["host_os"])
+          arch = normalize_value(RbConfig::CONFIG["host_cpu"])
+          version = normalize_value(RUBY_VERSION)
+
+          parts = ["seed/0.0.1"]
+          platform = [os, arch].compact
+          parts << "(#{platform.join("; ")})" unless platform.empty?
+          parts << (version.nil? ? "Ruby" : "Ruby/#{version}")
+          parts.join(" ")
+        end
+
+        # @param value [String, nil] The raw value to normalize.
+        # @return [String, nil] The stripped value, or nil when blank.
+        def normalize_value(value)
+          return nil if value.nil?
+
+          stripped = value.to_s.strip
+          stripped.empty? ? nil : stripped
+        end
+
+        # Maps RbConfig's host_os to a short, stable platform token.
+        # @param host_os [String, nil] The raw RbConfig host_os value.
+        # @return [String, nil] A normalized OS token, or nil when unknown.
+        def normalize_os(host_os)
+          value = normalize_value(host_os)
+          return nil if value.nil?
+
+          case value
+          when /linux/i then "linux"
+          when /darwin|mac ?os/i then "darwin"
+          when /mswin|mingw|cygwin|windows/i then "windows"
+          when /bsd/i then "bsd"
+          when /solaris/i then "solaris"
+          else value
+          end
         end
 
         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
