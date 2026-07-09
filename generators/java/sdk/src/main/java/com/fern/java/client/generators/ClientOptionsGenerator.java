@@ -284,7 +284,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
                             .toString())
                     .collect(Collectors.joining(""));
-            platformHeadersPutString += getRuntimePlatformHeadersPutString();
+            if (clientGeneratorContext.getCustomConfig().includePlatformHeaders()) {
+                platformHeadersPutString += getRuntimePlatformHeadersPutString();
+            }
         }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()

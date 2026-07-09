@@ -44,9 +44,6 @@ public final class ClientOptions {
                 put("User-Agent", "com.fern:websocket-bearer-auth/0.0.1");
                 put("X-Fern-Language", "JAVA");
                 put("X-Fern-SDK-Name", "com.seed.fern:websocket-bearer-auth-sdk");
-                put("X-Fern-Runtime", "jvm");
-                put("X-Fern-Runtime-Version", System.getProperty("java.version"));
-                put("X-Fern-Platform", System.getProperty("os.name"));
             }
         });
         this.headerSuppliers = headerSuppliers;

@@ -171,6 +171,9 @@ fixtures:
         omit-fern-headers: true
         maxRetries: 5
       outputFolder: omit-fern-headers
+    - customConfig:
+        includePlatformHeaders: true
+      outputFolder: include-platform-headers
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
