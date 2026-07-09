@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and `X-Fern-Platform`
+    observability headers to generated SDK clients. These report the runtime
+    (`jvm`), the JVM version (`System.getProperty("java.version")`), and the
+    operating system (`System.getProperty("os.name")`), computed at runtime.
+    Like the other Fern platform headers, they are gated by the `omit-fern-headers`
+    configuration option.
+  type: feat

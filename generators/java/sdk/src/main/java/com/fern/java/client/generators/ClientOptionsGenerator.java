@@ -181,6 +181,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return entries;
     }
 
+    /**
+     * Builds the {@code put(...)} statements for the runtime/platform observability headers. Unlike the other Fern
+     * headers, these values are computed at runtime via {@link System#getProperty(String)} rather than baked in at
+     * generation time.
+     */
+    private static String getRuntimePlatformHeadersPutString() {
+        return "put(\"X-Fern-Runtime\", \"jvm\");"
+                + "put(\"X-Fern-Runtime-Version\", System.getProperty(\"java.version\"));"
+                + "put(\"X-Fern-Platform\", System.getProperty(\"os.name\"));";
+    }
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
@@ -273,6 +284,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
                             .toString())
                     .collect(Collectors.joining(""));
+            platformHeadersPutString += getRuntimePlatformHeadersPutString();
         }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
