@@ -1,8 +1,10 @@
 - summary: |
-    Add the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and `X-Fern-Platform`
-    observability headers to generated SDK clients. `X-Fern-Runtime` reports the
-    runtime name (`php`), `X-Fern-Runtime-Version` reports the running PHP version
-    (`PHP_VERSION`), and `X-Fern-Platform` reports the operating system (`PHP_OS`).
-    Like the other Fern platform headers, they are gated by the `omitFernHeaders`
-    config option and are omitted when it is set.
+    Add opt-in support for the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and
+    `X-Fern-Platform` observability headers on generated SDK clients.
+    `X-Fern-Runtime` reports the runtime name (`php`), `X-Fern-Runtime-Version`
+    reports the running PHP version (`PHP_VERSION`), and `X-Fern-Platform` reports
+    the operating system (`PHP_OS`). These are gated behind a new
+    `includePlatformHeaders` config option and are disabled by default, so
+    existing generated output is unchanged. When enabled they are still subject to
+    `omitFernHeaders`.
   type: feat

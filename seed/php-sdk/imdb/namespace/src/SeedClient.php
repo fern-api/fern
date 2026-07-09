@@ -48,9 +48,6 @@ class SeedClient
             'X-Fern-SDK-Name' => 'Fern',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
-            'X-Fern-Runtime' => 'php',
-            'X-Fern-Runtime-Version' => PHP_VERSION,
-            'X-Fern-Platform' => PHP_OS,
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
