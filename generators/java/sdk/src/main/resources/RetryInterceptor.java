@@ -30,6 +30,21 @@ public class RetryInterceptor implements Interceptor {
             Optional<Long> initialRetryDelayMillis,
             Optional<Long> maxRetryDelayMillis,
             Optional<Double> jitterFactor) {
+        initialRetryDelayMillis.ifPresent(delay -> {
+            if (delay < 0) {
+                throw new IllegalArgumentException("initialRetryDelayMillis must be non-negative");
+            }
+        });
+        maxRetryDelayMillis.ifPresent(delay -> {
+            if (delay < 0) {
+                throw new IllegalArgumentException("maxRetryDelayMillis must be non-negative");
+            }
+        });
+        jitterFactor.ifPresent(factor -> {
+            if (factor < 0 || factor > 1) {
+                throw new IllegalArgumentException("jitterFactor must be between 0 and 1");
+            }
+        });
         this.maxRetries = maxRetries;
         this.initialRetryDelay =
                 initialRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_INITIAL_RETRY_DELAY);
