@@ -16,6 +16,15 @@ public partial class SeedPlainTextClient : ISeedPlainTextClient
                 { "X-Fern-SDK-Name", "SeedPlainText" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernplain-text/0.0.1" },
+                { "X-Fern-Runtime", "dotnet" },
+                {
+                    "X-Fern-Runtime-Version",
+                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                },
+                {
+                    "X-Fern-Platform",
+                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
+                },
             }
         );
         foreach (var header in platformHeaders)

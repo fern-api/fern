@@ -17,6 +17,15 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
                 { "X-Fern-SDK-Name", "SeedPackageYml" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernpackage-yml/0.0.1" },
+                { "X-Fern-Runtime", "dotnet" },
+                {
+                    "X-Fern-Runtime-Version",
+                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                },
+                {
+                    "X-Fern-Platform",
+                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
+                },
             }
         );
         foreach (var header in platformHeaders)

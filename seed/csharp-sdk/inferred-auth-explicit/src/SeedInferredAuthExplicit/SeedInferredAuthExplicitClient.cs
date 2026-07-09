@@ -24,6 +24,15 @@ public partial class SeedInferredAuthExplicitClient : ISeedInferredAuthExplicitC
                 { "X-Fern-SDK-Name", "SeedInferredAuthExplicit" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferninferred-auth-explicit/0.0.1" },
+                { "X-Fern-Runtime", "dotnet" },
+                {
+                    "X-Fern-Runtime-Version",
+                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                },
+                {
+                    "X-Fern-Platform",
+                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
+                },
             }
         );
         foreach (var header in platformHeaders)

@@ -21,6 +21,15 @@ public partial class SeedTraceClient : ISeedTraceClient
                 { "X-Fern-SDK-Name", "SeedTrace" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferntrace/0.0.1" },
+                { "X-Fern-Runtime", "dotnet" },
+                {
+                    "X-Fern-Runtime-Version",
+                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                },
+                {
+                    "X-Fern-Platform",
+                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
+                },
             }
         );
         foreach (var header in platformHeaders)

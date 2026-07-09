@@ -18,6 +18,15 @@ public partial class SeedAudiencesClient : ISeedAudiencesClient
                 { "X-Fern-SDK-Name", "SeedAudiences" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernaudiences/0.0.1" },
+                { "X-Fern-Runtime", "dotnet" },
+                {
+                    "X-Fern-Runtime-Version",
+                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                },
+                {
+                    "X-Fern-Platform",
+                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
+                },
             }
         );
         foreach (var header in platformHeaders)

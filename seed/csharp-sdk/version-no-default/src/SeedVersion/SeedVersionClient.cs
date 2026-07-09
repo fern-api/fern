@@ -16,6 +16,15 @@ public partial class SeedVersionClient : ISeedVersionClient
                 { "X-Fern-SDK-Name", "SeedVersion" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernversion-no-default/0.0.1" },
+                { "X-Fern-Runtime", "dotnet" },
+                {
+                    "X-Fern-Runtime-Version",
+                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                },
+                {
+                    "X-Fern-Platform",
+                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
+                },
             }
         );
         foreach (var header in platformHeaders)

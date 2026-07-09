@@ -48,6 +48,15 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
                 { "X-Fern-SDK-Name", "SeedEndpointSecurityAuth" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernendpoint-security-auth/0.0.1" },
+                { "X-Fern-Runtime", "dotnet" },
+                {
+                    "X-Fern-Runtime-Version",
+                    global::System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                },
+                {
+                    "X-Fern-Platform",
+                    global::System.Runtime.InteropServices.RuntimeInformation.OSDescription
+                },
             }
         );
         foreach (var header in platformHeaders)
