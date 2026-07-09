@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rbconfig"
-
 module Seed
   module Internal
     module Http
@@ -30,10 +28,7 @@ module Seed
           @default_headers = {
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "seed",
-            "X-Fern-SDK-Version": "0.0.1",
-            "X-Fern-Runtime": "ruby",
-            "X-Fern-Runtime-Version": RUBY_VERSION,
-            "X-Fern-Platform": RbConfig::CONFIG["host_os"]
+            "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)
         end
 

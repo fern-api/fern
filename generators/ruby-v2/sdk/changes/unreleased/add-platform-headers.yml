@@ -1,9 +1,11 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and `X-Fern-Platform`
-    observability headers to generated SDK clients. These report the runtime
+    Add opt-in support for the `X-Fern-Runtime`, `X-Fern-Runtime-Version`, and
+    `X-Fern-Platform` observability headers. When enabled they report the runtime
     (`ruby`), the Ruby version (`RUBY_VERSION`), and the operating system
-    (`RbConfig::CONFIG["host_os"]`) on every request. Like the other Fern
-    observability headers, they are gated by the `omitFernHeaders` config option.
+    (`RbConfig::CONFIG["host_os"]`) on every request. This is gated behind a new
+    `includePlatformHeaders` config option and is disabled by default, so existing
+    generated output is unchanged. When enabled it is still subject to the
+    `omitFernHeaders` option.
   type: feat

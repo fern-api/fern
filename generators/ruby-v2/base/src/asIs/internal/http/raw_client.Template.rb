@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-
+<% if (includePlatformHeaders) { %>
 require "rbconfig"
-
+<% } %>
 module <%= gem_namespace %>
   module Internal
     module Http
@@ -30,10 +30,10 @@ module <%= gem_namespace %>
           @default_headers = <% if (!omitFernHeaders) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
-            "X-Fern-SDK-Version": "0.0.1",
+            "X-Fern-SDK-Version": "0.0.1"<% if (includePlatformHeaders) { %>,
             "X-Fern-Runtime": "ruby",
             "X-Fern-Runtime-Version": RUBY_VERSION,
-            "X-Fern-Platform": RbConfig::CONFIG["host_os"]
+            "X-Fern-Platform": RbConfig::CONFIG["host_os"]<% } %>
           }.merge(headers)<% } else { %>headers<% } %>
         end
 

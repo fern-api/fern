@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rbconfig"
-
 module Seed
   module Internal
     module Http
