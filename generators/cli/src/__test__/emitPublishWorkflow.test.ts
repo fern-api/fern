@@ -49,11 +49,12 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain("id-token: write");
     });
 
-    it("uses a bare npm publish wrapper on a pinned Node toolchain (no npm@latest)", async () => {
+    it("invokes npm publish directly on a pinned Node toolchain (no wrapper, no npm@latest)", async () => {
         const yaml = await emitAndRead(baseInfo);
 
-        expect(yaml).toContain('npm publish "$@"');
+        expect(yaml).toContain("npm publish --access public");
         expect(yaml).not.toContain("npm@latest");
+        expect(yaml).not.toMatch(/publish\(\)\s*\{/);
         expect(yaml).toContain('node-version: "lts/Krypton"');
     });
 
@@ -188,12 +189,16 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain('"repository"');
     });
 
-    it("both publish steps define a publish() helper and backport logic", async () => {
+    it("both publish steps call npm publish directly with backport logic", async () => {
         const yaml = await emitAndRead(baseInfo);
 
-        // There should be two publish() helper definitions — one per publish step
-        const publishHelperMatches = yaml.match(/publish\(\)\s*\{/g);
-        expect(publishHelperMatches).toHaveLength(2);
+        // No publish() wrapper is defined anymore — npm publish is inlined.
+        expect(yaml).not.toMatch(/publish\(\)\s*\{/);
+
+        // Each step inlines four npm publish calls (alpha, beta, backport,
+        // stable) across the two publish steps.
+        const npmPublishMatches = yaml.match(/npm publish --access public/g);
+        expect(npmPublishMatches).toHaveLength(8);
 
         // Both platform and launcher steps should have backport logic
         // Each step has 2 occurrences: the echo message + the publish call
