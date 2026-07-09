@@ -410,7 +410,18 @@ export class DynamicTypeInstantiationMapper {
                             name: this.context.getFieldName(unionVariant.discriminantValue.name),
                             value: this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })
                         },
-                        ...baseFields
+                        // When `dedupeUnionBaseProperties` is enabled, the Go model no longer declares
+                        // top-level fields for base properties that every variant already carries — it
+                        // exposes them through discriminant-switching getters instead (see the Go model
+                        // generator's unionInheritedBasePropertyNames). Emitting them at the union root
+                        // here would reference fields that no longer exist and fail to compile. A
+                        // `samePropertiesAsObject` variant's own object already carries every base
+                        // property (set by `convertNamed` above), so dropping the redundant root copy
+                        // is safe: on marshal the Go model reads a samePropertiesAsObject variant from
+                        // the variant itself, not the top-level copy. Left as-is when the flag is off to
+                        // preserve the existing generated surface. The singleProperty/noProperties cases
+                        // below always keep the base fields because those variants do not carry them.
+                        ...(this.context.customConfig?.dedupeUnionBaseProperties ? [] : baseFields)
                     ]
                 });
             }

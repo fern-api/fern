@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated snippets, wire tests, and `reference.md` examples failing to compile
+    (`go vet`: `unknown field <name> in struct literal`) when `dedupeUnionBaseProperties`
+    is enabled. With the flag on, a discriminated union no longer declares top-level fields
+    for base properties that every variant carries — they are exposed through
+    discriminant-switching getters — but the dynamic snippet generator still set those
+    fields at the union root for `samePropertiesAsObject` variants, referencing fields that
+    no longer exist. Those variants already carry the base properties inside their own
+    object (and the Go model marshals a `samePropertiesAsObject` variant from the variant,
+    dropping the top-level copy), so the redundant root-level assignment is now omitted when
+    the flag is enabled. Behavior is unchanged when the flag is off.
+  type: fix
