@@ -3,3 +3,4 @@
 - summary: |
     Upgrade the PHP SDK generator to consume IR v67.
   type: chore
+  irVersion: 67
