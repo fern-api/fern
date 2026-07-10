@@ -1,6 +1,6 @@
 # Reference
 ## Agents
-<details><summary><code>client.agents.<a href="src/seed/agents/client.py">create</a>()</code></summary>
+<details><summary><code>client._agents.<a href="src/seed/_agents/client.py">create</a>()</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +19,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.agents.create()
+client._agents.create()
 
 ```
 </dd>
@@ -48,7 +48,7 @@ client.agents.create()
 </details>
 
 ## Agents Internal
-<details><summary><code>client.agents.internal.<a href="src/seed/agents/internal/client.py">create</a>()</code></summary>
+<details><summary><code>client._agents._internal.<a href="src/seed/_agents/_internal/client.py">create</a>()</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.agents.internal.create()
+client._agents._internal.create()
 
 ```
 </dd>
