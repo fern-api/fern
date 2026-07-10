@@ -285,7 +285,7 @@ func decompressedResponseBody(resp *http.Response) (io.Reader, error) {
 	if err != nil {
 		if err == io.EOF {
 			// The response body is empty, so there is nothing to decompress.
-			return resp.Body, nil
+			return http.NoBody, nil
 		}
 		return nil, err
 	}
