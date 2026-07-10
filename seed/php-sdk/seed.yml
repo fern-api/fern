@@ -102,6 +102,9 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
