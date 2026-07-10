@@ -3,7 +3,7 @@
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "local",
     "generatorConfig": {
-        "autoGenerateIdempotencyKey": true
+        "auto-generate-idempotency-key": true
     },
     "originGitCommit": "DUMMY",
     "invokedBy": "ci",
