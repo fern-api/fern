@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.14.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated clients.
+        When enabled it reports the SDK name/version, operating system, CPU
+        architecture, and Ruby runtime version, e.g.
+        `my-sdk/0.0.1 (linux; x86_64) Ruby/3.2.0`. The operating system, architecture,
+        and version are resolved at runtime; unknown components are omitted rather
+        than emitted as placeholders. This is gated behind a new
+        `includePlatformHeaders` config option and is disabled by default, so existing
+        generated output is unchanged. When enabled it is still subject to the
+        `omitFernHeaders` option.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
 - version: 1.13.4
   changelogEntry:
     - summary: |

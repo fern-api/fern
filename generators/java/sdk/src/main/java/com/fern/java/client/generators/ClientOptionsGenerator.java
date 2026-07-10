@@ -47,6 +47,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -92,6 +93,27 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private static final FieldSpec MAX_RETRIES_FIELD = FieldSpec.builder(
                     TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec INITIAL_RETRY_DELAY_MILLIS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                    "initialRetryDelayMillis",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec MAX_RETRY_DELAY_MILLIS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                    "maxRetryDelayMillis",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec RETRY_JITTER_FACTOR_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Double.class)),
+                    "retryJitterFactor",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
             .build();
 
     private static final String LOGGING_FIELD_NAME = "logging";
@@ -181,6 +203,40 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return entries;
     }
 
+    private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
+
+    /**
+     * Builds a static helper that assembles a structured {@code User-Agent} value at runtime, following the shape
+     * {@code {sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}}. The os, arch, and runtime-version
+     * segments are resolved at runtime via {@link System#getProperty(String)} rather than baked in at generation time;
+     * each is omitted (never emitted as a literal {@code null}) when it cannot be determined.
+     */
+    private static MethodSpec buildUserAgentMethod(String baseUserAgent) {
+        return MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addStatement("$T userAgent = $S", String.class, baseUserAgent)
+                .addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
+                .addStatement("$T arch = $T.getProperty($S)", String.class, System.class, "os.arch")
+                .addStatement("$T<$T> platformParts = new $T<>()", List.class, String.class, ArrayList.class)
+                .beginControlFlow("if (os != null && !os.isEmpty())")
+                .addStatement("platformParts.add(os.toLowerCase($T.ROOT))", Locale.class)
+                .endControlFlow()
+                .beginControlFlow("if (arch != null && !arch.isEmpty())")
+                .addStatement("platformParts.add(arch)")
+                .endControlFlow()
+                .beginControlFlow("if (!platformParts.isEmpty())")
+                .addStatement("userAgent += $S + $T.join($S, platformParts) + $S", " (", String.class, "; ", ")")
+                .endControlFlow()
+                .addStatement("$T javaVersion = $T.getProperty($S)", String.class, System.class, "java.version")
+                .addStatement("userAgent += $S", " Java")
+                .beginControlFlow("if (javaVersion != null && !javaVersion.isEmpty())")
+                .addStatement("userAgent += $S + javaVersion", "/")
+                .endControlFlow()
+                .addStatement("return userAgent")
+                .build();
+    }
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
@@ -263,16 +319,35 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         Map<String, MethodSpec> apiPathParamGetters = getApiPathParamGetters(apiPathParamFieldsForMainClass);
 
         String platformHeadersPutString = "";
+        Optional<MethodSpec> userAgentMethod = Optional.empty();
         if (!clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
-            platformHeadersPutString = getPlatformHeadersEntries(
-                            generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
-                            generatorContext.getGeneratorConfig(),
-                            generatorContext.getIr())
-                    .entrySet()
-                    .stream()
-                    .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
-                            .toString())
-                    .collect(Collectors.joining(""));
+            Map<String, String> platformHeaderEntries = getPlatformHeadersEntries(
+                    generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
+                    generatorContext.getGeneratorConfig(),
+                    generatorContext.getIr());
+            boolean includePlatformHeaders =
+                    clientGeneratorContext.getCustomConfig().includePlatformHeaders();
+            Optional<String> userAgentHeaderName = generatorContext
+                    .getIr()
+                    .getSdkConfig()
+                    .getPlatformHeaders()
+                    .getUserAgent()
+                    .map(userAgent -> userAgent.getHeader());
+            StringBuilder putStatements = new StringBuilder();
+            for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
+                boolean isUserAgent = includePlatformHeaders
+                        && userAgentHeaderName.isPresent()
+                        && userAgentHeaderName.get().equals(entry.getKey());
+                if (isUserAgent) {
+                    userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue()));
+                    putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), USER_AGENT_METHOD_NAME)
+                            .toString());
+                } else {
+                    putStatements.append(CodeBlock.of("put($S, $S);", entry.getKey(), entry.getValue())
+                            .toString());
+                }
+            }
+            platformHeadersPutString = putStatements.toString();
         }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
@@ -288,6 +363,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(ParameterSpec.builder(TIMEOUT_FIELD.type, TIMEOUT_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(MAX_RETRIES_FIELD.type, MAX_RETRIES_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.type, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .build())
+                .addParameter(
+                        ParameterSpec.builder(MAX_RETRY_DELAY_MILLIS_FIELD.type, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                                .build())
+                .addParameter(ParameterSpec.builder(RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name)
                         .build());
 
         // Only add webSocketFactory parameter if WebSocket channels are present
@@ -332,7 +415,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("this.$L = $L", TIMEOUT_FIELD.name, TIMEOUT_FIELD.name)
-                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name);
+                .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                .addStatement(
+                        "this.$L = $L", INITIAL_RETRY_DELAY_MILLIS_FIELD.name, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement("this.$L = $L", MAX_RETRY_DELAY_MILLIS_FIELD.name, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement("this.$L = $L", RETRY_JITTER_FACTOR_FIELD.name, RETRY_JITTER_FACTOR_FIELD.name);
 
         // Only add webSocketFactory assignment if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -364,7 +451,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addField(TIMEOUT_FIELD)
-                .addField(MAX_RETRIES_FIELD);
+                .addField(MAX_RETRIES_FIELD)
+                .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
+                .addField(MAX_RETRY_DELAY_MILLIS_FIELD)
+                .addField(RETRY_JITTER_FACTOR_FIELD);
 
         // Only add webSocketFactory field if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -385,6 +475,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(constructorBuilder.build())
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
+
+        if (userAgentMethod.isPresent()) {
+            clientOptionsBuilder.addMethod(userAgentMethod.get());
+        }
 
         addApiVersionField(clientOptionsBuilder);
 
@@ -451,12 +545,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
 
         MethodSpec maxRetriesGetter = createGetter(MAX_RETRIES_FIELD);
+        MethodSpec initialRetryDelayMillisGetter = createGetter(INITIAL_RETRY_DELAY_MILLIS_FIELD);
+        MethodSpec maxRetryDelayMillisGetter = createGetter(MAX_RETRY_DELAY_MILLIS_FIELD);
+        MethodSpec retryJitterFactorGetter = createGetter(RETRY_JITTER_FACTOR_FIELD);
 
         clientOptionsBuilder
                 .addMethod(timeoutGetter)
                 .addMethod(httpClientGetter)
                 .addMethod(httpClientWithTimeoutGetter)
-                .addMethod(maxRetriesGetter);
+                .addMethod(maxRetriesGetter)
+                .addMethod(initialRetryDelayMillisGetter)
+                .addMethod(maxRetryDelayMillisGetter)
+                .addMethod(retryJitterFactorGetter);
 
         // Only add webSocketFactory getter if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -657,6 +757,20 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("$L", getDefaultMaxRetries())
                         .build())
                 .addField(FieldSpec.builder(
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.type,
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                                Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                MAX_RETRY_DELAY_MILLIS_FIELD.type, MAX_RETRY_DELAY_MILLIS_FIELD.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
+                                RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
+                .addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
                                 TIMEOUT_FIELD.name,
                                 Modifier.PRIVATE)
@@ -723,6 +837,45 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, MAX_RETRIES_FIELD.name)
                         .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the initial delay (in milliseconds) used for exponential backoff "
+                                + "between retries. Defaults to 1000 milliseconds.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.LONG, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                                Optional.class,
+                                INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the maximum delay (in milliseconds) between retries. "
+                                + "Defaults to 60000 milliseconds.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.LONG, MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                                Optional.class,
+                                MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(RETRY_JITTER_FACTOR_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Override the jitter factor (between 0 and 1) applied to retry delays. "
+                                + "Defaults to 0.2.")
+                        .returns(builderClassName)
+                        .addParameter(TypeName.DOUBLE, RETRY_JITTER_FACTOR_FIELD.name)
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                RETRY_JITTER_FACTOR_FIELD.name,
+                                Optional.class,
+                                RETRY_JITTER_FACTOR_FIELD.name)
                         .addStatement("return this")
                         .build())
                 .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
@@ -1065,6 +1218,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name)
+                .addStatement(
+                        "builder.$L = clientOptions.$L()",
+                        RETRY_JITTER_FACTOR_FIELD.name,
+                        RETRY_JITTER_FACTOR_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", LOGGING_FIELD_NAME, LOGGING_FIELD_NAME);
 
         for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
@@ -1127,6 +1292,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         StringBuilder returnStringBuilder = new StringBuilder();
         returnStringBuilder.append("return new $T($L, $L, $L, $L, this.timeout.get(), this.");
         returnStringBuilder.append(MAX_RETRIES_FIELD.name);
+        returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
+        returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
+        returnStringBuilder.append(", this.").append(RETRY_JITTER_FACTOR_FIELD.name);
 
         // Add webSocketFactory if present
         if (webSocketFactoryField != null) {
@@ -1191,9 +1359,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class)
                 .addCode(
-                        ".addInterceptor(new $T(this.$L));\n",
+                        ".addInterceptor(new $T(this.$L, this.$L, this.$L, this.$L));\n",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
-                        MAX_RETRIES_FIELD.name)
+                        MAX_RETRIES_FIELD.name,
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                        RETRY_JITTER_FACTOR_FIELD.name)
                 .endControlFlow()
                 .addCode("\n")
                 .addStatement(
@@ -1207,6 +1378,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         clientGeneratorContext.getPoetClassNameFactory().getLoggingInterceptorClassName(),
                         "logger")
+                .addStatement(
+                        "$L.addInterceptor(new $T())",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext.getPoetClassNameFactory().getResponseDecompressionInterceptorClassName())
                 .addCode("\n");
 
         // Apply custom interceptors when custom-interceptors is enabled

@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.13.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK clients,
+        of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+        (e.g. `com.fern:sdk/0.0.1 (linux; amd64) Java/17.0.13`). The os
+        (`System.getProperty("os.name")`, lowercased), arch (`System.getProperty("os.arch")`),
+        and runtime version (`System.getProperty("java.version")`) are resolved at runtime;
+        any segment that cannot be determined is omitted rather than emitted as `null`.
+        This is gated behind a new `includePlatformHeaders` config option and is disabled by
+        default, so existing generated output is unchanged. When enabled, the header is still
+        subject to `omit-fern-headers`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies via a new
+        `ResponseDecompressionInterceptor` added to the generated `OkHttpClient`.
+        OkHttp only performs transparent gzip decompression when it adds the
+        `Accept-Encoding` header itself, so responses to requests with a
+        spec-defined `Accept-Encoding: gzip` header were previously returned as
+        raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.0
+  changelogEntry:
+    - summary: |
+        Add client builder options to customize the retry backoff schedule, alongside the existing
+        `maxRetries` option: `initialRetryDelayMillis` (default 1000), `maxRetryDelayMillis`
+        (default 60000), and `retryJitterFactor` (default 0.2). The options are available on both
+        the root client builder and `ClientOptions.Builder`.
+
+        ```java
+        Client client = Client.builder()
+            .maxRetries(3)
+            .initialRetryDelayMillis(500)
+            .maxRetryDelayMillis(30000)
+            .retryJitterFactor(0.1)
+            .build();
+        ```
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 66
 - version: 4.11.2
   changelogEntry:
     - summary: |

@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header of the form
+        `{sdkName}/{version} ({os}; {arch}) {runtime}/{runtimeVersion}`, matching the
+        Twilio helper-library shape. This is gated behind the `includePlatformHeaders`
+        config option and is disabled by default, so existing generated output is
+        unchanged. When enabled, the platform + runtime information is consolidated
+        into the `User-Agent` and the discrete `X-Fern-Runtime` / `X-Fern-Runtime-Version`
+        headers are omitted. The platform group and runtime segment are dropped
+        gracefully in environments where they cannot be determined (e.g. browsers),
+        and the header remains subject to `omitFernHeaders`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.79.2
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `.github/workflows/ci.yml` publish job now runs on a pinned Node LTS
+        (`node-version: "lts/Krypton"`) and calls `npm publish` directly instead
+        of `npx -y npm@latest publish`. Relying on `npm@latest` pulled whatever
+        npm release was newest at publish time, so a broken npm release could
+        break publishing. The pinned Node LTS bundles an npm that supports OIDC
+        trusted publishing. The `npx semver` invocation used for backport
+        detection is also pinned to `semver@7.8.1`.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
 - version: 3.79.1
   changelogEntry:
     - summary: |

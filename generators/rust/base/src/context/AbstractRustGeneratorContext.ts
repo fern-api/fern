@@ -106,7 +106,10 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("serde_json", "1.0");
         this.dependencyManager.add("reqwest", {
             version: "0.12",
-            features: ["json", "stream"], // stream is needed for ByteStream (file downloads)
+            // stream is needed for ByteStream (file downloads); gzip is needed to
+            // decompress gzip-encoded responses (e.g. when an Accept-Encoding
+            // header is set explicitly on the request)
+            features: ["json", "stream", "gzip"],
             defaultFeatures: false
         });
         this.dependencyManager.add("tokio", { version: "1.0", features: ["full"] });

@@ -208,6 +208,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes
                 })
@@ -221,6 +222,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         rootFolderName,
         customPagerClassName,
         omitFernHeaders,
+        includePlatformHeaders,
         maxRetries,
         retryStatusCodes
     }: {
@@ -229,6 +231,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         rootFolderName: string;
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
+        includePlatformHeaders?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
     }): Promise<File> {
@@ -239,6 +242,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 rootFolderName,
                 customPagerClassName,
                 omitFernHeaders,
+                includePlatformHeaders,
                 maxRetries
             })
         });
@@ -299,12 +303,14 @@ function getTemplateVariables({
     rootFolderName,
     customPagerClassName,
     omitFernHeaders,
+    includePlatformHeaders,
     maxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
+    includePlatformHeaders?: boolean;
     maxRetries?: number;
 }): Record<string, unknown> {
     return {
@@ -315,6 +321,7 @@ function getTemplateVariables({
         rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
         omitFernHeaders: omitFernHeaders ?? false,
+        includePlatformHeaders: includePlatformHeaders ?? false,
         defaultMaxRetries: maxRetries ?? 2
     };
 }

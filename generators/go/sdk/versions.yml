@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.47.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients for better runtime/platform observability. When enabled, the header
+        takes the form `{sdkName}/{sdkVersion} ({os}; {arch}) Go/{version}`, where the
+        operating system (`runtime.GOOS`), architecture (`runtime.GOARCH`), and Go
+        runtime version (`runtime.Version()`) are all resolved at runtime; unknown
+        components are omitted rather than reported as empty. This behavior is gated
+        behind a new `includePlatformHeaders` config option and is disabled by
+        default, so existing generated output is unchanged. When enabled it is still
+        subject to `omitFernHeaders` and is omitted when that is set.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.46.5
+  changelogEntry:
+    - summary: |
+        Honor the OAuth client-credentials token endpoint's declared request content-type
+        instead of unconditionally forcing `application/x-www-form-urlencoded`. Token
+        endpoints that consume `application/json` now send `Content-Type: application/json`,
+        while form-urlencoded remains the default when the spec does not declare a content-type
+        (per RFC 6749 §4.4.2). Previously a JSON token endpoint received an HTTP 415 that
+        surfaced as a generic 401.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
 - version: 1.46.4
   changelogEntry:
     - summary: |
