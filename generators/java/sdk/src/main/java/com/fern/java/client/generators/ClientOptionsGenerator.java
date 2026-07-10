@@ -206,10 +206,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
 
     /**
-     * Normalizes a {@code User-Agent} product token so it stays within the RFC 7230 token grammar. The Maven
-     * coordinate is {@code groupId:artifactId}, but a colon is not a valid token character, so it is replaced with a
-     * dot (e.g. {@code com.fern:imdb} -> {@code com.fern.imdb}), which is idiomatic for reverse-domain Java-style
-     * identifiers.
+     * Normalizes a {@code User-Agent} product token so it stays within the RFC 7230 token grammar. The Maven coordinate
+     * is {@code groupId:artifactId}, but a colon is not a valid token character, so it is replaced with a dot (e.g.
+     * {@code com.fern:imdb} -> {@code com.fern.imdb}), which is idiomatic for reverse-domain Java-style identifiers.
      */
     private static String toRfcCompliantUserAgent(String baseUserAgent) {
         return baseUserAgent.replace(':', '.');
@@ -353,16 +352,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .map(userAgent -> userAgent.getHeader());
             StringBuilder putStatements = new StringBuilder();
             for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
-                boolean isUserAgentHeader =
-                        userAgentHeaderName.isPresent() && userAgentHeaderName.get().equals(entry.getKey());
+                boolean isUserAgentHeader = userAgentHeaderName.isPresent()
+                        && userAgentHeaderName.get().equals(entry.getKey());
                 if (isUserAgentHeader && includePlatformHeaders) {
                     userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue()));
                     putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), USER_AGENT_METHOD_NAME)
                             .toString());
                 } else if (isUserAgentHeader) {
-                    putStatements.append(CodeBlock.of(
-                                    "put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
-                            .toString());
+                    putStatements.append(
+                            CodeBlock.of("put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
+                                    .toString());
                 } else {
                     putStatements.append(CodeBlock.of("put($S, $S);", entry.getKey(), entry.getValue())
                             .toString());
