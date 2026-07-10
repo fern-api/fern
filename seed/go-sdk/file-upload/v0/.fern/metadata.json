@@ -11,7 +11,8 @@
     "union": "v0"
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "manual",
+  "invokedBy": "ci",
   "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "v0.0.1"
 }
