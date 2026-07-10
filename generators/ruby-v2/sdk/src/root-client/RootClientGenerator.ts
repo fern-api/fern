@@ -341,11 +341,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // Under `any`-composed multi-scheme auth, gate the inferred-auth provider on
         // its (non-optional) credential params being present, so the provider (and
         // its token request) is only created when the caller actually supplied them.
+        // A set-but-empty string is treated the same as absent (`.to_s.empty?`).
         const gatedParams = anyAuthMultiScheme
             ? inferredParams.filter((param) => param != null && !param.isOptional)
             : [];
         const inferredGuard =
-            gatedParams.length > 0 ? gatedParams.map((param) => `!${param.snakeName}.nil?`).join(" && ") : undefined;
+            gatedParams.length > 0
+                ? gatedParams.map((param) => `!${param.snakeName}.to_s.empty?`).join(" && ")
+                : undefined;
 
         return ruby.codeblock((writer) => {
             if (inferredGuard != null) {
@@ -512,10 +515,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             if (anyAuthMultiScheme) {
                 // Under `any`-composed multi-scheme auth OAuth is a fallback. Only
                 // instantiate the provider (which fires a synchronous token request)
-                // when both credentials were supplied; otherwise the caller is
+                // when both credentials were supplied (treating a set-but-empty
+                // string the same as absent); otherwise the caller is
                 // authenticating with another scheme (e.g. an API key) and we must
                 // not touch the token endpoint.
-                writer.writeLine(`if !client_id.nil? && !client_secret.nil?`);
+                writer.writeLine(`if !client_id.to_s.empty? && !client_secret.to_s.empty?`);
                 writer.indent();
             }
             // Create an unauthenticated raw client for the auth endpoint.

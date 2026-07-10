@@ -13,7 +13,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), client_id: ENV.fetch("MY_CLIENT_ID", nil), client_secret: ENV.fetch("MY_CLIENT_SECRET", nil), username: ENV.fetch("MY_USERNAME", nil), password: ENV.fetch("MY_PASSWORD", nil), max_retries: 2)
-      if !client_id.nil? && !client_secret.nil?
+      if !client_id.to_s.empty? && !client_secret.to_s.empty?
         # Create an unauthenticated client for the auth endpoint
         auth_raw_client = Seed::Internal::Http::RawClient.new(
           base_url: base_url,
