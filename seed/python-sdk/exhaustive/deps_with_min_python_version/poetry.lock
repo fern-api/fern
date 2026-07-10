@@ -1039,14 +1039,14 @@ websockets = ">=14,<16"
 
 [[package]]
 name = "langsmith"
-version = "0.10.1"
+version = "0.10.2"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langsmith-0.10.1-py3-none-any.whl", hash = "sha256:565f6ab9c1e3cea4d0a7da2c0b535b3d8acd291a0df51b39e9e25b7b14c4b56d"},
-    {file = "langsmith-0.10.1.tar.gz", hash = "sha256:b8b8981b4623bd0fc96609c90ef6afd9241a036922c58a5f1f4591616e2670e0"},
+    {file = "langsmith-0.10.2-py3-none-any.whl", hash = "sha256:c2a3929055758ac1831582f0939fafc0973cc08432365bbad335c336338ec37c"},
+    {file = "langsmith-0.10.2.tar.gz", hash = "sha256:9aa685383fbdec07a0df51dafc333ab0d4b6b995771172a232c3364714eb17a6"},
 ]
 
 [package.dependencies]
