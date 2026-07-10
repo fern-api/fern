@@ -66,6 +66,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.TokenProvider);
         }
 
+        if (this.ir.sdkConfig.idempotencyKeyGeneration != null) {
+            files.push(AsIsFiles.Idempotency);
+        }
+
         return files;
     }
 
@@ -431,6 +435,22 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             arguments_: [argument],
             multiline: false
         });
+    }
+
+    public callGenerateIdempotencyKey(): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "GenerateIdempotencyKey",
+                importPath: this.getCoreImportPath()
+            }),
+            arguments_: [],
+            multiline: false
+        });
+    }
+
+    public getIdempotencyKeyGeneration(endpoint: FernIr.HttpEndpoint): FernIr.IdempotencyKeyGeneration | undefined {
+        const idempotencyKeyGeneration = this.ir.sdkConfig.idempotencyKeyGeneration;
+        return idempotencyKeyGeneration?.methods.includes(endpoint.method) ? idempotencyKeyGeneration : undefined;
     }
 
     public callSprintf(arguments_: go.AstNode[]): go.FuncInvocation {
