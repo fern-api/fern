@@ -649,6 +649,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 php.parameter({ name: "runtimeVersion", type: php.Type.string() })
             ],
             body: php.codeblock((writer) => {
+                // Collapse the 64-bit x86 aliases (x64, amd64, x86_64) to the canonical x86_64.
+                writer.writeTextStatement(
+                    "$arch = in_array(strtolower($arch), ['x64', 'amd64', 'x86_64'], true) ? 'x86_64' : $arch"
+                );
                 writer.writeTextStatement(
                     "$segments = array_values(array_filter([$os, $arch], fn ($value) => $value !== ''))"
                 );

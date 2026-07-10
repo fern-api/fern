@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.47.2
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `includePlatformHeaders` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.47.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip-encoded response bodies when the `Accept-Encoding` header is set
+        explicitly on the request. Go's `net/http` only performs transparent gzip
+        decompression when it adds the `Accept-Encoding` header itself, so responses to
+        requests with a spec-defined `Accept-Encoding: gzip` header were previously
+        returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
 - version: 1.47.0
   changelogEntry:
     - summary: |
