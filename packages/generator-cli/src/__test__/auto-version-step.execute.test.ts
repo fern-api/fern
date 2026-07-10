@@ -419,6 +419,169 @@ describe("AutoVersionStep.execute() — unreachable baseline never ships the pla
     });
 });
 
+describe("AutoVersionStep.execute() — adversarial baseline recovery", () => {
+    const cleanups: Array<() => Promise<void>> = [];
+
+    beforeEach(() => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+    });
+
+    afterEach(async () => {
+        await Promise.all(cleanups.splice(0).map((c) => c()));
+    });
+
+    async function newRepo(): Promise<string> {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        cleanups.push(() => tmpDir.cleanup());
+        gitExec(["init", "-b", "main"], tmpDir.path);
+        gitExec(["config", "user.name", "Test"], tmpDir.path);
+        gitExec(["config", "user.email", "test@example.com"], tmpDir.path);
+        gitExec(["config", "commit.gpgsign", "false"], tmpDir.path);
+        return tmpDir.path;
+    }
+
+    function commit(repoPath: string, message: string, files: Record<string, string>): string {
+        for (const [rel, content] of Object.entries(files)) {
+            const abs = join(repoPath, rel);
+            mkdirSync(join(abs, ".."), { recursive: true });
+            writeFileSync(abs, content);
+        }
+        gitExec(["add", "."], repoPath);
+        gitExec(["commit", "-m", message], repoPath);
+        return gitExec(["rev-parse", "HEAD"], repoPath);
+    }
+
+    const MAGIC = "0.0.0-fern-placeholder";
+    const pkg = (version: string) => JSON.stringify({ name: "test-sdk", version }, null, 2) + "\n";
+    const FEATURE = { "src/newFeature.ts": "export function newFeature(): number {\n    return 42;\n}\n" };
+    const minorAnalysis = {
+        version_bump: "MINOR",
+        message: "feat: add newFeature helper",
+        changelog_entry: "### Added\n- newFeature()",
+        version_bump_reason: "New public API."
+    };
+
+    function packageVersion(repoPath: string): string {
+        return (JSON.parse(readFileSync(join(repoPath, "package.json"), "utf-8")) as { version: string }).version;
+    }
+
+    it("skips intervening [fern-replay]/[fern-autoversion]/manual commits and anchors on the prior [fern-generated]", async () => {
+        // Mirrors the real regression history: the [fern-replay] advance lockfile commit (and
+        // friends) sit between the two generations. The re-anchor must walk past them to the
+        // previous [fern-generated] commit, not diff against a replay/manual commit.
+        mockAnalyzeSdkDiff.mockResolvedValue(minorAnalysis);
+        const repoPath = await newRepo();
+        commit(repoPath, "[fern-generated] gen 1", { "package.json": pkg("1.0.0"), "src/client.ts": "export {};\n" });
+        commit(repoPath, "[fern-replay] apply patches", { "src/custom.ts": "export const custom = 1;\n" });
+        commit(repoPath, "[fern-replay] advance lockfile", {
+            ".fern/replay.lock": '{"current_generation":"deadbeef"}\n'
+        });
+        commit(repoPath, "chore: customer manual edit", { "README.md": "hand-written\n" });
+        const currentSha = commit(repoPath, "[fern-generated] gen 2", { "package.json": pkg(MAGIC), ...FEATURE });
+
+        const step = new AutoVersionStep(repoPath, makeLogger(), baseConfig);
+        const result = await step.execute(
+            makeContext(
+                fakePreparedReplay({
+                    outputDir: repoPath,
+                    previousGenerationSha: "0".repeat(40),
+                    currentGenerationSha: currentSha
+                })
+            )
+        );
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0");
+        expect(result.version).toBe("1.1.0");
+        expect(packageVersion(repoPath)).toBe("1.1.0");
+    });
+
+    it("ignores a rogue [fern-generated] commit on a merged side branch (--first-parent)", async () => {
+        // A merged side branch carries its own [fern-generated] commit with a bogus version.
+        // A naive `git log` walk could surface it; the first-parent walk must stay on mainline
+        // and anchor on the real previous generation.
+        mockAnalyzeSdkDiff.mockResolvedValue(minorAnalysis);
+        const repoPath = await newRepo();
+        commit(repoPath, "[fern-generated] gen 1", { "package.json": pkg("1.0.0"), "src/client.ts": "export {};\n" });
+        gitExec(["checkout", "-b", "rogue"], repoPath);
+        commit(repoPath, "[fern-generated] rogue side gen", {
+            "package.json": pkg("9.9.9"),
+            "src/rogue.ts": "export {};\n"
+        });
+        gitExec(["checkout", "main"], repoPath);
+        gitExec(["merge", "--no-ff", "-m", "Merge rogue", "rogue"], repoPath);
+        const currentSha = commit(repoPath, "[fern-generated] gen 2", { "package.json": pkg(MAGIC), ...FEATURE });
+
+        const step = new AutoVersionStep(repoPath, makeLogger(), baseConfig);
+        const result = await step.execute(
+            makeContext(
+                fakePreparedReplay({
+                    outputDir: repoPath,
+                    previousGenerationSha: "0".repeat(40),
+                    currentGenerationSha: currentSha
+                })
+            )
+        );
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0");
+        expect(result.version).toBe("1.1.0");
+    });
+
+    it.each([
+        ["empty string", ""],
+        ["a ref name", "HEAD"],
+        ["garbage", "not-a-sha"],
+        ["shell injection", "0000; rm -rf /"],
+        ["non-hex 40 chars", "z".repeat(40)]
+    ])("does not trust a malformed recorded SHA (%s) and re-anchors from history", async (_label, recorded) => {
+        mockAnalyzeSdkDiff.mockResolvedValue(minorAnalysis);
+        const repoPath = await newRepo();
+        commit(repoPath, "[fern-generated] gen 1", { "package.json": pkg("1.0.0"), "src/client.ts": "export {};\n" });
+        const currentSha = commit(repoPath, "[fern-generated] gen 2", { "package.json": pkg(MAGIC), ...FEATURE });
+
+        const step = new AutoVersionStep(repoPath, makeLogger(), baseConfig);
+        const result = await step.execute(
+            makeContext(
+                fakePreparedReplay({
+                    outputDir: repoPath,
+                    previousGenerationSha: recorded,
+                    currentGenerationSha: currentSha
+                })
+            )
+        );
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.1.0");
+        expect(packageVersion(repoPath)).toBe("1.1.0");
+    });
+
+    it("degrades to an empty diff (never crashes) when currentGenerationSha is also unreachable", async () => {
+        // Worst case: both the recorded SHA and the reported current SHA are unreachable.
+        // AutoVersion must not throw — it resolves the version from baseVersion and rewrites
+        // the placeholder rather than shipping it.
+        const repoPath = await newRepo();
+        commit(repoPath, "[fern-generated] gen 1", { "package.json": pkg("1.0.0"), "src/client.ts": "export {};\n" });
+        commit(repoPath, "[fern-generated] gen 2", { "package.json": pkg(MAGIC), ...FEATURE });
+
+        const step = new AutoVersionStep(repoPath, makeLogger(), { ...baseConfig, baseVersion: "2.0.0" });
+        const result = await step.execute(
+            makeContext(
+                fakePreparedReplay({
+                    outputDir: repoPath,
+                    previousGenerationSha: "0".repeat(40),
+                    currentGenerationSha: "f".repeat(40)
+                })
+            )
+        );
+
+        expect(result.success).toBe(true);
+        expect(packageVersion(repoPath)).not.toContain("fern-placeholder");
+        expect(packageVersion(repoPath)).toBe("2.0.0");
+    });
+});
+
 describe("AutoVersionStep.execute() — pipeline baseVersion overrides diff extraction", () => {
     let repo: TwoGenerations;
 

@@ -153,7 +153,7 @@ export class AutoVersionStep extends BaseStep {
         // letting `git diff` fail on a bad object (which would leave the magic placeholder
         // in the shipped SDK).
         const diffBase = this.resolveReachableGenerationBase(previousGenerationSha, prepared.currentGenerationSha);
-        const rawDiff = diffBase != null ? this.gitDiff(diffBase, prepared.currentGenerationSha) : "";
+        const rawDiff = diffBase != null ? this.safeGitDiff(diffBase, prepared.currentGenerationSha) : "";
 
         const previousVersion = await this.resolvePreviousVersion({
             service,
@@ -736,6 +736,8 @@ export class AutoVersionStep extends BaseStep {
             });
             return true;
         } catch {
+            // Expected: `git cat-file -e` exits non-zero for a missing/unreachable object.
+            // This is a probe, so a non-zero exit is the "not reachable" signal, not an error.
             return false;
         }
     }
@@ -755,7 +757,8 @@ export class AutoVersionStep extends BaseStep {
                 stdio: "pipe",
                 maxBuffer: 64 * 1024 * 1024
             });
-        } catch {
+        } catch (error) {
+            this.logger.debug(`AutoVersionStep: git log history walk failed (${String(error)}); no baseline derived.`);
             return null;
         }
         for (const line of log.split("\n")) {
@@ -771,6 +774,25 @@ export class AutoVersionStep extends BaseStep {
             }
         }
         return null;
+    }
+
+    /**
+     * `gitDiff` that degrades to an empty diff instead of throwing. Both endpoints are
+     * expected to be reachable (the base is resolved via resolveReachableGenerationBase and
+     * `to` is this run's freshly-created HEAD), but we never want a `git diff` failure to
+     * abort autoversion and leave the magic placeholder in the shipped SDK — the empty diff
+     * routes version resolution to baseVersion/metadata/git-tags, which still rewrites it.
+     */
+    private safeGitDiff(from: string, to: string): string {
+        try {
+            return this.gitDiff(from, to);
+        } catch (error) {
+            this.logger.warn(
+                `AutoVersionStep: git diff ${from.slice(0, 7)}..${to.slice(0, 7)} failed ` +
+                    `(${error instanceof Error ? error.message : String(error)}); proceeding with an empty diff.`
+            );
+            return "";
+        }
     }
 
     private gitDiff(from: string, to: string): string {
