@@ -3,16 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { HttpMethod } from "../../http/types/HttpMethod.js";
 
 export const IdempotencyKeyGeneration: core.serialization.ObjectSchema<
     serializers.IdempotencyKeyGeneration.Raw,
     FernIr.IdempotencyKeyGeneration
 > = core.serialization.objectWithoutOptionalProperties({
     headerName: core.serialization.string(),
+    methods: core.serialization.list(HttpMethod),
 });
 
 export declare namespace IdempotencyKeyGeneration {
     export interface Raw {
         headerName: string;
+        methods: HttpMethod.Raw[];
     }
 }
