@@ -94,16 +94,45 @@ export function isPlainStringType(typeRef: FernIr.TypeReference): boolean {
 }
 
 /**
- * Checks if a type reference is optional.
+ * Checks if a type reference is optional or nullable (generated as a pointer type in Go).
  */
 export function isTypeReferenceOptional(typeRef: FernIr.TypeReference | undefined): boolean {
     if (typeRef == null) {
         return false;
     }
     if (typeRef.type === "container") {
-        return typeRef.container.type === "optional";
+        return typeRef.container.type === "optional" || typeRef.container.type === "nullable";
     }
     return false;
+}
+
+/**
+ * Unwraps optional and nullable containers to get the underlying type reference.
+ */
+export function unwrapOptionalOrNullable(typeRef: FernIr.TypeReference | undefined): FernIr.TypeReference | undefined {
+    let current = typeRef;
+    while (current != null && current.type === "container") {
+        if (current.container.type === "optional") {
+            current = current.container.optional;
+        } else if (current.container.type === "nullable") {
+            current = current.container.nullable;
+        } else {
+            break;
+        }
+    }
+    return current;
+}
+
+/**
+ * Checks if a type reference resolves to an int64 in Go (long or uint64 primitives),
+ * unwrapping optional/nullable containers.
+ */
+export function isInt64Type(typeRef: FernIr.TypeReference | undefined): boolean {
+    const unwrapped = unwrapOptionalOrNullable(typeRef);
+    return (
+        unwrapped?.type === "primitive" &&
+        (unwrapped.primitive.v1 === FernIr.PrimitiveTypeV1.Long || unwrapped.primitive.v1 === FernIr.PrimitiveTypeV1.Uint64)
+    );
 }
 
 /**

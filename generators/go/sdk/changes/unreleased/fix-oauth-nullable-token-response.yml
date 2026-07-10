@@ -1,0 +1,7 @@
+- summary: |
+    Fix compile errors in the generated OAuth and inferred auth token fetching code when
+    the token endpoint's response properties are optional or nullable (generated as
+    pointer types in Go), or when `expires_in` is an int64. The generated client now
+    nil-checks and dereferences pointer-typed `access_token` fields and converts int64
+    `expires_in` values to `int`.
+  type: fix

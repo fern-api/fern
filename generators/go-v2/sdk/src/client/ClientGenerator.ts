@@ -9,6 +9,7 @@ import {
     getInferredAuthScheme,
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
+    isInt64Type,
     isPlainStringType,
     isRequestPropertyOptional,
     isTypeReferenceOptional,
@@ -523,7 +524,16 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.dedent();
                 w.writeLine("}");
                 // Check for empty access token
-                w.writeLine('if response.AccessToken == "" {');
+                const responseProperties = oauthScheme.configuration.tokenEndpoint.responseProperties;
+                const accessTokenField = this.context.getFieldName(
+                    responseProperties.accessToken.property.name
+                );
+                const accessTokenIsPointer = this.isResponsePropertyOptional(responseProperties.accessToken);
+                if (accessTokenIsPointer) {
+                    w.writeLine(`if response.${accessTokenField} == nil || *response.${accessTokenField} == "" {`);
+                } else {
+                    w.writeLine(`if response.${accessTokenField} == "" {`);
+                }
                 w.indent();
                 w.write('return "", 0, ');
                 w.writeNode(
@@ -538,28 +548,38 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.newLine();
                 w.dedent();
                 w.writeLine("}");
+                const accessTokenValue = accessTokenIsPointer
+                    ? `*response.${accessTokenField}`
+                    : `response.${accessTokenField}`;
                 // Handle ExpiresIn with fallback to default
-                // Check if expiresIn is optional (pointer type) to determine how to access it
-                const responseProperties = oauthScheme.configuration.tokenEndpoint.responseProperties;
-                const expiresInIsOptional =
-                    responseProperties.expiresIn != null &&
-                    this.isResponsePropertyOptional(responseProperties.expiresIn);
-
-                w.writeLine("expiresIn := core.DefaultExpirySeconds");
-                if (expiresInIsOptional) {
-                    w.writeLine("if response.ExpiresIn != nil {");
-                    w.indent();
-                    w.writeLine("expiresIn = *response.ExpiresIn");
-                    w.dedent();
-                    w.writeLine("}");
+                if (responseProperties.expiresIn != null) {
+                    const expiresInField = this.context.getFieldName(responseProperties.expiresIn.property.name);
+                    const expiresInIsPointer = this.isResponsePropertyOptional(responseProperties.expiresIn);
+                    const expiresInIsInt64 = isInt64Type(responseProperties.expiresIn.property.valueType);
+                    w.writeLine("expiresIn := core.DefaultExpirySeconds");
+                    if (expiresInIsPointer) {
+                        const value = expiresInIsInt64
+                            ? `int(*response.${expiresInField})`
+                            : `*response.${expiresInField}`;
+                        w.writeLine(`if response.${expiresInField} != nil {`);
+                        w.indent();
+                        w.writeLine(`expiresIn = ${value}`);
+                        w.dedent();
+                        w.writeLine("}");
+                    } else {
+                        const value = expiresInIsInt64
+                            ? `int(response.${expiresInField})`
+                            : `response.${expiresInField}`;
+                        w.writeLine(`if response.${expiresInField} > 0 {`);
+                        w.indent();
+                        w.writeLine(`expiresIn = ${value}`);
+                        w.dedent();
+                        w.writeLine("}");
+                    }
+                    w.writeLine(`return ${accessTokenValue}, expiresIn, nil`);
                 } else {
-                    w.writeLine("if response.ExpiresIn > 0 {");
-                    w.indent();
-                    w.writeLine("expiresIn = response.ExpiresIn");
-                    w.dedent();
-                    w.writeLine("}");
+                    w.writeLine(`return ${accessTokenValue}, core.DefaultExpirySeconds, nil`);
                 }
-                w.writeLine("return response.AccessToken, expiresIn, nil");
                 w.dedent();
                 w.writeLine("})");
                 w.dedent();
@@ -740,7 +760,14 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 }
 
                 // Check for empty access token
-                w.writeLine(`if response.${accessTokenField} == "" {`);
+                const accessTokenIsPointer =
+                    firstAuthHeader?.responseProperty != null &&
+                    this.isResponsePropertyOptional(firstAuthHeader.responseProperty);
+                if (accessTokenIsPointer) {
+                    w.writeLine(`if response.${accessTokenField} == nil || *response.${accessTokenField} == "" {`);
+                } else {
+                    w.writeLine(`if response.${accessTokenField} == "" {`);
+                }
                 w.indent();
                 w.write('return "", 0, ');
                 w.writeNode(
@@ -756,30 +783,40 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.dedent();
                 w.writeLine("}");
 
+                const accessTokenValue = accessTokenIsPointer
+                    ? `*response.${accessTokenField}`
+                    : `response.${accessTokenField}`;
                 // Handle ExpiresIn with fallback to default
                 const expiryProperty = inferredScheme.tokenEndpoint.expiryProperty;
                 if (expiryProperty != null) {
                     const expiryField = this.context.getFieldName(expiryProperty.property.name);
-                    const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
+                    const expiryIsPointer = this.isResponsePropertyOptional(expiryProperty);
+                    const expiryIsInt64 = isInt64Type(expiryProperty.property.valueType);
 
                     w.writeLine("expiresIn := core.DefaultExpirySeconds");
-                    if (expiryIsOptional) {
+                    if (expiryIsPointer) {
+                        const value = expiryIsInt64
+                            ? `int(*response.${expiryField})`
+                            : `*response.${expiryField}`;
                         w.writeLine(`if response.${expiryField} != nil {`);
                         w.indent();
-                        w.writeLine(`expiresIn = *response.${expiryField}`);
+                        w.writeLine(`expiresIn = ${value}`);
                         w.dedent();
                         w.writeLine("}");
                     } else {
+                        const value = expiryIsInt64
+                            ? `int(response.${expiryField})`
+                            : `response.${expiryField}`;
                         w.writeLine(`if response.${expiryField} > 0 {`);
                         w.indent();
-                        w.writeLine(`expiresIn = response.${expiryField}`);
+                        w.writeLine(`expiresIn = ${value}`);
                         w.dedent();
                         w.writeLine("}");
                     }
-                    w.writeLine(`return response.${accessTokenField}, expiresIn, nil`);
+                    w.writeLine(`return ${accessTokenValue}, expiresIn, nil`);
                 } else {
                     // No expiry property — use default
-                    w.writeLine(`return response.${accessTokenField}, core.DefaultExpirySeconds, nil`);
+                    w.writeLine(`return ${accessTokenValue}, core.DefaultExpirySeconds, nil`);
                 }
 
                 w.dedent();
