@@ -80,8 +80,48 @@ export function getUserAgentTemplateFromGeneratorConfig(
     return undefined;
 }
 
+/** Default wire header for the auto-generated idempotency key. */
+const DEFAULT_IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
+
+/**
+ * Resolves the idempotency-key auto-generation config from the raw generator configuration.
+ *
+ * When enabled, generators auto-generate an idempotency key header on retry-unsafe
+ * (POST/PUT) requests unless the caller supplies one. This is resolved once by the CLI
+ * and threaded into the IR (`SdkConfig.idempotencyKeyGeneration`) so every generator reads
+ * the same value instead of each defining its own config key and re-deriving the behavior.
+ *
+ * Accepts either a boolean shorthand or an object with an optional custom header name:
+ *
+ *   config:
+ *     auto-generate-idempotency-key: true
+ *   # or
+ *     auto-generate-idempotency-key:
+ *       header-name: "Idempotency-Key"
+ *
+ * Lookup: `config["auto-generate-idempotency-key"]`. Returns `undefined` when disabled.
+ */
+export function getIdempotencyKeyGenerationFromGeneratorConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): { headerName: string } | undefined {
+    if (typeof generatorInvocation.raw?.config !== "object" || generatorInvocation.raw?.config === null) {
+        return undefined;
+    }
+    const value = (generatorInvocation.raw.config as { "auto-generate-idempotency-key"?: unknown })[
+        "auto-generate-idempotency-key"
+    ];
+    if (value === true) {
+        return { headerName: DEFAULT_IDEMPOTENCY_KEY_HEADER };
+    }
+    if (typeof value === "object" && value !== null) {
+        const headerName = (value as { "header-name"?: unknown })["header-name"];
+        return { headerName: typeof headerName === "string" ? headerName : DEFAULT_IDEMPOTENCY_KEY_HEADER };
+    }
+    return undefined;
+}
+
 /** Config keys consumed by the CLI and not forwarded to generators. */
-const CLI_ONLY_CONFIG_KEYS: ReadonlySet<string> = new Set(["user-agent"]);
+const CLI_ONLY_CONFIG_KEYS: ReadonlySet<string> = new Set(["user-agent", "auto-generate-idempotency-key"]);
 
 /**
  * Returns a copy of the generator's custom config with CLI-only keys removed.

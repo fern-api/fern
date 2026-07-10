@@ -240,6 +240,21 @@ types:
       hasPaginatedEndpoints: boolean
       hasFileDownloadEndpoints: boolean
       platformHeaders: PlatformHeaders
+      idempotencyKeyGeneration:
+        docs: |
+          When present, generated SDKs auto-generate an idempotency key header on
+          retry-unsafe (POST/PUT) requests unless the caller supplies one. Absent
+          means the feature is disabled (the default). Configured once via the
+          `auto-generate-idempotency-key` generator config key and read identically
+          by every generator so behavior is consistent across languages.
+        type: optional<IdempotencyKeyGeneration>
+  IdempotencyKeyGeneration:
+    properties:
+      headerName:
+        type: string
+        docs: |
+          The wire header used for the auto-generated idempotency key.
+          Defaults to "Idempotency-Key".
   PlatformHeaders:
     properties:
       language: string
