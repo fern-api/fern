@@ -575,9 +575,7 @@ class ClientWrapperGenerator:
             # When it is disabled (default), the discrete headers are preserved.
             user_agent_prefix: typing.Optional[str] = None
             if project._project_config is not None:
-                user_agent_prefix = (
-                    f"{project._project_config.package_name}/{project._project_config.package_version}"
-                )
+                user_agent_prefix = f"{project._project_config.package_name}/{project._project_config.package_version}"
             elif user_agent_header is not None:
                 user_agent_prefix = user_agent_header.value
             emit_structured_user_agent = (
