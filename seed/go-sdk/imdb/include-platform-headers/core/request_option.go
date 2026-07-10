@@ -80,6 +80,9 @@ func platformUserAgent(base string) string {
 	var b strings.Builder
 	b.WriteString(base)
 	goos, goarch := runtime.GOOS, runtime.GOARCH
+	if goarch == "x64" || goarch == "amd64" || goarch == "x86_64" {
+		goarch = "x86_64"
+	}
 	switch {
 	case goos != "" && goarch != "":
 		b.WriteString(fmt.Sprintf(" (%s; %s)", goos, goarch))

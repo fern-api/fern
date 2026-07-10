@@ -75,6 +75,7 @@ class SeedClient
      */
     private static function getPlatformUserAgent(string $os, string $arch, string $runtimeVersion): string
     {
+        $arch = in_array(strtolower($arch), ['x64', 'amd64', 'x86_64'], true) ? 'x86_64' : $arch;
         $segments = array_values(array_filter([$os, $arch], fn ($value) => $value !== ''));
         $platform = count($segments) > 0 ? ' (' . implode('; ', $segments) . ')' : '';
         $runtime = $runtimeVersion !== '' ? 'PHP/' . $runtimeVersion : 'PHP';

@@ -206,18 +206,36 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
 
     /**
+     * Normalizes a {@code User-Agent} product token so it stays within the RFC 7230 token grammar. The Maven
+     * coordinate is {@code groupId:artifactId}, but a colon is not a valid token character, so it is replaced with a
+     * dot (e.g. {@code com.fern:imdb} -> {@code com.fern.imdb}), which is idiomatic for reverse-domain Java-style
+     * identifiers.
+     */
+    private static String toRfcCompliantUserAgent(String baseUserAgent) {
+        return baseUserAgent.replace(':', '.');
+    }
+
+    /**
      * Builds a static helper that assembles a structured {@code User-Agent} value at runtime, following the shape
      * {@code {sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}}. The os, arch, and runtime-version
      * segments are resolved at runtime via {@link System#getProperty(String)} rather than baked in at generation time;
      * each is omitted (never emitted as a literal {@code null}) when it cannot be determined.
      */
     private static MethodSpec buildUserAgentMethod(String baseUserAgent) {
+        String rfcCompliantUserAgent = toRfcCompliantUserAgent(baseUserAgent);
         return MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(String.class)
-                .addStatement("$T userAgent = $S", String.class, baseUserAgent)
+                .addStatement("$T userAgent = $S", String.class, rfcCompliantUserAgent)
                 .addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
                 .addStatement("$T arch = $T.getProperty($S)", String.class, System.class, "os.arch")
+                .beginControlFlow(
+                        "if (arch != null && (arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S)))",
+                        "x64",
+                        "amd64",
+                        "x86_64")
+                .addStatement("arch = $S", "x86_64")
+                .endControlFlow()
                 .addStatement("$T<$T> platformParts = new $T<>()", List.class, String.class, ArrayList.class)
                 .beginControlFlow("if (os != null && !os.isEmpty())")
                 .addStatement("platformParts.add(os.toLowerCase($T.ROOT))", Locale.class)
@@ -335,12 +353,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .map(userAgent -> userAgent.getHeader());
             StringBuilder putStatements = new StringBuilder();
             for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
-                boolean isUserAgent = includePlatformHeaders
-                        && userAgentHeaderName.isPresent()
-                        && userAgentHeaderName.get().equals(entry.getKey());
-                if (isUserAgent) {
+                boolean isUserAgentHeader =
+                        userAgentHeaderName.isPresent() && userAgentHeaderName.get().equals(entry.getKey());
+                if (isUserAgentHeader && includePlatformHeaders) {
                     userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue()));
                     putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), USER_AGENT_METHOD_NAME)
+                            .toString());
+                } else if (isUserAgentHeader) {
+                    putStatements.append(CodeBlock.of(
+                                    "put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
                             .toString());
                 } else {
                     putStatements.append(CodeBlock.of("put($S, $S);", entry.getKey(), entry.getValue())

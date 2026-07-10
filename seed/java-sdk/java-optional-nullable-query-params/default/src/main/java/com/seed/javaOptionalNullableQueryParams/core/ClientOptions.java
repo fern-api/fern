@@ -47,7 +47,7 @@ public final class ClientOptions {
         this.headers.putAll(headers);
         this.headers.putAll(new HashMap<String, String>() {
             {
-                put("User-Agent", "com.fern:java-optional-nullable-query-params/0.0.1");
+                put("User-Agent", "com.fern.java-optional-nullable-query-params/0.0.1");
                 put("X-Fern-Language", "JAVA");
                 put("X-Fern-SDK-Name", "com.seed.fern:java-optional-nullable-query-params-sdk");
             }

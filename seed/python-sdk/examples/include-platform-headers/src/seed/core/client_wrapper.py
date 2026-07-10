@@ -33,7 +33,11 @@ class BaseClientWrapper:
         import platform
 
         _user_agent = "fern_examples/0.0.1"
-        _platform = "; ".join(part for part in (platform.system().lower(), platform.machine()) if part)
+        _os = platform.system().lower()
+        _arch = platform.machine()
+        if _arch.lower() in ("x64", "amd64", "x86_64"):
+            _arch = "x86_64"
+        _platform = "; ".join(part for part in (_os, _arch) if part)
         if _platform:
             _user_agent += f" ({_platform})"
         _python_version = platform.python_version()
