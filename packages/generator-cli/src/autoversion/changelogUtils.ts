@@ -41,5 +41,6 @@ export function prependChangelogBlock({
  * so callers can avoid prepending a duplicate block on regeneration.
  */
 export function changelogContainsVersion(content: string, version: string): boolean {
-    return content.includes(`## [${version}]`);
+    const escaped = version.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp(`^## \\[${escaped}\\]`, "m").test(content);
 }
