@@ -569,9 +569,10 @@ class ClientWrapperGenerator:
 
             # When include_platform_headers is enabled we emit a single structured
             # `User-Agent` (`{sdkName}/{version} ({os}; {arch}) Python/{version}`)
-            # that supersedes the default `{package}/{version}` User-Agent. The value
-            # is computed at runtime so the platform/runtime segments reflect the
-            # environment the SDK executes in.
+            # that supersedes the default `{package}/{version}` User-Agent and the
+            # discrete X-Fern-Runtime / X-Fern-Platform headers. The value is computed
+            # at runtime so the platform/runtime segments reflect the execution env.
+            # When it is disabled (default), the discrete headers are preserved.
             user_agent_prefix: typing.Optional[str] = None
             if project._project_config is not None:
                 user_agent_prefix = (
@@ -583,20 +584,21 @@ class ClientWrapperGenerator:
                 include_platform_headers and not omit_fern_headers and user_agent_prefix is not None
             )
 
-            if emit_structured_user_agent:
+            if not omit_fern_headers:
                 writer.write_line("import platform")
                 writer.write_line("")
-                writer.write_line(f'_user_agent = "{user_agent_prefix}"')
-                writer.write_line(
-                    '_platform = "; ".join(part for part in (platform.system().lower(), platform.machine()) if part)'
-                )
-                writer.write_line("if _platform:")
-                with writer.indent():
-                    writer.write_line('_user_agent += f" ({_platform})"')
-                writer.write_line("_python_version = platform.python_version()")
-                writer.write_line("if _python_version:")
-                with writer.indent():
-                    writer.write_line('_user_agent += f" Python/{_python_version}"')
+                if emit_structured_user_agent:
+                    writer.write_line(f'_user_agent = "{user_agent_prefix}"')
+                    writer.write_line(
+                        '_platform = "; ".join(part for part in (platform.system().lower(), platform.machine()) if part)'
+                    )
+                    writer.write_line("if _platform:")
+                    with writer.indent():
+                        writer.write_line('_user_agent += f" ({_platform})"')
+                    writer.write_line("_python_version = platform.python_version()")
+                    writer.write_line("if _python_version:")
+                    with writer.indent():
+                        writer.write_line('_user_agent += f" Python/{_python_version}"')
             writer.write("headers: ")
             writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
             writer.write_line("= {")
@@ -606,6 +608,9 @@ class ClientWrapperGenerator:
                 elif user_agent_header is not None:
                     writer.write_line(f'"{user_agent_header.header}": "{user_agent_header.value}",')
                 writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
+                if not emit_structured_user_agent:
+                    writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
+                    writer.write_line("f'X-Fern-Platform': f\"{platform.system().lower()}/{platform.release()}\",")
                 if project._project_config is not None:
                     writer.write_line(
                         f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
