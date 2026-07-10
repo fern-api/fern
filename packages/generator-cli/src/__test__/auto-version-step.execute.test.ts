@@ -308,6 +308,39 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         expect(head).toContain("[fern-autoversion]");
     });
 
+    it("recovers when previousGenerationSha is unreachable by deriving the baseline from history", async () => {
+        // Regression: generator-cli's signed-commit push recreates the [fern-generated]
+        // commit with a new remote SHA, so the SHA recorded in replay.lock
+        // (previousGenerationSha) no longer exists in the next clone. AutoVersionStep must
+        // not crash on the unreachable SHA — it should re-anchor on the most recent reachable
+        // [fern-generated] commit and still compute the correct bump.
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "MINOR",
+            message: "feat: add newFeature helper",
+            changelog_entry: "### Added\n- newFeature()",
+            version_bump_reason: "New public API."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), baseConfig);
+        const unreachableSha = "0".repeat(40);
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: unreachableSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0");
+        expect(result.version).toBe("1.1.0");
+
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        expect(pkg.version).toBe("1.1.0");
+    });
+
     it("omits the Fern trailer when isWhitelabel is true", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
             version_bump: "MINOR",
@@ -331,6 +364,58 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         const head = gitExec(["log", "-1", "--format=%B"], repo.repoPath);
         expect(head).toContain("feat: add newFeature helper");
         expect(head).not.toContain("🌿 Generated with Fern");
+    });
+});
+
+describe("AutoVersionStep.execute() — unreachable baseline never ships the placeholder", () => {
+    let repoPath: string;
+    let currentSha: string;
+    let cleanup: () => Promise<void>;
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+
+        // A repo whose only generation commit carries the magic placeholder, and whose
+        // recorded previousGenerationSha is unreachable with no prior [fern-generated]
+        // commit in history — the worst case. AutoVersion must still rewrite the placeholder
+        // rather than crash and let a `0.0.0-fern-placeholder` PR ship.
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        repoPath = tmpDir.path;
+        cleanup = () => tmpDir.cleanup();
+
+        gitExec(["init", "-b", "main"], repoPath);
+        gitExec(["config", "user.name", "Test"], repoPath);
+        gitExec(["config", "user.email", "test@example.com"], repoPath);
+        gitExec(["config", "commit.gpgsign", "false"], repoPath);
+        writeFileSync(
+            join(repoPath, "package.json"),
+            JSON.stringify({ name: "test-sdk", version: "0.0.0-fern-placeholder" }, null, 2) + "\n"
+        );
+        gitExec(["add", "."], repoPath);
+        gitExec(["commit", "-m", "[fern-generated] Current SDK (placeholder)"], repoPath);
+        currentSha = gitExec(["rev-parse", "HEAD"], repoPath);
+    });
+
+    afterEach(async () => {
+        await cleanup();
+    });
+
+    it("rewrites the placeholder using baseVersion instead of throwing on the unreachable SHA", async () => {
+        const step = new AutoVersionStep(repoPath, makeLogger(), { ...baseConfig, baseVersion: "2.3.4" });
+        const prepared = fakePreparedReplay({
+            outputDir: repoPath,
+            previousGenerationSha: "0".repeat(40),
+            currentGenerationSha: currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        const pkg = JSON.parse(readFileSync(join(repoPath, "package.json"), "utf-8")) as { version: string };
+        expect(pkg.version).not.toContain("fern-placeholder");
+        expect(pkg.version).toBe("2.3.4");
+        expect(mockAnalyzeSdkDiff).not.toHaveBeenCalled();
     });
 });
 
