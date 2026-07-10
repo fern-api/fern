@@ -1051,7 +1051,9 @@ describe("generateHeaders", () => {
             context: createMockContext(),
             intermediateRepresentation: {
                 headers: [],
-                sdkConfig: { idempotencyKeyGeneration: { headerName: "X-Custom-Idem", methods: [FernIr.HttpMethod.Post] } }
+                sdkConfig: {
+                    idempotencyKeyGeneration: { headerName: "X-Custom-Idem", methods: [FernIr.HttpMethod.Post] }
+                }
                 // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
