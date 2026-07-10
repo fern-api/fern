@@ -35,7 +35,14 @@ describe("buildUserAgentMethodBody", () => {
 
     it("drops the runtime version when unavailable and never emits an empty runtime", () => {
         const body = buildUserAgentLocalLines().join("\n");
-        expect(body).toContain('runtimeVersion.Length > 0 ? $" .NET/{runtimeVersion}" : " .NET"');
+        // `dotnet` is used instead of `.NET`; a leading dot is not a valid RFC 7230 token character.
+        expect(body).toContain('runtimeVersion.Length > 0 ? $" dotnet/{runtimeVersion}" : " dotnet"');
+        expect(body).not.toContain(".NET");
+    });
+
+    it("normalizes the 64-bit x86 architecture aliases to the canonical x86_64", () => {
+        const body = buildUserAgentLocalLines().join("\n");
+        expect(body).toContain('arch = arch == "x64" || arch == "amd64" || arch == "x86_64" ? "x86_64" : arch;');
     });
 
     it("builds the Twilio-shaped User-Agent around the package name and version expression", () => {

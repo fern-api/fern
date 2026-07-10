@@ -42,7 +42,7 @@ module Seed
         # @return [String] The User-Agent header value.
         def self.user_agent(prefix)
           os = normalize_os(RbConfig::CONFIG["host_os"])
-          arch = normalize_value(RbConfig::CONFIG["host_cpu"])
+          arch = normalize_arch(RbConfig::CONFIG["host_cpu"])
           version = normalize_value(RUBY_VERSION)
 
           result = prefix.to_s
@@ -59,6 +59,18 @@ module Seed
 
           stripped = value.to_s.strip
           stripped.empty? ? nil : stripped
+        end
+
+        # Collapses the 64-bit x86 architecture aliases (x64, amd64, x86_64) to
+        # the single canonical token "x86_64"; other architectures are returned
+        # unchanged.
+        # @param host_cpu [String, nil] The raw RbConfig host_cpu value.
+        # @return [String, nil] A normalized architecture token, or nil when blank.
+        def self.normalize_arch(host_cpu)
+          value = normalize_value(host_cpu)
+          return nil if value.nil?
+
+          %w[x64 amd64 x86_64].include?(value.downcase) ? "x86_64" : value
         end
 
         # Maps RbConfig's host_os to a short, stable platform token.
