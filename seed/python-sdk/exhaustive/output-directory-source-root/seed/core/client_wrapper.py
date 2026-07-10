@@ -18,13 +18,9 @@ class BaseClientWrapper:
         self._logging = logging
     
     def get_headers(self) -> typing.Dict[str, str]:
-        import platform
-        
         headers: typing.Dict[str, str]= {
         "User-Agent": "fern_exhaustive/0.0.1",
         "X-Fern-Language": "Python",
-        f'X-Fern-Runtime': f"python/{platform.python_version()}",
-        f'X-Fern-Platform': f"{platform.system().lower()}/{platform.release()}",
         "X-Fern-SDK-Name": "fern_exhaustive",
         "X-Fern-SDK-Version": "0.0.1",
         **(self.get_custom_headers() or {}),

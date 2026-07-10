@@ -30,12 +30,8 @@ class BaseClientWrapper:
         self._user_agent = user_agent
 
     def get_headers(self) -> typing.Dict[str, str]:
-        import platform
-
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
-            "X-Fern-Runtime": f"python/{platform.python_version()}",
-            "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "fern_literal-user-agent",
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
