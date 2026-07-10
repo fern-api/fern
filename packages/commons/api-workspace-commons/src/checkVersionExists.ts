@@ -81,6 +81,28 @@ export function getUserAgentTemplateFromGeneratorConfig(
     return undefined;
 }
 
+/**
+ * Resolves the object to read generator config keys from.
+ *
+ * Prefers the raw (unvalidated) generators.yml config, which is always present in the
+ * production generation path and preserves CLI-only keys verbatim. Falls back to the resolved
+ * `config` when `raw` is absent — this happens for synthetic invocations (e.g. the seed test
+ * harness) that populate `config` directly without a `raw` block.
+ */
+function getGeneratorConfigObject(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): Record<string, unknown> | undefined {
+    const raw = generatorInvocation.raw?.config;
+    if (typeof raw === "object" && raw !== null) {
+        return raw as Record<string, unknown>;
+    }
+    const resolved = generatorInvocation.config;
+    if (typeof resolved === "object" && resolved !== null) {
+        return resolved as Record<string, unknown>;
+    }
+    return undefined;
+}
+
 /** Default wire header for the auto-generated idempotency key. */
 const DEFAULT_IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
 
@@ -123,12 +145,11 @@ function parseIdempotencyKeyMethods(value: unknown): HttpMethod[] {
 export function getIdempotencyKeyGenerationFromGeneratorConfig(
     generatorInvocation: generatorsYml.GeneratorInvocation
 ): IdempotencyKeyGeneration | undefined {
-    if (typeof generatorInvocation.raw?.config !== "object" || generatorInvocation.raw?.config === null) {
+    const config = getGeneratorConfigObject(generatorInvocation);
+    if (config == null) {
         return undefined;
     }
-    const value = (generatorInvocation.raw.config as { "auto-generate-idempotency-key"?: unknown })[
-        "auto-generate-idempotency-key"
-    ];
+    const value = config["auto-generate-idempotency-key"];
     if (value === true) {
         return { headerName: DEFAULT_IDEMPOTENCY_KEY_HEADER, methods: DEFAULT_IDEMPOTENCY_KEY_METHODS };
     }
