@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.12.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies via a new
+        `ResponseDecompressionInterceptor` added to the generated `OkHttpClient`.
+        OkHttp only performs transparent gzip decompression when it adds the
+        `Accept-Encoding` header itself, so responses to requests with a
+        spec-defined `Accept-Encoding: gzip` header were previously returned as
+        raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
 - version: 4.12.0
   changelogEntry:
     - summary: |
