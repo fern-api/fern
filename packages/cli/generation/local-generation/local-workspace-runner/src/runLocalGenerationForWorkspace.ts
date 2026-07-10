@@ -3,11 +3,11 @@ import {
     computeSemanticVersion,
     detectCiProvider,
     detectInvocationSource,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
-    getUserAgentTemplateFromGeneratorConfig,
-    getIdempotencyKeyGenerationFromGeneratorConfig
+    getUserAgentTemplateFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
