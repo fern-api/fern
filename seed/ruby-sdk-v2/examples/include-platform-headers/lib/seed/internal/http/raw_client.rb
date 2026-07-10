@@ -1,14 +1,14 @@
 # frozen_string_literal: true
-<% if (includePlatformHeaders) { %>
+
 require "rbconfig"
-<% } %>
-module <%= gem_namespace %>
+
+module Seed
   module Internal
     module Http
       # @api private
       class RawClient
         # Default HTTP status codes that trigger a retry
-        RETRYABLE_STATUSES = {{RETRY_STATUS_CODES_ARRAY}}
+        RETRYABLE_STATUSES = [408, 429, 500, 502, 503, 504, 521, 522, 524].freeze
         # Initial delay between retries in seconds
         INITIAL_RETRY_DELAY = 0.5
         # Maximum delay between retries in seconds
@@ -20,20 +20,20 @@ module <%= gem_namespace %>
         attr_reader :base_url
 
         # @param base_url [String] The base url for the request.
-        # @param max_retries [Integer] The number of times to retry a failed request, defaults to <%= defaultMaxRetries %>.
+        # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
-        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {})
+        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {})
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
-          @default_headers = <% if (!omitFernHeaders) { %>{
+          @default_headers = {
             "X-Fern-Language": "Ruby",
-            "X-Fern-SDK-Name": "<%= sdkName %>",
+            "X-Fern-SDK-Name": "seed",
             "X-Fern-SDK-Version": "0.0.1"
-          }.merge(headers)<% } else { %>headers<% } %>
+          }.merge(headers)
         end
-<% if (includePlatformHeaders) { %>
+
         # Builds a structured User-Agent header value of the form
         # "{sdk_name}/{sdk_version} ({os}; {arch}) Ruby/{version}", resolving the
         # operating system, architecture, and Ruby version at runtime. Unknown
@@ -77,8 +77,8 @@ module <%= gem_namespace %>
           else value
           end
         end
-<% } %>
-        # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
+
+        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.
         def send(request)
           url = build_url(request)
@@ -168,7 +168,7 @@ module <%= gem_namespace %>
 
         LOCALHOST_HOSTS = %w[localhost 127.0.0.1 [::1]].freeze
 
-        # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
+        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [URI::Generic] The URL.
         def build_url(request)
           encoded_query = request.encode_query

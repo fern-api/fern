@@ -586,10 +586,23 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const headers: ruby.HashEntry[] = [];
 
         if (!this.context.customConfig.omitFernHeaders) {
-            if (this.context.ir.sdkConfig.platformHeaders.userAgent != null) {
+            const userAgent = this.context.ir.sdkConfig.platformHeaders.userAgent;
+            // When includePlatformHeaders is enabled we emit a single structured
+            // User-Agent ("{sdkName}/{version} ({os}; {arch}) Ruby/{version}") that
+            // consolidates the platform + runtime information, resolved at runtime.
+            // This supersedes the default "{package}/{version}" User-Agent value.
+            if (this.context.customConfig.includePlatformHeaders && userAgent != null) {
+                const rootModuleName = this.context.getRootModule().name;
                 headers.push({
                     key: ruby.TypeLiteral.string("User-Agent"),
-                    value: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.userAgent.value)
+                    value: ruby.codeblock(
+                        `${rootModuleName}::Internal::Http::RawClient.user_agent(${JSON.stringify(userAgent.value)})`
+                    )
+                });
+            } else if (userAgent != null) {
+                headers.push({
+                    key: ruby.TypeLiteral.string("User-Agent"),
+                    value: ruby.TypeLiteral.string(userAgent.value)
                 });
             }
 
