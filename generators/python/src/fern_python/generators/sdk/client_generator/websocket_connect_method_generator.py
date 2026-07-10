@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import fern.ir.resources as ir_types
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
-
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
@@ -26,6 +24,8 @@ from fern_python.utils.name_resolver import (
     resolve_name_preserving_underscores,
 )
 from fern_python.utils.snake_case import snake_case
+
+import fern.ir.resources as ir_types
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -514,7 +514,10 @@ class WebsocketConnectMethodGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name_preserving_underscores(component).snake_case.safe_name for component in components]) + "."
+        return (
+            ".".join([resolve_name_preserving_underscores(component).snake_case.safe_name for component in components])
+            + "."
+        )
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
