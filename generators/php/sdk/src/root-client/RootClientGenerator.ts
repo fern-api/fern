@@ -50,6 +50,7 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 };
 
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
+const GET_PLATFORM_USER_AGENT = "getPlatformUserAgent";
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly case: CaseConverter;
@@ -174,6 +175,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             class_.addMethod(this.getFromEnvOrThrowMethod());
         }
 
+        const userAgent = this.context.getUserAgent();
+        if (
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.customConfig.includePlatformHeaders &&
+            userAgent != null
+        ) {
+            class_.addMethod(this.getPlatformUserAgentMethod(userAgent.value));
+        }
+
         return this.newRootClientFile(class_);
     }
 
@@ -293,7 +303,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     key: php.codeblock(`'${userAgent.header}'`),
                     value: this.context.customConfig.includePlatformHeaders
                         ? php.codeblock(
-                              `sprintf('%s (%s; %s) PHP/%s', '${userAgent.value}', strtolower(PHP_OS), php_uname('m'), PHP_VERSION)`
+                              `self::${GET_PLATFORM_USER_AGENT}(strtolower(PHP_OS), php_uname('m'), PHP_VERSION)`
                           )
                         : php.codeblock(`'${userAgent.value}'`)
                 });
@@ -622,6 +632,31 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.write("return $value ? (string) $value : throw new ");
                 writer.writeNode(this.context.getExceptionClassReference());
                 writer.writeTextStatement("($message)");
+            })
+        });
+    }
+
+    private getPlatformUserAgentMethod(baseUserAgent: string): php.Method {
+        const escapedBase = baseUserAgent.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+        return php.method({
+            access: "private",
+            static_: true,
+            name: GET_PLATFORM_USER_AGENT,
+            return_: php.Type.string(),
+            parameters: [
+                php.parameter({ name: "os", type: php.Type.string() }),
+                php.parameter({ name: "arch", type: php.Type.string() }),
+                php.parameter({ name: "runtimeVersion", type: php.Type.string() })
+            ],
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement(
+                    "$segments = array_values(array_filter([$os, $arch], fn ($value) => $value !== ''))"
+                );
+                writer.writeTextStatement(
+                    "$platform = count($segments) > 0 ? ' (' . implode('; ', $segments) . ')' : ''"
+                );
+                writer.writeTextStatement("$runtime = $runtimeVersion !== '' ? 'PHP/' . $runtimeVersion : 'PHP'");
+                writer.writeTextStatement(`return '${escapedBase}' . $platform . ' ' . $runtime`);
             })
         });
     }
