@@ -1,5 +1,11 @@
 - summary: |
-    Add `fern org set/get/unset` commands for org-level CLI version floor.
-    `fern upgrade` now respects the org minimum version, and `fern check`
-    warns when the project is below the org floor.
+    Add `fern org set/get/unset` commands for an org-level minimum ("floor")
+    CLI version. When an org sets a floor, the CLI now enforces it at the
+    version-redirection layer: every command runs at the floor version (or
+    higher) automatically, downloading it via `npx` just like a pinned
+    version. The floor is cached on disk with a short TTL, fetched with a
+    tight timeout, and fails open, so it never blocks a build when the
+    registry is unreachable or the user is unauthenticated. Set
+    `FERN_IGNORE_ORG_VERSION_FLOOR=true` to bypass. `fern upgrade` also bumps
+    the project past the floor.
   type: feat

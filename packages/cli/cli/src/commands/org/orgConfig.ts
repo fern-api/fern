@@ -3,6 +3,9 @@ import { askToLogin } from "@fern-api/login";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import { homedir } from "os";
+import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/themeOrigin.js";
@@ -175,15 +178,18 @@ export async function unsetOrgCliVersion({ cliContext, org }: { cliContext: CliC
 export async function fetchOrgCliVersionMin({
     cliContext,
     orgId,
-    token
+    token,
+    timeoutMs
 }: {
     cliContext: CliContext;
     orgId: string;
     token: string;
+    timeoutMs?: number;
 }): Promise<string | undefined> {
     try {
         const res = await fetch(`${FDR_ORIGIN}/v2/registry/org-config/${orgId}`, {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
+            signal: timeoutMs != null ? AbortSignal.timeout(timeoutMs) : undefined
         });
         if (!res.ok) {
             cliContext.logger.debug(`Failed to fetch org config: HTTP ${res.status}`);
@@ -197,31 +203,121 @@ export async function fetchOrgCliVersionMin({
     }
 }
 
+const ORG_FLOOR_FETCH_TIMEOUT_MS = 2500;
+const ORG_FLOOR_CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+const ORG_FLOOR_CACHE_FILENAME = "org-cli-floor-cache.json";
+
+interface OrgFloorCacheEntry {
+    cliVersionMin: string | null;
+    fetchedAt: number;
+}
+
+function getOrgFloorCachePath(): string {
+    const storageFolder = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
+    return path.join(homedir(), storageFolder, ORG_FLOOR_CACHE_FILENAME);
+}
+
+async function readOrgFloorCache(orgId: string): Promise<OrgFloorCacheEntry | undefined> {
+    try {
+        const raw = await readFile(getOrgFloorCachePath(), "utf-8");
+        const parsed = JSON.parse(raw) as Record<string, OrgFloorCacheEntry>;
+        const entry = parsed[orgId];
+        if (entry == null || Date.now() - entry.fetchedAt > ORG_FLOOR_CACHE_TTL_MS) {
+            return undefined;
+        }
+        return entry;
+    } catch {
+        return undefined;
+    }
+}
+
+async function writeOrgFloorCache(orgId: string, cliVersionMin: string | undefined): Promise<void> {
+    try {
+        const cachePath = getOrgFloorCachePath();
+        let existing: Record<string, OrgFloorCacheEntry> = {};
+        try {
+            existing = JSON.parse(await readFile(cachePath, "utf-8")) as Record<string, OrgFloorCacheEntry>;
+        } catch {
+            // no existing cache
+        }
+        existing[orgId] = { cliVersionMin: cliVersionMin ?? null, fetchedAt: Date.now() };
+        await mkdir(path.dirname(cachePath), { recursive: true });
+        await writeFile(cachePath, JSON.stringify(existing), "utf-8");
+    } catch {
+        // caching is best-effort; ignore write failures
+    }
+}
+
 /**
- * Checks if the current project version is below the org floor and logs a warning.
- * Returns true if below floor.
+ * Resolves the org-level minimum CLI version for use in the version-redirection
+ * path. Reads a disk cache first (short TTL) and only hits FDR on a cache miss,
+ * using a tight timeout. Fails open (returns undefined) on any error — missing
+ * auth, network failure, timeout — so the floor never blocks a command.
  */
-export function checkVersionAgainstOrgFloor({
+async function getCachedOrgCliVersionMin({
     cliContext,
-    projectVersion,
-    orgFloor,
     orgId
 }: {
     cliContext: CliContext;
-    projectVersion: string;
-    orgFloor: string;
     orgId: string;
-}): boolean {
+}): Promise<string | undefined> {
+    if (process.env.FERN_IGNORE_ORG_VERSION_FLOOR === "true") {
+        return undefined;
+    }
+
+    const cached = await readOrgFloorCache(orgId);
+    if (cached != null) {
+        return cached.cliVersionMin ?? undefined;
+    }
+
     try {
-        if (isVersionAhead(orgFloor, projectVersion)) {
-            cliContext.logger.warn(
-                `CLI version ${chalk.dim(projectVersion)} is below org "${orgId}" minimum ${chalk.green(orgFloor)}. ` +
-                    `Run ${chalk.cyan("fern upgrade")} to update.`
+        const { getToken } = await import("@fern-api/auth");
+        const token = await getToken();
+        if (token == null) {
+            return undefined;
+        }
+        const cliVersionMin = await fetchOrgCliVersionMin({
+            cliContext,
+            orgId,
+            token: token.value,
+            timeoutMs: ORG_FLOOR_FETCH_TIMEOUT_MS
+        });
+        await writeOrgFloorCache(orgId, cliVersionMin);
+        return cliVersionMin;
+    } catch (err) {
+        cliContext.logger.debug(`Failed to resolve org CLI version floor: ${String(err)}`);
+        return undefined;
+    }
+}
+
+/**
+ * Given the version the CLI would otherwise run, returns the org floor when it
+ * is higher. Used by the version-redirection layer so every command runs at
+ * >= the org minimum. Fails open to `intendedVersion`.
+ */
+export async function applyOrgFloorToVersion({
+    cliContext,
+    orgId,
+    intendedVersion
+}: {
+    cliContext: CliContext;
+    orgId: string;
+    intendedVersion: string;
+}): Promise<string> {
+    const floor = await getCachedOrgCliVersionMin({ cliContext, orgId });
+    if (floor == null) {
+        return intendedVersion;
+    }
+    try {
+        if (isVersionAhead(floor, intendedVersion)) {
+            cliContext.logger.info(
+                `Org "${orgId}" requires Fern CLI ${chalk.green(`>= ${floor}`)} — running ${chalk.green(floor)}.`
             );
-            return true;
+            return floor;
         }
     } catch {
         // version comparison failed — don't block
     }
-    return false;
+    return intendedVersion;
 }
+

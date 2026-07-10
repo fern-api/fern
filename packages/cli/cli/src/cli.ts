@@ -86,8 +86,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import {
-    checkVersionAgainstOrgFloor,
-    fetchOrgCliVersionMin,
+    applyOrgFloorToVersion,
     getOrgConfig,
     setOrgCliVersion,
     unsetOrgCliVersion
@@ -328,13 +327,21 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
         );
+        let intendedVersion: string;
         if (projectConfig.version === "*") {
-            return cliContext.environment.packageVersion;
+            intendedVersion = cliContext.environment.packageVersion;
+        } else if (projectConfig.version === "latest") {
+            intendedVersion = await getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
+        } else {
+            intendedVersion = projectConfig.version;
         }
-        if (projectConfig.version === "latest") {
-            return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
-        }
-        return projectConfig.version;
+        // Enforce the org-level minimum CLI version floor (if set). Fails open
+        // to the resolved version when the floor is unset or unreachable.
+        return await applyOrgFloorToVersion({
+            cliContext,
+            orgId: projectConfig.organization,
+            intendedVersion
+        });
     }
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
 }
@@ -1407,25 +1414,6 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     directFromOpenapi: argv.fromOpenapi,
                     commandLineApiWorkspace: argv.api
                 });
-
-                // Check org-level CLI version floor
-                const { getToken } = await import("@fern-api/auth");
-                const token = await getToken();
-                if (token != null) {
-                    const orgFloor = await fetchOrgCliVersionMin({
-                        cliContext,
-                        orgId: project.config.organization,
-                        token: token.value
-                    });
-                    if (orgFloor != null) {
-                        checkVersionAgainstOrgFloor({
-                            cliContext,
-                            projectVersion: cliContext.environment.packageVersion,
-                            orgFloor,
-                            orgId: project.config.organization
-                        });
-                    }
-                }
             } catch (error) {
                 if (project == null) {
                     const reason = error instanceof Error ? error.message.slice(0, 100) : "project load failed";
