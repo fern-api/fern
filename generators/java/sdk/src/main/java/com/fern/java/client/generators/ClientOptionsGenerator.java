@@ -47,6 +47,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -202,6 +203,40 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return entries;
     }
 
+    private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
+
+    /**
+     * Builds a static helper that assembles a structured {@code User-Agent} value at runtime, following the shape
+     * {@code {sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}}. The os, arch, and runtime-version
+     * segments are resolved at runtime via {@link System#getProperty(String)} rather than baked in at generation time;
+     * each is omitted (never emitted as a literal {@code null}) when it cannot be determined.
+     */
+    private static MethodSpec buildUserAgentMethod(String baseUserAgent) {
+        return MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addStatement("$T userAgent = $S", String.class, baseUserAgent)
+                .addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
+                .addStatement("$T arch = $T.getProperty($S)", String.class, System.class, "os.arch")
+                .addStatement("$T<$T> platformParts = new $T<>()", List.class, String.class, ArrayList.class)
+                .beginControlFlow("if (os != null && !os.isEmpty())")
+                .addStatement("platformParts.add(os.toLowerCase($T.ROOT))", Locale.class)
+                .endControlFlow()
+                .beginControlFlow("if (arch != null && !arch.isEmpty())")
+                .addStatement("platformParts.add(arch)")
+                .endControlFlow()
+                .beginControlFlow("if (!platformParts.isEmpty())")
+                .addStatement("userAgent += $S + $T.join($S, platformParts) + $S", " (", String.class, "; ", ")")
+                .endControlFlow()
+                .addStatement("$T javaVersion = $T.getProperty($S)", String.class, System.class, "java.version")
+                .addStatement("userAgent += $S", " Java")
+                .beginControlFlow("if (javaVersion != null && !javaVersion.isEmpty())")
+                .addStatement("userAgent += $S + javaVersion", "/")
+                .endControlFlow()
+                .addStatement("return userAgent")
+                .build();
+    }
+
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
@@ -284,16 +319,35 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         Map<String, MethodSpec> apiPathParamGetters = getApiPathParamGetters(apiPathParamFieldsForMainClass);
 
         String platformHeadersPutString = "";
+        Optional<MethodSpec> userAgentMethod = Optional.empty();
         if (!clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
-            platformHeadersPutString = getPlatformHeadersEntries(
-                            generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
-                            generatorContext.getGeneratorConfig(),
-                            generatorContext.getIr())
-                    .entrySet()
-                    .stream()
-                    .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
-                            .toString())
-                    .collect(Collectors.joining(""));
+            Map<String, String> platformHeaderEntries = getPlatformHeadersEntries(
+                    generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
+                    generatorContext.getGeneratorConfig(),
+                    generatorContext.getIr());
+            boolean includePlatformHeaders =
+                    clientGeneratorContext.getCustomConfig().includePlatformHeaders();
+            Optional<String> userAgentHeaderName = generatorContext
+                    .getIr()
+                    .getSdkConfig()
+                    .getPlatformHeaders()
+                    .getUserAgent()
+                    .map(userAgent -> userAgent.getHeader());
+            StringBuilder putStatements = new StringBuilder();
+            for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
+                boolean isUserAgent = includePlatformHeaders
+                        && userAgentHeaderName.isPresent()
+                        && userAgentHeaderName.get().equals(entry.getKey());
+                if (isUserAgent) {
+                    userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue()));
+                    putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), USER_AGENT_METHOD_NAME)
+                            .toString());
+                } else {
+                    putStatements.append(CodeBlock.of("put($S, $S);", entry.getKey(), entry.getValue())
+                            .toString());
+                }
+            }
+            platformHeadersPutString = putStatements.toString();
         }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
@@ -421,6 +475,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(constructorBuilder.build())
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
+
+        if (userAgentMethod.isPresent()) {
+            clientOptionsBuilder.addMethod(userAgentMethod.get());
+        }
 
         addApiVersionField(clientOptionsBuilder);
 
