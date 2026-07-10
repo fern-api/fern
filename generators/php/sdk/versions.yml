@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.11.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients, gated behind a new `includePlatformHeaders` config option (default
+        off, so existing generated output is unchanged). When enabled, the client
+        reports its SDK name/version plus the operating system, architecture, and PHP
+        runtime version in the Twilio-style shape
+        `{sdkName}/{sdkVersion} ({os}; {arch}) PHP/{runtimeVersion}`
+        (e.g. `my-sdk/1.0.0 (linux; x86_64) PHP/8.2.0`). The platform values are
+        resolved at runtime via `PHP_OS`, `php_uname('m')`, and `PHP_VERSION`. Unknown
+        segments are omitted gracefully (the `(os; arch)` group is dropped when both are
+        empty, a single known value is included on its own, and the version suffix is
+        dropped when unavailable), and the discrete `X-Fern-Platform` / `X-Fern-Runtime`
+        headers are consolidated into the `User-Agent`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
 - version: 2.10.16
   changelogEntry:
     - summary: |
