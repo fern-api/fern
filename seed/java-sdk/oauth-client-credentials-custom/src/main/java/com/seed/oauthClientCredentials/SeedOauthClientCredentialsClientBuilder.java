@@ -264,9 +264,9 @@ public class SeedOauthClientCredentialsClientBuilder {
 
         private String entityId = null;
 
-        private Optional<String> scope = null;
+        private Optional<String> scope = Optional.empty();
 
-        private Optional<List<String>> permissions = null;
+        private Optional<List<String>> permissions = Optional.empty();
 
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;

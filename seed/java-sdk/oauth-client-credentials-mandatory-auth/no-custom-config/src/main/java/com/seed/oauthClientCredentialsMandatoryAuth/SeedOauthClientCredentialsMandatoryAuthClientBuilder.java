@@ -259,7 +259,7 @@ public class SeedOauthClientCredentialsMandatoryAuthClientBuilder {
 
         private final String clientSecret;
 
-        private Optional<String> scope = null;
+        private Optional<String> scope = Optional.empty();
 
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
