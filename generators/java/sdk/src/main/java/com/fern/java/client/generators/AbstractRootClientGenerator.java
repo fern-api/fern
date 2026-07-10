@@ -1920,10 +1920,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
                 // Add custom property fields to credentials auth
                 for (OAuthCustomProperty customProp : customPropertyNames) {
-                    credentialsAuthBuilder.addField(FieldSpec.builder(customProp.type, customProp.name)
-                            .addModifiers(Modifier.PRIVATE)
-                            .initializer("null")
-                            .build());
+                    FieldSpec.Builder customPropField =
+                            FieldSpec.builder(customProp.type, customProp.name).addModifiers(Modifier.PRIVATE);
+                    // Optional fields default to Optional.empty() (never a null Optional reference), matching the
+                    // request model's builder defaults and keeping the "Optional fields are never null" invariant.
+                    if (isOptionalTypeName(customProp.type)) {
+                        customPropField.initializer("$T.empty()", Optional.class);
+                    } else {
+                        customPropField.initializer("null");
+                    }
+                    credentialsAuthBuilder.addField(customPropField.build());
 
                     // Add setter for custom property
                     credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(customProp.name)
@@ -2419,6 +2425,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             return null;
         }
 
+        private boolean isOptionalTypeName(TypeName typeName) {
+            return typeName instanceof ParameterizedTypeName
+                    && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+        }
+
         private void createSetter(
                 String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
             createSetter(fieldName, environmentVariable, literal, Optional.empty());
@@ -2459,6 +2470,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         return null;
                     }
                 });
+            } else if (isOptionalTypeName(fieldType)) {
+                // Optional fields default to Optional.empty() (never a null Optional reference), matching the
+                // request model's builder defaults and keeping the "Optional fields are never null" invariant.
+                field.initializer("$T.empty()", Optional.class);
             } else {
                 field.initializer("null");
             }
