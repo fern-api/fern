@@ -30,30 +30,31 @@ module <%= gem_namespace %>
           @default_headers = <% if (!omitFernHeaders) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
-            "X-Fern-SDK-Version": "0.0.1"<% if (includePlatformHeaders) { %>,
-            "User-Agent": user_agent<% } %>
+            "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)<% } else { %>headers<% } %>
         end
 <% if (includePlatformHeaders) { %>
-        # Builds a structured User-Agent header value, resolving the operating
-        # system, architecture, and Ruby version at runtime. Unknown components
-        # are omitted rather than emitted as placeholder values.
+        # Builds a structured User-Agent header value of the form
+        # "{sdk_name}/{sdk_version} ({os}; {arch}) Ruby/{version}", resolving the
+        # operating system, architecture, and Ruby version at runtime. Unknown
+        # components are omitted rather than emitted as placeholder values.
+        # @param prefix [String] The "{sdk_name}/{sdk_version}" portion.
         # @return [String] The User-Agent header value.
-        def user_agent
+        def self.user_agent(prefix)
           os = normalize_os(RbConfig::CONFIG["host_os"])
           arch = normalize_value(RbConfig::CONFIG["host_cpu"])
           version = normalize_value(RUBY_VERSION)
 
-          parts = ["<%= sdkName %>/0.0.1"]
+          result = prefix.to_s
           platform = [os, arch].compact
-          parts << "(#{platform.join("; ")})" unless platform.empty?
-          parts << (version.nil? ? "Ruby" : "Ruby/#{version}")
-          parts.join(" ")
+          result += " (#{platform.join("; ")})" unless platform.empty?
+          result += version.nil? ? " Ruby" : " Ruby/#{version}"
+          result
         end
 
         # @param value [String, nil] The raw value to normalize.
         # @return [String, nil] The stripped value, or nil when blank.
-        def normalize_value(value)
+        def self.normalize_value(value)
           return nil if value.nil?
 
           stripped = value.to_s.strip
@@ -63,7 +64,7 @@ module <%= gem_namespace %>
         # Maps RbConfig's host_os to a short, stable platform token.
         # @param host_os [String, nil] The raw RbConfig host_os value.
         # @return [String, nil] A normalized OS token, or nil when unknown.
-        def normalize_os(host_os)
+        def self.normalize_os(host_os)
           value = normalize_value(host_os)
           return nil if value.nil?
 
