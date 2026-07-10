@@ -81,7 +81,7 @@ fixtures:
       customConfig: null
     - outputFolder: include-idempotency-key
       customConfig:
-        autoGenerateIdempotencyKey: true
+        auto-generate-idempotency-key: true
     - outputFolder: with-audiences
       customConfig: null
       audiences:
