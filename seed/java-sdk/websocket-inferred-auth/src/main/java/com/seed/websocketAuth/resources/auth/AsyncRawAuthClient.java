@@ -3,10 +3,12 @@
  */
 package com.seed.websocketAuth.resources.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.websocketAuth.core.ClientOptions;
 import com.seed.websocketAuth.core.MediaTypes;
 import com.seed.websocketAuth.core.ObjectMappers;
 import com.seed.websocketAuth.core.RequestOptions;
+import com.seed.websocketAuth.core.RetryInterceptor;
 import com.seed.websocketAuth.core.SeedWebsocketAuthApiException;
 import com.seed.websocketAuth.core.SeedWebsocketAuthException;
 import com.seed.websocketAuth.core.SeedWebsocketAuthHttpResponse;
@@ -67,6 +69,15 @@ public class AsyncRawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedWebsocketAuthHttpResponse<TokenResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -83,6 +94,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedWebsocketAuthApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedWebsocketAuthException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedWebsocketAuthException("Network error executing HTTP request", e));
@@ -130,6 +144,15 @@ public class AsyncRawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedWebsocketAuthHttpResponse<TokenResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -146,6 +169,9 @@ public class AsyncRawAuthClient {
                     future.completeExceptionally(new SeedWebsocketAuthApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedWebsocketAuthException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedWebsocketAuthException("Network error executing HTTP request", e));

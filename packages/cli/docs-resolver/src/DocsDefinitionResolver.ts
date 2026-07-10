@@ -9,8 +9,10 @@ import {
     visitDiscriminatedUnion
 } from "@fern-api/core-utils";
 import {
+    collectCodeSrcUrls,
     isValidRelativeSlug,
     parseImagePaths,
+    prefetchCodeSrcUrls,
     type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -68,6 +70,7 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
@@ -171,6 +174,7 @@ export class DocsDefinitionResolver {
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
     private buildTranslatedApiDefinitions: boolean;
+    private markdownFilesToPathName: Record<AbsoluteFilePath, string> = {} as Record<AbsoluteFilePath, string>;
 
     constructor({
         domain,
@@ -342,6 +346,15 @@ export class DocsDefinitionResolver {
         return this.translatedApiSpecs;
     }
 
+    /**
+     * Returns the map of absolute file paths to their fully qualified slug pathnames.
+     * Used by translation processing to resolve relative .md/.mdx links.
+     * Must be called after `resolve()`.
+     */
+    public getMarkdownFilesToPathName(): Record<AbsoluteFilePath, string> {
+        return this.markdownFilesToPathName;
+    }
+
     private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
         const translations = this.parsedDocsConfig.translations;
         if (translations == null || translations.length === 0) {
@@ -473,7 +486,24 @@ export class DocsDefinitionResolver {
         const refStart = performance.now();
         // Use a Set for O(1) deduplication instead of O(N) array scan
         const seenReferencedFiles = new Set<AbsoluteFilePath>();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+        const pageEntries = Object.entries(this.parsedDocsConfig.pages);
+
+        // Pre-fetch all external <Code src="https://..."/> URLs in parallel to avoid
+        // sequential HTTP blocking (can save 30+ seconds for docs with many external code snippets)
+        const allCodeSrcUrls: string[] = [];
+        for (const [, markdown] of pageEntries) {
+            allCodeSrcUrls.push(...collectCodeSrcUrls(markdown));
+        }
+        const prefetchStart = Date.now();
+        const urlCache = await prefetchCodeSrcUrls(allCodeSrcUrls, this.taskContext);
+        if (urlCache.size > 0) {
+            const uniqueCount = new Set(allCodeSrcUrls).size;
+            this.taskContext.logger.info(
+                `Prefetched ${uniqueCount} external code URLs in ${Date.now() - prefetchStart}ms`
+            );
+        }
+
+        for (const [relativePath, markdown] of pageEntries) {
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
             const result = await replaceReferencedMarkdown({
                 markdown,
@@ -492,7 +522,8 @@ export class DocsDefinitionResolver {
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                context: this.taskContext
+                context: this.taskContext,
+                urlCache
             });
 
             const newMarkdown = transformAtPrefixImports({
@@ -592,6 +623,7 @@ export class DocsDefinitionResolver {
         const pathNameStart = performance.now();
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
+        this.markdownFilesToPathName = markdownFilesToPathName;
         const pathNameTime = performance.now() - pathNameStart;
         this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
 
@@ -726,7 +758,7 @@ export class DocsDefinitionResolver {
                     [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
                         const relativeFilePath = this.toRelativeFilepath(filePath);
                         const contents = (await readFile(filePath)).toString();
-                        return [relativeFilePath, contents];
+                        return [relativeFilePath, await this.bundleJsFileContents(filePath, contents)];
                     })
                 )
             );
@@ -751,13 +783,13 @@ export class DocsDefinitionResolver {
         if (this._parsedDocsConfig.header != null) {
             const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.header);
             const contents = (await readFile(this._parsedDocsConfig.header)).toString();
-            jsFiles[relativeFilePath] = contents;
+            jsFiles[relativeFilePath] = await this.bundleJsFileContents(this._parsedDocsConfig.header, contents);
             this.taskContext.logger.debug(`Added custom header component: ${relativeFilePath}`);
         }
         if (this._parsedDocsConfig.footer != null) {
             const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.footer);
             const contents = (await readFile(this._parsedDocsConfig.footer)).toString();
-            jsFiles[relativeFilePath] = contents;
+            jsFiles[relativeFilePath] = await this.bundleJsFileContents(this._parsedDocsConfig.footer, contents);
             this.taskContext.logger.debug(`Added custom footer component: ${relativeFilePath}`);
         }
 
@@ -1071,6 +1103,27 @@ export class DocsDefinitionResolver {
         return config;
     }
 
+    /**
+     * Bundles a custom component file with rolldown when it imports third-party
+     * libraries, so the uploaded source is self-contained. Returns the original
+     * contents when no bundling is needed.
+     */
+    private async bundleJsFileContents(absoluteFilePath: AbsoluteFilePath, contents: string): Promise<string> {
+        try {
+            const bundled = await maybeBundleMdxComponent({
+                absoluteFilePath,
+                contents,
+                context: this.taskContext
+            });
+            return bundled ?? contents;
+        } catch (error) {
+            throw new CliError({
+                message: `Failed to bundle third-party imports in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                code: CliError.Code.ParseError
+            });
+        }
+    }
+
     private getFernWorkspaceForApiSection(
         apiSection: docsYml.DocsNavigationItem.ApiSection
     ): AbstractAPIWorkspace<unknown> {
@@ -1289,6 +1342,13 @@ export class DocsDefinitionResolver {
                     navigationConfig: tabbed,
                     parentSlug: slug
                 }),
+            // NOTE: the top-level landing page is intentionally NOT propagated
+            // into versioned navigation. Cloning it into every version node
+            // creates landingPage nodes that shadow real pages sharing the
+            // landing slug (they are visited first during slug collection),
+            // which strips the sidebar from those pages at render time. This
+            // matches the legacy (< 5.58.0) publish behavior that live docs
+            // sites were authored against.
             versioned: (versioned) => this.toVersionedNode(versioned, slug),
             productgroup: (productGroup) =>
                 this.toProductGroupNode({
@@ -1409,6 +1469,13 @@ export class DocsDefinitionResolver {
         if (product.type === "internal") {
             const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
             let child: FernNavigation.V1.ProductChild;
+            // NOTE: `product.landingPage` is intentionally NOT emitted here.
+            // Like the versioned case in toRootChild, landingPage nodes are
+            // visited before the product's own navigation during slug
+            // collection, so a landing page sharing a slug with a page in the
+            // product shadows that page and strips its sidebar at render time.
+            // This matches the legacy (< 5.58.0) publish behavior that live
+            // docs sites were authored against.
             switch (product.navigation.type) {
                 case "tabbed":
                     child = {
@@ -2610,6 +2677,7 @@ export class DocsDefinitionResolver {
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
                 claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
+                ...(!this.parsedDocsConfig.pageActions.options.mcp ? { mcp: false } : {}),
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
                     subtitle: customAction.subtitle,

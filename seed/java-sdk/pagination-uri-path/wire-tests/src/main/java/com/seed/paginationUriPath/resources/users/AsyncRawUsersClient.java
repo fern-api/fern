@@ -3,9 +3,11 @@
  */
 package com.seed.paginationUriPath.resources.users;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.paginationUriPath.core.ClientOptions;
 import com.seed.paginationUriPath.core.ObjectMappers;
 import com.seed.paginationUriPath.core.RequestOptions;
+import com.seed.paginationUriPath.core.RetryInterceptor;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathApiException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathHttpResponse;
@@ -61,6 +63,15 @@ public class AsyncRawUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -93,6 +104,9 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationUriPathApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationUriPathException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPaginationUriPathException("Network error executing HTTP request", e));
@@ -133,6 +147,15 @@ public class AsyncRawUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -165,6 +188,9 @@ public class AsyncRawUsersClient {
                     future.completeExceptionally(new SeedPaginationUriPathApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationUriPathException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPaginationUriPathException("Network error executing HTTP request", e));

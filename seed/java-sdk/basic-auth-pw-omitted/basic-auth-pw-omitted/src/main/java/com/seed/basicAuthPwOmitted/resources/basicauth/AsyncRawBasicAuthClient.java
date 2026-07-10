@@ -8,6 +8,7 @@ import com.seed.basicAuthPwOmitted.core.ClientOptions;
 import com.seed.basicAuthPwOmitted.core.MediaTypes;
 import com.seed.basicAuthPwOmitted.core.ObjectMappers;
 import com.seed.basicAuthPwOmitted.core.RequestOptions;
+import com.seed.basicAuthPwOmitted.core.RetryInterceptor;
 import com.seed.basicAuthPwOmitted.core.SeedBasicAuthPwOmittedApiException;
 import com.seed.basicAuthPwOmitted.core.SeedBasicAuthPwOmittedException;
 import com.seed.basicAuthPwOmitted.core.SeedBasicAuthPwOmittedHttpResponse;
@@ -64,6 +65,15 @@ public class AsyncRawBasicAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedBasicAuthPwOmittedHttpResponse<Boolean>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -90,6 +100,9 @@ public class AsyncRawBasicAuthClient {
                     future.completeExceptionally(new SeedBasicAuthPwOmittedApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedBasicAuthPwOmittedException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedBasicAuthPwOmittedException("Network error executing HTTP request", e));
@@ -143,6 +156,15 @@ public class AsyncRawBasicAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedBasicAuthPwOmittedHttpResponse<Boolean>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -175,6 +197,9 @@ public class AsyncRawBasicAuthClient {
                     future.completeExceptionally(new SeedBasicAuthPwOmittedApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedBasicAuthPwOmittedException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedBasicAuthPwOmittedException("Network error executing HTTP request", e));

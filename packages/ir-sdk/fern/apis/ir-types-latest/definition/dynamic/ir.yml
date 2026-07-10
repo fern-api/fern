@@ -2,6 +2,7 @@ imports:
   commons: ./commons.yml
   endpoints: ./endpoints.yml
   environment: ./environment.yml
+  globalParameters: ../global-parameters.yml
   types: ./types.yml
   variables: ./variables.yml
 types:
@@ -38,6 +39,12 @@ types:
           Variables that are configured at the client level and can be
           referenced in path parameters and other contexts.
         type: optional<list<variables.VariableDeclaration>>
+      globalParameters:
+        docs: |
+          Global parameters configured at the client level and injected
+          into relevant requests. Used by dynamic snippet generators to
+          include client-level parameters in generated code samples.
+        type: optional<list<globalParameters.GlobalParameter>>
       generatorConfig: optional<GeneratorConfig>
 
   GeneratorConfig:

@@ -11,7 +11,9 @@ const include = [
     "src/__test__/applyTranslatedFrontmatterToNavTree.test.ts",
     "src/__test__/applyTranslatedNavigationOverlays.test.ts",
     "src/__test__/translations-config.test.ts",
-    "src/__test__/sidebar-title.test.ts"
+    "src/__test__/sidebar-title.test.ts",
+    "src/__test__/product-landing-page.test.ts",
+    "src/__test__/versioned-root-landing-page.test.ts"
 ];
 
 export default defineConfig({

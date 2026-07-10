@@ -17,6 +17,9 @@ public partial class RetriesClient : IRetriesClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedNoRetries.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedNoRetries.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -29,6 +32,7 @@ public partial class RetriesClient : IRetriesClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/users",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

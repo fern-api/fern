@@ -3,9 +3,11 @@
  */
 package com.seed.oauthClientCredentialsWithVariables.resources.nested.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.ObjectMappers;
 import com.seed.oauthClientCredentialsWithVariables.core.RequestOptions;
+import com.seed.oauthClientCredentialsWithVariables.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesApiException;
 import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesException;
 import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesHttpResponse;
@@ -47,6 +49,15 @@ public class RawApiClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -56,6 +67,9 @@ public class RawApiClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedOauthClientCredentialsWithVariablesApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedOauthClientCredentialsWithVariablesException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedOauthClientCredentialsWithVariablesException("Network error executing HTTP request", e);
         }

@@ -10,6 +10,7 @@ import {
     BundledTypescriptProject,
     CoreUtilitiesManager,
     DependencyManager,
+    DependencyType,
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
@@ -65,6 +66,7 @@ import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/W
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
+import { ReactQueryGenerator } from "./react-query/ReactQueryGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
 import { TestGenerator } from "./test-generator/TestGenerator.js";
@@ -124,7 +126,7 @@ export declare namespace SdkGenerator {
         includeOtherInUnionTypes: boolean;
         enableForwardCompatibleEnums: boolean;
         requireDefaultEnvironment: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeout: number | "infinity" | undefined;
         skipResponseValidation: boolean;
         extraDependencies: Record<string, string>;
         extraDevDependencies: Record<string, string>;
@@ -156,6 +158,7 @@ export declare namespace SdkGenerator {
         fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
         omitFernHeaders: boolean;
+        includePlatformHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
         generateReadWriteOnlyTypes: boolean;
@@ -173,6 +176,7 @@ export declare namespace SdkGenerator {
         resolveQueryParameterNameConflicts: boolean;
         maxRetries: number | undefined;
         alwaysSendAuth: boolean;
+        generateReactQueryHooks: boolean;
     }
 }
 
@@ -189,6 +193,8 @@ export class SdkGenerator {
     private generateWebSocketClients: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
+    private extraExportPaths: string[] = [];
+    private generatedPeerDependenciesMeta: Record<string, unknown> = {};
 
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
     private readonly case: CaseConverter;
@@ -528,7 +534,7 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
-            defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
+            defaultTimeout: config.defaultTimeout,
             npmPackage,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
@@ -550,6 +556,7 @@ export class SdkGenerator {
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
+            includePlatformHeaders: config.includePlatformHeaders,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             caseConverter: this.case
@@ -601,7 +608,14 @@ export class SdkGenerator {
                 fileResponseType: config.fileResponseType,
                 fetchSupport: config.fetchSupport,
                 allowCustomFetcher: config.allowCustomFetcher,
-                generateSubpackageExports: config.generateSubpackageExports
+                generateSubpackageExports: config.generateSubpackageExports,
+                reactQueryConfig: config.generateReactQueryHooks
+                    ? {
+                          clientClassName: naming.client,
+                          namespaceName: this.getReactQueryNamespaceName(naming.client),
+                          providerName: `${naming.client}Provider`
+                      }
+                    : undefined
             }),
             ir: intermediateRepresentation
         });
@@ -718,6 +732,10 @@ export class SdkGenerator {
             ...this.testGenerator.extraFiles
         };
 
+        if (this.config.generateReactQueryHooks) {
+            this.generateReactQueryHooks();
+        }
+
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
             const snippets: FernGeneratorExec.Snippets = {
@@ -761,7 +779,10 @@ export class SdkGenerator {
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraPeerDependencies: this.config.extraPeerDependencies,
-                  extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
+                  extraPeerDependenciesMeta: {
+                      ...this.config.extraPeerDependenciesMeta,
+                      ...this.generatedPeerDependenciesMeta
+                  },
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   extraConfigs: this.config.packageJson,
@@ -774,7 +795,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  extraExportPaths: this.extraExportPaths
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -785,7 +807,10 @@ export class SdkGenerator {
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraPeerDependencies: this.config.extraPeerDependencies,
-                  extraPeerDependenciesMeta: this.config.extraPeerDependenciesMeta,
+                  extraPeerDependenciesMeta: {
+                      ...this.config.extraPeerDependenciesMeta,
+                      ...this.generatedPeerDependenciesMeta
+                  },
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   resolutions: {},
@@ -799,8 +824,54 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  extraExportPaths: this.extraExportPaths
               });
+    }
+
+    private generateReactQueryHooks(): void {
+        this.context.logger.debug("Generating React Query hooks...");
+        const reactQueryGenerator = new ReactQueryGenerator({
+            intermediateRepresentation: this.intermediateRepresentation,
+            packageResolver: this.packageResolver,
+            namespaceExport: this.namespaceExport,
+            clientClassName: this.naming.client,
+            caseConverter: this.case,
+            npmPackageName: this.npmPackage?.packageName,
+            relativePackagePath: this.relativePackagePath
+        });
+        const { files: reactQueryFiles, serviceExportPaths } = reactQueryGenerator.generateFiles();
+        this.extraFiles = {
+            ...this.extraFiles,
+            ...reactQueryFiles
+        };
+        this.dependencyManager.addDependency("@tanstack/react-query", ">=5.0.0", {
+            type: DependencyType.PEER
+        });
+        this.dependencyManager.addDependency("react", ">=18.0.0", {
+            type: DependencyType.PEER
+        });
+        this.dependencyManager.addDependency("@types/react", ">=18.0.0", {
+            type: DependencyType.PEER
+        });
+        this.extraExportPaths.push("react-query");
+        for (const servicePath of serviceExportPaths) {
+            this.extraExportPaths.push(servicePath);
+        }
+        this.generatedPeerDependenciesMeta["@tanstack/react-query"] = { optional: true };
+        this.generatedPeerDependenciesMeta["react"] = { optional: true };
+        this.generatedPeerDependenciesMeta["@types/react"] = { optional: true };
+        this.context.logger.debug("Generated React Query hooks");
+    }
+
+    private getReactQueryNamespaceName(clientClassName: string): string {
+        const withoutClient = clientClassName.endsWith("Client")
+            ? clientClassName.slice(0, -"Client".length)
+            : clientClassName;
+        if (withoutClient.length === 0) {
+            return this.namespaceExport.charAt(0).toLowerCase() + this.namespaceExport.slice(1);
+        }
+        return withoutClient.charAt(0).toLowerCase() + withoutClient.slice(1);
     }
 
     private hasIdempotentEndpoints(): boolean {
@@ -1592,7 +1663,8 @@ export class SdkGenerator {
                     ...common,
                     payloadFormat: {
                         components: verification.payloadFormat.components,
-                        delimiter: verification.payloadFormat.delimiter
+                        delimiter: verification.payloadFormat.delimiter,
+                        bodySort: verification.payloadFormat.bodySort
                     }
                 });
             case "asymmetric": {
@@ -1607,7 +1679,15 @@ export class SdkGenerator {
                                       : null
                           }
                         : { type: verification.keySource.type };
-                return JSON.stringify({ ...common, keySource });
+                const payloadFormat =
+                    verification.payloadFormat != null
+                        ? {
+                              components: verification.payloadFormat.components,
+                              delimiter: verification.payloadFormat.delimiter,
+                              bodySort: verification.payloadFormat.bodySort
+                          }
+                        : null;
+                return JSON.stringify({ ...common, keySource, payloadFormat });
             }
             default:
                 return JSON.stringify({ type: "unknown" });

@@ -3,9 +3,11 @@
  */
 package com.seed.websocket.resources.status;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.RequestOptions;
+import com.seed.websocket.core.RetryInterceptor;
 import com.seed.websocket.core.SeedWebsocketApiException;
 import com.seed.websocket.core.SeedWebsocketException;
 import com.seed.websocket.core.SeedWebsocketHttpResponse;
@@ -48,6 +50,15 @@ public class RawStatusClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -58,6 +69,8 @@ public class RawStatusClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedWebsocketApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedWebsocketException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedWebsocketException("Network error executing HTTP request", e);
         }

@@ -104,6 +104,9 @@ public partial class NullableClient : INullableClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedNullable.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedNullable.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -117,6 +120,7 @@ public partial class NullableClient : INullableClient
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -182,6 +186,9 @@ public partial class NullableClient : INullableClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedNullable.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedNullable.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -195,6 +202,7 @@ public partial class NullableClient : INullableClient
                     Method = HttpMethod.Delete,
                     Path = "/users",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

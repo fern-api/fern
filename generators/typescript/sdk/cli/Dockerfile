@@ -1,24 +1,3 @@
-# Stage 1: Rebuild oxlint-tsgolint from source under go1.26.4 so the embedded
-# go/stdlib clears CVE-2026-42507 and CVE-2026-27145 (fixed in 1.26.4).
-# The published 0.23.0 binaries are compiled with go1.26.3.
-FROM golang:1.26.4-trixie AS tsgolint-rebuild
-ARG TSGOLINT_VERSION=0.23.0
-ENV GOTOOLCHAIN=go1.26.4
-RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
-RUN git config --global user.email "build@example.com" && \
-    git config --global user.name "Build" && \
-    git clone --depth 1 --branch v${TSGOLINT_VERSION} \
-        https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
-    cd /src/tsgolint && \
-    git submodule update --init --depth 1 typescript-go && \
-    cd typescript-go && \
-    git am --3way --no-gpg-sign ../patches/*.patch && \
-    cd .. && \
-    mkdir -p internal/collections && \
-    find ./typescript-go/internal/collections -type f ! -name '*_test.go' -exec cp {} internal/collections/ \; && \
-    CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
-    ls -la /out/tsgolint
-
 FROM node:24.17-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
@@ -101,38 +80,21 @@ RUN npm install -g pnpm@11.8.0 --force
 RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.9.3 \
   prettier@3.8.1 \
-  oxfmt@0.54.0 \
+  oxfmt@0.57.0 \
   @biomejs/biome@2.4.10 \
-  oxlint@1.69.0 \
-  oxlint-tsgolint@0.23.0 \
+  oxlint@1.72.0 \
+  oxlint-tsgolint@0.24.0 \
   @types/node@^20.0.0 \
   ts-loader@^9.5.4 \
   webpack@^5.105.4 \
   msw@2.12.14 \
   vitest@^4.1.1
 
-# Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
-# rebuilt one so it embeds the patched Go stdlib.
-COPY --from=tsgolint-rebuild /out/tsgolint /tmp/tsgolint-rebuilt
-RUN chmod +x /tmp/tsgolint-rebuilt && \
-    set -eux; \
-    found=0; \
-    for f in $(find / -type f -name tsgolint -path '*@oxlint-tsgolint*' 2>/dev/null); do \
-        cp /tmp/tsgolint-rebuilt "$f"; \
-        chmod +x "$f"; \
-        found=1; \
-        echo "Replaced tsgolint binary at $f"; \
-    done; \
-    if [ "$found" = "0" ]; then \
-        echo "::error::Could not find any tsgolint binary to replace"; \
-        exit 1; \
-    fi; \
-    rm /tmp/tsgolint-rebuilt
-
-# Clean pnpm content-addressable store (holds the pre-built tsgolint
-# binary compiled with go1.26.2) and corepack cache. Patch pnpm's
-# bundled undici to 6.27.0 to clear CVE-2026-12151.
-RUN rm -rf /.pnpm/store /.pnpm-cache /root/.cache/node/corepack && \
+# Clean caches to reduce image size. Do NOT remove /.pnpm/store —
+# pnpm 11 global packages are symlinked into it; deleting it breaks
+# every globally installed tool (biome, oxfmt, prettier, etc.).
+# Patch pnpm's bundled undici to 6.27.0 to clear CVE-2026-12151.
+RUN rm -rf /.pnpm-cache /root/.cache/node/corepack && \
     cd /usr/local/lib/node_modules/pnpm/dist/node_modules && \
     npm pack undici@6.27.0 && \
     rm -rf undici && \

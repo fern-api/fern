@@ -1,7 +1,6 @@
-
 import { Readable } from "stream";
 
-import { Stream, ServerSentEvent } from "../../../src/core/stream/Stream";
+import { type ServerSentEvent, Stream } from "../../../src/core/stream/Stream";
 
 describe("Stream", () => {
     describe("JSON streaming", () => {
@@ -38,7 +37,7 @@ describe("Stream", () => {
         });
 
         it("should handle messages split across chunks", async () => {
-            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', ' 2}\n']);
+            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', " 2}\n"]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -122,9 +121,7 @@ describe("Stream", () => {
         });
 
         it("should stop at stream terminator", async () => {
-            const mockStream = createReadableStream([
-                'data: {"value": 1}\n\ndata: [DONE]\n\ndata: {"value": 2}\n',
-            ]);
+            const mockStream = createReadableStream(['data: {"value": 1}\n\ndata: [DONE]\n\ndata: {"value": 2}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -179,9 +176,7 @@ describe("Stream", () => {
         });
 
         it("should handle multiline data with id after last data line", async () => {
-            const mockStream = createReadableStream([
-                'data: {"delta":\ndata: "hello"}\nid: 42\n\n',
-            ]);
+            const mockStream = createReadableStream(['data: {"delta":\ndata: "hello"}\nid: 42\n\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -197,9 +192,7 @@ describe("Stream", () => {
         });
 
         it("should handle id after data without trailing blank line", async () => {
-            const mockStream = createReadableStream([
-                'data: {"value": 1}\nid: last-event\n',
-            ]);
+            const mockStream = createReadableStream(['data: {"value": 1}\nid: last-event\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -231,7 +224,6 @@ describe("Stream", () => {
 
             expect(messages).toEqual([{ value: 1 }]);
         });
-
     });
 
     describe("SSE event-level discrimination (inject discriminator)", () => {
@@ -314,9 +306,7 @@ describe("Stream", () => {
         });
 
         it("should not inject if no event field is present", async () => {
-            const mockStream = createReadableStream([
-                'data: {"content": "hello"}\n\n',
-            ]);
+            const mockStream = createReadableStream(['data: {"content": "hello"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -332,9 +322,7 @@ describe("Stream", () => {
         });
 
         it("should handle empty JSON object", async () => {
-            const mockStream = createReadableStream([
-                'event: heartbeat\ndata: {}\n\n',
-            ]);
+            const mockStream = createReadableStream(["event: heartbeat\ndata: {}\n\n"]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -368,9 +356,7 @@ describe("Stream", () => {
         });
 
         it("should concatenate multiline data fields", async () => {
-            const mockStream = createReadableStream([
-                'event: completion\ndata: {"delta":\ndata: "hello"}\n\n',
-            ]);
+            const mockStream = createReadableStream(['event: completion\ndata: {"delta":\ndata: "hello"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -386,11 +372,7 @@ describe("Stream", () => {
         });
 
         it("should handle events split across chunks", async () => {
-            const mockStream = createReadableStream([
-                'event: comple',
-                'tion\ndata: {"con',
-                'tent": "hi"}\n\n',
-            ]);
+            const mockStream = createReadableStream(["event: comple", 'tion\ndata: {"con', 'tent": "hi"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -406,9 +388,7 @@ describe("Stream", () => {
         });
 
         it("should handle last event without trailing blank line", async () => {
-            const mockStream = createReadableStream([
-                'event: completion\ndata: {"content": "hi"}\n',
-            ]);
+            const mockStream = createReadableStream(['event: completion\ndata: {"content": "hi"}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -445,9 +425,7 @@ describe("Stream", () => {
         });
 
         it("should inject empty string discriminator when event field is present but empty", async () => {
-            const mockStream = createReadableStream([
-                'event: \ndata: {"content": "hello"}\n\n',
-            ]);
+            const mockStream = createReadableStream(['event: \ndata: {"content": "hello"}\n\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -486,9 +464,7 @@ describe("Stream", () => {
         });
 
         it("should persist id across events per SSE spec", async () => {
-            const mockStream = createReadableStream([
-                'id: evt-1\ndata: {"value": 1}\n\ndata: {"value": 2}\n',
-            ]);
+            const mockStream = createReadableStream(['id: evt-1\ndata: {"value": 1}\n\ndata: {"value": 2}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -526,9 +502,7 @@ describe("Stream", () => {
         });
 
         it("should ignore retry field with non-integer value", async () => {
-            const mockStream = createReadableStream([
-                'retry: abc\ndata: {"value": 1}\n',
-            ]);
+            const mockStream = createReadableStream(['retry: abc\ndata: {"value": 1}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -596,9 +570,7 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([
-                { data: { value: 1 }, id: undefined, retry: undefined, event: undefined },
-            ]);
+            expect(events).toEqual([{ data: { value: 1 }, id: undefined, retry: undefined, event: undefined }]);
         });
 
         it("should stop at stream terminator via withMetadata (non-discriminator)", async () => {
@@ -616,9 +588,7 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([
-                { data: { value: 1 }, id: "evt-1", retry: undefined, event: undefined },
-            ]);
+            expect(events).toEqual([{ data: { value: 1 }, id: "evt-1", retry: undefined, event: undefined }]);
         });
 
         it("should stop at stream terminator via withMetadata (discriminator)", async () => {
@@ -642,9 +612,7 @@ describe("Stream", () => {
         });
 
         it("should reject retry with decimal value", async () => {
-            const mockStream = createReadableStream([
-                'retry: 3.5\ndata: {"value": 1}\n',
-            ]);
+            const mockStream = createReadableStream(['retry: 3.5\ndata: {"value": 1}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -660,9 +628,7 @@ describe("Stream", () => {
         });
 
         it("should accept retry value of zero", async () => {
-            const mockStream = createReadableStream([
-                'retry: 0\ndata: {"value": 1}\n',
-            ]);
+            const mockStream = createReadableStream(['retry: 0\ndata: {"value": 1}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -678,9 +644,7 @@ describe("Stream", () => {
         });
 
         it("should set empty string id when id field has no value", async () => {
-            const mockStream = createReadableStream([
-                'id:\ndata: {"value": 1}\n',
-            ]);
+            const mockStream = createReadableStream(['id:\ndata: {"value": 1}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -696,9 +660,7 @@ describe("Stream", () => {
         });
 
         it("should yield undefined event field for non-discriminator SSE even with event lines", async () => {
-            const mockStream = createReadableStream([
-                'event: completion\nid: evt-1\ndata: {"value": 1}\n',
-            ]);
+            const mockStream = createReadableStream(['event: completion\nid: evt-1\ndata: {"value": 1}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -716,12 +678,7 @@ describe("Stream", () => {
         });
 
         it("should preserve metadata across chunked data", async () => {
-            const mockStream = createReadableStream([
-                'id: ev',
-                't-1\nretry: 30',
-                '00\ndata: {"val',
-                'ue": 1}\n',
-            ]);
+            const mockStream = createReadableStream(["id: ev", "t-1\nretry: 30", '00\ndata: {"val', 'ue": 1}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -733,9 +690,7 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([
-                { data: { value: 1 }, id: "evt-1", retry: 3000, event: undefined },
-            ]);
+            expect(events).toEqual([{ data: { value: 1 }, id: "evt-1", retry: 3000, event: undefined }]);
         });
 
         it("should update id between events in discriminator path", async () => {
@@ -795,13 +750,24 @@ describe("Stream", () => {
 
             expect(events).toEqual([
                 {
-                    data: { type: "model.message", thread_id: "main", created_at: "2026-06-26T06:58:53.649Z", id: "01kw1bjtjg1702sn5tf5esqwbm" },
+                    data: {
+                        type: "model.message",
+                        thread_id: "main",
+                        created_at: "2026-06-26T06:58:53.649Z",
+                        id: "01kw1bjtjg1702sn5tf5esqwbm",
+                    },
                     id: "2",
                     retry: undefined,
                     event: undefined,
                 },
                 {
-                    data: { content: "Hi", type: "model.message.delta", id: "01kw1bjtjg1702sn5tf5esqwbm", thread_id: "main", created_at: "2026-06-26T06:58:59.691Z" },
+                    data: {
+                        content: "Hi",
+                        type: "model.message.delta",
+                        id: "01kw1bjtjg1702sn5tf5esqwbm",
+                        thread_id: "main",
+                        created_at: "2026-06-26T06:58:59.691Z",
+                    },
                     id: "3",
                     retry: undefined,
                     event: undefined,
@@ -852,11 +818,7 @@ describe("Stream", () => {
         });
 
         it("should handle chunked boundary splitting data and id lines", async () => {
-            const mockStream = createReadableStream([
-                'data: {"value": 1}\n',
-                'id: chunked-',
-                'id\n\n',
-            ]);
+            const mockStream = createReadableStream(['data: {"value": 1}\n', "id: chunked-", "id\n\n"]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -868,15 +830,11 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([
-                { data: { value: 1 }, id: "chunked-id", retry: undefined, event: undefined },
-            ]);
+            expect(events).toEqual([{ data: { value: 1 }, id: "chunked-id", retry: undefined, event: undefined }]);
         });
 
         it("should handle multiline data followed by id", async () => {
-            const mockStream = createReadableStream([
-                'data: {"delta":\ndata: "hello"}\nid: multi-42\n\n',
-            ]);
+            const mockStream = createReadableStream(['data: {"delta":\ndata: "hello"}\nid: multi-42\n\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -888,9 +846,7 @@ describe("Stream", () => {
                 events.push(event);
             }
 
-            expect(events).toEqual([
-                { data: { delta: "hello" }, id: "multi-42", retry: undefined, event: undefined },
-            ]);
+            expect(events).toEqual([{ data: { delta: "hello" }, id: "multi-42", retry: undefined, event: undefined }]);
         });
 
         it("should handle mixed id ordering across events", async () => {
@@ -914,9 +870,7 @@ describe("Stream", () => {
         });
 
         it("should not affect default iteration which still yields T", async () => {
-            const mockStream = createReadableStream([
-                'id: evt-1\nretry: 3000\ndata: {"value": 1}\n',
-            ]);
+            const mockStream = createReadableStream(['id: evt-1\nretry: 3000\ndata: {"value": 1}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -969,10 +923,7 @@ describe("Stream", () => {
 
         it("should handle binary data chunks", async () => {
             const encoder = new TextEncoder();
-            const mockStream = createReadableStream([
-                encoder.encode('{"val'),
-                encoder.encode('ue": 1}\n'),
-            ]);
+            const mockStream = createReadableStream([encoder.encode('{"val'), encoder.encode('ue": 1}\n')]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -1082,7 +1033,7 @@ describe("Stream", () => {
         });
 
         it("should handle stream with only whitespace", async () => {
-            const mockStream = createReadableStream(['   \n\n\t\n   ']);
+            const mockStream = createReadableStream(["   \n\n\t\n   "]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -1113,11 +1064,498 @@ describe("Stream", () => {
             expect(messages).toEqual([{ value: 1 }]);
         });
     });
+
+    describe("SSE stream reconnection", () => {
+        it("should reconnect on premature EOF when resumable", async () => {
+            const firstStream = createReadableStream([
+                'id: 1\ndata: {"value": 1}\n\n',
+                'id: 2\ndata: {"value": 2}\n\n',
+            ]);
+            const secondStream = createReadableStream(['id: 3\ndata: {"value": 3}\n\n', "data: [DONE]\n\n"]);
+
+            let reconnectCallCount = 0;
+            let lastReceivedEventId: string | undefined;
+            const reconnect = async (lastEventId: string) => {
+                reconnectCallCount++;
+                lastReceivedEventId = lastEventId;
+                return secondStream;
+            };
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
+            expect(reconnectCallCount).toBe(1);
+            expect(lastReceivedEventId).toBe("2");
+        });
+
+        it("should reconnect using the last dispatched id, not a parsed-but-undispatched id", async () => {
+            // evt-1 is fully dispatched; evt-2's id: line is parsed but the
+            // stream ends before evt-2's data + blank line, so evt-2 is never
+            // yielded. Reconnection must resume from evt-1 (the last dispatched
+            // id), otherwise evt-2 would be silently skipped.
+            const firstStream = createReadableStream(['id: evt-1\ndata: {"value": 1}\n\n', "id: evt-2\n"]);
+            const secondStream = createReadableStream(['id: evt-2\ndata: {"value": 2}\n\n', "data: [DONE]\n\n"]);
+
+            let reconnectCallCount = 0;
+            let lastReceivedEventId: string | undefined;
+            const reconnect = async (lastEventId: string) => {
+                reconnectCallCount++;
+                lastReceivedEventId = lastEventId;
+                return secondStream;
+            };
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
+            expect(reconnectCallCount).toBe(1);
+            expect(lastReceivedEventId).toBe("evt-1");
+        });
+
+        it("should not reconnect when reconnectionEnabled is false", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: false,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should not reconnect when not resumable", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: false },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should respect maxReconnectionAttempts", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                // Return a stream that immediately ends without data (server down)
+                return createReadableStream([]);
+            };
+
+            const firstStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 3,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // First stream yields 1, then reconnection attempts get empty streams
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(3);
+        });
+
+        it("should not reconnect when stream ends with terminator", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n', "data: [DONE]\n\n"]);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should not reconnect without a reconnect function", async () => {
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+        });
+
+        it("should not reconnect without a lastId", async () => {
+            const mockStream = createReadableStream(['data: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
+    describe("SSE stream reconnection - abort during delay", () => {
+        it("should stop promptly when aborted during reconnect delay", async () => {
+            const firstStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const abortController = new AbortController();
+            const stream = new Stream({
+                stream: firstStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                signal: abortController.signal,
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            const startTime = Date.now();
+
+            // Abort after a short delay (while the stream is in its reconnect delay)
+            setTimeout(() => abortController.abort(), 50);
+
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            const elapsed = Date.now() - startTime;
+            // Should have stopped well before the default 1000ms reconnect delay completes.
+            // Use a generous upper bound to avoid flakiness on slow CI runners.
+            expect(elapsed).toBeLessThan(800);
+            expect(messages).toEqual([{ value: 1 }]);
+            // reconnect should NOT have been called since we aborted during the delay
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
+    describe("SSE stream reconnection - backoff with progress", () => {
+        it("should apply default backoff even when server sends no retry directive", async () => {
+            // Server yields 1 event then drops on each connection (no retry: field)
+            const streams = [
+                createReadableStream(['id: 1\ndata: {"value": 1}\n\n']),
+                createReadableStream(['id: 2\ndata: {"value": 2}\n\n']),
+                createReadableStream(['id: 3\ndata: {"value": 3}\n\ndata: [DONE]\n\n']),
+            ];
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                const s = streams[reconnectCallCount];
+                if (s == null) {
+                    throw new Error(`unexpected reconnect call ${reconnectCallCount}`);
+                }
+                return s;
+            };
+
+            const startTime = Date.now();
+            const first = streams[0];
+            if (first == null) {
+                throw new Error("missing first stream");
+            }
+            const stream = new Stream({
+                stream: first,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
+            expect(reconnectCallCount).toBe(2);
+            // Total elapsed time should be at least 2 * DEFAULT_RECONNECT_DELAY_MS (~1000ms each).
+            // Use a slightly relaxed lower bound to tolerate timer jitter on slow CI.
+            const totalElapsed = Date.now() - startTime;
+            expect(totalElapsed).toBeGreaterThanOrEqual(1500);
+        });
+
+        it("should respect maxReconnectionAttempts even when each reconnect yields data", async () => {
+            // Server yields 1 event per connection, then drops (no terminator, no retry).
+            // reconnectAttempts resets on progress, so the cap is per-consecutive-failed-reconnects.
+            // With data yielded each time, reconnects reset and should keep going until terminator.
+            const streams = [
+                createReadableStream(['id: 1\ndata: {"value": 1}\n\n']),
+                createReadableStream(['id: 2\ndata: {"value": 2}\n\n']),
+                createReadableStream(['id: 3\ndata: {"value": 3}\n\ndata: [DONE]\n\n']),
+            ];
+
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                const s = streams[reconnectCallCount];
+                if (s == null) {
+                    throw new Error(`unexpected reconnect call ${reconnectCallCount}`);
+                }
+                return s;
+            };
+
+            const first = streams[0];
+            if (first == null) {
+                throw new Error("missing first stream");
+            }
+            const stream = new Stream({
+                stream: first,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 1,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Even with maxReconnectionAttempts=1, since each reconnect yields data
+            // the counter resets; all 3 events are received.
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }, { value: 3 }]);
+            expect(reconnectCallCount).toBe(2);
+        });
+    });
+
+    describe("SSE stream reconnection - terminator stops without extra reconnect", () => {
+        it("should stop immediately on terminator with zero reconnect calls", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(["data: [DONE]\n\n"]);
+            };
+
+            const mockStream = createReadableStream([
+                'id: 1\ndata: {"value": 1}\n\n',
+                'id: 2\ndata: {"value": 2}\n\n',
+                "data: [DONE]\n\n",
+            ]);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+
+        it("should stop immediately on terminator mid-stream without extra reconnect", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(['id: 99\ndata: {"value": 99}\n\ndata: [DONE]\n\n']);
+            };
+
+            // Terminator arrives in the middle of a stream that still has more data buffered
+            const mockStream = createReadableStream([
+                'id: 1\ndata: {"value": 1}\n\n',
+                'id: 2\ndata: {"value": 2}\n\n',
+                "id: 3\ndata: [DONE]\n\n",
+                'id: 4\ndata: {"value": 4}\n\n',
+            ]);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Should stop at [DONE] and not yield event 4 or attempt reconnection
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
+    describe("SSE stream reconnection - no terminator prevents reconnect", () => {
+        it("should not attempt reconnection when no streamTerminator is configured", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                return createReadableStream(['id: 2\ndata: {"value": 2}\n\n']);
+            };
+
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 5,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            // Without a streamTerminator, shouldReconnect returns false
+            // to avoid a reconnect storm.
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(reconnectCallCount).toBe(0);
+        });
+    });
+
+    describe("SSE stream reconnection - null reconnect body", () => {
+        it("should treat null reconnect body as a failed attempt", async () => {
+            let reconnectCallCount = 0;
+            const reconnect = async (_lastEventId: string) => {
+                reconnectCallCount++;
+                // @ts-expect-error Intentionally returning null to test null-body handling
+                return null;
+            };
+
+            const mockStream = createReadableStream(['id: 1\ndata: {"value": 1}\n\n']);
+
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]", resumable: true },
+                reconnectionEnabled: true,
+                maxReconnectionAttempts: 2,
+                reconnect,
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
+            // Both reconnect attempts returned null, exhausting maxReconnectionAttempts
+            expect(reconnectCallCount).toBe(2);
+        });
+    });
 });
 
 // Helper function to create a ReadableStream from string chunks
 function createReadableStream(chunks: (string | Uint8Array)[]): Readable | ReadableStream {
-
     // For wrapper type, return Node.js Readable stream
     const readable = new Readable({
         read() {
@@ -1128,5 +1566,4 @@ function createReadableStream(chunks: (string | Uint8Array)[]): Readable | Reada
         },
     });
     return readable;
-
 }

@@ -85,6 +85,9 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true

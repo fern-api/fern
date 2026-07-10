@@ -21,7 +21,9 @@ public final class InferredAuthTokenSupplier implements Supplier<Map<String, Str
 
     private final AuthClient authClient;
 
-    private Map<String, String> cachedHeaders;
+    private final Object tokenLock = new Object();
+
+    private volatile Map<String, String> cachedHeaders;
 
     public InferredAuthTokenSupplier(
             String xApiKey, String clientId, String clientSecret, String scope, AuthClient authClient) {
@@ -44,12 +46,18 @@ public final class InferredAuthTokenSupplier implements Supplier<Map<String, Str
 
     @java.lang.Override
     public Map<String, String> get() {
-        if (cachedHeaders == null) {
-            TokenResponse tokenResponse = fetchToken();
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Authorization", "Bearer " + tokenResponse.getAccessToken());
-            this.cachedHeaders = headers;
+        Map<String, String> cachedHeadersSnapshot = this.cachedHeaders;
+        if (cachedHeadersSnapshot != null) {
+            return cachedHeadersSnapshot;
         }
-        return cachedHeaders;
+        synchronized (tokenLock) {
+            if (cachedHeaders == null) {
+                TokenResponse tokenResponse = fetchToken();
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + tokenResponse.getAccessToken());
+                this.cachedHeaders = headers;
+            }
+            return cachedHeaders;
+        }
     }
 }

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
-
+<% if (includePlatformHeaders) { %>
+require "rbconfig"
+<% } %>
 module <%= gem_namespace %>
   module Internal
     module Http
@@ -31,7 +33,51 @@ module <%= gem_namespace %>
             "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)<% } else { %>headers<% } %>
         end
+<% if (includePlatformHeaders) { %>
+        # Builds a structured User-Agent header value of the form
+        # "{sdk_name}/{sdk_version} ({os}; {arch}) Ruby/{version}", resolving the
+        # operating system, architecture, and Ruby version at runtime. Unknown
+        # components are omitted rather than emitted as placeholder values.
+        # @param prefix [String] The "{sdk_name}/{sdk_version}" portion.
+        # @return [String] The User-Agent header value.
+        def self.user_agent(prefix)
+          os = normalize_os(RbConfig::CONFIG["host_os"])
+          arch = normalize_value(RbConfig::CONFIG["host_cpu"])
+          version = normalize_value(RUBY_VERSION)
 
+          result = prefix.to_s
+          platform = [os, arch].compact
+          result += " (#{platform.join("; ")})" unless platform.empty?
+          result += version.nil? ? " Ruby" : " Ruby/#{version}"
+          result
+        end
+
+        # @param value [String, nil] The raw value to normalize.
+        # @return [String, nil] The stripped value, or nil when blank.
+        def self.normalize_value(value)
+          return nil if value.nil?
+
+          stripped = value.to_s.strip
+          stripped.empty? ? nil : stripped
+        end
+
+        # Maps RbConfig's host_os to a short, stable platform token.
+        # @param host_os [String, nil] The raw RbConfig host_os value.
+        # @return [String, nil] A normalized OS token, or nil when unknown.
+        def self.normalize_os(host_os)
+          value = normalize_value(host_os)
+          return nil if value.nil?
+
+          case value
+          when /linux/i then "linux"
+          when /darwin|mac ?os/i then "darwin"
+          when /mswin|mingw|cygwin|windows/i then "windows"
+          when /bsd/i then "bsd"
+          when /solaris/i then "solaris"
+          else value
+          end
+        end
+<% } %>
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.
         def send(request)

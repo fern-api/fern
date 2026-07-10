@@ -1,4 +1,208 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header of the form
+        `{sdkName}/{version} ({os}; {arch}) {runtime}/{runtimeVersion}`, matching the
+        Twilio helper-library shape. This is gated behind the `includePlatformHeaders`
+        config option and is disabled by default, so existing generated output is
+        unchanged. When enabled, the platform + runtime information is consolidated
+        into the `User-Agent` and the discrete `X-Fern-Runtime` / `X-Fern-Runtime-Version`
+        headers are omitted. The platform group and runtime segment are dropped
+        gracefully in environments where they cannot be determined (e.g. browsers),
+        and the header remains subject to `omitFernHeaders`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.79.2
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `.github/workflows/ci.yml` publish job now runs on a pinned Node LTS
+        (`node-version: "lts/Krypton"`) and calls `npm publish` directly instead
+        of `npx -y npm@latest publish`. Relying on `npm@latest` pulled whatever
+        npm release was newest at publish time, so a broken npm release could
+        break publishing. The pinned Node LTS bundles an npm that supports OIDC
+        trusted publishing. The `npx semver` invocation used for backport
+        detection is also pinned to `semver@7.8.1`.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 3.79.1
+  changelogEntry:
+    - summary: |
+        Generated snippets now use `baseUrl` instead of `environment` when
+        no environments are defined in the API spec, matching the actual
+        constructor parameter users should provide.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 3.79.0
+  changelogEntry:
+    - summary: |
+        Add a `defaultTimeout` custom config option, expressed in milliseconds, which is idiomatic for
+        JavaScript/TypeScript (`setTimeout`, `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the
+        timeout. The seconds-based `defaultTimeoutInSeconds` and `timeoutInSeconds` keys are now
+        deprecated but continue to work: their values are converted to milliseconds (× 1000). Precedence
+        is `defaultTimeout` > `defaultTimeoutInSeconds` > `timeoutInSeconds`. Generated SDK output is
+        unchanged for existing configs.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.2
+  changelogEntry:
+    - summary: |
+        Fix a regression where `| undefined` was dropped from the value type of generated
+        `Record` types backed by optional map values (e.g. optional `additionalProperties`).
+        Optional map values now correctly generate `Record<string, T | undefined>` with
+        serialization `record(string(), T.optional())`, while `unknown`/`any` map values
+        keep the redundant `| undefined` stripped (`Record<string, unknown>`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.1
+  changelogEntry:
+    - summary: |
+        Fix `TypeError: Cannot use 'in' operator to search for 'path' in undefined`
+        crash when `null` or `undefined` is passed to a file upload parameter at
+        runtime. The error is now a clear `TypeError` describing the expected types
+        instead of a cryptic `in` operator failure.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.0
+  changelogEntry:
+    - summary: |
+        Add an `additionalBodyParameters` request option that spreads additional parameters into an
+        endpoint's JSON request body. Caller-supplied properties override matching keys in the endpoint
+        body, matching the behavior of the Python, Swift, and Ruby SDKs. Omitting the option leaves the
+        request body unchanged and never fabricates a body for bodyless requests.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.77.3
+  changelogEntry:
+    - summary: |
+        Revert the automatic renaming of inlined path parameters that collide with request
+        body properties (introduced in 3.77.1). These collisions are now rejected at the CLI
+        level: `fern check` errors and asks the user to deconflict the names (e.g. via
+        `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.77.2
+  changelogEntry:
+    - summary: |
+        Fix ESM spec violations for extensionless imports in generated SDKs. The
+        `rename-to-esm-files.js` script now resolves bare directory imports
+        (e.g. `from "./oauth"` → `from "./oauth/index.mjs"`) and extensionless
+        file imports (e.g. `from "./client"` → `from "./client.mjs"`), which
+        previously broke Node's ESM loader and Turbopack (Next 16). Also sets
+        `moduleResolution: "bundler"` in `tsconfig.esm.json` for correct ESM
+        semantics.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 3.77.1
+  changelogEntry:
+    - summary: |
+        When an inlined path parameter (`inlinePathParameters: true`) shares its property name with an
+        inlined request-body property (e.g. a `{idType}` path parameter and an `idType` body field),
+        the request wrapper now keeps both fields by renaming the path parameter with a `PathParam`
+        suffix (e.g. `idTypePathParam`). Previously the two values were collapsed into a single shared
+        field, which made it impossible to send different values for the URL path and the request body.
+      type: fix
+  createdAt: "2026-07-06"
+  irVersion: 67
+- version: 3.77.0
+  changelogEntry:
+    - summary: |
+        Implement SSE stream auto-reconnection for resumable endpoints. When an SSE
+        stream drops mid-connection and the endpoint is marked `resumable: true`, the
+        SDK now automatically reconnects using the Last-Event-ID header, honoring
+        server-sent retry directives clamped to 30 seconds. Reconnection respects
+        `reconnectionEnabled` and `maxReconnectionAttempts` options.
+      type: feat
+  createdAt: "2026-07-04"
+  irVersion: 67
+- version: 3.76.0
+  changelogEntry:
+    - summary: |
+        Add React Query hooks generation support via the `generateReactQueryHooks` config flag.
+        When enabled, generates a `react-query/` directory with a tRPC-style namespace object
+        that mirrors the SDK client hierarchy (e.g. `seedApi.user.list.useQuery()`). Each query
+        endpoint exposes useQuery, useSuspenseQuery, getQueryKey, getQueryOptions (for SSR/RSC),
+        and invalidate. Mutation endpoints expose useMutation. Hierarchical cache invalidation
+        at endpoint, service, and SDK levels. Per-service file splits with wildcard subexports
+        for tree-shaking. All exports available via a `./react-query` package.json subexport
+        with optional peer dependencies on react and @tanstack/react-query.
+      type: feat
+  createdAt: "2026-07-03"
+  irVersion: 67
+- version: 3.75.3
+  changelogEntry:
+    - summary: |
+        Emit object keys without quotes in generated dynamic snippets when the key is
+        a valid JavaScript identifier. Previously, keys of maps and free-form objects
+        (e.g. `map<string, unknown>` values) were always quoted, producing inconsistent
+        output where `metadata: { "releaseDate": ... }` sat next to unquoted typed
+        properties. Keys that are not valid identifiers remain quoted.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 67
+- version: 3.75.2
+  changelogEntry:
+    - summary: |
+        Fix formatter regression caused by pnpm 11 Docker upgrade. The Dockerfile's
+        `rm -rf /.pnpm/store` cleanup step was breaking all globally installed tools
+        (biome, oxfmt, prettier) because pnpm 11 stores global packages as symlinks
+        into `$PNPM_HOME/store`. Also clean up a redundant `code` template wrapper in
+        constructor generation that produced malformed indentation before formatting.
+      type: fix
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 3.75.1
+  changelogEntry:
+    - summary: |
+        Fix asymmetric webhook signature verification to support `payload-format`
+        configuration. When `payload-format.components` includes `timestamp`, the
+        timestamp header value is now included in the data verified by the asymmetric
+        signature, closing a replay-protection gap where the timestamp was
+        unauthenticated.
+      type: fix
+    - summary: |
+        Use `IterableIterator<T>` instead of `HeadersIterator<T>` in the generated `Headers.ts` shim.
+        `HeadersIterator` was added in TypeScript 5.6; the previous annotations broke compilation on TS < 5.6.
+      type: fix
+    - summary: |
+        Upgrade oxc tooling: oxlint 1.69.0 → 1.72.0, oxfmt 0.54.0 → 0.57.0,
+        oxlint-tsgolint 0.23.0 → 0.24.0.
+      type: chore
+  createdAt: "2026-07-01"
+  irVersion: 67
+- version: 3.75.0
+  changelogEntry:
+    - summary: |
+        TimeoutError now extends the base API error class instead of Error directly,
+        so `instanceof ApiError` catches timeout errors. Added a `requestId` getter
+        to the base API error class that extracts `x-request-id` from the raw response
+        headers.
+      type: feat
+  createdAt: "2026-06-30"
+  irVersion: 67
+- version: 3.74.2
+  changelogEntry:
+    - summary: |
+        Remove the tsgolint rebuild-from-source Docker stage. The published
+        oxlint-tsgolint 0.23.0 binaries are now used directly, eliminating the
+        golang image pull, typescript-go submodule clone, and Go compilation
+        that made Dockerfile builds slow. The two Go stdlib CVEs previously
+        addressed by the rebuild (CVE-2026-42507 net/textproto, CVE-2026-27145
+        crypto/x509) are not exercisable by a linting binary; they will clear
+        automatically when tsgolint ships a release built with go1.26.4+.
+      type: chore
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 3.74.1
   changelogEntry:
     - summary: |

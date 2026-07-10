@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedServerSentEventsResumableClient } from "@fern/server-sent-events-resumable";
 
-const client = new SeedServerSentEventsResumableClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedServerSentEventsResumableClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.completions.stream({
     query: "foo"
 });
@@ -93,7 +93,7 @@ The SDK uses async iterators, so you can consume the responses using a `for awai
 ```typescript
 import { SeedServerSentEventsResumableClient } from "@fern/server-sent-events-resumable";
 
-const client = new SeedServerSentEventsResumableClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedServerSentEventsResumableClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.completions.stream({
     query: "foo"
 });

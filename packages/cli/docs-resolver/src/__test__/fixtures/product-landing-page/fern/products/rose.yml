@@ -1,0 +1,7 @@
+landing-page:
+  page: Overview
+  path: ../pages/rose-overview.mdx
+  slug: overview
+navigation:
+  - page: Overview
+    path: ../pages/rose-overview.mdx

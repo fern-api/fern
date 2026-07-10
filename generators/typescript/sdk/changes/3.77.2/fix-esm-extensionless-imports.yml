@@ -1,0 +1,9 @@
+- summary: |
+    Fix ESM spec violations for extensionless imports in generated SDKs. The
+    `rename-to-esm-files.js` script now resolves bare directory imports
+    (e.g. `from "./oauth"` → `from "./oauth/index.mjs"`) and extensionless
+    file imports (e.g. `from "./client"` → `from "./client.mjs"`), which
+    previously broke Node's ESM loader and Turbopack (Next 16). Also sets
+    `moduleResolution: "bundler"` in `tsconfig.esm.json` for correct ESM
+    semantics.
+  type: fix

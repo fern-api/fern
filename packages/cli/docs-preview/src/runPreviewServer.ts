@@ -161,8 +161,14 @@ export async function runPreviewServer({
         result: PreviewDocsResult
     ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
         const translations = new Map<string, DocsV1Read.DocsDefinition>();
-        const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
-            result;
+        const {
+            docsDefinition,
+            translationPages,
+            translationNavigationOverlays,
+            collectedFileIds,
+            docsWorkspacePath,
+            markdownFilesToPathName
+        } = result;
 
         if (translationPages == null || Object.keys(translationPages).length === 0) {
             return translations;
@@ -245,7 +251,7 @@ export async function runPreviewServer({
                         processedMarkdown = replaceImagePathsAndUrls(
                             processedMarkdown,
                             collectedFileIds,
-                            {}, // markdownFilesToPathName not needed for translations
+                            markdownFilesToPathName,
                             {
                                 absolutePathToMarkdownFile,
                                 absolutePathToFernFolder: docsWorkspacePath

@@ -10,6 +10,8 @@ pub struct ClientConfig {
     pub password: Option<String>,
     pub client_id: Option<String>,
     pub client_secret: Option<String>,
+    pub oauth_token_endpoint: Option<String>,
+    pub oauth_token_exchange: Option<crate::OAuthTokenExchangeConfig>,
     pub timeout: Duration,
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
@@ -25,6 +27,14 @@ impl Default for ClientConfig {
             password: None,
             client_id: None,
             client_secret: None,
+            oauth_token_endpoint: Some("/token".to_string()),
+            oauth_token_exchange: Some(crate::OAuthTokenExchangeConfig {
+                client_id_property: "client_id".to_string(),
+                client_secret_property: "client_secret".to_string(),
+                extra_request_properties: HashMap::new(),
+                access_token_property: "access_token".to_string(),
+                expires_in_property: "expires_in".to_string(),
+            }),
             timeout: Duration::from_secs(60),
             max_retries: 3,
             custom_headers: HashMap::from([

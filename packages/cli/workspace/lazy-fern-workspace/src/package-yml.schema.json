@@ -3205,6 +3205,20 @@
               "type": "null"
             }
           ]
+        },
+        "global-parameters": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "List of global parameter IDs that this endpoint opts into.\nUsed with apply: explicit mode."
         }
       },
       "required": [
@@ -3718,6 +3732,17 @@
                 }
               ],
               "description": "HTTP header containing the key ID for JWKS key selection."
+            },
+            "payload-format": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookPayloadFormatSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Describes how the signed payload is constructed.\nDefaults to body-only (components: [body], delimiter: \"\")."
             },
             "timestamp": {
               "oneOf": [

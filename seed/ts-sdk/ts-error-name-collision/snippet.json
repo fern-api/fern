@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithoutEndpointError({\n    bar: \"bar\"\n});\n"
+                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithoutEndpointError({\n    bar: \"bar\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.foo({\n    bar: \"bar\"\n});\n"
+                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.simple.foo({\n    bar: \"bar\"\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
+                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
+                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
+                "client": "import { SeedErrors } from \"@fern/ts-error-name-collision\";\n\nconst client = new SeedErrors({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
             }
         }
     ],

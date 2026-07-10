@@ -9,6 +9,7 @@ import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
 import com.seed.unions.core.RequestOptions;
+import com.seed.unions.core.RetryInterceptor;
 import com.seed.unions.core.SeedUnionsApiException;
 import com.seed.unions.core.SeedUnionsException;
 import com.seed.unions.core.SeedUnionsHttpResponse;
@@ -55,6 +56,15 @@ public class RawBigunionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -65,6 +75,8 @@ public class RawBigunionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);
         }
@@ -101,6 +113,15 @@ public class RawBigunionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -111,6 +132,8 @@ public class RawBigunionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);
         }
@@ -149,6 +172,15 @@ public class RawBigunionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -161,6 +193,8 @@ public class RawBigunionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUnionsException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUnionsException("Network error executing HTTP request", e);
         }

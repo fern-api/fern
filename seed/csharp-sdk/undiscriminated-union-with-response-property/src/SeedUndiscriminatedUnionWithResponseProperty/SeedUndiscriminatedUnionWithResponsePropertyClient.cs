@@ -35,6 +35,12 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedUndiscriminatedUnionWithResponseProperty.Core.QueryStringBuilder.Builder(
+                capacity: 0
+            )
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedUndiscriminatedUnionWithResponseProperty.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -48,6 +54,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/union",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -112,6 +119,12 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString =
+            new SeedUndiscriminatedUnionWithResponseProperty.Core.QueryStringBuilder.Builder(
+                capacity: 0
+            )
+                .MergeAdditional(options?.AdditionalQueryParameters)
+                .Build();
         var _headers =
             await new SeedUndiscriminatedUnionWithResponseProperty.Core.HeadersBuilder.Builder()
                 .Add(_client.Options.Headers)
@@ -125,6 +138,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 {
                     Method = HttpMethod.Get,
                     Path = "/unions",
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

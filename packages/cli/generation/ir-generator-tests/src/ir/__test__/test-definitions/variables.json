@@ -222,6 +222,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -258,6 +259,7 @@
             "docs": null
         }
     ],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -414,6 +416,7 @@
                 }
             }
         ],
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,

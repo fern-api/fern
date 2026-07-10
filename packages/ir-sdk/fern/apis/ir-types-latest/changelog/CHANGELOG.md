@@ -5,6 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.10.2] - 2026-07-07
+
+- Docs: Clarify `HttpEndpoint.globalParameters` semantics — it is now the fully
+  resolved set of global parameters that apply to the endpoint, computed at
+  IR-generation time (explicit opt-ins ∪ matching `apply: auto` parameters, with
+  body-location parameters gated on the request-body schema containing the dotted
+  target path). Generators should consume it as a membership check rather than
+  re-deriving applicability from `apply` modes.
+
+## [v67.10.1] - 2026-07-02
+
+- Docs: Clarify `GlobalParameter.name` semantics — `wireValue` is the canonical
+  identifier (extension entry's `name` field, used in per-operation opt-in),
+  `name` is the SDK-facing identifier (from `parameter-name` if provided,
+  otherwise derived via casing rules).
+
+## [v67.10.0] - 2026-07-01
+
+- Feature: Add optional `globalParameters` field to `IntermediateRepresentation`.
+  Introduces `GlobalParameter`, `GlobalParameterLocation`, `GlobalParameterApplyMode`,
+  and `GlobalParameterId` types. Enables the new `x-fern-global-parameters` OpenAPI
+  extension which lets users declare global defaults for request body, query, header,
+  and path fields — set once at the SDK client / CLI config level and injected at the
+  declared wire location, with per-call values winning. Subsumes the header-only
+  semantics of `x-fern-global-headers` and the path-only semantics of
+  `x-fern-sdk-variables`.
+
+## [v67.9.0] - 2026-06-30
+
+- Feature: Add optional `customProperties` field to dynamic IR `OAuth` type and
+  optional `customPropertyValues` field to `OAuthValues`. Enables dynamic snippet
+  generators to include custom OAuth token endpoint request properties (beyond
+  clientId and clientSecret) in generated code examples, fixing compilation
+  failures for SDKs with custom OAuth parameters.
+
+## [v67.8.0] - 2026-06-29
+
+- Feature: Add optional `payloadFormat` field to `AsymmetricKeySignatureVerification`.
+  Allows the timestamp (and other components like message-id, notification-url)
+  to be included in the data that the asymmetric signature is verified against,
+  closing a replay-protection gap where the timestamp header was unauthenticated.
+
+## [v67.7.0] - 2026-06-25
+
+- Feature: Add optional `contentType` field to `V2HttpEndpointExample`. Allows
+  endpoint-level examples to be tagged with the content type they belong to
+  (e.g. `application/json`, `application/ld+json`), enabling the docs UI to
+  filter or auto-select examples when the user switches content types.
 ## [v67.6.0] - 2026-06-23
 
 - Feature: Add optional `specVersion` field to `IntermediateRepresentation`.

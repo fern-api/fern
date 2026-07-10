@@ -1,0 +1,6 @@
+- summary: |
+    Fix remote generation CLI hanging indefinitely when S3 download stalls.
+    Added connection timeout (60s) and overall download timeout (5 min) to
+    both downloadZipForTask and downloadAndExtractZipToDirectory, so the CLI
+    fails with a clear error instead of blocking forever.
+  type: fix

@@ -3,10 +3,12 @@
  */
 package com.seed.queryParameters.resources.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.queryParameters.core.ClientOptions;
 import com.seed.queryParameters.core.ObjectMappers;
 import com.seed.queryParameters.core.QueryStringMapper;
 import com.seed.queryParameters.core.RequestOptions;
+import com.seed.queryParameters.core.RetryInterceptor;
 import com.seed.queryParameters.core.SeedQueryParametersApiException;
 import com.seed.queryParameters.core.SeedQueryParametersException;
 import com.seed.queryParameters.core.SeedQueryParametersHttpResponse;
@@ -73,6 +75,15 @@ public class RawUserClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -83,6 +94,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedQueryParametersApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedQueryParametersException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedQueryParametersException("Network error executing HTTP request", e);
         }

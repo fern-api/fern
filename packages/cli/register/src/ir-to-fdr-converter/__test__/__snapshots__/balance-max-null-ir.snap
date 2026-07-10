@@ -42,6 +42,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -112,6 +113,7 @@
             "head": "/rates",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.getRates",
           "idempotent": false,
@@ -197,6 +199,7 @@
             "userSpecifiedExamples": {
               "base_getRates_example_200": {
                 "codeSamples": undefined,
+                "contentType": undefined,
                 "displayName": "getRates_example",
                 "request": {
                   "auth": undefined,

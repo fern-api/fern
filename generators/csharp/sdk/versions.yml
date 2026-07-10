@@ -1,4 +1,107 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.73.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+        (e.g. `my-sdk/1.2.0 (linux; x64) .NET/8.0.4`). The OS, architecture, and
+        runtime version are resolved at runtime via
+        `System.Runtime.InteropServices.RuntimeInformation` and `System.Environment`.
+        This is gated behind a new `include-platform-headers` config option and is
+        disabled by default, so existing generated output is unchanged. When enabled
+        it remains subject to the `omit-fern-headers` config option.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 2.72.2
+  changelogEntry:
+    - summary: |
+        Make each scheme's credentials optional under `any`-composed auth. Previously,
+        with a multi-scheme `auth: any: [...]` config the generated client treated OAuth
+        (and other) credentials as unconditionally required at construction, so a caller
+        who only wanted API-key auth could not instantiate the client. Credentials now
+        fall back to environment variables without throwing, and the OAuth/inferred token
+        provider and auth headers are only set up when that scheme's credentials are present.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 2.72.1
+  changelogEntry:
+    - summary: |
+        Bump the bundled `@fern-api/generator-cli` to 0.9.44 so every local-only commit
+        is signed when pushing to GitHub, not just HEAD. Replay branches contain multiple
+        commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only the HEAD
+        commit was recreated via the GitHub API and signed, leaving earlier commits on
+        the PR unverified.
+      type: chore
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 2.72.0
+  changelogEntry:
+    - summary: |
+        Add a `default-timeout-in-milliseconds` config option to the C# SDK generator
+        for expressing the default network timeout in milliseconds (mapping to .NET's
+        `TimeSpan`). The generated `ClientOptions.Timeout` is now computed from
+        milliseconds (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`).
+        The `default-timeout-in-seconds` option is now deprecated but remains fully
+        backwards compatible: when only the seconds key is set, it is converted to
+        milliseconds. The new key takes precedence when both are set.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 2.71.2
+  changelogEntry:
+    - summary: |
+        Fix mock-server tests and XML-doc `<example>` snippets calling client methods with
+        path parameters in the wrong order (CS1503) when a user-authored example lists its
+        path-parameters in a different order than the URL path template. The generated method
+        signature follows the IR's canonical (URL-template) order, but the snippet writer was
+        consuming the example's path-parameters positionally in the author's declared order.
+        Example values are now bound to each parameter by name and emitted in the endpoint's
+        canonical path-parameter order, matching the generated signature.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 2.71.1
+  changelogEntry:
+    - summary: |
+        Fix SSE stream reconnection correctness to match the reference implementation:
+        (1) Do not reconnect when no terminator is configured (the client cannot
+        distinguish a completed stream from a dropped connection).
+        (2) Apply a default 1-second backoff between reconnect attempts when the
+        server sends no retry: directive (previously zero delay).
+        (3) Use the last *dispatched* event ID for reconnection rather than the
+        last *parsed* id, preventing silent event loss on mid-event drops.
+        (4) Treat reconnect function failures as consumed attempts; throw
+        IOException with the last failure as InnerException when the cap is
+        exhausted, instead of silently truncating the stream.
+        (5) Let OperationCanceledException propagate immediately from reconnectFn
+        instead of swallowing it as a retry attempt.
+        (6) Dispose the old HTTP response only after a new one is successfully
+        obtained, preventing ObjectDisposedException on retry.
+      type: fix
+  createdAt: "2026-07-05"
+  irVersion: 66
+- version: 2.71.0
+  changelogEntry:
+    - summary: |
+        Add opt-in SSE stream reconnection for resumable endpoints.
+        When an SSE endpoint is marked as resumable, the generated SDK
+        automatically reconnects using the Last-Event-ID header.
+        New RequestOptions fields: MaxStreamReconnectAttempts, DisableStreamReconnection.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
+- version: 2.70.0
+  changelogEntry:
+    - summary: |
+        Add support for undocumented/extra parameters: AdditionalQueryParameters from
+        RequestOptions are now applied to all endpoints (previously only endpoints with
+        defined query parameters would merge them). Also add ADDITIONAL_BODY_PROPERTIES
+        feature to README generation.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
 - version: 2.69.2
   changelogEntry:
     - summary: |

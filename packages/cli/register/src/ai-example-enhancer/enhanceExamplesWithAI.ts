@@ -8,8 +8,8 @@ import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
-import { FaiExampleEnhancer } from "./faiClient.js";
 import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers.js";
+import { LambdaExampleEnhancer } from "./lambdaClient.js";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator.js";
 import {
     AIExampleEnhancerConfig,
@@ -517,7 +517,7 @@ async function performAIEnhancement(
     sourceSpecs?: OpenAPISourceSpec[],
     apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
-    const enhancer = new FaiExampleEnhancer(config, context, token, organizationId);
+    const enhancer = new LambdaExampleEnhancer(config, context, token, organizationId);
     const circuitBreaker = new CircuitBreaker();
 
     let openApiSpec: string | undefined;
@@ -679,7 +679,7 @@ async function performAIEnhancement(
 
 async function enhancePackageExamples(
     apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
-    enhancer: FaiExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
     organizationId: string,
     stats: { count: number; total: number },
@@ -893,7 +893,7 @@ function collectWorkItems(
 
 async function processEndpointsConcurrently(
     allWorkItems: (EndpointWorkItem & { packageId?: string })[],
-    enhancer: FaiExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
     organizationId: string,
     stats: { count: number; total: number },
@@ -919,7 +919,7 @@ async function processEndpointsConcurrently(
     const maxConcurrentRequests = parseInt(process.env.FERN_AI_MAX_CONCURRENT || "25", 10);
 
     context.logger.debug(
-        `Processing ${allWorkItems.length} endpoints with max ${maxConcurrentRequests} concurrent FAI calls using rolling window queue`
+        `Processing ${allWorkItems.length} endpoints with max ${maxConcurrentRequests} concurrent Lambda calls using rolling window queue`
     );
 
     // Check circuit breaker before processing
@@ -1055,7 +1055,7 @@ async function processEndpointsConcurrently(
 
 async function processEndpoint(
     workItem: EndpointWorkItem & { packageId?: string },
-    enhancer: FaiExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
     organizationId: string,
     stats: { count: number; total: number },
@@ -1111,7 +1111,7 @@ async function processEndpoint(
         openApiSpec: prunedOpenApiSpec
     };
 
-    // Single attempt - FAI client handles retries internally (1 retry total)
+    // Single attempt - Lambda client handles retries internally (1 retry total)
     try {
         const result = await enhancer.enhanceExample(request);
 
@@ -1119,14 +1119,14 @@ async function processEndpoint(
         circuitBreaker?.recordSuccess();
 
         // Backfill any required fields the AI may have missed from the original auto-generated example.
-        // The enhancement service may not fully resolve nested allOf chains, producing partial examples.
-        // Handle a {body: {...}} envelope if present, but only when the original
+        // The AI Lambda may not fully resolve nested allOf chains, producing partial examples.
+        // Handle the Lambda's {body: {...}} envelope if present, but only when the original
         // does NOT have a "body" key (distinguishes envelope from schemas with a literal body field).
         if (result.enhancedRequestExample != null && request.originalRequestExample != null) {
-            const unwrapped = unwrapBodyEnvelope(result.enhancedRequestExample);
+            const unwrapped = unwrapLambdaBodyEnvelope(result.enhancedRequestExample);
             const originalHasBody = isObjectWithKey(request.originalRequestExample, "body");
             if (unwrapped.wasWrapped && !originalHasBody) {
-                // Envelope detected — backfill the inner value directly.
+                // Lambda envelope detected — backfill the inner value directly.
                 // Do NOT re-wrap: the IR path only handles FDR {type,value} wrappers,
                 // and writeAiExamplesOverride has its own unwrap logic.
                 result.enhancedRequestExample = backfillMissingFields(unwrapped.inner, request.originalRequestExample);
@@ -1668,10 +1668,10 @@ function isObjectWithKey(value: unknown, key: string): boolean {
 }
 
 /**
- * Detects and unwraps a `{body: {...}}` envelope format.
- * The enhancement service sometimes wraps the request example in a "body" key.
+ * Detects and unwraps the Lambda's `{body: {...}}` envelope format.
+ * The Lambda sometimes wraps the request example in a "body" key.
  */
-export function unwrapBodyEnvelope(value: unknown): { wasWrapped: boolean; inner: unknown } {
+export function unwrapLambdaBodyEnvelope(value: unknown): { wasWrapped: boolean; inner: unknown } {
     if (typeof value === "object" && value !== null && !Array.isArray(value) && "body" in value) {
         return { wasWrapped: true, inner: (value as Record<string, unknown>).body };
     }

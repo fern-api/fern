@@ -88,7 +88,6 @@ describe("Test getResponseBody", () => {
         }
     });
 
-
     it("should handle streaming response type", async () => {
         const encoder = new TextEncoder();
         const testData = "test stream data";
@@ -121,5 +120,4 @@ describe("Test getResponseBody", () => {
         const descriptor = Object.getOwnPropertyDescriptor(result, "__fern_response_ref");
         expect(descriptor?.enumerable).toBe(false);
     });
-
 });

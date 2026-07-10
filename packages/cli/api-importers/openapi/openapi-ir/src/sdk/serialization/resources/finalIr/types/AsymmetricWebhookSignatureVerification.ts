@@ -4,6 +4,7 @@ import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AsymmetricAlgorithm } from "./AsymmetricAlgorithm.js";
+import { WebhookPayloadFormat } from "./WebhookPayloadFormat.js";
 import { WebhookSignatureEncoding } from "./WebhookSignatureEncoding.js";
 import { WebhookTimestamp } from "./WebhookTimestamp.js";
 
@@ -17,6 +18,7 @@ export const AsymmetricWebhookSignatureVerification: core.serialization.ObjectSc
     signaturePrefix: core.serialization.string().optional(),
     jwksUrl: core.serialization.string().optional(),
     keyIdHeader: core.serialization.string().optional(),
+    payloadFormat: WebhookPayloadFormat.optional(),
     timestamp: WebhookTimestamp.optional(),
 });
 
@@ -28,6 +30,7 @@ export declare namespace AsymmetricWebhookSignatureVerification {
         signaturePrefix?: string | null;
         jwksUrl?: string | null;
         keyIdHeader?: string | null;
+        payloadFormat?: WebhookPayloadFormat.Raw | null;
         timestamp?: WebhookTimestamp.Raw | null;
     }
 }

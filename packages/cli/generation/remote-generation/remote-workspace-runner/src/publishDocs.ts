@@ -96,6 +96,32 @@ function sanitizePreviewId(id: string): string {
     return sanitized;
 }
 
+/**
+ * Extract a human-readable error detail from an oRPC / ledger publish error.
+ * When the server returns Zod validation issues (via oRPC's BAD_REQUEST),
+ * those are surfaced so the user can see exactly which field failed.
+ */
+function formatLedgerError(error: unknown): string {
+    if (error == null) {
+        return "Unknown error";
+    }
+    const msg = error instanceof Error ? error.message : String(error);
+
+    // oRPC errors carry validation issues in `error.data.issues`.
+    const data = (error as { data?: { issues?: Array<{ message?: string; path?: Array<string | number> }> } }).data;
+    if (data?.issues != null && Array.isArray(data.issues) && data.issues.length > 0) {
+        const issueLines = data.issues
+            .map((issue) => {
+                const path = issue.path?.join(".") ?? "";
+                const message = issue.message ?? "invalid";
+                return path ? `  - ${path}: ${message}` : `  - ${message}`;
+            })
+            .join("\n");
+        return msg + "\n" + issueLines;
+    }
+    return msg;
+}
+
 export class DocsPublishConflictError extends Error {
     constructor() {
         super("Another docs publish is currently in progress for this domain.");
@@ -875,6 +901,7 @@ export async function publishDocs({
                     organization,
                     domain,
                     basepath: basePath,
+                    basepathAware: isBasepathAware,
                     previewId,
                     customDomains,
                     git: ledgerGit,
@@ -903,7 +930,8 @@ export async function publishDocs({
             try {
                 await runLedgerPublish();
             } catch (error) {
-                return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
+                const detail = formatLedgerError(error);
+                return context.failAndThrow("Failed to publish docs via ledger to " + domain + ": " + detail, error, {
                     code: CliError.Code.NetworkError
                 });
             }
@@ -976,6 +1004,7 @@ export async function publishDocs({
                         // 5. Preserve editThisPageUrl/editThisPageLaunch from the base page
                         const collectedFileIds = resolver.getCollectedFileIds();
                         const docsWorkspacePath = resolver.getDocsWorkspacePath();
+                        const markdownFilesToPathName = resolver.getMarkdownFilesToPathName();
 
                         // Create a locale-aware file loader that prefers translated snippets
                         // (e.g., translations/zh/snippets/foo.mdx) over base snippets.
@@ -1044,7 +1073,7 @@ export async function publishDocs({
                                     processedMarkdown = replaceImagePathsAndUrls(
                                         processedMarkdown,
                                         collectedFileIds,
-                                        {}, // markdownFilesToPathName not needed for translations
+                                        markdownFilesToPathName,
                                         {
                                             absolutePathToMarkdownFile,
                                             absolutePathToFernFolder: docsWorkspacePath

@@ -73,8 +73,14 @@ types:
     properties:
       clientId: commons.Name
       clientSecret: commons.Name
+      customProperties:
+        type: optional<list<types.NamedParameter>>
+        docs: Custom properties required for the OAuth token endpoint request, beyond clientId and clientSecret.
 
   OAuthValues:
     properties:
       clientId: string
       clientSecret: string
+      customPropertyValues:
+        type: optional<map<string, unknown>>
+        docs: Map of wire values to their example values for custom OAuth properties.

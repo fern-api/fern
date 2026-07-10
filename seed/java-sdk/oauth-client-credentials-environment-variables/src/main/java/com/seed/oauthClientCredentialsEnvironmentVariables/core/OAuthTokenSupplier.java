@@ -21,9 +21,11 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private final AuthClient authClient;
 
-    private String accessToken;
+    private final Object tokenLock = new Object();
 
-    private Instant expiresAt;
+    private volatile String accessToken;
+
+    private volatile Instant expiresAt;
 
     public OAuthTokenSupplier(String clientId, String clientSecret, String scope, AuthClient authClient) {
         this.clientId = clientId;
@@ -44,12 +46,19 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     @java.lang.Override
     public String get() {
-        if (accessToken == null || expiresAt.isBefore(Instant.now())) {
-            TokenResponse authResponse = fetchToken();
-            this.accessToken = authResponse.getAccessToken();
-            this.expiresAt = getExpiresAt(authResponse.getExpiresIn());
+        String cachedToken = this.accessToken;
+        Instant cachedExpiresAt = this.expiresAt;
+        if (cachedToken != null && cachedExpiresAt != null && !cachedExpiresAt.isBefore(Instant.now())) {
+            return "Bearer " + cachedToken;
         }
-        return "Bearer " + accessToken;
+        synchronized (tokenLock) {
+            if (accessToken == null || expiresAt.isBefore(Instant.now())) {
+                TokenResponse authResponse = fetchToken();
+                this.accessToken = authResponse.getAccessToken();
+                this.expiresAt = getExpiresAt(authResponse.getExpiresIn());
+            }
+            return "Bearer " + accessToken;
+        }
     }
 
     private Instant getExpiresAt(long expiresInSeconds) {

@@ -16,8 +16,6 @@
         "isolatedDeclarations": true,
         "verbatimModuleSyntax": true
     },
-    "include": [
-        "src"
-    ],
+    "include": ["src"],
     "exclude": []
 }

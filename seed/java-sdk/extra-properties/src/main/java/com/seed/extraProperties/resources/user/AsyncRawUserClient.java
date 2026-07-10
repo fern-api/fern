@@ -8,6 +8,7 @@ import com.seed.extraProperties.core.ClientOptions;
 import com.seed.extraProperties.core.MediaTypes;
 import com.seed.extraProperties.core.ObjectMappers;
 import com.seed.extraProperties.core.RequestOptions;
+import com.seed.extraProperties.core.RetryInterceptor;
 import com.seed.extraProperties.core.SeedExtraPropertiesApiException;
 import com.seed.extraProperties.core.SeedExtraPropertiesException;
 import com.seed.extraProperties.core.SeedExtraPropertiesHttpResponse;
@@ -65,6 +66,15 @@ public class AsyncRawUserClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedExtraPropertiesHttpResponse<User>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -80,6 +90,9 @@ public class AsyncRawUserClient {
                     future.completeExceptionally(new SeedExtraPropertiesApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedExtraPropertiesException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedExtraPropertiesException("Network error executing HTTP request", e));

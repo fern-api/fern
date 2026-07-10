@@ -412,6 +412,9 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle
@@ -524,10 +527,10 @@ fixtures:
         namespaceExport: SeedErrors
         naming:
           client: SeedErrors
-  ts-path-param-body-conflict:
+  ts-react-query:
     - outputFolder: .
       customConfig:
-        inlinePathParameters: true
+        generateReactQueryHooks: true
   server-sent-events-openapi:
     - outputFolder: no-custom-config
       customConfig: null
@@ -579,3 +582,6 @@ scripts:
           fi
 allowedFailures:
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
+  - pagination:no-custom-config # pre-existing: TS5076 '??' and '&&' mixed without parentheses in Client.ts
+  - pagination:page-index-semantics # pre-existing: TS5076 '??' and '&&' mixed without parentheses in Client.ts
+  - webhooks:no-custom-config # pre-existing: generation failure

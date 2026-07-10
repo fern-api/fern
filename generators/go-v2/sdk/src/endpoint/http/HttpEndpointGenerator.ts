@@ -469,6 +469,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     url: go.codeblock("endpointURL"),
                     request: signature.request?.getRequestReference(),
                     response: this.getResponseParameterReference({ endpoint }),
+                    responseIsOptional: this.isResponseOptional({ endpoint }),
                     errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
                     namespaceImportPath: this.context.getNamespaceImportPath(subpackage)
                 })
@@ -1060,6 +1061,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
+    /**
+     * Returns true when the endpoint's JSON response body may be empty. The IR importer wraps the
+     * primary response body in an optional/nullable container when a no-body 2xx (e.g. a 204
+     * EmptyResponse) coexists with a body-bearing 2xx, so we surface `ResponseIsOptional: true` and
+     * let the caller treat an empty body as a successful (nil-bodied) response rather than erroring.
+     */
+    private isResponseOptional({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
+        const responseBody = endpoint.response?.body;
+        if (responseBody?.type !== "json") {
+            return false;
+        }
+        return this.context.maybeUnwrapOptionalOrNullable(responseBody.value.responseBodyType) != null;
+    }
+
     private getResponseReturnStatement({
         signature,
         endpoint
@@ -1214,14 +1229,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getContentTypeHeaderValue({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
-        // OAuth 2.0 token endpoints must use form-urlencoded encoding (RFC 6749 §4.4.2).
+        const declaredContentType = this.getDeclaredContentTypeHeaderValue({ endpoint });
+        // OAuth 2.0 token endpoints default to form-urlencoded encoding (RFC 6749 §4.4.2),
+        // but honor an explicitly declared request content-type (e.g. application/json)
+        // for non-RFC-standard token endpoints that consume JSON.
         const oauthScheme = getOAuthClientCredentialsScheme(this.context.ir);
         if (oauthScheme?.configuration?.type === "clientCredentials") {
             const tokenEndpointId = oauthScheme.configuration.tokenEndpoint.endpointReference.endpointId;
             if (endpoint.id === tokenEndpointId) {
-                return "application/x-www-form-urlencoded";
+                return declaredContentType ?? "application/x-www-form-urlencoded";
             }
         }
+        return declaredContentType;
+    }
+
+    private getDeclaredContentTypeHeaderValue({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
         const sdkRequest = endpoint.sdkRequest;
         if (sdkRequest == null) {
             return undefined;

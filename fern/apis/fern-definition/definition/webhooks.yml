@@ -86,6 +86,11 @@ types:
       key-id-header:
         type: optional<string>
         docs: HTTP header containing the key ID for JWKS key selection.
+      payload-format:
+        type: optional<WebhookPayloadFormatSchema>
+        docs: |
+          Describes how the signed payload is constructed.
+          Defaults to body-only (components: [body], delimiter: "").
       timestamp: optional<WebhookTimestampSchema>
 
   WebhookSignatureAlgorithmSchema:

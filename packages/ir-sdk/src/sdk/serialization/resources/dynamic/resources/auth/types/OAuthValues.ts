@@ -10,11 +10,15 @@ export const OAuthValues: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     clientId: core.serialization.string(),
     clientSecret: core.serialization.string(),
+    customPropertyValues: core.serialization
+        .record(core.serialization.string(), core.serialization.unknown())
+        .optional(),
 });
 
 export declare namespace OAuthValues {
     export interface Raw {
         clientId: string;
         clientSecret: string;
+        customPropertyValues?: Record<string, unknown> | null;
     }
 }

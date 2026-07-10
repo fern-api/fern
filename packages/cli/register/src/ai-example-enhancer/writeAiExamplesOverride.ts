@@ -131,7 +131,7 @@ export async function writeAiExamplesOverride({
                 }
 
                 // Extract the inner value if the request body is wrapped in a "body" key
-                // The enhancement service response sometimes wraps the request in { "body": { ... } }
+                // The Lambda response sometimes wraps the request in { "body": { ... } }
                 let requestBodyToProcess = example.requestBody;
                 if (
                     requestBodyToProcess !== null &&

@@ -75,6 +75,8 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
   circular-references-advanced:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
@@ -95,6 +97,9 @@ fixtures:
     - customConfig:
         omit_fern_headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        include_platform_headers: true
+      outputFolder: include-platform-headers
     - customConfig:
         additional_init_exports:
           - from: types.types

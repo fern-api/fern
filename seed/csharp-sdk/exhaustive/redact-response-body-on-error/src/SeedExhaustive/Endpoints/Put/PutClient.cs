@@ -19,6 +19,9 @@ public partial class PutClient : IPutClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -31,6 +34,7 @@ public partial class PutClient : IPutClient
                 {
                     Method = HttpMethod.Put,
                     Path = string.Format("{0}", ValueConvert.ToPathParameterString(request.Id)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

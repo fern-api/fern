@@ -9,6 +9,7 @@ import com.seed.validation.core.MediaTypes;
 import com.seed.validation.core.ObjectMappers;
 import com.seed.validation.core.QueryStringMapper;
 import com.seed.validation.core.RequestOptions;
+import com.seed.validation.core.RetryInterceptor;
 import com.seed.validation.core.SeedValidationApiException;
 import com.seed.validation.core.SeedValidationException;
 import com.seed.validation.core.SeedValidationHttpResponse;
@@ -67,6 +68,15 @@ public class AsyncRawSeedValidationClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedValidationHttpResponse<Type>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -82,6 +92,9 @@ public class AsyncRawSeedValidationClient {
                     future.completeExceptionally(new SeedValidationApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedValidationException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedValidationException("Network error executing HTTP request", e));
@@ -122,6 +135,15 @@ public class AsyncRawSeedValidationClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<SeedValidationHttpResponse<Type>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -137,6 +159,9 @@ public class AsyncRawSeedValidationClient {
                     future.completeExceptionally(new SeedValidationApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedValidationException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedValidationException("Network error executing HTTP request", e));

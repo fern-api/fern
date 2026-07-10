@@ -1,4 +1,4 @@
-import { Spec } from "@fern-api/api-workspace-commons";
+import { Spec, stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
@@ -233,7 +233,7 @@ export async function writeFilesToDiskAndRunGenerator({
 
     const config = getGeneratorConfig({
         generatorInvocation,
-        customConfig: generatorInvocation.config,
+        customConfig: stripCliConfigKeys(generatorInvocation.config),
         workspaceName: workspace.definition.rootApiFile.contents.name,
         outputVersion: mappedOutputVersionOverride,
         organization,

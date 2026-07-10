@@ -22,6 +22,7 @@ import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension.js";
 import { getFernAvailability } from "../../extensions/getFernAvailability.js";
 import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension.js";
+import { getEndpointGlobalParameterIds } from "../../extensions/getGlobalParameters.js";
 import { OperationContext } from "../contexts.js";
 import { convertServer } from "../convertServer.js";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters.js";
@@ -366,7 +367,8 @@ export function convertHttpOperation({
         examples,
         pagination: operationContext.pagination,
         source,
-        retries
+        retries,
+        globalParameterIds: getEndpointGlobalParameterIds(operation)
     }));
 }
 

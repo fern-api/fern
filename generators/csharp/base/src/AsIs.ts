@@ -41,6 +41,7 @@ export const AsIsFiles = {
     QueryStringBuilder: "QueryStringBuilder.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
     RawClient: "RawClient.Template.cs",
+    SseReconnectHelper: "SseReconnectHelper.Template.cs",
     RawResponse: "RawResponse.Template.cs",
     ResponseHeaders: "ResponseHeaders.Template.cs",
     StreamRequest: "StreamRequest.Template.cs",
@@ -111,6 +112,9 @@ export const AsIsFiles = {
             "test/Pagination/StepOffsetTest.Template.cs",
             "test/Pagination/StringCursorTest.Template.cs"
         ],
+        Sse: {
+            SseReconnectHelperTests: "test/Sse/SseReconnectHelperTests.Template.cs"
+        },
         WebSockets: {
             AsyncLockTests: "test/WebSockets/AsyncLockTests.Template.cs",
             DisconnectionInfoTests: "test/WebSockets/DisconnectionInfoTests.Template.cs",

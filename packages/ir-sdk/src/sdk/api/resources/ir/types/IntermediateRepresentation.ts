@@ -41,6 +41,15 @@ export interface IntermediateRepresentation {
     errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     sdkConfig: FernIr.SdkConfig;
     variables: FernIr.VariableDeclaration[];
+    /**
+     * Global parameters that are set once at the SDK client level
+     * and injected into every relevant request at the declared wire
+     * location (header, query, body, or path). Subsumes the header-only
+     * semantics of `headers` (x-fern-global-headers) and the path-only
+     * semantics of `variables` (x-fern-sdk-variables) with support for
+     * body and query locations.
+     */
+    globalParameters: FernIr.GlobalParameter[] | undefined;
     serviceTypeReferenceInfo: FernIr.ServiceTypeReferenceInfo;
     readmeConfig: FernIr.ReadmeConfig | undefined;
     sourceConfig: FernIr.SourceConfig | undefined;

@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNullableOptionalClient } from "@fern/nullable-optional";
 
-const client = new SeedNullableOptionalClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedNullableOptionalClient({ baseUrl: "YOUR_BASE_URL" });
 await client.nullableOptional.createUser({
     username: "username",
     email: "email",

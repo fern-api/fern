@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: Test x-fern-global-parameters extension
+  version: 1.0.0
+x-fern-global-parameters:
+  - name: currency
+    in: body
+    target: config.currency
+    env: CHANNEL3_CURRENCY
+    default: USD
+    optional: true
+    apply: auto
+    docs: The currency code used for pricing.
+  - name: language
+    in: query
+    env: CHANNEL3_LANGUAGE
+    optional: true
+  - name: x-custom-header
+    in: header
+    env: CUSTOM_HEADER
+    optional: false
+  - name: region
+    in: path
+    target: regionId
+    env: CHANNEL3_REGION
+    default: us
+    apply: explicit
+  - name: verbose
+    in: query
+    type: boolean
+    default: false
+    optional: true
+    docs: Enable verbose response output.
+  - name: max-retries
+    in: header
+    target: X-Max-Retries
+    parameter-name: maxRetries
+    type: integer
+    default: 3
+    optional: true
+  - name: api-version
+    in: query
+    docs: The API version to use for the request.
+  - name: x-trace-id
+    in: header
+    env: TRACE_ID
+    default: auto-generated
+    x-fern-default: trace-default
+    docs: x-fern-default should take precedence over default.
+paths:
+  "/v1/products/{regionId}/search":
+    post:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: search
+      x-fern-global-parameter:
+        - region
+        - currency
+      operationId: searchProducts
+      parameters:
+        - in: path
+          name: regionId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                config:
+                  type: object
+                  properties:
+                    currency:
+                      type: string
+                    limit:
+                      type: integer
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+  "/v1/products/{regionId}/{productId}":
+    get:
+      x-fern-sdk-group-name: products
+      x-fern-sdk-method-name: get
+      x-fern-global-parameter: region
+      operationId: getProduct
+      parameters:
+        - in: path
+          name: regionId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: productId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number

@@ -49,6 +49,18 @@ class RawCompletionsClient:
             omit=OMIT,
         ) as _response:
 
+            def _reconnect(last_event_id: str):
+                return self._client_wrapper.httpx_client.stream(
+                    "stream",
+                    method="POST",
+                    json={
+                        "query": query,
+                    },
+                    headers={"Last-Event-ID": last_event_id},
+                    request_options=request_options,
+                    omit=OMIT,
+                )
+
             def _stream() -> HttpResponse[typing.Iterator[StreamedCompletion]]:
                 try:
                     if 200 <= _response.status_code < 300:
@@ -69,6 +81,8 @@ class RawCompletionsClient:
                                 )
                                 if request_options is not None
                                 else self._client_wrapper.get_max_stream_reconnection_attempts(),
+                                stream_terminator="[[DONE]]",
+                                reconnect=_reconnect,
                             )
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
@@ -215,6 +229,18 @@ class AsyncRawCompletionsClient:
             omit=OMIT,
         ) as _response:
 
+            def _reconnect(last_event_id: str):
+                return self._client_wrapper.httpx_client.stream(
+                    "stream",
+                    method="POST",
+                    json={
+                        "query": query,
+                    },
+                    headers={"Last-Event-ID": last_event_id},
+                    request_options=request_options,
+                    omit=OMIT,
+                )
+
             async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]:
                 try:
                     if 200 <= _response.status_code < 300:
@@ -235,6 +261,8 @@ class AsyncRawCompletionsClient:
                                 )
                                 if request_options is not None
                                 else self._client_wrapper.get_max_stream_reconnection_attempts(),
+                                stream_terminator="[[DONE]]",
+                                reconnect=_reconnect,
                             )
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":

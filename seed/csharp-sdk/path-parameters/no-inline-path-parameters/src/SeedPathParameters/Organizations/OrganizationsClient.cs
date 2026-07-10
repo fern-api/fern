@@ -19,6 +19,9 @@ public partial class OrganizationsClient : IOrganizationsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPathParameters.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -35,6 +38,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(tenantId),
                         ValueConvert.ToPathParameterString(organizationId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -103,6 +107,9 @@ public partial class OrganizationsClient : IOrganizationsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedPathParameters.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedPathParameters.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -120,6 +127,7 @@ public partial class OrganizationsClient : IOrganizationsClient
                         ValueConvert.ToPathParameterString(organizationId),
                         ValueConvert.ToPathParameterString(userId)
                     ),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

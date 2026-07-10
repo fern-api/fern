@@ -21,6 +21,9 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -34,6 +37,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                     Method = HttpMethod.Post,
                     Path = "/req-bodies/object",
                     Body = request,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },
@@ -121,6 +125,9 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add("X-Custom-Header", request.XCustomHeader)
             .Add(_client.Options.Headers)
@@ -135,6 +142,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                     Method = HttpMethod.Post,
                     Path = "/req-bodies/array-body-with-headers",
                     Body = request.Body,
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

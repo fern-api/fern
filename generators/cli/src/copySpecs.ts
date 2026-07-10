@@ -1,6 +1,7 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import type { DetectedAuthBinding } from "./detectAuth.js";
+import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
@@ -13,6 +14,14 @@ export interface RawSpecsManifestEntry {
 export interface RawSpecsManifest {
     specs: RawSpecsManifestEntry[];
 }
+
+/**
+ * Characters that are safe to interpolate into a Rust `"..."` string literal.
+ * Rejects double quotes and backslashes that could break out of the literal
+ * or inject code into generated `main.rs`.
+ */
+// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally rejecting control chars in codegen output
+const SAFE_RUST_STRING_LITERAL = /^[^"\\\x00-\x1f]+$/;
 
 /** Where the local-workspace-runner mounts raw API specs inside the container. */
 export const SPECS_DIRECTORY = "/fern/specs";
@@ -63,11 +72,14 @@ export async function copySpecs(args: {
     outputDir: string;
     binaryName: string;
     authBindings: DetectedAuthBinding[];
+    globalParamBindings: DetectedGlobalParam[];
     specsDir?: string;
     /** When true, emit `mod custom;` + `mod sdk;` + `custom::register(app)` in main.rs. */
     customCommands?: boolean;
+    /** When set, emit `.command_namespace("<rootGroup>")` on the OpenApiBinding chain. */
+    rootGroup?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
+    const { outputDir, binaryName, authBindings, globalParamBindings, specsDir, customCommands, rootGroup } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -94,7 +106,9 @@ export async function copySpecs(args: {
             binaryName,
             entries,
             authBindings,
-            customCommands: customCommands ?? false
+            globalParamBindings,
+            customCommands: customCommands ?? false,
+            rootGroup
         })
     );
 
@@ -179,9 +193,11 @@ function renderMainRs(args: {
     binaryName: string;
     entries: SpecEntry[];
     authBindings: DetectedAuthBinding[];
+    globalParamBindings: DetectedGlobalParam[];
     customCommands: boolean;
+    rootGroup?: string;
 }): string {
-    const { binaryName, entries, authBindings, customCommands } = args;
+    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -199,6 +215,17 @@ function renderMainRs(args: {
     }
     if (authTypeImports.size > 0) {
         imports.push(`use fern_cli_sdk::auth::{${[...authTypeImports].sort().join(", ")}};`);
+    }
+
+    // Collect global parameter imports
+    const globalParamImports = new Set<string>();
+    for (const gp of globalParamBindings) {
+        for (const imp of gp.imports) {
+            globalParamImports.add(imp);
+        }
+    }
+    if (globalParamImports.size > 0) {
+        imports.push(`use fern_cli_sdk::openapi::discovery::{${[...globalParamImports].sort().join(", ")}};`);
     }
 
     const lines: string[] = [
@@ -220,12 +247,26 @@ function renderMainRs(args: {
         lines.push(`        ${binding.rustCall}`);
     }
 
+    // Root-level global parameters (from ir.globalParameters via
+    // detectGlobalParams). Registered on the root CliApp — like auth —
+    // and propagated to each binding at runtime via
+    // `CliApp::propagate_root_global_parameters`.
+    for (const gp of globalParamBindings) {
+        lines.push(`        ${gp.rustCall}`);
+    }
+
     // OpenApiBinding with specs and binding-level auth
     lines.push("        .binding(");
     lines.push("            OpenApiBinding::new()");
     for (const entry of entries) {
         const include = `include_str!("${entry.destFilename}")`;
         if (entry.namespace != null && entry.namespace !== "") {
+            if (!SAFE_RUST_STRING_LITERAL.test(entry.namespace)) {
+                throw new Error(
+                    `Unsafe namespace "${entry.namespace}": contains characters that cannot be interpolated ` +
+                        "into a Rust string literal. Avoid double quotes, backslashes, and control characters."
+                );
+            }
             lines.push(`                .spec_under("${entry.namespace}", ${include})`);
         } else {
             lines.push(`                .spec(${include})`);
@@ -233,6 +274,9 @@ function renderMainRs(args: {
     }
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
+    }
+    if (rootGroup != null) {
+        lines.push(`                .command_namespace("${rootGroup}")`);
     }
     // Close the binding
     lines.push("        );");

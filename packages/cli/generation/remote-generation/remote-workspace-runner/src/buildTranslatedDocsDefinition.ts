@@ -10,7 +10,7 @@ import {
     transformAtPrefixImports
 } from "@fern-api/docs-resolver";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, doesPathExist, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
+import { type AbsoluteFilePath, doesPathExist, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 
@@ -49,6 +49,7 @@ export async function buildTranslatedDocsDefinition({
 }): Promise<DocsDefinition> {
     const collectedFileIds = resolver.getCollectedFileIds();
     const docsWorkspacePath = resolver.getDocsWorkspacePath();
+    const markdownFilesToPathName = resolver.getMarkdownFilesToPathName();
 
     const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
         const relPath = relative(docsWorkspacePath, filepath);
@@ -101,7 +102,7 @@ export async function buildTranslatedDocsDefinition({
                 processedMarkdown = replaceImagePathsAndUrls(
                     processedMarkdown,
                     collectedFileIds,
-                    {},
+                    markdownFilesToPathName,
                     {
                         absolutePathToMarkdownFile,
                         absolutePathToFernFolder: docsWorkspacePath

@@ -9,6 +9,7 @@ import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
 import com.seed.serverSentEvents.core.ResponseBodyReader;
+import com.seed.serverSentEvents.core.RetryInterceptor;
 import com.seed.serverSentEvents.core.SeedServerSentEventsApiException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsHttpResponse;
@@ -69,6 +70,15 @@ public class AsyncRawCompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> future =
                 new CompletableFuture<>();
@@ -88,6 +98,9 @@ public class AsyncRawCompletionsClient {
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedServerSentEventsException("Network error executing HTTP request", e));
@@ -135,6 +148,15 @@ public class AsyncRawCompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> future =
                 new CompletableFuture<>();
@@ -153,6 +175,9 @@ public class AsyncRawCompletionsClient {
                     future.completeExceptionally(new SeedServerSentEventsApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedServerSentEventsException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedServerSentEventsException("Network error executing HTTP request", e));

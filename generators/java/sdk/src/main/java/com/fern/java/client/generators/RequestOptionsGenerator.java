@@ -159,6 +159,11 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         FieldSpec.Builder timeoutTimeUnitFieldBuilder =
                 FieldSpec.builder(ParameterizedTypeName.get(TimeUnit.class), "timeoutTimeUnit", Modifier.PRIVATE);
 
+        FieldSpec.Builder maxRetriesFieldBuilder = FieldSpec.builder(
+                ParameterizedTypeName.get(ClassName.get(Optional.class), TypeName.get(Integer.class)),
+                "maxRetries",
+                Modifier.PRIVATE);
+
         // Add in the other (static) fields for request options
         createRequestOptionField(
                 "getTimeout",
@@ -171,6 +176,13 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 "getTimeoutTimeUnit",
                 timeoutTimeUnitFieldBuilder,
                 CodeBlock.of("$T.SECONDS", TimeUnit.class),
+                requestOptionsTypeSpec,
+                builderTypeSpec,
+                fields);
+        createRequestOptionField(
+                "getMaxRetries",
+                maxRetriesFieldBuilder,
+                CodeBlock.of("$T.empty()", Optional.class),
                 requestOptionsTypeSpec,
                 builderTypeSpec,
                 fields);
@@ -193,6 +205,15 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(timeUnitField.type, timeUnitField.name)
                 .addStatement("this.$L = Optional.of($L)", timeoutField.name, timeoutField.name)
                 .addStatement("this.$L = $L", timeUnitField.name, timeUnitField.name)
+                .addStatement("return this")
+                .returns(builderClassName)
+                .build());
+
+        FieldSpec maxRetriesField = maxRetriesFieldBuilder.build();
+        builderTypeSpec.addMethod(MethodSpec.methodBuilder(maxRetriesField.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(Integer.class, maxRetriesField.name)
+                .addStatement("this.$L = Optional.of($L)", maxRetriesField.name, maxRetriesField.name)
                 .addStatement("return this")
                 .returns(builderClassName)
                 .build());

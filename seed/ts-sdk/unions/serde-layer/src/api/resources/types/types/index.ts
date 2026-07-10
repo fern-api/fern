@@ -4,6 +4,7 @@ export * from "./Foo.js";
 export * from "./FooExtended.js";
 export * from "./SecondItemType.js";
 export * from "./TypeWithOptionalMap.js";
+export * from "./TypeWithOptionalReferenceMap.js";
 export * from "./Union.js";
 export * from "./UnionWithBaseProperties.js";
 export * from "./UnionWithDiscriminant.js";

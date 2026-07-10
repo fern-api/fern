@@ -71,14 +71,20 @@ export async function loadSingleNamespaceAPIWorkspace({
             const absoluteFilepathToTarget: AbsoluteFilePath | undefined =
                 definition.schema.target.length === 0
                     ? undefined
-                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
+                    : path.isAbsolute(definition.schema.target) && definition.resolvedAbsolutePath
+                      ? AbsoluteFilePath.of(definition.schema.target)
+                      : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
             if (absoluteFilepathToTarget != null) {
                 if (!(await doesPathExist(absoluteFilepathToTarget))) {
+                    const displayTarget =
+                        path.isAbsolute(definition.schema.target) && definition.resolvedAbsolutePath
+                            ? RelativeFilePath.of(path.basename(definition.schema.target))
+                            : RelativeFilePath.of(definition.schema.target);
                     return {
                         didSucceed: false,
                         failures: {
-                            [RelativeFilePath.of(definition.schema.target)]: {
+                            [displayTarget]: {
                                 type: WorkspaceLoaderFailureType.FILE_MISSING
                             }
                         }

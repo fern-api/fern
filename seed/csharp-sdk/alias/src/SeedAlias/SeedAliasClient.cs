@@ -34,6 +34,9 @@ public partial class SeedAliasClient : ISeedAliasClient
         CancellationToken cancellationToken = default
     )
     {
+        var _queryString = new SeedAlias.Core.QueryStringBuilder.Builder(capacity: 0)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
         var _headers = await new SeedAlias.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
@@ -46,6 +49,7 @@ public partial class SeedAliasClient : ISeedAliasClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
+                    QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
                 },

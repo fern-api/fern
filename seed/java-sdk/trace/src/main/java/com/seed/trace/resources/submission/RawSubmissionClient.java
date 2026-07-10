@@ -3,10 +3,12 @@
  */
 package com.seed.trace.resources.submission;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
 import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.core.SeedTraceHttpResponse;
@@ -62,6 +64,15 @@ public class RawSubmissionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -73,6 +84,8 @@ public class RawSubmissionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -109,6 +122,15 @@ public class RawSubmissionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -121,6 +143,8 @@ public class RawSubmissionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -156,6 +180,15 @@ public class RawSubmissionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -165,6 +198,8 @@ public class RawSubmissionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }
@@ -195,6 +230,15 @@ public class RawSubmissionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -206,6 +250,8 @@ public class RawSubmissionClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedTraceApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedTraceException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedTraceException("Network error executing HTTP request", e);
         }

@@ -60,7 +60,6 @@ export function buildEndpoint({
             fileContainingReference: declarationFile,
             namespace: maybeEndpointNamespace
         });
-        names.add(pathParameter.name);
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
@@ -412,6 +411,10 @@ export function buildEndpoint({
         convertedEndpoint.retries = convertEndpointRetries({
             retries: endpoint.retries
         });
+    }
+
+    if (endpoint.globalParameterIds != null && endpoint.globalParameterIds.length > 0) {
+        convertedEndpoint["global-parameters"] = endpoint.globalParameterIds;
     }
 
     // if any internal endpoints exist, then set the audience to external if this endpoint is not internal

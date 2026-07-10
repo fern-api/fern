@@ -1,6 +1,6 @@
 import {
-    makeRequest,
     isCacheNoStoreSupported,
+    makeRequest,
     resetCacheNoStoreSupported,
 } from "../../../src/core/fetcher/makeRequest";
 

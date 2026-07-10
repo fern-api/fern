@@ -1,4 +1,95 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.13.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK clients,
+        of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+        (e.g. `com.fern:sdk/0.0.1 (linux; amd64) Java/17.0.13`). The os
+        (`System.getProperty("os.name")`, lowercased), arch (`System.getProperty("os.arch")`),
+        and runtime version (`System.getProperty("java.version")`) are resolved at runtime;
+        any segment that cannot be determined is omitted rather than emitted as `null`.
+        This is gated behind a new `includePlatformHeaders` config option and is disabled by
+        default, so existing generated output is unchanged. When enabled, the header is still
+        subject to `omit-fern-headers`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies via a new
+        `ResponseDecompressionInterceptor` added to the generated `OkHttpClient`.
+        OkHttp only performs transparent gzip decompression when it adds the
+        `Accept-Encoding` header itself, so responses to requests with a
+        spec-defined `Accept-Encoding: gzip` header were previously returned as
+        raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.0
+  changelogEntry:
+    - summary: |
+        Add client builder options to customize the retry backoff schedule, alongside the existing
+        `maxRetries` option: `initialRetryDelayMillis` (default 1000), `maxRetryDelayMillis`
+        (default 60000), and `retryJitterFactor` (default 0.2). The options are available on both
+        the root client builder and `ClientOptions.Builder`.
+
+        ```java
+        Client client = Client.builder()
+            .maxRetries(3)
+            .initialRetryDelayMillis(500)
+            .maxRetryDelayMillis(30000)
+            .retryJitterFactor(0.1)
+            .build();
+        ```
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 4.11.2
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated OAuth and inferred-auth token
+        caches. `OAuthTokenSupplier` and `InferredAuthTokenSupplier` now use
+        double-checked locking with `volatile` cache fields, so the token/header
+        cache (a singleton shared across all request threads) is refreshed exactly
+        once under concurrent load (single-flight) and cached values are safely
+        published across threads. The cache-hit path stays lock-free.
+        `OAuthAuthProvider`'s existing double-checked locking is corrected by
+        marking its `accessToken`/`expiresAt` fields `volatile`. No public API
+        changes; generated code remains Java 8 compatible.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 66
+- version: 4.11.1
+  changelogEntry:
+    - summary: |
+        Fix misleading "Network error" message when deserialization fails. JSON deserialization
+        errors (e.g. unsupported date formats) are now reported as "Failed to deserialize response"
+        instead of being incorrectly wrapped as network errors.
+      type: fix
+    - summary: |
+        Add RFC 1123 (RFC 2822) date format support to DateTimeDeserializer. Dates like
+        "Thu, 07 May 2026 14:23:38 +0000" are now parsed correctly.
+      type: fix
+  createdAt: "2026-07-02"
+  irVersion: 66
+- version: 4.11.0
+  changelogEntry:
+    - summary: |
+        Fix URL building for paths with non-slash-separated suffixes (e.g.,
+        `/{Sid}.json`). The suffix is now correctly concatenated with the path
+        parameter value instead of being added as a separate path segment,
+        which previously caused an extra `/` before the suffix.
+      type: fix
+    - summary: |
+        Add per-request `maxRetries` override on `RequestOptions`. A non-null
+        per-request value overrides the client-wide `ClientOptions.maxRetries`;
+        when unset, behavior is unchanged. Mirrors the existing per-request
+        `timeout` override pattern and matches the behavior of the TypeScript,
+        Python, Go, C#, PHP, Rust, and Swift SDKs.
+      type: feat
+  createdAt: "2026-07-01"
+  irVersion: 66
 - version: 4.10.19
   changelogEntry:
     - summary: |

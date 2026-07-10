@@ -11,8 +11,10 @@ import {
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
+import { FernGlobalParametersExtension } from "../extensions/x-fern-global-parameters.js";
 import { convertGlobalHeaderOverrides } from "../utils/convertGlobalHeaderOverrides.js";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension.js";
+import { convertGlobalParametersExtension } from "../utils/convertGlobalParametersExtension.js";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1.js";
 import { WebhookConverter } from "./paths/operations/WebhookConverter.js";
 import { PathConverter } from "./paths/PathConverter.js";
@@ -48,6 +50,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.convertSecuritySchemes();
 
         this.convertGlobalHeaders();
+
+        this.convertGlobalParameters();
 
         this.convertBasePath();
 
@@ -96,6 +100,44 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             this.addGlobalHeadersToIr(globalHeaders);
             this.context.setGlobalHeaders(globalHeaders);
+        }
+    }
+
+    private convertGlobalParameters(): void {
+        const globalParametersExtension = new FernGlobalParametersExtension({
+            breadcrumbs: ["x-fern-global-parameters"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const convertedGlobalParameters = globalParametersExtension.convert();
+        if (convertedGlobalParameters != null) {
+            const globalParameters = convertGlobalParametersExtension({
+                globalParameters: convertedGlobalParameters,
+                context: this.context
+            });
+            this.ir.globalParameters = globalParameters;
+
+            // Warn about overlapping header names between x-fern-global-parameters
+            // and x-fern-global-headers — the former takes precedence.
+            // Compare on target (the actual wire header name), not the SDK name.
+            if (this.ir.headers.length > 0) {
+                const globalHeaderWireValues = new Set(
+                    this.ir.headers.map((h) => {
+                        const name = h.name;
+                        return (typeof name === "string" ? name : name.wireValue).toLowerCase();
+                    })
+                );
+                for (const param of convertedGlobalParameters) {
+                    const wireTarget = (param.target ?? param.name).toLowerCase();
+                    if (param.in === "header" && globalHeaderWireValues.has(wireTarget)) {
+                        this.context.logger.warn(
+                            `Global parameter "${param.name}" (in: header, target: "${param.target ?? param.name}") ` +
+                                `overlaps with an x-fern-global-headers entry. The x-fern-global-parameters ` +
+                                `definition takes precedence.`
+                        );
+                    }
+                }
+            }
         }
     }
 
@@ -317,6 +359,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
         const errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
+        const declaredGlobalParameterIds =
+            this.ir.globalParameters != null ? new Set(this.ir.globalParameters.map((p) => p.id)) : undefined;
+
         for (const [path, pathItem] of Object.entries(this.context.spec.paths ?? {})) {
             if (pathItem == null) {
                 continue;
@@ -327,7 +372,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 breadcrumbs: ["paths", path],
                 topLevelServers: this.context.spec.servers,
                 pathItem,
-                path
+                path,
+                declaredGlobalParameterIds
             });
             const convertedPath = pathConverter.convert();
             if (convertedPath != null) {

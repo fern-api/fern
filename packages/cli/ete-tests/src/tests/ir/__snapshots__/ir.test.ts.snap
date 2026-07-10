@@ -53,6 +53,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -70,6 +71,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -477,6 +479,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -804,6 +807,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -1074,6 +1078,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1093,6 +1098,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -1373,6 +1379,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -15458,6 +15465,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15529,6 +15537,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15629,6 +15638,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -15691,6 +15701,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -16056,6 +16067,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -16174,6 +16186,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -16191,6 +16204,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -17136,6 +17150,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -17155,6 +17170,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_nested": [
@@ -17588,6 +17604,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -18014,6 +18031,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -18063,6 +18081,7 @@ exports[`ir > {"name":"packages"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -18476,6 +18495,7 @@ exports[`ir > {"name":"packages"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -19174,6 +19194,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -19466,6 +19487,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -19485,6 +19507,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -20017,6 +20040,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -20654,6 +20678,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "internal"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -20707,6 +20732,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "sharedTypes": [
             "type_commons:Internal"
@@ -21084,6 +21110,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         ],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -22565,6 +22592,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "test"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -22618,6 +22646,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "sharedTypes": [
             "type_commons:Type"
@@ -23101,6 +23130,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         ],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -26255,6 +26285,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "internal"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -27190,6 +27221,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "test"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -28197,6 +28229,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -28512,6 +28545,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -28565,6 +28599,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         }
     ],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
@@ -30964,6 +30999,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         ],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -31245,6 +31281,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -31412,6 +31449,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -31431,6 +31469,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -31713,6 +31752,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -32114,6 +32154,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -32190,6 +32231,7 @@ exports[`ir > {"name":"variables"} 1`] = `
             "docs": "I am a variable"
         }
     ],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
@@ -32453,6 +32495,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                 }
             }
         ],
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -32936,6 +32979,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -33087,6 +33131,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "url": "https://api.example.com/.well-known/jwks.json",
                         "keyIdHeader": "x-key-id"
                     },
+                    "payloadFormat": null,
                     "timestamp": {
                         "headerName": "x-payment-timestamp",
                         "format": "ISO8601",
@@ -33134,6 +33179,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     "keySource": {
                         "type": "static"
                     },
+                    "payloadFormat": null,
                     "timestamp": null
                 },
                 "fileUploadPayload": null,
@@ -33745,6 +33791,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,

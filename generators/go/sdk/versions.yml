@@ -1,4 +1,72 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.47.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip-encoded response bodies when the `Accept-Encoding` header is set
+        explicitly on the request. Go's `net/http` only performs transparent gzip
+        decompression when it adds the `Accept-Encoding` header itself, so responses to
+        requests with a spec-defined `Accept-Encoding: gzip` header were previously
+        returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.47.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients for better runtime/platform observability. When enabled, the header
+        takes the form `{sdkName}/{sdkVersion} ({os}; {arch}) Go/{version}`, where the
+        operating system (`runtime.GOOS`), architecture (`runtime.GOARCH`), and Go
+        runtime version (`runtime.Version()`) are all resolved at runtime; unknown
+        components are omitted rather than reported as empty. This behavior is gated
+        behind a new `includePlatformHeaders` config option and is disabled by
+        default, so existing generated output is unchanged. When enabled it is still
+        subject to `omitFernHeaders` and is omitted when that is set.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.46.5
+  changelogEntry:
+    - summary: |
+        Honor the OAuth client-credentials token endpoint's declared request content-type
+        instead of unconditionally forcing `application/x-www-form-urlencoded`. Token
+        endpoints that consume `application/json` now send `Content-Type: application/json`,
+        while form-urlencoded remains the default when the spec does not declare a content-type
+        (per RFC 6749 §4.4.2). Previously a JSON token endpoint received an HTTP 415 that
+        surfaced as a generic 401.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 1.46.4
+  changelogEntry:
+    - summary: |
+        Align SSE stream auto-reconnection with the reference TypeScript implementation:
+        (1) Do not reconnect when no stream terminator is configured (prevents reconnect
+        storms on clean EOF). (2) Apply a default 1 s minimum backoff between reconnects
+        when the server sends no `retry:` directive. (3) Only commit `Last-Event-ID` on
+        dispatched events (blank-line boundary), not on parsed-but-undispatched ids from
+        incomplete events dropped mid-stream — fixes silent event loss on reconnect.
+        (4) Reset the consecutive-reconnect-attempt counter on progress (each yielded
+        event). (5) Gracefully handle failed/nil-body reconnect responses by consuming
+        an attempt and retrying instead of surfacing the error immediately. (6) Do not
+        reconnect when no event ID has been dispatched — reconnecting with an empty
+        Last-Event-ID would replay the entire stream (duplicate events). (7) Guard
+        against nil *http.Response from reconnectFn to prevent nil-pointer panics.
+        (8) Close response body when reconnectFn returns both a response and an error.
+      type: fix
+  createdAt: "2026-07-05"
+  irVersion: 66
+- version: 1.46.3
+  changelogEntry:
+    - summary: |
+        Generated `raw_client.go` now sets `ResponseIsOptional: true` in `CallParams` for endpoints
+        whose success response body is optional — e.g. an operation that returns both a body-bearing
+        2xx and a 204 No Content. Previously the field was never emitted, so a real 204 (empty body)
+        hit `io.EOF` in the caller and surfaced as an error instead of a successful, nil-bodied
+        response.
+      type: fix
+  createdAt: "2026-07-03"
+  irVersion: 66
 - version: 1.46.2
   changelogEntry:
     - summary: |

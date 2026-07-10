@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedStreamingClient } from "@fern/streaming-parameter";
 
-const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedStreamingClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.dummy.generate({
     stream: false,
     num_events: 5

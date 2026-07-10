@@ -1,0 +1,519 @@
+{
+  "apiName": "Multi Content Type Examples",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "graphqlOperations": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_clients",
+    ],
+    "types": [
+      "ClientRequest",
+      "ClientResponse",
+      "Client",
+      "ClientWithId",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_clients": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": "Plain JSON client (application/json)",
+              "path": "/clients",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "client": {
+                  "email": "contact@acme.com",
+                  "name": "Acme Corp",
+                },
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "client": {
+                    "email": "contact@acme.com",
+                    "name": "Acme Corp",
+                  },
+                },
+              },
+              "responseBody": {
+                "client": {
+                  "email": "contact@acme.com",
+                  "id": "client-123",
+                  "name": "Acme Corp",
+                },
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "client": {
+                    "email": "contact@acme.com",
+                    "id": "client-123",
+                    "name": "Acme Corp",
+                  },
+                },
+              },
+              "responseStatusCode": 201,
+            },
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": "JSON-LD client with linked data context (application/ld+json)",
+              "path": "/clients",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "@context": "urn:example:governance-model#",
+                "client": {
+                  "@type": "Client",
+                  "email": "contact@acme.com",
+                  "name": "Acme Corp",
+                },
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "@context": "urn:example:governance-model#",
+                  "client": {
+                    "@type": "Client",
+                    "email": "contact@acme.com",
+                    "name": "Acme Corp",
+                  },
+                },
+              },
+              "responseBody": {
+                "@context": "urn:example:governance-model#",
+                "client": {
+                  "@type": "Client",
+                  "email": "contact@acme.com",
+                  "id": "client-123",
+                  "name": "Acme Corp",
+                },
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "@context": "urn:example:governance-model#",
+                  "client": {
+                    "@type": "Client",
+                    "email": "contact@acme.com",
+                    "id": "client-123",
+                    "name": "Acme Corp",
+                  },
+                },
+              },
+              "responseStatusCode": 201,
+            },
+          ],
+          "headers": [],
+          "id": "create",
+          "includeInApiExplorer": undefined,
+          "method": "POST",
+          "multiAuth": undefined,
+          "name": "Create client",
+          "originalEndpointId": "endpoint_clients.create",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/clients",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "type": {
+              "contentType": "application/json",
+              "description": undefined,
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ClientRequest",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "description": undefined,
+                "type": {
+                  "contentType": "application/json",
+                  "description": undefined,
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "ClientRequest",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "type": {
+                  "contentType": "application/ld+json",
+                  "description": undefined,
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "ClientRequest",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+          },
+          "response": {
+            "description": "Client created successfully",
+            "isWildcard": undefined,
+            "statusCode": 201,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "ClientResponse",
+              },
+            },
+          },
+          "responseHeaders": [],
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Client created successfully",
+                "isWildcard": undefined,
+                "statusCode": 201,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "ClientResponse",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+          "subtitle": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {
+              "JSON-LD client with linked data context (application/ld+json)": {
+                "codeSamples": undefined,
+                "contentType": "application/ld+json",
+                "displayName": "JSON-LD client with linked data context (application/ld+json)",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/clients",
+                  },
+                  "environment": undefined,
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "@context": "urn:example:governance-model#",
+                    "client": {
+                      "@type": "Client",
+                      "email": "contact@acme.com",
+                      "name": "Acme Corp",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "@context": "urn:example:governance-model#",
+                      "client": {
+                        "@type": "Client",
+                        "email": "contact@acme.com",
+                        "id": "client-123",
+                        "name": "Acme Corp",
+                      },
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+              "Plain JSON client (application/json)": {
+                "codeSamples": undefined,
+                "contentType": "application/json",
+                "displayName": "Plain JSON client (application/json)",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/clients",
+                  },
+                  "environment": undefined,
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "client": {
+                      "email": "contact@acme.com",
+                      "name": "Acme Corp",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "client": {
+                        "email": "contact@acme.com",
+                        "id": "client-123",
+                        "name": "Acme Corp",
+                      },
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+            },
+          },
+        },
+      ],
+      "graphqlOperations": [],
+      "name": "clients",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_clients",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "Client": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Client",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ClientRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ClientRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "client",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "Client",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ClientResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ClientResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "client",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ClientWithId",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ClientWithId": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ClientWithId",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

@@ -256,6 +256,7 @@ export async function publishDocsViaLedger({
     organization,
     domain,
     basepath,
+    basepathAware,
     previewId,
     customDomains,
     git,
@@ -274,6 +275,8 @@ export async function publishDocsViaLedger({
     organization: string;
     domain: string;
     basepath: string | undefined;
+    /** When true, store the manifest at a basepath-scoped S3 key so multiple sites can coexist on one host. */
+    basepathAware?: boolean;
     previewId: string | undefined;
     customDomains?: string[];
     git?: DocsPublishGitInput;
@@ -337,6 +340,7 @@ export async function publishDocsViaLedger({
         orgId: organization,
         domain,
         basepath: basepath ?? "",
+        ...(basepathAware && { basepathAware: true }),
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,

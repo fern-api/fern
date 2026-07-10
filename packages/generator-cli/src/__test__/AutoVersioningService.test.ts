@@ -287,6 +287,123 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain("version.go");
     });
 
+    // Regression coverage for the Go SDK being flagged as a breaking change on a no-op
+    // regeneration. The freshly generated Go code carries the magic placeholder version (major 0,
+    // so no /vN suffix), while the previously published SDK has /vN on its module path and every
+    // import. git groups all deletions before all additions in an import block, so the old
+    // near-neighbour pairing only stripped the FIRST import's suffix churn and leaked the rest to
+    // the AI analyzer, which then misclassified the diff as breaking. The whole block must be
+    // stripped so nothing reaches the analyzer.
+    it("testCleanDiffForAI_stripsGoModulePathSuffixChangesInGroupedImportBlock", () => {
+        const diff =
+            "diff --git a/client/client.go b/client/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client/client.go\n" +
+            "+++ b/client/client.go\n" +
+            "@@ -1,9 +1,9 @@\n" +
+            " package client\n" +
+            " import (\n" +
+            '-\tcore "github.com/anduril/lattice-sdk-go/v4/core"\n' +
+            '-\tinternal "github.com/anduril/lattice-sdk-go/v4/internal"\n' +
+            '-\toption "github.com/anduril/lattice-sdk-go/v4/option"\n' +
+            '+\tcore "github.com/anduril/lattice-sdk-go/core"\n' +
+            '+\tinternal "github.com/anduril/lattice-sdk-go/internal"\n' +
+            '+\toption "github.com/anduril/lattice-sdk-go/option"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // No suffix churn should survive — the whole file section collapses to nothing.
+        expect(cleaned).not.toContain("/v4/");
+        expect(cleaned).not.toContain('core "github.com/anduril/lattice-sdk-go/core"');
+        expect(cleaned).not.toContain('internal "github.com/anduril/lattice-sdk-go/internal"');
+        expect(cleaned).not.toContain('option "github.com/anduril/lattice-sdk-go/option"');
+        expect(cleaned).not.toContain("client.go");
+    });
+
+    it("testCleanDiffForAI_stripsGoModuleDirectiveSuffixButKeepsRealChanges", () => {
+        const diff =
+            "diff --git a/go.mod b/go.mod\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/go.mod\n" +
+            "+++ b/go.mod\n" +
+            "@@ -1,4 +1,4 @@\n" +
+            "-module github.com/anduril/lattice-sdk-go/v4\n" +
+            "+module github.com/anduril/lattice-sdk-go\n" +
+            " go 1.21\n" +
+            "-require github.com/pkg/errors v0.9.1\n" +
+            "+require github.com/pkg/errors v0.10.0\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // The /v4 module-directive suffix churn is stripped...
+        expect(cleaned).not.toContain("module github.com/anduril/lattice-sdk-go/v4");
+        expect(cleaned).not.toContain("+module github.com/anduril/lattice-sdk-go\n");
+        // ...but a genuine dependency change on a github.com line is preserved.
+        expect(cleaned).toContain("-require github.com/pkg/errors v0.9.1");
+        expect(cleaned).toContain("+require github.com/pkg/errors v0.10.0");
+    });
+
+    it("testCleanDiffForAI_preservesGenuineGoImportAdditionAlongsideSuffixChurn", () => {
+        const diff =
+            "diff --git a/client/client.go b/client/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client/client.go\n" +
+            "+++ b/client/client.go\n" +
+            "@@ -1,7 +1,7 @@\n" +
+            " import (\n" +
+            '-\tcore "github.com/anduril/lattice-sdk-go/v4/core"\n' +
+            '-\tinternal "github.com/anduril/lattice-sdk-go/v4/internal"\n' +
+            '+\tcore "github.com/anduril/lattice-sdk-go/core"\n' +
+            '+\tinternal "github.com/anduril/lattice-sdk-go/internal"\n' +
+            '+\tnewpkg "github.com/anduril/lattice-sdk-go/newpkg"\n' +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // Suffix-only churn is gone...
+        expect(cleaned).not.toContain("/v4/");
+        expect(cleaned).not.toContain('core "github.com/anduril/lattice-sdk-go/core"');
+        expect(cleaned).not.toContain('internal "github.com/anduril/lattice-sdk-go/internal"');
+        // ...but the genuinely new import (no matching suffix-bearing deletion) survives.
+        expect(cleaned).toContain('+\tnewpkg "github.com/anduril/lattice-sdk-go/newpkg"');
+    });
+
+    // The generated Go SDK also embeds its own module path (with the `/vN` suffix) mid-line as the
+    // `X-Fern-SDK-Name` header value, where the closing quote is followed by more characters (`)`),
+    // not end-of-line. The suffix must still be stripped there so this no-op churn does not reach
+    // the AI analyzer. Regression for a gap found during end-to-end testing against a real Go SDK.
+    it("testCleanDiffForAI_stripsGoModulePathSuffixInMidLineHeaderValue", () => {
+        const diff =
+            "diff --git a/core/request_option.go b/core/request_option.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/core/request_option.go\n" +
+            "+++ b/core/request_option.go\n" +
+            "@@ -52,3 +52,3 @@ func (r *RequestOptions) cloneHeader() http.Header {\n" +
+            '-\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go/v4")\n' +
+            '+\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go")\n' +
+            " \treturn headers\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // Both sides of the header-value suffix churn are removed — nothing reaches the analyzer.
+        expect(cleaned).not.toContain("/v4");
+        expect(cleaned).not.toContain('"github.com/anduril/lattice-sdk-go"');
+        expect(cleaned).not.toContain("request_option.go");
+    });
+
     it("testExtractPreviousVersion_invalidVersionFormat_returnsUndefined", () => {
         const diff =
             "diff --git a/config.txt b/config.txt\n" +

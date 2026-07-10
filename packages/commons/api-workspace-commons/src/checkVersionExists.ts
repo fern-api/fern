@@ -51,6 +51,56 @@ export function getPackageNameFromGeneratorConfig(
     return undefined;
 }
 
+/**
+ * Resolves the user-agent template from the raw generator configuration.
+ *
+ * When set, this template is interpolated and used as the `User-Agent` header
+ * value. Supported placeholders (resolved statically at generation time):
+ *
+ *   {packageName}      — published package name from output config
+ *   {version}          — SDK/package version
+ *   {language}         — generation language (python, typescript, go, …)
+ *   {generatorVersion} — Fern generator version
+ *   {organization}     — organization from fern.config.json
+ *   {apiName}          — API name from the root API definition
+ *
+ * Default (when absent): `{packageName}/{version}`
+ *
+ * Lookup: `config["user-agent"]`
+ */
+export function getUserAgentTemplateFromGeneratorConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): string | undefined {
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const template = (generatorInvocation.raw.config as { "user-agent"?: string })["user-agent"];
+        if (template != null) {
+            return template;
+        }
+    }
+    return undefined;
+}
+
+/** Config keys consumed by the CLI and not forwarded to generators. */
+const CLI_ONLY_CONFIG_KEYS: ReadonlySet<string> = new Set(["user-agent"]);
+
+/**
+ * Returns a copy of the generator's custom config with CLI-only keys removed.
+ * Generators validate their config strictly; CLI-consumed keys like `user-agent`
+ * must be stripped before forwarding.
+ */
+export function stripCliConfigKeys(config: unknown): unknown {
+    if (typeof config !== "object" || config === null) {
+        return config;
+    }
+    const filtered: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(config)) {
+        if (!CLI_ONLY_CONFIG_KEYS.has(key)) {
+            filtered[key] = value;
+        }
+    }
+    return filtered;
+}
+
 // ─── Constants ──────────────────────────────────────────────────────
 
 /** Timeout for registry HTTP calls (ms). Prevents slow registries from delaying generation start. */
