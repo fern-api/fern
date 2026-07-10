@@ -151,7 +151,7 @@ func (r *Retrier) run(
 			errorDecoder,
 			maxRetryAttempts,
 			retryAttempt+1,
-			decodeError(response, errorDecoder),
+			decodeError(response, response.Body, errorDecoder),
 		)
 	}
 

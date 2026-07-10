@@ -134,10 +134,14 @@ func (s *Streamer[T]) streamOnce(
 		return nil, nil, err
 	}
 
-	if err := decompressResponse(resp); err != nil {
+	body, err := decompressedResponseBody(resp)
+	if err != nil {
 		defer func() { _ = resp.Body.Close() }()
 		return nil, nil, err
 	}
+	// The response is handed off to the stream, so the (possibly wrapped)
+	// body must replace resp.Body; closing it also closes the original body.
+	resp.Body = body
 
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
@@ -148,7 +152,7 @@ func (s *Streamer[T]) streamOnce(
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		defer func() { _ = resp.Body.Close() }()
-		return nil, nil, decodeError(resp, params.ErrorDecoder)
+		return nil, nil, decodeError(resp, resp.Body, params.ErrorDecoder)
 	}
 
 	var opts []core.StreamOption
