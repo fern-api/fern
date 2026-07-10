@@ -246,6 +246,7 @@ public final class ClientOptions {
 
             Logger logger = Logger.from(this.logging);
             httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
+            httpClientBuilder.addInterceptor(new ResponseDecompressionInterceptor());
 
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
