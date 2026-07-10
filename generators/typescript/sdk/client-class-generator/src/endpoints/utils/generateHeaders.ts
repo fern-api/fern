@@ -81,13 +81,47 @@ export function generateHeaders({
         });
     }
 
+    // The idempotency-key auto-generation behavior (whether it is enabled, which HTTP methods
+    // are eligible, and the wire header name) is resolved once by the CLI and carried in the IR
+    // so every generator applies it identically instead of re-deriving it from its own config.
+    const idempotencyKeyGeneration = intermediateRepresentation.sdkConfig.idempotencyKeyGeneration;
+    const idempotencyKeyHeaderName = idempotencyKeyGeneration?.headerName ?? "Idempotency-Key";
+    const autoGenerateIdempotencyKey =
+        idempotencyKeyGeneration != null && idempotencyKeyGeneration.methods.includes(endpoint.method);
+
+    let wrappedDeclaredIdempotencyKey = false;
+
     if (endpoint.idempotent) {
         for (const header of idempotencyHeaders) {
-            elements.push({
-                header: getWireValue(header.name),
-                value: getValueExpressionForIdempotencyHeader({ header, context })
-            });
+            const wireValue = getWireValue(header.name);
+            let value = getValueExpressionForIdempotencyHeader({ header, context });
+            if (autoGenerateIdempotencyKey && wireValue.toLowerCase() === idempotencyKeyHeaderName.toLowerCase()) {
+                context.importsManager.addImportFromRoot("core/idempotency", {
+                    namedImports: ["generateIdempotencyKey"]
+                });
+                value = ts.factory.createBinaryExpression(
+                    value,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createCallExpression(
+                        ts.factory.createIdentifier("generateIdempotencyKey"),
+                        undefined,
+                        []
+                    )
+                );
+                wrappedDeclaredIdempotencyKey = true;
+            }
+            elements.push({ header: wireValue, value });
         }
+    }
+
+    if (autoGenerateIdempotencyKey && !wrappedDeclaredIdempotencyKey) {
+        context.importsManager.addImportFromRoot("core/idempotency", {
+            namedImports: ["generateIdempotencyKey"]
+        });
+        elements.push({
+            header: idempotencyKeyHeaderName,
+            value: ts.factory.createCallExpression(ts.factory.createIdentifier("generateIdempotencyKey"), undefined, [])
+        });
     }
 
     elements.push(...getOverridableRootHeaders({ context, intermediateRepresentation }));

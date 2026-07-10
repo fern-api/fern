@@ -16,6 +16,7 @@ export namespace AsIsManager {
         generatorType: "sdk" | "model" | "express";
         formatter: "prettier" | "biome" | "oxfmt" | "none";
         linter: "biome" | "oxlint" | "none";
+        autoGenerateIdempotencyKey: boolean;
     }
 }
 
@@ -27,6 +28,7 @@ export class AsIsManager {
     private readonly generatorType: "sdk" | "model" | "express";
     private readonly formatter: "prettier" | "biome" | "oxfmt" | "none";
     private readonly linter: "biome" | "oxlint" | "none";
+    private readonly autoGenerateIdempotencyKey: boolean;
 
     constructor({
         useBigInt,
@@ -35,7 +37,8 @@ export class AsIsManager {
         relativeTestPath,
         generatorType,
         formatter,
-        linter
+        linter,
+        autoGenerateIdempotencyKey
     }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
@@ -44,6 +47,7 @@ export class AsIsManager {
         this.generatorType = generatorType;
         this.formatter = formatter;
         this.linter = linter;
+        this.autoGenerateIdempotencyKey = autoGenerateIdempotencyKey;
     }
 
     /**
@@ -55,6 +59,7 @@ export class AsIsManager {
             oxfmtrcJson: { "oxfmtrc.json": ".oxfmtrc.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
+                idempotency: { "core/idempotency.ts": `${this.relativePackagePath}/core/idempotency.ts` },
                 mergeAdditionalBodyParameters: { "core/requestBody.ts": `${this.relativePackagePath}/core/requestBody.ts` },
                 json: {
                     vanilla: { "core/json.vanilla.ts": `${this.relativePackagePath}/core/json.ts` },
@@ -87,6 +92,9 @@ export class AsIsManager {
         }
         if (this.generatorType === "sdk" || this.generatorType === "model") {
             filesToCopy.push(asIsFiles.core.mergeHeaders);
+            if (this.autoGenerateIdempotencyKey) {
+                filesToCopy.push(asIsFiles.core.idempotency);
+            }
             filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
             if (this.useBigInt) {
                 filesToCopy.push(asIsFiles.tests.bigintSetup);
