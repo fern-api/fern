@@ -273,8 +273,8 @@ func newFormURLEncodedRequestBody(request interface{}, bodyProperties map[string
 // with a gzip reader when the server responds with a gzip-encoded body that
 // the underlying HTTP client did not transparently decompress (e.g. when an
 // Accept-Encoding header is set explicitly on the request). The response is
-// not modified; closing the returned body also closes resp.Body.
-func decompressedResponseBody(resp *http.Response) (io.ReadCloser, error) {
+// not modified; closing resp.Body remains the caller's responsibility.
+func decompressedResponseBody(resp *http.Response) (io.Reader, error) {
 	if resp.Uncompressed || resp.Body == nil || resp.Body == http.NoBody {
 		return resp.Body, nil
 	}
@@ -289,23 +289,21 @@ func decompressedResponseBody(resp *http.Response) (io.ReadCloser, error) {
 		}
 		return nil, err
 	}
-	return &gzipReadCloser{gzipReader: gzipReader, body: resp.Body}, nil
+	return &gunzipReader{gzipReader: gzipReader}, nil
 }
 
 // maxDecompressedBodySize caps the number of decompressed bytes read from a
 // gzip response body to guard against decompression bombs.
 const maxDecompressedBodySize = 1 << 30 // 1 GiB
 
-// gzipReadCloser reads decompressed content from the gzip reader and
-// closes both the gzip reader and the underlying response body. It limits
+// gunzipReader reads decompressed content from the gzip reader, limiting
 // the total number of decompressed bytes to maxDecompressedBodySize.
-type gzipReadCloser struct {
+type gunzipReader struct {
 	gzipReader *gzip.Reader
-	body       io.ReadCloser
 	read       int64
 }
 
-func (g *gzipReadCloser) Read(p []byte) (int, error) {
+func (g *gunzipReader) Read(p []byte) (int, error) {
 	if g.read >= maxDecompressedBodySize {
 		return 0, fmt.Errorf("decompressed response body exceeds %d bytes", int64(maxDecompressedBodySize))
 	}
@@ -315,14 +313,6 @@ func (g *gzipReadCloser) Read(p []byte) (int, error) {
 		return n, fmt.Errorf("decompressed response body exceeds %d bytes", int64(maxDecompressedBodySize))
 	}
 	return n, err
-}
-
-func (g *gzipReadCloser) Close() error {
-	gzipErr := g.gzipReader.Close()
-	if bodyErr := g.body.Close(); bodyErr != nil {
-		return bodyErr
-	}
-	return gzipErr
 }
 
 // decodeError decodes the error from the given HTTP response, reading the

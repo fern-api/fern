@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/url"
 
@@ -139,9 +140,15 @@ func (s *Streamer[T]) streamOnce(
 		defer func() { _ = resp.Body.Close() }()
 		return nil, nil, err
 	}
-	// The response is handed off to the stream, so the (possibly wrapped)
-	// body must replace resp.Body; closing it also closes the original body.
-	resp.Body = body
+	if body != io.Reader(resp.Body) {
+		// The response is handed off to the stream, which reads and closes
+		// resp.Body, so the decompressing reader must replace it while
+		// preserving the original body's Close.
+		resp.Body = struct {
+			io.Reader
+			io.Closer
+		}{body, resp.Body}
+	}
 
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
