@@ -86,7 +86,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import {
-    applyOrgFloorToVersion,
+    applyOrgBoundsToVersion,
     getOrgConfig,
     setOrgCliVersion,
     unsetOrgCliVersion
@@ -335,9 +335,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         } else {
             intendedVersion = projectConfig.version;
         }
-        // Enforce the org-level minimum CLI version floor (if set). Fails open
-        // to the resolved version when the floor is unset or unreachable.
-        return await applyOrgFloorToVersion({
+        // Clamp to the org-level CLI version bounds (floor/ceiling) if set. Fails
+        // open to the resolved version when bounds are unset or unreachable.
+        return await applyOrgBoundsToVersion({
             cliContext,
             orgId: projectConfig.organization,
             intendedVersion
@@ -3786,16 +3786,32 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             "Set an org-level config value (admin only)",
             (y) =>
                 y
-                    .positional("key", { type: "string", demandOption: true })
+                    .positional("key", {
+                        type: "string",
+                        demandOption: true,
+                        choices: ["cli-version", "cli-version-min", "cli-version-max"],
+                        description:
+                            "cli-version pins an exact version; cli-version-min sets a floor; cli-version-max sets a ceiling"
+                    })
                     .positional("value", { type: "string", demandOption: true })
                     .option("org", { type: "string", description: "Override org ID" }),
             async (argv) => {
                 cliContext.instrumentPostHogEvent({ command: "fern org set" });
-                if (argv.key !== "cli-version") {
-                    cliContext.failAndThrow(`Unknown config key "${argv.key}". Supported: cli-version`);
-                    return;
+                switch (argv.key) {
+                    case "cli-version":
+                        await setOrgCliVersion({ cliContext, min: argv.value, max: argv.value, org: argv.org });
+                        break;
+                    case "cli-version-min":
+                        await setOrgCliVersion({ cliContext, min: argv.value, org: argv.org });
+                        break;
+                    case "cli-version-max":
+                        await setOrgCliVersion({ cliContext, max: argv.value, org: argv.org });
+                        break;
+                    default:
+                        cliContext.failAndThrow(
+                            `Unknown config key "${argv.key}". Supported: cli-version, cli-version-min, cli-version-max`
+                        );
                 }
-                await setOrgCliVersion({ cliContext, version: argv.value, org: argv.org });
             }
         );
 
@@ -3817,15 +3833,31 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             "Remove an org-level config value (admin only)",
             (y) =>
                 y
-                    .positional("key", { type: "string", demandOption: true })
+                    .positional("key", {
+                        type: "string",
+                        demandOption: true,
+                        choices: ["cli-version", "cli-version-min", "cli-version-max"],
+                        description:
+                            "cli-version clears both bounds; cli-version-min clears the floor; cli-version-max clears the ceiling"
+                    })
                     .option("org", { type: "string", description: "Override org ID" }),
             async (argv) => {
                 cliContext.instrumentPostHogEvent({ command: "fern org unset" });
-                if (argv.key !== "cli-version") {
-                    cliContext.failAndThrow(`Unknown config key "${argv.key}". Supported: cli-version`);
-                    return;
+                switch (argv.key) {
+                    case "cli-version":
+                        await unsetOrgCliVersion({ cliContext, org: argv.org, field: "all" });
+                        break;
+                    case "cli-version-min":
+                        await unsetOrgCliVersion({ cliContext, org: argv.org, field: "min" });
+                        break;
+                    case "cli-version-max":
+                        await unsetOrgCliVersion({ cliContext, org: argv.org, field: "max" });
+                        break;
+                    default:
+                        cliContext.failAndThrow(
+                            `Unknown config key "${argv.key}". Supported: cli-version, cli-version-min, cli-version-max`
+                        );
                 }
-                await unsetOrgCliVersion({ cliContext, org: argv.org });
             }
         );
 

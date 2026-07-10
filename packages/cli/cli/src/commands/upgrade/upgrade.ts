@@ -14,7 +14,7 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
-import { fetchOrgCliVersionMin } from "../org/orgConfig.js";
+import { fetchOrgCliVersionBounds } from "../org/orgConfig.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -375,15 +375,15 @@ export async function upgrade({
         }
     }
 
-    // Apply org-level CLI version floor (if set)
+    // Apply org-level CLI version bounds (floor/ceiling), if set
     if (!isLocalDev) {
         try {
-            const floorResult = await applyOrgVersionFloor({
+            const boundsResult = await applyOrgVersionBounds({
                 cliContext,
                 resolvedTargetVersion
             });
-            if (floorResult != null) {
-                resolvedTargetVersion = floorResult;
+            if (boundsResult != null) {
+                resolvedTargetVersion = boundsResult;
             }
         } catch {
             // Silently ignore org config failures (e.g. network errors, missing auth)
@@ -519,11 +519,14 @@ export async function upgrade({
 }
 
 /**
- * Checks the org-level CLI version floor and returns a version that satisfies it.
- * If the org has a floor and the resolved target is below it, bumps to the floor.
- * Silently falls back if the org config endpoint is unreachable.
+ * Clamps the resolved upgrade target into the org-level CLI version bounds.
+ * Bumps up to the floor (`min`) and caps down to the ceiling (`max`). Silently
+ * falls back if the org config endpoint is unreachable. The ceiling cap is only
+ * applied when it still produces an upgrade ahead of the current version — if
+ * the project already runs past the ceiling, the version-redirection layer
+ * enforces the cap at runtime instead.
  */
-async function applyOrgVersionFloor({
+async function applyOrgVersionBounds({
     cliContext,
     resolvedTargetVersion
 }: {
@@ -551,36 +554,46 @@ async function applyOrgVersionFloor({
         return resolvedTargetVersion;
     }
 
-    const orgFloor = await fetchOrgCliVersionMin({ cliContext, orgId, token: token.value });
-    if (orgFloor == null) {
+    const { min, max } = await fetchOrgCliVersionBounds({ cliContext, orgId, token: token.value });
+    if (min == null && max == null) {
         return resolvedTargetVersion;
     }
 
-    if (resolvedTargetVersion == null) {
-        // No upgrade was resolved via latest — check if current version is below floor
+    const currentVersion = cliContext.environment.packageVersion;
+    let target = resolvedTargetVersion;
+
+    // Floor: bump up to the minimum.
+    if (min != null) {
         try {
-            if (isVersionAhead(orgFloor, cliContext.environment.packageVersion)) {
+            if (target == null) {
+                if (isVersionAhead(min, currentVersion)) {
+                    cliContext.logger.info(
+                        `Org "${orgId}" requires minimum CLI version ${chalk.green(min)}. Upgrading.`
+                    );
+                    target = min;
+                }
+            } else if (isVersionAhead(min, target)) {
                 cliContext.logger.info(
-                    `Org "${orgId}" requires minimum CLI version ${chalk.green(orgFloor)}. Upgrading.`
+                    `Org "${orgId}" requires minimum CLI version ${chalk.green(min)} (resolved ${target}).`
                 );
-                return orgFloor;
+                target = min;
             }
         } catch {
             // version comparison failed
         }
-        return resolvedTargetVersion;
     }
 
-    // If resolved target is below the org floor, bump to floor
-    try {
-        if (isVersionAhead(orgFloor, resolvedTargetVersion)) {
-            cliContext.logger.info(
-                `Org "${orgId}" requires minimum CLI version ${chalk.green(orgFloor)} (resolved ${resolvedTargetVersion}).`
-            );
-            return orgFloor;
+    // Ceiling: cap down to the maximum (only when it still upgrades from current).
+    if (max != null && target != null) {
+        try {
+            if (isVersionAhead(target, max) && !isVersionAhead(currentVersion, max)) {
+                cliContext.logger.info(`Org "${orgId}" caps CLI version at ${chalk.green(max)} (resolved ${target}).`);
+                target = max;
+            }
+        } catch {
+            // version comparison failed
         }
-    } catch {
-        // version comparison failed
     }
-    return resolvedTargetVersion;
+
+    return target;
 }
