@@ -163,14 +163,19 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             httpEndpoint.getMethod().toString(),
                             variables.getOkhttpRequestBodyName());
             if (clientGeneratorContext.isEndpointSecurity()) {
-                builder.add(".headers($T.of(_headers))\n", Headers.class);
+                builder.add(
+                        ".headers($T.of($L))\n",
+                        Headers.class,
+                        maybeWrapHeadersWithIdempotencyKey(CodeBlock.of("_headers")));
             } else {
                 builder.add(
-                        ".headers($T.of($L.$L($L)))\n",
+                        ".headers($T.of($L))\n",
                         Headers.class,
-                        clientOptionsMember.name,
-                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                        maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                                "$L.$L($L)",
+                                clientOptionsMember.name,
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
             }
             if (sendContentType) {
                 sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
@@ -292,14 +297,19 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             httpEndpoint.getMethod().toString(),
                             variables.getOkhttpRequestBodyName());
             if (clientGeneratorContext.isEndpointSecurity()) {
-                builder.add(".headers($T.of(_headers))\n", Headers.class);
+                builder.add(
+                        ".headers($T.of($L))\n",
+                        Headers.class,
+                        maybeWrapHeadersWithIdempotencyKey(CodeBlock.of("_headers")));
             } else {
                 builder.add(
-                        ".headers($T.of($L.$L($L)))\n",
+                        ".headers($T.of($L))\n",
                         Headers.class,
-                        clientOptionsMember.name,
-                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                        maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                                "$L.$L($L)",
+                                clientOptionsMember.name,
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
             }
             if (sendContentType) {
                 builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);

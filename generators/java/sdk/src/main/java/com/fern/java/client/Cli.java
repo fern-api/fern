@@ -40,6 +40,7 @@ import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
 import com.fern.java.client.generators.HttpResponseGenerator;
 import com.fern.java.client.generators.ILoggerGenerator;
+import com.fern.java.client.generators.IdempotencyUtilsGenerator;
 import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
 import com.fern.java.client.generators.LogConfigGenerator;
@@ -382,6 +383,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         ResponseBodyReaderGenerator responseBodyReaderGenerator = new ResponseBodyReaderGenerator(context);
         this.addGeneratedFile(responseBodyReaderGenerator.generateFile());
+
+        if (context.getIr().getSdkConfig().getIdempotencyKeyGeneration().isPresent()) {
+            IdempotencyUtilsGenerator idempotencyUtilsGenerator = new IdempotencyUtilsGenerator(context);
+            this.addGeneratedFile(idempotencyUtilsGenerator.generateFile());
+        }
 
         ClientOptionsGenerator clientOptionsGenerator =
                 new ClientOptionsGenerator(context, generatedEnvironmentsClass, generatedRequestOptions);
