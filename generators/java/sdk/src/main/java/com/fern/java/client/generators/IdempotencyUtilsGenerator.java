@@ -38,7 +38,7 @@ public final class IdempotencyUtilsGenerator extends AbstractFileGenerator {
                     .contents(contents)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read IdempotencyUtils.java");
+            throw new RuntimeException("Failed to read IdempotencyUtils.java", e);
         }
     }
 }
