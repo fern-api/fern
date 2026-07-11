@@ -9,6 +9,5 @@
     configured methods (defaulting to `POST` and `PUT`) with a freshly generated UUIDv4
     (`SecureRandom.uuid`) at request time. For endpoints that declare a matching idempotency
     header the caller-supplied value wins and the generated UUID is only the fallback. When the
-    IR does not enable the feature, generated output is unchanged. The generator now consumes
-    IR v67.
+    IR does not enable the feature, generated output is unchanged.
   type: feat
