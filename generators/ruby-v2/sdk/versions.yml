@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.15.1
+  changelogEntry:
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
 - version: 1.15.0
   changelogEntry:
     - summary: |
