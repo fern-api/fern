@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.13.3
+  changelogEntry:
+    - summary: |
+        Upgrade the Java SDK generator to consume IR v67. The generated SDK output is unchanged.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
 - version: 4.13.2
   changelogEntry:
     - summary: |
@@ -17,7 +24,7 @@
         callers such as `.scope("value")` continue to compile unchanged.
       type: fix
   createdAt: "2026-07-10"
-  irVersion: 66
+  irVersion: 67
 - version: 4.13.1
   changelogEntry:
     - summary: |

@@ -119,6 +119,49 @@ def resolve_name(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
     return _resolve_string_name(name_or_str)
 
 
+_LEADING_UNDERSCORES = re.compile(r"^(_+)")
+_TRAILING_UNDERSCORES = re.compile(r"(_+)$")
+
+
+def _underscore_affixes(original_name: str) -> tuple[str, str]:
+    leading_match = _LEADING_UNDERSCORES.match(original_name)
+    leading = leading_match.group(1) if leading_match is not None else ""
+    core = original_name[len(leading) :]
+    trailing_match = _TRAILING_UNDERSCORES.search(core)
+    trailing = trailing_match.group(1) if trailing_match is not None else ""
+    return leading, trailing
+
+
+def resolve_name_preserving_underscores(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
+    """Like ``resolve_name`` but re-attaches leading/trailing underscores from the
+    original name that the casing functions would otherwise strip.
+
+    This is scoped to namespace/module names (subpackage names and FernFilepath
+    parts derived from ``x-fern-sdk-group-name``) so that a group named ``_agents``
+    generates a private ``_agents`` module. It is intentionally NOT applied to
+    parameter, field, or property names, whose casing must stay unchanged to avoid
+    breaking existing SDK method signatures.
+    """
+    resolved = resolve_name(name_or_str)
+    leading, trailing = _underscore_affixes(get_original_name(name_or_str))
+    if not leading and not trailing:
+        return resolved
+
+    def reattach(value: ir_types.SafeAndUnsafeString) -> ir_types.SafeAndUnsafeString:
+        return ir_types.SafeAndUnsafeString(
+            safe_name=f"{leading}{value.safe_name}{trailing}",
+            unsafe_name=f"{leading}{value.unsafe_name}{trailing}",
+        )
+
+    return ir_types.Name(
+        original_name=resolved.original_name,
+        camel_case=reattach(resolved.camel_case),
+        pascal_case=reattach(resolved.pascal_case),
+        snake_case=reattach(resolved.snake_case),
+        screaming_snake_case=reattach(resolved.screaming_snake_case),
+    )
+
+
 def get_wire_value(name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue]) -> str:
     if isinstance(name_and_wire_value_or_str, str):
         return name_and_wire_value_or_str

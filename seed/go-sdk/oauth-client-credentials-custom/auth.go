@@ -10,21 +10,23 @@ import (
 )
 
 var (
-	getTokenRequestFieldCid      = big.NewInt(1 << 0)
-	getTokenRequestFieldCsr      = big.NewInt(1 << 1)
-	getTokenRequestFieldScp      = big.NewInt(1 << 2)
-	getTokenRequestFieldEntityID = big.NewInt(1 << 3)
-	getTokenRequestFieldScope    = big.NewInt(1 << 4)
+	getTokenRequestFieldCid         = big.NewInt(1 << 0)
+	getTokenRequestFieldCsr         = big.NewInt(1 << 1)
+	getTokenRequestFieldScp         = big.NewInt(1 << 2)
+	getTokenRequestFieldEntityID    = big.NewInt(1 << 3)
+	getTokenRequestFieldScope       = big.NewInt(1 << 4)
+	getTokenRequestFieldPermissions = big.NewInt(1 << 5)
 )
 
 type GetTokenRequest struct {
-	Cid       string  `json:"cid" url:"-"`
-	Csr       string  `json:"csr" url:"-"`
-	Scp       string  `json:"scp" url:"-"`
-	EntityID  string  `json:"entity_id" url:"-"`
-	Scope     *string `json:"scope,omitempty" url:"-"`
-	audience  string
-	grantType string
+	Cid         string   `json:"cid" url:"-"`
+	Csr         string   `json:"csr" url:"-"`
+	Scp         string   `json:"scp" url:"-"`
+	EntityID    string   `json:"entity_id" url:"-"`
+	Scope       *string  `json:"scope,omitempty" url:"-"`
+	Permissions []string `json:"permissions,omitempty" url:"-"`
+	audience    string
+	grantType   string
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -78,6 +80,13 @@ func (g *GetTokenRequest) SetEntityID(entityID string) {
 func (g *GetTokenRequest) SetScope(scope *string) {
 	g.Scope = scope
 	g.require(getTokenRequestFieldScope)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenRequest) SetPermissions(permissions []string) {
+	g.Permissions = permissions
+	g.require(getTokenRequestFieldPermissions)
 }
 
 func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {

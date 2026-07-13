@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml

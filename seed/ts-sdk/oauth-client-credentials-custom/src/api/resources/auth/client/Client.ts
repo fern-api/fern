@@ -32,7 +32,8 @@ export class AuthClient {
      *         csr: "csr",
      *         scp: "scp",
      *         entity_id: "entity_id",
-     *         scope: "scope"
+     *         scope: "scope",
+     *         permissions: ["permissions", "permissions"]
      *     })
      */
     public getTokenWithClientCredentials(

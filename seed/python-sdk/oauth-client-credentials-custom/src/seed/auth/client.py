@@ -34,6 +34,7 @@ class AuthClient:
         scp: str,
         entity_id: str,
         scope: typing.Optional[str] = OMIT,
+        permissions: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
@@ -48,6 +49,8 @@ class AuthClient:
         entity_id : str
 
         scope : typing.Optional[str]
+
+        permissions : typing.Optional[typing.Sequence[str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -71,10 +74,17 @@ class AuthClient:
             scp="scp",
             entity_id="entity_id",
             scope="scope",
+            permissions=["permissions", "permissions"],
         )
         """
         _response = self._raw_client.get_token_with_client_credentials(
-            cid=cid, csr=csr, scp=scp, entity_id=entity_id, scope=scope, request_options=request_options
+            cid=cid,
+            csr=csr,
+            scp=scp,
+            entity_id=entity_id,
+            scope=scope,
+            permissions=permissions,
+            request_options=request_options,
         )
         return _response.data
 
@@ -154,6 +164,7 @@ class AsyncAuthClient:
         scp: str,
         entity_id: str,
         scope: typing.Optional[str] = OMIT,
+        permissions: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
@@ -168,6 +179,8 @@ class AsyncAuthClient:
         entity_id : str
 
         scope : typing.Optional[str]
+
+        permissions : typing.Optional[typing.Sequence[str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -196,13 +209,20 @@ class AsyncAuthClient:
                 scp="scp",
                 entity_id="entity_id",
                 scope="scope",
+                permissions=["permissions", "permissions"],
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get_token_with_client_credentials(
-            cid=cid, csr=csr, scp=scp, entity_id=entity_id, scope=scope, request_options=request_options
+            cid=cid,
+            csr=csr,
+            scp=scp,
+            entity_id=entity_id,
+            scope=scope,
+            permissions=permissions,
+            request_options=request_options,
         )
         return _response.data
 
