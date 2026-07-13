@@ -432,6 +432,13 @@ fixtures:
         enable-inline-types: true
       outputFolder: inline-types
       disableDynamicSnippetTests: true
+  csharp-union-base-properties:
+    - customConfig:
+        dedupe-union-base-properties: true
+      outputFolder: dedupe-union-base-properties
+      # Dynamic snippets consume the deferred-property fact from the dynamic IR, which is not yet
+      # published; re-enable once @fern-api/dynamic-ir-sdk carries deferredUnionBaseProperties.
+      disableDynamicSnippetTests: true
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
