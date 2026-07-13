@@ -423,6 +423,14 @@ fixtures:
         enable-inline-types: true
       outputFolder: inline-types
       disableDynamicSnippetTests: true
+  csharp-union-base-properties:
+    - customConfig:
+        dedupeUnionBaseProperties: true
+      outputFolder: dedupe-union-base-properties
+      # Dynamic snippets do not yet account for base-property suppression; disabled here so the
+      # snapshot exercises the model/serialization path (the point of this fixture) without the
+      # known dynamic-snippets gap.
+      disableDynamicSnippetTests: true
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
