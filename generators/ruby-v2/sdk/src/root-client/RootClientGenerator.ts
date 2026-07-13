@@ -263,22 +263,21 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.writeLine(`,`);
                 }
                 if (hasBasicAuth) {
-                    writer.write(`headers: headers`);
+                    writer.writeLine(`headers: headers,`);
                 } else {
                     writer.write(`headers: `);
                     writer.writeNode(this.getRawClientHeaders());
+                    writer.writeLine(`,`);
                 }
-                if (hasAuthProvider && anyAuthMultiScheme) {
-                    // Under `any`-composed multi-scheme auth the provider is only
-                    // instantiated when its creds were supplied. Merge its headers at
-                    // runtime only when it exists; when creds are absent `@auth_provider`
-                    // is nil and we fall back to the other scheme's header
-                    // (api-key/basic/etc.) without touching the token endpoint.
-                    writer.writeLine(`.merge(@auth_provider.nil? ? {} : @auth_provider.auth_headers),`);
-                } else if (hasAuthProvider) {
-                    writer.writeLine(`.merge(@auth_provider.auth_headers),`);
-                } else {
-                    writer.writeLine(",");
+                if (hasAuthProvider) {
+                    // Pass the auth provider into the RawClient so its `auth_headers`
+                    // are resolved on EVERY request rather than baked once here. This
+                    // lets token-based providers (OAuth client-credentials, inferred
+                    // auth) refresh an expired token mid-session. When the provider's
+                    // credentials were not supplied (e.g. an `any`-composed scheme
+                    // where another scheme's creds were given) `@auth_provider` is nil,
+                    // and the RawClient simply resolves no auth headers.
+                    writer.writeLine(`auth_provider: @auth_provider,`);
                 }
                 writer.writeLine(`max_retries: max_retries`);
                 writer.dedent();
