@@ -16,7 +16,13 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
+from fern_python.utils.name_resolver import (
+    get_name_from_wire_value,
+    get_original_name,
+    get_wire_value,
+    resolve_name,
+    resolve_name_preserving_underscores,
+)
 from fern_python.utils.snake_case import snake_case
 
 import fern.ir.resources as ir_types
@@ -508,7 +514,10 @@ class WebsocketConnectMethodGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
+        return (
+            ".".join([resolve_name_preserving_underscores(component).snake_case.safe_name for component in components])
+            + "."
+        )
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
