@@ -525,9 +525,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine("}");
                 // Check for empty access token
                 const responseProperties = oauthScheme.configuration.tokenEndpoint.responseProperties;
-                const accessTokenField = this.context.getFieldName(
-                    responseProperties.accessToken.property.name
-                );
+                const accessTokenField = this.context.getFieldName(responseProperties.accessToken.property.name);
                 const accessTokenIsPointer = this.isResponsePropertyOptional(responseProperties.accessToken);
                 if (accessTokenIsPointer) {
                     w.writeLine(`if response.${accessTokenField} == nil || *response.${accessTokenField} == "" {`);
@@ -795,18 +793,14 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
                     w.writeLine("expiresIn := core.DefaultExpirySeconds");
                     if (expiryIsPointer) {
-                        const value = expiryIsInt64
-                            ? `int(*response.${expiryField})`
-                            : `*response.${expiryField}`;
+                        const value = expiryIsInt64 ? `int(*response.${expiryField})` : `*response.${expiryField}`;
                         w.writeLine(`if response.${expiryField} != nil {`);
                         w.indent();
                         w.writeLine(`expiresIn = ${value}`);
                         w.dedent();
                         w.writeLine("}");
                     } else {
-                        const value = expiryIsInt64
-                            ? `int(response.${expiryField})`
-                            : `response.${expiryField}`;
+                        const value = expiryIsInt64 ? `int(response.${expiryField})` : `response.${expiryField}`;
                         w.writeLine(`if response.${expiryField} > 0 {`);
                         w.indent();
                         w.writeLine(`expiresIn = ${value}`);

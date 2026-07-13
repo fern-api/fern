@@ -131,7 +131,8 @@ export function isInt64Type(typeRef: FernIr.TypeReference | undefined): boolean 
     const unwrapped = unwrapOptionalOrNullable(typeRef);
     return (
         unwrapped?.type === "primitive" &&
-        (unwrapped.primitive.v1 === FernIr.PrimitiveTypeV1.Long || unwrapped.primitive.v1 === FernIr.PrimitiveTypeV1.Uint64)
+        (unwrapped.primitive.v1 === FernIr.PrimitiveTypeV1.Long ||
+            unwrapped.primitive.v1 === FernIr.PrimitiveTypeV1.Uint64)
     );
 }
 
