@@ -64,24 +64,6 @@
         }
       ]
     },
-    "auto-generate-idempotency-key": {
-      "oneOf": [
-        {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
-          ]
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "Global default for idempotency-key auto-generation, applied to every\ngenerator group so it does not have to be set on each generator's `config`.\nWhen enabled, generators auto-generate an idempotency key header on\nretry-unsafe (POST/PUT) requests unless the caller supplies one.\n\nAccepts either a boolean shorthand or an object with an optional custom\nheader name and eligible-method list:\n```yaml\nauto-generate-idempotency-key: true\n# or\nauto-generate-idempotency-key:\n  header-name: \"Idempotency-Key\"\n  methods: [\"POST\", \"PUT\"]\n```\nA generator's own `config.auto-generate-idempotency-key` overrides this\nglobal value for that generator."
-    },
     "aliases": {
       "oneOf": [
         {
@@ -3290,6 +3272,24 @@
             }
           ],
           "description": "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
+        },
+        "auto-generate-idempotency-key": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enable idempotency-key auto-generation for every generator in this API, so it\ndoes not have to be set on each generator's `config`. When enabled, generators\nauto-generate an idempotency key header on retry-unsafe (POST/PUT) requests\nunless the caller supplies one.\n\nAccepts either a boolean shorthand or an object with an optional custom\nheader name and eligible-method list:\n```yaml\napi:\n  settings:\n    auto-generate-idempotency-key: true\n    # or\n    auto-generate-idempotency-key:\n      header-name: \"Idempotency-Key\"\n      methods: [\"POST\", \"PUT\"]\n```\nA generator's own `config.auto-generate-idempotency-key` overrides this\nvalue for that generator."
         }
       },
       "additionalProperties": false,

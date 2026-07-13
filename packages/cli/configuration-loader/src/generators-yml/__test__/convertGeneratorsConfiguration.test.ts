@@ -1446,13 +1446,16 @@ describe("convertGeneratorsConfiguration", () => {
         });
     });
 
-    describe("global auto-generate-idempotency-key", () => {
-        it("applies a top-level boolean to every generator in every group", async () => {
+    describe("api.settings auto-generate-idempotency-key", () => {
+        it("applies an api.settings boolean to every generator in every group", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    "auto-generate-idempotency-key": true,
+                    api: {
+                        settings: { "auto-generate-idempotency-key": true },
+                        specs: [{ openapi: "openapi.yml" }]
+                    },
                     groups: {
                         "ts-sdk": {
                             generators: [{ name: "fernapi/fern-typescript-sdk", version: "1.0.0" }]
@@ -1469,12 +1472,17 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[1]?.generators[0]?.idempotencyKeyGenerationConfig).toBe(true);
         });
 
-        it("applies a top-level object form to every generator", async () => {
+        it("applies an api.settings object form to every generator", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    "auto-generate-idempotency-key": { "header-name": "X-Idempotency-Key", methods: ["POST"] },
+                    api: {
+                        settings: {
+                            "auto-generate-idempotency-key": { "header-name": "X-Idempotency-Key", methods: ["POST"] }
+                        },
+                        specs: [{ openapi: "openapi.yml" }]
+                    },
                     groups: {
                         "ts-sdk": {
                             generators: [{ name: "fernapi/fern-typescript-sdk", version: "1.0.0" }]
@@ -1490,12 +1498,15 @@ describe("convertGeneratorsConfiguration", () => {
             });
         });
 
-        it("lets a per-generator config override the global default", async () => {
+        it("lets a per-generator config override the api.settings default", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    "auto-generate-idempotency-key": true,
+                    api: {
+                        settings: { "auto-generate-idempotency-key": true },
+                        specs: [{ openapi: "openapi.yml" }]
+                    },
                     groups: {
                         sdk: {
                             generators: [
@@ -1518,12 +1529,15 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[0]?.generators[1]?.idempotencyKeyGenerationConfig).toBe(true);
         });
 
-        it("lets a per-generator `false` explicitly opt out of a global `true`", async () => {
+        it("lets a per-generator `false` explicitly opt out of an api.settings `true`", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    "auto-generate-idempotency-key": true,
+                    api: {
+                        settings: { "auto-generate-idempotency-key": true },
+                        specs: [{ openapi: "openapi.yml" }]
+                    },
                     groups: {
                         sdk: {
                             generators: [
@@ -1544,11 +1558,14 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[0]?.generators[1]?.idempotencyKeyGenerationConfig).toBe(true);
         });
 
-        it("leaves the config undefined when no global or per-generator value is set", async () => {
+        it("leaves the config undefined when no api.settings or per-generator value is set", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/generators.yml"),
                 rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [{ openapi: "openapi.yml" }]
+                    },
                     groups: {
                         sdk: {
                             generators: [{ name: "fernapi/fern-typescript-sdk", version: "1.0.0" }]

@@ -17,7 +17,6 @@ export async function visitGeneratorsYamlAst(
         metadata: noop,
         readme: noop,
         "default-group": noop,
-        "auto-generate-idempotency-key": noop,
         aliases: noop,
         reviewers: noop,
         openapi: noop,

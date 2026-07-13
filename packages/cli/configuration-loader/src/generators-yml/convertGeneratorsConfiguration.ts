@@ -89,9 +89,14 @@ export async function convertGeneratorsConfiguration({
     warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration);
 
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
-    // Global idempotency-key default: applied to every generator unless the generator overrides it
-    // in its own `config`. Resolved into the IR downstream.
-    const globalIdempotencyKeyGeneration = rawGeneratorsConfiguration["auto-generate-idempotency-key"];
+    // API-level idempotency-key default (`api.settings.auto-generate-idempotency-key`): applied to
+    // every generator in this API unless the generator overrides it in its own `config`. Resolved
+    // into the IR downstream.
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+    const globalIdempotencyKeyGeneration =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["auto-generate-idempotency-key"]
+            : undefined;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,

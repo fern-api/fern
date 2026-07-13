@@ -26,7 +26,6 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     metadata: OutputMetadataSchema.optional(),
     readme: ReadmeSchema.optional(),
     "default-group": core.serialization.string().optional(),
-    "auto-generate-idempotency-key": core.serialization.unknown().optional(),
     aliases: core.serialization
         .record(core.serialization.string(), core.serialization.list(core.serialization.string()))
         .optional(),
@@ -51,7 +50,6 @@ export declare namespace GeneratorsConfigurationSchema {
         metadata?: OutputMetadataSchema.Raw | null;
         readme?: ReadmeSchema.Raw | null;
         "default-group"?: string | null;
-        "auto-generate-idempotency-key"?: unknown | null;
         aliases?: Record<string, string[]> | null;
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;
