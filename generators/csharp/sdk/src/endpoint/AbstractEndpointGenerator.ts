@@ -5,6 +5,7 @@ import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
 type HttpEndpoint = FernIr.HttpEndpoint;
 type PathParameter = FernIr.PathParameter;
 type ServiceId = FernIr.ServiceId;
@@ -415,16 +416,25 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                 .filter((pathParam) => this.defaultValueExtractor.extractClientDefault(pathParam.clientDefault) != null)
                 .map((pathParam) => getOriginalName(pathParam.name))
         );
-        const pathParameters = [
-            ...example.rootPathParameters,
-            ...example.servicePathParameters,
-            ...example.endpointPathParameters
-        ];
+        // Bind each example value to its parameter by name. The example preserves path-parameters
+        // in the order the user authored them, which may differ from the URL-template order that
+        // drives the generated method signature (endpoint.allPathParameters). Iterating the example
+        // positionally would place arguments in the wrong slots (CS1503), so we look up each value by
+        // name and emit arguments in the canonical signature order instead.
+        const exampleValuesByName = new Map<string, ExampleTypeReference>(
+            [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].map(
+                (pathParameter) => [getOriginalName(pathParameter.name), pathParameter.value]
+            )
+        );
         const requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         const optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
-        for (const pathParameter of pathParameters) {
+        for (const pathParameter of endpoint.allPathParameters) {
+            const exampleValue = exampleValuesByName.get(getOriginalName(pathParameter.name));
+            if (exampleValue == null) {
+                continue;
+            }
             const snippet = this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: pathParameter.value,
+                exampleTypeReference: exampleValue,
                 parseDatetimes
             });
             if (pathParameterNamesWithClientDefault.has(getOriginalName(pathParameter.name))) {

@@ -79,7 +79,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = TimeSpan.FromSeconds(30);
+    } = TimeSpan.FromMilliseconds(30000);
 
     public string? Version { get;
 #if NET5_0_OR_GREATER

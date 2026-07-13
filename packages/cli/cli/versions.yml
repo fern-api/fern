@@ -1,4 +1,98 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.68.0
+  changelogEntry:
+    - summary: |
+        Add an `auto-generate-idempotency-key` generator config key. When enabled, the
+        CLI records idempotency-key auto-generation in the IR (`SdkConfig.idempotencyKeyGeneration`)
+        so every generator reads a single, canonical setting from the IR instead of each
+        defining its own config key. Accepts `true` or `{ header-name: "Idempotency-Key" }`
+        and is stripped from the config forwarded to generators.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 5.67.1
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` leaking the literal "AUTO" string into self-hosted generated
+        SDKs. Both the IR version field (which drives the User-Agent header and
+        X-Fern-SDK-Version) and the IR publishing config (which drives package.json and
+        version.ts) now use the language-mapped magic version placeholder
+        ("0.0.0-fern-placeholder") instead of the raw "AUTO" version, so these fields are
+        stamped with the computed version after post-generation replacement rather than "AUTO".
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.67.0
+  changelogEntry:
+    - summary: |
+        Custom MDX components (`experimental.mdx-components`) can now import third-party
+        libraries. The CLI bundles component files with rolldown (via npx) at docs build
+        time, inlining dependencies resolved from the docs project's node_modules.
+      type: feat
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.66.1
+  changelogEntry:
+    - summary: |
+        Validate that a docs instance's `url` and `custom-domain` share the same basepath for all
+        sites, not just basepath-aware ones. Navigation links and redirects are generated relative to
+        the basepath, so the CLI now fails with a clear error when they differ.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 5.66.0
+  changelogEntry:
+    - summary: |
+        Resolve `x-fern-global-parameters` applicability once at IR-generation time.
+        `HttpEndpoint.globalParameters` now holds the fully resolved set of global
+        parameters that apply to each endpoint (explicit opt-ins plus matching
+        `apply: auto` parameters), with body-location parameters gated on the
+        endpoint's request-body schema actually containing the dotted target path.
+        An explicit opt-in whose request body lacks the target is dropped with a
+        generation-time warning.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.8
+  changelogEntry:
+    - summary: |
+        Docs configs with a `path` input library no longer crash `fern docs dev` and
+        `fern generate --docs`. `parseLibrariesConfiguration` now accepts both `git`
+        and `path` library inputs instead of throwing on `path`, so a site whose
+        library docs were generated locally with `fern docs md generate --local` can
+        be previewed and published.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.7
+  changelogEntry:
+    - summary: |
+        `fern check` now fails when `docs.yml` contains both `navigation` and `products`.
+        These are mutually exclusive (as `navigation` and `versions` already were): in a
+        multi-product site the navigation lives in each product's referenced file, so a
+        top-level `navigation` block silently overrides the products and renders empty
+        navigation.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.6
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/generator-cli` to 0.9.44 so every local-only commit is signed
+        when pushing to GitHub, not just HEAD.
+      type: chore
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 5.65.5
+  changelogEntry:
+    - summary: |
+        Improve `fern docs dev` initial build time by pre-fetching external `<Code src="https://..."/>` URLs
+        in parallel instead of sequentially, and optimizing image processing with early-exit checks and
+        streaming scanning. For large docs sites with many external code snippets, this reduces initial
+        build time from ~57s to ~14s (75% faster).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 5.65.4
   changelogEntry:
     - summary: |

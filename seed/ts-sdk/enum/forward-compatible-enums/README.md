@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedEnumClient } from "@fern/enum";
 
-const client = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedEnumClient({ baseUrl: "YOUR_BASE_URL" });
 await client.headers.send({
     operand: ">",
     maybeOperand: ">",

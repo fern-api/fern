@@ -85,6 +85,9 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
@@ -124,7 +127,7 @@ features:
   requestOptions: true
   idempotency: false
   autoPagination: false
-  oauth: false
+  oauth: true
   authEnvVarScanning: true
   websocket: false
   streamingJson: false

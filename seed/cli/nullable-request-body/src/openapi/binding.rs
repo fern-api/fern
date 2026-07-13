@@ -661,8 +661,10 @@ impl Binding for OpenApiBinding {
             // path validation — handle_binary_response branches on it to
             // stream raw bytes to stdout instead of touching the filesystem.
             // Every other value flows through validate_safe_file_path, which
-            // rejects traversal, symlink escapes, and control characters
-            // per AGENTS.md.
+            // rejects control characters and requires the parent directory to
+            // exist, but does not sandbox the path to CWD — the file is
+            // written wherever the user points it (final-component symlinks
+            // are still refused at open time via O_NOFOLLOW).
             let output_path_owned = matched_args
                 .try_get_one::<String>("output")
                 .ok()

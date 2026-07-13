@@ -28,9 +28,9 @@ public final class OAuthAuthProvider implements AuthProvider {
 
     private final AuthClient authClient;
 
-    private String accessToken;
+    private volatile String accessToken;
 
-    private Instant expiresAt;
+    private volatile Instant expiresAt;
 
     private final Object refreshLock = new Object();
 

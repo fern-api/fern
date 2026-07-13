@@ -240,6 +240,28 @@ types:
       hasPaginatedEndpoints: boolean
       hasFileDownloadEndpoints: boolean
       platformHeaders: PlatformHeaders
+      idempotencyKeyGeneration:
+        docs: |
+          When present, generated SDKs auto-generate an idempotency key header on
+          the eligible HTTP methods (`methods`) unless the caller supplies one.
+          Absent means the feature is disabled (the default). Configured once via
+          the `auto-generate-idempotency-key` generator config key and read
+          identically by every generator so behavior is consistent across languages.
+        type: optional<IdempotencyKeyGeneration>
+  IdempotencyKeyGeneration:
+    properties:
+      headerName:
+        type: string
+        docs: |
+          The wire header used for the auto-generated idempotency key.
+          Defaults to "Idempotency-Key".
+      methods:
+        type: list<http.HttpMethod>
+        docs: |
+          The HTTP methods eligible for auto-generation. A key is only injected on
+          requests whose method is in this list (defaults to POST and PUT). Centralized
+          here so the method-gating is identical across every generator instead of each
+          hard-coding its own set.
   PlatformHeaders:
     properties:
       language: string

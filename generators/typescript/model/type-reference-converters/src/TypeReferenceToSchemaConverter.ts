@@ -98,13 +98,14 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         { keyType, valueType }: FernIr.MapType,
         params: ConvertTypeReferenceParams
     ): Zurg.Schema {
-        // Strip optional wrappers from the value type to match the type converter,
-        // which uses `typeNodeWithoutUndefined` for record value types.
-        // Nullable wrappers are preserved so the schema correctly reflects nullable map values.
-        const unwrappedValueType = unwrapOptional(valueType);
+        // Mirror the type converter: keep the optional wrapper on genuinely optional map
+        // values (so the schema emits `.optional()` to match `V | undefined`), but strip it
+        // from `unknown`/`any` values where `| undefined` is redundant. Nullable wrappers are
+        // always preserved so the schema correctly reflects nullable map values.
+        const valueSchemaType = this.isTypeReferenceUnknown(valueType) ? unwrapOptional(valueType) : valueType;
         return this.zurg.record({
             keySchema: this.convert({ ...params, typeReference: keyType }),
-            valueSchema: this.convert({ ...params, typeReference: unwrappedValueType })
+            valueSchema: this.convert({ ...params, typeReference: valueSchemaType })
         });
     }
 

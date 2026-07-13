@@ -64,7 +64,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = TimeSpan.FromSeconds(30);
+    } = TimeSpan.FromMilliseconds(30000);
 
     public string? UserAgent { get;
 #if NET5_0_OR_GREATER

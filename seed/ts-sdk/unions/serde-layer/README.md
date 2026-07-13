@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedUnionsClient } from "@fern/unions";
 
-const client = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedUnionsClient({ baseUrl: "YOUR_BASE_URL" });
 await client.bigunion.get("id");
 ```
 

@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedRequestParametersClient } from "@fern/request-parameters";
 
-const client = new SeedRequestParametersClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedRequestParametersClient({ baseUrl: "YOUR_BASE_URL" });
 await client.user.createUsername({
     tags: ["tags", "tags"],
     username: "username",
