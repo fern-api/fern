@@ -1009,7 +1009,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             return [];
         }
         const exampleByWireValue = new Map(
-            shape.object.properties.map((property) => [getWireValue(property.name), property])
+            (exampleUnion.baseProperties ?? []).map((property) => [getWireValue(property.name), property])
         );
 
         const properties: { name: string; value: ast.AstNode }[] = [];
