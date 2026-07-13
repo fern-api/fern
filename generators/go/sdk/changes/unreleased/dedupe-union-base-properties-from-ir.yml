@@ -1,0 +1,10 @@
+- summary: |
+    Read the discriminated-union base-property dedupe decision from the IR
+    (`UnionTypeDeclaration.inheritedBaseProperties`) instead of re-deriving it in the generator.
+    Behavior is unchanged for the default (the `dedupeUnionBaseProperties` flag stays opt-in), and
+    the delegating-getter emission plus the local literal filter remain. Because the IR uses
+    structural type equality (a subset of the generator's previous rendered-Go-type comparison),
+    a few base properties that were previously suppressed may reappear on the union envelope; this
+    is safe (it can only keep a field, never drop a needed one) and removes prior drift between the
+    model and the dynamic snippets.
+  type: chore

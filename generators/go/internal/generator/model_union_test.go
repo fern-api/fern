@@ -35,169 +35,66 @@ func literalObjectProperty(pascal string) *ir.ObjectProperty {
 	}
 }
 
-func objectType(properties ...*ir.ObjectProperty) *ir.TypeDeclaration {
-	return &ir.TypeDeclaration{Shape: &ir.Type{Object: &ir.ObjectTypeDeclaration{Properties: properties}}}
-}
-
-func objectTypeDeclaration(propertyNames ...string) *ir.TypeDeclaration {
-	var properties []*ir.ObjectProperty
-	for _, name := range propertyNames {
-		properties = append(properties, objectProperty(name))
-	}
-	return objectType(properties...)
-}
-
-func samePropertiesAsObjectVariant(typeID common.TypeId) *ir.SingleUnionType {
-	return &ir.SingleUnionType{
-		DiscriminantValue: nameAndWireValue(typeID),
-		Shape: &ir.SingleUnionTypeProperties{
-			PropertiesType:         "samePropertiesAsObject",
-			SamePropertiesAsObject: &ir.DeclaredTypeName{TypeId: typeID},
-		},
-	}
-}
-
+// The "which base properties are inherited by every variant" decision is computed upstream in
+// the IR (UnionTypeDeclaration.InheritedBaseProperties) and covered by the IR-generator tests.
+// These tests cover the Go side's *consumption* of that fact: the config-flag gate, the
+// Go-local literal rendering filter, and the mapping to exported field names.
 func TestUnionInheritedBasePropertyNames(t *testing.T) {
 	tv := &typeVisitor{
 		dedupeUnionBaseProperties: true,
-		writer: &fileWriter{
-			types: map[common.TypeId]*ir.TypeDeclaration{
-				"Foo": objectTypeDeclaration("Name", "Id"),
-				"Bar": objectTypeDeclaration("Name"),
-			},
-		},
+		writer:                    &fileWriter{types: map[common.TypeId]*ir.TypeDeclaration{}},
 	}
 
-	t.Run("suppresses only base properties every variant already carries", func(t *testing.T) {
+	t.Run("suppresses the base properties the IR marked as inherited", func(t *testing.T) {
 		union := &ir.UnionTypeDeclaration{
-			BaseProperties: []*ir.ObjectProperty{objectProperty("Name"), objectProperty("Id")},
-			Types: []*ir.SingleUnionType{
-				samePropertiesAsObjectVariant("Foo"),
-				samePropertiesAsObjectVariant("Bar"),
-			},
+			BaseProperties:          []*ir.ObjectProperty{objectProperty("Name"), objectProperty("Id")},
+			InheritedBaseProperties: []*common.NameAndWireValue{nameAndWireValue("Name")},
 		}
 		got := tv.unionInheritedBasePropertyNames(union)
 		if _, ok := got["Name"]; !ok {
-			t.Errorf("expected Name to be suppressed: it is carried by both Foo and Bar")
+			t.Errorf("expected Name to be suppressed: the IR marked it inherited")
 		}
-		// Id is only declared by Foo, so it is a genuine union-level base property and
-		// must keep its top-level field.
+		// Id is not in InheritedBaseProperties, so it keeps its top-level field.
 		if _, ok := got["Id"]; ok {
-			t.Errorf("did not expect Id to be suppressed: only Foo carries it")
+			t.Errorf("did not expect Id to be suppressed: the IR did not mark it inherited")
 		}
 	})
 
-	t.Run("suppresses nothing when a variant is not an object", func(t *testing.T) {
+	t.Run("no inherited base properties means nothing to suppress", func(t *testing.T) {
 		union := &ir.UnionTypeDeclaration{
 			BaseProperties: []*ir.ObjectProperty{objectProperty("Name")},
-			Types: []*ir.SingleUnionType{
-				samePropertiesAsObjectVariant("Foo"),
-				{Shape: &ir.SingleUnionTypeProperties{PropertiesType: "singleProperty"}},
-			},
-		}
-		if got := tv.unionInheritedBasePropertyNames(union); len(got) != 0 {
-			t.Errorf("expected no suppression when a variant carries no object properties, got %v", got)
-		}
-	})
-
-	t.Run("no base properties means nothing to suppress", func(t *testing.T) {
-		union := &ir.UnionTypeDeclaration{
-			Types: []*ir.SingleUnionType{samePropertiesAsObjectVariant("Foo")},
 		}
 		if got := tv.unionInheritedBasePropertyNames(union); len(got) != 0 {
 			t.Errorf("expected empty result, got %v", got)
 		}
 	})
 
-	t.Run("never suppresses literal base properties even when carried by every variant", func(t *testing.T) {
-		// A literal property keeps its own `<Name>()` getter (no `Get` prefix) on both
-		// the union and each variant. Suppressing it would emit a delegating
-		// `Get<Name>()` that calls the variant's non-existent `Get<Name>()` and fail to
-		// compile, so literals must stay on the normal path.
-		litTv := &typeVisitor{
-			dedupeUnionBaseProperties: true,
-			writer: &fileWriter{
-				types: map[common.TypeId]*ir.TypeDeclaration{
-					"A": objectTypeDeclaration("Name", "Kind"),
-					"B": objectTypeDeclaration("Name", "Kind"),
-				},
-			},
-		}
+	t.Run("never suppresses literal inherited base properties (Go local filter)", func(t *testing.T) {
+		// A literal property renders as a `<Name>()` method (no `Get` prefix) on each variant, so a
+		// delegating `Get<Name>()` on the envelope would reference a non-existent method and fail to
+		// compile. Even when the IR marks it inherited, Go keeps it on the envelope. This is Go
+		// rendering policy, not a re-derivation of the shared decision.
 		union := &ir.UnionTypeDeclaration{
 			BaseProperties: []*ir.ObjectProperty{objectProperty("Name"), literalObjectProperty("Kind")},
-			Types: []*ir.SingleUnionType{
-				samePropertiesAsObjectVariant("A"),
-				samePropertiesAsObjectVariant("B"),
+			InheritedBaseProperties: []*common.NameAndWireValue{
+				nameAndWireValue("Name"),
+				nameAndWireValue("Kind"),
 			},
 		}
-		got := litTv.unionInheritedBasePropertyNames(union)
+		got := tv.unionInheritedBasePropertyNames(union)
 		if _, ok := got["Name"]; !ok {
-			t.Errorf("expected non-literal common property Name to be suppressed")
+			t.Errorf("expected non-literal inherited property Name to be suppressed")
 		}
 		if _, ok := got["Kind"]; ok {
-			t.Errorf("did not expect literal property Kind to be suppressed")
-		}
-	})
-
-	t.Run("does not suppress when a variant's same-named property has a different type", func(t *testing.T) {
-		// The delegating getter would be `GetName() string { ... return c.A.GetName() }`,
-		// but the variant's GetName() returns int — a type mismatch that would not compile.
-		mismatchTv := &typeVisitor{
-			dedupeUnionBaseProperties: true,
-			writer: &fileWriter{
-				types: map[common.TypeId]*ir.TypeDeclaration{
-					"A": objectType(primitiveProperty("Name", common.PrimitiveTypeV1Integer)),
-					"B": objectType(primitiveProperty("Name", common.PrimitiveTypeV1Integer)),
-				},
-			},
-		}
-		union := &ir.UnionTypeDeclaration{
-			BaseProperties: []*ir.ObjectProperty{primitiveProperty("Name", common.PrimitiveTypeV1String)},
-			Types: []*ir.SingleUnionType{
-				samePropertiesAsObjectVariant("A"),
-				samePropertiesAsObjectVariant("B"),
-			},
-		}
-		if got := mismatchTv.unionInheritedBasePropertyNames(union); len(got) != 0 {
-			t.Errorf("expected no suppression when base (string) and variant (int) types differ, got %v", got)
-		}
-	})
-
-	t.Run("does not suppress when a variant's same-named property is a literal", func(t *testing.T) {
-		// Base `Kind` is non-literal, but each variant's `Kind` is a literal whose getter is
-		// `Kind()` (no `Get` prefix); a delegating `Get<Name>()` would not compile.
-		literalVariantTv := &typeVisitor{
-			dedupeUnionBaseProperties: true,
-			writer: &fileWriter{
-				types: map[common.TypeId]*ir.TypeDeclaration{
-					"A": objectType(literalObjectProperty("Kind")),
-					"B": objectType(literalObjectProperty("Kind")),
-				},
-			},
-		}
-		union := &ir.UnionTypeDeclaration{
-			BaseProperties: []*ir.ObjectProperty{primitiveProperty("Kind", common.PrimitiveTypeV1String)},
-			Types: []*ir.SingleUnionType{
-				samePropertiesAsObjectVariant("A"),
-				samePropertiesAsObjectVariant("B"),
-			},
-		}
-		if got := literalVariantTv.unionInheritedBasePropertyNames(union); len(got) != 0 {
-			t.Errorf("expected no suppression when a variant's same-named property is a literal, got %v", got)
+			t.Errorf("did not expect literal inherited property Kind to be suppressed")
 		}
 	})
 
 	t.Run("suppresses nothing when the dedupeUnionBaseProperties flag is off", func(t *testing.T) {
-		off := &typeVisitor{
-			dedupeUnionBaseProperties: false,
-			writer:                    tv.writer,
-		}
+		off := &typeVisitor{dedupeUnionBaseProperties: false, writer: tv.writer}
 		union := &ir.UnionTypeDeclaration{
-			BaseProperties: []*ir.ObjectProperty{objectProperty("Name")},
-			Types: []*ir.SingleUnionType{
-				samePropertiesAsObjectVariant("Foo"),
-				samePropertiesAsObjectVariant("Bar"),
-			},
+			BaseProperties:          []*ir.ObjectProperty{objectProperty("Name")},
+			InheritedBaseProperties: []*common.NameAndWireValue{nameAndWireValue("Name")},
 		}
 		if got := off.unionInheritedBasePropertyNames(union); len(got) != 0 {
 			t.Errorf("expected no suppression when flag is off, got %v", got)
