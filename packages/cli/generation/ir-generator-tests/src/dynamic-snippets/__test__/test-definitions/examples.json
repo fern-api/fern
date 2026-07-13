@@ -161,7 +161,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:BasicType": {
             "type": "enum",
@@ -426,7 +427,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons/types:Tag": {
             "type": "alias",
@@ -749,7 +751,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons/types:EventInfo": {
             "type": "discriminatedUnion",
@@ -878,6 +881,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "metadata": {
                     "type": "samePropertiesAsObject",
@@ -1065,6 +1069,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "string": {
                     "type": "singleProperty",
@@ -1693,7 +1698,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:CastMember": {
             "type": "undiscriminatedUnion",
@@ -1905,7 +1911,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Actress": {
             "type": "object",
@@ -2036,7 +2043,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:StuntDouble": {
             "type": "object",
@@ -2167,7 +2175,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:ExtendedMovie": {
             "type": "object",
@@ -2588,7 +2597,8 @@
             "extends": [
                 "type_types:Movie"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Moment": {
             "type": "object",
@@ -2749,7 +2759,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:File": {
             "type": "object",
@@ -2880,7 +2891,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Directory": {
             "type": "object",
@@ -3053,7 +3065,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Node": {
             "type": "object",
@@ -3226,7 +3239,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Tree": {
             "type": "object",
@@ -3333,7 +3347,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Metadata": {
             "type": "discriminatedUnion",
@@ -3423,6 +3438,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "html": {
                     "type": "singleProperty",
@@ -3716,6 +3732,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "generic": {
                     "type": "samePropertiesAsObject",
@@ -3931,7 +3948,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:MigrationStatus": {
             "type": "enum",
@@ -4197,7 +4215,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Request": {
             "type": "object",
@@ -4297,7 +4316,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Response": {
             "type": "object",
@@ -4430,7 +4450,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:ResponseType": {
             "type": "object",
@@ -4531,7 +4552,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Test": {
             "type": "discriminatedUnion",
@@ -4621,6 +4643,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "and": {
                     "type": "singleProperty",
@@ -4813,7 +4836,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:BigEntity": {
             "type": "object",
@@ -5313,7 +5337,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:CronJob": {
             "type": "object",
@@ -5414,7 +5439,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:RefreshTokenRequest": {
             "type": "object",
@@ -5515,7 +5541,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],

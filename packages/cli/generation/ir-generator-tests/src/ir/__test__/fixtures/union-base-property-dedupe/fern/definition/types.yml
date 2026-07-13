@@ -1,0 +1,133 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+# Fixtures exercising the discriminated-union base-property dedupe facts computed by the IR generator
+# (UnionTypeDeclaration.inheritedBaseProperties = View A, ObjectTypeDeclaration.deferredUnionBaseProperties = View B).
+
+types:
+  # ---------------------------------------------------------------------------
+  # Scenario 1: every variant redeclares the base property with a matching type.
+  # → View A lists `shape`; both variants are exclusive → View B lists `shape`.
+  # ---------------------------------------------------------------------------
+  Circle:
+    properties:
+      shape: string
+      radius: double
+  Square:
+    properties:
+      shape: string
+      side: double
+  Geometry:
+    discriminant: kind
+    base-properties:
+      shape: string
+    union:
+      circle: Circle
+      square: Square
+
+  # ---------------------------------------------------------------------------
+  # Scenario 2: one variant omits the base property.
+  # → View A excludes `note` (not every variant carries it); the carrying object
+  #   still defers it in View B, the other object does not.
+  # ---------------------------------------------------------------------------
+  WithNote:
+    properties:
+      note: string
+      extra: string
+  WithoutNote:
+    properties:
+      other: string
+  Annotated:
+    discriminant: kind
+    base-properties:
+      note: string
+    union:
+      withNote: WithNote
+      withoutNote: WithoutNote
+
+  # ---------------------------------------------------------------------------
+  # Scenario 3: same wire name, conflicting type. Excluded from both views.
+  # ---------------------------------------------------------------------------
+  IntCounter:
+    properties:
+      count: integer
+  Counter:
+    discriminant: kind
+    base-properties:
+      count: string
+    union:
+      intCounter: IntCounter
+
+  # ---------------------------------------------------------------------------
+  # Scenario 4: explicit base property no variant carries. Stays a normal base
+  # property; excluded from both views.
+  # ---------------------------------------------------------------------------
+  OnlyLocal:
+    properties:
+      localField: string
+  MetaHolder:
+    discriminant: kind
+    base-properties:
+      meta: string
+    union:
+      onlyLocal: OnlyLocal
+
+  # ---------------------------------------------------------------------------
+  # Scenario 5: variant object also referenced standalone (as a property type).
+  # → View A still lists `tag`; View B excludes it (guard b — not exclusive).
+  # ---------------------------------------------------------------------------
+  Tagged:
+    properties:
+      tag: string
+      payload: string
+  TaggedUnion:
+    discriminant: kind
+    base-properties:
+      tag: string
+    union:
+      tagged: Tagged
+  TaggedWrapper:
+    properties:
+      inner: Tagged
+
+  # ---------------------------------------------------------------------------
+  # Scenario 6: variant is an alias of the object. The alias chain is resolved
+  # for View A (`kind` is inherited). View B stays empty (the object is an alias
+  # target, so guard b disqualifies it).
+  # ---------------------------------------------------------------------------
+  Kinded:
+    properties:
+      category: string
+      value: string
+  KindedAlias:
+    type: Kinded
+  AliasUnion:
+    discriminant: kind
+    base-properties:
+      category: string
+    union:
+      kinded: KindedAlias
+
+  # ---------------------------------------------------------------------------
+  # Scenario (extends): a variant carries the base property via `extends`, not a
+  # direct redeclaration. The extends chain is resolved for both views.
+  # ---------------------------------------------------------------------------
+  HasOwner:
+    properties:
+      owner: string
+  Repo:
+    extends:
+      - HasOwner
+    properties:
+      repoName: string
+  Gist:
+    extends:
+      - HasOwner
+    properties:
+      gistId: string
+  Resource:
+    discriminant: kind
+    base-properties:
+      owner: string
+    union:
+      repo: Repo
+      gist: Gist

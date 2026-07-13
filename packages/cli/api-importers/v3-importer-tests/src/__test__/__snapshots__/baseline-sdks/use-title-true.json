@@ -23,6 +23,7 @@
         "discriminant": "type",
         "extends": [],
         "baseProperties": [],
+        "inheritedBaseProperties": [],
         "types": [
           {
             "discriminantValue": "EMBEDDING_GENERATION",
@@ -145,6 +146,7 @@
             }
           }
         },
+        "inheritedBaseProperties": [],
         "types": {
           "EMBEDDING_GENERATION": {
             "typeReference": {

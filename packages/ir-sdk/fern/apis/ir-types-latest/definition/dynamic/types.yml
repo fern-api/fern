@@ -60,6 +60,12 @@ types:
       additionalProperties:
         docs: Whether the type allows additional properties.
         type: optional<boolean>
+      deferredUnionBaseProperties:
+        docs: |
+          Mirror of ObjectTypeDeclaration.deferredUnionBaseProperties: wire values a leaf-dropping
+          snippet generator should not set inside this variant object (they are owned by the union
+          envelope). Absent/empty unless this object is used exclusively as a union variant.
+        type: optional<list<commons.NameAndWireValue>>
 
   DiscriminatedUnionType:
     properties:
@@ -69,6 +75,11 @@ types:
         docs: |
           Map from the discriminant value (e.g. "user") to the type (e.g. User).
         type: map<string, SingleDiscriminatedUnionType>
+      inheritedBaseProperties:
+        docs: |
+          Wire values of the base properties every variant redeclares with a structurally-equal
+          type. Mirror of UnionTypeDeclaration.inheritedBaseProperties for snippet generators.
+        type: list<commons.NameAndWireValue>
 
   SingleDiscriminatedUnionType:
     union:

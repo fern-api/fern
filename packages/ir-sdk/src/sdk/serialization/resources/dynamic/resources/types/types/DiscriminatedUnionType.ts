@@ -14,6 +14,7 @@ export const DiscriminatedUnionType: core.serialization.ObjectSchema<
     declaration: Declaration,
     discriminant: NameAndWireValue,
     types: core.serialization.record(core.serialization.string(), SingleDiscriminatedUnionType),
+    inheritedBaseProperties: core.serialization.list(NameAndWireValue),
 });
 
 export declare namespace DiscriminatedUnionType {
@@ -21,5 +22,6 @@ export declare namespace DiscriminatedUnionType {
         declaration: Declaration.Raw;
         discriminant: NameAndWireValue.Raw;
         types: Record<string, SingleDiscriminatedUnionType.Raw>;
+        inheritedBaseProperties: NameAndWireValue.Raw[];
     }
 }

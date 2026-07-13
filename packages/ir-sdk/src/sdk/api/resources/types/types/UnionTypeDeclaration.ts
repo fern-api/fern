@@ -9,6 +9,15 @@ export interface UnionTypeDeclaration {
     types: FernIr.SingleUnionType[];
     baseProperties: FernIr.ObjectProperty[];
     /**
+     * Base properties that every `samePropertiesAsObject` variant of this union redeclares
+     * with a structurally-equal type (resolving `extends` and alias chains). These are the
+     * properties that are duplicated on both the union and every variant. Generators may
+     * collapse the duplication — e.g. by owning the field solely on the union envelope and
+     * delegating to the active variant. Empty when the union has no such redundant base
+     * properties. Computed by the IR generator; consumers must not recompute it.
+     */
+    inheritedBaseProperties: FernIr.NameAndWireValue[];
+    /**
      * The default union variant to use when the discriminant field is missing from input.
      * When set, generators should fall back to this variant rather than an unknown/error type.
      */

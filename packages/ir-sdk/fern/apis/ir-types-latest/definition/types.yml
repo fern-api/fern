@@ -118,6 +118,15 @@ types:
       extra-properties:
         docs: Whether to allow extra properties on the object.
         type: boolean
+      deferredUnionBaseProperties:
+        docs: |
+          Populated only when this object is used exclusively as a `samePropertiesAsObject`
+          variant of one or more discriminated unions. Lists the wire values this object declares
+          that every owning union also declares as a base property with a structurally-equal type,
+          i.e. the fields a leaf-dropping generator may omit from this object and defer to the union
+          envelope. Absent/empty for any object referenced outside a union variant. Computed by the
+          IR generator; consumers must not recompute it.
+        type: optional<list<commons.NameAndWireValue>>
 
   ObjectProperty:
     extends: commons.Declaration
@@ -149,6 +158,15 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+      inheritedBaseProperties:
+        docs: |
+          Base properties that every `samePropertiesAsObject` variant of this union redeclares
+          with a structurally-equal type (resolving `extends` and alias chains). These are the
+          properties that are duplicated on both the union and every variant. Generators may
+          collapse the duplication — e.g. by owning the field solely on the union envelope and
+          delegating to the active variant. Empty when the union has no such redundant base
+          properties. Computed by the IR generator; consumers must not recompute it.
+        type: list<commons.NameAndWireValue>
       default:
         docs: |
           The default union variant to use when the discriminant field is missing from input.

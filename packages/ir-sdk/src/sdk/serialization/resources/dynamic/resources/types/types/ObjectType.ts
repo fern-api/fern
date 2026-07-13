@@ -3,6 +3,7 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
+import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
 import { TypeId } from "../../commons/types/TypeId.js";
 import { Declaration } from "../../declaration/types/Declaration.js";
 import { NamedParameter } from "./NamedParameter.js";
@@ -15,6 +16,7 @@ export const ObjectType: core.serialization.ObjectSchema<
     properties: core.serialization.list(NamedParameter),
     extends: core.serialization.list(TypeId).optional(),
     additionalProperties: core.serialization.boolean().optional(),
+    deferredUnionBaseProperties: core.serialization.list(NameAndWireValue).optional(),
 });
 
 export declare namespace ObjectType {
@@ -23,5 +25,6 @@ export declare namespace ObjectType {
         properties: NamedParameter.Raw[];
         extends?: TypeId.Raw[] | null;
         additionalProperties?: boolean | null;
+        deferredUnionBaseProperties?: NameAndWireValue.Raw[] | null;
     }
 }
