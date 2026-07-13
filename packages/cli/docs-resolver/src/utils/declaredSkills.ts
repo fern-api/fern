@@ -303,7 +303,7 @@ async function findReferencesEscapingSkillDirectory({
         const contents = await readFile(file.absoluteFilePath, "utf-8");
         for (const target of extractRelativeMarkdownReferences(contents)) {
             const resolved = resolve(dirname(file.absoluteFilePath), target);
-            if (relative(skillDirectory, resolved).startsWith("..")) {
+            if (referenceEscapesSkillDirectory({ skillDirectory, resolved })) {
                 violations.push({
                     severity: "error",
                     message:
@@ -315,6 +315,23 @@ async function findReferencesEscapingSkillDirectory({
         }
     }
     return violations;
+}
+
+/**
+ * True when `resolved` lands outside `skillDirectory`. Escaping is about a leading `..` path
+ * *segment*, not a `..` string prefix — a plain `startsWith("..")` would false-positive on
+ * in-directory targets like `...` (the ellipsis placeholder in `[x](...)`) or `..foo`.
+ * `relative` from fs-utils always uses forward slashes, so the segment separator is `/`.
+ */
+function referenceEscapesSkillDirectory({
+    skillDirectory,
+    resolved
+}: {
+    skillDirectory: AbsoluteFilePath;
+    resolved: AbsoluteFilePath;
+}): boolean {
+    const relativeToSkill = relative(skillDirectory, resolved);
+    return relativeToSkill === ".." || relativeToSkill.startsWith("../");
 }
 
 /**

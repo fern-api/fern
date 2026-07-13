@@ -168,6 +168,28 @@ describe("discoverDeclaredSkills", () => {
         expect(violations).toEqual([]);
     });
 
+    it("does not flag `...` placeholders or `..`-prefixed filenames as escaping references", async () => {
+        await writeFileAt(
+            "my-skill/SKILL.md",
+            skillMarkdown(
+                "my-skill",
+                [
+                    "See the [rate limit](...) docs.", // ellipsis placeholder — a filename, not `../`
+                    "[weird](..foo.md)", // in-directory file whose name starts with `..`
+                    "[nested](references/..bar.md)"
+                ].join("\n")
+            )
+        );
+        await writeFileAt("my-skill/..foo.md", "# foo\n");
+        await writeFileAt("my-skill/references/..bar.md", "# bar\n");
+        await writeFileAt("my-skill/...", "placeholder\n");
+
+        const { skills, violations } = await discoverDeclaredSkills({ absolutePathToSkillsDirectory: skillsDirectory });
+
+        expect(violations).toEqual([]);
+        expect(skills.map((skill) => skill.name)).toEqual(["my-skill"]);
+    });
+
     it("checks references in every markdown file of the skill, not just SKILL.md", async () => {
         await writeFileAt("my-skill/SKILL.md", skillMarkdown("my-skill"));
         await writeFileAt("my-skill/references/api.md", "[escape](../../outside.md)\n");
