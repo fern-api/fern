@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
+    from .idempotency import generate_idempotency_key
     from .jsonable_encoder import encode_path_param, jsonable_encoder
     from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
     from .pagination import AsyncPager, SyncPager
@@ -58,6 +59,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "create_logger": ".logging",
     "encode_path_param": ".jsonable_encoder",
     "encode_query": ".query_encoder",
+    "generate_idempotency_key": ".idempotency",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
     "parse_rfc2822_datetime": ".datetime_utils",
@@ -120,6 +122,7 @@ __all__ = [
     "create_logger",
     "encode_path_param",
     "encode_query",
+    "generate_idempotency_key",
     "jsonable_encoder",
     "parse_obj_as",
     "parse_rfc2822_datetime",

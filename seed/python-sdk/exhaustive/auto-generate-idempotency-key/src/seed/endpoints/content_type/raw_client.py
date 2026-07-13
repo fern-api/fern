@@ -8,6 +8,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.idempotency import generate_idempotency_key
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from pydantic import ValidationError
@@ -95,7 +96,7 @@ class RawContentTypeClient:
             },
             headers={
                 "content-type": "application/json-patch+json",
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -187,7 +188,7 @@ class RawContentTypeClient:
             },
             headers={
                 "content-type": "application/json-patch+json; charset=utf-8",
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -284,7 +285,7 @@ class AsyncRawContentTypeClient:
             },
             headers={
                 "content-type": "application/json-patch+json",
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -376,7 +377,7 @@ class AsyncRawContentTypeClient:
             },
             headers={
                 "content-type": "application/json-patch+json; charset=utf-8",
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,

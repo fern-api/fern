@@ -1514,29 +1514,22 @@ class EndpointFunctionGenerator:
         else:
             return AST.Expression(AST.CodeWriter(write_headers_dict))
 
-    def _get_uuid4_reference(self) -> AST.Reference:
-        return AST.Reference(
-            qualified_name_excluding_import=("uuid4",),
-            import_=AST.ReferenceImport(module=AST.Module.built_in(("uuid",))),
-        )
-
     def _generate_idempotency_key_expression(self) -> AST.Expression:
-        uuid4_reference = self._get_uuid4_reference()
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
 
         def write(writer: NodeWriter) -> None:
-            writer.write("str(")
-            writer.write_reference(uuid4_reference)
-            writer.write("())")
+            writer.write_reference(generate_reference)
+            writer.write("()")
 
         return AST.Expression(AST.CodeWriter(write))
 
     def _get_idempotency_key_header_value(self, *, provided_value: str, param_name: str) -> AST.Expression:
-        uuid4_reference = self._get_uuid4_reference()
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
 
         def write(writer: NodeWriter) -> None:
-            writer.write(f"{provided_value} if {param_name} is not None else str(")
-            writer.write_reference(uuid4_reference)
-            writer.write("())")
+            writer.write(f"{provided_value} if {param_name} is not None else ")
+            writer.write_reference(generate_reference)
+            writer.write("()")
 
         return AST.Expression(AST.CodeWriter(write))
 

@@ -8,6 +8,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.idempotency import generate_idempotency_key
 from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
@@ -111,7 +112,7 @@ class RawObjectClient:
                 "bigint": bigint,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -157,7 +158,7 @@ class RawObjectClient:
                 "string": string,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -203,7 +204,7 @@ class RawObjectClient:
                 "map": map_,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -258,7 +259,7 @@ class RawObjectClient:
                 ),
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -316,7 +317,7 @@ class RawObjectClient:
                 ),
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -365,7 +366,7 @@ class RawObjectClient:
                 object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField], direction="write"
             ),
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -411,7 +412,7 @@ class RawObjectClient:
                 "unknown": unknown,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -457,7 +458,7 @@ class RawObjectClient:
                 "documentedUnknownType": documented_unknown_type,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -501,7 +502,7 @@ class RawObjectClient:
             method="POST",
             json=request,
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -565,7 +566,7 @@ class RawObjectClient:
                 "requiredLong": required_long,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -625,7 +626,7 @@ class RawObjectClient:
                 ),
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -684,7 +685,7 @@ class RawObjectClient:
                 "actualDatetime": actual_datetime,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -787,7 +788,7 @@ class AsyncRawObjectClient:
                 "bigint": bigint,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -833,7 +834,7 @@ class AsyncRawObjectClient:
                 "string": string,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -879,7 +880,7 @@ class AsyncRawObjectClient:
                 "map": map_,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -934,7 +935,7 @@ class AsyncRawObjectClient:
                 ),
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -992,7 +993,7 @@ class AsyncRawObjectClient:
                 ),
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1041,7 +1042,7 @@ class AsyncRawObjectClient:
                 object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField], direction="write"
             ),
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1087,7 +1088,7 @@ class AsyncRawObjectClient:
                 "unknown": unknown,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1133,7 +1134,7 @@ class AsyncRawObjectClient:
                 "documentedUnknownType": documented_unknown_type,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1177,7 +1178,7 @@ class AsyncRawObjectClient:
             method="POST",
             json=request,
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1241,7 +1242,7 @@ class AsyncRawObjectClient:
                 "requiredLong": required_long,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1301,7 +1302,7 @@ class AsyncRawObjectClient:
                 ),
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1360,7 +1361,7 @@ class AsyncRawObjectClient:
                 "actualDatetime": actual_datetime,
             },
             headers={
-                "Idempotency-Key": str(uuid.uuid4()),
+                "Idempotency-Key": generate_idempotency_key(),
             },
             request_options=request_options,
             omit=OMIT,
