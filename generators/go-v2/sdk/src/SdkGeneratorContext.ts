@@ -437,13 +437,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public callGenerateIdempotencyKey(): go.FuncInvocation {
+    public callSetIdempotencyKeyHeader(headers: go.AstNode): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
-                name: "GenerateIdempotencyKey",
+                name: "SetIdempotencyKeyHeader",
                 importPath: this.getCoreImportPath()
             }),
-            arguments_: [],
+            arguments_: [headers],
             multiline: false
         });
     }

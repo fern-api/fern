@@ -963,18 +963,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             const idempotencyKeyGeneration = this.context.getIdempotencyKeyGeneration(endpoint);
             if (idempotencyKeyGeneration != null) {
                 writer.writeNewLineIfLastLineNot();
-                writer.write("if headers.Get(");
-                writer.writeNode(go.TypeInstantiation.string(idempotencyKeyGeneration.headerName));
-                writer.writeLine(') == "" {');
-                writer.indent();
-                writer.write("headers.Set(");
-                writer.writeNode(go.TypeInstantiation.string(idempotencyKeyGeneration.headerName));
-                writer.write(", ");
-                writer.writeNode(this.context.callGenerateIdempotencyKey());
-                writer.write(")");
+                writer.writeNode(this.context.callSetIdempotencyKeyHeader(go.codeblock("headers")));
                 writer.newLine();
-                writer.dedent();
-                writer.writeLine("}");
             }
         });
     }

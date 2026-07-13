@@ -49,9 +49,7 @@ func (r *RawClient) Create(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	if headers.Get("Idempotency-Key") == "" {
-		headers.Set("Idempotency-Key", core.GenerateIdempotencyKey())
-	}
+	core.SetIdempotencyKeyHeader(headers)
 
 	var response uuid.UUID
 	raw, err := r.caller.Call(
