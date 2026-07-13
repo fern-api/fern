@@ -532,7 +532,9 @@ export class DynamicTypeInstantiationMapper {
                 const baseGoType = this.getGoTypeString(baseProperty.typeReference);
                 const carriedByEveryVariant = declaredByEveryVariant.every((declared) => {
                     const variantProperty = declared.get(wireValue);
-                    return variantProperty != null && this.getGoTypeString(variantProperty.typeReference) === baseGoType;
+                    return (
+                        variantProperty != null && this.getGoTypeString(variantProperty.typeReference) === baseGoType
+                    );
                 });
                 if (carriedByEveryVariant) {
                     deduped.add(wireValue);
