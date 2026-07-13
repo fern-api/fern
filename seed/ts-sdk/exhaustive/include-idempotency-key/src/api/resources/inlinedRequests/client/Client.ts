@@ -3,7 +3,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import { generateIdempotencyKey } from "../../../../core/idempotency.js";
+import { getIdempotencyHeaders } from "../../../../core/idempotency.js";
 import * as core from "../../../../core/index.js";
 import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
@@ -67,7 +67,7 @@ export class InlinedRequestsClient {
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "Idempotency-Key": generateIdempotencyKey() }),
+            getIdempotencyHeaders(),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -140,7 +140,8 @@ export class InlinedRequestsClient {
         const { "X-Custom-Header": xCustomHeader, body: _body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-Custom-Header": xCustomHeader, "Idempotency-Key": generateIdempotencyKey() }),
+            getIdempotencyHeaders(),
+            mergeOnlyDefinedHeaders({ "X-Custom-Header": xCustomHeader }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({

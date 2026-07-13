@@ -7,6 +7,19 @@ import { Project } from "ts-morph";
 const asIsFilePath = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("assets/asIs"));
 
 const DEFAULT_PACKAGE_PATH = "src";
+const DEFAULT_IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
+
+/**
+ * The `core/idempotency.ts` helper hardcodes the default `Idempotency-Key` header name so it lives
+ * in exactly one place instead of being repeated at every endpoint call site. When the SDK is
+ * configured with a custom header name, swap it in here.
+ */
+export function substituteIdempotencyKeyHeaderName(fileContent: string, idempotencyKeyHeaderName: string): string {
+    if (idempotencyKeyHeaderName === DEFAULT_IDEMPOTENCY_KEY_HEADER) {
+        return fileContent;
+    }
+    return fileContent.replace(`"${DEFAULT_IDEMPOTENCY_KEY_HEADER}"`, JSON.stringify(idempotencyKeyHeaderName));
+}
 export namespace AsIsManager {
     export interface Init {
         useBigInt: boolean;
@@ -17,6 +30,7 @@ export namespace AsIsManager {
         formatter: "prettier" | "biome" | "oxfmt" | "none";
         linter: "biome" | "oxlint" | "none";
         autoGenerateIdempotencyKey: boolean;
+        idempotencyKeyHeaderName: string;
     }
 }
 
@@ -29,6 +43,7 @@ export class AsIsManager {
     private readonly formatter: "prettier" | "biome" | "oxfmt" | "none";
     private readonly linter: "biome" | "oxlint" | "none";
     private readonly autoGenerateIdempotencyKey: boolean;
+    private readonly idempotencyKeyHeaderName: string;
 
     constructor({
         useBigInt,
@@ -38,7 +53,8 @@ export class AsIsManager {
         generatorType,
         formatter,
         linter,
-        autoGenerateIdempotencyKey
+        autoGenerateIdempotencyKey,
+        idempotencyKeyHeaderName
     }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
@@ -48,6 +64,7 @@ export class AsIsManager {
         this.formatter = formatter;
         this.linter = linter;
         this.autoGenerateIdempotencyKey = autoGenerateIdempotencyKey;
+        this.idempotencyKeyHeaderName = idempotencyKeyHeaderName;
     }
 
     /**
@@ -144,7 +161,10 @@ export class AsIsManager {
                 }
             } else {
                 // Handle direct file mapping
-                const fileContent = await fs.readFile(path.join(asIsFilePath, sourcePattern), "utf-8");
+                let fileContent = await fs.readFile(path.join(asIsFilePath, sourcePattern), "utf-8");
+                if (sourcePattern === "core/idempotency.ts") {
+                    fileContent = substituteIdempotencyKeyHeaderName(fileContent, this.idempotencyKeyHeaderName);
+                }
                 project.createSourceFile(targetPattern, fileContent, { overwrite: true });
             }
         }

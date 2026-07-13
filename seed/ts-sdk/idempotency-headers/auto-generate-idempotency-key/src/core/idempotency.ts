@@ -16,3 +16,11 @@ export function generateIdempotencyKey(): string {
         return value.toString(16);
     });
 }
+
+/**
+ * Returns the auto-generated idempotency-key header. The header name is fixed for the SDK,
+ * so it lives here rather than being repeated at every endpoint call site.
+ */
+export function getIdempotencyHeaders(): Record<string, string> {
+    return { "Idempotency-Key": generateIdempotencyKey() };
+}

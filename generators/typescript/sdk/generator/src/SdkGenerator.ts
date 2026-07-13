@@ -628,7 +628,9 @@ export class SdkGenerator {
             generatorType: "sdk",
             formatter: config.formatter,
             linter: config.linter,
-            autoGenerateIdempotencyKey: intermediateRepresentation.sdkConfig.idempotencyKeyGeneration != null
+            autoGenerateIdempotencyKey: intermediateRepresentation.sdkConfig.idempotencyKeyGeneration != null,
+            idempotencyKeyHeaderName:
+                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key"
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({

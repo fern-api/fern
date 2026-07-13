@@ -987,7 +987,7 @@ describe("generateHeaders", () => {
         });
 
         const text = statementsToString(result);
-        expect(text).toContain('"Idempotency-Key": generateIdempotencyKey()');
+        expect(text).toContain("getIdempotencyHeaders()");
     });
 
     it.each([
@@ -1008,7 +1008,7 @@ describe("generateHeaders", () => {
         });
 
         const text = statementsToString(result);
-        expect(text).not.toContain("generateIdempotencyKey");
+        expect(text).not.toContain("getIdempotencyHeaders");
     });
 
     it("respects a custom IR methods list (PATCH eligible, POST not)", () => {
@@ -1025,7 +1025,7 @@ describe("generateHeaders", () => {
         });
 
         const text = statementsToString(result);
-        expect(text).toContain('"Idempotency-Key": generateIdempotencyKey()');
+        expect(text).toContain("getIdempotencyHeaders()");
     });
 
     it("does not auto-generate an Idempotency-Key header on POST when the IR has no idempotencyKeyGeneration", () => {
@@ -1043,10 +1043,10 @@ describe("generateHeaders", () => {
         });
 
         const text = statementsToString(result);
-        expect(text).not.toContain("generateIdempotencyKey");
+        expect(text).not.toContain("getIdempotencyHeaders");
     });
 
-    it("uses the IR header name when auto-generating", () => {
+    it("merges the shared getIdempotencyHeaders() helper regardless of the configured header name", () => {
         const result = generateHeaders({
             context: createMockContext(),
             intermediateRepresentation: {
@@ -1065,8 +1065,11 @@ describe("generateHeaders", () => {
             idempotencyHeaders: []
         });
 
+        // The header name is baked into the shared `getIdempotencyHeaders()` helper (see
+        // AsIsManager.substituteIdempotencyKeyHeaderName), so it is not repeated at the call site.
         const text = statementsToString(result);
-        expect(text).toContain('"X-Custom-Idem": generateIdempotencyKey()');
+        expect(text).toContain("getIdempotencyHeaders()");
+        expect(text).not.toContain("X-Custom-Idem");
     });
 
     it("falls back to generateIdempotencyKey when a declared Idempotency-Key is provided and the method is IR-eligible", () => {

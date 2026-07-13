@@ -2,8 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import { generateIdempotencyKey } from "../../../../../../core/idempotency.js";
+import { mergeHeaders } from "../../../../../../core/headers.js";
+import { getIdempotencyHeaders } from "../../../../../../core/idempotency.js";
 import * as core from "../../../../../../core/index.js";
 import { mergeAdditionalBodyParameters } from "../../../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
@@ -434,7 +434,7 @@ export class ParamsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "Idempotency-Key": generateIdempotencyKey() }),
+            getIdempotencyHeaders(),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -498,7 +498,7 @@ export class ParamsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "Idempotency-Key": generateIdempotencyKey() }),
+            getIdempotencyHeaders(),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -563,7 +563,7 @@ export class ParamsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "Idempotency-Key": generateIdempotencyKey() }),
+            getIdempotencyHeaders(),
             _binaryUploadRequest.headers,
             requestOptions?.headers,
         );
@@ -636,7 +636,7 @@ export class ParamsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "Idempotency-Key": generateIdempotencyKey() }),
+            getIdempotencyHeaders(),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -707,7 +707,7 @@ export class ParamsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "Idempotency-Key": generateIdempotencyKey() }),
+            getIdempotencyHeaders(),
             _binaryUploadRequest.headers,
             requestOptions?.headers,
         );
