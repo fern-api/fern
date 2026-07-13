@@ -118,17 +118,39 @@ function parseIdempotencyKeyMethods(value: unknown): HttpMethod[] {
  *       header-name: "Idempotency-Key"
  *       methods: ["POST", "PUT"]
  *
- * Lookup: `config["auto-generate-idempotency-key"]`. Returns `undefined` when disabled.
+ * The value may be set per-generator (under a generator's `config`) or globally at the top level
+ * of `generators.yml`; the per-generator value overrides the global one. That precedence is
+ * resolved at configuration-load time and stamped onto the invocation. Returns `undefined` when
+ * disabled.
  */
 export function getIdempotencyKeyGenerationFromGeneratorConfig(
     generatorInvocation: generatorsYml.GeneratorInvocation
 ): IdempotencyKeyGeneration | undefined {
+    // The effective config (per-generator `config.auto-generate-idempotency-key` falling back to the
+    // global generators.yml default) is resolved and stamped onto the invocation at configuration-load
+    // time. Fall back to reading the per-generator config directly for callers that build invocations
+    // without going through the loader.
+    const value =
+        generatorInvocation.idempotencyKeyGenerationConfig ??
+        getRawPerGeneratorIdempotencyKeyConfig(generatorInvocation);
+    return resolveIdempotencyKeyGeneration(value);
+}
+
+/** Reads the raw `auto-generate-idempotency-key` value from a generator's own `config` block. */
+function getRawPerGeneratorIdempotencyKeyConfig(generatorInvocation: generatorsYml.GeneratorInvocation): unknown {
     if (typeof generatorInvocation.raw?.config !== "object" || generatorInvocation.raw?.config === null) {
         return undefined;
     }
-    const value = (generatorInvocation.raw.config as { "auto-generate-idempotency-key"?: unknown })[
+    return (generatorInvocation.raw.config as { "auto-generate-idempotency-key"?: unknown })[
         "auto-generate-idempotency-key"
     ];
+}
+
+/**
+ * Normalizes a raw `auto-generate-idempotency-key` value (boolean shorthand or object) into the
+ * resolved IR shape. Returns `undefined` when disabled.
+ */
+export function resolveIdempotencyKeyGeneration(value: unknown): IdempotencyKeyGeneration | undefined {
     if (value === true) {
         return { headerName: DEFAULT_IDEMPOTENCY_KEY_HEADER, methods: DEFAULT_IDEMPOTENCY_KEY_METHODS };
     }
