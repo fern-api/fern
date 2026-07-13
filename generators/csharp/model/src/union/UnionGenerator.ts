@@ -1031,7 +1031,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 continue;
             }
             properties.push({
-                name: this.getBasePropertyName(baseProperty.name),
+                name: this.getBasePropertyName(baseProperty),
                 value: this.exampleGenerator.getSnippetForTypeReference({
                     exampleTypeReference: exampleProperty.value,
                     parseDatetimes
@@ -1042,11 +1042,21 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     }
 
     /**
-     * The envelope's C# property name for a base property. Uses the shared naming helper so the
-     * object-initializer name matches the field the union envelope actually generates.
+     * The envelope's C# property name for a base property. Resolves through the shared name registry
+     * so the object-initializer name matches the exact field the envelope generates — including any
+     * keyword/builtin/collision redirection (e.g. a base property named `getHashCode` becomes
+     * `GetHashCode_`, which the naming heuristic alone cannot see). Falls back to the heuristic only
+     * if the envelope's fields have not been registered yet (its `doGenerate` has not run).
      */
-    private getBasePropertyName(name: FernIr.NameAndWireValueOrString): string {
-        return getGeneratedPropertyName({ context: this.context, className: this.classReference.name, name });
+    private getBasePropertyName(baseProperty: FernIr.ObjectProperty): string {
+        return (
+            this.model.registry.getFieldNameByOrigin(baseProperty) ??
+            getGeneratedPropertyName({
+                context: this.context,
+                className: this.classReference.name,
+                name: baseProperty.name
+            })
+        );
     }
 
     public doGenerateSnippet({
