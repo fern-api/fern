@@ -41,7 +41,8 @@ module Seed
       headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}" if !username.nil? && !password.nil?
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
-        headers: headers.merge(@auth_provider.nil? ? {} : @auth_provider.auth_headers),
+        headers: headers,
+        auth_provider: @auth_provider,
         max_retries: max_retries
       )
     end

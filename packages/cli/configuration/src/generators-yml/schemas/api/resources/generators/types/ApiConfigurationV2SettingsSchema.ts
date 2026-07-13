@@ -10,4 +10,26 @@ import type * as GeneratorsYml from "../../../index.js";
  */
 export interface ApiConfigurationV2SettingsSchema
     extends GeneratorsYml.OpenApiSettingsSchema,
-        GeneratorsYml.AsyncApiSettingsSchema {}
+        GeneratorsYml.AsyncApiSettingsSchema {
+    /**
+     * Enable idempotency-key auto-generation for every generator in this API, so it
+     * does not have to be set on each generator's `config`. When enabled, generators
+     * auto-generate an idempotency key header on retry-unsafe (POST/PUT) requests
+     * unless the caller supplies one.
+     *
+     * Accepts either a boolean shorthand or an object with an optional custom
+     * header name and eligible-method list:
+     * ```yaml
+     * api:
+     *   settings:
+     *     auto-generate-idempotency-key: true
+     *     # or
+     *     auto-generate-idempotency-key:
+     *       header-name: "Idempotency-Key"
+     *       methods: ["POST", "PUT"]
+     * ```
+     * A generator's own `config.auto-generate-idempotency-key` overrides this
+     * value for that generator.
+     */
+    "auto-generate-idempotency-key"?: unknown;
+}
