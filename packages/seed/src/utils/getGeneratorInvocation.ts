@@ -47,11 +47,17 @@ export async function getGeneratorInvocation({
               }
             : undefined;
 
+    const idempotencyKeyGenerationConfig =
+        typeof customConfig === "object" && customConfig !== null
+            ? (customConfig as { "auto-generate-idempotency-key"?: unknown })["auto-generate-idempotency-key"]
+            : undefined;
+
     return {
         name: docker.name,
         containerImage: undefined,
         version: docker.version,
         config: customConfig,
+        idempotencyKeyGenerationConfig,
         outputMode: await getOutputMode({ outputMode, language, fixtureName, publishConfig }),
         absolutePathToLocalOutput: absolutePathToOutput,
         absolutePathToLocalSnippets: undefined,

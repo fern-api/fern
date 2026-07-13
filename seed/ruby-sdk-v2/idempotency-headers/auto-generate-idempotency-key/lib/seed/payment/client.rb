@@ -21,7 +21,7 @@ module Seed
       # @return [String]
       def create(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        headers = { "Idempotency-Key" => request_options[:idempotency_key] || SecureRandom.uuid }
+        headers = { "Idempotency-Key" => request_options[:idempotency_key] || Seed::Internal::IdempotencyKey.generate }
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

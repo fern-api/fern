@@ -351,9 +351,12 @@ export class HttpEndpointGenerator {
             this.context.ir.idempotencyHeaders.some(
                 (header) => getWireValue(header.name).toLowerCase() === headerName.toLowerCase()
             );
+        // Generation of the key lives in a single core helper so the underlying
+        // source of randomness is not repeated at every eligible endpoint.
+        const generateExpression = `${this.context.getRootModuleName()}::Internal::IdempotencyKey.generate`;
         const expression = declaresIdempotencyKey
-            ? "request_options[:idempotency_key] || SecureRandom.uuid"
-            : "SecureRandom.uuid";
+            ? `request_options[:idempotency_key] || ${generateExpression}`
+            : generateExpression;
         return { headerName, expression };
     }
 
