@@ -1959,9 +1959,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 // in the IR. Emitted before the declared idempotency headers and request-option headers
                 // so a caller-provided value wins.
                 if (this.context.shouldAutoGenerateIdempotencyKey(endpoint)) {
-                    writer.writeLine(
-                        `.Add(${JSON.stringify(this.context.getIdempotencyKeyGenerationHeaderName())}, global::System.Guid.NewGuid().ToString())`
-                    );
+                    writer.writeLine(".AddIdempotencyHeader()");
                 }
 
                 if (endpoint.idempotent) {

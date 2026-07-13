@@ -214,9 +214,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // so a caller-provided value wins.
                 if (this.context.shouldAutoGenerateIdempotencyKey(this.endpoint)) {
                     writer.writeLine();
-                    writer.write(
-                        `.Add(${JSON.stringify(this.context.getIdempotencyKeyGenerationHeaderName())}, global::System.Guid.NewGuid().ToString())`
-                    );
+                    writer.write(".AddIdempotencyHeader()");
                 }
 
                 // For idempotent requests, add idempotency headers (as Dictionary<string, string>)

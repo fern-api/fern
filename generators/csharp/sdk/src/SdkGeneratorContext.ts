@@ -200,6 +200,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasFormUrlEncodedEndpoints()) {
             files.push(AsIsFiles.FormRequest);
         }
+        if (this.isIdempotencyKeyAutoGenerationEnabled()) {
+            files.push(AsIsFiles.IdempotencyHeaderExtensions);
+        }
 
         if (this.settings.includeExceptionHandler) {
             files.push(AsIsFiles.ExceptionHandler);

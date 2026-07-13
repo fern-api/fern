@@ -24,7 +24,7 @@ public partial class NoAuthClient : INoAuthClient
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add("Idempotency-Key", global::System.Guid.NewGuid().ToString())
+            .AddIdempotencyHeader()
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);

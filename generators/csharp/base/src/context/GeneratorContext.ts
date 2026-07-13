@@ -230,6 +230,15 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     /**
+     * Returns true when the IR requests idempotency-key auto-generation for the SDK (regardless of a
+     * particular endpoint's method). Used to decide whether to emit the shared
+     * `AddIdempotencyHeader` helper.
+     */
+    public isIdempotencyKeyAutoGenerationEnabled(): boolean {
+        return this.ir.sdkConfig.idempotencyKeyGeneration != null;
+    }
+
+    /**
      * The wire header name used for the auto-generated idempotency key, sourced from the IR. Defaults
      * to `Idempotency-Key` when the IR does not supply one.
      */

@@ -25,7 +25,7 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
             .Add("X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader)
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
-            .Add("Idempotency-Key", global::System.Guid.NewGuid().ToString())
+            .AddIdempotencyHeader()
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);
