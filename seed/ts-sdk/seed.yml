@@ -309,6 +309,9 @@ fixtures:
   oauth-client-credentials-reference:
     - outputFolder: .
       customConfig: null
+  ts-oauth-token-optional:
+    - outputFolder: no-custom-config
+      customConfig: null
   mixed-case:
     - outputFolder: no-custom-config
       customConfig: null
