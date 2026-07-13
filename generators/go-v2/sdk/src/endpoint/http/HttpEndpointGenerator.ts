@@ -1229,14 +1229,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getContentTypeHeaderValue({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
-        // OAuth 2.0 token endpoints must use form-urlencoded encoding (RFC 6749 §4.4.2).
+        const declaredContentType = this.getDeclaredContentTypeHeaderValue({ endpoint });
+        // OAuth 2.0 token endpoints default to form-urlencoded encoding (RFC 6749 §4.4.2),
+        // but honor an explicitly declared request content-type (e.g. application/json)
+        // for non-RFC-standard token endpoints that consume JSON.
         const oauthScheme = getOAuthClientCredentialsScheme(this.context.ir);
         if (oauthScheme?.configuration?.type === "clientCredentials") {
             const tokenEndpointId = oauthScheme.configuration.tokenEndpoint.endpointReference.endpointId;
             if (endpoint.id === tokenEndpointId) {
-                return "application/x-www-form-urlencoded";
+                return declaredContentType ?? "application/x-www-form-urlencoded";
             }
         }
+        return declaredContentType;
+    }
+
+    private getDeclaredContentTypeHeaderValue({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
         const sdkRequest = endpoint.sdkRequest;
         if (sdkRequest == null) {
             return undefined;

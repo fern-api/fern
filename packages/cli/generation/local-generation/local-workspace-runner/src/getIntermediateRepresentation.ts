@@ -2,6 +2,7 @@ import {
     detectCiProvider,
     detectInvocationSource,
     FernWorkspace,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getUserAgentTemplateFromGeneratorConfig
@@ -52,6 +53,7 @@ export async function getIntermediateRepresentation({
     ir?: IntermediateRepresentation;
 }): Promise<getIntermediateRepresentation.Return> {
     const resolvedUserAgentTemplate = userAgentTemplate ?? getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
+    const idempotencyKeyGeneration = getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation);
     const intermediateRepresentation =
         ir ??
         generateIntermediateRepresentation({
@@ -68,6 +70,7 @@ export async function getIntermediateRepresentation({
             version,
             packageName,
             userAgentTemplate: resolvedUserAgentTemplate,
+            idempotencyKeyGeneration,
             organization,
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),

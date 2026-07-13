@@ -139,7 +139,7 @@ function getAccessFromRootClient({
     service: FernIr.HttpService;
 }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.getModuleName(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
@@ -331,7 +331,7 @@ function getSourceFilePath({
     service: FernIr.HttpService;
 }): string | undefined {
     const modulePath = context.getModulePath().replace(/-/g, "_");
-    const pathParts = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
+    const pathParts = service.name.fernFilepath.allParts.map((part) => context.getModuleName(part));
     if (pathParts.length === 0) {
         return `src/${modulePath}/client.py`;
     }

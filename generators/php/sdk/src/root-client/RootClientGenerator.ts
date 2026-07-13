@@ -50,6 +50,7 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 };
 
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
+const GET_PLATFORM_USER_AGENT = "getPlatformUserAgent";
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly case: CaseConverter;
@@ -164,8 +165,23 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         }
 
-        if (constructorParameters.optional.some((parameter) => parameter.environmentVariable != null)) {
+        // Under `any`-composed multi-scheme auth, missing creds fall back to the env
+        // var but never throw (the caller may be using another scheme), so the
+        // getFromEnvOrThrow helper is not emitted.
+        if (
+            !this.isAnyAuthWithMultipleSchemes() &&
+            constructorParameters.optional.some((parameter) => parameter.environmentVariable != null)
+        ) {
             class_.addMethod(this.getFromEnvOrThrowMethod());
+        }
+
+        const userAgent = this.context.getUserAgent();
+        if (
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.customConfig.includePlatformHeaders &&
+            userAgent != null
+        ) {
+            class_.addMethod(this.getPlatformUserAgentMethod(userAgent.value));
         }
 
         return this.newRootClientFile(class_);
@@ -180,6 +196,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }): php.Class.Constructor {
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
+        // Under `any`-composed auth with more than one scheme, each scheme's
+        // credentials are independently optional: the caller supplies exactly one
+        // scheme's creds. We must not throw for missing creds, must set each
+        // scheme's header only when its cred is present, and must only wire up a
+        // token provider when that scheme's creds were actually supplied.
+        const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
 
         const parameters: php.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {
@@ -238,7 +260,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         }
         for (const param of constructorParameters.optional) {
-            if (param.header != null && param.environmentVariable != null) {
+            // Under `any`-composed multi-scheme auth, env-var-backed auth headers are
+            // written conditionally below (only when the cred is present) instead of
+            // being baked into the static default headers map.
+            if (param.header != null && param.environmentVariable != null && !anyAuthMultiScheme) {
                 // Variables backed by an environment variable can be instantiated in-line.
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
@@ -276,7 +301,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             if (userAgent != null) {
                 headerEntries.push({
                     key: php.codeblock(`'${userAgent.header}'`),
-                    value: php.codeblock(`'${userAgent.value}'`)
+                    value: this.context.customConfig.includePlatformHeaders
+                        ? php.codeblock(
+                              `self::${GET_PLATFORM_USER_AGENT}(strtolower(PHP_OS), php_uname('m'), PHP_VERSION)`
+                          )
+                        : php.codeblock(`'${userAgent.value}'`)
                 });
             }
         }
@@ -326,6 +355,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             writer.writeTextStatement(
                                 `$${param.name} ??= ($envValue !== false ? $envValue : '${escaped}')`
                             );
+                        } else if (anyAuthMultiScheme) {
+                            // Fall back to the env var if present, but do not throw when it is
+                            // missing — the caller may be authenticating with another scheme.
+                            writer.writeTextStatement(
+                                `$${param.name} ??= getenv('${param.environmentVariable}') ?: null`
+                            );
                         } else {
                             writer.write(`$${param.name} ??= `);
                             writer.writeNodeStatement(
@@ -354,7 +389,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
                 for (const param of constructorParameters.optional) {
-                    if (param.header != null && param.environmentVariable == null) {
+                    if (param.header != null && (param.environmentVariable == null || anyAuthMultiScheme)) {
                         writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
@@ -386,7 +421,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     .map((scheme) => this.resolveBasicAuthScheme(scheme))
                     .filter((resolved) => resolved != null);
                 if (resolvedBasicAuthSchemes.length > 0) {
-                    const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                    const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory || anyAuthMultiScheme;
                     const needsControlFlow = isAuthOptional || resolvedBasicAuthSchemes.length > 1;
                     let hasWrittenIf = false;
                     for (const resolved of resolvedBasicAuthSchemes) {
@@ -447,13 +482,38 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
                 // OAuth and inferred auth provider setup - moved after environment setup
                 const oauth = this.context.getOauth();
-                if (oauth != null && oauth.configuration.type === "clientCredentials") {
-                    this.writeOAuthProviderSetup(writer, oauth, isMultiUrl);
+                const inferredAuth = this.context.getInferredAuth();
+                const hasOAuth = oauth != null && oauth.configuration.type === "clientCredentials";
+                const hasInferredAuth = inferredAuth != null;
+                const oauthCredGuard = "$clientId !== null && $clientSecret !== null";
+                const inferredCredGuard =
+                    inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
+
+                if (hasOAuth && oauth != null) {
+                    if (anyAuthMultiScheme) {
+                        writer.controlFlow("if", php.codeblock(oauthCredGuard));
+                    }
+                    this.writeOAuthProviderSetup(writer, oauth, isMultiUrl, anyAuthMultiScheme);
+                    if (anyAuthMultiScheme) {
+                        writer.endControlFlow();
+                    }
                 }
 
-                const inferredAuth = this.context.getInferredAuth();
-                if (inferredAuth != null) {
-                    this.writeInferredAuthProviderSetup(writer, inferredAuth, isMultiUrl, constructorParameters);
+                if (hasInferredAuth && inferredAuth != null) {
+                    const guardInferred = anyAuthMultiScheme && inferredCredGuard != null;
+                    if (guardInferred) {
+                        writer.controlFlow("if", php.codeblock(inferredCredGuard));
+                    }
+                    this.writeInferredAuthProviderSetup(
+                        writer,
+                        inferredAuth,
+                        isMultiUrl,
+                        constructorParameters,
+                        guardInferred
+                    );
+                    if (guardInferred) {
+                        writer.endControlFlow();
+                    }
                 }
 
                 // Update client options with the updated headers
@@ -475,10 +535,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.writeLine();
 
                 // Build the RawClient options, including getAuthHeaders callback if using OAuth or InferredAuth
-                const hasOAuth = oauth != null && oauth.configuration.type === "clientCredentials";
-                const hasInferredAuth = inferredAuth != null;
-
                 if (hasOAuth || hasInferredAuth) {
+                    // Only install the getAuthHeaders callback when the corresponding token
+                    // provider was set up; under `any`-composed auth that only happens when
+                    // the scheme's creds were supplied.
+                    const callbackGuard = anyAuthMultiScheme ? (hasOAuth ? oauthCredGuard : inferredCredGuard) : null;
+                    if (callbackGuard != null) {
+                        writer.controlFlow("if", php.codeblock(callbackGuard));
+                    }
                     writer.writeLine(`$this->${this.context.getClientOptionsName()}['getAuthHeaders'] = fn () => `);
                     if (hasOAuth) {
                         writer.writeLine(
@@ -486,6 +550,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         );
                     } else if (hasInferredAuth) {
                         writer.writeLine("    $this->inferredAuthProvider->getAuthHeaders();");
+                    }
+                    if (callbackGuard != null) {
+                        writer.endControlFlow();
                     }
                     writer.writeLine();
                 }
@@ -569,6 +636,35 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         });
     }
 
+    private getPlatformUserAgentMethod(baseUserAgent: string): php.Method {
+        const escapedBase = baseUserAgent.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+        return php.method({
+            access: "private",
+            static_: true,
+            name: GET_PLATFORM_USER_AGENT,
+            return_: php.Type.string(),
+            parameters: [
+                php.parameter({ name: "os", type: php.Type.string() }),
+                php.parameter({ name: "arch", type: php.Type.string() }),
+                php.parameter({ name: "runtimeVersion", type: php.Type.string() })
+            ],
+            body: php.codeblock((writer) => {
+                // Collapse the 64-bit x86 aliases (x64, amd64, x86_64) to the canonical x86_64.
+                writer.writeTextStatement(
+                    "$arch = in_array(strtolower($arch), ['x64', 'amd64', 'x86_64'], true) ? 'x86_64' : $arch"
+                );
+                writer.writeTextStatement(
+                    "$segments = array_values(array_filter([$os, $arch], fn ($value) => $value !== ''))"
+                );
+                writer.writeTextStatement(
+                    "$platform = count($segments) > 0 ? ' (' . implode('; ', $segments) . ')' : ''"
+                );
+                writer.writeTextStatement("$runtime = $runtimeVersion !== '' ? 'PHP/' . $runtimeVersion : 'PHP'");
+                writer.writeTextStatement(`return '${escapedBase}' . $platform . ' ' . $runtime`);
+            })
+        });
+    }
+
     private getConstructorParameters(): ConstructorParameters {
         const allParameters: ConstructorParameter[] = [];
         const requiredParameters: ConstructorParameter[] = [];
@@ -611,7 +707,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getParameterForAuthScheme(scheme: FernIr.AuthScheme): ConstructorParameter[] {
-        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory || this.isAnyAuthWithMultipleSchemes();
         switch (scheme.type) {
             case "bearer": {
                 const name = this.context.getParameterName(scheme.token);
@@ -836,11 +932,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         // Only add null-check conditions for params without environment variable fallbacks.
         // Params with env vars are guaranteed non-null after the ??= getFromEnvOrThrow assignment.
+        // Under `any`-composed multi-scheme auth env vars do NOT throw when unset, so the
+        // credentials may be null even with an env var and must always be guarded.
+        const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
         const conditions: string[] = [];
-        if (!usernameOmitted && scheme.usernameEnvVar == null) {
+        if (!usernameOmitted && (scheme.usernameEnvVar == null || anyAuthMultiScheme)) {
             conditions.push(`$${usernameName} !== null`);
         }
-        if (!passwordOmitted && scheme.passwordEnvVar == null) {
+        if (!passwordOmitted && (scheme.passwordEnvVar == null || anyAuthMultiScheme)) {
             conditions.push(`$${passwordName} !== null`);
         }
 
@@ -868,7 +967,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
-    private writeOAuthProviderSetup(writer: php.Writer, oauth: FernIr.OAuthScheme, isMultiUrl: boolean): void {
+    private writeOAuthProviderSetup(
+        writer: php.Writer,
+        oauth: FernIr.OAuthScheme,
+        isMultiUrl: boolean,
+        guarded = false
+    ): void {
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -902,9 +1006,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$this->oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
-        const clientIdFallback = oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
+        // When wrapped in a credential guard (any-composed auth), clientId/clientSecret
+        // are non-null inside the block, so the `?? ''` fallback would be redundant.
+        const clientIdFallback =
+            guarded || oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
         const clientSecretFallback =
-            oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
+            guarded || oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
         const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
         const extraArgs = getOAuthTokenRequestProperties(
             this.context,
@@ -916,7 +1023,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): ConstructorParameter[] {
-        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory || this.isAnyAuthWithMultipleSchemes();
         const parameters: ConstructorParameter[] = [];
 
         // Get the token endpoint to extract request properties
@@ -987,7 +1094,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer: php.Writer,
         inferredAuth: FernIr.InferredAuthScheme,
         isMultiUrl: boolean,
-        constructorParameters: ConstructorParameters
+        constructorParameters: ConstructorParameters,
+        guarded = false
     ): void {
         const tokenEndpointReference = inferredAuth.tokenEndpoint.endpoint;
         const subpackageId = tokenEndpointReference.subpackageId;
@@ -1043,7 +1151,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                                 const isOptionalParam = constructorParameters.optional.some(
                                     (p: ConstructorParameter) => p.name === paramName
                                 );
-                                if (isOptionalParam) {
+                                if (isOptionalParam && !guarded) {
                                     writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
                                 } else {
                                     writer.writeLine(`'${paramName}' => $${paramName},`);
@@ -1063,7 +1171,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             const isOptionalParam = constructorParameters.optional.some(
                                 (p: ConstructorParameter) => p.name === paramName
                             );
-                            if (isOptionalParam) {
+                            if (isOptionalParam && !guarded) {
                                 writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
                             } else {
                                 writer.writeLine(`'${paramName}' => $${paramName},`);
@@ -1096,6 +1204,29 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             return undefined;
         }
         return { service, endpoint };
+    }
+
+    /**
+     * True when auth is `any`-composed across more than one scheme. In that case
+     * each scheme's credentials are independently optional (the caller supplies
+     * exactly one scheme's creds), so we must not throw for missing creds and must
+     * only wire up a scheme's token provider / header when its creds are present.
+     */
+    private isAnyAuthWithMultipleSchemes(): boolean {
+        return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
+    }
+
+    /**
+     * Builds a PHP boolean expression that is true only when all of an inferred-auth
+     * scheme's (non-literal) credential parameters were supplied. Returns null when
+     * the scheme has no such parameters.
+     */
+    private getInferredAuthCredentialGuard(scheme: FernIr.InferredAuthScheme): string | null {
+        const names = this.getParametersForInferredAuth(scheme).map((param) => param.name);
+        if (names.length === 0) {
+            return null;
+        }
+        return names.map((name) => `$${name} !== null`).join(" && ");
     }
 
     private newRootClientFile(class_: php.Class): PhpFile {

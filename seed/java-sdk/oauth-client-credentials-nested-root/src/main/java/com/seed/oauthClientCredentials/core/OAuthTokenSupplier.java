@@ -8,6 +8,7 @@ import com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentials.resources.auth.types.TokenResponse;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class OAuthTokenSupplier implements Supplier<String> {
@@ -17,7 +18,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private final String clientSecret;
 
-    private final String scope;
+    private final Optional<String> scope;
 
     private final AuthClient authClient;
 
@@ -27,7 +28,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private volatile Instant expiresAt;
 
-    public OAuthTokenSupplier(String clientId, String clientSecret, String scope, AuthClient authClient) {
+    public OAuthTokenSupplier(String clientId, String clientSecret, Optional<String> scope, AuthClient authClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.scope = scope;

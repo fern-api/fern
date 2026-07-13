@@ -52359,6 +52359,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": true,
+    "idempotencyKeyGeneration": null,
     "platformHeaders": {
       "language": "",
       "sdkName": "",

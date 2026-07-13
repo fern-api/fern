@@ -193,6 +193,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # X-Fern-Runtime, X-Fern-Platform, User-Agent) from generated SDK requests.
     omit_fern_headers: bool = False
 
+    # If true, emits a structured `User-Agent` header of the form
+    # `{sdkName}/{version} ({os}; {arch}) Python/{pythonVersion}` that consolidates
+    # platform + runtime information. Disabled by default so existing output is
+    # unchanged. Subject to `omit_fern_headers`.
+    include_platform_headers: bool = False
+
     # The default number of retries for failed requests in the generated SDK.
     # Set to 0 to disable retries by default (useful for non-idempotent APIs).
     # SDK users can still override this per-request via request_options.
