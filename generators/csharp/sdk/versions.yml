@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.73.2
+  changelogEntry:
+    - summary: |
+        Add an opt-in `dedupeUnionBaseProperties` configuration flag (default off, matching the Go
+        generator's flag of the same name) that stops duplicating a discriminated union's base
+        properties on its variant leaves. When enabled and a union declares base properties (e.g. via
+        `infer-discriminated-union-base-properties` or a shared `extends` parent) that a
+        `samePropertiesAsObject` variant also carries, the variant class no longer re-declares them —
+        so required fields like `Name` are set once on the envelope instead of being demanded on both
+        the envelope and the leaf and silently overwritten on serialize. Generated examples set those
+        base properties on the envelope (so they compile), and the union's JSON reader strips
+        union-owned properties before deserializing a variant so they don't leak into the variant's
+        `AdditionalProperties`. Off by default, so existing generated output is unchanged; the default
+        is expected to flip in a future major version with a migration. Variant objects that are used
+        standalone or shared across unions that don't all own the property are left untouched.
+      type: fix
+  createdAt: "2026-07-13"
+  irVersion: 66
 - version: 2.73.1
   changelogEntry:
     - summary: |

@@ -196,6 +196,8 @@ export class Generation {
         shouldGeneratedDiscriminatedUnions: () => this.customConfig["use-discriminated-unions"] ?? true,
         /** When true, generates undiscriminated unions with runtime type detection. Default: false. */
         shouldGenerateUndiscriminatedUnions: () => this.customConfig["use-undiscriminated-unions"] ?? false,
+        /** When true, a discriminated union's base properties are suppressed on `samePropertiesAsObject` variant leaves that duplicate them, so common fields are owned solely by the union envelope. Default: false (base properties are duplicated on the envelope and each leaf). */
+        dedupeUnionBaseProperties: () => this.customConfig["dedupeUnionBaseProperties"] ?? false,
         /** Custom name for the exported public client class. Default: "" (uses clientClassName or computed name). */
         exportedClientClassName: () => this.customConfig["exported-client-class-name"] ?? "",
         /** Custom name for the internal client class. Default: "" (auto-generated from organization/workspace). */
