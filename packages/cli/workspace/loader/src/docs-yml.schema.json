@@ -4299,6 +4299,17 @@
           ],
           "description": "Optional \"Learn more\" link shown alongside the description."
         },
+        "repository": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "@deprecated No longer rendered. Accepted for backwards compatibility so existing docs.yml files that still declare it continue to load; the value is ignored."
+        },
         "install-command": {
           "oneOf": [
             {

@@ -182,6 +182,14 @@ export class DocsDefinitionResolver {
     private taskContext: TaskContext;
     private editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
     private uploadFiles: UploadFilesFn;
+    /**
+     * True only when a real `uploadFiles` was supplied (publish / preview) — i.e. when the
+     * resolved files are actually served. Validation rules (valid-markdown-links,
+     * missing-redirects) construct the resolver with no `uploadFiles` purely to read the
+     * navigation tree; in that mode we skip Agent Skills collection so its validation errors
+     * don't surface as a misattributed failure of an unrelated rule.
+     */
+    private readonly uploadsEnabled: boolean;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
     private buildTranslatedApiDefinitions: boolean;
@@ -194,7 +202,7 @@ export class DocsDefinitionResolver {
         apiWorkspaces,
         taskContext,
         editThisPage,
-        uploadFiles = defaultUploadFiles,
+        uploadFiles,
         registerApi = defaultRegisterApi,
         targetAudiences,
         buildTranslatedApiDefinitions = false
@@ -205,7 +213,8 @@ export class DocsDefinitionResolver {
         this.apiWorkspaces = apiWorkspaces;
         this.taskContext = taskContext;
         this.editThisPage = editThisPage;
-        this.uploadFiles = uploadFiles;
+        this.uploadsEnabled = uploadFiles != null;
+        this.uploadFiles = uploadFiles ?? defaultUploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
@@ -559,8 +568,11 @@ export class DocsDefinitionResolver {
 
         // collect Agent Skills uploads — generated from the docs.yml-declared skills path,
         // or the raw .well-known passthrough when no path is declared — so the docs site
-        // serves them at /.well-known/skills/… and /.well-known/agent-skills/…
-        const agentSkillsUploads = await this.collectAgentSkillsUploads();
+        // serves them at /.well-known/skills/… and /.well-known/agent-skills/…. Skipped when
+        // files aren't being served (validation resolves): skills are validated by the
+        // valid-well-known-skills rule, and collecting here would let its errors surface as a
+        // failure of whichever rule triggered this resolve.
+        const agentSkillsUploads: FilePathPair[] = this.uploadsEnabled ? await this.collectAgentSkillsUploads() : [];
         if (agentSkillsUploads.length > 0) {
             this.taskContext.logger.debug(`Collected ${agentSkillsUploads.length} agent skills files`);
         }

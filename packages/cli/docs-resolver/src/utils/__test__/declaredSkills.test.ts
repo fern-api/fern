@@ -181,6 +181,35 @@ describe("discoverDeclaredSkills", () => {
         );
     });
 
+    it("errors instead of crashing when the declared path is a file, not a directory", async () => {
+        await writeFileAt("AGENTS.md", "# not a directory\n");
+        const filePath = AbsoluteFilePath.of(path.join(skillsDirectory, "AGENTS.md"));
+
+        const { skills, violations } = await discoverDeclaredSkills({ absolutePathToSkillsDirectory: filePath });
+
+        expect(skills).toEqual([]);
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toEqual("error");
+        expect(violations[0]?.message).toContain("is not a directory");
+    });
+
+    it("ignores escaping references shown inside code blocks and inline code", async () => {
+        await writeFileAt(
+            "my-skill/SKILL.md",
+            skillMarkdown(
+                "my-skill",
+                ["An example link:", "```md", "[guide](../guide.md)", "```", "And inline `[x](../y.md)` too.\n"].join(
+                    "\n"
+                )
+            )
+        );
+
+        const { skills, violations } = await discoverDeclaredSkills({ absolutePathToSkillsDirectory: skillsDirectory });
+
+        expect(violations).toEqual([]);
+        expect(skills.map((skill) => skill.name)).toEqual(["my-skill"]);
+    });
+
     it("does not treat files inside a skill as nested skills", async () => {
         await writeFileAt("my-skill/SKILL.md", skillMarkdown("my-skill"));
         await writeFileAt("my-skill/examples/SKILL.md", "not frontmatter");

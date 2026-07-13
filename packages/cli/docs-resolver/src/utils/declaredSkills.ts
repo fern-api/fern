@@ -76,14 +76,14 @@ export async function discoverDeclaredSkills({
 }: {
     absolutePathToSkillsDirectory: AbsoluteFilePath;
 }): Promise<DiscoveredDeclaredSkills> {
-    if (!(await doesPathExist(absolutePathToSkillsDirectory))) {
+    if (!(await doesPathExist(absolutePathToSkillsDirectory, "directory"))) {
         return {
             skills: [],
             violations: [
                 {
                     severity: "error",
                     message:
-                        `Skills path "${absolutePathToSkillsDirectory}" does not exist. ` +
+                        `Skills path "${absolutePathToSkillsDirectory}" does not exist or is not a directory. ` +
                         "page-actions.options.skills.path must point to a directory of agent skills in this repo.",
                     absoluteFilePath: undefined
                 }
@@ -165,7 +165,7 @@ async function findSkillDirectories(directory: AbsoluteFilePath): Promise<Absolu
             continue;
         }
         const subdirectory = join(directory, RelativeFilePath.of(entry.name));
-        if (await doesPathExist(join(subdirectory, RelativeFilePath.of(SKILL_MARKDOWN_FILENAME)))) {
+        if (await doesPathExist(join(subdirectory, RelativeFilePath.of(SKILL_MARKDOWN_FILENAME)), "file")) {
             skillDirectories.push(subdirectory);
         } else {
             skillDirectories.push(...(await findSkillDirectories(subdirectory)));
@@ -317,9 +317,34 @@ async function findReferencesEscapingSkillDirectory({
     return violations;
 }
 
+/**
+ * Removes fenced code blocks (``` / ~~~) and inline code spans (`…`) so that link and image
+ * syntax shown as an *example* inside documentation isn't mistaken for a live reference. A
+ * `../foo` in a code sample is not a real link and must not be flagged as escaping the skill.
+ */
+function stripCodeSpansAndFences(markdown: string): string {
+    const lines = markdown.split("\n");
+    const stripped: string[] = [];
+    let openFence: string | undefined;
+    for (const line of lines) {
+        const fenceChar = line.match(/^\s*(`{3,}|~{3,})/)?.[1]?.[0];
+        if (openFence == null) {
+            if (fenceChar != null) {
+                openFence = fenceChar;
+                continue;
+            }
+            // drop inline code spans (`code`, ``co`de``) before this line is scanned
+            stripped.push(line.replace(/`+[^`]*`+/g, ""));
+        } else if (fenceChar === openFence) {
+            openFence = undefined;
+        }
+    }
+    return stripped.join("\n");
+}
+
 function extractRelativeMarkdownReferences(markdown: string): string[] {
     const targets: string[] = [];
-    for (const match of markdown.matchAll(MARKDOWN_LINK_TARGET_REGEX)) {
+    for (const match of stripCodeSpansAndFences(markdown).matchAll(MARKDOWN_LINK_TARGET_REGEX)) {
         const rawTarget = match[1];
         if (rawTarget == null) {
             continue;

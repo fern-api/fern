@@ -180,6 +180,28 @@ describe("validateDeclaredSkillsPath", () => {
         expect(violations[0]?.message).toContain(".well-known/skills/ is ignored");
     });
 
+    it("still validates the .well-known/agent-skills/ passthrough when a skills path is declared", async () => {
+        await writeFileAt(
+            "agent-skills/best-practices/SKILL.md",
+            "---\nname: best-practices\ndescription: How to use the API well.\n---\n"
+        );
+        // the agent-skills passthrough is still uploaded verbatim, so a malformed bundle there
+        // must be caught even though the declared path is the source of the generated bundle
+        await writeFileAt(".well-known/agent-skills/index.json", "{ not json");
+
+        const violations = await validateDeclaredSkillsPath({
+            absolutePathToFernFolder: fernFolder,
+            absolutePathToSkillsDirectory: declaredSkillsDirectory("agent-skills")
+        });
+        expect(
+            violations.some(
+                (violation) =>
+                    violation.severity === "error" &&
+                    violation.message.includes(".well-known/agent-skills/index.json is not valid JSON")
+            )
+        ).toBe(true);
+    });
+
     it("names files outside the fern folder in the message instead of a relative path", async () => {
         await writeFileAt(
             "agent-skills/best-practices/SKILL.md",

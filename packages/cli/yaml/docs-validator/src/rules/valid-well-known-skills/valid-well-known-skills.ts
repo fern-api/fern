@@ -99,6 +99,15 @@ export async function validateDeclaredSkillsPath({
         });
     }
 
+    // a declared path only generates the .well-known/skills/ bundle; .well-known/agent-skills/
+    // is still uploaded verbatim, so it must keep being validated here too
+    ruleViolations.push(
+        ...(await validateWellKnownSkillsDirectory({
+            absolutePathToFernFolder,
+            wellKnownDirectory: WELL_KNOWN_AGENT_SKILLS_DIRECTORY
+        }))
+    );
+
     return ruleViolations;
 }
 

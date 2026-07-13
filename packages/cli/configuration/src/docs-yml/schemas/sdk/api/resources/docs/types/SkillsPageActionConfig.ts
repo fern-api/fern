@@ -26,6 +26,11 @@ export interface SkillsPageActionConfig {
     /** Optional "Learn more" link shown alongside the description. */
     learnMoreUrl?: string;
     /**
+     * @deprecated No longer rendered. Accepted for backwards compatibility so existing docs.yml
+     * files that still declare it continue to load; the value is ignored.
+     */
+    repository?: string;
+    /**
      * Command(s) used to install the skills, rendered verbatim as a copyable block. Providing a
      * custom command disables the modal's per-skill selection. When omitted, the docs site
      * generates `npx skills add https://<domain>` and per-skill selection appends
