@@ -34,7 +34,7 @@ describe("dynamic IR mirrors the union base-property dedupe facts", () => {
         if (geometry.type !== "discriminatedUnion") {
             throw new Error(`Geometry is not a discriminatedUnion (was ${geometry.type})`);
         }
-        expect(geometry.inheritedBaseProperties.map((property) => property.wireValue)).toEqual(["shape"]);
+        expect((geometry.inheritedBaseProperties ?? []).map((property) => property.wireValue)).toEqual(["shape"]);
     });
 
     it("mirrors deferredUnionBaseProperties onto the dynamic object", () => {

@@ -11,5 +11,5 @@ export interface DiscriminatedUnionType {
      * Wire values of the base properties every variant redeclares with a structurally-equal
      * type. Mirror of UnionTypeDeclaration.inheritedBaseProperties for snippet generators.
      */
-    inheritedBaseProperties: FernIr.dynamic.NameAndWireValue[];
+    inheritedBaseProperties: FernIr.dynamic.NameAndWireValue[] | undefined;
 }

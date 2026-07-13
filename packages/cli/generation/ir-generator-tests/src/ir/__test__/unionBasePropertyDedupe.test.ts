@@ -51,7 +51,7 @@ describe("discriminated-union base-property dedupe facts", () => {
     }
 
     function inheritedWireValues(typeName: string): string[] {
-        return getUnion(typeName).inheritedBaseProperties.map((property) => getWireValue(property));
+        return (getUnion(typeName).inheritedBaseProperties ?? []).map((property) => getWireValue(property));
     }
 
     function deferredWireValues(typeName: string): string[] | undefined {

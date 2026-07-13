@@ -611,7 +611,7 @@ export class DynamicSnippetsConverter {
             declaration,
             discriminant: this.inflateNameAndWireValue(union.discriminant),
             // Mirror the pre-computed regular-IR fact; computed once by the IR generator, never here.
-            inheritedBaseProperties: union.inheritedBaseProperties.map((property) =>
+            inheritedBaseProperties: (union.inheritedBaseProperties ?? []).map((property) =>
                 this.inflateNameAndWireValue(property)
             ),
             types: Object.fromEntries(

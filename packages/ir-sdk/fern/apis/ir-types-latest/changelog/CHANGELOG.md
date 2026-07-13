@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add discriminated-union base-property dedupe facts, computed once during IR
   generation so every generator reads one source of truth instead of re-deriving
   the decision.
-  - `UnionTypeDeclaration.inheritedBaseProperties` (`list<NameAndWireValue>`):
+  - `UnionTypeDeclaration.inheritedBaseProperties` (`optional<list<NameAndWireValue>>`):
     base properties that *every* `samePropertiesAsObject` variant redeclares with a
     structurally-equal type (resolving `extends` and alias chains). For
     envelope-dropping generators (e.g. Go).

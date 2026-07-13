@@ -16,7 +16,7 @@ export interface UnionTypeDeclaration {
      * delegating to the active variant. Empty when the union has no such redundant base
      * properties. Computed by the IR generator; consumers must not recompute it.
      */
-    inheritedBaseProperties: FernIr.NameAndWireValue[];
+    inheritedBaseProperties: FernIr.NameAndWireValue[] | undefined;
     /**
      * The default union variant to use when the discriminant field is missing from input.
      * When set, generators should fall back to this variant rather than an unknown/error type.

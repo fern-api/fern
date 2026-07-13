@@ -166,7 +166,7 @@ types:
           collapse the duplication — e.g. by owning the field solely on the union envelope and
           delegating to the active variant. Empty when the union has no such redundant base
           properties. Computed by the IR generator; consumers must not recompute it.
-        type: list<commons.NameAndWireValue>
+        type: optional<list<commons.NameAndWireValue>>
       default:
         docs: |
           The default union variant to use when the discriminant field is missing from input.
