@@ -1021,7 +1021,7 @@ export class EndpointSnippetGenerator {
     private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
             return `${endpoint.declaration.fernFilepath.allParts
-                .map((val) => this.context.getMethodName(val))
+                .map((val) => this.context.getModuleName(val))
                 .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
         }
         return this.context.getMethodName(endpoint.declaration.name);
