@@ -1052,7 +1052,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
         return (
             this.model.registry.getFieldNameByOrigin(baseProperty) ??
             getGeneratedPropertyName({
-                context: this.context,
+                caseConverter: this.case,
                 className: this.classReference.name,
                 name: baseProperty.name
             })

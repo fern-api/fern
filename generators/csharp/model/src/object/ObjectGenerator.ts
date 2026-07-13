@@ -423,7 +423,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         className: string;
         objectProperty: NameAndWireValueOrString;
     }): string {
-        return getGeneratedPropertyName({ context: this.context, className, name: objectProperty });
+        return getGeneratedPropertyName({ caseConverter: this.case, className, name: objectProperty });
     }
 
     private shouldAddProtobufMappers(typeDeclaration: TypeDeclaration): boolean {

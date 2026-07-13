@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -18,15 +18,15 @@ import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
  * in sync with the fields `generateField` produces.
  */
 export function getGeneratedPropertyName({
-    context,
+    caseConverter,
     className,
     name
 }: {
-    context: ModelGeneratorContext;
+    caseConverter: CaseConverter;
     className: string;
     name: NameAndWireValueOrString;
 }): string {
-    const propertyName = context.case.pascalSafe(name);
+    const propertyName = caseConverter.pascalSafe(name);
     return propertyName === className ? `${propertyName}_` : propertyName;
 }
 
