@@ -966,6 +966,71 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     /**
+     * Enumerates a type's outgoing references to other named types, categorized by how the
+     * reference is used. This is the single place that walks a type declaration's shape, so the
+     * IR-shape knowledge that both {@link buildInlineTypeMaps} and {@link buildTypeReferenceInfo}
+     * depend on lives here rather than being duplicated across two visitors.
+     *
+     * - `variantEdges`: typeIds referenced as a discriminated-union `samePropertiesAsObject` variant.
+     * - `propertyEdges`: named typeIds referenced by a property, base property, single-union-property,
+     *   or undiscriminated-union member value type (alias chains followed).
+     * - `extendsEdges`: typeIds referenced as an `extends` parent.
+     * - `aliasEdges`: named typeIds referenced as an alias target (alias chains followed).
+     */
+    private getOutgoingTypeReferences(typeDeclaration: TypeDeclaration): {
+        variantEdges: TypeId[];
+        propertyEdges: TypeId[];
+        extendsEdges: TypeId[];
+        aliasEdges: TypeId[];
+    } {
+        const variantEdges: TypeId[] = [];
+        const propertyEdges: TypeId[] = [];
+        const extendsEdges: TypeId[] = [];
+        const aliasEdges: TypeId[] = [];
+        typeDeclaration.shape._visit({
+            alias: (alias) => {
+                aliasEdges.push(...this.extractNamedTypeIdsFromTypeReference(alias.aliasOf));
+            },
+            enum: () => undefined,
+            object: (object) => {
+                for (const extended of object.extends) {
+                    extendsEdges.push(extended.typeId);
+                }
+                for (const property of [...object.properties, ...(object.extendedProperties ?? [])]) {
+                    propertyEdges.push(...this.extractNamedTypeIdsFromTypeReference(property.valueType));
+                }
+            },
+            union: (union) => {
+                for (const extended of union.extends) {
+                    extendsEdges.push(extended.typeId);
+                }
+                for (const baseProperty of union.baseProperties) {
+                    propertyEdges.push(...this.extractNamedTypeIdsFromTypeReference(baseProperty.valueType));
+                }
+                for (const unionType of union.types) {
+                    unionType.shape._visit({
+                        samePropertiesAsObject: (declaredTypeName) => {
+                            variantEdges.push(declaredTypeName.typeId);
+                        },
+                        singleProperty: (singleProperty) => {
+                            propertyEdges.push(...this.extractNamedTypeIdsFromTypeReference(singleProperty.type));
+                        },
+                        noProperties: () => undefined,
+                        _other: () => undefined
+                    });
+                }
+            },
+            undiscriminatedUnion: (undiscriminatedUnion) => {
+                for (const member of undiscriminatedUnion.members) {
+                    propertyEdges.push(...this.extractNamedTypeIdsFromTypeReference(member.type));
+                }
+            },
+            _other: () => undefined
+        });
+        return { variantEdges, propertyEdges, extendsEdges, aliasEdges };
+    }
+
+    /**
      * Builds the inline type parent and children maps by scanning all type declarations.
      * For each non-alias type, finds named references to inline types in its properties/members
      * (following alias chains). An inline type is only inlined if exactly one non-alias type
@@ -988,52 +1053,10 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                 continue;
             }
 
-            const referencedTypeIds: TypeId[] = [];
-
-            typeDeclaration.shape._visit({
-                alias: () => {
-                    // Already filtered above, but required by visitor
-                },
-                object: (otd) => {
-                    for (const property of [...otd.properties, ...(otd.extendedProperties ?? [])]) {
-                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(property.valueType));
-                    }
-                },
-                enum: () => {
-                    // Enums don't reference other types
-                },
-                union: (utd) => {
-                    for (const unionType of utd.types) {
-                        unionType.shape._visit({
-                            samePropertiesAsObject: (declaredTypeName) => {
-                                referencedTypeIds.push(declaredTypeName.typeId);
-                            },
-                            singleProperty: (singleProperty) => {
-                                referencedTypeIds.push(
-                                    ...this.extractNamedTypeIdsFromTypeReference(singleProperty.type)
-                                );
-                            },
-                            noProperties: () => {
-                                // No-op: no types to reference
-                            },
-                            _other: () => {
-                                // Unknown union types are ignored
-                            }
-                        });
-                    }
-                    for (const baseProp of utd.baseProperties) {
-                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(baseProp.valueType));
-                    }
-                },
-                undiscriminatedUnion: (uutd) => {
-                    for (const member of uutd.members) {
-                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(member.type));
-                    }
-                },
-                _other: () => {
-                    // Unknown shape types are ignored
-                }
-            });
+            // Inline nesting counts variant and value-type references (not `extends`/alias targets),
+            // matching the original traversal here.
+            const { variantEdges, propertyEdges } = this.getOutgoingTypeReferences(typeDeclaration);
+            const referencedTypeIds = [...variantEdges, ...propertyEdges];
 
             for (const refTypeId of referencedTypeIds) {
                 const refDeclaration = this.ir.types[refTypeId];
@@ -1183,48 +1206,17 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             referrers.add(unionTypeId);
             variantReferrers.set(variantTypeId, referrers);
         };
-        const addNonVariant = (typeRef: TypeReference): void => {
-            for (const referencedTypeId of this.extractNamedTypeIdsFromTypeReference(typeRef)) {
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            const { variantEdges, propertyEdges, extendsEdges, aliasEdges } =
+                this.getOutgoingTypeReferences(typeDeclaration);
+            for (const variantTypeId of variantEdges) {
+                addVariantReferrer(variantTypeId, typeId);
+            }
+            // Every non-variant edge (property value, `extends` parent, alias target) marks the
+            // referenced type as used outside a union variant, so it keeps all of its fields.
+            for (const referencedTypeId of [...propertyEdges, ...extendsEdges, ...aliasEdges]) {
                 nonVariantReferenced.add(referencedTypeId);
             }
-        };
-        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
-            typeDeclaration.shape._visit({
-                alias: (alias) => addNonVariant(alias.aliasOf),
-                enum: () => undefined,
-                object: (object) => {
-                    // A type used as an `extends` parent is consumed outside any union variant.
-                    for (const extended of object.extends) {
-                        nonVariantReferenced.add(extended.typeId);
-                    }
-                    for (const property of [...object.properties, ...(object.extendedProperties ?? [])]) {
-                        addNonVariant(property.valueType);
-                    }
-                },
-                union: (union) => {
-                    for (const extended of union.extends) {
-                        nonVariantReferenced.add(extended.typeId);
-                    }
-                    for (const baseProperty of union.baseProperties) {
-                        addNonVariant(baseProperty.valueType);
-                    }
-                    for (const unionType of union.types) {
-                        unionType.shape._visit({
-                            samePropertiesAsObject: (declaredTypeName) =>
-                                addVariantReferrer(declaredTypeName.typeId, typeId),
-                            singleProperty: (singleProperty) => addNonVariant(singleProperty.type),
-                            noProperties: () => undefined,
-                            _other: () => undefined
-                        });
-                    }
-                },
-                undiscriminatedUnion: (undiscriminatedUnion) => {
-                    for (const member of undiscriminatedUnion.members) {
-                        addNonVariant(member.type);
-                    }
-                },
-                _other: () => undefined
-            });
         }
         this._typeReferenceInfo = { variantReferrers, nonVariantReferenced };
         return this._typeReferenceInfo;
