@@ -273,6 +273,9 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - outputFolder: no-custom-config
       customConfig: null
+  go-oauth-token-nullable:
+    - outputFolder: no-custom-config
+      customConfig: null
   pagination-custom:
     - outputFolder: .
       customConfig:
