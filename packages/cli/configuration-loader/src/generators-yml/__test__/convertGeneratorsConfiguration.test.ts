@@ -1518,6 +1518,32 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[0]?.generators[1]?.idempotencyKeyGenerationConfig).toBe(true);
         });
 
+        it("lets a per-generator `false` explicitly opt out of a global `true`", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    "auto-generate-idempotency-key": true,
+                    groups: {
+                        sdk: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0",
+                                    config: { "auto-generate-idempotency-key": false }
+                                },
+                                { name: "fernapi/fern-python-sdk", version: "1.0.0" }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.idempotencyKeyGenerationConfig).toBe(false);
+            expect(converted.groups[0]?.generators[1]?.idempotencyKeyGenerationConfig).toBe(true);
+        });
+
         it("leaves the config undefined when no global or per-generator value is set", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
