@@ -53,6 +53,10 @@ func do() {
         Scope: fern.String(
             "scope",
         ),
+        Permissions: []string{
+            "permissions",
+            "permissions",
+        },
     }
     client.Auth.GetTokenWithClientCredentials(
         context.TODO(),

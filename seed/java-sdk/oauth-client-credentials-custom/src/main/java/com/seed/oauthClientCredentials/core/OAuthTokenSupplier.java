@@ -8,6 +8,8 @@ import com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentials.resources.auth.types.TokenResponse;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class OAuthTokenSupplier implements Supplier<String> {
@@ -21,7 +23,9 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private final String entityId;
 
-    private final String scope;
+    private final Optional<String> scope;
+
+    private final Optional<List<String>> permissions;
 
     private final AuthClient authClient;
 
@@ -32,12 +36,19 @@ public final class OAuthTokenSupplier implements Supplier<String> {
     private volatile Instant expiresAt;
 
     public OAuthTokenSupplier(
-            String clientId, String clientSecret, String scp, String entityId, String scope, AuthClient authClient) {
+            String clientId,
+            String clientSecret,
+            String scp,
+            String entityId,
+            Optional<String> scope,
+            Optional<List<String>> permissions,
+            AuthClient authClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.scp = scp;
         this.entityId = entityId;
         this.scope = scope;
+        this.permissions = permissions;
         this.authClient = authClient;
         this.expiresAt = Instant.now();
     }
@@ -49,6 +60,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
                 .scp(scp)
                 .entityId(entityId)
                 .scope(scope)
+                .permissions(permissions)
                 .build();
         return authClient.getTokenWithClientCredentials(getTokenRequest);
     }

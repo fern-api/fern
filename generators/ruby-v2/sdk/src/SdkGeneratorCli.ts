@@ -11,6 +11,7 @@ import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
 import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator.js";
+import { OAuthProviderGenerator } from "./oauth/OAuthProviderGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
@@ -112,6 +113,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         });
 
         this.generateInferredAuthProvider(context);
+        this.generateOAuthProvider(context);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -171,6 +173,17 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 scheme: inferredAuth
             });
             context.project.addRawFiles(inferredAuthProvider.generate());
+        }
+    }
+
+    private generateOAuthProvider(context: SdkGeneratorContext): void {
+        const oauth = context.getOAuthAuth();
+        if (oauth != null) {
+            const oauthProvider = new OAuthProviderGenerator({
+                context,
+                scheme: oauth
+            });
+            context.project.addRawFiles(oauthProvider.generate());
         }
     }
 

@@ -1,5 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
+import type { HttpMethod, IdempotencyKeyGeneration } from "@fern-api/ir-sdk";
 import { CliError, TaskContext } from "@fern-api/task-context";
 /**
  * Resolves the package name from the raw generator configuration.
@@ -80,8 +81,69 @@ export function getUserAgentTemplateFromGeneratorConfig(
     return undefined;
 }
 
+/** Default wire header for the auto-generated idempotency key. */
+const DEFAULT_IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
+
+/** Retry-unsafe methods that are eligible for auto-generation by default. */
+const DEFAULT_IDEMPOTENCY_KEY_METHODS: HttpMethod[] = ["POST", "PUT"];
+
+const ALL_HTTP_METHODS: ReadonlySet<string> = new Set(["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"]);
+
+function parseIdempotencyKeyMethods(value: unknown): HttpMethod[] {
+    if (!Array.isArray(value)) {
+        return DEFAULT_IDEMPOTENCY_KEY_METHODS;
+    }
+    const methods = value
+        .filter((entry): entry is string => typeof entry === "string")
+        .map((entry) => entry.toUpperCase())
+        .filter((entry): entry is HttpMethod => ALL_HTTP_METHODS.has(entry));
+    return methods.length > 0 ? methods : DEFAULT_IDEMPOTENCY_KEY_METHODS;
+}
+
+/**
+ * Resolves the idempotency-key auto-generation config from the raw generator configuration.
+ *
+ * When enabled, generators auto-generate an idempotency key header on the eligible HTTP
+ * methods (POST/PUT by default) unless the caller supplies one. This is resolved once by the
+ * CLI and threaded into the IR (`SdkConfig.idempotencyKeyGeneration`) so every generator reads
+ * the same value instead of each defining its own config key and re-deriving the behavior.
+ *
+ * Accepts either a boolean shorthand or an object with an optional custom header name and
+ * an optional eligible-method list:
+ *
+ *   config:
+ *     auto-generate-idempotency-key: true
+ *   # or
+ *     auto-generate-idempotency-key:
+ *       header-name: "Idempotency-Key"
+ *       methods: ["POST", "PUT"]
+ *
+ * Lookup: `config["auto-generate-idempotency-key"]`. Returns `undefined` when disabled.
+ */
+export function getIdempotencyKeyGenerationFromGeneratorConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): IdempotencyKeyGeneration | undefined {
+    if (typeof generatorInvocation.raw?.config !== "object" || generatorInvocation.raw?.config === null) {
+        return undefined;
+    }
+    const value = (generatorInvocation.raw.config as { "auto-generate-idempotency-key"?: unknown })[
+        "auto-generate-idempotency-key"
+    ];
+    if (value === true) {
+        return { headerName: DEFAULT_IDEMPOTENCY_KEY_HEADER, methods: DEFAULT_IDEMPOTENCY_KEY_METHODS };
+    }
+    if (typeof value === "object" && value !== null) {
+        const headerName = (value as { "header-name"?: unknown })["header-name"];
+        return {
+            headerName: typeof headerName === "string" ? headerName : DEFAULT_IDEMPOTENCY_KEY_HEADER,
+            methods: parseIdempotencyKeyMethods((value as { methods?: unknown })["methods"])
+        };
+    }
+    return undefined;
+}
+
 /** Config keys consumed by the CLI and not forwarded to generators. */
-const CLI_ONLY_CONFIG_KEYS: ReadonlySet<string> = new Set(["user-agent"]);
+const CLI_ONLY_CONFIG_KEYS: ReadonlySet<string> = new Set(["user-agent", "auto-generate-idempotency-key"]);
 
 /**
  * Returns a copy of the generator's custom config with CLI-only keys removed.

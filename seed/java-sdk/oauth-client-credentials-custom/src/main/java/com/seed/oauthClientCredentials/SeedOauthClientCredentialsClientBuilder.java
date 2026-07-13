@@ -9,6 +9,7 @@ import com.seed.oauthClientCredentials.core.LogConfig;
 import com.seed.oauthClientCredentials.core.OAuthTokenSupplier;
 import com.seed.oauthClientCredentials.resources.auth.AuthClient;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
@@ -302,7 +303,9 @@ public class SeedOauthClientCredentialsClientBuilder {
 
         private String entityId = null;
 
-        private String scope = null;
+        private Optional<String> scope = Optional.empty();
+
+        private Optional<List<String>> permissions = Optional.empty();
 
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
@@ -319,8 +322,23 @@ public class SeedOauthClientCredentialsClientBuilder {
             return this;
         }
 
-        public _CredentialsAuth scope(String scope) {
+        public _CredentialsAuth scope(Optional<String> scope) {
             this.scope = scope;
+            return this;
+        }
+
+        public _CredentialsAuth scope(String scope) {
+            this.scope = Optional.ofNullable(scope);
+            return this;
+        }
+
+        public _CredentialsAuth permissions(Optional<List<String>> permissions) {
+            this.permissions = permissions;
+            return this;
+        }
+
+        public _CredentialsAuth permissions(List<String> permissions) {
+            this.permissions = Optional.ofNullable(permissions);
             return this;
         }
 
@@ -330,7 +348,13 @@ public class SeedOauthClientCredentialsClientBuilder {
             ClientOptions baseOptions = buildClientOptions();
             AuthClient authClient = new AuthClient(baseOptions);
             OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
-                    this.clientId, this.clientSecret, this.scp, this.entityId, this.scope, authClient);
+                    this.clientId,
+                    this.clientSecret,
+                    this.scp,
+                    this.entityId,
+                    this.scope,
+                    this.permissions,
+                    authClient);
             ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
                     .addHeader("Authorization", oAuthTokenSupplier)
                     .build();

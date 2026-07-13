@@ -587,9 +587,13 @@ class ClientWrapperGenerator:
                 writer.write_line("")
                 if emit_structured_user_agent:
                     writer.write_line(f'_user_agent = "{user_agent_prefix}"')
-                    writer.write_line(
-                        '_platform = "; ".join(part for part in (platform.system().lower(), platform.machine()) if part)'
-                    )
+                    writer.write_line("_os = platform.system().lower()")
+                    # Collapse the 64-bit x86 aliases (x64, amd64, x86_64) to the canonical x86_64.
+                    writer.write_line("_arch = platform.machine()")
+                    writer.write_line('if _arch.lower() in ("x64", "amd64", "x86_64"):')
+                    with writer.indent():
+                        writer.write_line('_arch = "x86_64"')
+                    writer.write_line('_platform = "; ".join(part for part in (_os, _arch) if part)')
                     writer.write_line("if _platform:")
                     with writer.indent():
                         writer.write_line('_user_agent += f" ({_platform})"')

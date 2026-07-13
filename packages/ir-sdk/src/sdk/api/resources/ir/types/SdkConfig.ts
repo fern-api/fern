@@ -8,4 +8,12 @@ export interface SdkConfig {
     hasPaginatedEndpoints: boolean;
     hasFileDownloadEndpoints: boolean;
     platformHeaders: FernIr.PlatformHeaders;
+    /**
+     * When present, generated SDKs auto-generate an idempotency key header on
+     * the eligible HTTP methods (`methods`) unless the caller supplies one.
+     * Absent means the feature is disabled (the default). Configured once via
+     * the `auto-generate-idempotency-key` generator config key and read
+     * identically by every generator so behavior is consistent across languages.
+     */
+    idempotencyKeyGeneration: FernIr.IdempotencyKeyGeneration | undefined;
 }

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.11.0] - 2026-07-08
+
+- Add `SdkConfig.idempotencyKeyGeneration` (optional `IdempotencyKeyGeneration`).
+  When present, generators auto-generate an idempotency key header on retry-unsafe
+  (POST/PUT) requests unless the caller supplies one; absent disables the feature
+  (the default). It is configured once via the `auto-generate-idempotency-key`
+  generator config key and read identically by every generator, so the behavior is
+  consistent across languages instead of being re-derived per generator. Carries
+  `headerName` (defaults to `Idempotency-Key`) and `methods` (the eligible HTTP
+  methods, defaulting to `POST` and `PUT`), so the method-gating is centralized in
+  the IR rather than hard-coded per generator.
+
 ## [v67.10.2] - 2026-07-07
 
 - Docs: Clarify `HttpEndpoint.globalParameters` semantics — it is now the fully

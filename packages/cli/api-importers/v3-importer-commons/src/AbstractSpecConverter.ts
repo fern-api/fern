@@ -83,6 +83,7 @@ export abstract class AbstractSpecConverter<
                 hasPaginatedEndpoints: false,
                 hasStreamingEndpoints: false,
                 isAuthMandatory: true,
+                idempotencyKeyGeneration: undefined,
                 platformHeaders: {
                     language: "",
                     sdkName: "",

@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.15.0
+  changelogEntry:
+    - summary: |
+        Add support for OAuth 2.0 client-credentials authentication. Clients configured with an
+        `oauth`/`client-credentials` scheme now accept `client_id`/`client_secret` (with environment
+        variable fallback) and generate an OAuth token provider that fetches, caches, and refreshes the
+        access token from the configured token endpoint.
+      type: feat
+    - summary: |
+        Send `client_id`/`client_secret` (and other required token-request properties) when the OAuth
+        token endpoint's request body is a named/referenced type. Previously only inlined request bodies
+        were handled, so a referenced body produced an empty token request and authentication failed.
+      type: fix
+    - summary: |
+        When both an inferred-auth scheme and an OAuth scheme are present (e.g. `auth: any`), instantiate
+        a single auth provider instead of emitting two `@auth_provider` assignments where the OAuth block
+        silently clobbered the inferred-auth block. The provider that appears first in the declared auth
+        order is selected.
+      type: fix
+    - summary: |
+        Fix a backward-compatibility regression under `any`-composed multi-scheme auth: the OAuth (and
+        inferred-auth) provider is now conditional on its credentials being present. Previously the client
+        unconditionally instantiated the provider and merged its `auth_headers` in `initialize`, firing a
+        synchronous token request at construction — so an existing api-key-only consumer calling
+        `Client.new(api_key: ...)` without OAuth credentials made a live network call and raised. The
+        provider is now only created (and merged) when its credentials are supplied; otherwise the client
+        falls back to the other `any` scheme (api key/basic/bearer) and never touches the token endpoint.
+        Auth parameters are also relaxed to optional under `any`-with-multiple-schemes. A single mandatory
+        OAuth scheme keeps its existing (eager) behavior. The credentials check treats a set-but-empty
+        string (e.g. `OAUTH_CLIENT_ID=""`) the same as absent, so an existing api-key-only consumer with
+        empty OAuth environment variables still falls back to the api-key path instead of firing a token
+        fetch at construction.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.14.1
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `includePlatformHeaders` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
 - version: 1.14.0
   changelogEntry:
     - summary: |
