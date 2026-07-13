@@ -33,7 +33,7 @@
         fetch at construction.
       type: fix
   createdAt: "2026-07-10"
-  irVersion: 66
+  irVersion: 67
 - version: 1.14.1
   changelogEntry:
     - summary: |
