@@ -194,7 +194,7 @@ export function getInferredAuthCredentialParams(
         }
         params.push({
             fieldName: context.getFieldName(header.name),
-            isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
+            isOptional: isTypeReferenceOptional(header.valueType)
         });
     }
 
@@ -205,7 +205,7 @@ export function getInferredAuthCredentialParams(
         if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
             continue;
         }
-        const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
+        const isOptional = isTypeReferenceOptional(prop.valueType);
         if (isOptional) {
             continue;
         }
