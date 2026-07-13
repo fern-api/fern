@@ -14,7 +14,6 @@ export const SkillsPageActionConfig: core.serialization.ObjectSchema<
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
     learnMoreUrl: core.serialization.property("learn-more-url", core.serialization.string().optional()),
-    // deprecated: accepted for backwards compatibility but ignored (no longer rendered)
     repository: core.serialization.string().optional(),
     installCommand: core.serialization.property("install-command", SkillsInstallCommand.optional()),
     skills: core.serialization.list(SkillEntry).optional(),

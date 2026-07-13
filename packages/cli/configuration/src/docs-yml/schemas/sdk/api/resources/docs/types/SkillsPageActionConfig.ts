@@ -25,10 +25,7 @@ export interface SkillsPageActionConfig {
     description?: string;
     /** Optional "Learn more" link shown alongside the description. */
     learnMoreUrl?: string;
-    /**
-     * @deprecated No longer rendered. Accepted for backwards compatibility so existing docs.yml
-     * files that still declare it continue to load; the value is ignored.
-     */
+    /** Deprecated and ignored; kept for backwards compatibility. */
     repository?: string;
     /**
      * Command(s) used to install the skills, rendered verbatim as a copyable block. Providing a

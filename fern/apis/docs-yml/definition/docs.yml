@@ -528,6 +528,9 @@ types:
       "learn-more-url":
         type: optional<string>
         docs: Optional "Learn more" link shown alongside the description.
+      repository:
+        type: optional<string>
+        docs: Deprecated and ignored; kept for backwards compatibility.
       "install-command":
         type: optional<SkillsInstallCommand>
         docs: |
