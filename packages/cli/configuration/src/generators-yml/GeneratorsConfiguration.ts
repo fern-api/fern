@@ -189,6 +189,12 @@ export interface GeneratorInvocation {
     irVersionOverride: string | undefined;
     version: string;
     config: unknown;
+    /**
+     * Resolved `auto-generate-idempotency-key` value for this generator: the generator's own
+     * `config.auto-generate-idempotency-key` when present, otherwise the global generators.yml
+     * default. Left as the raw boolean/object; normalized into the IR downstream.
+     */
+    idempotencyKeyGenerationConfig?: unknown;
     // Note this also includes a reviewers block for PR mode, it's from fiddle
     // and the same schema
     outputMode: FernFiddle.remoteGen.OutputMode;

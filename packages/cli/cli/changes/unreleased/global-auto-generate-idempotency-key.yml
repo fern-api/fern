@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a top-level `auto-generate-idempotency-key` option in `generators.yml` that applies
+    idempotency-key auto-generation to every generator group, so it no longer has to be set on
+    each generator's `config`. A generator's own `config.auto-generate-idempotency-key` still
+    overrides the global value. Accepts the same boolean shorthand or `header-name` / `methods`
+    object form, and is resolved into the IR (`SdkConfig.idempotencyKeyGeneration`) as before.
+  type: feat
