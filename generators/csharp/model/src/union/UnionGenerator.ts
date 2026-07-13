@@ -603,62 +603,75 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     (type): type is FernIr.SingleUnionType & { shape: { propertiesType: "samePropertiesAsObject" } } =>
                         type.shape.propertiesType === "samePropertiesAsObject"
                 );
-                // Only the base properties actually suppressed from a variant leaf must be stripped
-                // here (see ObjectGenerator). A base property no variant declares was never rendered
-                // on any leaf, so stripping it would needlessly change output for unrelated unions.
-                const basePropertyWireNamesSet = new Set<string>();
-                for (const type of samePropertiesAsObjectTypes) {
-                    for (const wireName of this.context.getBasePropertyWireNamesToOmitForType(type.shape.typeId)) {
-                        basePropertyWireNamesSet.add(wireName);
-                    }
-                }
-                const basePropertyWireNames = [...basePropertyWireNamesSet];
-                const hasBaseProperties = basePropertyWireNames.length > 0;
-                // Variants whose JSON must have the discriminant (and base properties) removed.
-                const variantsNeedingStrippedJson = new Set<string>();
-                // Variants that declare the discriminant themselves, so only base properties are removed.
-                const variantsNeedingBasePropertiesStrippedJson = new Set<string>();
-                for (const type of samePropertiesAsObjectTypes) {
-                    const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
-                    const hasDiscriminantProperty =
-                        typeDecl.shape.type === "object" &&
-                        [...typeDecl.shape.properties, ...(typeDecl.shape.extendedProperties ?? [])].some(
-                            (prop) => getWireValue(prop.name) === discriminatorPropName
+                // Compute, per variant, the wire names to strip from its JSON before deserializing: the
+                // discriminant (unless the variant declares a property with that wire name) plus the base
+                // properties suppressed from *this* variant's leaf (see ObjectGenerator). The strip set is
+                // per-variant, never aggregated across variants — a base property a variant keeps on its
+                // leaf must not be stripped, or that variant's value would be lost on deserialization.
+                const variantStripSpecs = samePropertiesAsObjectTypes
+                    .map((type) => {
+                        const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
+                        const declaresDiscriminant =
+                            typeDecl.shape.type === "object" &&
+                            [...typeDecl.shape.properties, ...(typeDecl.shape.extendedProperties ?? [])].some(
+                                (prop) => getWireValue(prop.name) === discriminatorPropName
+                            );
+                        const baseWireNames = [
+                            ...this.context.getBasePropertyWireNamesToOmitForType(type.shape.typeId)
+                        ];
+                        const wireNames = declaresDiscriminant
+                            ? baseWireNames
+                            : [discriminatorPropName, ...baseWireNames];
+                        return {
+                            discriminantValue: getWireValue(type.discriminantValue),
+                            wireNames,
+                            stripsDiscriminant: !declaresDiscriminant
+                        };
+                    })
+                    .filter((spec) => spec.wireNames.length > 0);
+
+                // Emit one stripped-JSON local per distinct strip set (variants that strip the same set
+                // share it); a variant that strips nothing reads the raw `json`. The legacy variable names
+                // are reused for the single-set common cases so unchanged unions keep identical output.
+                const strippedJsonVarByDiscriminant = new Map<string, string>();
+                const varNameBySignature = new Map<string, string>();
+                const usedVarNames = new Set<string>();
+                for (const { discriminantValue, wireNames, stripsDiscriminant } of variantStripSpecs) {
+                    const signature = [...wireNames].sort().join(" ");
+                    let varName = varNameBySignature.get(signature);
+                    if (varName == null) {
+                        const preferredName = stripsDiscriminant
+                            ? "jsonWithoutDiscriminator"
+                            : "jsonWithoutBaseProperties";
+                        varName = preferredName;
+                        for (let suffix = 2; usedVarNames.has(varName); suffix++) {
+                            varName = `${preferredName}${suffix}`;
+                        }
+                        usedVarNames.add(varName);
+                        varNameBySignature.set(signature, varName);
+                        const objName =
+                            varName === "jsonWithoutDiscriminator"
+                                ? "jsonObject"
+                                : varName === "jsonWithoutBaseProperties"
+                                  ? "basePropertiesJsonObject"
+                                  : `${varName}Object`;
+                        writer.writeLine(
+                            !stripsDiscriminant
+                                ? "// Strip base properties owned by the union to prevent them from leaking into AdditionalProperties"
+                                : wireNames.length > 1
+                                  ? "// Strip properties owned by the union (discriminant and base properties) to prevent them from leaking into AdditionalProperties"
+                                  : "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
                         );
-                    if (!hasDiscriminantProperty) {
-                        variantsNeedingStrippedJson.add(getWireValue(type.discriminantValue));
-                    } else if (hasBaseProperties) {
-                        variantsNeedingBasePropertiesStrippedJson.add(getWireValue(type.discriminantValue));
+                        writer.writeLine(`var ${objName} = System.Text.Json.Nodes.JsonObject.Create(json);`);
+                        for (const wireName of wireNames) {
+                            writer.writeLine(`${objName}?.Remove("${wireName}");`);
+                        }
+                        writer.writeTextStatement(
+                            `var ${varName} = ${objName} != null ? JsonSerializer.SerializeToElement(${objName}, options) : json`
+                        );
+                        writer.writeLine();
                     }
-                }
-                if (variantsNeedingStrippedJson.size > 0) {
-                    writer.writeLine(
-                        hasBaseProperties
-                            ? "// Strip properties owned by the union (discriminant and base properties) to prevent them from leaking into AdditionalProperties"
-                            : "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
-                    );
-                    writer.writeLine("var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);");
-                    writer.writeLine(`jsonObject?.Remove("${discriminatorPropName}");`);
-                    for (const wireName of basePropertyWireNames) {
-                        writer.writeLine(`jsonObject?.Remove("${wireName}");`);
-                    }
-                    writer.writeTextStatement(
-                        "var jsonWithoutDiscriminator = jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json"
-                    );
-                    writer.writeLine();
-                }
-                if (variantsNeedingBasePropertiesStrippedJson.size > 0) {
-                    writer.writeLine(
-                        "// Strip base properties owned by the union to prevent them from leaking into AdditionalProperties"
-                    );
-                    writer.writeLine("var basePropertiesJsonObject = System.Text.Json.Nodes.JsonObject.Create(json);");
-                    for (const wireName of basePropertyWireNames) {
-                        writer.writeLine(`basePropertiesJsonObject?.Remove("${wireName}");`);
-                    }
-                    writer.writeTextStatement(
-                        "var jsonWithoutBaseProperties = basePropertiesJsonObject != null ? JsonSerializer.SerializeToElement(basePropertiesJsonObject, options) : json"
-                    );
-                    writer.writeLine();
+                    strippedJsonVarByDiscriminant.set(discriminantValue, varName);
                 }
 
                 writer.writeLine("var value = discriminator switch");
@@ -672,18 +685,11 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         writer.write(" => ");
                         switch (type.shape.propertiesType) {
                             case "samePropertiesAsObject":
-                                // Use the JSON variant with union-owned properties removed. The
-                                // discriminant is preserved for a variant that declares it itself,
-                                // in which case only the base properties are stripped.
-                                if (variantsNeedingStrippedJson.has(getWireValue(type.discriminantValue))) {
-                                    writer.write("jsonWithoutDiscriminator");
-                                } else if (
-                                    variantsNeedingBasePropertiesStrippedJson.has(getWireValue(type.discriminantValue))
-                                ) {
-                                    writer.write("jsonWithoutBaseProperties");
-                                } else {
-                                    writer.write("json");
-                                }
+                                // Use the JSON with this variant's own union-owned properties (discriminant
+                                // and/or base properties) removed; a variant that owns none reads `json`.
+                                writer.write(
+                                    strippedJsonVarByDiscriminant.get(getWireValue(type.discriminantValue)) ?? "json"
+                                );
                                 break;
                             case "singleProperty":
                                 writer.write(`json.GetProperty("${getWireValue(type.shape.name)}")`);
