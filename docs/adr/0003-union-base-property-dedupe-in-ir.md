@@ -1,7 +1,7 @@
 # ADR 0003: Compute discriminated-union base-property dedupe facts in the IR
 
 ## Status
-Accepted — merged #TBD on 2026-07-13.
+Accepted — PR [#17041](https://github.com/fern-api/fern/pull/17041) (opened 2026-07-13); merge pending review.
 
 ## Context
 When a discriminated union has base properties that every variant already carries (e.g. fields lifted
