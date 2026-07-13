@@ -1234,6 +1234,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         if (this._unionVariantBasePropertyOmissions != null) {
             return this._unionVariantBasePropertyOmissions;
         }
+        // Gated behind the `dedupeUnionBaseProperties` config flag (default off): removing the
+        // duplicated fields from variant leaves is a breaking change to the generated surface, so
+        // existing users keep the duplicated fields until they opt in. When disabled, no variant
+        // omits anything, so leaves, JSON stripping, and examples all match the pre-existing output.
+        if (!this.settings.dedupeUnionBaseProperties) {
+            this._unionVariantBasePropertyOmissions = new Map();
+            return this._unionVariantBasePropertyOmissions;
+        }
         const { variantReferrers, nonVariantReferenced } = this.buildTypeReferenceInfo();
 
         // Base properties, keyed by wire name, for every discriminated union that declares any.

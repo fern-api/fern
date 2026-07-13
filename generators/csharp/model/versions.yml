@@ -2,11 +2,13 @@
 - version: 0.10.1
   changelogEntry:
     - summary: |
-        Suppress a discriminated union's base properties on its `samePropertiesAsObject` variant
-        objects when the variant duplicates them, so common fields are owned solely by the union
-        envelope. Only applies when the variant object is used exclusively as a variant of unions
-        that all declare the property with a matching type; standalone or shared variant objects
-        keep all of their fields.
+        Add an opt-in `dedupeUnionBaseProperties` configuration flag (default off, matching the Go
+        generator's flag of the same name). When enabled, a discriminated union's base properties
+        are suppressed on its `samePropertiesAsObject` variant objects that duplicate them, so common
+        fields are owned solely by the union envelope. Only applies when the variant object is used
+        exclusively as a variant of unions that all declare the property with a matching type;
+        standalone or shared variant objects keep all of their fields. Off by default, so existing
+        generated output is unchanged.
       type: fix
   createdAt: "2026-07-09"
   irVersion: 66

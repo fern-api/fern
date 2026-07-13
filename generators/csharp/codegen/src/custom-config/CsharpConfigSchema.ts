@@ -42,6 +42,11 @@ export const CsharpConfigSchema = z.object({
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
     "use-undiscriminated-unions": z.boolean().optional(),
+    // When true, a discriminated union's base properties are owned solely by the union envelope:
+    // `samePropertiesAsObject` variant leaves that duplicate them stop re-declaring them. Off by
+    // default so existing generated output is unchanged; opt in to drop the duplicated leaf fields.
+    // Named to match the Go generator's `dedupeUnionBaseProperties` flag.
+    dedupeUnionBaseProperties: z.boolean().optional(),
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 
