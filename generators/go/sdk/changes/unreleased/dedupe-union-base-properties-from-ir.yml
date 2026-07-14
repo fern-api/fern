@@ -7,5 +7,7 @@
     therefore the generated output — is unchanged from before. The delegating-getter emission, the
     local literal filter, and the opt-in `dedupeUnionBaseProperties` flag (default off) all remain.
     The same widening is applied in the Go dynamic-snippets generator, so the model and snippets
-    dedupe an identical set (removing the prior drift between them).
+    dedupe an identical set (removing the prior drift between them). Moves the generator to IR v67,
+    where the `inheritedBaseProperties` fact is available.
   type: chore
+  irVersion: 67
