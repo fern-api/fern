@@ -127,7 +127,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         for (const { variable, optionName } of serverVariableOptions) {
             const docLines: string[] = [];
             if (variable.values != null && variable.values.length > 0) {
-                docLines.push(`Allowed values: ${variable.values.join(", ")}.`);
+                docLines.push(`Allowed values (not enforced): ${variable.values.join(", ")}.`);
             }
             if (variable.default != null) {
                 docLines.push(`Defaults to "${variable.default}".`);
@@ -1124,7 +1124,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     /**
      * Emits the interpolation of server URL variables (e.g. region/edge) into the base URL.
      * When any server variable is provided at construction time, the base URL(s) are rebuilt
-     * from the environment's URL template(s), falling back to each variable's default.
+     * from the environment's URL template(s), falling back to each variable's default (or its
+     * first allowed value). For a single base URL, an explicitly supplied `base_url` always
+     * takes precedence and suppresses interpolation.
      * Returns undefined when the API declares no server variables (behavior unchanged).
      */
     private getServerVariableInterpolationStatement(options: ServerVariableOption[]): ruby.AstNode | undefined {
@@ -1140,8 +1142,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const writeLocalDeclarations = (writer: ruby.Writer): void => {
             for (const { optionName, localName, variable } of options) {
-                const fallback = JSON.stringify(variable.default ?? "");
-                writer.writeLine(`${localName} = ${optionName}.nil? ? ${fallback} : ${optionName}`);
+                // Server variables always declare a default (OpenAPI requires one); fall back to
+                // the first allowed value when a Fern-native environment omits it. Failing at
+                // generation time is preferable to silently interpolating an empty URL segment.
+                const fallbackValue = variable.default ?? variable.values?.[0];
+                if (fallbackValue == null) {
+                    throw new Error(
+                        `Server URL variable "${variable.id}" has no default or allowed values; ` +
+                            "cannot generate a fallback for the base URL."
+                    );
+                }
+                writer.writeLine(
+                    `${localName} = ${optionName}.nil? ? ${JSON.stringify(fallbackValue)} : ${optionName}`
+                );
             }
         };
 
@@ -1153,7 +1166,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 const template = templatedEnvironment.urlTemplate;
                 return ruby.codeblock((writer) => {
-                    writer.writeLine(`if ${condition}`);
+                    // Only rebuild the base URL from the template when the caller did not pass an
+                    // explicit base_url; an explicitly supplied base_url always takes precedence.
+                    writer.writeLine(`if base_url.nil? && (${condition})`);
                     writer.indent();
                     writeLocalDeclarations(writer);
                     writer.writeLine(`base_url = ${this.urlTemplateToRubyString(template, options)}`);
@@ -1171,11 +1186,17 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 const entries = environments.baseUrls.map((baseUrl) => {
                     const key = this.case.snakeSafe(baseUrl.name);
                     const template = templates[baseUrl.id];
-                    const value =
-                        template != null
-                            ? this.urlTemplateToRubyString(template, options)
-                            : JSON.stringify(staticUrls[baseUrl.id] ?? "");
-                    return `${key}: ${value}`;
+                    if (template != null) {
+                        return `${key}: ${this.urlTemplateToRubyString(template, options)}`;
+                    }
+                    const staticUrl = staticUrls[baseUrl.id];
+                    if (staticUrl == null) {
+                        throw new Error(
+                            `Base URL "${baseUrl.id}" has neither a URL template nor a static URL; ` +
+                                "cannot generate server URL variable interpolation."
+                        );
+                    }
+                    return `${key}: ${JSON.stringify(staticUrl)}`;
                 });
                 return ruby.codeblock((writer) => {
                     writer.writeLine(`if ${condition}`);
@@ -1200,11 +1221,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     /**
      * Substitutes `{id}` placeholders in a URL template with `#{localName}` and returns
      * the result as a double-quoted (interpolated) Ruby string literal.
+     *
+     * The template text is author-controlled (it comes from the API spec's `server.url`),
+     * so it is escaped for the Ruby double-quoted string context before our own
+     * interpolations are inserted. This prevents a malicious template from breaking out of
+     * the string literal or injecting arbitrary Ruby via `#{...}`. Placeholder substitution
+     * uses NUL-delimited sentinels so the intentional interpolations survive escaping.
      */
     private urlTemplateToRubyString(template: string, options: ServerVariableOption[]): string {
+        const sentinels: { sentinel: string; interpolation: string }[] = [];
         let result = template;
-        for (const { variable, localName } of options) {
-            result = result.split(`{${variable.id}}`).join(`#{${localName}}`);
+        options.forEach(({ variable, localName }, index) => {
+            const sentinel = `\u0000${index}\u0000`;
+            sentinels.push({ sentinel, interpolation: `#{${localName}}` });
+            result = result.split(`{${variable.id}}`).join(sentinel);
+        });
+        result = result
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/#(?=[{@$])/g, "\\#");
+        for (const { sentinel, interpolation } of sentinels) {
+            result = result.split(sentinel).join(interpolation);
         }
         return `"${result}"`;
     }

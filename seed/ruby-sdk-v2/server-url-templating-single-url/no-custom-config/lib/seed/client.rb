@@ -69,7 +69,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, region: nil, server_url_environment: nil, max_retries: 2)
-      if !region.nil? || !server_url_environment.nil?
+      if base_url.nil? && (!region.nil? || !server_url_environment.nil?)
         region_value = region.nil? ? "us-east-1" : region
         server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
         base_url = "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1"
