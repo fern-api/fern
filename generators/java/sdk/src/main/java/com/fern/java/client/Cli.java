@@ -59,6 +59,8 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.client.generators.WebhookSignatureGenerator;
+import com.fern.java.client.generators.WebhooksHelperGenerator;
 import com.fern.java.client.generators.auth.AuthProviderGenerator;
 import com.fern.java.client.generators.auth.BasicAuthProviderGenerator;
 import com.fern.java.client.generators.auth.BearerAuthProviderGenerator;
@@ -547,6 +549,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         CoreMediaTypesGenerator mediaTypesGenerator = new CoreMediaTypesGenerator(context);
         GeneratedResourcesJavaFile generatedMediaTypesFile = mediaTypesGenerator.generateFile();
         this.addGeneratedFile(generatedMediaTypesFile);
+
+        List<GeneratedJavaFile> generatedWebhooksHelpers = WebhooksHelperGenerator.generateFiles(context);
+        if (!generatedWebhooksHelpers.isEmpty()) {
+            WebhookSignatureGenerator webhookSignatureGenerator = new WebhookSignatureGenerator(context);
+            this.addGeneratedFile(webhookSignatureGenerator.generateFile());
+            generatedWebhooksHelpers.forEach(this::addGeneratedFile);
+        }
 
         // types
         log(generatorExecClient, "Generating data types and models");
