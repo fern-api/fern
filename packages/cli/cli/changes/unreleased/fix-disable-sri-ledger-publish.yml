@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `disable-sri` being dropped for remote JS scripts when publishing docs
+    via the ledger deploy path. The per-script `disableSri` flag from `docs.yml`
+    is now forwarded through the ledger config, so flagged scripts render without
+    an SRI `integrity` (or `crossorigin`) attribute.
+  type: fix
