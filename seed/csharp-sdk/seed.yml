@@ -226,6 +226,12 @@ fixtures:
     - customConfig:
         environment-class-name: CustomEnvironment
       outputFolder: environment-class-name
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
   exhaustive:
     - customConfig:
         explicit-namespaces: true
