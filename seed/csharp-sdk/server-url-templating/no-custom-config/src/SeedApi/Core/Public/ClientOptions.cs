@@ -5,6 +5,25 @@ namespace SeedApi;
 [Serializable]
 public partial class ClientOptions
 {
+    private SeedApiEnvironment _environment = SeedApiEnvironment.RegionalApiServer;
+
+    public ClientOptions() { }
+
+    internal ClientOptions(ClientOptions other)
+    {
+        Environment = other.Environment;
+        IsEnvironmentExplicitlySet = other.IsEnvironmentExplicitlySet;
+        Region = other.Region;
+        ServerUrlEnvironment = other.ServerUrlEnvironment;
+        HttpClient = other.HttpClient;
+        MaxRetries = other.MaxRetries;
+        Timeout = other.Timeout;
+        Headers = new Headers(new Dictionary<string, HeaderValue>(other.Headers));
+        AdditionalHeaders = other.AdditionalHeaders;
+    }
+
+    internal bool IsEnvironmentExplicitlySet { get; private set; } = false;
+
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
@@ -13,7 +32,11 @@ public partial class ClientOptions
     /// <summary>
     /// The Environment for the API.
     /// </summary>
-    public SeedApiEnvironment Environment { get; set; } = SeedApiEnvironment.RegionalApiServer;
+    public SeedApiEnvironment Environment
+    {
+        get => _environment;
+        set => SetEnvironment(value);
+    }
 
     /// <summary>
     /// The Region to route requests to. Allowed values: us-east-1, us-west-2, eu-west-1. Defaults to "us-east-1".
@@ -46,7 +69,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = new HttpClient();
+    } = DefaultHttpClientFactory.Create();
 
     /// <summary>
     /// Additional headers to be sent with HTTP requests.
@@ -82,19 +105,17 @@ public partial class ClientOptions
 #endif
     } = TimeSpan.FromMilliseconds(30000);
 
+    private void SetEnvironment(SeedApiEnvironment value)
+    {
+        _environment = value;
+        IsEnvironmentExplicitlySet = true;
+    }
+
     /// <summary>
     /// Clones this and returns a new instance
     /// </summary>
     internal ClientOptions Clone()
     {
-        return new ClientOptions
-        {
-            Environment = Environment,
-            HttpClient = HttpClient,
-            MaxRetries = MaxRetries,
-            Timeout = Timeout,
-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
-            AdditionalHeaders = AdditionalHeaders,
-        };
+        return new ClientOptions(this);
     }
 }

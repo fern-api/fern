@@ -29,6 +29,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
     }
     private baseUrlField: ast.Field | undefined;
     private environmentField: ast.Field | undefined;
+    private baseUrlExplicitlySetField: ast.Field | undefined;
+    private environmentExplicitlySetField: ast.Field | undefined;
+    private serverVariableFields: ast.Field[] = [];
     private unifiedFields: UnifiedField[] = [];
 
     public doGenerate(): CSharpFile {
@@ -124,21 +127,20 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             if (variable.default != null) {
                 docs.push(`Defaults to "${variable.default}".`);
             }
-            class_.addField({
-                origin: class_.explicit(optionName),
-                access: ast.Access.Public,
-                get: true,
-                init: true,
-                type: this.Primitive.string.asOptional(),
-                summary: docs.length > 0 ? docs.join(" ") : undefined
-            });
+            this.serverVariableFields.push(
+                class_.addField({
+                    origin: class_.explicit(optionName),
+                    access: ast.Access.Public,
+                    get: true,
+                    init: true,
+                    type: this.Primitive.string.asOptional(),
+                    summary: docs.length > 0 ? docs.join(" ") : undefined
+                })
+            );
         }
     }
 
-    private createBaseUrlField(
-        classOrInterface: ast.Interface | ast.Class,
-        hasServerVariables = false
-    ): ast.Field | undefined {
+    private createBaseUrlField(classOrInterface: ast.Class, hasServerVariables = false): ast.Field | undefined {
         const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
         let defaultEnvironment: FernIr.NameOrString | undefined = undefined;
         if (defaultEnvironmentId != null) {
@@ -172,41 +174,129 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         if (this.context.ir.environments != null) {
             const field = this.context.ir.environments.environments._visit({
                 singleBaseUrl: () => {
+                    if (hasServerVariables) {
+                        classOrInterface.addField({
+                            name: "_baseUrl",
+                            access: ast.Access.Private,
+                            type: this.Primitive.string,
+                            initializer: hasDefault
+                                ? this.csharp.codeblock((writer) => {
+                                      writer.writeNode(this.Types.Environments);
+                                      writer.write(`.${defaultEnvironmentName}`);
+                                  })
+                                : this.csharp.codeblock(unified ? "null!" : '""')
+                        });
+                        this.baseUrlExplicitlySetField = classOrInterface.addField({
+                            origin: classOrInterface.explicit("IsBaseUrlExplicitlySet"),
+                            access: ast.Access.Internal,
+                            get: true,
+                            set: ast.Access.Private,
+                            type: this.Primitive.boolean,
+                            initializer: this.csharp.codeblock("false")
+                        });
+                        classOrInterface.addMethod({
+                            name: "SetBaseUrl",
+                            access: ast.Access.Private,
+                            parameters: [
+                                this.csharp.parameter({
+                                    name: "value",
+                                    type: this.Primitive.string
+                                })
+                            ],
+                            body: this.csharp.codeblock((writer) => {
+                                writer.writeLine("_baseUrl = value;");
+                                writer.writeLine("IsBaseUrlExplicitlySet = true;");
+                            })
+                        });
+                    }
                     return (this.baseUrlField = classOrInterface.addField({
                         origin: classOrInterface.explicit("BaseUrl"),
                         access: ast.Access.Public,
                         get: true,
                         ...(hasServerVariables ? { set: true } : { init: true }),
-                        useRequired: makeRequired,
+                        useRequired: hasServerVariables ? unified && !hasDefault : makeRequired,
                         type: this.Primitive.string,
                         summary: this.baseOptionsGenerator.members.baseUrlSummary,
-                        initializer: hasDefault
-                            ? this.csharp.codeblock((writer) => {
-                                  writer.writeNode(this.Types.Environments);
-                                  writer.write(`.${defaultEnvironmentName}`);
+                        ...(hasServerVariables
+                            ? {
+                                  accessors: {
+                                      get: (writer) => writer.write("_baseUrl"),
+                                      set: (writer) => writer.write("SetBaseUrl(value)")
+                                  }
+                              }
+                            : {
+                                  initializer: hasDefault
+                                      ? this.csharp.codeblock((writer) => {
+                                            writer.writeNode(this.Types.Environments);
+                                            writer.write(`.${defaultEnvironmentName}`);
+                                        })
+                                      : unified
+                                        ? undefined
+                                        : this.csharp.codeblock('""')
                               })
-                            : unified
-                              ? undefined
-                              : this.csharp.codeblock('""')
                     }));
                 },
                 multipleBaseUrls: () => {
+                    if (hasServerVariables) {
+                        classOrInterface.addField({
+                            name: "_environment",
+                            access: ast.Access.Private,
+                            type: this.Types.Environments,
+                            initializer: hasDefault
+                                ? this.csharp.codeblock((writer) => {
+                                      writer.writeNode(this.Types.Environments);
+                                      writer.write(`.${defaultEnvironmentName}`);
+                                  })
+                                : this.csharp.codeblock("null!")
+                        });
+                        this.environmentExplicitlySetField = classOrInterface.addField({
+                            origin: classOrInterface.explicit("IsEnvironmentExplicitlySet"),
+                            access: ast.Access.Internal,
+                            get: true,
+                            set: ast.Access.Private,
+                            type: this.Primitive.boolean,
+                            initializer: this.csharp.codeblock("false")
+                        });
+                        classOrInterface.addMethod({
+                            name: "SetEnvironment",
+                            access: ast.Access.Private,
+                            parameters: [
+                                this.csharp.parameter({
+                                    name: "value",
+                                    type: this.Types.Environments
+                                })
+                            ],
+                            body: this.csharp.codeblock((writer) => {
+                                writer.writeLine("_environment = value;");
+                                writer.writeLine("IsEnvironmentExplicitlySet = true;");
+                            })
+                        });
+                    }
                     return (this.environmentField = classOrInterface.addField({
                         origin: classOrInterface.explicit("Environment"),
                         access: ast.Access.Public,
                         get: true,
                         ...(hasServerVariables ? { set: true } : { init: true }),
-                        useRequired: makeRequired,
+                        useRequired: hasServerVariables ? unified && !hasDefault : makeRequired,
                         type: this.Types.Environments,
                         summary: "The Environment for the API.",
-                        initializer: hasDefault
-                            ? this.csharp.codeblock((writer) => {
-                                  writer.writeNode(this.Types.Environments);
-                                  writer.write(`.${defaultEnvironmentName}`);
+                        ...(hasServerVariables
+                            ? {
+                                  accessors: {
+                                      get: (writer) => writer.write("_environment"),
+                                      set: (writer) => writer.write("SetEnvironment(value)")
+                                  }
+                              }
+                            : {
+                                  initializer: hasDefault
+                                      ? this.csharp.codeblock((writer) => {
+                                            writer.writeNode(this.Types.Environments);
+                                            writer.write(`.${defaultEnvironmentName}`);
+                                        })
+                                      : unified
+                                        ? undefined
+                                        : this.csharp.codeblock("null")
                               })
-                            : unified
-                              ? undefined
-                              : this.csharp.codeblock("null")
                     }));
                 },
                 _other: () => undefined
@@ -412,15 +502,14 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
 
         const hasRequiredUnifiedFields = this.unifiedFields.some((f) => !f.isOptional && !f.hasEnvironmentVariable);
         const hasRequiredBaseUrl = this.hasRequiredBaseUrlWithoutDefault();
-        const needsCopyConstructor = hasRequiredUnifiedFields || hasRequiredBaseUrl;
+        const needsCopyConstructor =
+            hasRequiredUnifiedFields || hasRequiredBaseUrl || this.serverVariableFields.length > 0;
 
         if (needsCopyConstructor) {
-            // When ClientOptions has `required` fields, we need a copy constructor
-            // annotated with [SetsRequiredMembers] so Clone() can create a new instance.
-            // We also re-add the public parameterless constructor since defining any
-            // explicit constructor suppresses C#'s implicit default constructor.
+            // A copy constructor preserves server-variable tracking state and supports
+            // cloning required properties via [SetsRequiredMembers].
             this.addPublicParameterlessConstructor(cls);
-            this.addCopyConstructor(cls);
+            this.addCopyConstructor(cls, hasRequiredUnifiedFields || hasRequiredBaseUrl);
         }
 
         const cloneBody = needsCopyConstructor
@@ -431,9 +520,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                   const unifiedFieldLines = this.unifiedFields
                       .map((field) => `\n    ${field.name} = ${field.name},`)
                       .join("");
+                  const serverVariableFieldLines = this.serverVariableFields
+                      .map((field) => `\n    ${field.name} = ${field.name},`)
+                      .join("");
                   writer.writeStatement(
                       `return new ClientOptions
-{${this.baseUrlField ? `\n    ${this.baseUrlField.name} = ${this.baseUrlField.name},` : ""}${this.environmentField ? `\n    ${this.environmentField.name} = ${this.environmentField.name},` : ""}
+{${this.baseUrlField ? `\n    ${this.baseUrlField.name} = ${this.baseUrlField.name},` : ""}${this.environmentField ? `\n    ${this.environmentField.name} = ${this.environmentField.name},` : ""}${serverVariableFieldLines}
     HttpClient = HttpClient,
     MaxRetries = MaxRetries,
     Timeout = Timeout,
@@ -467,7 +559,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         });
     }
 
-    private addCopyConstructor(cls: ast.Class): void {
+    private addCopyConstructor(cls: ast.Class, hasRequiredFields: boolean): void {
         const setsRequiredMembersRef = this.csharp.classReference({
             name: "SetsRequiredMembersAttribute",
             namespace: "System.Diagnostics.CodeAnalysis"
@@ -475,7 +567,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
 
         cls.addConstructor({
             access: ast.Access.Internal,
-            annotations: [this.csharp.annotation({ reference: setsRequiredMembersRef })],
+            annotations: hasRequiredFields ? [this.csharp.annotation({ reference: setsRequiredMembersRef })] : [],
             parameters: [
                 this.csharp.parameter({
                     name: "other",
@@ -486,8 +578,21 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 if (this.baseUrlField) {
                     writer.writeLine(`${this.baseUrlField.name} = other.${this.baseUrlField.name};`);
                 }
+                if (this.baseUrlExplicitlySetField) {
+                    writer.writeLine(
+                        `${this.baseUrlExplicitlySetField.name} = other.${this.baseUrlExplicitlySetField.name};`
+                    );
+                }
                 if (this.environmentField) {
                     writer.writeLine(`${this.environmentField.name} = other.${this.environmentField.name};`);
+                }
+                if (this.environmentExplicitlySetField) {
+                    writer.writeLine(
+                        `${this.environmentExplicitlySetField.name} = other.${this.environmentExplicitlySetField.name};`
+                    );
+                }
+                for (const field of this.serverVariableFields) {
+                    writer.writeLine(`${field.name} = other.${field.name};`);
                 }
                 writer.writeLine("HttpClient = other.HttpClient;");
                 writer.writeLine("MaxRetries = other.MaxRetries;");

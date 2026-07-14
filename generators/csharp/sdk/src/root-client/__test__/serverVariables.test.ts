@@ -2,7 +2,11 @@ import { CaseConverter } from "@fern-api/base-generator";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-import { getServerVariableOptions, urlTemplateToInterpolatedString } from "../serverVariables.js";
+import {
+    getServerVariableOptions,
+    getServerVariableValueExpression,
+    urlTemplateToInterpolatedString
+} from "../serverVariables.js";
 
 const caseConverter = new CaseConverter({
     generationLanguage: "csharp",
@@ -10,8 +14,23 @@ const caseConverter = new CaseConverter({
     smartCasing: true
 });
 
-function serverVariable(id: string, name: string, default_?: string, values?: string[]): FernIr.ServerVariable {
+function serverVariable(
+    id: string,
+    name: FernIr.NameOrString,
+    default_?: string,
+    values?: string[]
+): FernIr.ServerVariable {
     return { id, name, default: default_, values };
+}
+
+function name(originalName: string): FernIr.Name {
+    return {
+        originalName,
+        camelCase: { safeName: "wrongCamel", unsafeName: "wrongCamel" },
+        pascalCase: { safeName: "WrongPascal", unsafeName: "WrongPascal" },
+        snakeCase: { safeName: "wrong_snake", unsafeName: "wrong_snake" },
+        screamingSnakeCase: { safeName: "WRONG_SNAKE", unsafeName: "WRONG_SNAKE" }
+    };
 }
 
 function multipleBaseUrls(
@@ -76,6 +95,15 @@ describe("getServerVariableOptions", () => {
         expect(options[0]?.localName).toBe("_region");
     });
 
+    it("uses the original name when the IR stores precomputed casing metadata", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([serverVariable("region", name("custom region"), "us-east-1")]),
+            caseConverter
+        );
+        expect(options[0]?.optionName).toBe("CustomRegion");
+        expect(options[0]?.localName).toBe("_customRegion");
+    });
+
     it("de-collides a variable whose name matches a reserved client option", () => {
         // `environment` is already a ClientOptions property, so the variable must be
         // surfaced as `ServerUrlEnvironment`.
@@ -85,6 +113,28 @@ describe("getServerVariableOptions", () => {
         );
         expect(options[0]?.optionName).toBe("ServerUrlEnvironment");
         expect(options[0]?.localName).toBe("_serverUrlEnvironment");
+    });
+
+    it("de-collides variables from internal server-variable tracking members", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([serverVariable("explicit", "is base url explicitly set")]),
+            caseConverter
+        );
+        expect(options[0]?.optionName).toBe("ServerUrlIsBaseUrlExplicitlySet");
+    });
+
+    it("de-collides generated option names from each other", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([
+                serverVariable("environment", "environment"),
+                serverVariable("server-url-environment", "server url environment")
+            ]),
+            caseConverter
+        );
+        expect(options.map((option) => option.optionName)).toEqual([
+            "ServerUrlEnvironment",
+            "ServerUrlServerUrlEnvironment"
+        ]);
     });
 
     it("dedups variables shared across multiple base URLs by id", () => {
@@ -148,5 +198,41 @@ describe("urlTemplateToInterpolatedString", () => {
         expect(
             urlTemplateToInterpolatedString("https://api.{region}.example.com{System.Environment.Exit(0)}", options)
         ).toBe('$"https://api.{_region}.example.com{{System.Environment.Exit(0)}}"');
+    });
+
+    it("escapes C# string metacharacters before reopening declared placeholders", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([serverVariable("region", "region", "us-east-1")]),
+            caseConverter
+        );
+        expect(
+            urlTemplateToInterpolatedString(
+                'https://api.{region}.example.com/"quoted"\\{System.Environment.Exit(0)}',
+                options
+            )
+        ).toBe('$"https://api.{_region}.example.com/\\"quoted\\"\\\\{{System.Environment.Exit(0)}}"');
+    });
+});
+
+describe("getServerVariableValueExpression", () => {
+    it("falls back to the IR default when one is declared", () => {
+        const [option] = getServerVariableOptions(
+            singleBaseUrl([serverVariable("region", "region", "us-east-1")]),
+            caseConverter
+        );
+        if (option == null) {
+            throw new Error("Expected a server variable option");
+        }
+        expect(getServerVariableValueExpression(option)).toBe('clientOptions.Region ?? "us-east-1"');
+    });
+
+    it("throws when neither the client option nor an IR default is available", () => {
+        const [option] = getServerVariableOptions(singleBaseUrl([serverVariable("region", "region")]), caseConverter);
+        if (option == null) {
+            throw new Error("Expected a server variable option");
+        }
+        expect(getServerVariableValueExpression(option)).toBe(
+            "clientOptions.Region ?? throw new global::System.ArgumentException(\"The 'Region' server URL variable has no default value and must be set.\", nameof(clientOptions.Region))"
+        );
     });
 });

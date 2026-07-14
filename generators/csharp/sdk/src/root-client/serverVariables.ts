@@ -18,7 +18,11 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "MaxRetries",
     "Timeout",
     "GrpcOptions",
-    "ExceptionHandler"
+    "ExceptionHandler",
+    "IsBaseUrlExplicitlySet",
+    "IsEnvironmentExplicitlySet",
+    "SetBaseUrl",
+    "SetEnvironment"
 ]);
 
 export interface ServerVariableOption {
@@ -27,6 +31,13 @@ export interface ServerVariableOption {
     optionName: string;
     /** The local variable name used when interpolating the URL template. */
     localName: string;
+}
+
+export function getServerVariableValueExpression({ variable, optionName }: ServerVariableOption): string {
+    if (variable.default != null) {
+        return `clientOptions.${optionName} ?? "${escapeForCSharpString(variable.default)}"`;
+    }
+    return `clientOptions.${optionName} ?? throw new global::System.ArgumentException("The '${optionName}' server URL variable has no default value and must be set.", nameof(clientOptions.${optionName}))`;
 }
 
 /**
@@ -38,11 +49,14 @@ export function getServerVariableOptions(
     environmentsConfig: FernIr.EnvironmentsConfig | undefined,
     caseConverter: CaseConverter
 ): ServerVariableOption[] {
+    const usedOptionNames = new Set(RESERVED_OPTION_NAMES);
     return collectServerVariables(environmentsConfig).map((variable) => {
-        const pascal = caseConverter.pascalSafe(variable.name);
-        const optionName = RESERVED_OPTION_NAMES.has(pascal)
-            ? caseConverter.pascalSafe(`server url ${getOriginalName(variable.name)}`)
-            : pascal;
+        const pascal = caseConverter.pascalSafe(getOriginalName(variable.name));
+        let optionName = pascal;
+        while (usedOptionNames.has(optionName)) {
+            optionName = caseConverter.pascalSafe(`server url ${optionName}`);
+        }
+        usedOptionNames.add(optionName);
         return { variable, optionName, localName: `_${caseConverter.camelSafe(optionName)}` };
     });
 }

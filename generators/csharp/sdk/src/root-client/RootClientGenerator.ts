@@ -33,6 +33,7 @@ import {
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 import {
     getServerVariableOptions,
+    getServerVariableValueExpression,
     type ServerVariableOption,
     urlTemplateToInterpolatedString
 } from "./serverVariables.js";
@@ -795,15 +796,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             return;
         }
         const environments = config.environments;
-        const condition = options.map(({ optionName }) => `clientOptions.${optionName} != null`).join(" || ");
-
+        const variableSetCondition = options
+            .map(({ optionName }) => `clientOptions.${optionName} != null`)
+            .join(" || ");
         switch (environments.type) {
             case "singleBaseUrl": {
                 const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
                 if (templatedEnvironment?.urlTemplate == null) {
                     return;
                 }
-                writer.controlFlow("if", this.csharp.codeblock(condition));
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsBaseUrlExplicitlySet`)
+                );
                 this.writeServerVariableLocals(writer, options);
                 writer.writeTextStatement(
                     `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(templatedEnvironment.urlTemplate, options)}`
@@ -818,7 +823,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
                 const urlTemplates = templatedEnvironment.urlTemplates;
                 const staticUrls = templatedEnvironment.urls;
-                writer.controlFlow("if", this.csharp.codeblock(condition));
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsEnvironmentExplicitlySet`)
+                );
                 this.writeServerVariableLocals(writer, options);
                 writer.write("clientOptions.Environment = ");
                 writer.writeNodeStatement(
@@ -848,10 +856,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private writeServerVariableLocals(writer: Writer, options: ServerVariableOption[]): void {
-        for (const { variable, optionName, localName } of options) {
-            writer.writeTextStatement(
-                `var ${localName} = clientOptions.${optionName} ?? "${escapeForCSharpString(variable.default ?? "")}"`
-            );
+        for (const option of options) {
+            writer.writeTextStatement(`var ${option.localName} = ${getServerVariableValueExpression(option)}`);
         }
     }
 

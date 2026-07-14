@@ -10,7 +10,10 @@ public partial class SeedApiClient : ISeedApiClient
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
         clientOptions ??= new ClientOptions();
-        if (clientOptions.Region != null || clientOptions.ServerUrlEnvironment != null)
+        if (
+            (clientOptions.Region != null || clientOptions.ServerUrlEnvironment != null)
+            && !clientOptions.IsBaseUrlExplicitlySet
+        )
         {
             var _region = clientOptions.Region ?? "us-east-1";
             var _serverUrlEnvironment = clientOptions.ServerUrlEnvironment ?? "prod";
