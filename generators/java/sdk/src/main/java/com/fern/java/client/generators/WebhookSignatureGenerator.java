@@ -34,13 +34,16 @@ public final class WebhookSignatureGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedResourcesJavaFile generateFile() {
         try (InputStream is = WebhookSignatureGenerator.class.getResourceAsStream("/WebhookSignature.java")) {
+            if (is == null) {
+                throw new RuntimeException("Failed to find resource WebhookSignature.java");
+            }
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read WebhookSignature.java");
+            throw new RuntimeException("Failed to read WebhookSignature.java", e);
         }
     }
 }

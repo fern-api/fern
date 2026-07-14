@@ -79,7 +79,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         }
 
         WebhookVerificationEntry defaultEntry = null;
-        int maxCount = 0;
+        int maxCount = -1;
         for (WebhookVerificationEntry entry : grouped.values()) {
             if (entry.webhookNames.size() > maxCount) {
                 defaultEntry = entry;

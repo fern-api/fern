@@ -12,6 +12,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 public final class WebhookSignature {
 
+    private static final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
+
     private WebhookSignature() {}
 
     public static String computeHmacSignature(String payload, String secret, String algorithm, String encoding) {
@@ -34,11 +36,10 @@ public final class WebhookSignature {
 
     private static String toHex(byte[] bytes) {
         char[] hex = new char[bytes.length * 2];
-        char[] digits = "0123456789abcdef".toCharArray();
         for (int index = 0; index < bytes.length; index++) {
             int value = bytes[index] & 0xff;
-            hex[index * 2] = digits[value >>> 4];
-            hex[index * 2 + 1] = digits[value & 0x0f];
+            hex[index * 2] = HEX_DIGITS[value >>> 4];
+            hex[index * 2 + 1] = HEX_DIGITS[value & 0x0f];
         }
         return new String(hex);
     }
