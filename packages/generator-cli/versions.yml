@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.48
+  changelogEntry:
+    - summary: |
+        Explicitly versioned generations (`--version X.Y.Z`) now record a version-only entry in
+        `changelog.md`, and existing changelog entries are always preserved: GithubStep prepends
+        new entries instead of only creating a fresh file, and the GitHub push/PR flows restore a
+        tracked `changelog.md` that the generated output would otherwise delete.
+      type: fix
+  createdAt: "2026-07-14"
 - version: 0.9.47
   changelogEntry:
     - summary: |
