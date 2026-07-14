@@ -62,6 +62,7 @@ async fn main() {
                 audience: "https://api.example.com".to_string(),
                 grant_type: "client_credentials".to_string(),
                 scope: Some("scope".to_string()),
+                permissions: Some(vec!["permissions".to_string(), "permissions".to_string()]),
             },
             None,
         )

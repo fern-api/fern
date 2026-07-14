@@ -1,0 +1,27 @@
+openapi: 3.0.1
+info:
+  title: python-underscore-subpackages
+  version: ""
+paths:
+  /agents/create:
+    post:
+      operationId: agents_create
+      x-fern-sdk-group-name:
+        - _agents
+      x-fern-sdk-method-name: create
+      responses:
+        "204":
+          description: ""
+  /agents/nested:
+    post:
+      operationId: agents_nested_create
+      x-fern-sdk-group-name:
+        - _agents
+        - _internal
+      x-fern-sdk-method-name: create
+      responses:
+        "204":
+          description: ""
+components:
+  schemas: {}
+  securitySchemes: {}

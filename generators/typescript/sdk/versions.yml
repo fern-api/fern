@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.80.2
+  changelogEntry:
+    - summary: |
+        Fix compile errors in the generated `OAuthAuthProvider` when the serde layer is
+        disabled: the token endpoint method is now called with the same camelCase name
+        that the generated client exposes (previously the original casing, e.g.
+        `CreateOauth2Token`, was used). Also guard against optional `access_token`
+        response properties so the token refresh path satisfies its `Promise<string>`
+        return type instead of `string | undefined`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 3.80.1
   changelogEntry:
     - summary: |

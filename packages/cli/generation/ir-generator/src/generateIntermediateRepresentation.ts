@@ -80,6 +80,12 @@ export declare namespace generateIntermediateRepresentation {
         packageName: string | undefined;
         /** Template for the User-Agent header value (e.g. "north-python-sdk/{version}"). */
         userAgentTemplate?: string;
+        /**
+         * When set, generators auto-generate an idempotency key header on retry-unsafe
+         * (POST/PUT) requests unless the caller supplies one. Resolved once here from the
+         * `auto-generate-idempotency-key` generator config so every generator reads it from IR.
+         */
+        idempotencyKeyGeneration?: FernIr.IdempotencyKeyGeneration;
         /** Organization name from fern.config.json, used for {organization} in user-agent template. */
         organization?: string;
         version: string | undefined;
@@ -102,6 +108,7 @@ export function generateIntermediateRepresentation({
     readme,
     packageName,
     userAgentTemplate,
+    idempotencyKeyGeneration,
     organization,
     version,
     context,
@@ -567,6 +574,7 @@ export function generateIntermediateRepresentation({
         hasStreamingEndpoints,
         hasPaginatedEndpoints,
         hasFileDownloadEndpoints,
+        idempotencyKeyGeneration,
         platformHeaders: {
             language: "X-Fern-Language",
             sdkName: "X-Fern-SDK-Name",

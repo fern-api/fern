@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 
-import { DocsConfiguration, ProductFileConfig, VersionFileConfig } from "../DocsYmlSchemas.js";
+import { AIChatConfig, DocsConfiguration, ProductFileConfig, VersionFileConfig } from "../DocsYmlSchemas.js";
 
 describe("DocsYmlSchemas", () => {
     it("should produce JSON Schema for DocsConfiguration", () => {
@@ -39,6 +39,16 @@ describe("DocsYmlSchemas", () => {
         expect(properties["ai-search"]).toBeDefined();
         expect(properties["agents"]).toBeDefined();
         expect(properties["check"]).toBeDefined();
+    });
+
+    it("AIChatConfig defaults mask-pii to undefined (masking off by default)", () => {
+        const parsed = AIChatConfig.parse({});
+        expect(parsed["mask-pii"]).toBeUndefined();
+    });
+
+    it("AIChatConfig preserves an explicit mask-pii opt-in", () => {
+        expect(AIChatConfig.parse({ "mask-pii": true })["mask-pii"]).toBe(true);
+        expect(AIChatConfig.parse({ "mask-pii": false })["mask-pii"]).toBe(false);
     });
 
     it("should preserve explicitly configured check rule severities", () => {

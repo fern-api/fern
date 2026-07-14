@@ -6,6 +6,7 @@ import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
 import { RawClient } from "../endpoint/http/RawClient.js";
+import { OAuthProviderGenerator } from "../oauth/OAuthProviderGenerator.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
@@ -124,10 +125,34 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             returnType: ruby.Type.void()
         });
 
+        // Both inferred-auth and OAuth attach their Authorization header through a
+        // single `@auth_provider`. When BOTH schemes are present (e.g. `auth: any`
+        // with an OAuth and an InferredAuth scheme), emitting both init blocks makes
+        // the second `@auth_provider = ...` clobber the first, silently dropping a
+        // scheme. Until the ruby-v2 request architecture supports a composite/routing
+        // provider, pick exactly ONE provider deterministically: the provider-based
+        // scheme that appears first in `ir.auth.schemes` (which mirrors the declared
+        // `any` order and how the TS/Rust `AnyAuthProvider` tries schemes in order).
         const inferredAuth = this.context.getInferredAuth();
-        if (inferredAuth != null) {
-            method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
+        const oauthAuth = this.context.getOAuthAuth();
+        const useOAuthProvider = this.shouldUseOAuthProvider(inferredAuth, oauthAuth);
+
+        // Under `any`-composed auth with more than one scheme, each scheme's
+        // credentials are independently optional: the caller supplies exactly one
+        // scheme's creds (e.g. just an API key). In that case OAuth/inferred auth is
+        // a FALLBACK, not mandatory — so we must NOT eagerly instantiate the auth
+        // provider (which fires a synchronous token request at construction) unless
+        // that scheme's credentials were actually provided. For a single mandatory
+        // provider scheme we keep the existing eager behavior.
+        const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
+
+        if (oauthAuth != null && useOAuthProvider) {
+            method.addStatement(this.getOAuthInitializationStatement(oauthAuth, anyAuthMultiScheme));
+        } else if (inferredAuth != null) {
+            method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth, anyAuthMultiScheme));
         }
+
+        const hasAuthProvider = inferredAuth != null || oauthAuth != null;
 
         if (isMultiUrl) {
             method.addStatement(
@@ -238,15 +263,21 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.writeLine(`,`);
                 }
                 if (hasBasicAuth) {
-                    writer.write(`headers: headers`);
+                    writer.writeLine(`headers: headers,`);
                 } else {
                     writer.write(`headers: `);
                     writer.writeNode(this.getRawClientHeaders());
+                    writer.writeLine(`,`);
                 }
-                if (inferredAuth != null) {
-                    writer.writeLine(`.merge(@auth_provider.auth_headers),`);
-                } else {
-                    writer.writeLine(",");
+                if (hasAuthProvider) {
+                    // Pass the auth provider into the RawClient so its `auth_headers`
+                    // are resolved on EVERY request rather than baked once here. This
+                    // lets token-based providers (OAuth client-credentials, inferred
+                    // auth) refresh an expired token mid-session. When the provider's
+                    // credentials were not supplied (e.g. an `any`-composed scheme
+                    // where another scheme's creds were given) `@auth_provider` is nil,
+                    // and the RawClient simply resolves no auth headers.
+                    writer.writeLine(`auth_provider: @auth_provider,`);
                 }
                 writer.writeLine(`max_retries: max_retries`);
                 writer.dedent();
@@ -257,7 +288,40 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return method;
     }
 
-    private getInferredAuthInitializationStatement(scheme: FernIr.InferredAuthScheme): ruby.AstNode {
+    /**
+     * Decides which single provider to instantiate when both an inferred-auth and
+     * an OAuth scheme are present. Only one `@auth_provider` can be materialized in
+     * the current architecture, so we choose the scheme that appears first in
+     * `ir.auth.schemes` (the declared `any` order). When only one of the two is
+     * present, the choice is trivial. Returns `true` when the OAuth provider should
+     * win.
+     */
+    private shouldUseOAuthProvider(
+        inferredAuth: FernIr.InferredAuthScheme | undefined,
+        oauthAuth: FernIr.OAuthScheme | undefined
+    ): boolean {
+        if (oauthAuth == null) {
+            return false;
+        }
+        if (inferredAuth == null) {
+            return true;
+        }
+        // Both present: first provider-based scheme in the declared order wins.
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private getInferredAuthInitializationStatement(
+        scheme: FernIr.InferredAuthScheme,
+        anyAuthMultiScheme: boolean
+    ): ruby.AstNode {
         const inferredParams = this.getParametersForInferredAuth(scheme);
 
         // Get the auth service/endpoint info to determine the auth client class
@@ -273,7 +337,23 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
+        // Under `any`-composed multi-scheme auth, gate the inferred-auth provider on
+        // its (non-optional) credential params being present, so the provider (and
+        // its token request) is only created when the caller actually supplied them.
+        // A set-but-empty string is treated the same as absent (`.to_s.empty?`).
+        const gatedParams = anyAuthMultiScheme
+            ? inferredParams.filter((param) => param != null && !param.isOptional)
+            : [];
+        const inferredGuard =
+            gatedParams.length > 0
+                ? gatedParams.map((param) => `!${param.snakeName}.to_s.empty?`).join(" && ")
+                : undefined;
+
         return ruby.codeblock((writer) => {
+            if (inferredGuard != null) {
+                writer.writeLine(`if ${inferredGuard}`);
+                writer.indent();
+            }
             // Create an unauthenticated raw client for the auth endpoint
             writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
             writer.write(`auth_raw_client = `);
@@ -356,6 +436,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.writeLine(` }`);
             writer.dedent();
             writer.writeLine(`)`);
+            if (inferredGuard != null) {
+                writer.dedent();
+                writer.writeLine(`end`);
+            }
         });
     }
 
@@ -379,6 +463,130 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             name: "InferredAuthProvider",
             modules: [this.context.getRootModule().name, "Internal"],
             fullyQualified: true
+        });
+    }
+
+    private getOAuthProviderClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: OAuthProviderGenerator.CLASS_NAME,
+            modules: [this.context.getRootModule().name, "Internal"],
+            fullyQualified: true
+        });
+    }
+
+    private getOAuthAdditionalParameterNames(scheme: FernIr.OAuthScheme): string[] {
+        return new OAuthProviderGenerator({ context: this.context, scheme }).getAdditionalRequestPropertyNames();
+    }
+
+    /**
+     * Builds the fully-qualified module path (e.g. `["Seed", "Identity"]`) of the
+     * generated subpackage client that owns the OAuth token endpoint, so the root
+     * client instantiates the correct `<Root>::<Subpackage...>::Client`. Falls back
+     * to the root `Auth` subpackage when the service filepath is unavailable.
+     */
+    private getAuthClientModules(service: FernIr.HttpService | undefined): string[] {
+        const rootModuleName = this.context.getRootModule().name;
+        const allParts = service?.name?.fernFilepath?.allParts;
+        if (allParts != null && allParts.length > 0) {
+            return [rootModuleName, ...allParts.map((part) => this.case.pascalSafe(part))];
+        }
+        return [rootModuleName, "Auth"];
+    }
+
+    private getOAuthInitializationStatement(scheme: FernIr.OAuthScheme, anyAuthMultiScheme: boolean): ruby.AstNode {
+        if (scheme.configuration.type !== "clientCredentials") {
+            return ruby.codeblock("");
+        }
+        const additionalParams = this.getOAuthAdditionalParameterNames(scheme);
+
+        // Determine the auth subpackage/client that owns the token endpoint.
+        const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        const authClientModules = this.getAuthClientModules(service);
+
+        const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        const tokenEndpointBaseUrlId = tokenEndpoint?.baseUrl;
+
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+
+        return ruby.codeblock((writer) => {
+            if (anyAuthMultiScheme) {
+                // Under `any`-composed multi-scheme auth OAuth is a fallback. Only
+                // instantiate the provider (which fires a synchronous token request)
+                // when both credentials were supplied (treating a set-but-empty
+                // string the same as absent); otherwise the caller is
+                // authenticating with another scheme (e.g. an API key) and we must
+                // not touch the token endpoint.
+                writer.writeLine(`if !client_id.to_s.empty? && !client_secret.to_s.empty?`);
+                writer.indent();
+            }
+            // Create an unauthenticated raw client for the auth endpoint.
+            // OAuth client-credentials sends the credentials in the token request body,
+            // so the auth client itself needs no auth headers.
+            writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
+            writer.write(`auth_raw_client = `);
+            writer.writeNode(this.context.getRawClientClassReference());
+            writer.writeLine(`.new(`);
+            writer.indent();
+
+            if (isMultiUrl) {
+                const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
+                const authBaseUrlId = tokenEndpointBaseUrlId ?? multiUrlEnvs?.baseUrls[0]?.id;
+                const authBaseUrlName = authBaseUrlId != null ? this.context.getBaseUrlName(authBaseUrlId) : undefined;
+                if (authBaseUrlName != null) {
+                    writer.writeLine(`base_url: base_url || environment&.dig(:${authBaseUrlName}),`);
+                } else {
+                    writer.writeLine(`base_url: base_url,`);
+                }
+            } else {
+                writer.write(`base_url: base_url`);
+                if (defaultEnvironmentReference != null) {
+                    writer.write(" || ");
+                    writer.writeNode(defaultEnvironmentReference);
+                }
+                writer.writeLine(`,`);
+            }
+            writer.writeLine(`headers: {`);
+            writer.indent();
+            writer.writeLine(`"X-Fern-Language" => "Ruby"`);
+            writer.dedent();
+            writer.writeLine(`}`);
+            writer.dedent();
+            writer.writeLine(`)`);
+            writer.newLine();
+
+            // Create the auth client
+            writer.writeLine(`# Create the auth client for token retrieval`);
+            writer.write(`auth_client = `);
+            writer.writeNode(
+                ruby.classReference({
+                    name: "Client",
+                    modules: authClientModules,
+                    fullyQualified: true
+                })
+            );
+            writer.writeLine(`.new(client: auth_raw_client)`);
+            writer.newLine();
+
+            // Create the OAuth provider with the auth client and credentials
+            writer.writeLine(`# Create the OAuth provider with the auth client and credentials`);
+            writer.write(`@auth_provider = `);
+            writer.writeNode(this.getOAuthProviderClassReference());
+            writer.writeLine(`.new(`);
+            writer.indent();
+            writer.writeLine(`auth_client: auth_client,`);
+            writer.write(`options: { base_url: base_url, client_id: client_id, client_secret: client_secret`);
+            for (const param of additionalParams) {
+                writer.write(`, ${param}: ${param}`);
+            }
+            writer.writeLine(` }`);
+            writer.dedent();
+            writer.writeLine(`)`);
+            if (anyAuthMultiScheme) {
+                writer.dedent();
+                writer.writeLine(`end`);
+            }
         });
     }
 
@@ -464,12 +672,105 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     }
                     break;
                 }
+                case "oauth": {
+                    if (scheme.configuration.type !== "clientCredentials") {
+                        break;
+                    }
+                    const clientIdEnvVar = scheme.configuration.clientIdEnvVar;
+                    const clientSecretEnvVar = scheme.configuration.clientSecretEnvVar;
+
+                    parameters.push(
+                        ruby.parameters.keyword({
+                            name: "client_id",
+                            type: clientIdEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                            initializer:
+                                clientIdEnvVar != null
+                                    ? ruby.codeblock(`ENV.fetch("${clientIdEnvVar}", nil)`)
+                                    : undefined,
+                            docs: undefined
+                        })
+                    );
+                    parameters.push(
+                        ruby.parameters.keyword({
+                            name: "client_secret",
+                            type:
+                                clientSecretEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                            initializer:
+                                clientSecretEnvVar != null
+                                    ? ruby.codeblock(`ENV.fetch("${clientSecretEnvVar}", nil)`)
+                                    : undefined,
+                            docs: undefined
+                        })
+                    );
+
+                    for (const additionalName of this.getOAuthAdditionalParameterNames(scheme)) {
+                        parameters.push(
+                            ruby.parameters.keyword({
+                                name: additionalName,
+                                type: ruby.Type.string(),
+                                initializer: undefined,
+                                docs: undefined
+                            })
+                        );
+                    }
+                    break;
+                }
                 default:
                     break;
             }
         }
 
-        return parameters;
+        return this.dedupeAuthenticationParameters(this.relaxAuthParametersForAnyAuth(parameters));
+    }
+
+    /**
+     * Under `any`-composed multi-scheme auth every scheme's credentials are
+     * independently optional (the caller supplies exactly one scheme's creds), so
+     * no auth parameter may be required. Any parameter that would otherwise be
+     * mandatory (no initializer) is relaxed to a nilable string defaulting to `nil`.
+     * For a single mandatory scheme this is a no-op, preserving existing behavior.
+     */
+    private relaxAuthParametersForAnyAuth(parameters: ruby.KeywordParameter[]): ruby.KeywordParameter[] {
+        if (!this.isAnyAuthWithMultipleSchemes()) {
+            return parameters;
+        }
+        return parameters.map((parameter) => {
+            if (parameter.initializer != null) {
+                return parameter;
+            }
+            return ruby.parameters.keyword({
+                name: parameter.name,
+                type: ruby.Type.nilable(ruby.Type.string()),
+                initializer: ruby.nilValue(),
+                docs: parameter.docs
+            });
+        });
+    }
+
+    /**
+     * Deduplicates authentication keyword parameters by name. When multiple auth
+     * schemes contribute a parameter with the same name (e.g. an inferred-auth
+     * scheme and an OAuth scheme both exposing `client_id`/`client_secret`), the
+     * constructor must only declare it once. When duplicates differ, the parameter
+     * that has an initializer (an optional, env-var-backed parameter) is preferred
+     * over a required one so a single credential can satisfy either scheme.
+     */
+    private dedupeAuthenticationParameters(parameters: ruby.KeywordParameter[]): ruby.KeywordParameter[] {
+        const result: ruby.KeywordParameter[] = [];
+        const indexByName = new Map<string, number>();
+        for (const parameter of parameters) {
+            const existingIndex = indexByName.get(parameter.name);
+            if (existingIndex == null) {
+                indexByName.set(parameter.name, result.length);
+                result.push(parameter);
+                continue;
+            }
+            const existing = result[existingIndex];
+            if (existing != null && existing.initializer == null && parameter.initializer != null) {
+                result[existingIndex] = parameter;
+            }
+        }
+        return result;
     }
 
     /**
@@ -716,5 +1017,17 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return this.context.ir.rootPackage.subpackages.map((subpackageId) => {
             return this.context.getSubpackageOrThrow(subpackageId);
         });
+    }
+
+    /**
+     * True when auth is `any`-composed across more than one scheme. In that case
+     * each scheme's credentials are independently optional (the caller supplies
+     * exactly one scheme's creds), so provider-based schemes (OAuth / inferred) are
+     * fallbacks: their credentials must be optional and their token providers may
+     * only be instantiated when the corresponding credentials are present. Mirrors
+     * the C#/PHP `isAnyAuthWithMultipleSchemes` gate (FER-11539, PR #16968).
+     */
+    private isAnyAuthWithMultipleSchemes(): boolean {
+        return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
     }
 }

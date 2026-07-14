@@ -253,7 +253,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const clientIdProperty = this.getName(requestProperties.clientId.property.name, context);
         const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name, context);
-        const endpointName = this.getName(endpoint.name, context);
+        // Client method names are always camelCase (see GeneratedSdkClientClassImpl),
+        // regardless of the serde layer.
+        const endpointName = context.case.camelUnsafe(endpoint.name);
 
         const customPropertyAssignments = this.getCustomPropertyAssignments(requestProperties, endpoint, context);
         const additionalPropertyAssignments = this.getAdditionalRequestPropertyAssignments(requestProperties, context);
@@ -262,6 +264,18 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             property: responseProperties.accessToken,
             variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
         });
+
+        const accessTokenIsOptional = context.type.isOptional(responseProperties.accessToken.property.valueType);
+        const accessTokenGuard = accessTokenIsOptional
+            ? `
+                if (accessToken == null) {
+                    throw new ${getTextOfTsNode(
+                        context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+                    )}({
+                        message: "OAuth token response is missing the access token",
+                    });
+                }`
+            : "";
 
         const hasExpiration = responseProperties.expiresIn != null;
         const expiresInPropertyRaw =
@@ -363,9 +377,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ${clientSecretProperty}: clientSecret,${customPropertyAssignments}${additionalPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
-                this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
+                const accessToken = ${accessTokenProperty};${accessTokenGuard}
+                this.${ACCESS_TOKEN_FIELD_NAME} = accessToken;
                 this.${EXPIRES_AT_FIELD_NAME} = this.getExpiresAt(${expiresInProperty}, BUFFER_IN_MINUTES);
-                return this.${ACCESS_TOKEN_FIELD_NAME};
+                return accessToken;
             } finally {
                 this.${REFRESH_PROMISE_FIELD_NAME} = undefined;
             }
@@ -382,8 +397,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ${clientSecretProperty}: clientSecret,${customPropertyAssignments}${additionalPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
-                this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
-                return this.${ACCESS_TOKEN_FIELD_NAME};
+                const accessToken = ${accessTokenProperty};${accessTokenGuard}
+                this.${ACCESS_TOKEN_FIELD_NAME} = accessToken;
+                return accessToken;
             } finally {
                 this.${REFRESH_PROMISE_FIELD_NAME} = undefined;
             }

@@ -1490,13 +1490,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             writer.write_newline_if_last_line_not()
 
-        # else: fall back to header-auth-only or raise error
-        has_header_auth_schemes = len(client_wrapper_generator._get_header_auth_schemes()) > 0
+        # else: fall back to non-OAuth auth schemes or raise error
+        has_non_oauth_auth_schemes = (
+            len(client_wrapper_generator._get_header_auth_schemes()) > 0
+            or client_wrapper_generator._get_basic_auth_scheme() is not None
+        )
         writer.write_line("else:")
         with writer.indent():
-            if has_header_auth_schemes:
-                # When header auth schemes exist (e.g. api_key via auth: any), allow constructing
-                # the client without a bearer token — the header auth alone is sufficient.
+            if has_non_oauth_auth_schemes:
+                # When other auth schemes exist (e.g. api_key or basic auth via auth: any), allow
+                # constructing the client without a bearer token — that auth alone is sufficient.
                 header_only_kwargs = self._get_client_wrapper_kwargs(
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
