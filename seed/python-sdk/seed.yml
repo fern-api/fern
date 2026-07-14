@@ -98,6 +98,9 @@ fixtures:
         omit_fern_headers: true
       outputFolder: omit-fern-headers
     - customConfig:
+        include_platform_headers: true
+      outputFolder: include-platform-headers
+    - customConfig:
         additional_init_exports:
           - from: types.types
             imports:

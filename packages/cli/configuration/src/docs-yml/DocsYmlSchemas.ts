@@ -246,7 +246,8 @@ export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),
-    datasources: z.array(AIChatDatasource).optional()
+    datasources: z.array(AIChatDatasource).optional(),
+    "mask-pii": z.boolean().optional()
 });
 
 // ===== Font schemas =====

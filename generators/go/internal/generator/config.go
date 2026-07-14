@@ -31,6 +31,7 @@ type Config struct {
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
+	IncludePlatformHeaders       bool
 	Organization                 string
 	Version                      string
 	IRFilepath                   string
@@ -80,6 +81,7 @@ func NewConfig(
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
 	omitFernHeaders bool,
+	includePlatformHeaders bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -114,6 +116,7 @@ func NewConfig(
 		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     omitEmptyRequestWrappers,
 		OmitFernHeaders:              omitFernHeaders,
+		IncludePlatformHeaders:       includePlatformHeaders,
 		Version:                      version,
 		IRFilepath:                   irFilepath,
 		SnippetFilepath:              snippetFilepath,

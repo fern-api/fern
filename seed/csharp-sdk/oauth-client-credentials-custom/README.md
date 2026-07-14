@@ -53,6 +53,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
         Scope = "scope",
+        Permissions = new List<string>() { "permissions", "permissions" },
     }
 );
 ```

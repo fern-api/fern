@@ -3,6 +3,7 @@ import {
     computeSemanticVersion,
     detectCiProvider,
     detectInvocationSource,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
@@ -167,6 +168,7 @@ export async function runLocalGenerationForWorkspace({
 
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
                 const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
+                const idempotencyKeyGeneration = getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation);
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
                 // When version is AUTO, stamp the language-mapped magic placeholder into the IR
@@ -194,6 +196,7 @@ export async function runLocalGenerationForWorkspace({
                     version: effectiveIrVersion,
                     packageName,
                     userAgentTemplate,
+                    idempotencyKeyGeneration,
                     organization: projectConfig.organization,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),

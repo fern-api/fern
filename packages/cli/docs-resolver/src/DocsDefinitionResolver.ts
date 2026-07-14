@@ -67,6 +67,12 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
 }
 
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.AIChatConfig includes the maskPii field.
+type AIChatConfigWithMaskPii = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
+    maskPii?: boolean;
+};
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -965,8 +971,9 @@ export class DocsDefinitionResolver {
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
-                          }))
-                      } as DocsV1Write.DocsConfig["aiChatConfig"])
+                          })),
+                          maskPii: this.parsedDocsConfig.aiChatConfig.maskPii
+                      } as AIChatConfigWithMaskPii as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,

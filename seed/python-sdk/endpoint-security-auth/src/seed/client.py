@@ -89,6 +89,8 @@ class SeedEndpointSecurityAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -106,6 +108,8 @@ class SeedEndpointSecurityAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -121,6 +125,8 @@ class SeedEndpointSecurityAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
@@ -140,6 +146,8 @@ class SeedEndpointSecurityAuth:
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
@@ -160,6 +168,8 @@ class SeedEndpointSecurityAuth:
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
                     api_key=api_key,
+                    username=username,
+                    password=password,
                     headers=headers,
                     httpx_client=httpx_client
                     if httpx_client is not None
@@ -176,6 +186,8 @@ class SeedEndpointSecurityAuth:
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
                 httpx_client=httpx_client
@@ -193,6 +205,8 @@ class SeedEndpointSecurityAuth:
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
@@ -317,6 +331,8 @@ class AsyncSeedEndpointSecurityAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -334,6 +350,8 @@ class AsyncSeedEndpointSecurityAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -349,6 +367,8 @@ class AsyncSeedEndpointSecurityAuth:
         *,
         base_url: str,
         api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
@@ -368,6 +388,8 @@ class AsyncSeedEndpointSecurityAuth:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
@@ -386,6 +408,8 @@ class AsyncSeedEndpointSecurityAuth:
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
                     api_key=api_key,
+                    username=username,
+                    password=password,
                     headers=headers,
                     httpx_client=httpx_client
                     if httpx_client is not None
@@ -402,6 +426,8 @@ class AsyncSeedEndpointSecurityAuth:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 token=_token_getter_override,
                 async_token=oauth_token_provider.get_token,
@@ -418,6 +444,8 @@ class AsyncSeedEndpointSecurityAuth:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
+                username=username,
+                password=password,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None

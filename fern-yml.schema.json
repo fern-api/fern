@@ -1846,6 +1846,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -1892,6 +1895,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
