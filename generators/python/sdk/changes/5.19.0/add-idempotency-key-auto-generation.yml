@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add automatic idempotency-key generation, driven by the centralized
+    `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+    UUIDv4 idempotency-key header to requests whose HTTP method is listed in the IR. A
+    caller-supplied key still takes precedence.
+  type: feat

@@ -17,6 +17,9 @@ export const AsIsFiles = {
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
     ErrorsType: "internal/errors/type_error.Template.rb",
 
+    // Idempotency
+    IdempotencyKey: "internal/idempotency_key.Template.rb",
+
     // Iterator classes
     ItemIterator: "internal/iterators/item_iterator.Template.rb",
     CursorItemIterator: "internal/iterators/cursor_item_iterator.Template.rb",
@@ -117,5 +120,6 @@ const asIsTopoValue = {
     [AsIsFiles.CursorPageIterator]: 29,
     [AsIsFiles.OffsetPageIterator]: 30,
     [AsIsFiles.CustomPager]: 31,
-    [AsIsFiles.WebhookSignature]: 32
+    [AsIsFiles.IdempotencyKey]: 32,
+    [AsIsFiles.WebhookSignature]: 33
 };

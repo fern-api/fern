@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.82.0
+  changelogEntry:
+    - summary: |
+        Add automatic idempotency-key generation, driven by the centralized
+        `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+        UUIDv4 idempotency-key header (default `Idempotency-Key`) to requests whose HTTP method is
+        listed in the IR (default `POST`/`PUT`). A caller-supplied key in request options still takes
+        precedence.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.81.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string options on the
+        client constructor and interpolated into the base URL(s) at request time. Reserved
+        option names are de-collided by prefixing with `serverUrl` (e.g. a variable named
+        `environment` is exposed as `serverUrlEnvironment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 3.80.2
   changelogEntry:
     - summary: |

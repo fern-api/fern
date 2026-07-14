@@ -385,7 +385,7 @@ async function convertJsConfig(
     js: docsYml.RawSchemas.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<docsYml.JavascriptConfig> {
-    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
+    const remote: docsYml.ParsedJsRemoteConfig[] = [];
     const files: docsYml.AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -401,7 +401,8 @@ async function convertJsConfig(
         } else if (isRemoteJsConfig(config)) {
             remote.push({
                 strategy: config.strategy,
-                url: CjsFdrSdk.Url(config.url)
+                url: CjsFdrSdk.Url(config.url),
+                disableSri: config.disableSri
             });
         } else if (isFileJsConfig(config)) {
             files.push({

@@ -17,6 +17,7 @@ from .snake_case import snake_case as to_snake
 import fern.ir.resources as ir_types
 
 _DIGIT_SPLIT = re.compile(r"(\d+)")
+_NON_LOWER_ALNUM_START = re.compile(r"^[^a-z0-9]")
 
 # Mirrors @fern-api/casings-generator's `smartCasing` config from the customer's
 # generators.yml (`smart-casing: true|false`). The IR pre-computes Name.snake_case
@@ -47,9 +48,10 @@ def _smart_snake(s: str) -> str:
     """Snake_case matching @fern-api/casings-generator's snakeCase output.
 
     When smartCasing is enabled (the default), digits adjacent to letters stay
-    attached so ``3d`` -> ``3d`` and ``base64`` -> ``base64``. Mirrors:
-
-        n.split(" ").map(part => part.split(/(\\d+)/).map(snakeCase).join("")).join("_")
+    attached so ``3d`` -> ``3d`` and ``base64`` -> ``base64``, while a segment
+    that starts a new word after a digit run (uppercase letter or an existing
+    separator) keeps its word boundary: ``ConversationsV2Configuration`` ->
+    ``conversations_v2_configuration``, ``applicationV1`` -> ``application_v1``.
 
     When smartCasing is disabled (``smart-casing: false`` in generators.yml), every
     digit run is treated as a separate word, matching plain lodash ``snakeCase``:
@@ -57,7 +59,20 @@ def _smart_snake(s: str) -> str:
     """
     if not _smart_casing_enabled:
         return "_".join(to_snake(part) for part in s.split(" "))
-    return "_".join("".join(to_snake(sub) for sub in _DIGIT_SPLIT.split(part)) for part in s.split(" "))
+
+    def smart_snake_part(part: str) -> str:
+        segments = _DIGIT_SPLIT.split(part)
+        result = []
+        for index, segment in enumerate(segments):
+            cased = to_snake(segment)
+            if not cased:
+                continue
+            previous = segments[index - 1] if index > 0 else None
+            starts_new_word = previous is not None and previous.isdigit() and _NON_LOWER_ALNUM_START.match(segment)
+            result.append(f"_{cased}" if starts_new_word else cased)
+        return "".join(result)
+
+    return "_".join(smart_snake_part(part) for part in s.split(" "))
 
 
 def _to_screaming_snake(s: str) -> str:

@@ -1,4 +1,63 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an idempotency-key request header. This is now driven
+        entirely by the IR (`SdkConfig.idempotencyKeyGeneration`), resolved once by the CLI from
+        the `auto-generate-idempotency-key` generator config key, so the header name and the set of
+        eligible HTTP methods are read identically across every generator. When enabled, the
+        generated SDK attaches the configured header (defaulting to `Idempotency-Key`) on the
+        configured methods (defaulting to `POST` and `PUT`) with a freshly generated UUIDv4
+        (`SecureRandom.uuid`) at request time. For endpoints that declare a matching idempotency
+        header the caller-supplied value wins and the generated UUID is only the fallback. When the
+        IR does not enable the feature, generated output is unchanged.
+      type: feat
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.16.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string keyword
+        arguments on the client initializer and interpolated into the base URL(s) when
+        provided, falling back to each variable's default. Reserved option names are
+        de-collided by prefixing with `server_url_` (e.g. a variable named `environment`
+        is exposed as `server_url_environment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.5
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Sub-client accessors and methods like `ConversationsV2Configuration` now generate
+        `conversations_v2_configuration` instead of `conversations_v2configuration`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.4
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies when the `Accept-Encoding`
+        header is set explicitly on the request. `Net::HTTP` disables its transparent
+        response decoding as soon as the caller sets an `Accept-Encoding` header, so
+        responses to requests with a spec-defined `Accept-Encoding: gzip` header were
+        previously returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.3
+  changelogEntry:
+    - summary: |
+        Fix `reference.md` endpoint titles to show path parameters in keyword-argument form
+        (e.g. `fetch_store(store_id:)` instead of `fetch_store(store_id)`). Generated Ruby methods
+        only accept keyword arguments, so the previous positional-looking titles were misleading.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 1.15.2
   changelogEntry:
     - summary: |

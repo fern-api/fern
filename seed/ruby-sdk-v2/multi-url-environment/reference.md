@@ -62,7 +62,7 @@ client.ec2.boot_instance(size: "size")
 <dd>
 
 ```ruby
-client.s3.get_presigned_url(s3key: "s3Key")
+client.s3.get_presigned_url(s3_key: "s3Key")
 ```
 </dd>
 </dl>
@@ -77,7 +77,7 @@ client.s3.get_presigned_url(s3key: "s3Key")
 <dl>
 <dd>
 
-**s3key:** `String` 
+**s3_key:** `String` 
     
 </dd>
 </dl>
