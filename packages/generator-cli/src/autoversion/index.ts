@@ -6,6 +6,7 @@ export {
     countFilesInDiff,
     formatSizeKB
 } from "./AutoVersioningService.js";
+export { changelogContainsVersion, prependChangelogBlock } from "./changelogUtils.js";
 export {
     AUTO_VERSION,
     extractLanguageFromGeneratorName,
