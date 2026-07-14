@@ -179,7 +179,8 @@ class HmacHelperWriter {
                 parameters.push("messageId string");
             }
         }
-        if (this.hasTimestamp) {
+        // The timestamp header is needed either for timestamp validation or as a payload component.
+        if (this.hasTimestamp || this.components.includes("TIMESTAMP")) {
             parameters.push("timestampHeader string");
         }
         return parameters;
