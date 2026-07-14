@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.73.2
+  changelogEntry:
+    - summary: |
+        Enable automatic response decompression on the default HttpClient. The default client
+        is now created with an HttpClientHandler configured with AutomaticDecompression
+        (DecompressionMethods.All on .NET 5+, GZip | Deflate on older targets), so responses
+        with a Content-Encoding of gzip or deflate are decompressed transparently — including
+        when an Accept-Encoding request header is set explicitly by the API spec. User-supplied
+        HttpClients provided via ClientOptions are not modified.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
 - version: 2.73.1
   changelogEntry:
     - summary: |
