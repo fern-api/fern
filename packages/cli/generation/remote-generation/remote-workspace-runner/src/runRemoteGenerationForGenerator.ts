@@ -3,6 +3,7 @@ import {
     computeSemanticVersion,
     detectCiProvider,
     detectInvocationSource,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getUserAgentTemplateFromGeneratorConfig
@@ -171,6 +172,7 @@ export async function runRemoteGenerationForGenerator({
         resolvedVersion != null && isAutoVersion(resolvedVersion) ? MAGIC_VERSION : resolvedVersion;
 
     const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
+    const idempotencyKeyGeneration = getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation);
     const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
@@ -185,6 +187,7 @@ export async function runRemoteGenerationForGenerator({
         readme,
         packageName,
         userAgentTemplate,
+        idempotencyKeyGeneration,
         organization,
         version: effectiveIrVersion,
         context: interactiveTaskContext,

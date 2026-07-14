@@ -29,7 +29,8 @@ module Seed
         headers: {
           "User-Agent" => "fern_inferred-auth-implicit-reference/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }.merge(@auth_provider.auth_headers),
+        },
+        auth_provider: @auth_provider,
         max_retries: max_retries
       )
     end

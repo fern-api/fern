@@ -144,6 +144,9 @@ fixtures:
       customConfig:
         omitFernHeaders: true
         maxRetries: 5
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1

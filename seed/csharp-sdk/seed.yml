@@ -216,6 +216,9 @@ fixtures:
     - customConfig:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        include-platform-headers: true
+      outputFolder: include-platform-headers
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false

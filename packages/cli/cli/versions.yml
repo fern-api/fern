@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.70.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `mask-pii` setting under `ai-search` in docs.yml. When enabled, personally
+        identifiable information (PII) in user messages is masked before being sent to Ask Fern.
+        Disabled by default.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.69.0
+  changelogEntry:
+    - summary: |
+        Add an `api.settings.auto-generate-idempotency-key` option in `generators.yml` that applies
+        idempotency-key auto-generation to every generator in the API, so it no longer has to be set
+        on each generator's `config`. A generator's own `config.auto-generate-idempotency-key` still
+        overrides the API-level value. Accepts the same boolean shorthand or `header-name` / `methods`
+        object form, and is resolved into the IR (`SdkConfig.idempotencyKeyGeneration`) as before.
+      type: feat
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 5.68.0
+  changelogEntry:
+    - summary: |
+        Add an `auto-generate-idempotency-key` generator config key. When enabled, the
+        CLI records idempotency-key auto-generation in the IR (`SdkConfig.idempotencyKeyGeneration`)
+        so every generator reads a single, canonical setting from the IR instead of each
+        defining its own config key. Accepts `true` or `{ header-name: "Idempotency-Key" }`
+        and is stripped from the config forwarded to generators.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
 - version: 5.67.1
   changelogEntry:
     - summary: |

@@ -49,6 +49,10 @@ client.auth.get_token_with_client_credentials(
     scp="scp",
     entity_id="entity_id",
     scope="scope",
+    permissions=[
+        "permissions",
+        "permissions"
+    ],
 )
 ```
 
@@ -75,6 +79,10 @@ async def main() -> None:
         scp="scp",
         entity_id="entity_id",
         scope="scope",
+        permissions=[
+            "permissions",
+            "permissions"
+        ],
     )
 
 

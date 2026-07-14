@@ -5,6 +5,7 @@ import tmp from "tmp-promise";
 
 import type { FernGeneratorCli } from "../configuration/sdk/index.js";
 import * as serializers from "../configuration/sdk/serialization/index.js";
+import { README_SPAWN_TEST_TIMEOUT_MS } from "./testGenerateReadme.js";
 
 export function testGenerateReference({
     fixtureName,
@@ -14,14 +15,19 @@ export function testGenerateReference({
     config: FernGeneratorCli.ReferenceConfig;
 }): void {
     describe(fixtureName, () => {
-        it("generate reference", async () => {
-            const file = await tmp.file();
-            const json = JSON.stringify(await serializers.ReferenceConfig.jsonOrThrow(config), undefined, 2);
-            await writeFile(file.path, json);
+        it(
+            "generate reference",
+            async () => {
+                const file = await tmp.file();
+                const json = JSON.stringify(await serializers.ReferenceConfig.jsonOrThrow(config), undefined, 2);
+                await writeFile(file.path, json);
 
-            const args = [path.join(__dirname, "../../bin/cli"), "generate-reference", "--config", file.path];
-            const { stdout } = await execa("node", args);
-            await expect(stdout).toMatchFileSnapshot(`__snapshots__/${fixtureName}.md`);
-        });
+                const args = [path.join(__dirname, "../../bin/cli"), "generate-reference", "--config", file.path];
+                const { stdout } = await execa("node", args);
+                await expect(stdout).toMatchFileSnapshot(`__snapshots__/${fixtureName}.md`);
+            },
+            // See README_SPAWN_TEST_TIMEOUT_MS: cold-start `node` spawn is flaky under CI load.
+            README_SPAWN_TEST_TIMEOUT_MS
+        );
     });
 }

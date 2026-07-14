@@ -24,6 +24,12 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 import { buildUserAgentHeaderEntry } from "./buildUserAgentHeaderEntry.js";
+import {
+    BUILD_USER_AGENT_METHOD_NAME,
+    BUILD_USER_AGENT_RETURN_SUFFIX,
+    buildUserAgentLocalLines,
+    buildUserAgentReturnPrefix
+} from "./buildUserAgentMethodBody.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 import {
     getServerVariableOptions,
@@ -158,6 +164,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
 
         class_.addConstructor(this.getConstructorMethod());
+
+        if (this.settings.includePlatformHeaders) {
+            this.addBuildUserAgentMethod(class_);
+        }
 
         for (const subpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
@@ -368,20 +378,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
                 value: this.context.getCurrentVersionValueAccess()
             });
-            // When `user-agent-name-from-package` is enabled, falls back to
-            // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
-            // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
-            // TypeScript generator's npm-package-name fallback. Defaults off so
-            // existing C# SDKs imported from OpenAPI keep emitting no User-Agent.
-            const userAgentEntry = buildUserAgentHeaderEntry({
-                userAgent: platformHeaders.userAgent,
-                packageName: this.generation.names.project.packageId,
-                csharp: this.csharp,
-                versionValueAccess: this.context.getCurrentVersionValueAccess(),
-                userAgentNameFromPackage: this.settings.userAgentNameFromPackage
-            });
-            if (userAgentEntry != null) {
-                platformHeaderEntries.push(userAgentEntry);
+            if (this.settings.includePlatformHeaders) {
+                // Emit a single structured `User-Agent` consolidating the SDK
+                // name/version with the OS, architecture, and runtime, all
+                // resolved at runtime by the `BuildUserAgent` helper.
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock('"User-Agent"'),
+                    value: this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`)
+                });
+            } else {
+                // When `user-agent-name-from-package` is enabled, falls back to
+                // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
+                // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
+                // TypeScript generator's npm-package-name fallback. Defaults off so
+                // existing C# SDKs imported from OpenAPI keep emitting no User-Agent.
+                const userAgentEntry = buildUserAgentHeaderEntry({
+                    userAgent: platformHeaders.userAgent,
+                    packageName: this.generation.names.project.packageId,
+                    csharp: this.csharp,
+                    versionValueAccess: this.context.getCurrentVersionValueAccess(),
+                    userAgentNameFromPackage: this.settings.userAgentNameFromPackage
+                });
+                if (userAgentEntry != null) {
+                    platformHeaderEntries.push(userAgentEntry);
+                }
             }
         }
 
@@ -1202,6 +1222,36 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 writer.write("return Environment.GetEnvironmentVariable(env) ?? throw new ");
                 writer.writeNode(this.System.Exception);
                 writer.writeLine("(message);");
+            }),
+            type: ast.MethodType.STATIC
+        });
+    }
+
+    /**
+     * Emits a static helper that builds a structured `User-Agent` of the shape
+     * `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`, with the
+     * OS, architecture, and runtime version resolved at runtime. The OS/arch group
+     * is omitted when neither can be determined (and reduced to a single value when
+     * only one is), and the runtime version is dropped when unavailable, so the
+     * helper never emits an empty group and never throws.
+     */
+    private addBuildUserAgentMethod(cls: ast.Class) {
+        const packageName = this.generation.names.project.packageId;
+        cls.addMethod({
+            access: ast.Access.Private,
+            name: BUILD_USER_AGENT_METHOD_NAME,
+            return_: this.Primitive.string,
+            parameters: [],
+            isAsync: false,
+            body: this.csharp.codeblock((writer) => {
+                for (const line of buildUserAgentLocalLines()) {
+                    writer.writeLine(line);
+                }
+                writer.write(buildUserAgentReturnPrefix(packageName));
+                // Written via `writeNode` so the generated `Version` reference
+                // registers its using directive.
+                writer.writeNode(this.context.getCurrentVersionValueAccess());
+                writer.writeLine(BUILD_USER_AGENT_RETURN_SUFFIX);
             }),
             type: ast.MethodType.STATIC
         });

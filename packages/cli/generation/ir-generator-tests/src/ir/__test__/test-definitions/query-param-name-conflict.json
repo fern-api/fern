@@ -1239,6 +1239,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

@@ -20,7 +20,8 @@ client.auth.get_token_with_client_credentials(
   entity_id: "entity_id",
   audience: "https://api.example.com",
   grant_type: "client_credentials",
-  scope: "scope"
+  scope: "scope",
+  permissions: %w[permissions permissions]
 )
 ```
 </dd>
@@ -85,6 +86,14 @@ client.auth.get_token_with_client_credentials(
 <dd>
 
 **scope:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `Internal::Types::Array[String]` 
     
 </dd>
 </dl>

@@ -390,6 +390,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return undefined;
     }
 
+    public getOAuthAuth(): FernIr.OAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
     public get selfHosted(): boolean {
         return this.ir.selfHosted ?? false;
     }
