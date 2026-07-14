@@ -1,0 +1,6 @@
+- summary: |
+    Forward the GitHub Actions OIDC request variables (`ACTIONS_ID_TOKEN_REQUEST_URL` and
+    `ACTIONS_ID_TOKEN_REQUEST_TOKEN`) into the local-generation Docker container, so tooling running
+    inside a generator (e.g. `npm publish` to an npm trusted publisher) can mint a short-lived OIDC
+    token instead of relying on a long-lived registry token. No effect outside GitHub Actions OIDC jobs.
+  type: internal
