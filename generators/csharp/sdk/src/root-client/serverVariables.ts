@@ -92,11 +92,16 @@ function collectServerVariables(config: FernIr.EnvironmentsConfig | undefined): 
 /**
  * Substitutes `{id}` placeholders in a URL template with `{localName}` and returns
  * the result wrapped as a C# interpolated string (e.g. `$"https://api.{_region}.example.com"`).
+ *
+ * All braces in the template are first escaped to their doubled C# form (`{{`/`}}`) so
+ * that any brace that is not a declared server-variable placeholder is emitted as a
+ * literal rather than becoming a live interpolation expression; the known `{id}`
+ * placeholders are then reintroduced as real interpolation holes.
  */
 export function urlTemplateToInterpolatedString(template: string, options: ServerVariableOption[]): string {
-    let result = escapeForCSharpString(template);
+    let result = escapeForCSharpString(template).split("{").join("{{").split("}").join("}}");
     for (const { variable, localName } of options) {
-        result = result.split(`{${variable.id}}`).join(`{${localName}}`);
+        result = result.split(`{{${variable.id}}}`).join(`{${localName}}`);
     }
     return `$"${result}"`;
 }

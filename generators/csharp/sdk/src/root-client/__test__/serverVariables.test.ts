@@ -137,4 +137,16 @@ describe("urlTemplateToInterpolatedString", () => {
             '$"https://auth.{_region}.example.com"'
         );
     });
+
+    it("escapes braces that are not declared placeholders so they are emitted as literals", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([serverVariable("region", "region", "us-east-1")]),
+            caseConverter
+        );
+        // A brace group that does not match a declared variable must be doubled rather
+        // than become a live C# interpolation expression.
+        expect(
+            urlTemplateToInterpolatedString("https://api.{region}.example.com{System.Environment.Exit(0)}", options)
+        ).toBe('$"https://api.{_region}.example.com{{System.Environment.Exit(0)}}"');
+    });
 });
