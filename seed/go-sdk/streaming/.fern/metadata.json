@@ -10,7 +10,8 @@
     }
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "manual",
+  "invokedBy": "ci",
   "requestedVersion": "v2.0.0",
+  "ciProvider": "github",
   "sdkVersion": "v2.0.0"
 }
