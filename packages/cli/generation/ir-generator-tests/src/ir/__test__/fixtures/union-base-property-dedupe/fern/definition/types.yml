@@ -131,3 +131,31 @@ types:
     union:
       repo: Repo
       gist: Gist
+
+  # ---------------------------------------------------------------------------
+  # Scenario (guard b via the API surface): a variant object that is ALSO used
+  # directly as an endpoint response is not exclusively a union variant, so View B
+  # must NOT defer its fields (leaf-dropping would corrupt the standalone response
+  # model). View A still applies to the union. `nonVariantReferenced` must therefore
+  # see references from endpoints/webhooks/etc., not just `types`.
+  # ---------------------------------------------------------------------------
+  EndpointResponseVariant:
+    properties:
+      trace: string
+      detail: string
+  DirectlyReferencedUnion:
+    discriminant: kind
+    base-properties:
+      trace: string
+    union:
+      onlyVariant: EndpointResponseVariant
+
+service:
+  auth: false
+  base-path: /trace
+  endpoints:
+    getTrace:
+      method: GET
+      path: /latest
+      # EndpointResponseVariant is a union variant AND this endpoint's direct response.
+      response: EndpointResponseVariant

@@ -40,9 +40,13 @@ is **structurally equal** to `W.valueType`):
 - **`ObjectTypeDeclaration.deferredUnionBaseProperties`** (View B, for leaf-droppers such as C#):
   per object used *exclusively* as a union variant, the properties it declares that every owning union
   also declares as a base property with a structurally-equal type. Guard: the object must never be
-  referenced outside a union variant (standalone, an `extends` parent, an alias target, an
-  undiscriminated-union member, or a plain property type), because leaf-dropping mutates a possibly
-  shared object.
+  referenced outside a union variant, because leaf-dropping mutates a possibly shared object. This
+  guard spans the **entire IR**, not just the type graph — an object reachable as an `extends` parent,
+  an alias target, an undiscriminated-union member, a plain property type, **or anywhere on the API
+  surface** (an endpoint request/response, a webhook payload, a websocket message, an error, or a
+  global header/parameter/variable) is disqualified. (Considering only `ir.types` here was a latent
+  bug: an object used as both a union variant and, say, a direct endpoint response would have been
+  wrongly stripped.)
 
 Both fields are mirrored on the dynamic IR (`DiscriminatedUnionType.inheritedBaseProperties` and
 `ObjectType.deferredUnionBaseProperties`) for the snippet generators. The dynamic converter copies the

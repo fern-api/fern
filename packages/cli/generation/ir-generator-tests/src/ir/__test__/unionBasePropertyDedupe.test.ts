@@ -102,4 +102,12 @@ describe("discriminated-union base-property dedupe facts", () => {
         expect(deferredWireValues("Repo")).toEqual(["owner"]);
         expect(deferredWireValues("Gist")).toEqual(["owner"]);
     });
+
+    it("guard b sees the API surface: a variant also used as a direct endpoint response is excluded from View B", () => {
+        // The union still inherits the base property (envelope-drop is safe regardless of other usage).
+        expect(inheritedWireValues("DirectlyReferencedUnion")).toEqual(["trace"]);
+        // But EndpointResponseVariant is also this endpoint's response, so it is NOT exclusively a
+        // variant — leaf-dropping would corrupt the standalone response model. Must be excluded.
+        expect(deferredWireValues("EndpointResponseVariant")).toBeUndefined();
+    });
 });
