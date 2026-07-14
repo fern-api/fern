@@ -2,13 +2,13 @@ import json
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
-import fern.ir.resources as ir_types
-
 from fern_python.codegen import Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
-from fern_python.utils import pascal_case
+from fern_python.utils import pascal_case, snake_case
+
+import fern.ir.resources as ir_types
 
 WEBHOOKS_MODULE_NAME = "webhooks"
 WEBHOOKS_HELPER_FILE_NAME = "webhooks_helper"
@@ -61,13 +61,21 @@ class WebhooksHelperGenerator:
 
         root_exports: List[str] = []
 
-        self._write_helper(class_name="WebhooksHelper", config=default_entry.config)
+        self._write_helper(
+            class_name="WebhooksHelper",
+            module_name=WEBHOOKS_HELPER_FILE_NAME,
+            config=default_entry.config,
+        )
         root_exports.append("WebhooksHelper")
 
         for entry in override_entries:
             first_webhook_name = entry.webhook_names[0]
             class_name = f"{_webhook_name_to_pascal(first_webhook_name)}WebhooksHelper"
-            self._write_helper(class_name=class_name, config=entry.config)
+            self._write_helper(
+                class_name=class_name,
+                module_name=snake_case(class_name),
+                config=entry.config,
+            )
             root_exports.append(class_name)
 
         # Re-export the helper classes from the top-level package.
@@ -140,11 +148,11 @@ class WebhooksHelperGenerator:
             sort_keys=True,
         )
 
-    def _write_helper(self, *, class_name: str, config: ir_types.HmacSignatureVerification) -> None:
+    def _write_helper(self, *, class_name: str, module_name: str, config: ir_types.HmacSignatureVerification) -> None:
         contents = _HmacHelperWriter(class_name=class_name, config=config).write()
         filepath = Filepath(
             directories=(Filepath.DirectoryFilepathPart(module_name=WEBHOOKS_MODULE_NAME),),
-            file=Filepath.FilepathPart(module_name=WEBHOOKS_HELPER_FILE_NAME),
+            file=Filepath.FilepathPart(module_name=module_name),
         )
         filepath_nested = self._project.get_source_file_filepath(filepath, include_src_root=True)
         self._project.add_file(filepath_nested, contents)
@@ -275,7 +283,7 @@ class _HmacHelperWriter:
                     "try:",
                     "    timestamp_value = int(timestamp_header)",
                     "except ValueError:",
-                    '    raise ValueError("Invalid timestamp format: expected unix seconds")',
+                    '    raise ValueError("Invalid timestamp format: expected unix seconds") from None',
                     "timestamp_ms = timestamp_value * 1000",
                 ]
             )
@@ -285,7 +293,7 @@ class _HmacHelperWriter:
                     "try:",
                     "    timestamp_value = int(timestamp_header)",
                     "except ValueError:",
-                    '    raise ValueError("Invalid timestamp format: expected unix milliseconds")',
+                    '    raise ValueError("Invalid timestamp format: expected unix milliseconds") from None',
                     "timestamp_ms = timestamp_value",
                 ]
             )
@@ -295,7 +303,7 @@ class _HmacHelperWriter:
                     "try:",
                     '    parsed_timestamp = datetime.datetime.fromisoformat(timestamp_header.replace("Z", "+00:00"))',
                     "except ValueError:",
-                    '    raise ValueError("Invalid timestamp format: expected ISO 8601 date string")',
+                    '    raise ValueError("Invalid timestamp format: expected ISO 8601 date string") from None',
                     "timestamp_ms = parsed_timestamp.timestamp() * 1000",
                 ]
             )

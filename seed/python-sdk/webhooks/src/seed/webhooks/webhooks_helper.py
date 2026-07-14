@@ -33,7 +33,7 @@ class WebhooksHelper:
         try:
             timestamp_value = int(timestamp_header)
         except ValueError:
-            raise ValueError("Invalid timestamp format: expected unix seconds")
+            raise ValueError("Invalid timestamp format: expected unix seconds") from None
         timestamp_ms = timestamp_value * 1000
 
         if abs(time.time() * 1000 - timestamp_ms) > TIMESTAMP_TOLERANCE_SECONDS * 1000:

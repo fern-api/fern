@@ -62,8 +62,7 @@ class SdkGeneratorContext(ABC):
             for ep in service.endpoints
         )
         _has_webhook_signature_verification = any(
-            webhook.signature_verification is not None
-            and webhook.signature_verification.get_as_union().type == "hmac"
+            webhook.signature_verification is not None and webhook.signature_verification.get_as_union().type == "hmac"
             for webhook_group in ir.webhook_groups.values()
             for webhook in webhook_group
         )
