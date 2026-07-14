@@ -45,11 +45,14 @@ jobs:
       - name: Release SDKs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
         run: |
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
-          fern generate --api ir-types-latest --group dynamic-ir --version $version
+          # Generate locally (in Docker on this runner) rather than remotely, so the npm publish runs
+          # inside the GitHub Actions job and can authenticate to the trusted publisher via OIDC
+          # (id-token: write above). runDocker forwards ACTIONS_ID_TOKEN_REQUEST_* into the container;
+          # no NPM_TOKEN is needed — see the package's Trusted Publisher config on npmjs.
+          fern generate --api ir-types-latest --group dynamic-ir --version $version --local
 
   python:
     runs-on: ubuntu-latest
