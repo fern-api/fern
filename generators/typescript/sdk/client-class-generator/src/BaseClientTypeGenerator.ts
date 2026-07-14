@@ -308,7 +308,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
                 }
                 const literal = urlTemplateToTemplateLiteral(templatedEnvironment.urlTemplate, options);
                 const section = `    let baseUrl = ${OPTIONS_PARAMETER_NAME}?.baseUrl;
-    if (${condition}) {
+    if (baseUrl == null && (${condition})) {
 ${localDeclarations}
         baseUrl = ${literal};
     }
@@ -332,7 +332,7 @@ ${localDeclarations}
                     return `            ${propertyKey}: ${JSON.stringify(staticUrls[baseUrl.id] ?? "")},`;
                 });
                 const section = `    let environment = ${OPTIONS_PARAMETER_NAME}?.environment;
-    if (${condition}) {
+    if (environment == null && (${condition})) {
 ${localDeclarations}
         environment = {
 ${entries.join("\n")}

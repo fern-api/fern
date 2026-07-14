@@ -63,7 +63,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     );
 
     let baseUrl = options?.baseUrl;
-    if (options?.region != null || options?.serverUrlEnvironment != null) {
+    if (baseUrl == null && (options?.region != null || options?.serverUrlEnvironment != null)) {
         const _region = options?.region ?? "us-east-1";
         const _serverUrlEnvironment = options?.serverUrlEnvironment ?? "prod";
         baseUrl = `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`;

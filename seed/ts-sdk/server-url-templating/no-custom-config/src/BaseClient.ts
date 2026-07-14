@@ -63,7 +63,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     );
 
     let environment = options?.environment;
-    if (options?.region != null || options?.serverUrlEnvironment != null) {
+    if (environment == null && (options?.region != null || options?.serverUrlEnvironment != null)) {
         const _region = options?.region ?? "us-east-1";
         const _serverUrlEnvironment = options?.serverUrlEnvironment ?? "prod";
         environment = {

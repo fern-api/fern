@@ -90,11 +90,22 @@ function collectServerVariables(ir: FernIr.IntermediateRepresentation): FernIr.S
 }
 
 /**
+ * Escapes characters that are significant inside a TypeScript template literal so
+ * that the static portions of an author-controlled URL template cannot inject code
+ * (backslashes, backticks, and `${` interpolation openers).
+ */
+function escapeTemplateLiteralText(text: string): string {
+    return text.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$\{/g, "\\${");
+}
+
+/**
  * Substitutes `{id}` placeholders in a URL template with `${localName}` and returns
- * the result wrapped as a TypeScript template literal (including backticks).
+ * the result wrapped as a TypeScript template literal (including backticks). The static
+ * text of the template is escaped first so that a malicious template cannot break out of
+ * the literal; only the intended variable placeholders become interpolations.
  */
 export function urlTemplateToTemplateLiteral(template: string, options: ServerVariableOption[]): string {
-    let result = template;
+    let result = escapeTemplateLiteralText(template);
     for (const { variable, localName } of options) {
         result = result.split(`{${variable.id}}`).join(`\${${localName}}`);
     }
