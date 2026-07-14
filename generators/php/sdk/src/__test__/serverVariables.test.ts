@@ -2,7 +2,12 @@ import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 
-import { getServerVariableOptions, urlTemplateToPhpString } from "../root-client/serverVariables.js";
+import {
+    getMultipleBaseUrlsTemplatedEnvironment,
+    getServerVariableOptions,
+    getSingleBaseUrlTemplatedEnvironment,
+    urlTemplateToPhpConcatenation
+} from "../root-client/serverVariables.js";
 
 const caseConverter = new CaseConverter({
     generationLanguage: "php",
@@ -114,16 +119,89 @@ describe("getServerVariableOptions", () => {
         const options = getServerVariableOptions(config, caseConverter);
         expect(options.map((option) => option.optionName)).toEqual(["region"]);
     });
+
+    it("uses the configured default environment before an earlier templated environment", () => {
+        const firstVariable: FernIr.ServerVariable = {
+            id: "first",
+            name: "first",
+            default: "first",
+            values: []
+        };
+        const defaultVariable: FernIr.ServerVariable = {
+            id: "selected",
+            name: "selected",
+            default: "selected",
+            values: []
+        };
+        const config: FernIr.EnvironmentsConfig = {
+            defaultEnvironment: "default",
+            environments: FernIr.Environments.singleBaseUrl({
+                environments: [
+                    {
+                        id: "first",
+                        name: "first",
+                        docs: undefined,
+                        audiences: undefined,
+                        defaultUrl: undefined,
+                        url: "https://first.example.com",
+                        urlTemplate: "https://{first}.example.com",
+                        urlVariables: [firstVariable]
+                    },
+                    {
+                        id: "default",
+                        name: "default",
+                        docs: undefined,
+                        audiences: undefined,
+                        defaultUrl: undefined,
+                        url: "https://default.example.com",
+                        urlTemplate: "https://{selected}.example.com",
+                        urlVariables: [defaultVariable]
+                    }
+                ]
+            })
+        };
+
+        expect(getSingleBaseUrlTemplatedEnvironment(config)?.id).toBe("default");
+        expect(getServerVariableOptions(config, caseConverter).map((option) => option.optionName)).toEqual([
+            "selected"
+        ]);
+    });
+
+    it("uses the configured default multiple-base-URL environment", () => {
+        const config = multipleBaseUrlsConfig();
+        const environments = config.environments;
+        if (environments.type !== "multipleBaseUrls") {
+            throw new Error("Expected multiple base URLs");
+        }
+        const defaultEnvironment = environments.environments[0];
+        if (defaultEnvironment == null) {
+            throw new Error("Expected an environment");
+        }
+        environments.environments.unshift({
+            ...defaultEnvironment,
+            id: "EarlierEnvironment",
+            name: "EarlierEnvironment"
+        });
+
+        expect(getMultipleBaseUrlsTemplatedEnvironment(config)?.id).toBe("RegionalApiServer");
+    });
 });
 
-describe("urlTemplateToPhpString", () => {
-    it("substitutes placeholders with the option name and wraps in a double-quoted string", () => {
+describe("urlTemplateToPhpConcatenation", () => {
+    it("concatenates single-quoted literals with interpolated option variables", () => {
         const options = getServerVariableOptions(multipleBaseUrlsConfig(), caseConverter);
-        expect(urlTemplateToPhpString("https://api.{region}.{environment}.example.com/v1", options)).toBe(
-            '"https://api.{$region}.{$serverUrlEnvironment}.example.com/v1"'
+        expect(urlTemplateToPhpConcatenation("https://api.{region}.{environment}.example.com/v1", options)).toBe(
+            "'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1'"
         );
-        expect(urlTemplateToPhpString("https://auth.{region}.example.com", options)).toBe(
-            '"https://auth.{$region}.example.com"'
+        expect(urlTemplateToPhpConcatenation("https://auth.{region}.example.com", options)).toBe(
+            "'https://auth.' . $region . '.example.com'"
+        );
+    });
+
+    it("escapes single quotes in literal segments so a template cannot break out of the string", () => {
+        const options = getServerVariableOptions(multipleBaseUrlsConfig(), caseConverter);
+        expect(urlTemplateToPhpConcatenation("https://api.{region}.example.com/'; phpinfo();", options)).toBe(
+            "'https://api.' . $region . '.example.com/\\'; phpinfo();'"
         );
     });
 });

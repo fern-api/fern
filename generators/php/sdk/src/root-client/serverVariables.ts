@@ -21,6 +21,34 @@ export interface ServerVariableOption {
     optionName: string;
 }
 
+export function getSingleBaseUrlTemplatedEnvironment(
+    config: FernIr.EnvironmentsConfig
+): FernIr.SingleBaseUrlEnvironment | undefined {
+    const environments = config.environments;
+    if (environments.type !== "singleBaseUrl") {
+        return undefined;
+    }
+    return (
+        environments.environments.find(
+            (environment) => environment.id === config.defaultEnvironment && environment.urlTemplate != null
+        ) ?? environments.environments.find((environment) => environment.urlTemplate != null)
+    );
+}
+
+export function getMultipleBaseUrlsTemplatedEnvironment(
+    config: FernIr.EnvironmentsConfig
+): FernIr.MultipleBaseUrlsEnvironment | undefined {
+    const environments = config.environments;
+    if (environments.type !== "multipleBaseUrls") {
+        return undefined;
+    }
+    return (
+        environments.environments.find(
+            (environment) => environment.id === config.defaultEnvironment && environment.urlTemplates != null
+        ) ?? environments.environments.find((environment) => environment.urlTemplates != null)
+    );
+}
+
 /**
  * Returns the server URL variables (e.g. region) declared on the API's environments,
  * paired with the client-option name each is exposed under. Variables are de-duplicated
@@ -66,24 +94,22 @@ function collectServerVariables(config: FernIr.EnvironmentsConfig | undefined): 
 
     const environments = config.environments;
     switch (environments.type) {
-        case "singleBaseUrl":
-            for (const environment of environments.environments) {
-                if (environment.urlVariables != null) {
-                    add(environment.urlVariables);
-                    break;
+        case "singleBaseUrl": {
+            const environment = getSingleBaseUrlTemplatedEnvironment(config);
+            if (environment?.urlVariables != null) {
+                add(environment.urlVariables);
+            }
+            break;
+        }
+        case "multipleBaseUrls": {
+            const environment = getMultipleBaseUrlsTemplatedEnvironment(config);
+            if (environment?.urlVariables != null) {
+                for (const variables of Object.values(environment.urlVariables)) {
+                    add(variables);
                 }
             }
             break;
-        case "multipleBaseUrls":
-            for (const environment of environments.environments) {
-                if (environment.urlVariables != null) {
-                    for (const variables of Object.values(environment.urlVariables)) {
-                        add(variables);
-                    }
-                    break;
-                }
-            }
-            break;
+        }
         default:
             assertNever(environments);
     }
@@ -91,14 +117,42 @@ function collectServerVariables(config: FernIr.EnvironmentsConfig | undefined): 
     return result;
 }
 
+function escapeSingleQuoted(value: string): string {
+    return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+}
+
 /**
- * Substitutes `{id}` placeholders in a URL template with `{$optionName}` and returns
- * the result wrapped as a PHP double-quoted string (including the surrounding quotes).
+ * Builds a PHP string expression for a URL template by concatenating single-quoted
+ * literal segments with the interpolated option variables. The template text is emitted
+ * as single-quoted literals (never a double-quoted interpolated string) so an
+ * author-controlled template cannot inject PHP variable interpolation such as `{$foo}`.
  */
-export function urlTemplateToPhpString(template: string, options: ServerVariableOption[]): string {
-    let result = template.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-    for (const { variable, optionName } of options) {
-        result = result.split(`{${variable.id}}`).join(`{$${optionName}}`);
+export function urlTemplateToPhpConcatenation(template: string, options: ServerVariableOption[]): string {
+    const idToOptionName = new Map(options.map(({ variable, optionName }) => [variable.id, optionName]));
+    const parts: string[] = [];
+    let literal = "";
+    let index = 0;
+    while (index < template.length) {
+        if (template[index] === "{") {
+            const end = template.indexOf("}", index);
+            if (end !== -1) {
+                const optionName = idToOptionName.get(template.slice(index + 1, end));
+                if (optionName != null) {
+                    if (literal.length > 0) {
+                        parts.push(`'${escapeSingleQuoted(literal)}'`);
+                        literal = "";
+                    }
+                    parts.push(`$${optionName}`);
+                    index = end + 1;
+                    continue;
+                }
+            }
+        }
+        literal += template[index];
+        index += 1;
     }
-    return `"${result}"`;
+    if (literal.length > 0 || parts.length === 0) {
+        parts.push(`'${escapeSingleQuoted(literal)}'`);
+    }
+    return parts.join(" . ");
 }

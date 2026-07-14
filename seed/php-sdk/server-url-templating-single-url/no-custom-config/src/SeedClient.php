@@ -55,10 +55,10 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if ($region != null || $serverUrlEnvironment != null) {
+        if (($region != null || $serverUrlEnvironment != null) && !isset($this->options['baseUrl'])) {
             $region ??= 'us-east-1';
             $serverUrlEnvironment ??= 'prod';
-            $this->options['baseUrl'] = "https://api.{$region}.{$serverUrlEnvironment}.example.com/v1";
+            $this->options['baseUrl'] = 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1';
         }
 
 

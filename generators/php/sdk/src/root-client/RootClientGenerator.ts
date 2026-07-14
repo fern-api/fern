@@ -8,7 +8,13 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { getServerVariableOptions, ServerVariableOption, urlTemplateToPhpString } from "./serverVariables.js";
+import {
+    getMultipleBaseUrlsTemplatedEnvironment,
+    getServerVariableOptions,
+    getSingleBaseUrlTemplatedEnvironment,
+    ServerVariableOption,
+    urlTemplateToPhpConcatenation
+} from "./serverVariables.js";
 
 interface ConstructorParameters {
     all: ConstructorParameter[];
@@ -630,6 +636,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         }
         if (option.variable.default != null) {
             docs.push(`Defaults to "${option.variable.default}".`);
+        } else {
+            docs.push("Required when any other server URL variable is provided.");
         }
         return docs.join(" ");
     }
@@ -657,37 +665,56 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         }
         const environments = config.environments;
 
-        const condition = serverVariableOptions.map((option) => `$${option.optionName} != null`).join(" || ");
+        const anyProvided = serverVariableOptions.map((option) => `$${option.optionName} != null`).join(" || ");
+        const writeMissingDefaultGuards = (): void => {
+            for (const option of serverVariableOptions) {
+                if (option.variable.default == null) {
+                    writer.controlFlow("if", php.codeblock(`$${option.optionName} == null`));
+                    writer.writeTextStatement(
+                        `throw new \\InvalidArgumentException('${option.optionName} is required when overriding the server URL with variables.')`
+                    );
+                    writer.endControlFlow();
+                }
+            }
+        };
         const writeDefaults = (): void => {
             for (const option of serverVariableOptions) {
-                const fallback =
-                    option.variable.default != null ? this.escapeSingleQuoted(option.variable.default) : "";
-                writer.writeTextStatement(`$${option.optionName} ??= '${fallback}'`);
+                if (option.variable.default != null) {
+                    writer.writeTextStatement(
+                        `$${option.optionName} ??= '${this.escapeSingleQuoted(option.variable.default)}'`
+                    );
+                }
             }
         };
 
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
+                const templatedEnvironment = getSingleBaseUrlTemplatedEnvironment(config);
                 if (templatedEnvironment?.urlTemplate == null) {
                     return;
                 }
-                const phpString = urlTemplateToPhpString(templatedEnvironment.urlTemplate, serverVariableOptions);
-                writer.controlFlow("if", php.codeblock(condition));
+                const optionsName = this.context.getClientOptionsName();
+                const phpString = urlTemplateToPhpConcatenation(
+                    templatedEnvironment.urlTemplate,
+                    serverVariableOptions
+                );
+                writer.controlFlow("if", php.codeblock(`(${anyProvided}) && !isset($this->${optionsName}['baseUrl'])`));
+                writeMissingDefaultGuards();
                 writeDefaults();
-                writer.writeTextStatement(`$this->${this.context.getClientOptionsName()}['baseUrl'] = ${phpString}`);
+                writer.writeTextStatement(`$this->${optionsName}['baseUrl'] = ${phpString}`);
                 writer.endControlFlow();
                 writer.writeLine();
                 return;
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
+                const templatedEnvironment = getMultipleBaseUrlsTemplatedEnvironment(config);
                 if (templatedEnvironment?.urlTemplates == null) {
                     return;
                 }
                 const templates = templatedEnvironment.urlTemplates;
                 const staticUrls = templatedEnvironment.urls;
-                writer.controlFlow("if", php.codeblock(condition));
+                writer.controlFlow("if", php.codeblock(`$environment == null && (${anyProvided})`));
+                writeMissingDefaultGuards();
                 writeDefaults();
                 writer.write("$environment = ");
                 writer.writeNodeStatement(
@@ -701,7 +728,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             const template = templates[baseUrl.id];
                             const value =
                                 template != null
-                                    ? urlTemplateToPhpString(template, serverVariableOptions)
+                                    ? urlTemplateToPhpConcatenation(template, serverVariableOptions)
                                     : `'${this.escapeSingleQuoted(staticUrls[baseUrl.id] ?? "")}'`;
                             w.write(`${propertyName}: ${value}`);
                             if (index < environments.baseUrls.length - 1) {

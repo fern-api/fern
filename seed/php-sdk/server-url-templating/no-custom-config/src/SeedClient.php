@@ -62,12 +62,12 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if ($region != null || $serverUrlEnvironment != null) {
+        if ($environment == null && ($region != null || $serverUrlEnvironment != null)) {
             $region ??= 'us-east-1';
             $serverUrlEnvironment ??= 'prod';
             $environment = Environments::custom(
-                base: "https://api.{$region}.{$serverUrlEnvironment}.example.com/v1",
-                auth: "https://auth.{$region}.example.com"
+                base: 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1',
+                auth: 'https://auth.' . $region . '.example.com'
             );
         }
 
