@@ -3,6 +3,7 @@ import type { ClonedRepository } from "@fern-api/github";
 import type { Octokit } from "@octokit/rest";
 
 import type { PipelineLogger } from "../PipelineLogger";
+import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./constants";
 
 const MAX_CONCURRENT_PUSH_RETRIES = 3;
 
@@ -16,6 +17,28 @@ const MAX_SIGNED_CHAIN_LENGTH = 20;
 export interface CommitAuthor {
     name: string;
     email: string;
+}
+
+const PAT_TOKEN_PREFIXES = ["ghp_", "github_pat_"];
+
+/**
+ * Resolves the commit identity to send to the Git Data API for the given auth token.
+ *
+ * Personal access tokens cannot auto-sign API-created commits, and omitting the
+ * identity fields attributes them to the PAT owner. Pinning the Fern bot identity
+ * keeps author/committer stable for tooling that filters on them (e.g. CI
+ * ignore-committer rules). Signing-capable principals (App installation `ghs_`,
+ * OAuth `gho_`) keep the omitted default so GitHub attributes the commit to the
+ * bot user and stamps the "Verified" signature.
+ */
+export function resolveCommitAuthor(token: string, author: CommitAuthor | undefined): CommitAuthor | undefined {
+    if (author != null) {
+        return author;
+    }
+    if (PAT_TOKEN_PREFIXES.some((prefix) => token.startsWith(prefix))) {
+        return { name: FERN_BOT_NAME, email: FERN_BOT_EMAIL };
+    }
+    return undefined;
 }
 
 export interface PushSignedCommitOptions {
