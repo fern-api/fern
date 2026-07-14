@@ -102,6 +102,9 @@ export function convertDiscriminatedUnionTypeDeclaration({
                       }
                   }))
                 : [],
+        // Populated by the computeUnionBasePropertyDedupe post-build pass once the full types map
+        // is assembled; initialized empty here.
+        inheritedBaseProperties: [],
         types: unionTypes,
         default: defaultUnionType,
         discriminatorContext: getDiscriminatorContext({ union })

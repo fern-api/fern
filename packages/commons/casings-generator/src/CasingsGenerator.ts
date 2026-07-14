@@ -126,11 +126,26 @@ function computeName(
 
         // In smartCasing, manage numbers next to letters differently:
         // _.snakeCase("v2") = "v_2"
-        // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
+        // smartCasing("v2") = "v2", other examples: "applicationV1" => "application_v1",
+        // "ConversationsV2Configuration" => "conversations_v2_configuration", "2v22" => "2v22"
         const smartSnakeFn = (n: string) =>
             n
                 .split(" ")
-                .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
+                .map((part) => {
+                    const segments = part.split(/(\d+)/);
+                    return segments
+                        .map((segment, index) => {
+                            const casedSegment = snakeCase(segment);
+                            const previousSegment = segments[index - 1];
+                            const startsNewWord =
+                                casedSegment !== "" &&
+                                previousSegment != null &&
+                                /^\d+$/.test(previousSegment) &&
+                                /^[^a-z0-9]/.test(segment);
+                            return startsNewWord ? `_${casedSegment}` : casedSegment;
+                        })
+                        .join("");
+                })
                 .join("_");
         snakeCaseName = preserve ? withUnderscorePreservation(name, smartSnakeFn) : smartSnakeFn(name);
     }

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support server URL variables (region/edge routing). When an API's environments
+    declare URL templates with variables (e.g. `https://api.{region}.example.com`),
+    the generated client now exposes each variable as an optional functional option
+    (`WithRegion`, etc.). A variable whose name collides with a reserved client
+    option is prefixed with `ServerURL` (e.g. `environment` becomes
+    `WithServerURLEnvironment`). Setting any variable rebuilds the base URL(s) at
+    construction time by interpolating the templates, falling back to each
+    variable's default when unset.
+  type: feat

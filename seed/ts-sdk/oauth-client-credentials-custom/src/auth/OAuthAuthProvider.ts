@@ -95,9 +95,10 @@ export class OAuthAuthProvider implements core.AuthProvider {
                     entity_id: this.options.entity_id,
                 });
 
-                this.accessToken = tokenResponse.access_token;
+                const accessToken = tokenResponse.access_token;
+                this.accessToken = accessToken;
                 this.expiresAt = this.getExpiresAt(tokenResponse.expires_in, BUFFER_IN_MINUTES);
-                return this.accessToken;
+                return accessToken;
             } finally {
                 this.refreshPromise = undefined;
             }

@@ -95,7 +95,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Child": {
             "type": "object",
@@ -190,7 +191,8 @@
             "extends": [
                 "type_:Parent"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],

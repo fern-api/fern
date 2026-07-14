@@ -288,8 +288,10 @@ public final class CasingConfiguration {
     }
 
     /**
-     * Smart snake_case: keeps numbers adjacent to letters ("v2" stays "v2" instead of "v_2"). Matches TypeScript: split
-     * on spaces, then each part split on digits, snake_case each non-digit segment.
+     * Smart snake_case: keeps numbers adjacent to letters ("v2" stays "v2" instead of "v_2"), while a segment that
+     * starts a new word after a digit run keeps its word boundary ("ConversationsV2Configuration" becomes
+     * "conversations_v2_configuration"). Matches TypeScript: split on spaces, then each part split on digits,
+     * snake_case each non-digit segment.
      */
     static String toSmartSnakeCase(String s) {
         String[] spaceParts = s.split(" ");
@@ -297,11 +299,23 @@ public final class CasingConfiguration {
         for (String part : spaceParts) {
             List<String> segments = splitByDigits(part);
             StringBuilder partResult = new StringBuilder();
-            for (String seg : segments) {
+            for (int i = 0; i < segments.size(); i++) {
+                String seg = segments.get(i);
                 if (!seg.isEmpty() && seg.charAt(0) >= '0' && seg.charAt(0) <= '9') {
                     partResult.append(seg);
                 } else {
-                    partResult.append(toBasicSnakeCase(seg));
+                    String cased = toBasicSnakeCase(seg);
+                    boolean previousIsDigits =
+                            i > 0 && Character.isDigit(segments.get(i - 1).charAt(0));
+                    char firstChar = seg.isEmpty() ? '\0' : seg.charAt(0);
+                    boolean startsNewWord = !cased.isEmpty()
+                            && previousIsDigits
+                            && !(firstChar >= 'a' && firstChar <= 'z')
+                            && !(firstChar >= '0' && firstChar <= '9');
+                    if (startsNewWord) {
+                        partResult.append('_');
+                    }
+                    partResult.append(cased);
                 }
             }
             snakeParts.add(partResult.toString());

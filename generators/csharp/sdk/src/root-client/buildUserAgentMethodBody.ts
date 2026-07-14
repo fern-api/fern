@@ -29,6 +29,7 @@ export function buildUserAgentLocalLines(): string[] {
         `    : ${RUNTIME_INFORMATION}.IsOSPlatform(${OS_PLATFORM}.OSX) ? "osx"`,
         '    : "";',
         `var arch = ${RUNTIME_INFORMATION}.ProcessArchitecture.ToString().ToLowerInvariant();`,
+        'arch = arch == "x64" || arch == "amd64" || arch == "x86_64" ? "x86_64" : arch;',
         "var platform = os.Length > 0 && arch.Length > 0",
         '    ? $" ({os}; {arch})"',
         "    : os.Length > 0",
@@ -37,7 +38,7 @@ export function buildUserAgentLocalLines(): string[] {
         '            ? $" ({arch})"',
         '            : "";',
         "var runtimeVersion = global::System.Environment.Version.ToString();",
-        'var runtime = runtimeVersion.Length > 0 ? $" .NET/{runtimeVersion}" : " .NET";'
+        'var runtime = runtimeVersion.Length > 0 ? $" dotnet/{runtimeVersion}" : " dotnet";'
     ];
 }
 

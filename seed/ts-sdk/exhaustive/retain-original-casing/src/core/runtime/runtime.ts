@@ -174,15 +174,47 @@ const RUNTIME_DISPLAY_NAMES: Record<Runtime["type"], string | undefined> = {
 };
 
 /**
+ * CPU architecture aliases that all refer to 64-bit x86. They are normalized to
+ * the single canonical token `x86_64` so the User-Agent architecture label is
+ * consistent regardless of which runtime reports it (Node reports `x64`, others
+ * report `amd64` or `x86_64`).
+ */
+const X86_64_ARCH_ALIASES = new Set(["x64", "amd64", "x86_64"]);
+
+/**
+ * Normalizes a CPU architecture token, collapsing the 64-bit x86 aliases
+ * (`x64`, `amd64`, `x86_64`) to `x86_64`. Other architectures are returned
+ * unchanged.
+ */
+function normalizeArch(arch: string | undefined): string | undefined {
+    if (arch == null) {
+        return arch;
+    }
+    return X86_64_ARCH_ALIASES.has(arch.toLowerCase()) ? "x86_64" : arch;
+}
+
+/**
+ * Percent-encodes the `@` and `/` characters in an npm package name so the
+ * User-Agent product token stays within the RFC 7230 token grammar. The
+ * original scoped package name can be recovered by URL-decoding (e.g.
+ * `@dummy/sdk` becomes `%40dummy%2Fsdk`).
+ */
+function encodeProductName(sdkName: string): string {
+    return sdkName.replace(/@/g, "%40").replace(/\//g, "%2F");
+}
+
+/**
  * Builds a structured User-Agent string of the form
  *   `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
  * where the platform group and runtime segment are omitted gracefully when the
  * underlying values cannot be determined (e.g. in a browser).
  */
 export function getUserAgent(sdkName: string, sdkVersion: string): string {
-    let userAgent = `${sdkName}/${sdkVersion}`;
+    let userAgent = `${encodeProductName(sdkName)}/${sdkVersion}`;
 
-    const platform = [RUNTIME.os, RUNTIME.arch].filter((part): part is string => part != null && part.length > 0);
+    const platform = [RUNTIME.os, normalizeArch(RUNTIME.arch)].filter(
+        (part): part is string => part != null && part.length > 0,
+    );
     if (platform.length > 0) {
         userAgent += ` (${platform.join("; ")})`;
     }

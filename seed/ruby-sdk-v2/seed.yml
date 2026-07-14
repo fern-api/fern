@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
@@ -122,12 +122,18 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
 
 features:
   requestOptions: true
   idempotency: false
   autoPagination: false
-  oauth: false
+  oauth: true
   authEnvVarScanning: true
   websocket: false
   streamingJson: false

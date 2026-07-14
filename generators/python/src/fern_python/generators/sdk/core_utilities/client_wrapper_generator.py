@@ -587,9 +587,13 @@ class ClientWrapperGenerator:
                 writer.write_line("")
                 if emit_structured_user_agent:
                     writer.write_line(f'_user_agent = "{user_agent_prefix}"')
-                    writer.write_line(
-                        '_platform = "; ".join(part for part in (platform.system().lower(), platform.machine()) if part)'
-                    )
+                    writer.write_line("_os = platform.system().lower()")
+                    # Collapse the 64-bit x86 aliases (x64, amd64, x86_64) to the canonical x86_64.
+                    writer.write_line("_arch = platform.machine()")
+                    writer.write_line('if _arch.lower() in ("x64", "amd64", "x86_64"):')
+                    with writer.indent():
+                        writer.write_line('_arch = "x86_64"')
+                    writer.write_line('_platform = "; ".join(part for part in (_os, _arch) if part)')
                     writer.write_line("if _platform:")
                     with writer.indent():
                         writer.write_line('_user_agent += f" ({_platform})"')
@@ -897,6 +901,122 @@ class ClientWrapperGenerator:
                 )
             )
 
+        # Basic auth is independent of bearer/OAuth auth and must always be included —
+        # even when exclude_auth is True (OAuth token override mode). When OAuth is also
+        # present (auth: any), make the credentials optional so users can authenticate
+        # with either OAuth or basic auth alone.
+        basic_auth_scheme = self._get_basic_auth_scheme()
+        basic_auth_is_required = self._context.ir.sdk_config.is_auth_mandatory and not self._has_oauth()
+        if basic_auth_scheme is not None:
+            username_omitted = basic_auth_scheme.username_omit is True
+            password_omitted = basic_auth_scheme.password_omit is True
+
+            # When omit is true, the field is completely removed from the end-user API.
+            # Only add non-omitted fields to constructor parameters.
+            if not username_omitted:
+                username_constructor_parameter_name = names.get_username_constructor_parameter_name(basic_auth_scheme)
+                username_constructor_parameter = ConstructorParameter(
+                    constructor_parameter_name=username_constructor_parameter_name,
+                    private_member_name=names.get_username_member_name(basic_auth_scheme),
+                    type_hint=(
+                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
+                        if basic_auth_is_required
+                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    ),
+                    initializer=AST.Expression(
+                        f'{username_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.username).screaming_snake_case.safe_name}"',
+                    ),
+                    getter_method=AST.FunctionDeclaration(
+                        name=names.get_username_getter_name(basic_auth_scheme),
+                        signature=AST.FunctionSignature(
+                            parameters=[],
+                            return_type=(
+                                AST.TypeHint.str_()
+                                if basic_auth_is_required
+                                else AST.TypeHint.optional(AST.TypeHint.str_())
+                            ),
+                        ),
+                        body=AST.CodeWriter(
+                            self._get_required_getter_body_writer(
+                                member_name=names.get_username_member_name(basic_auth_scheme)
+                            )
+                            if basic_auth_is_required
+                            else self._get_optional_getter_body_writer(
+                                member_name=names.get_username_member_name(basic_auth_scheme)
+                            )
+                        ),
+                    ),
+                    environment_variable=(
+                        basic_auth_scheme.username_env_var if basic_auth_scheme.username_env_var is not None else None
+                    ),
+                    is_basic=True,
+                    template=TemplateGenerator.string_template(
+                        is_optional=False,
+                        template_string_prefix=username_constructor_parameter_name,
+                        inputs=[
+                            TemplateInput.factory.payload(
+                                PayloadInput(
+                                    location="AUTH",
+                                    path="username",
+                                )
+                            ),
+                        ],
+                    ),
+                )
+                parameters.append(username_constructor_parameter)
+
+            if not password_omitted:
+                password_constructor_parameter_name = names.get_password_constructor_parameter_name(basic_auth_scheme)
+                password_constructor_parameter = ConstructorParameter(
+                    constructor_parameter_name=password_constructor_parameter_name,
+                    private_member_name=names.get_password_member_name(basic_auth_scheme),
+                    type_hint=(
+                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
+                        if basic_auth_is_required
+                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                    ),
+                    initializer=AST.Expression(
+                        f'{password_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.password).screaming_snake_case.safe_name}"',
+                    ),
+                    getter_method=AST.FunctionDeclaration(
+                        name=names.get_password_getter_name(basic_auth_scheme),
+                        signature=AST.FunctionSignature(
+                            parameters=[],
+                            return_type=(
+                                AST.TypeHint.str_()
+                                if basic_auth_is_required
+                                else AST.TypeHint.optional(AST.TypeHint.str_())
+                            ),
+                        ),
+                        body=AST.CodeWriter(
+                            self._get_required_getter_body_writer(
+                                member_name=names.get_password_member_name(basic_auth_scheme)
+                            )
+                            if basic_auth_is_required
+                            else self._get_optional_getter_body_writer(
+                                member_name=names.get_password_member_name(basic_auth_scheme)
+                            )
+                        ),
+                    ),
+                    is_basic=True,
+                    environment_variable=(
+                        basic_auth_scheme.password_env_var if basic_auth_scheme.password_env_var is not None else None
+                    ),
+                    template=TemplateGenerator.string_template(
+                        is_optional=False,
+                        template_string_prefix=password_constructor_parameter_name,
+                        inputs=[
+                            TemplateInput.factory.payload(
+                                PayloadInput(
+                                    location="AUTH",
+                                    path="password",
+                                )
+                            ),
+                        ],
+                    ),
+                )
+                parameters.append(password_constructor_parameter)
+
         if exclude_auth:
             # Add generic headers parameter even when excluding auth
             parameters.append(headers_constructor_parameter)
@@ -977,117 +1097,6 @@ class ClientWrapperGenerator:
                     ),
                 )
             )
-
-        basic_auth_scheme = self._get_basic_auth_scheme()
-        if basic_auth_scheme is not None:
-            username_omitted = basic_auth_scheme.username_omit is True
-            password_omitted = basic_auth_scheme.password_omit is True
-
-            # When omit is true, the field is completely removed from the end-user API.
-            # Only add non-omitted fields to constructor parameters.
-            if not username_omitted:
-                username_constructor_parameter_name = names.get_username_constructor_parameter_name(basic_auth_scheme)
-                username_constructor_parameter = ConstructorParameter(
-                    constructor_parameter_name=username_constructor_parameter_name,
-                    private_member_name=names.get_username_member_name(basic_auth_scheme),
-                    type_hint=(
-                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
-                    ),
-                    initializer=AST.Expression(
-                        f'{username_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.username).screaming_snake_case.safe_name}"',
-                    ),
-                    getter_method=AST.FunctionDeclaration(
-                        name=names.get_username_getter_name(basic_auth_scheme),
-                        signature=AST.FunctionSignature(
-                            parameters=[],
-                            return_type=(
-                                AST.TypeHint.str_()
-                                if self._context.ir.sdk_config.is_auth_mandatory
-                                else AST.TypeHint.optional(AST.TypeHint.str_())
-                            ),
-                        ),
-                        body=AST.CodeWriter(
-                            self._get_required_getter_body_writer(
-                                member_name=names.get_username_member_name(basic_auth_scheme)
-                            )
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else self._get_optional_getter_body_writer(
-                                member_name=names.get_username_member_name(basic_auth_scheme)
-                            )
-                        ),
-                    ),
-                    environment_variable=(
-                        basic_auth_scheme.username_env_var if basic_auth_scheme.username_env_var is not None else None
-                    ),
-                    is_basic=True,
-                    template=TemplateGenerator.string_template(
-                        is_optional=False,
-                        template_string_prefix=username_constructor_parameter_name,
-                        inputs=[
-                            TemplateInput.factory.payload(
-                                PayloadInput(
-                                    location="AUTH",
-                                    path="username",
-                                )
-                            ),
-                        ],
-                    ),
-                )
-                parameters.append(username_constructor_parameter)
-
-            if not password_omitted:
-                password_constructor_parameter_name = names.get_password_constructor_parameter_name(basic_auth_scheme)
-                password_constructor_parameter = ConstructorParameter(
-                    constructor_parameter_name=password_constructor_parameter_name,
-                    private_member_name=names.get_password_member_name(basic_auth_scheme),
-                    type_hint=(
-                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
-                    ),
-                    initializer=AST.Expression(
-                        f'{password_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.password).screaming_snake_case.safe_name}"',
-                    ),
-                    getter_method=AST.FunctionDeclaration(
-                        name=names.get_password_getter_name(basic_auth_scheme),
-                        signature=AST.FunctionSignature(
-                            parameters=[],
-                            return_type=(
-                                AST.TypeHint.str_()
-                                if self._context.ir.sdk_config.is_auth_mandatory
-                                else AST.TypeHint.optional(AST.TypeHint.str_())
-                            ),
-                        ),
-                        body=AST.CodeWriter(
-                            self._get_required_getter_body_writer(
-                                member_name=names.get_password_member_name(basic_auth_scheme)
-                            )
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else self._get_optional_getter_body_writer(
-                                member_name=names.get_password_member_name(basic_auth_scheme)
-                            )
-                        ),
-                    ),
-                    is_basic=True,
-                    environment_variable=(
-                        basic_auth_scheme.password_env_var if basic_auth_scheme.password_env_var is not None else None
-                    ),
-                    template=TemplateGenerator.string_template(
-                        is_optional=False,
-                        template_string_prefix=password_constructor_parameter_name,
-                        inputs=[
-                            TemplateInput.factory.payload(
-                                PayloadInput(
-                                    location="AUTH",
-                                    path="password",
-                                )
-                            ),
-                        ],
-                    ),
-                )
-                parameters.append(password_constructor_parameter)
 
         # Add generic headers parameter
         parameters.append(headers_constructor_parameter)

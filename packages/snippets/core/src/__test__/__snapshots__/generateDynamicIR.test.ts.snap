@@ -83,6 +83,7 @@ exports[`generateDynamicIR > go 1`] = `
           },
         },
       },
+      "deferredUnionBaseProperties": undefined,
       "extends": undefined,
       "properties": [
         {

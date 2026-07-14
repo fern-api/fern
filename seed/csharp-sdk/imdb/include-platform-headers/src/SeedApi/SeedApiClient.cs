@@ -58,13 +58,14 @@ public partial class SeedApiClient : ISeedApiClient
         var arch = global::System
             .Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString()
             .ToLowerInvariant();
+        arch = arch == "x64" || arch == "amd64" || arch == "x86_64" ? "x86_64" : arch;
         var platform =
             os.Length > 0 && arch.Length > 0 ? $" ({os}; {arch})"
             : os.Length > 0 ? $" ({os})"
             : arch.Length > 0 ? $" ({arch})"
             : "";
         var runtimeVersion = global::System.Environment.Version.ToString();
-        var runtime = runtimeVersion.Length > 0 ? $" .NET/{runtimeVersion}" : " .NET";
+        var runtime = runtimeVersion.Length > 0 ? $" dotnet/{runtimeVersion}" : " dotnet";
         return $"SeedApi/{Version.Current}{platform}{runtime}";
     }
 }

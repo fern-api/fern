@@ -309,6 +309,9 @@ fixtures:
   oauth-client-credentials-reference:
     - outputFolder: .
       customConfig: null
+  ts-oauth-token-optional:
+    - outputFolder: no-custom-config
+      customConfig: null
   mixed-case:
     - outputFolder: no-custom-config
       customConfig: null
@@ -532,6 +535,12 @@ fixtures:
       customConfig:
         generateReactQueryHooks: true
   server-sent-events-openapi:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
     - outputFolder: no-custom-config
       customConfig: null
 

@@ -23,6 +23,7 @@ describe("AuthClient", () => {
             audience: "https://api.example.com",
             grant_type: "client_credentials",
             scope: "scope",
+            permissions: ["permissions", "permissions"],
         };
         const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
 
@@ -41,6 +42,7 @@ describe("AuthClient", () => {
             scp: "scp",
             entity_id: "entity_id",
             scope: "scope",
+            permissions: ["permissions", "permissions"],
         });
         expect(response).toEqual(rawResponseBody);
     });

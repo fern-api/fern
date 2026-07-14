@@ -1,4 +1,5 @@
 import { NameInput } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
@@ -16,6 +17,60 @@ import {
 } from "../authUtils.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+/**
+ * RequestOptions field names that a server URL variable must not shadow. Kept in
+ * sync with the reserved names in the Go v1 generator (sdk.go). A variable whose
+ * idiomatic name collides with one of these is exposed under a "ServerURL"-prefixed
+ * name instead.
+ */
+const RESERVED_OPTION_NAMES = new Set<string>([
+    "BaseURL",
+    "Environment",
+    "HTTPClient",
+    "HTTPHeader",
+    "BodyProperties",
+    "QueryParameters",
+    "MaxAttempts",
+    "MaxBufSize",
+    "MaxStreamReconnectAttempts",
+    "DisableStreamReconnection",
+    "DisableRetries"
+]);
+
+interface ServerVariableOption {
+    variable: FernIr.ServerVariable;
+    /** Exported RequestOptions field name, e.g. "Region" or "ServerURLEnvironment". */
+    fieldName: string;
+    /** Local variable name used during interpolation, e.g. "region". */
+    localName: string;
+}
+
+interface BaseUrlTemplate {
+    /** The Environment struct field the interpolated URL is assigned to (e.g. "Base"). */
+    fieldName: string;
+    /** The URL template containing {id} placeholders. */
+    template: string;
+}
+
+interface ServerVariableConfig {
+    /** Server URL variables, de-duplicated by id. */
+    variables: FernIr.ServerVariable[];
+    /** URL templates whose {id} placeholders reference the above variables. */
+    templates: BaseUrlTemplate[];
+}
+
+function dedupeServerVariablesById(variables: FernIr.ServerVariable[]): FernIr.ServerVariable[] {
+    const seen = new Set<string>();
+    const result: FernIr.ServerVariable[] = [];
+    for (const variable of variables) {
+        if (!seen.has(variable.id)) {
+            seen.add(variable.id);
+            result.push(variable);
+        }
+    }
+    return result;
+}
 
 export declare namespace ClientGenerator {
     interface Args {
@@ -231,9 +286,191 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         this.writeAuthEnvironmentVariables({ writer });
         this.writeHeaderEnvironmentVariables({ writer });
         if (this.isRootClient) {
+            this.writeServerVariableInterpolation({ writer });
             this.writeOAuthTokenFetching({ writer });
             this.writeInferredAuthTokenFetching({ writer });
         }
+    }
+
+    /**
+     * Returns the server URL variables and the URL template(s) they interpolate, both
+     * read from the SAME environment (the first one that declares both). Sourcing the
+     * variables and templates from a single environment guarantees the template's {id}
+     * placeholders line up with the collected variable ids rather than being drawn from
+     * two independently-selected environments. Variables are de-duplicated by id, and
+     * the option naming mirrors the Go v1 generator so the generated field references
+     * line up. For singleBaseUrl the template fieldName is empty (the result is assigned
+     * to options.BaseURL rather than an Environment struct field).
+     */
+    private getServerVariableConfig(): ServerVariableConfig {
+        const empty: ServerVariableConfig = { variables: [], templates: [] };
+        const config = this.context.ir.environments;
+        if (config == null) {
+            return empty;
+        }
+        const environments = config.environments;
+        switch (environments.type) {
+            case "singleBaseUrl":
+                for (const environment of environments.environments) {
+                    if (
+                        environment.urlVariables != null &&
+                        environment.urlVariables.length > 0 &&
+                        environment.urlTemplate != null
+                    ) {
+                        return {
+                            variables: dedupeServerVariablesById(environment.urlVariables),
+                            templates: [{ fieldName: "", template: environment.urlTemplate }]
+                        };
+                    }
+                }
+                return empty;
+            case "multipleBaseUrls": {
+                const baseUrlNamesById = new Map<string, string>();
+                for (const baseUrl of environments.baseUrls) {
+                    baseUrlNamesById.set(baseUrl.id, this.context.caseConverter.pascalUnsafe(baseUrl.name));
+                }
+                for (const environment of environments.environments) {
+                    if (
+                        environment.urlVariables != null &&
+                        Object.keys(environment.urlVariables).length > 0 &&
+                        environment.urlTemplates != null &&
+                        Object.keys(environment.urlTemplates).length > 0
+                    ) {
+                        const variables: FernIr.ServerVariable[] = [];
+                        for (const baseUrlId of Object.keys(environment.urlVariables).sort()) {
+                            variables.push(...(environment.urlVariables[baseUrlId] ?? []));
+                        }
+                        const templates: BaseUrlTemplate[] = [];
+                        for (const baseUrlId of Object.keys(environment.urlTemplates).sort()) {
+                            const template = environment.urlTemplates[baseUrlId];
+                            if (template == null) {
+                                continue;
+                            }
+                            templates.push({
+                                fieldName: baseUrlNamesById.get(baseUrlId) ?? baseUrlId,
+                                template
+                            });
+                        }
+                        return { variables: dedupeServerVariablesById(variables), templates };
+                    }
+                }
+                return empty;
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    private toServerVariableOptions(variables: FernIr.ServerVariable[]): ServerVariableOption[] {
+        return variables.map((variable) => {
+            const pascal = this.context.caseConverter.pascalUnsafe(variable.name);
+            const collides = RESERVED_OPTION_NAMES.has(pascal);
+            const fieldName = collides ? `ServerURL${pascal}` : pascal;
+            const localName = collides ? `serverURL${pascal}` : this.context.caseConverter.camelSafe(variable.name);
+            return { variable, fieldName, localName };
+        });
+    }
+
+    /**
+     * Writes the construction-time interpolation block: when any server URL variable
+     * option is set, rebuild the base URL(s) from the environment's URL template(s),
+     * substituting each {id} placeholder with the provided value (falling back to the
+     * variable's default).
+     */
+    private writeServerVariableInterpolation({ writer }: { writer: go.Writer }): void {
+        const { variables, templates } = this.getServerVariableConfig();
+        if (variables.length === 0 || templates.length === 0) {
+            return;
+        }
+        const options = this.toServerVariableOptions(variables);
+        const optionsByVariableId = new Map<string, ServerVariableOption>();
+        for (const option of options) {
+            optionsByVariableId.set(option.variable.id, option);
+        }
+        const isMultipleBaseUrls = this.context.isMultipleBaseUrlsEnvironment();
+
+        // Only rebuild the base URL from the template(s) when the user has NOT supplied an
+        // explicit base URL. An explicit BaseURL always takes precedence and must not be
+        // clobbered by server-variable interpolation.
+        const variableConditions = options.map((option) => `options.${option.fieldName} != ""`).join(" || ");
+        writer.write("if ");
+        writer.write(`options.BaseURL == "" && (${variableConditions})`);
+        writer.writeLine(" {");
+        writer.indent();
+
+        // Declare a local for each variable, defaulting to its IR default when unset.
+        for (const option of options) {
+            writer.writeLine(`${option.localName} := options.${option.fieldName}`);
+            if (option.variable.default != null) {
+                writer.writeLine(`if ${option.localName} == "" {`);
+                writer.indent();
+                writer.writeLine(`${option.localName} = ${JSON.stringify(option.variable.default)}`);
+                writer.dedent();
+                writer.writeLine("}");
+            }
+        }
+
+        if (isMultipleBaseUrls) {
+            writer.write("options.Environment = ");
+            writer.writeNode(
+                go.typeReference({
+                    name: "Environment",
+                    importPath: this.context.getRootImportPath()
+                })
+            );
+            writer.writeLine("{");
+            writer.indent();
+            for (const { fieldName, template } of templates) {
+                writer.write(`${fieldName}: `);
+                this.writeSprintfForTemplate({ writer, template, optionsByVariableId });
+                writer.writeLine(",");
+            }
+            writer.dedent();
+            writer.writeLine("}");
+        } else {
+            const template = templates[0];
+            if (template != null) {
+                writer.write("options.BaseURL = ");
+                this.writeSprintfForTemplate({ writer, template: template.template, optionsByVariableId });
+                writer.newLine();
+            }
+        }
+
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Writes a fmt.Sprintf call that reconstructs a URL from its template, replacing
+     * each {id} placeholder with the corresponding local variable (in order).
+     */
+    private writeSprintfForTemplate({
+        writer,
+        template,
+        optionsByVariableId
+    }: {
+        writer: go.Writer;
+        template: string;
+        optionsByVariableId: Map<string, ServerVariableOption>;
+    }): void {
+        const args: string[] = [];
+        // Escape any literal percent signs (e.g. percent-encoded URL segments) before
+        // introducing %s verbs, so they aren't misinterpreted by fmt.Sprintf.
+        const escaped = template.replace(/%/g, "%%");
+        const format = escaped.replace(/\{([^}]+)\}/g, (match, id: string) => {
+            const option = optionsByVariableId.get(id);
+            if (option == null) {
+                return match;
+            }
+            args.push(option.localName);
+            return "%s";
+        });
+        writer.writeNode(
+            go.invokeFunc({
+                func: go.typeReference({ name: "Sprintf", importPath: "fmt" }),
+                arguments_: [go.codeblock(JSON.stringify(format)), ...args.map((arg) => go.codeblock(arg))]
+            })
+        );
     }
 
     private writeHeaderEnvironmentVariables({ writer }: { writer: go.Writer }): void {

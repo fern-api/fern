@@ -56,6 +56,7 @@ import { ExampleResolverImpl } from "./resolvers/ExampleResolver.js";
 import { PropertyResolverImpl } from "./resolvers/PropertyResolver.js";
 import { TypeResolverImpl } from "./resolvers/TypeResolver.js";
 import { VariableResolverImpl } from "./resolvers/VariableResolver.js";
+import { addUnionBasePropertyDedupeToIr } from "./union-base-properties/computeUnionBasePropertyDedupe.js";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath.js";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience.js";
 import { getIrGenerationSettings } from "./utils/getIrGenerationSettings.js";
@@ -80,6 +81,12 @@ export declare namespace generateIntermediateRepresentation {
         packageName: string | undefined;
         /** Template for the User-Agent header value (e.g. "north-python-sdk/{version}"). */
         userAgentTemplate?: string;
+        /**
+         * When set, generators auto-generate an idempotency key header on retry-unsafe
+         * (POST/PUT) requests unless the caller supplies one. Resolved once here from the
+         * `auto-generate-idempotency-key` generator config so every generator reads it from IR.
+         */
+        idempotencyKeyGeneration?: FernIr.IdempotencyKeyGeneration;
         /** Organization name from fern.config.json, used for {organization} in user-agent template. */
         organization?: string;
         version: string | undefined;
@@ -102,6 +109,7 @@ export function generateIntermediateRepresentation({
     readme,
     packageName,
     userAgentTemplate,
+    idempotencyKeyGeneration,
     organization,
     version,
     context,
@@ -480,6 +488,11 @@ export function generateIntermediateRepresentation({
 
     addExtendedPropertiesToIr(intermediateRepresentation);
 
+    // Compute the language-agnostic discriminated-union base-property dedupe facts once, now that the
+    // full types map is assembled and `extendedProperties` are populated (this pass reads them). All
+    // generators consume these IR facts instead of re-deriving the decision. See the ADR.
+    addUnionBasePropertyDedupeToIr(intermediateRepresentation);
+
     // Resolve which global parameters actually apply to each endpoint (body-location
     // params are gated on the request-body schema containing the target path), storing
     // the resolved set in endpoint.globalParameters for generators to consume directly.
@@ -567,6 +580,7 @@ export function generateIntermediateRepresentation({
         hasStreamingEndpoints,
         hasPaginatedEndpoints,
         hasFileDownloadEndpoints,
+        idempotencyKeyGeneration,
         platformHeaders: {
             language: "X-Fern-Language",
             sdkName: "X-Fern-SDK-Name",

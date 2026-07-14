@@ -23,10 +23,14 @@ module <%= gem_namespace %>
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to <%= defaultMaxRetries %>.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
-        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {})
+        # @param auth_provider [Object, nil] An optional auth provider responding to
+        #   `auth_headers`. When present its headers are resolved on every request so
+        #   token-based schemes (e.g. OAuth) can refresh an expired token mid-session.
+        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, auth_provider: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
+          @auth_provider = auth_provider
           @default_headers = <% if (!omitFernHeaders) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
@@ -42,7 +46,7 @@ module <%= gem_namespace %>
         # @return [String] The User-Agent header value.
         def self.user_agent(prefix)
           os = normalize_os(RbConfig::CONFIG["host_os"])
-          arch = normalize_value(RbConfig::CONFIG["host_cpu"])
+          arch = normalize_arch(RbConfig::CONFIG["host_cpu"])
           version = normalize_value(RUBY_VERSION)
 
           result = prefix.to_s
@@ -59,6 +63,18 @@ module <%= gem_namespace %>
 
           stripped = value.to_s.strip
           stripped.empty? ? nil : stripped
+        end
+
+        # Collapses the 64-bit x86 architecture aliases (x64, amd64, x86_64) to
+        # the single canonical token "x86_64"; other architectures are returned
+        # unchanged.
+        # @param host_cpu [String, nil] The raw RbConfig host_cpu value.
+        # @return [String, nil] A normalized architecture token, or nil when blank.
+        def self.normalize_arch(host_cpu)
+          value = normalize_value(host_cpu)
+          return nil if value.nil?
+
+          %w[x64 amd64 x86_64].include?(value.downcase) ? "x86_64" : value
         end
 
         # Maps RbConfig's host_os to a short, stable platform token.
@@ -82,6 +98,9 @@ module <%= gem_namespace %>
         # @return [HTTP::Response] The HTTP response.
         def send(request)
           url = build_url(request)
+          # Resolve auth headers once per request (not per retry) so token-based
+          # providers refresh at most once here; static providers are cheap.
+          auth_headers = resolve_auth_headers
           attempt = 0
           response = nil
 
@@ -89,8 +108,9 @@ module <%= gem_namespace %>
             http_request = build_http_request(
               url:,
               method: request.method,
-              headers: request.encode_headers(protected_keys: @default_headers.keys),
-              body: request.encode_body
+              headers: request.encode_headers(protected_keys: @default_headers.keys + auth_headers.keys),
+              body: request.encode_body,
+              auth_headers: auth_headers
             )
 
             conn = connect(url)
@@ -203,12 +223,27 @@ module <%= gem_namespace %>
                 "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
         end
 
+        # Resolves the auth headers to send with the next request. Delegates to the
+        # configured auth provider (if any) on every call so that token-based
+        # providers (e.g. OAuth client-credentials) can refresh an expired token
+        # before the request is sent. Returns an empty hash when no provider is set,
+        # which keeps the api-key / basic / bearer / no-auth paths unchanged.
+        # @return [Hash] The auth headers for the current request.
+        def resolve_auth_headers
+          return {} if @auth_provider.nil?
+
+          @auth_provider.auth_headers
+        end
+
         # @param url [URI::Generic] The url to the resource.
         # @param method [String] The HTTP method to use.
         # @param headers [Hash] The headers for the request.
         # @param body [String, nil] The body for the request.
+        # @param auth_headers [Hash] The auth headers resolved for this request. These
+        #   take precedence over the static default headers but not over per-request
+        #   headers, mirroring the previous baked-header precedence.
         # @return [HTTP::Request] The HTTP request.
-        def build_http_request(url:, method:, headers: {}, body: nil)
+        def build_http_request(url:, method:, headers: {}, body: nil, auth_headers: {})
           request = Net::HTTPGenericRequest.new(
             method,
             !body.nil?,
@@ -216,11 +251,25 @@ module <%= gem_namespace %>
             url
           )
 
-          request_headers = @default_headers.merge(headers)
+          request_headers = @default_headers.merge(auth_headers).merge(headers)
           request_headers.each { |name, value| request[name] = value }
           request.body = body if body
 
+          # Net::HTTP disables its transparent gzip/deflate decoding as soon as an
+          # Accept-Encoding header is set explicitly on the request. Re-enable it so
+          # that compressed response bodies are still inflated.
+          request.extend(DecodeContent) if request_headers.keys.any? { |name| name.to_s.casecmp("accept-encoding").zero? }
+
           request
+        end
+
+        # Keeps Net::HTTP's transparent gzip/deflate response decoding enabled
+        # even when an Accept-Encoding header is set explicitly on the request.
+        # @api private
+        module DecodeContent
+          def decode_content # rubocop:disable Naming/PredicateMethod
+            true
+          end
         end
 
         # @param query [Hash] The query for the request.
