@@ -1009,10 +1009,18 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.writeNode(oauthTokenProviderClassReference);
         // When wrapped in a credential guard (any-composed auth), clientId/clientSecret
         // are non-null inside the block, so the `?? ''` fallback would be redundant.
+        // Env-var-backed params are also non-null, but only when the OAuth scheme's own
+        // constructor parameters were generated (they are skipped when a bearer scheme
+        // exists) — the env-or-throw assignment is tied to those parameters.
+        const oauthParamsSkipped = this.context.ir.auth.schemes.some((s) => s.type === "bearer");
         const clientIdFallback =
-            guarded || oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
+            guarded || (oauth.configuration.clientIdEnvVar != null && !oauthParamsSkipped)
+                ? "$clientId"
+                : "$clientId ?? ''";
         const clientSecretFallback =
-            guarded || oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
+            guarded || (oauth.configuration.clientSecretEnvVar != null && !oauthParamsSkipped)
+                ? "$clientSecret"
+                : "$clientSecret ?? ''";
         const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
         const extraArgs = getOAuthTokenRequestProperties(
             this.context,
