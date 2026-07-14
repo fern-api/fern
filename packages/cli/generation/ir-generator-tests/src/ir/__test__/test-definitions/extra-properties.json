@@ -53,7 +53,8 @@
                     }
                 ],
                 "extra-properties": true,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -109,7 +110,8 @@
                     }
                 ],
                 "extra-properties": true,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -797,7 +799,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": true
+                "additionalProperties": true,
+                "deferredUnionBaseProperties": null
             },
             "type_user:User": {
                 "type": "object",
@@ -898,7 +901,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": true
+                "additionalProperties": true,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],

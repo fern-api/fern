@@ -258,6 +258,7 @@ describe("migrateFromV67ToV66", () => {
                     extends: [],
                     extendedProperties: undefined,
                     extraProperties: false,
+                    deferredUnionBaseProperties: undefined,
                     properties: [
                         {
                             docs: undefined,

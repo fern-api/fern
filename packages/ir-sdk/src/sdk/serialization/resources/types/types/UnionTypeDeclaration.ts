@@ -3,6 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
 import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { DeclaredTypeName } from "./DeclaredTypeName.js";
 import { ObjectProperty } from "./ObjectProperty.js";
@@ -17,6 +18,7 @@ export const UnionTypeDeclaration: core.serialization.ObjectSchema<
     extends: core.serialization.list(DeclaredTypeName),
     types: core.serialization.list(SingleUnionType),
     baseProperties: core.serialization.list(ObjectProperty),
+    inheritedBaseProperties: core.serialization.list(NameAndWireValue).optional(),
     default: SingleUnionType.optional(),
     discriminatorContext: UnionDiscriminatorContext.optional(),
 });
@@ -27,6 +29,7 @@ export declare namespace UnionTypeDeclaration {
         extends: DeclaredTypeName.Raw[];
         types: SingleUnionType.Raw[];
         baseProperties: ObjectProperty.Raw[];
+        inheritedBaseProperties?: NameAndWireValue.Raw[] | null;
         default?: SingleUnionType.Raw | null;
         discriminatorContext?: UnionDiscriminatorContext.Raw | null;
     }

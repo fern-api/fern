@@ -175,7 +175,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_endpoints/put:Error": {
             "type": "object",
@@ -411,7 +412,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_endpoints/put:ErrorCategory": {
             "type": "enum",
@@ -1081,7 +1083,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_general-errors:BadObjectRequestInfo": {
             "type": "object",
@@ -1182,7 +1185,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/docs:ObjectWithDocs": {
             "type": "object",
@@ -1322,7 +1326,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/enum:WeatherReport": {
             "type": "enum",
@@ -2070,7 +2075,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithRequiredField": {
             "type": "object",
@@ -2210,7 +2216,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithMapOfMap": {
             "type": "object",
@@ -2364,7 +2371,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:NestedObjectWithOptionalField": {
             "type": "object",
@@ -2540,7 +2548,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:NestedObjectWithRequiredField": {
             "type": "object",
@@ -2710,7 +2719,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:DoubleOptional": {
             "type": "object",
@@ -2853,7 +2863,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:OptionalAlias": {
             "type": "alias",
@@ -3136,7 +3147,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithUnknownField": {
             "type": "object",
@@ -3275,7 +3287,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithDocumentedUnknownType": {
             "type": "object",
@@ -3415,7 +3428,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:DocumentedUnknownType": {
             "type": "alias",
@@ -3874,7 +3888,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithRequiredNestedObject": {
             "type": "object",
@@ -4044,7 +4059,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithInheritedRequiredEnum": {
             "type": "object",
@@ -4214,7 +4230,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ExtendedObjectWithInheritedEnum": {
             "type": "object",
@@ -4419,7 +4436,8 @@
             "extends": [
                 "type_types/object:ObjectWithInheritedRequiredEnum"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/object:ObjectWithRequiredExtendedField": {
             "type": "object",
@@ -4559,7 +4577,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/union:Animal": {
             "type": "discriminatedUnion",
@@ -4688,6 +4707,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "dog": {
                     "type": "samePropertiesAsObject",
@@ -4913,7 +4933,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/union:Cat": {
             "type": "object",
@@ -5083,7 +5104,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types/union:MixedType": {
             "type": "undiscriminatedUnion",

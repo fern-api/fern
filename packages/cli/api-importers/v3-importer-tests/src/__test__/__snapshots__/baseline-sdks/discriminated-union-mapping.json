@@ -117,6 +117,7 @@
         "discriminant": "variant",
         "extends": [],
         "baseProperties": [],
+        "inheritedBaseProperties": [],
         "types": [
           {
             "discriminantValue": "request",
@@ -492,6 +493,7 @@
             }
           }
         },
+        "inheritedBaseProperties": [],
         "types": {
           "request": {
             "typeId": "type_:RequestOne",
