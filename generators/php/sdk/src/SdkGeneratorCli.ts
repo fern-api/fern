@@ -24,6 +24,7 @@ import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPacka
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -70,6 +71,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateErrors(context);
         this.generateOauthTokenProvider(context);
         this.generateInferredAuthProvider(context);
+        this.generateWebhooksHelpers(context);
         await this.generateWireTestFiles(context);
 
         if (context.config.output.snippetFilepath != null) {
@@ -198,6 +200,13 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 scheme: inferredAuth
             });
             context.project.addSourceFiles(inferredAuthProvider.generate());
+        }
+    }
+
+    private generateWebhooksHelpers(context: SdkGeneratorContext): void {
+        const generator = new WebhooksHelperGenerator(context);
+        for (const file of generator.generate()) {
+            context.project.addSourceFiles(file);
         }
     }
 

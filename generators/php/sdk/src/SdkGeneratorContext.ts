@@ -602,7 +602,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [
+        const files = [
             AsIsFiles.BaseApiRequest,
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
@@ -617,6 +617,21 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             ...this.getCoreStreamAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];
+        if (this.hasHmacWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
+        }
+        return files;
+    }
+
+    private hasHmacWebhookSignatureVerification(): boolean {
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (webhook.signatureVerification?.type === "hmac") {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private getCoreStreamAsIsFiles(): string[] {
