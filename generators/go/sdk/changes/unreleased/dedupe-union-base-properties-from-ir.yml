@@ -1,10 +1,11 @@
 - summary: |
-    Read the discriminated-union base-property dedupe decision from the IR
-    (`UnionTypeDeclaration.inheritedBaseProperties`) instead of re-deriving it in the generator.
-    Behavior is unchanged for the default (the `dedupeUnionBaseProperties` flag stays opt-in), and
-    the delegating-getter emission plus the local literal filter remain. Because the IR uses
-    structural type equality (a subset of the generator's previous rendered-Go-type comparison),
-    a few base properties that were previously suppressed may reappear on the union envelope; this
-    is safe (it can only keep a field, never drop a needed one) and removes prior drift between the
-    model and the dynamic snippets.
+    Consume the discriminated-union base-property dedupe decision from the IR
+    (`UnionTypeDeclaration.inheritedBaseProperties`) as the language-agnostic structural core,
+    instead of computing that core in the generator. Go still applies a thin local
+    render-equivalence widening on top (list/set both render `[]T`, optional/nullable both render
+    `*T`, and `getters-pass-by-value` strips the leading `*`), so the set of deduped fields — and
+    therefore the generated output — is unchanged from before. The delegating-getter emission, the
+    local literal filter, and the opt-in `dedupeUnionBaseProperties` flag (default off) all remain.
+    The same widening is applied in the Go dynamic-snippets generator, so the model and snippets
+    dedupe an identical set (removing the prior drift between them).
   type: chore
