@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.70.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `mask-pii` setting under `ai-search` in docs.yml. When enabled, personally
+        identifiable information (PII) in user messages is masked before being sent to Ask Fern.
+        Disabled by default.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 5.69.0
   changelogEntry:
     - summary: |
