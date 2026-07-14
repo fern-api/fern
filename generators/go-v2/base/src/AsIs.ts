@@ -19,5 +19,6 @@ export enum AsIsFiles {
     Stream = "core/stream.go_",
     StreamTest = "core/stream_test.go_",
     Streamer = "internal/streamer.go_",
-    TokenProvider = "core/token_provider.go_"
+    TokenProvider = "core/token_provider.go_",
+    WebhookSignature = "core/webhook_signature.go_"
 }
