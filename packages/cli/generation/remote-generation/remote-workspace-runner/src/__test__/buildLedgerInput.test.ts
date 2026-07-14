@@ -523,4 +523,47 @@ describe("buildLedgerInput", () => {
 
         expect(localeEntry.config?.integrations).toBeUndefined();
     });
+
+    // ── js remote scripts: disable-sri opt-out ────────────────────────
+
+    it("forwards per-script disableSri from DocsConfig.js.remote into LedgerConfig", () => {
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                js: {
+                    files: [],
+                    remote: [
+                        {
+                            url: "https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js",
+                            strategy: "beforeInteractive" as const,
+                            disableSri: true
+                        },
+                        {
+                            url: "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js",
+                            strategy: "beforeInteractive" as const
+                        }
+                    ]
+                }
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.config?.js?.remote).toEqual([
+            {
+                url: "https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js",
+                strategy: "beforeInteractive",
+                disableSri: true
+            },
+            {
+                url: "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js",
+                strategy: "beforeInteractive",
+                disableSri: undefined
+            }
+        ]);
+    });
 });
