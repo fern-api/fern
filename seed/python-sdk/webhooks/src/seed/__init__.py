@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedWebhooks, SeedWebhooks
     from .version import __version__
+    from .webhooks import WebhooksHelper
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedWebhooks": ".client",
     "DefaultAioHttpClient": "._default_clients",
@@ -19,6 +20,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RefundProcessedPayload": ".types",
     "SeedWebhooks": ".client",
     "UserCreatedPayload": ".types",
+    "WebhooksHelper": ".webhooks",
     "__version__": ".version",
 }
 
@@ -53,5 +55,6 @@ __all__ = [
     "RefundProcessedPayload",
     "SeedWebhooks",
     "UserCreatedPayload",
+    "WebhooksHelper",
     "__version__",
 ]

@@ -1,0 +1,38 @@
+import base64
+import hashlib
+import hmac
+import typing
+
+HmacAlgorithm = typing.Literal["sha1", "sha256", "sha384", "sha512"]
+SignatureEncoding = typing.Literal["base64", "hex"]
+
+_HASH_CONSTRUCTORS: typing.Dict[str, typing.Callable[[], "hashlib._Hash"]] = {
+    "sha1": hashlib.sha1,
+    "sha256": hashlib.sha256,
+    "sha384": hashlib.sha384,
+    "sha512": hashlib.sha512,
+}
+
+
+def compute_hmac_signature(
+    *,
+    payload: str,
+    secret: str,
+    algorithm: HmacAlgorithm,
+    encoding: SignatureEncoding,
+) -> str:
+    """
+    Compute the HMAC signature of a payload using the given secret, algorithm, and encoding.
+    """
+    digestmod = _HASH_CONSTRUCTORS[algorithm]
+    mac = hmac.new(secret.encode("utf-8"), payload.encode("utf-8"), digestmod)
+    if encoding == "hex":
+        return mac.hexdigest()
+    return base64.b64encode(mac.digest()).decode("utf-8")
+
+
+def timing_safe_equal(a: str, b: str) -> bool:
+    """
+    Compare two strings in constant time to avoid leaking information through timing.
+    """
+    return hmac.compare_digest(a.encode("utf-8"), b.encode("utf-8"))

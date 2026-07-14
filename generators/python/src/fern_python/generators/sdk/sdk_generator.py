@@ -29,6 +29,7 @@ from fern_python.codegen.project import ProjectConfig
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
+from fern_python.generators.sdk.webhooks_helper_generator import WebhooksHelperGenerator
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
 )
@@ -322,6 +323,10 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             project=project,
         )
+
+        # Generate webhook signature verification helpers (WebhooksHelper) for
+        # any webhooks that declare HMAC signature verification in the IR.
+        WebhooksHelperGenerator(context=context, project=project).generate()
 
         # Generate test_aiohttp_autodetect.py test file (skip when embedding —
         # the host project owns its own tests/ directory).
