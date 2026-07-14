@@ -1,7 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WebhooksHelperGenerator } from "../webhooks/WebhooksHelperGenerator.js";
 
 describe("WebhooksHelperGenerator", () => {
@@ -12,8 +11,7 @@ describe("WebhooksHelperGenerator", () => {
                     webhooks: [
                         {
                             name: "event",
-                            signatureVerification: {
-                                type: "hmac",
+                            signatureVerification: FernIr.WebhookSignatureVerification.hmac({
                                 signatureHeaderName: "x-webhook-signature",
                                 algorithm: "SHA256",
                                 encoding: "HEX",
@@ -24,15 +22,18 @@ describe("WebhooksHelperGenerator", () => {
                                     bodySort: undefined
                                 },
                                 timestamp: undefined
-                            }
+                            })
                         }
                     ]
                 }
-            } as unknown as FernIr.IntermediateRepresentation,
+            },
             customConfig: {},
+            case: {
+                pascalSafe: () => "Event"
+            },
             getRootNamespace: () => "Seed",
             getCoreNamespace: () => "Seed\\Core"
-        } as unknown as SdkGeneratorContext;
+        } satisfies ConstructorParameters<typeof WebhooksHelperGenerator>[0];
 
         const [file] = new WebhooksHelperGenerator(context).generate();
         const contents = file?.fileContents.toString();

@@ -2,10 +2,9 @@ import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { PhpFile } from "@fern-api/php-base";
+import type { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
@@ -14,8 +13,20 @@ interface WebhookVerificationEntry {
     webhookNames: FernIr.WebhookName[];
 }
 
+interface WebhooksHelperGeneratorContext {
+    readonly ir: {
+        webhookGroups: Record<FernIr.WebhookGroupId, Array<Pick<FernIr.Webhook, "name" | "signatureVerification">>>;
+    };
+    readonly customConfig: BasePhpCustomConfigSchema;
+    readonly case: {
+        pascalSafe(name: FernIr.WebhookName): string;
+    };
+    getRootNamespace(): string;
+    getCoreNamespace(): string;
+}
+
 export class WebhooksHelperGenerator {
-    public constructor(private readonly context: SdkGeneratorContext) {}
+    public constructor(private readonly context: WebhooksHelperGeneratorContext) {}
 
     public generate(): PhpFile[] {
         const { defaultEntry, overrideEntries } = this.collectHmacConfigs();
