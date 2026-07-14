@@ -239,11 +239,19 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     private writeHeaderEnvironmentVariables({ writer }: { writer: go.Writer }): void {
         for (const header of this.context.ir.headers) {
             if (header.env != null) {
-                this.writeEnvConditional({
-                    writer,
-                    propertyReference: this.getOptionsPropertyReference(header.name),
-                    env: header.env
-                });
+                if (isTypeReferenceOptional(header.valueType)) {
+                    this.writeOptionalEnvConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        env: header.env
+                    });
+                } else {
+                    this.writeEnvConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        env: header.env
+                    });
+                }
             }
             // After env fallback, apply clientDefault if present and type is plain string
             if (header.clientDefault != null && isPlainStringType(header.valueType)) {
@@ -905,6 +913,31 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.write(" = ");
         writer.writeNode(this.context.callGetenv(env));
         writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private writeOptionalEnvConditional({
+        writer,
+        propertyReference,
+        env
+    }: {
+        writer: go.Writer;
+        propertyReference: go.Selector;
+        env: string;
+    }): void {
+        writer.write("if ");
+        writer.writeNode(propertyReference);
+        writer.writeLine(" == nil {");
+        writer.indent();
+        writer.write("if value := ");
+        writer.writeNode(this.context.callGetenv(env));
+        writer.writeLine('; value != "" {');
+        writer.indent();
+        writer.writeNode(propertyReference);
+        writer.writeLine(" = &value");
+        writer.dedent();
+        writer.writeLine("}");
         writer.dedent();
         writer.writeLine("}");
     }
