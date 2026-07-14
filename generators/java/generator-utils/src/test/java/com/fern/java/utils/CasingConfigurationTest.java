@@ -275,18 +275,26 @@ public class CasingConfigurationTest {
         @Test
         void toSmartSnakeCase_test2This2() {
             // "test2This2" -> splitByDigits: "test", "2", "This", "2"
-            // non-digit parts: basicSnake("test") = "test", basicSnake("This") = "this"
-            // result: "test2this2"
-            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2")).isEqualTo("test2this2");
+            // "This" starts a new word after the digit run, so it keeps its boundary
+            // result: "test2_this2"
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2")).isEqualTo("test2_this2");
         }
 
         @Test
         void toSmartSnakeCase_test2This2_2v22() {
             // "test2This2 2v22" -> space split: ["test2This2", "2v22"]
-            // "test2This2" -> "test2this2"
-            // "2v22" -> splitByDigits: "2", "v", "22" -> "2v22"
-            // join with "_": "test2this2_2v22"
-            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22")).isEqualTo("test2this2_2v22");
+            // "test2This2" -> "test2_this2"
+            // "2v22" -> splitByDigits: "2", "v", "22" -> "2v22" (lowercase after digits stays fused)
+            // join with "_": "test2_this2_2v22"
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22")).isEqualTo("test2_this2_2v22");
+        }
+
+        @Test
+        void toSmartSnakeCase_capitalizedWordAfterDigits() {
+            assertThat(CasingConfiguration.toSmartSnakeCase("ConversationsV2Configuration"))
+                    .isEqualTo("conversations_v2_configuration");
+            assertThat(CasingConfiguration.toSmartSnakeCase("CreateOauth2Token"))
+                    .isEqualTo("create_oauth2_token");
         }
 
         @Test
@@ -474,7 +482,7 @@ public class CasingConfigurationTest {
             CasingConfiguration config = buildConfig(true, null, null);
             CasingConfiguration.NameParts parts = config.computeName("test2This2 2v22");
 
-            assertThat(parts.snakeUnsafe).isEqualTo("test2this2_2v22");
+            assertThat(parts.snakeUnsafe).isEqualTo("test2_this2_2v22");
         }
 
         // --- smartCasing + initialism capitalization (Go language) ---

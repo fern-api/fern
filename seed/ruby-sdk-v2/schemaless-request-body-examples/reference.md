@@ -70,7 +70,7 @@ client.create_plant(request: {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">update_plant</a>(plant_id, request) -> Seed::Types::UpdatePlantResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_plant</a>(plant_id:, request) -> Seed::Types::UpdatePlantResponse</code></summary>
 <dl>
 <dd>
 
