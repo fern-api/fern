@@ -1,10 +1,8 @@
 import { CaseConverter, getWireValue } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
 import { Comments } from "../utils/comments.js";
 
 const DEFAULT_HELPER_CLASS_NAME = "WebhooksHelper";
