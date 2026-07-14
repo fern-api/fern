@@ -73,7 +73,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/lib/seed/imdb/client.rb">get_movie</a>(movie_id) -> Seed::Types::Movie</code></summary>
+<details><summary><code>client.imdb.<a href="/lib/seed/imdb/client.rb">get_movie</a>(movie_id:) -> Seed::Types::Movie</code></summary>
 <dl>
 <dd>
 

@@ -196,6 +196,41 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
         });
     });
 
+    describe("smartCasing snake_case digit boundaries", () => {
+        const generator = constructFullCasingsGenerator({
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: true
+        });
+
+        it("keeps trailing digits fused to the previous word", () => {
+            const result = generator.generateName("applicationV1");
+            expect(result.snakeCase.unsafeName).toBe("application_v1");
+        });
+
+        it("keeps digit-prefixed lowercase words fused", () => {
+            const result = generator.generateName("2v22");
+            expect(result.snakeCase.unsafeName).toBe("2v22");
+        });
+
+        it("separates a capitalized word following digits", () => {
+            const result = generator.generateName("ConversationsV2Configuration");
+            expect(result.snakeCase.unsafeName).toBe("conversations_v2_configuration");
+            expect(result.camelCase.unsafeName).toBe("conversationsV2Configuration");
+            expect(result.pascalCase.unsafeName).toBe("ConversationsV2Configuration");
+        });
+
+        it("separates a capitalized word following digits in endpoint-style names", () => {
+            const result = generator.generateName("CreateOauth2Token");
+            expect(result.snakeCase.unsafeName).toBe("create_oauth2_token");
+        });
+
+        it("preserves existing underscore boundaries after digits", () => {
+            const result = generator.generateName("conversations_v2_configuration");
+            expect(result.snakeCase.unsafeName).toBe("conversations_v2_configuration");
+        });
+    });
+
     describe("backward compatibility - names without underscores unchanged", () => {
         const generatorNoSmart = constructFullCasingsGenerator({
             generationLanguage: undefined,

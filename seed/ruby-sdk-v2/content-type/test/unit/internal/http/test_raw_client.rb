@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "socket"
+require "zlib"
 
 describe Seed::Internal::Http::RawClient do
   def make_response(status_code)
@@ -52,6 +54,50 @@ describe Seed::Internal::Http::RawClient do
 
     it "retries when attempt is below max retries" do
       assert client.should_retry?(make_response(502), 2)
+    end
+  end
+
+  describe "gzip response decompression" do
+    it "decompresses a gzip response when Accept-Encoding is set explicitly" do
+      body = '{"message": "gzipped response"}'
+      compressed = Zlib.gzip(body)
+
+      server = TCPServer.new("127.0.0.1", 0)
+      port = server.addr[1]
+      server_thread = Thread.new do
+        socket = server.accept
+        request_lines = []
+        while (line = socket.gets) && line != "\r\n"
+          request_lines << line
+        end
+        socket.write("HTTP/1.1 200 OK\r\n")
+        socket.write("Content-Type: application/json\r\n")
+        socket.write("Content-Encoding: gzip\r\n")
+        socket.write("Content-Length: #{compressed.bytesize}\r\n")
+        socket.write("\r\n")
+        socket.write(compressed)
+        socket.close
+        request_lines
+      end
+
+      client = Seed::Internal::Http::RawClient.new(
+        base_url: "http://127.0.0.1:#{port}",
+        max_retries: 0
+      )
+      request = Seed::Internal::JSON::Request.new(
+        base_url: "http://127.0.0.1:#{port}",
+        path: "/gzip",
+        method: "GET",
+        headers: { "Accept-Encoding" => "gzip" }
+      )
+
+      response = client.send(request)
+      request_lines = server_thread.value
+      server.close
+
+      assert(request_lines.any? { |line| line.casecmp("accept-encoding: gzip\r\n").zero? })
+      assert_equal "200", response.code
+      assert_equal body, response.body
     end
   end
 
