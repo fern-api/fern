@@ -79,6 +79,9 @@ fixtures:
         packagePath: src/test-packagePath
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: include-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
     - outputFolder: with-audiences
       customConfig: null
       audiences:
@@ -145,6 +148,12 @@ fixtures:
     - outputFolder: flatten-request-parameters
       customConfig:
         flattenRequestParameters: true
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
