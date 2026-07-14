@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.47.4
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Names like `ConversationsV2Configuration` now produce the snake_case
+        `conversations_v2_configuration` instead of `conversations_v2configuration`,
+        matching the camelCase and pascalCase variants.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
 - version: 1.47.3
   changelogEntry:
     - summary: |

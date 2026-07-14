@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.70.3
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Names like `ConversationsV2Configuration` now generate `conversations_v2_configuration`
+        instead of `conversations_v2configuration` (matching the camelCase and pascalCase
+        variants). Trailing numbers remain fused, e.g. `applicationV1` still generates
+        `application_v1`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.70.2
+  changelogEntry:
+    - summary: |
+        Fix multi-API environment grouping (`group-multi-api-environments`) selecting the wrong
+        base URL when more than two specs are merged and several specs share identical servers.
+        Duplicate servers no longer accumulate across merges, so environments with the same name
+        but different URLs are now grouped into a multi-URL environment instead of collapsing to
+        the last spec's URL.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.70.1
+  changelogEntry:
+    - summary: |
+        `fern generate` with an explicit `--version X.Y.Z` now records a version-only entry
+        (version header with an empty description) in the SDK repo's `changelog.md`, and existing
+        changelog entries are preserved across regenerations instead of being wiped.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 5.70.0
   changelogEntry:
     - summary: |

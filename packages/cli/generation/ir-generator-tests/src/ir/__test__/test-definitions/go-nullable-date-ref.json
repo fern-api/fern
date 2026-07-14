@@ -1820,12 +1820,12 @@
                             "safeName": "iso8601Date"
                         },
                         "snakeCase": {
-                            "unsafeName": "iso8601date",
-                            "safeName": "iso8601date"
+                            "unsafeName": "iso8601_date",
+                            "safeName": "iso8601_date"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "ISO8601DATE",
-                            "safeName": "ISO8601DATE"
+                            "unsafeName": "ISO8601_DATE",
+                            "safeName": "ISO8601_DATE"
                         },
                         "pascalCase": {
                             "unsafeName": "Iso8601Date",
@@ -1853,12 +1853,12 @@
                             "safeName": "iso8601DateNullable"
                         },
                         "snakeCase": {
-                            "unsafeName": "iso8601date_nullable",
-                            "safeName": "iso8601date_nullable"
+                            "unsafeName": "iso8601_date_nullable",
+                            "safeName": "iso8601_date_nullable"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "ISO8601DATE_NULLABLE",
-                            "safeName": "ISO8601DATE_NULLABLE"
+                            "unsafeName": "ISO8601_DATE_NULLABLE",
+                            "safeName": "ISO8601_DATE_NULLABLE"
                         },
                         "pascalCase": {
                             "unsafeName": "Iso8601DateNullable",
@@ -1889,12 +1889,12 @@
                             "safeName": "iso8601DateTimeNullable"
                         },
                         "snakeCase": {
-                            "unsafeName": "iso8601date_time_nullable",
-                            "safeName": "iso8601date_time_nullable"
+                            "unsafeName": "iso8601_date_time_nullable",
+                            "safeName": "iso8601_date_time_nullable"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "ISO8601DATE_TIME_NULLABLE",
-                            "safeName": "ISO8601DATE_TIME_NULLABLE"
+                            "unsafeName": "ISO8601_DATE_TIME_NULLABLE",
+                            "safeName": "ISO8601_DATE_TIME_NULLABLE"
                         },
                         "pascalCase": {
                             "unsafeName": "Iso8601DateTimeNullable",
