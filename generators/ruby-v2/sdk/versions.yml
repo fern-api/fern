@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an idempotency-key request header. This is now driven
+        entirely by the IR (`SdkConfig.idempotencyKeyGeneration`), resolved once by the CLI from
+        the `auto-generate-idempotency-key` generator config key, so the header name and the set of
+        eligible HTTP methods are read identically across every generator. When enabled, the
+        generated SDK attaches the configured header (defaulting to `Idempotency-Key`) on the
+        configured methods (defaulting to `POST` and `PUT`) with a freshly generated UUIDv4
+        (`SecureRandom.uuid`) at request time. For endpoints that declare a matching idempotency
+        header the caller-supplied value wins and the generated UUID is only the fallback. When the
+        IR does not enable the feature, generated output is unchanged.
+      type: feat
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 1.16.0
   changelogEntry:
     - summary: |
