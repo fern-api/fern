@@ -27,7 +27,11 @@ import Testing
                     entityId: "entity_id",
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials,
-                    scope: "scope"
+                    scope: "scope",
+                    permissions: [
+                        "permissions",
+                        "permissions"
+                    ]
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -68,7 +72,11 @@ import Testing
                     entityId: "entity_id",
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials,
-                    scope: "scope"
+                    scope: "scope",
+                    permissions: [
+                        "permissions",
+                        "permissions"
+                    ]
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -109,7 +117,11 @@ import Testing
                     entityId: "entity_id",
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials,
-                    scope: "scope"
+                    scope: "scope",
+                    permissions: [
+                        "permissions",
+                        "permissions"
+                    ]
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -152,7 +164,11 @@ import Testing
                     entityId: "entity_id",
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials,
-                    scope: "scope"
+                    scope: "scope",
+                    permissions: [
+                        "permissions",
+                        "permissions"
+                    ]
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -193,7 +209,11 @@ import Testing
                     entityId: "entity_id",
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials,
-                    scope: "scope"
+                    scope: "scope",
+                    permissions: [
+                        "permissions",
+                        "permissions"
+                    ]
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -236,7 +256,11 @@ import Testing
                     entityId: "entity_id",
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials,
-                    scope: "scope"
+                    scope: "scope",
+                    permissions: [
+                        "permissions",
+                        "permissions"
+                    ]
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -277,7 +301,11 @@ import Testing
                     entityId: "entity_id",
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials,
-                    scope: "scope"
+                    scope: "scope",
+                    permissions: [
+                        "permissions",
+                        "permissions"
+                    ]
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

@@ -501,6 +501,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                                                 }
 
                                                 @Override
+                                                public Optional<MavenCoordinate> visitGo(
+                                                        com.fern.ir.model.publish.GoPublishTarget value) {
+                                                    return Optional.empty();
+                                                }
+
+                                                @Override
                                                 public Optional<MavenCoordinate> _visitUnknown(Object value) {
                                                     return Optional.empty();
                                                 }

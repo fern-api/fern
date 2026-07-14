@@ -143,7 +143,7 @@ client = SeedPythonBackslashEscape(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.user.get(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

@@ -84,7 +84,7 @@ describe("validateBasepathAlignment", () => {
         ).toThrow();
         expect(failAndThrow).toHaveBeenCalledTimes(1);
         const [message, , options] = failAndThrow.mock.calls[0] ?? [];
-        expect(message).toContain("DNS cutover");
+        expect(message).toContain("Basepath mismatch");
         expect(message).toContain("'/docs'");
         expect(message).toContain("'/'");
         expect(options).toEqual({ code: CliError.Code.ConfigError });

@@ -134,14 +134,16 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up node
-        uses: actions/setup-node@v6${
-            usePnpm
-                ? `
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/Krypton"${
+              usePnpm
+                  ? `
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4`
-                : ""
-        }
+                  : ""
+          }
 
       - name: Install dependencies
         run: ${frozenInstall}
@@ -156,22 +158,19 @@ jobs:
                 : `
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}`
         }
-          publish() {  # use latest npm to ensure OIDC support
-            npx -y npm@latest publish "$@"
-          }
           if [[ \${GITHUB_REF} == *alpha* ]]; then
-            publish --access ${access} --tag alpha
+            npm publish --access ${access} --tag alpha
           elif [[ \${GITHUB_REF} == *beta* ]]; then
-            publish --access ${access} --tag beta
+            npm publish --access ${access} --tag beta
           else
             PKG_NAME=$(node -p "require('./package.json').name")
             PKG_VERSION=$(node -p "require('./package.json').version")
             CURRENT_LATEST=$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
-            if npx -y semver "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+            if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
-              publish --access ${access} --tag backport
+              npm publish --access ${access} --tag backport
             else
-              publish --access ${access}
+              npm publish --access ${access}
             fi
           fi${
               useOidc

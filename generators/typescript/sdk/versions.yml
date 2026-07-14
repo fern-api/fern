@@ -1,4 +1,120 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.80.2
+  changelogEntry:
+    - summary: |
+        Fix compile errors in the generated `OAuthAuthProvider` when the serde layer is
+        disabled: the token endpoint method is now called with the same camelCase name
+        that the generated client exposes (previously the original casing, e.g.
+        `CreateOauth2Token`, was used). Also guard against optional `access_token`
+        response properties so the token refresh path satisfies its `Promise<string>`
+        return type instead of `string | undefined`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.80.1
+  changelogEntry:
+    - summary: |
+        Make the structured `User-Agent` (emitted when `includePlatformHeaders` is
+        enabled) comply with the RFC 7230 token grammar. The npm package name is now
+        percent-encoded in the product token so the `@` and `/` of a scoped package
+        are escaped (e.g. `@dummy/sdk/0.0.1` becomes `%40dummy%2Fsdk/0.0.1`); the
+        original name can be recovered by URL-decoding. The architecture label is also
+        normalized so the 64-bit x86 aliases (`x64`, `amd64`, `x86_64`) all report as
+        the canonical `x86_64`.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header of the form
+        `{sdkName}/{version} ({os}; {arch}) {runtime}/{runtimeVersion}`, matching the
+        Twilio helper-library shape. This is gated behind the `includePlatformHeaders`
+        config option and is disabled by default, so existing generated output is
+        unchanged. When enabled, the platform + runtime information is consolidated
+        into the `User-Agent` and the discrete `X-Fern-Runtime` / `X-Fern-Runtime-Version`
+        headers are omitted. The platform group and runtime segment are dropped
+        gracefully in environments where they cannot be determined (e.g. browsers),
+        and the header remains subject to `omitFernHeaders`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.79.2
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `.github/workflows/ci.yml` publish job now runs on a pinned Node LTS
+        (`node-version: "lts/Krypton"`) and calls `npm publish` directly instead
+        of `npx -y npm@latest publish`. Relying on `npm@latest` pulled whatever
+        npm release was newest at publish time, so a broken npm release could
+        break publishing. The pinned Node LTS bundles an npm that supports OIDC
+        trusted publishing. The `npx semver` invocation used for backport
+        detection is also pinned to `semver@7.8.1`.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 3.79.1
+  changelogEntry:
+    - summary: |
+        Generated snippets now use `baseUrl` instead of `environment` when
+        no environments are defined in the API spec, matching the actual
+        constructor parameter users should provide.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 3.79.0
+  changelogEntry:
+    - summary: |
+        Add a `defaultTimeout` custom config option, expressed in milliseconds, which is idiomatic for
+        JavaScript/TypeScript (`setTimeout`, `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the
+        timeout. The seconds-based `defaultTimeoutInSeconds` and `timeoutInSeconds` keys are now
+        deprecated but continue to work: their values are converted to milliseconds (× 1000). Precedence
+        is `defaultTimeout` > `defaultTimeoutInSeconds` > `timeoutInSeconds`. Generated SDK output is
+        unchanged for existing configs.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.2
+  changelogEntry:
+    - summary: |
+        Fix a regression where `| undefined` was dropped from the value type of generated
+        `Record` types backed by optional map values (e.g. optional `additionalProperties`).
+        Optional map values now correctly generate `Record<string, T | undefined>` with
+        serialization `record(string(), T.optional())`, while `unknown`/`any` map values
+        keep the redundant `| undefined` stripped (`Record<string, unknown>`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.1
+  changelogEntry:
+    - summary: |
+        Fix `TypeError: Cannot use 'in' operator to search for 'path' in undefined`
+        crash when `null` or `undefined` is passed to a file upload parameter at
+        runtime. The error is now a clear `TypeError` describing the expected types
+        instead of a cryptic `in` operator failure.
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.0
+  changelogEntry:
+    - summary: |
+        Add an `additionalBodyParameters` request option that spreads additional parameters into an
+        endpoint's JSON request body. Caller-supplied properties override matching keys in the endpoint
+        body, matching the behavior of the Python, Swift, and Ruby SDKs. Omitting the option leaves the
+        request body unchanged and never fabricates a body for bodyless requests.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.77.3
+  changelogEntry:
+    - summary: |
+        Revert the automatic renaming of inlined path parameters that collide with request
+        body properties (introduced in 3.77.1). These collisions are now rejected at the CLI
+        level: `fern check` errors and asks the user to deconflict the names (e.g. via
+        `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 3.77.2
   changelogEntry:
     - summary: |

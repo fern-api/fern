@@ -1,0 +1,8 @@
+- summary: |
+    Make each scheme's credentials optional under `any`-composed auth. Previously,
+    with a multi-scheme `auth: any: [...]` config the generated client treated OAuth
+    (and other) credentials as unconditionally required at construction, so a caller
+    who only wanted API-key auth could not instantiate the client. Credentials now
+    fall back to environment variables without throwing, and the OAuth/inferred token
+    provider and auth headers are only set up when that scheme's credentials are present.
+  type: fix

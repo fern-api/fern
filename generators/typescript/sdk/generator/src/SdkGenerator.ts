@@ -126,7 +126,7 @@ export declare namespace SdkGenerator {
         includeOtherInUnionTypes: boolean;
         enableForwardCompatibleEnums: boolean;
         requireDefaultEnvironment: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeout: number | "infinity" | undefined;
         skipResponseValidation: boolean;
         extraDependencies: Record<string, string>;
         extraDevDependencies: Record<string, string>;
@@ -158,6 +158,7 @@ export declare namespace SdkGenerator {
         fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
         omitFernHeaders: boolean;
+        includePlatformHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
         generateReadWriteOnlyTypes: boolean;
@@ -533,7 +534,7 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
-            defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
+            defaultTimeout: config.defaultTimeout,
             npmPackage,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
@@ -555,6 +556,7 @@ export class SdkGenerator {
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
+            includePlatformHeaders: config.includePlatformHeaders,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             caseConverter: this.case

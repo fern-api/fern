@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAliasExtendsClient } from "@fern/alias-extends";
 
-const client = new SeedAliasExtendsClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedAliasExtendsClient({ baseUrl: "YOUR_BASE_URL" });
 await client.extendedInlineRequestBody({
     child: "child",
     parent: "parent"

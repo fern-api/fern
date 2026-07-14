@@ -1,4 +1,52 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.46
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning shipping the `0.0.0-fern-placeholder` version when the previous
+        generation SHA recorded in `replay.lock` is unreachable. Signed-commit pushes recreate
+        the `[fern-generated]` commit with a new remote SHA, so the recorded SHA can be absent
+        from the next clone; `AutoVersionStep` now treats it as a hint, re-anchors the diff
+        baseline on the most recent reachable `[fern-generated]` commit, and always rewrites the
+        magic placeholder instead of crashing on a bad git object.
+      type: fix
+  createdAt: "2026-07-10"
+- version: 0.9.45
+  changelogEntry:
+    - summary: |
+        Fix the broken "See full changelog" link in generated PR bodies. The link pointed at
+        `blob/<sha>/changelog.md`, but that file was never committed in the self-hosted (non-replay)
+        generation path, so the link 404'd. GithubStep now guarantees `changelog.md` lands in the
+        committed tree it pushes, and only emits the link when the file is actually tracked at the
+        pushed head SHA.
+      type: fix
+    - summary: |
+        Fix Go SDKs being flagged as a breaking change (spurious major version bump) on no-op
+        regenerations under `--version AUTO`. The freshly generated code carries the magic placeholder
+        version (major 0, no `/vN` module-path suffix) while the previously published SDK has `/vN` on
+        its module directive and every import. Because git groups all deletions before all additions in
+        an import block, the diff cleaner only stripped the first import's suffix churn and leaked the
+        rest to the AI diff analyzer, which misclassified the regeneration as breaking. The cleaner now
+        removes all Go module-path `/vN` suffix-only churn regardless of diff layout.
+      type: fix
+  createdAt: "2026-07-08"
+- version: 0.9.44
+  changelogEntry:
+    - summary: |
+        Sign every local-only commit when pushing to GitHub, not just HEAD. Replay branches
+        contain multiple commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only
+        the HEAD commit was recreated via the GitHub API and signed, leaving earlier commits
+        on the PR unverified.
+      type: fix
+  createdAt: "2026-07-07"
+- version: 0.9.43
+  changelogEntry:
+    - summary: |
+        Fix replay lockfile not advancing in the no-patches flow when zero new
+        patches are detected. The lockfile's current_generation was saved to disk
+        but never committed, causing previousGenerationSha to remain stale and
+        autoversion diffs to accumulate across runs.
+      type: fix
+  createdAt: "2026-07-07"
 - version: 0.9.42
   changelogEntry:
     - summary: |

@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedOauthClientCredentialsMandatoryAuthClient } from "@fern/oauth-client-credentials-mandatory-auth";
 
-const client = new SeedOauthClientCredentialsMandatoryAuthClient({ environment: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
+const client = new SeedOauthClientCredentialsMandatoryAuthClient({ baseUrl: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
 await client.auth.getTokenWithClientCredentials({
     client_id: "my_oauth_app_123",
     client_secret: "sk_live_abcdef123456789",

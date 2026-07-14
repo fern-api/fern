@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `defaultTimeout` custom config option, expressed in milliseconds, which is idiomatic for
+    JavaScript/TypeScript (`setTimeout`, `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the
+    timeout. The seconds-based `defaultTimeoutInSeconds` and `timeoutInSeconds` keys are now
+    deprecated but continue to work: their values are converted to milliseconds (× 1000). Precedence
+    is `defaultTimeout` > `defaultTimeoutInSeconds` > `timeoutInSeconds`. Generated SDK output is
+    unchanged for existing configs.
+  type: feat

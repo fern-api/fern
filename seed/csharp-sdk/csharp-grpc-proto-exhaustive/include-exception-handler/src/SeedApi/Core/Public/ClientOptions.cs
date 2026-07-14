@@ -70,7 +70,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = TimeSpan.FromSeconds(30);
+    } = TimeSpan.FromMilliseconds(30000);
 
     /// <summary>
     /// The options used for gRPC client endpoints.

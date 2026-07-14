@@ -9,12 +9,12 @@ export const TypeWithOptionalMap: core.serialization.ObjectSchema<
     SeedUnions.TypeWithOptionalMap
 > = core.serialization.object({
     key: core.serialization.string(),
-    columnValues: core.serialization.record(core.serialization.string(), core.serialization.string()),
+    columnValues: core.serialization.record(core.serialization.string(), core.serialization.string().optional()),
 });
 
 export declare namespace TypeWithOptionalMap {
     export interface Raw {
         key: string;
-        columnValues: Record<string, string | null>;
+        columnValues: Record<string, string | null | undefined>;
     }
 }

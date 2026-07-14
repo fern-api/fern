@@ -118,6 +118,18 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, emits a structured {@code User-Agent} header of the form {@code {sdkName}/{sdkVersion} ({os}; {arch})
+     * {runtime}/{runtimeVersion}}, with the os, arch, and runtime version resolved at runtime. Opt-in and disabled by
+     * default so existing generated output is unchanged. When enabled, the header is still subject to
+     * {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("includePlatformHeaders")
+    default Boolean includePlatformHeaders() {
+        return false;
+    }
+
     @Value.Default
     @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {

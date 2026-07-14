@@ -100,4 +100,71 @@ describe Seed::Internal::Http::RawClient do
       assert_equal body, response.body
     end
   end
+
+  # A minimal auth provider whose `auth_headers` returns a *different* token on
+  # each call, simulating a token that is refreshed on expiry.
+  class RefreshingAuthProvider
+    def initialize
+      @count = 0
+    end
+
+    def auth_headers
+      @count += 1
+      { "Authorization" => "Bearer TOKEN_#{@count}" }
+    end
+  end
+
+  describe "#resolve_auth_headers" do
+    it "returns an empty hash when no auth provider is configured" do
+      client = Seed::Internal::Http::RawClient.new(base_url: "https://example.com")
+
+      assert_equal({}, client.resolve_auth_headers)
+    end
+
+    it "consults the auth provider on every call so an expired token is refreshed" do
+      client = Seed::Internal::Http::RawClient.new(
+        base_url: "https://example.com",
+        auth_provider: RefreshingAuthProvider.new
+      )
+
+      assert_equal({ "Authorization" => "Bearer TOKEN_1" }, client.resolve_auth_headers)
+      assert_equal({ "Authorization" => "Bearer TOKEN_2" }, client.resolve_auth_headers)
+    end
+  end
+
+  describe "#build_http_request auth header precedence" do
+    let(:client) do
+      Seed::Internal::Http::RawClient.new(
+        base_url: "https://example.com",
+        headers: { "Authorization" => "Bearer STATIC" }
+      )
+    end
+
+    it "lets resolved auth headers override the static default headers" do
+      request = client.build_http_request(
+        url: URI.parse("https://example.com"),
+        method: "GET",
+        auth_headers: { "Authorization" => "Bearer FRESH" }
+      )
+
+      assert_equal("Bearer FRESH", request["Authorization"])
+    end
+
+    it "lets per-request headers take precedence over auth headers" do
+      request = client.build_http_request(
+        url: URI.parse("https://example.com"),
+        method: "GET",
+        headers: { "Authorization" => "Bearer PER_REQUEST" },
+        auth_headers: { "Authorization" => "Bearer FRESH" }
+      )
+
+      assert_equal("Bearer PER_REQUEST", request["Authorization"])
+    end
+
+    it "defaults auth headers to empty, leaving the default headers unchanged" do
+      request = client.build_http_request(url: URI.parse("https://example.com"), method: "GET")
+
+      assert_equal("Bearer STATIC", request["Authorization"])
+    end
+  end
 end

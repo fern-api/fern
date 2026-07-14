@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedWebsocketClient } from "@fern/websocket";
 
-const client = new SeedWebsocketClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedWebsocketClient({ baseUrl: "YOUR_BASE_URL" });
 await client.status.getStatus();
 ```
 
