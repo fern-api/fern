@@ -32,6 +32,9 @@ export const AsIsFiles = {
     HttpBaseRequest: "internal/http/base_request.Template.rb",
     HttpRawClient: "internal/http/raw_client.Template.rb",
 
+    // Webhooks
+    WebhookSignature: "internal/webhook_signature.Template.rb",
+
     // JSON
     JsonRequest: "internal/json/request.Template.rb",
     JsonSerializable: "internal/json/serializable.Template.rb",
@@ -120,5 +123,6 @@ const asIsTopoValue = {
     [AsIsFiles.CursorPageIterator]: 29,
     [AsIsFiles.OffsetPageIterator]: 30,
     [AsIsFiles.CustomPager]: 31,
-    [AsIsFiles.IdempotencyKey]: 32
+    [AsIsFiles.IdempotencyKey]: 32,
+    [AsIsFiles.WebhookSignature]: 33
 };

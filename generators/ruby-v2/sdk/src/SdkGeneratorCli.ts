@@ -20,6 +20,7 @@ import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientG
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
@@ -114,6 +115,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         this.generateInferredAuthProvider(context);
         this.generateOAuthProvider(context);
+        this.generateWebhooksHelpers(context);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -184,6 +186,13 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 scheme: oauth
             });
             context.project.addRawFiles(oauthProvider.generate());
+        }
+    }
+
+    private generateWebhooksHelpers(context: SdkGeneratorContext): void {
+        const webhooksHelperGenerator = new WebhooksHelperGenerator(context);
+        for (const file of webhooksHelperGenerator.generate()) {
+            context.project.addRawFiles(file);
         }
     }
 

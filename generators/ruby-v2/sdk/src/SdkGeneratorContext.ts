@@ -322,7 +322,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public getCoreAsIsFiles(): string[] {
-        const files = [
+        const files: string[] = [
             // Public errors
             AsIsFiles.ApiError,
             AsIsFiles.ClientError,
@@ -391,7 +391,22 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.TestHttpRawClient
         ];
 
+        if (this.hasHmacWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
+        }
+
         return files;
+    }
+
+    public hasHmacWebhookSignatureVerification(): boolean {
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (webhook.signatureVerification?.type === "hmac") {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public getInferredAuth(): FernIr.InferredAuthScheme | undefined {
