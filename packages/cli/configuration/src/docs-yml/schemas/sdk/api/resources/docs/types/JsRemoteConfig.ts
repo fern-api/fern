@@ -5,4 +5,5 @@ import type * as FernDocsConfig from "../../../index.js";
 export interface JsRemoteConfig {
     url: string;
     strategy?: FernDocsConfig.JsScriptStrategy;
+    disableSri?: boolean;
 }

@@ -6573,6 +6573,12 @@
               "type": "null"
             }
           ]
+        },
+        "disable-sri": {
+          "type": [
+            "boolean",
+            "null"
+          ]
         }
       },
       "required": [
