@@ -5,9 +5,13 @@ import * as core from "./core/index.js";
 import type * as environments from "./environments.js";
 
 export interface BaseClientOptions {
-    environment?: core.Supplier<environments.SeedApiEnvironment | environments.SeedApiEnvironmentUrls>;
+    environment?: core.Supplier<environments.SeedApiEnvironment | string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
+    /** The region to route requests to. Allowed values: us-east-1, us-west-2, eu-west-1. Defaults to "us-east-1". */
+    region?: string;
+    /** The serverUrlEnvironment to route requests to. Allowed values: prod, staging, dev. Defaults to "prod". */
+    serverUrlEnvironment?: string;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -49,17 +53,25 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
-            "X-Fern-SDK-Name": "@fern/server-url-templating",
+            "X-Fern-SDK-Name": "@fern/server-url-templating-single-url",
             "X-Fern-SDK-Version": "0.0.1",
-            "User-Agent": "@fern/server-url-templating/0.0.1",
+            "User-Agent": "@fern/server-url-templating-single-url/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },
         options?.headers,
     );
 
+    let baseUrl = options?.baseUrl;
+    if (options?.region != null || options?.serverUrlEnvironment != null) {
+        const _region = options?.region ?? "us-east-1";
+        const _serverUrlEnvironment = options?.serverUrlEnvironment ?? "prod";
+        baseUrl = `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`;
+    }
+
     return {
         ...options,
+        baseUrl,
         logging: core.logging.createLogger(options?.logging),
         headers,
     } as NormalizedClientOptions<T>;
