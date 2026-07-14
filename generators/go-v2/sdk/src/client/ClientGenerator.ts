@@ -697,7 +697,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Set up the token getter function
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");
                 w.indent();
-                w.writeLine("return oauthTokenProvider.GetOrFetchWithExpirySeconds(func() (string, int64, error) {");
+                w.writeLine("return oauthTokenProvider.GetOrFetch(func() (string, int64, error) {");
                 w.indent();
 
                 // Fetch a new token from the auth endpoint
@@ -948,7 +948,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Set up the token getter function
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");
                 w.indent();
-                w.writeLine("return inferredAuthProvider.GetOrFetchWithExpirySeconds(func() (string, int64, error) {");
+                w.writeLine("return inferredAuthProvider.GetOrFetch(func() (string, int64, error) {");
                 w.indent();
 
                 // Build the request struct for the token endpoint call

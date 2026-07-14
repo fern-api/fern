@@ -90,19 +90,7 @@ func (t *TokenProvider) GetToken() string {
 // GetOrFetch returns a valid token, fetching a new one if necessary.
 // The fetchFunc is called at most once even if multiple goroutines call GetOrFetch
 // concurrently when the token is expired. It should return (accessToken, expiresInSeconds, error).
-func (t *TokenProvider) GetOrFetch(fetchFunc func() (string, int, error)) (string, error) {
-	return t.getOrFetch(func() (string, int64, error) {
-		accessToken, expiresIn, err := fetchFunc()
-		return accessToken, int64(expiresIn), err
-	})
-}
-
-// GetOrFetchWithExpirySeconds is equivalent to GetOrFetch but accepts int64 expiry values.
-func (t *TokenProvider) GetOrFetchWithExpirySeconds(fetchFunc func() (string, int64, error)) (string, error) {
-	return t.getOrFetch(fetchFunc)
-}
-
-func (t *TokenProvider) getOrFetch(fetchFunc func() (string, int64, error)) (string, error) {
+func (t *TokenProvider) GetOrFetch(fetchFunc func() (string, int64, error)) (string, error) {
 	// Fast path: check if we have a valid token
 	if token := t.GetToken(); token != "" {
 		return token, nil

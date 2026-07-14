@@ -37,7 +37,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 		&authOptions,
 	)
 	options.SetTokenGetter(func() (string, error) {
-		return inferredAuthProvider.GetOrFetchWithExpirySeconds(func() (string, int64, error) {
+		return inferredAuthProvider.GetOrFetch(func() (string, int64, error) {
 			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
 				XAPIKey:      options.XAPIKey,
 				ClientID:     options.ClientID,
