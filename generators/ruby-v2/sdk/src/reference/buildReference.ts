@@ -156,7 +156,7 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(context.caseConverter.snakeSafe(pathParam.name));
+        parameters.push(`${context.caseConverter.snakeSafe(pathParam.name)}:`);
     });
 
     if (endpoint.requestBody != null) {

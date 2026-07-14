@@ -12,4 +12,10 @@ export interface ObjectType {
     extends: FernIr.dynamic.TypeId[] | undefined;
     /** Whether the type allows additional properties. */
     additionalProperties: boolean | undefined;
+    /**
+     * Mirror of ObjectTypeDeclaration.deferredUnionBaseProperties: wire values a leaf-dropping
+     * snippet generator should not set inside this variant object (they are owned by the union
+     * envelope). Absent/empty unless this object is used exclusively as a union variant.
+     */
+    deferredUnionBaseProperties: FernIr.dynamic.NameAndWireValue[] | undefined;
 }

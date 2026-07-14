@@ -243,6 +243,12 @@ fixtures:
         packageName: sseresumable
         module:
           path: github.com/fern-api/sse-resumable-go
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
   openapi-request-body-ref:
     - outputFolder: no-custom-config
       customConfig: null

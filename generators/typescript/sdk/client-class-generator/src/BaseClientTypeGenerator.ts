@@ -6,6 +6,7 @@ import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
+import { getServerVariableOptions, urlTemplateToTemplateLiteral } from "./serverVariables.js";
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
@@ -255,12 +256,13 @@ export type BaseClientOptions = {
         }
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
+        const serverVariableInterpolation = this.getServerVariableInterpolation();
 
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
-): NormalizedClientOptions<T> {${headersSection}    return {
-        ...options,${rootPathParamDefaults}
+): NormalizedClientOptions<T> {${headersSection}${serverVariableInterpolation.section}    return {
+        ...options,${rootPathParamDefaults}${serverVariableInterpolation.returnFields}
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}
@@ -268,6 +270,81 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
 }`;
 
         context.sourceFile.addStatements(functionCode);
+    }
+
+    /**
+     * Generates the interpolation of server URL variables (e.g. region/edge) into the base URL.
+     * When the API declares server variables, each is exposed as a client option; if any is
+     * provided the base URL is rebuilt from the environment's URL template(s) using those values.
+     * Returns empty strings when the API declares no server variables, leaving output unchanged.
+     */
+    private getServerVariableInterpolation(): { section: string; returnFields: string } {
+        const empty = { section: "", returnFields: "" };
+        const options = getServerVariableOptions(this.ir, this.caseConverter);
+        if (options.length === 0) {
+            return empty;
+        }
+        const config = this.ir.environments;
+        if (config == null) {
+            return empty;
+        }
+        const environments = config.environments;
+
+        const condition = options
+            .map(({ optionName }) => `${OPTIONS_PARAMETER_NAME}?.${getPropertyKey(optionName)} != null`)
+            .join(" || ");
+        const localDeclarations = options
+            .map(({ optionName, localName, variable }) => {
+                const fallback = variable.default != null ? JSON.stringify(variable.default) : '""';
+                return `        const ${localName} = ${OPTIONS_PARAMETER_NAME}?.${getPropertyKey(optionName)} ?? ${fallback};`;
+            })
+            .join("\n");
+
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
+                if (templatedEnvironment?.urlTemplate == null) {
+                    return empty;
+                }
+                const literal = urlTemplateToTemplateLiteral(templatedEnvironment.urlTemplate, options);
+                const section = `    let baseUrl = ${OPTIONS_PARAMETER_NAME}?.baseUrl;
+    if (${condition}) {
+${localDeclarations}
+        baseUrl = ${literal};
+    }
+
+`;
+                return { section, returnFields: "\n        baseUrl," };
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
+                if (templatedEnvironment?.urlTemplates == null) {
+                    return empty;
+                }
+                const templates = templatedEnvironment.urlTemplates;
+                const staticUrls = templatedEnvironment.urls;
+                const entries = environments.baseUrls.map((baseUrl) => {
+                    const propertyKey = getPropertyKey(this.caseConverter.camelUnsafe(baseUrl.name));
+                    const template = templates[baseUrl.id];
+                    if (template != null) {
+                        return `            ${propertyKey}: ${urlTemplateToTemplateLiteral(template, options)},`;
+                    }
+                    return `            ${propertyKey}: ${JSON.stringify(staticUrls[baseUrl.id] ?? "")},`;
+                });
+                const section = `    let environment = ${OPTIONS_PARAMETER_NAME}?.environment;
+    if (${condition}) {
+${localDeclarations}
+        environment = {
+${entries.join("\n")}
+        };
+    }
+
+`;
+                return { section, returnFields: "\n        environment," };
+            }
+            default:
+                assertNever(environments);
+        }
     }
 
     private getRootPathParameterDefaults(): string {

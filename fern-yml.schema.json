@@ -3074,6 +3074,9 @@
                         "afterInteractive",
                         "lazyOnload"
                       ]
+                    },
+                    "disable-sri": {
+                      "type": "boolean"
                     }
                   },
                   "required": [
@@ -3127,6 +3130,9 @@
                           "afterInteractive",
                           "lazyOnload"
                         ]
+                      },
+                      "disable-sri": {
+                        "type": "boolean"
                       }
                     },
                     "required": [

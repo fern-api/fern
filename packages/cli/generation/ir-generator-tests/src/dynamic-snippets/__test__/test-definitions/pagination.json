@@ -62,7 +62,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UsernamePage": {
             "type": "object",
@@ -161,7 +162,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_complex:SearchRequestQuery": {
             "type": "undiscriminatedUnion",
@@ -375,7 +377,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_complex:MultipleFilterSearchRequestOperator": {
             "type": "enum",
@@ -741,7 +744,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_complex:SingleFilterSearchRequestOperator": {
             "type": "enum",
@@ -1164,7 +1168,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_complex:PaginatedConversationResponse": {
             "type": "object",
@@ -1364,7 +1369,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_complex:CursorPages": {
             "type": "object",
@@ -1600,7 +1606,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_complex:StartingAfterPaging": {
             "type": "object",
@@ -1734,7 +1741,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_complex:Conversation": {
             "type": "object",
@@ -1835,7 +1843,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:Order": {
             "type": "enum",
@@ -2130,7 +2139,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:WithCursor": {
             "type": "object",
@@ -2273,7 +2283,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:UserListContainer": {
             "type": "object",
@@ -2416,7 +2427,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:UserPage": {
             "type": "object",
@@ -2589,7 +2601,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:UserOptionalListContainer": {
             "type": "object",
@@ -2735,7 +2748,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:UserOptionalListPage": {
             "type": "object",
@@ -2908,7 +2922,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:UsernameContainer": {
             "type": "object",
@@ -3051,7 +3066,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:ListUsersExtendedResponse": {
             "type": "object",
@@ -3256,7 +3272,8 @@
             "extends": [
                 "type_inline-users/inline-users:UserPage"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:ListUsersExtendedOptionalListResponse": {
             "type": "object",
@@ -3461,7 +3478,8 @@
             "extends": [
                 "type_inline-users/inline-users:UserOptionalListPage"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:ListUsersPaginationResponse": {
             "type": "object",
@@ -3697,7 +3715,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:ListUsersMixedTypePaginationResponse": {
             "type": "object",
@@ -3867,7 +3886,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:Page": {
             "type": "object",
@@ -4100,7 +4120,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:NextPage": {
             "type": "object",
@@ -4270,7 +4291,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:Users": {
             "type": "object",
@@ -4413,7 +4435,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inline-users/inline-users:User": {
             "type": "object",
@@ -4583,7 +4606,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:Order": {
             "type": "enum",
@@ -4800,7 +4824,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:WithCursor": {
             "type": "object",
@@ -4904,7 +4929,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:UserListContainer": {
             "type": "object",
@@ -5008,7 +5034,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:UserPage": {
             "type": "object",
@@ -5142,7 +5169,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:UserOptionalListContainer": {
             "type": "object",
@@ -5249,7 +5277,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:UserOptionalListPage": {
             "type": "object",
@@ -5383,7 +5412,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:UsernameContainer": {
             "type": "object",
@@ -5487,7 +5517,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:ListUsersExtendedResponse": {
             "type": "object",
@@ -5653,7 +5684,8 @@
             "extends": [
                 "type_users:UserPage"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:ListUsersExtendedOptionalListResponse": {
             "type": "object",
@@ -5819,7 +5851,8 @@
             "extends": [
                 "type_users:UserOptionalListPage"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:ListUsersPaginationResponse": {
             "type": "object",
@@ -6019,7 +6052,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:ListUsersOptionalDataPaginationResponse": {
             "type": "object",
@@ -6222,7 +6256,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:ListUsersMixedTypePaginationResponse": {
             "type": "object",
@@ -6356,7 +6391,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:ListUsersTopLevelCursorPaginationResponse": {
             "type": "object",
@@ -6493,7 +6529,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:UserList": {
             "type": "alias",
@@ -6764,7 +6801,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:Page": {
             "type": "object",
@@ -6958,7 +6996,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:NextPage": {
             "type": "object",
@@ -7089,7 +7128,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_users:User": {
             "type": "object",
@@ -7220,7 +7260,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],

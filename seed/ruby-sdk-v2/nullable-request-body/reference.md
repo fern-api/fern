@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.<a href="/lib/seed/test_group/client.rb">test_method_name</a>(path_param, request) -> Object</code></summary>
+<details><summary><code>client.test_group.<a href="/lib/seed/test_group/client.rb">test_method_name</a>(path_param:, request) -> Object</code></summary>
 <dl>
 <dd>
 

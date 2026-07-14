@@ -129,8 +129,14 @@ export interface AbsoluteJsFileConfig {
     strategy?: CjsFdrSdk.docs.v1.commons.JsScriptStrategy;
 }
 
+// Extends the published FDR remote-script shape with `disableSri` until the
+// generated @fern-api/fdr-sdk type carries the field natively.
+export type ParsedJsRemoteConfig = CjsFdrSdk.docs.v1.commons.JsRemoteConfig & {
+    disableSri?: boolean;
+};
+
 export interface JavascriptConfig {
-    remote?: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[];
+    remote?: ParsedJsRemoteConfig[];
     files: AbsoluteJsFileConfig[];
 }
 

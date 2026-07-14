@@ -94,6 +94,7 @@
             },
           },
         },
+        "deferredUnionBaseProperties": undefined,
         "extends": undefined,
         "properties": [
           {
@@ -356,6 +357,7 @@
             },
           },
         },
+        "deferredUnionBaseProperties": undefined,
         "extends": undefined,
         "properties": [
           {
@@ -751,6 +753,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -944,6 +947,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

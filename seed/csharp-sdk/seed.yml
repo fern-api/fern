@@ -226,6 +226,12 @@ fixtures:
     - customConfig:
         environment-class-name: CustomEnvironment
       outputFolder: environment-class-name
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
   exhaustive:
     - customConfig:
         explicit-namespaces: true
@@ -245,6 +251,9 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
     - publishConfig:
         type: nuget
         registryUrl: ""
@@ -429,5 +438,11 @@ fixtures:
     - customConfig:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
+  idempotency-headers:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
 allowedFailures:
   - oauth-client-credentials-custom

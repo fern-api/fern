@@ -627,7 +627,10 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             generatorType: "sdk",
             formatter: config.formatter,
-            linter: config.linter
+            linter: config.linter,
+            autoGenerateIdempotencyKey: intermediateRepresentation.sdkConfig.idempotencyKeyGeneration != null,
+            idempotencyKeyHeaderName:
+                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key"
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
