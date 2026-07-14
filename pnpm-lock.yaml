@@ -1719,8 +1719,8 @@ importers:
         specifier: workspace:*
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
-        specifier: ^66.3.0
-        version: 66.3.0
+        specifier: 67.11.0
+        version: 67.11.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1846,8 +1846,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^66.3.0
-        version: 66.3.0
+        specifier: 67.11.0
+        version: 67.11.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1903,8 +1903,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^66.3.0
-        version: 66.3.0
+        specifier: 67.11.0
+        version: 67.11.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
