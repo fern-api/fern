@@ -192,7 +192,9 @@ public class SeedApiClientBuilder {
      * }</pre>
      */
     protected void setCustomHeaders(ClientOptions.Builder builder) {
-        builder.addHeader("X-Api-Key", this.apiKey);
+        if (this.apiKey != null) {
+            builder.addHeader("X-Api-Key", this.apiKey);
+        }
     }
 
     /**

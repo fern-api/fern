@@ -172,7 +172,9 @@ public final class ClientOptions {
         }
 
         public Builder addHeader(String key, String value) {
-            this.headers.put(key, value);
+            if (value != null) {
+                this.headers.put(key, value);
+            }
             return this;
         }
 
