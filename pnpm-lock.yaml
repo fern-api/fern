@@ -1119,8 +1119,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.2.0
-        version: 67.2.0
+        specifier: 67.11.0
+        version: 67.11.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1210,8 +1210,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: 67.2.0
-        version: 67.2.0
+        specifier: 67.11.0
+        version: 67.11.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1261,8 +1261,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 67.2.0
-        version: 67.2.0
+        specifier: 67.11.0
+        version: 67.11.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
