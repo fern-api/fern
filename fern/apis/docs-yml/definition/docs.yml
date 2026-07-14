@@ -2095,6 +2095,13 @@ types:
     properties:
       url: string
       strategy: optional<JsScriptStrategy>
+      disable-sri:
+        type: optional<boolean>
+        docs: |-
+          When true, skip computing a Subresource Integrity (SRI) hash for this
+          remote script. The script is rendered without an `integrity` attribute.
+          Useful for scripts whose contents change (e.g. rolling CDN builds) that
+          would otherwise fail integrity verification.
 
   JsFileConfig:
     discriminated: false

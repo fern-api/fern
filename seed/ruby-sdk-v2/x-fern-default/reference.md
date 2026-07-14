@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">test_get</a>(region) -> Seed::Types::TestGetResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">test_get</a>(region:) -> Seed::Types::TestGetResponse</code></summary>
 <dl>
 <dd>
 

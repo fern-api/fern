@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.19.0
+  changelogEntry:
+    - summary: |
+        Add automatic idempotency-key generation, driven by the centralized
+        `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+        UUIDv4 idempotency-key header to requests whose HTTP method is listed in the IR. A
+        caller-supplied key still takes precedence.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 5.18.4
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Sub-client accessors and methods like `ConversationsV2Configuration` now generate
+        `conversations_v2_configuration` instead of `conversations_v2configuration`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 5.18.3
   changelogEntry:
     - summary: |

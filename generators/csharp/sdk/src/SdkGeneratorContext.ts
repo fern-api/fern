@@ -188,6 +188,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.MultipartFormRequest,
                 // AsIsFiles.NdJsonContent,
                 // AsIsFiles.NdJsonRequest,
+                AsIsFiles.DefaultHttpClientFactory,
                 AsIsFiles.QueryStringBuilder,
                 AsIsFiles.QueryStringConverter,
                 AsIsFiles.RawClient,
@@ -199,6 +200,9 @@ export class SdkGeneratorContext extends GeneratorContext {
 
         if (this.hasFormUrlEncodedEndpoints()) {
             files.push(AsIsFiles.FormRequest);
+        }
+        if (this.isIdempotencyKeyAutoGenerationEnabled()) {
+            files.push(AsIsFiles.IdempotencyHeaderExtensions);
         }
 
         if (this.settings.includeExceptionHandler) {
@@ -240,6 +244,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.QueryStringBuilderTests,
             AsIsFiles.Test.QueryStringConverterTests,
             AsIsFiles.Test.WithRawResponseTests,
+            AsIsFiles.Test.RawClientTests.GzipResponseTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests

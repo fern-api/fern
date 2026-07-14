@@ -197,7 +197,21 @@ module Seed
           request_headers.each { |name, value| request[name] = value }
           request.body = body if body
 
+          # Net::HTTP disables its transparent gzip/deflate decoding as soon as an
+          # Accept-Encoding header is set explicitly on the request. Re-enable it so
+          # that compressed response bodies are still inflated.
+          request.extend(DecodeContent) if request_headers.keys.any? { |name| name.to_s.casecmp("accept-encoding").zero? }
+
           request
+        end
+
+        # Keeps Net::HTTP's transparent gzip/deflate response decoding enabled
+        # even when an Accept-Encoding header is set explicitly on the request.
+        # @api private
+        module DecodeContent
+          def decode_content # rubocop:disable Naming/PredicateMethod
+            true
+          end
         end
 
         # @param query [Hash] The query for the request.

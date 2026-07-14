@@ -1,0 +1,217 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "conversations/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listConversations": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/conversations",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../conversations-api.yml",
+              },
+              "url": "stage",
+            },
+          },
+          "source": {
+            "openapi": "../conversations-api.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listConversations:
+      path: /conversations
+      method: GET
+      source:
+        openapi: ../conversations-api.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      url: stage
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../conversations-api.yml
+",
+    },
+    "messages/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listMessages": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/messages",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../messages-api.yml",
+              },
+              "url": "stage",
+            },
+          },
+          "source": {
+            "openapi": "../messages-api.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listMessages:
+      path: /messages
+      method: GET
+      source:
+        openapi: ../messages-api.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      url: stage
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../messages-api.yml
+",
+    },
+    "oauth/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createToken": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/token",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../oauth-api.yml",
+              },
+              "url": "oauth",
+            },
+          },
+          "source": {
+            "openapi": "../oauth-api.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createToken:
+      path: /token
+      method: POST
+      source:
+        openapi: ../oauth-api.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      url: oauth
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../oauth-api.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "STG",
+      "default-url": "stage",
+      "display-name": "Messages API",
+      "environments": {
+        "STG": {
+          "urls": {
+            "oauth": "https://oauth.stage.example.com",
+            "stage": "https://api.stage.example.com",
+          },
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "stage",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Messages API
+environments:
+  STG:
+    urls:
+      stage: https://api.stage.example.com
+      oauth: https://oauth.stage.example.com
+default-environment: STG
+default-url: stage
+",
+  },
+  "specVersion": "1.0.0",
+}

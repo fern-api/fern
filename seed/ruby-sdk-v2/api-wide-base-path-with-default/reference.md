@@ -1,6 +1,6 @@
 # Reference
 ## Widgets
-<details><summary><code>client.widgets.<a href="/lib/seed/widgets/client.rb">create</a>(api_version, request) -> Seed::Types::Widget</code></summary>
+<details><summary><code>client.widgets.<a href="/lib/seed/widgets/client.rb">create</a>(api_version:, request) -> Seed::Types::Widget</code></summary>
 <dl>
 <dd>
 

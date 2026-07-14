@@ -540,7 +540,8 @@ export const JsFileConfig = z.union([z.string(), JsFileConfigSettings]);
 
 export const JsRemoteConfig = z.object({
     url: z.string(),
-    strategy: JsScriptStrategy.optional()
+    strategy: JsScriptStrategy.optional(),
+    "disable-sri": z.boolean().optional()
 });
 
 export const JsConfigOptions = z.union([JsRemoteConfig, JsFileConfig]);

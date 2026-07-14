@@ -17,7 +17,9 @@ export function convertObjectTypeDeclaration({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         properties: getObjectPropertiesFromRawObjectSchema(object, file),
         extraProperties: object["extra-properties"] ?? false,
-        extendedProperties: undefined
+        extendedProperties: undefined,
+        // Populated by the computeUnionBasePropertyDedupe post-build pass; undefined here.
+        deferredUnionBaseProperties: undefined
     });
 }
 

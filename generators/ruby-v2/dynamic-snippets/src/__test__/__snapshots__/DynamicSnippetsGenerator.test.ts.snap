@@ -260,7 +260,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::PRODUCTION
 )
 
-client.s3.get_presigned_url(s3key: "xyz")
+client.s3.get_presigned_url(s3_key: "xyz")
 "
 `;
 
@@ -272,7 +272,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::STAGING
 )
 
-client.s3.get_presigned_url(s3key: "xyz")
+client.s3.get_presigned_url(s3_key: "xyz")
 "
 `;
 

@@ -204,7 +204,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RequestTypeInlineType1": {
             "type": "object",
@@ -267,7 +268,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1": {
             "type": "object",
@@ -493,7 +495,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1FooMapValue": {
             "type": "object",
@@ -505,12 +508,12 @@
                         "safeName": "rootType1FooMapValue"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1foo_map_value",
-                        "safeName": "root_type1foo_map_value"
+                        "unsafeName": "root_type1_foo_map_value",
+                        "safeName": "root_type1_foo_map_value"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1FOO_MAP_VALUE",
-                        "safeName": "ROOT_TYPE1FOO_MAP_VALUE"
+                        "unsafeName": "ROOT_TYPE1_FOO_MAP_VALUE",
+                        "safeName": "ROOT_TYPE1_FOO_MAP_VALUE"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1FooMapValue",
@@ -586,7 +589,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1FooListItem": {
             "type": "object",
@@ -598,12 +602,12 @@
                         "safeName": "rootType1FooListItem"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1foo_list_item",
-                        "safeName": "root_type1foo_list_item"
+                        "unsafeName": "root_type1_foo_list_item",
+                        "safeName": "root_type1_foo_list_item"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1FOO_LIST_ITEM",
-                        "safeName": "ROOT_TYPE1FOO_LIST_ITEM"
+                        "unsafeName": "ROOT_TYPE1_FOO_LIST_ITEM",
+                        "safeName": "ROOT_TYPE1_FOO_LIST_ITEM"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1FooListItem",
@@ -679,7 +683,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1FooSetItem": {
             "type": "object",
@@ -691,12 +696,12 @@
                         "safeName": "rootType1FooSetItem"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1foo_set_item",
-                        "safeName": "root_type1foo_set_item"
+                        "unsafeName": "root_type1_foo_set_item",
+                        "safeName": "root_type1_foo_set_item"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1FOO_SET_ITEM",
-                        "safeName": "ROOT_TYPE1FOO_SET_ITEM"
+                        "unsafeName": "ROOT_TYPE1_FOO_SET_ITEM",
+                        "safeName": "ROOT_TYPE1_FOO_SET_ITEM"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1FooSetItem",
@@ -772,7 +777,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1InlineType1": {
             "type": "object",
@@ -784,12 +790,12 @@
                         "safeName": "rootType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1inline_type1",
-                        "safeName": "root_type1inline_type1"
+                        "unsafeName": "root_type1_inline_type1",
+                        "safeName": "root_type1_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1INLINE_TYPE1",
-                        "safeName": "ROOT_TYPE1INLINE_TYPE1"
+                        "unsafeName": "ROOT_TYPE1_INLINE_TYPE1",
+                        "safeName": "ROOT_TYPE1_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1InlineType1",
@@ -895,7 +901,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType1InlineType1NestedInlineType1": {
             "type": "object",
@@ -907,12 +914,12 @@
                         "safeName": "rootType1InlineType1NestedInlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1inline_type1nested_inline_type1",
-                        "safeName": "root_type1inline_type1nested_inline_type1"
+                        "unsafeName": "root_type1_inline_type1_nested_inline_type1",
+                        "safeName": "root_type1_inline_type1_nested_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1INLINE_TYPE1NESTED_INLINE_TYPE1",
-                        "safeName": "ROOT_TYPE1INLINE_TYPE1NESTED_INLINE_TYPE1"
+                        "unsafeName": "ROOT_TYPE1_INLINE_TYPE1_NESTED_INLINE_TYPE1",
+                        "safeName": "ROOT_TYPE1_INLINE_TYPE1_NESTED_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1InlineType1NestedInlineType1",
@@ -1048,7 +1055,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DiscriminatedUnion1": {
             "type": "discriminatedUnion",
@@ -1100,6 +1108,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "type1": {
                     "type": "samePropertiesAsObject",
@@ -1194,12 +1203,12 @@
                         "safeName": "discriminatedUnion1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "discriminated_union1inline_type1",
-                        "safeName": "discriminated_union1inline_type1"
+                        "unsafeName": "discriminated_union1_inline_type1",
+                        "safeName": "discriminated_union1_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DISCRIMINATED_UNION1INLINE_TYPE1",
-                        "safeName": "DISCRIMINATED_UNION1INLINE_TYPE1"
+                        "unsafeName": "DISCRIMINATED_UNION1_INLINE_TYPE1",
+                        "safeName": "DISCRIMINATED_UNION1_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "DiscriminatedUnion1InlineType1",
@@ -1305,7 +1314,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -1317,12 +1327,12 @@
                         "safeName": "discriminatedUnion1InlineType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "discriminated_union1inline_type1inline_type1",
-                        "safeName": "discriminated_union1inline_type1inline_type1"
+                        "unsafeName": "discriminated_union1_inline_type1_inline_type1",
+                        "safeName": "discriminated_union1_inline_type1_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1",
-                        "safeName": "DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1"
+                        "unsafeName": "DISCRIMINATED_UNION1_INLINE_TYPE1_INLINE_TYPE1",
+                        "safeName": "DISCRIMINATED_UNION1_INLINE_TYPE1_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "DiscriminatedUnion1InlineType1InlineType1",
@@ -1398,7 +1408,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -1410,12 +1421,12 @@
                         "safeName": "discriminatedUnion1InlineType2"
                     },
                     "snakeCase": {
-                        "unsafeName": "discriminated_union1inline_type2",
-                        "safeName": "discriminated_union1inline_type2"
+                        "unsafeName": "discriminated_union1_inline_type2",
+                        "safeName": "discriminated_union1_inline_type2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DISCRIMINATED_UNION1INLINE_TYPE2",
-                        "safeName": "DISCRIMINATED_UNION1INLINE_TYPE2"
+                        "unsafeName": "DISCRIMINATED_UNION1_INLINE_TYPE2",
+                        "safeName": "DISCRIMINATED_UNION1_INLINE_TYPE2"
                     },
                     "pascalCase": {
                         "unsafeName": "DiscriminatedUnion1InlineType2",
@@ -1491,7 +1502,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1": {
             "type": "undiscriminatedUnion",
@@ -1583,12 +1595,12 @@
                         "safeName": "undiscriminatedUnion1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_type1",
-                        "safeName": "undiscriminated_union1inline_type1"
+                        "unsafeName": "undiscriminated_union1_inline_type1",
+                        "safeName": "undiscriminated_union1_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_INLINE_TYPE1",
+                        "safeName": "UNDISCRIMINATED_UNION1_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineType1",
@@ -1694,7 +1706,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -1706,12 +1719,12 @@
                         "safeName": "undiscriminatedUnion1InlineType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_type1inline_type1",
-                        "safeName": "undiscriminated_union1inline_type1inline_type1"
+                        "unsafeName": "undiscriminated_union1_inline_type1_inline_type1",
+                        "safeName": "undiscriminated_union1_inline_type1_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_INLINE_TYPE1_INLINE_TYPE1",
+                        "safeName": "UNDISCRIMINATED_UNION1_INLINE_TYPE1_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineType1InlineType1",
@@ -1787,7 +1800,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -1799,12 +1813,12 @@
                         "safeName": "undiscriminatedUnion1InlineType2"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_type2",
-                        "safeName": "undiscriminated_union1inline_type2"
+                        "unsafeName": "undiscriminated_union1_inline_type2",
+                        "safeName": "undiscriminated_union1_inline_type2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_TYPE2",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_TYPE2"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_INLINE_TYPE2",
+                        "safeName": "UNDISCRIMINATED_UNION1_INLINE_TYPE2"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineType2",
@@ -1880,7 +1894,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:InlineEnum1": {
             "type": "enum",
@@ -2011,12 +2026,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1",
-                        "safeName": "undiscriminated_union1discriminated_union1"
+                        "unsafeName": "undiscriminated_union1_discriminated_union1",
+                        "safeName": "undiscriminated_union1_discriminated_union1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1",
+                        "safeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1",
@@ -2051,6 +2066,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "type1": {
                     "type": "samePropertiesAsObject",
@@ -2145,12 +2161,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1inline_type1",
-                        "safeName": "undiscriminated_union1discriminated_union1inline_type1"
+                        "unsafeName": "undiscriminated_union1_discriminated_union1_inline_type1",
+                        "safeName": "undiscriminated_union1_discriminated_union1_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1_INLINE_TYPE1",
+                        "safeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1InlineType1",
@@ -2256,7 +2272,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
             "type": "object",
@@ -2268,12 +2285,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1inline_type1inline_type1",
-                        "safeName": "undiscriminated_union1discriminated_union1inline_type1inline_type1"
+                        "unsafeName": "undiscriminated_union1_discriminated_union1_inline_type1_inline_type1",
+                        "safeName": "undiscriminated_union1_discriminated_union1_inline_type1_inline_type1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1_INLINE_TYPE1_INLINE_TYPE1",
+                        "safeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1_INLINE_TYPE1_INLINE_TYPE1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1",
@@ -2349,7 +2366,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
             "type": "object",
@@ -2361,12 +2379,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1InlineType2"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1inline_type2",
-                        "safeName": "undiscriminated_union1discriminated_union1inline_type2"
+                        "unsafeName": "undiscriminated_union1_discriminated_union1_inline_type2",
+                        "safeName": "undiscriminated_union1_discriminated_union1_inline_type2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE2",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE2"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1_INLINE_TYPE2",
+                        "safeName": "UNDISCRIMINATED_UNION1_DISCRIMINATED_UNION1_INLINE_TYPE2"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1InlineType2",
@@ -2442,7 +2460,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineEnum1": {
             "type": "enum",
@@ -2454,12 +2473,12 @@
                         "safeName": "undiscriminatedUnion1InlineEnum1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_enum1",
-                        "safeName": "undiscriminated_union1inline_enum1"
+                        "unsafeName": "undiscriminated_union1_inline_enum1",
+                        "safeName": "undiscriminated_union1_inline_enum1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_ENUM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_ENUM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_INLINE_ENUM1",
+                        "safeName": "UNDISCRIMINATED_UNION1_INLINE_ENUM1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineEnum1",
@@ -2606,12 +2625,12 @@
                         "safeName": "undiscriminatedUnion1InlineListItem1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_list_item1",
-                        "safeName": "undiscriminated_union1inline_list_item1"
+                        "unsafeName": "undiscriminated_union1_inline_list_item1",
+                        "safeName": "undiscriminated_union1_inline_list_item1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_LIST_ITEM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_LIST_ITEM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_INLINE_LIST_ITEM1",
+                        "safeName": "UNDISCRIMINATED_UNION1_INLINE_LIST_ITEM1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineListItem1",
@@ -2687,7 +2706,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineSetItem1": {
             "type": "object",
@@ -2699,12 +2719,12 @@
                         "safeName": "undiscriminatedUnion1InlineSetItem1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_set_item1",
-                        "safeName": "undiscriminated_union1inline_set_item1"
+                        "unsafeName": "undiscriminated_union1_inline_set_item1",
+                        "safeName": "undiscriminated_union1_inline_set_item1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_SET_ITEM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_SET_ITEM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_INLINE_SET_ITEM1",
+                        "safeName": "UNDISCRIMINATED_UNION1_INLINE_SET_ITEM1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineSetItem1",
@@ -2780,7 +2800,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UndiscriminatedUnion1InlineMapItem1": {
             "type": "object",
@@ -2792,12 +2813,12 @@
                         "safeName": "undiscriminatedUnion1InlineMapItem1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_map_item1",
-                        "safeName": "undiscriminated_union1inline_map_item1"
+                        "unsafeName": "undiscriminated_union1_inline_map_item1",
+                        "safeName": "undiscriminated_union1_inline_map_item1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_MAP_ITEM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_MAP_ITEM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION1_INLINE_MAP_ITEM1",
+                        "safeName": "UNDISCRIMINATED_UNION1_INLINE_MAP_ITEM1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineMapItem1",
@@ -2873,7 +2894,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ReferenceType": {
             "type": "object",
@@ -2936,7 +2958,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionTypeWithAliasVariant": {
             "type": "discriminatedUnion",
@@ -2988,6 +3011,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "samePropertiesAsObject",
@@ -3095,6 +3119,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "singleProperty",
@@ -3185,6 +3210,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "singleProperty",
@@ -3271,6 +3297,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "aliasVariant": {
                     "type": "singleProperty",
@@ -3525,7 +3552,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithMapAliasTypeValue": {
             "type": "object",
@@ -3595,7 +3623,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithMapAliasTypeKey": {
             "type": "object",
@@ -3665,7 +3694,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithMapAliasTypeBoth": {
             "type": "object",
@@ -3735,7 +3765,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithListAliasType": {
             "type": "object",
@@ -3801,7 +3832,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectTypeWithSetAliasType": {
             "type": "object",
@@ -3867,7 +3899,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:AliasVariant": {
             "type": "alias",
@@ -4062,7 +4095,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:OtherAliasVariantType": {
             "type": "object",
@@ -4125,7 +4159,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:AliasPropertyType": {
             "type": "object",
@@ -4188,7 +4223,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:OtherAliasPropertyType": {
             "type": "object",
@@ -4251,7 +4287,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NonAliasVariant": {
             "type": "object",
@@ -4314,7 +4351,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:TypesPropertyCollisionParent": {
             "type": "object",
@@ -4407,7 +4445,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:TypesPropertyCollisionChild": {
             "type": "object",
@@ -4470,7 +4509,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:TypesPropertyCollisionBaseParent": {
             "type": "object",
@@ -4533,7 +4573,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:TypesPropertyCollisionExtendsParent": {
             "type": "object",
@@ -4628,7 +4669,8 @@
             "extends": [
                 "type_:TypesPropertyCollisionBaseParent"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:TypesPropertyCollisionExtendsChild": {
             "type": "object",
@@ -4691,7 +4733,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionWithTypesVariant": {
             "type": "discriminatedUnion",
@@ -4743,6 +4786,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "types": {
                     "type": "samePropertiesAsObject",
@@ -4891,7 +4935,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionWithTypesVariantOtherInlineType1": {
             "type": "object",
@@ -4984,7 +5029,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],

@@ -15,7 +15,8 @@ import {
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
     mapMagicVersionForLanguage,
-    maxVersionBump
+    maxVersionBump,
+    prependChangelogBlock
 } from "../../autoversion/index";
 import type { PreparedReplay } from "../../replay/replay-run";
 import type { PipelineLogger } from "../PipelineLogger";
@@ -823,28 +824,13 @@ export class AutoVersionStep extends BaseStep {
     private async prependChangelogEntry(params: { version: string; entry: string }): Promise<void> {
         const { version, entry } = params;
         const changelogPath = join(this.outputDir, "changelog.md");
-        const now = new Date().toISOString().slice(0, 10);
-        const header = `## [${version}] - ${now}\n`;
-        const newBlock = `${header}${entry.trim()}\n\n`;
 
         let existing = "";
         if (existsSync(changelogPath)) {
             existing = await readFile(changelogPath, "utf-8");
         }
 
-        let output: string;
-        if (existing.trim().length === 0) {
-            output = `# Changelog\n\n${newBlock}`;
-        } else if (existing.startsWith("# Changelog")) {
-            const newlineIdx = existing.indexOf("\n");
-            const headerLine = newlineIdx >= 0 ? existing.slice(0, newlineIdx) : existing;
-            const remainder = (newlineIdx >= 0 ? existing.slice(newlineIdx + 1) : "").replace(/^\s*\n/, "");
-            output = `${headerLine}\n\n${newBlock}${remainder}`;
-        } else {
-            output = `${newBlock}${existing}`;
-        }
-
-        await writeFile(changelogPath, output, "utf-8");
+        await writeFile(changelogPath, prependChangelogBlock({ existingContent: existing, version, entry }), "utf-8");
     }
 
     private brandMessage(message: string): string {
