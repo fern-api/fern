@@ -12,6 +12,7 @@ export const AsIsFiles = {
     TemplateCsProj: "Template.csproj",
     UsingCs: "Using.cs",
     ValueConvert: "ValueConvert.Template.cs",
+    WebhookSignature: "WebhookSignature.Template.cs",
     // Grpc
     GrpcRequestOptions: "GrpcRequestOptions.Template.cs",
     ProtoAnyMapper: "ProtoAnyMapper.Template.cs",
