@@ -161,7 +161,7 @@ export class WebhooksHelperGenerator {
                     assertNever(component);
             }
         }
-        if (config.timestamp != null) {
+        if (config.timestamp != null || config.payloadFormat.components.includes("TIMESTAMP")) {
             parameters.push(php.parameter({ name: "timestampHeader", type: nullableString }));
         }
         return parameters;
