@@ -1,0 +1,249 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Messages API",
+  "servers": [
+    {
+      "type": "grouped",
+      "name": "STG",
+      "description": "STG environment",
+      "urls": {
+        "stage": {
+          "url": "https://api.stage.example.com"
+        },
+        "oauth": {
+          "url": "https://oauth.stage.example.com"
+        }
+      }
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listMessages",
+      "tags": [
+        "messages"
+      ],
+      "namespace": "messages",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListMessagesRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ListMessagesResponse",
+          "namespace": "messages",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "messages"
+            }
+          ],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../messages-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/messages",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../messages-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "stage",
+      "servers": [
+        {
+          "name": "stage"
+        }
+      ]
+    },
+    {
+      "audiences": [],
+      "operationId": "listConversations",
+      "tags": [
+        "conversations"
+      ],
+      "namespace": "conversations",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListConversationsRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ListConversationsResponse",
+          "namespace": "conversations",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "conversations"
+            }
+          ],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../conversations-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/conversations",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../conversations-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "stage",
+      "servers": [
+        {
+          "name": "stage"
+        }
+      ]
+    },
+    {
+      "audiences": [],
+      "operationId": "createToken",
+      "tags": [
+        "oauth"
+      ],
+      "namespace": "oauth",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateTokenRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "CreateTokenResponse",
+          "namespace": "oauth",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "oauth"
+            }
+          ],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../oauth-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "POST",
+      "path": "/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../oauth-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "oauth",
+      "servers": [
+        {
+          "name": "oauth"
+        }
+      ]
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {
+      "messages": {},
+      "conversations": {},
+      "oauth": {}
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

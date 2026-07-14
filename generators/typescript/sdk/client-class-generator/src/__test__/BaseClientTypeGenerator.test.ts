@@ -1415,4 +1415,138 @@ describe("BaseClientTypeGenerator", () => {
             expect(importedNames).toContain("InferredAuthProvider");
         });
     });
+
+    describe("server URL variables (region/edge routing)", () => {
+        function createServerVariable(opts: {
+            id: string;
+            name: string;
+            default?: string;
+            values?: string[];
+        }): FernIr.ServerVariable {
+            return {
+                id: opts.id,
+                name: casingsGenerator.generateName(opts.name),
+                default: opts.default,
+                values: opts.values
+            };
+        }
+
+        function createMultipleBaseUrlsIR(): FernIr.IntermediateRepresentation {
+            const region = createServerVariable({
+                id: "region",
+                name: "region",
+                default: "us-east-1",
+                values: ["us-east-1", "us-west-2", "eu-west-1"]
+            });
+            // "environment" collides with the reserved BaseClientOptions.environment option
+            const environment = createServerVariable({
+                id: "environment",
+                name: "environment",
+                default: "prod",
+                values: ["prod", "staging", "dev"]
+            });
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "RegionalApiServer",
+                environments: FernIr.Environments.multipleBaseUrls({
+                    baseUrls: [
+                        { id: "base", name: casingsGenerator.generateName("base") },
+                        { id: "auth", name: casingsGenerator.generateName("auth") }
+                    ],
+                    environments: [
+                        {
+                            id: "RegionalApiServer",
+                            name: casingsGenerator.generateName("Regional API Server"),
+                            urls: {
+                                base: "https://api.example.com/v1",
+                                auth: "https://auth.example.com"
+                            },
+                            urlTemplates: {
+                                base: "https://api.{region}.{environment}.example.com/v1",
+                                auth: "https://auth.{region}.example.com"
+                            },
+                            urlVariables: {
+                                base: [region, environment],
+                                auth: [region]
+                            },
+                            audiences: undefined,
+                            defaultUrls: undefined,
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            return ir;
+        }
+
+        function createSingleBaseUrlIR(): FernIr.IntermediateRepresentation {
+            const region = createServerVariable({
+                id: "region",
+                name: "region",
+                default: "us-east-1",
+                values: ["us-east-1", "eu-west-1"]
+            });
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "Default",
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        {
+                            id: "Default",
+                            name: casingsGenerator.generateName("Default"),
+                            url: "https://api.example.com",
+                            urlTemplate: "https://api.{region}.example.com",
+                            urlVariables: [region],
+                            audiences: undefined,
+                            defaultUrl: undefined,
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            return ir;
+        }
+
+        function getNormalizeFunction(ir: FernIr.IntermediateRepresentation): string {
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+            const normalizeFunction = context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+            if (normalizeFunction == null) {
+                throw new Error("normalizeClientOptions function was not generated");
+            }
+            return normalizeFunction;
+        }
+
+        it("does not emit interpolation when the IR has no environments config", () => {
+            const normalizeFunction = getNormalizeFunction(createIR());
+            expect(normalizeFunction).not.toContain("_region");
+        });
+
+        it("interpolates server variables into multiple base URLs", () => {
+            const normalizeFunction = getNormalizeFunction(createMultipleBaseUrlsIR());
+            // Both server variables gate the interpolation
+            expect(normalizeFunction).toContain("options?.region != null");
+            expect(normalizeFunction).toContain("options?.serverUrlEnvironment != null");
+            // Local declarations fall back to the variable defaults
+            expect(normalizeFunction).toContain('const _region = options?.region ?? "us-east-1"');
+            expect(normalizeFunction).toContain(
+                'const _serverUrlEnvironment = options?.serverUrlEnvironment ?? "prod"'
+            );
+            // Each base URL is rebuilt from its template
+            expect(normalizeFunction).toContain(
+                "base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`"
+            );
+            expect(normalizeFunction).toContain("auth: `https://auth.${_region}.example.com`");
+        });
+
+        it("interpolates server variables into a single base URL", () => {
+            const normalizeFunction = getNormalizeFunction(createSingleBaseUrlIR());
+            expect(normalizeFunction).toContain("options?.region != null");
+            expect(normalizeFunction).toContain('const _region = options?.region ?? "us-east-1"');
+            expect(normalizeFunction).toContain("baseUrl = `https://api.${_region}.example.com`");
+        });
+    });
 });

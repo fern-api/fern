@@ -56,6 +56,7 @@ import { ExampleResolverImpl } from "./resolvers/ExampleResolver.js";
 import { PropertyResolverImpl } from "./resolvers/PropertyResolver.js";
 import { TypeResolverImpl } from "./resolvers/TypeResolver.js";
 import { VariableResolverImpl } from "./resolvers/VariableResolver.js";
+import { addUnionBasePropertyDedupeToIr } from "./union-base-properties/computeUnionBasePropertyDedupe.js";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath.js";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience.js";
 import { getIrGenerationSettings } from "./utils/getIrGenerationSettings.js";
@@ -486,6 +487,11 @@ export function generateIntermediateRepresentation({
     intermediateRepresentation.serviceTypeReferenceInfo = computeServiceTypeReferenceInfo(irGraph);
 
     addExtendedPropertiesToIr(intermediateRepresentation);
+
+    // Compute the language-agnostic discriminated-union base-property dedupe facts once, now that the
+    // full types map is assembled and `extendedProperties` are populated (this pass reads them). All
+    // generators consume these IR facts instead of re-deriving the decision. See the ADR.
+    addUnionBasePropertyDedupeToIr(intermediateRepresentation);
 
     // Resolve which global parameters actually apply to each endpoint (body-location
     // params are gated on the request-body schema containing the target path), storing

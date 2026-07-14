@@ -617,6 +617,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             ...this.getCoreStreamAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];
+        // Only ship the idempotency key helper when the IR enables idempotency-key generation.
+        if (this.ir.sdkConfig.idempotencyKeyGeneration != null) {
+            files.push(AsIsFiles.IdempotencyKey);
+        }
         if (this.hasHmacWebhookSignatureVerification()) {
             files.push(AsIsFiles.WebhookSignature);
         }

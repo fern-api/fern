@@ -41,7 +41,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
                     properties: [],
                     extends: [],
                     extendedProperties: [],
-                    extraProperties: hasAdditionalProperties
+                    extraProperties: hasAdditionalProperties,
+                    deferredUnionBaseProperties: undefined
                 }),
                 propertiesByAudience: {},
                 inlinedTypes: {},
@@ -255,7 +256,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 properties,
                 extends: extends_.map((ext) => this.context.typeReferenceToDeclaredTypeName(ext)).filter(isNonNullish),
                 extendedProperties: [],
-                extraProperties: hasAdditionalProperties
+                extraProperties: hasAdditionalProperties,
+                deferredUnionBaseProperties: undefined
             }),
             propertiesByAudience,
             referencedTypes,

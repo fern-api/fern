@@ -65,7 +65,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:RootType": {
             "type": "object",
@@ -128,7 +129,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_a:A": {
             "type": "object",
@@ -231,7 +233,8 @@
             "extends": [
                 "type_:RootType"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:TorU": {
             "type": "undiscriminatedUnion",
@@ -409,7 +412,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:U": {
             "type": "object",
@@ -510,7 +514,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:FieldValue": {
             "type": "discriminatedUnion",
@@ -600,6 +605,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "primitive_value": {
                     "type": "singleProperty",
@@ -778,6 +784,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "list": {
                     "type": "singleProperty",
@@ -1028,7 +1035,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_ast:JsonLike": {
             "type": "undiscriminatedUnion",

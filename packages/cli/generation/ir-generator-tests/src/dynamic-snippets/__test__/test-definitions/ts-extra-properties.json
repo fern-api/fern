@@ -155,7 +155,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": true
+            "additionalProperties": true,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],

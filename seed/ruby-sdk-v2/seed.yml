@@ -122,6 +122,12 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
 
 features:
   requestOptions: true

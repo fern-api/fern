@@ -187,7 +187,7 @@ client.inlined.send_(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id:) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 

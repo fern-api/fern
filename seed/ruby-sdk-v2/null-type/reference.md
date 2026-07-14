@@ -71,7 +71,7 @@ client.conversations.outbound_call(to_phone_number: "to_phone_number")
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">get</a>(id) -> Seed::Types::User</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">get</a>(id:) -> Seed::Types::User</code></summary>
 <dl>
 <dd>
 

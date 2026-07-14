@@ -1449,6 +1449,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -1646,6 +1647,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

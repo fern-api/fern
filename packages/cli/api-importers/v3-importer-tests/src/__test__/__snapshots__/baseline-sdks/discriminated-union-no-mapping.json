@@ -23,6 +23,7 @@
         "discriminant": "role",
         "extends": [],
         "baseProperties": [],
+        "inheritedBaseProperties": [],
         "types": [
           {
             "discriminantValue": "user",
@@ -557,6 +558,7 @@
             }
           }
         },
+        "inheritedBaseProperties": [],
         "types": {
           "user": {
             "typeId": "type_:UserMessage",

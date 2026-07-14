@@ -616,6 +616,12 @@ export class Generation {
                 multipartMethodNameForCollection: "AddFileParameterParts",
                 isReferenceType: true
             }),
+        /** Factory for the default HttpClient with automatic response decompression */
+        DefaultHttpClientFactory: () =>
+            this.csharp.classReference({
+                namespace: this.namespaces.core,
+                origin: this.model.staticExplicit("DefaultHttpClientFactory")
+            }),
         /** HTTP header management utilities */
         Headers: () =>
             this.csharp.classReference({
