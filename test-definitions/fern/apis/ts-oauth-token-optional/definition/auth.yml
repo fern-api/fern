@@ -21,7 +21,7 @@ service:
           properties:
             client_id: string
             client_secret: string
-            grant_type: literal<"client_credentials">
+            grant_type: optional<string>
       response: TokenResponse
       examples:
         - request:

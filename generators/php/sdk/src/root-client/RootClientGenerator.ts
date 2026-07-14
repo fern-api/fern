@@ -101,7 +101,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         // Add field for OAuth token provider if using client credentials OAuth
         const oauth = this.context.getOauth();
-        if (oauth != null && oauth.configuration.type === "clientCredentials") {
+        if (oauth != null && oauth.configuration.type === "clientCredentials" && this.shouldUseOAuthProvider()) {
             class_.addField(
                 php.field({
                     name: "$oauthTokenProvider",
@@ -118,7 +118,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         // Add field for inferred auth provider if using inferred auth
         const inferredAuth = this.context.getInferredAuth();
-        if (inferredAuth != null) {
+        if (inferredAuth != null && !this.shouldUseOAuthProvider()) {
             class_.addField(
                 php.field({
                     name: "$inferredAuthProvider",
@@ -483,8 +483,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 // OAuth and inferred auth provider setup - moved after environment setup
                 const oauth = this.context.getOauth();
                 const inferredAuth = this.context.getInferredAuth();
-                const hasOAuth = oauth != null && oauth.configuration.type === "clientCredentials";
-                const hasInferredAuth = inferredAuth != null;
+                const hasOAuth =
+                    oauth != null && oauth.configuration.type === "clientCredentials" && this.shouldUseOAuthProvider();
+                const hasInferredAuth = inferredAuth != null && !this.shouldUseOAuthProvider();
                 const oauthCredGuard = "$clientId !== null && $clientSecret !== null";
                 const inferredCredGuard =
                     inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
@@ -1212,6 +1213,32 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
      * exactly one scheme's creds), so we must not throw for missing creds and must
      * only wire up a scheme's token provider / header when its creds are present.
      */
+    /**
+     * Both OAuth and inferred auth attach their auth headers through a token
+     * provider, and only one provider can drive the root client's
+     * `getAuthHeaders` callback. When both schemes are present (e.g. `auth: any`
+     * with an OAuth and an inferred scheme), pick the provider-based scheme that
+     * appears first in `ir.auth.schemes`, which mirrors the declared `any` order.
+     */
+    private shouldUseOAuthProvider(): boolean {
+        const oauth = this.context.getOauth();
+        if (oauth == null || oauth.configuration.type !== "clientCredentials") {
+            return false;
+        }
+        if (this.context.getInferredAuth() == null) {
+            return true;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private isAnyAuthWithMultipleSchemes(): boolean {
         return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
     }

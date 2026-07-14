@@ -85,6 +85,31 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
 
+    /**
+     * Both OAuth and inferred auth attach their Authorization header through a
+     * token provider, and only one provider can drive the root client's auth
+     * header. When both schemes are present (e.g. `auth: any` with an OAuth and
+     * an inferred scheme), pick the provider-based scheme that appears first in
+     * `ir.auth.schemes`, which mirrors the declared `any` order.
+     */
+    private shouldUseOAuthProvider(): boolean {
+        if (this.oauth == null) {
+            return false;
+        }
+        if (this.inferred == null) {
+            return true;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private members = lazy({
         clientOptionsParameterName: () => "clientOptions",
         client: () => this.Types.RootClient.explicit("_client"),
@@ -613,7 +638,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    if (this.oauth != null) {
+                    if (this.oauth != null && this.shouldUseOAuthProvider()) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                         );
@@ -659,7 +684,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    if (this.inferred != null) {
+                    if (this.inferred != null && !this.shouldUseOAuthProvider()) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.inferred.tokenEndpoint.endpoint.serviceId
                         );
