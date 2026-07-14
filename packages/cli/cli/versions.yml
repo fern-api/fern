@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.72.0
+  changelogEntry:
+    - summary: |
+        Add a `disable-sri` option to remote `js` scripts in `docs.yml`. When set to
+        true, the script is rendered without a Subresource Integrity (SRI) `integrity`
+        attribute, which is useful for scripts whose contents change over time.
+      type: feat
+    - summary: |
+        Resolve the `auto-generate-idempotency-key` config from a generator invocation's resolved
+        `config` when no raw `generators.yml` block is present. This restores idempotency-key
+        auto-generation for synthetic invocations (e.g. the seed test harness) that populate `config`
+        directly without a `raw` block.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 5.71.0
   changelogEntry:
     - summary: |
