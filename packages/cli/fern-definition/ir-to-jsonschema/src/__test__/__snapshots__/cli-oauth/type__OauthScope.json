@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "read:pets",
+      "description": "Read pets"
+    }
+  ],
+  "definitions": {}
+}
