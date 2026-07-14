@@ -5,5 +5,11 @@ import type * as FernDocsConfig from "../../../index.js";
 export interface JsRemoteConfig {
     url: string;
     strategy?: FernDocsConfig.JsScriptStrategy;
+    /**
+     * When true, skip computing a Subresource Integrity (SRI) hash for this
+     * remote script. The script is rendered without an `integrity` attribute.
+     * Useful for scripts whose contents change (e.g. rolling CDN builds) that
+     * would otherwise fail integrity verification.
+     */
     disableSri?: boolean;
 }
