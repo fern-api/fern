@@ -147,12 +147,12 @@
                         "safeName": "userV2Profile"
                     },
                     "snakeCase": {
-                        "unsafeName": "user_v2profile",
-                        "safeName": "user_v2profile"
+                        "unsafeName": "user_v2_profile",
+                        "safeName": "user_v2_profile"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "USER_V2PROFILE",
-                        "safeName": "USER_V2PROFILE"
+                        "unsafeName": "USER_V2_PROFILE",
+                        "safeName": "USER_V2_PROFILE"
                     },
                     "pascalCase": {
                         "unsafeName": "UserV2Profile",

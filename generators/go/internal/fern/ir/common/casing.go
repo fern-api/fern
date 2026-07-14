@@ -331,7 +331,9 @@ func toPascalCase(s string) string {
 }
 
 // toSmartSnakeCase converts a string to snake_case with smart number handling.
-// In smartCasing mode, "v2" stays "v2" instead of "v_2".
+// In smartCasing mode, "v2" stays "v2" instead of "v_2", while a segment that
+// starts a new word after a digit run keeps its word boundary
+// ("ConversationsV2Configuration" => "conversations_v2_configuration").
 func toSmartSnakeCase(s string) string {
 	// Split on spaces first (to handle "test2This2 2v22" => "test2this2_2v22")
 	spaceParts := strings.Split(s, " ")
@@ -340,11 +342,19 @@ func toSmartSnakeCase(s string) string {
 		// Split on digits, then snake_case each non-digit segment
 		segments := splitByDigits(part)
 		var partResult strings.Builder
-		for _, seg := range segments {
+		for i, seg := range segments {
 			if len(seg) > 0 && seg[0] >= '0' && seg[0] <= '9' {
 				partResult.WriteString(seg)
 			} else {
-				partResult.WriteString(toBasicSnakeCase(seg))
+				cased := toBasicSnakeCase(seg)
+				previousIsDigits := i > 0 && len(segments[i-1]) > 0 &&
+					segments[i-1][0] >= '0' && segments[i-1][0] <= '9'
+				startsNewWord := cased != "" && previousIsDigits && len(seg) > 0 &&
+					!(seg[0] >= 'a' && seg[0] <= 'z')
+				if startsNewWord {
+					partResult.WriteString("_")
+				}
+				partResult.WriteString(cased)
 			}
 		}
 		snakeParts = append(snakeParts, partResult.String())
