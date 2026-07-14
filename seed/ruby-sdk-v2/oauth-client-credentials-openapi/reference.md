@@ -100,7 +100,7 @@ client.plants.list
 </dl>
 </details>
 
-<details><summary><code>client.plants.<a href="/lib/seed/plants/client.rb">get</a>(plant_id) -> Seed::Types::Plant</code></summary>
+<details><summary><code>client.plants.<a href="/lib/seed/plants/client.rb">get</a>(plant_id:) -> Seed::Types::Plant</code></summary>
 <dl>
 <dd>
 
