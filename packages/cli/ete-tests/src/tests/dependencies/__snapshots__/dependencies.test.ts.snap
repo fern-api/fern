@@ -766,6 +766,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -776,4 +777,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2291269`;
+exports[`dependencies > file dependencies 1`] = `2291311`;

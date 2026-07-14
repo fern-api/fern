@@ -62,7 +62,9 @@ Autoversioning (`src/autoversion/`, exported under the `@fern-api/generator-cli/
 - `VersionUtils.ts` — Language detection, magic-version constants, semver bump, `VersionBump` enum, chunk-size constants.
 - `AutoVersioningCache.ts` — Per-invocation deduplication cache for FAI analysis calls across parallel generators.
 
-Consumed by `@fern-api/local-workspace-runner`'s `LocalTaskHandler` and `packages/cli/cli`'s `sdk-diff` command. Will also be consumed by `AutoVersionStep` in the post-generation pipeline (FER-9980).
+Consumed by `@fern-api/local-workspace-runner`'s `LocalTaskHandler`, `packages/cli/cli`'s `sdk-diff` command, and `AutoVersionStep` in the post-generation pipeline.
+
+`AutoVersionStep` receives `previousGenerationSha` from replay's `PreparedReplay`, but that value is the **raw lockfile hint** (`current_generation`, read verbatim — replay does not reconcile it before returning). Per [ADR 0001](./docs/adr/0001-delegate-divergent-merge-recovery-to-replay.md) the recorded SHA is not a load-bearing invariant, so `AutoVersionStep` does **not** trust it: it re-anchors the diff base on the most recent reachable `[fern-generated]` commit (`git log --first-parent`) when the recorded SHA is unreachable, and always rewrites the magic placeholder even when no baseline is reachable. See [ADR 0002](./docs/adr/0002-autoversion-baseline-reanchoring.md).
 
 GitHub helpers (`src/pipeline/github/`):
 - `createReplayBranch.ts` — Synthetic divergent commit creation
@@ -129,6 +131,7 @@ Generators pick up new generator-cli versions **lazily** — the next time a gen
 - `skipCommit` means replay already committed — GithubStep must NOT `commitAllChanges()` again
 - Force push required when updating existing PR with replay commits (replay rewrites branch history)
 - Divergent-merge recovery (squash-merge of a regen PR, force-push past a generation, lost-then-found generations) is owned entirely by `@fern-api/replay`'s derived scan boundary — `replayPrepare` no longer runs a precondition gauntlet to detect or sync it. See [ADR 0001](./docs/adr/0001-delegate-divergent-merge-recovery-to-replay.md).
+- The `previousGenerationSha` on `PreparedReplay` is a hint (the raw lockfile `current_generation`), **not** a guaranteed-reachable commit. `pushSignedCommit` recreates every local commit via the GitHub API, so the `[fern-generated]` commit gets a new remote SHA and the recorded SHA can be unreachable in the next clone. Any consumer diffing against it (e.g. `AutoVersionStep`) must probe reachability and re-anchor from history rather than passing it straight to `git diff`. See [ADR 0002](./docs/adr/0002-autoversion-baseline-reanchoring.md).
 - The `[fern-generation-base]` tag is still written but no longer read by this version of generator-cli. It exists for backward compatibility with older deployed generator-cli versions whose bundled gauntlet still reads it; remove the write side once the catalog has rolled forward across all generators.
 - Pipeline continues on step failure — replay errors return null report to not fail generation. **Exception**: VerificationStep failure aborts the pipeline so GithubStep is skipped (broken SDK never gets a PR).
 - Generator name sanitization: `/` replaced with `--` for tag names and commit status context

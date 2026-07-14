@@ -146,7 +146,14 @@ export class AutoVersionStep extends BaseStep {
     }): Promise<AutoVersionStepResult> {
         const { prepared, service, language, mappedMagicVersion, previousGenerationSha } = params;
 
-        const rawDiff = this.gitDiff(previousGenerationSha, prepared.currentGenerationSha);
+        // The SHA recorded in replay.lock (previousGenerationSha) is a hint, not a
+        // load-bearing invariant: pushing signed commits recreates the [fern-generated]
+        // commit with a new remote SHA, so the recorded SHA can be unreachable in a later
+        // clone. Re-anchor on the most recent reachable [fern-generated] commit instead of
+        // letting `git diff` fail on a bad object (which would leave the magic placeholder
+        // in the shipped SDK).
+        const diffBase = this.resolveReachableGenerationBase(previousGenerationSha, prepared.currentGenerationSha);
+        const rawDiff = diffBase != null ? this.safeGitDiff(diffBase, prepared.currentGenerationSha) : "";
 
         const previousVersion = await this.resolvePreviousVersion({
             service,
@@ -687,6 +694,105 @@ export class AutoVersionStep extends BaseStep {
             stdio: "pipe",
             maxBuffer: 256 * 1024 * 1024
         });
+    }
+
+    /**
+     * Resolves a reachable base commit for the autoversion diff.
+     *
+     * `recordedSha` (the previous generation from replay.lock) is preferred when it exists
+     * in this clone. When it doesn't — e.g. the signed-commit push recreated the
+     * [fern-generated] commit under a new SHA, or the branch was squash-merged — we re-anchor
+     * on the most recent reachable [fern-generated] commit in history. Returns null when no
+     * generation baseline is reachable at all, in which case the caller resolves the previous
+     * version from metadata/git-tags and still rewrites the placeholder.
+     */
+    private resolveReachableGenerationBase(recordedSha: string, currentGenerationSha: string): string | null {
+        if (this.commitExists(recordedSha)) {
+            return recordedSha;
+        }
+        this.logger.warn(
+            `AutoVersionStep: recorded previous generation ${recordedSha.slice(0, 7)} is unreachable in this ` +
+                `clone; deriving the baseline from history.`
+        );
+        const derived = this.findPreviousGenerationFromHistory(currentGenerationSha);
+        if (derived != null) {
+            this.logger.info(`AutoVersionStep: re-anchored autoversion baseline on ${derived.slice(0, 7)}.`);
+            return derived;
+        }
+        this.logger.warn(
+            "AutoVersionStep: no reachable [fern-generated] baseline found; falling back to metadata/git-tags."
+        );
+        return null;
+    }
+
+    private commitExists(sha: string): boolean {
+        if (!/^[0-9a-f]{7,40}$/.test(sha)) {
+            return false;
+        }
+        try {
+            execFileSync("git", ["cat-file", "-e", `${sha}^{commit}`], {
+                cwd: this.outputDir,
+                stdio: "pipe"
+            });
+            return true;
+        } catch {
+            // Expected: `git cat-file -e` exits non-zero for a missing/unreachable object.
+            // This is a probe, so a non-zero exit is the "not reachable" signal, not an error.
+            return false;
+        }
+    }
+
+    /**
+     * Walks first-parent history from the current generation commit and returns the most
+     * recent prior [fern-generated] commit — the reachable equivalent of replay.lock's
+     * recorded baseline. Mirrors @fern-api/replay's `findPreviousGenerationFromHistory`.
+     */
+    private findPreviousGenerationFromHistory(currentGenerationSha: string): string | null {
+        const start = this.commitExists(currentGenerationSha) ? currentGenerationSha : "HEAD";
+        let log: string;
+        try {
+            log = execFileSync("git", ["log", "--first-parent", "--format=%H%x00%s", start], {
+                cwd: this.outputDir,
+                encoding: "utf-8",
+                stdio: "pipe",
+                maxBuffer: 64 * 1024 * 1024
+            });
+        } catch (error) {
+            this.logger.debug(`AutoVersionStep: git log history walk failed (${String(error)}); no baseline derived.`);
+            return null;
+        }
+        for (const line of log.split("\n")) {
+            if (line.trim().length === 0) {
+                continue;
+            }
+            const [sha, subject = ""] = line.split("\0");
+            if (sha == null || sha === currentGenerationSha) {
+                continue;
+            }
+            if (subject.startsWith("[fern-generated]")) {
+                return sha;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * `gitDiff` that degrades to an empty diff instead of throwing. Both endpoints are
+     * expected to be reachable (the base is resolved via resolveReachableGenerationBase and
+     * `to` is this run's freshly-created HEAD), but we never want a `git diff` failure to
+     * abort autoversion and leave the magic placeholder in the shipped SDK — the empty diff
+     * routes version resolution to baseVersion/metadata/git-tags, which still rewrites it.
+     */
+    private safeGitDiff(from: string, to: string): string {
+        try {
+            return this.gitDiff(from, to);
+        } catch (error) {
+            this.logger.warn(
+                `AutoVersionStep: git diff ${from.slice(0, 7)}..${to.slice(0, 7)} failed ` +
+                    `(${error instanceof Error ? error.message : String(error)}); proceeding with an empty diff.`
+            );
+            return "";
+        }
     }
 
     private gitDiff(from: string, to: string): string {

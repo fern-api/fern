@@ -98,6 +98,11 @@ export const CsharpConfigSchema = z.object({
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
+    // When true, emits the platform observability headers `X-Fern-Runtime`,
+    // `X-Fern-Runtime-Version`, and `X-Fern-Platform` on generated SDK requests.
+    // Off by default so existing generated output is unchanged. Still subject to
+    // `omit-fern-headers`.
+    "include-platform-headers": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
     // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
     // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is

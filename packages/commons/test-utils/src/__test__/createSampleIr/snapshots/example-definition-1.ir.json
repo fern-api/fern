@@ -675,6 +675,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": false,
     "platformHeaders": {
       "language": "X-Fern-Language",

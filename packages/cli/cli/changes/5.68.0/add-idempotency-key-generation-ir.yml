@@ -1,0 +1,7 @@
+- summary: |
+    Add an `auto-generate-idempotency-key` generator config key. When enabled, the
+    CLI records idempotency-key auto-generation in the IR (`SdkConfig.idempotencyKeyGeneration`)
+    so every generator reads a single, canonical setting from the IR instead of each
+    defining its own config key. Accepts `true` or `{ header-name: "Idempotency-Key" }`
+    and is stripped from the config forwarded to generators.
+  type: feat

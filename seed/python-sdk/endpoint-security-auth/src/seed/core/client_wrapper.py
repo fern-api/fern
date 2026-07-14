@@ -12,10 +12,10 @@ class BaseClientWrapper:
         self,
         *,
         api_key: typing.Optional[str] = None,
-        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -25,10 +25,10 @@ class BaseClientWrapper:
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.api_key = api_key
-        self._auth_headers = auth_headers
-        self._token = token
         self._username = username
         self._password = password
+        self._auth_headers = auth_headers
+        self._token = token
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
@@ -62,12 +62,6 @@ class BaseClientWrapper:
             headers.update(self._auth_headers())
         return headers
 
-    def _get_token(self) -> typing.Optional[str]:
-        if isinstance(self._token, str) or self._token is None:
-            return self._token
-        else:
-            return self._token()
-
     def _get_username(self) -> typing.Optional[str]:
         if isinstance(self._username, str) or self._username is None:
             return self._username
@@ -79,6 +73,12 @@ class BaseClientWrapper:
             return self._password
         else:
             return self._password()
+
+    def _get_token(self) -> typing.Optional[str]:
+        if isinstance(self._token, str) or self._token is None:
+            return self._token
+        else:
+            return self._token()
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
@@ -104,10 +104,10 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Optional[str] = None,
-        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -119,10 +119,10 @@ class SyncClientWrapper(BaseClientWrapper):
     ):
         super().__init__(
             api_key=api_key,
-            auth_headers=auth_headers,
-            token=token,
             username=username,
             password=password,
+            auth_headers=auth_headers,
+            token=token,
             headers=headers,
             base_url=base_url,
             timeout=timeout,
@@ -146,10 +146,10 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Optional[str] = None,
-        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -163,10 +163,10 @@ class AsyncClientWrapper(BaseClientWrapper):
     ):
         super().__init__(
             api_key=api_key,
-            auth_headers=auth_headers,
-            token=token,
             username=username,
             password=password,
+            auth_headers=auth_headers,
+            token=token,
             headers=headers,
             base_url=base_url,
             timeout=timeout,
