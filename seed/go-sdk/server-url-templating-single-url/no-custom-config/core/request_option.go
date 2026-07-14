@@ -18,7 +18,6 @@ type RequestOption interface {
 // to be used directly; use the option package instead.
 type RequestOptions struct {
 	BaseURL                    string
-	Environment                interface{}
 	HTTPClient                 HTTPClient
 	HTTPHeader                 http.Header
 	BodyProperties             map[string]interface{}
@@ -28,6 +27,8 @@ type RequestOptions struct {
 	MaxStreamReconnectAttempts uint
 	DisableStreamReconnection  bool
 	DisableRetries             bool
+	Region                     string
+	ServerURLEnvironment       string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -53,9 +54,9 @@ func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
-	headers.Set("X-Fern-SDK-Name", "github.com/server-url-templating/fern")
+	headers.Set("X-Fern-SDK-Name", "github.com/server-url-templating-single-url/fern")
 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
-	headers.Set("User-Agent", "github.com/server-url-templating/fern/0.0.1")
+	headers.Set("User-Agent", "github.com/server-url-templating-single-url/fern/0.0.1")
 	return headers
 }
 
@@ -145,11 +146,20 @@ func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
 	opts.DisableRetries = true
 }
 
-// EnvironmentOption implements the RequestOption interface.
-type EnvironmentOption struct {
-	Environment interface{}
+// RegionOption implements the RequestOption interface.
+type RegionOption struct {
+	Region string
 }
 
-func (e *EnvironmentOption) applyRequestOptions(opts *RequestOptions) {
-	opts.Environment = e.Environment
+func (r *RegionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Region = r.Region
+}
+
+// ServerURLEnvironmentOption implements the RequestOption interface.
+type ServerURLEnvironmentOption struct {
+	ServerURLEnvironment string
+}
+
+func (s *ServerURLEnvironmentOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ServerURLEnvironment = s.ServerURLEnvironment
 }

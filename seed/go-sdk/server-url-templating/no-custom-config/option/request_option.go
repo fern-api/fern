@@ -103,3 +103,19 @@ func WithEnvironment(environment fern.Environment) *core.EnvironmentOption {
 		Environment: environment,
 	}
 }
+
+// WithRegion sets the "region" server URL variable, which is
+// substituted into the base URL template(s) at construction time.
+func WithRegion(region string) *core.RegionOption {
+	return &core.RegionOption{
+		Region: region,
+	}
+}
+
+// WithServerURLEnvironment sets the "environment" server URL variable, which is
+// substituted into the base URL template(s) at construction time.
+func WithServerURLEnvironment(serverURLEnvironment string) *core.ServerURLEnvironmentOption {
+	return &core.ServerURLEnvironmentOption{
+		ServerURLEnvironment: serverURLEnvironment,
+	}
+}

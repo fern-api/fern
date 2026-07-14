@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	fmt "fmt"
 
-	fern "github.com/server-url-templating/fern"
-	core "github.com/server-url-templating/fern/core"
-	internal "github.com/server-url-templating/fern/internal"
-	option "github.com/server-url-templating/fern/option"
+	fern "github.com/server-url-templating-single-url/fern"
+	core "github.com/server-url-templating-single-url/fern/core"
+	internal "github.com/server-url-templating-single-url/fern/internal"
+	option "github.com/server-url-templating-single-url/fern/option"
 )
 
 type Client struct {
@@ -21,6 +22,21 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.BaseURL == "" && (options.Region != "" || options.ServerURLEnvironment != "") {
+		region := options.Region
+		if region == "" {
+			region = "us-east-1"
+		}
+		serverURLEnvironment := options.ServerURLEnvironment
+		if serverURLEnvironment == "" {
+			serverURLEnvironment = "prod"
+		}
+		options.BaseURL = fmt.Sprintf(
+			"https://api.%s.%s.example.com/v1",
+			region,
+			serverURLEnvironment,
+		)
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -55,22 +71,6 @@ func (c *Client) GetUser(
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.GetUser(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) GetToken(
-	ctx context.Context,
-	request *fern.TokenRequest,
-	opts ...option.RequestOption,
-) (*fern.TokenResponse, error) {
-	response, err := c.WithRawResponse.GetToken(
 		ctx,
 		request,
 		opts...,
