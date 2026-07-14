@@ -203,7 +203,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // scheme's header only when its cred is present, and must only wire up a
         // token provider when that scheme's creds were actually supplied.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
-        const serverVariableOptions = getServerVariableOptions(this.context.ir.environments, this.case);
+        const serverVariableOptions = getServerVariableOptions(
+            this.context.ir.environments,
+            this.case,
+            constructorParameters.all.map((parameter) => parameter.name)
+        );
 
         const parameters: php.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {

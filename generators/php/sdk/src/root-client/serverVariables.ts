@@ -3,9 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 /**
- * Client option names already present on the root client. A server URL variable
- * whose name collides with one of these is exposed under a `serverUrl`-prefixed
- * name so it does not shadow an existing client option.
+ * Client option names already present on the root client.
  */
 const RESERVED_OPTION_NAMES = new Set<string>([
     "environment",
@@ -26,17 +24,27 @@ export interface ServerVariableOption {
 /**
  * Returns the server URL variables (e.g. region) declared on the API's environments,
  * paired with the client-option name each is exposed under. Variables are de-duplicated
- * by id and de-collided against existing client option names.
+ * by id and de-collided against existing and generated client option names.
  */
 export function getServerVariableOptions(
     environmentsConfig: FernIr.EnvironmentsConfig | undefined,
-    caseConverter: CaseConverter
+    caseConverter: CaseConverter,
+    existingOptionNames: Iterable<string> = []
 ): ServerVariableOption[] {
+    const usedOptionNames = new Set([...RESERVED_OPTION_NAMES, ...existingOptionNames]);
     return collectServerVariables(environmentsConfig).map((variable) => {
         const camel = caseConverter.camelSafe(getOriginalName(variable.name));
-        const optionName = RESERVED_OPTION_NAMES.has(camel)
-            ? caseConverter.camelSafe(`server url ${getOriginalName(variable.name)}`)
-            : camel;
+        let optionName = camel;
+        if (usedOptionNames.has(optionName)) {
+            optionName = caseConverter.camelSafe(`server url ${getOriginalName(variable.name)}`);
+        }
+        const baseOptionName = optionName;
+        let suffix = 2;
+        while (usedOptionNames.has(optionName)) {
+            optionName = `${baseOptionName}${suffix}`;
+            suffix++;
+        }
+        usedOptionNames.add(optionName);
         return { variable, optionName };
     });
 }

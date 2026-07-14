@@ -67,6 +67,32 @@ describe("getServerVariableOptions", () => {
         expect(options.map((option) => option.optionName)).toEqual(["region", "serverUrlEnvironment"]);
     });
 
+    it("de-collides server variables from existing options and each other", () => {
+        const config = multipleBaseUrlsConfig();
+        const environments = config.environments;
+        if (environments.type !== "multipleBaseUrls") {
+            throw new Error("Expected multiple base URLs");
+        }
+        const environment = environments.environments[0];
+        if (environment == null) {
+            throw new Error("Expected an environment");
+        }
+        environment.urlVariables = {
+            base: [
+                REGION,
+                {
+                    id: "server-region",
+                    name: "region",
+                    default: "us-east-1",
+                    values: []
+                }
+            ]
+        };
+
+        const options = getServerVariableOptions(config, caseConverter, ["region", "serverUrlRegion"]);
+        expect(options.map((option) => option.optionName)).toEqual(["serverUrlRegion2", "serverUrlRegion3"]);
+    });
+
     it("reads variables from single base URL environments", () => {
         const config: FernIr.EnvironmentsConfig = {
             defaultEnvironment: undefined,
