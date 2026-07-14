@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Allow OAuth token endpoint expiration fields to use the `long` type.
+  type: fix
