@@ -79,6 +79,9 @@ fixtures:
         packagePath: src/test-packagePath
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: include-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
     - outputFolder: with-audiences
       customConfig: null
       audiences:
@@ -145,6 +148,12 @@ fixtures:
     - outputFolder: flatten-request-parameters
       customConfig:
         flattenRequestParameters: true
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
@@ -308,6 +317,9 @@ fixtures:
         neverThrowErrors: true
   oauth-client-credentials-reference:
     - outputFolder: .
+      customConfig: null
+  ts-oauth-token-optional:
+    - outputFolder: no-custom-config
       customConfig: null
   mixed-case:
     - outputFolder: no-custom-config
@@ -532,6 +544,12 @@ fixtures:
       customConfig:
         generateReactQueryHooks: true
   server-sent-events-openapi:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
     - outputFolder: no-custom-config
       customConfig: null
 

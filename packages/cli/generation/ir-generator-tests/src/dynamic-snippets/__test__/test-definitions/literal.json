@@ -125,7 +125,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inlined:SomeAliasedLiteral": {
             "type": "alias",
@@ -300,7 +301,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inlined:ANestedLiteral": {
             "type": "object",
@@ -404,7 +406,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inlined:DiscriminatedLiteral": {
             "type": "discriminatedUnion",
@@ -494,6 +497,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "customName": {
                     "type": "singleProperty",
@@ -1167,7 +1171,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_reference:ContainerObject": {
             "type": "object",
@@ -1271,7 +1276,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_reference:NestedObjectWithLiterals": {
             "type": "object",
@@ -1438,7 +1444,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_reference:SomeLiteral": {
             "type": "alias",

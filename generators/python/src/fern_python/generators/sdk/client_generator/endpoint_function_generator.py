@@ -1437,6 +1437,12 @@ class EndpointFunctionGenerator:
     ) -> Optional[AST.Expression]:
         headers: List[Tuple[str, AST.Expression]] = []
 
+        idempotency_key_generation = self._context.ir.sdk_config.idempotency_key_generation
+        auto_generate_idempotency_key = (
+            idempotency_key_generation is not None and endpoint.method in idempotency_key_generation.methods
+        )
+        wrapped_declared_idempotency_key = False
+
         ir_headers = service.headers + endpoint.headers
         if endpoint.idempotent:
             ir_headers += idempotency_headers
@@ -1463,12 +1469,30 @@ class EndpointFunctionGenerator:
                     )
                 )
             else:
+                wire_value = get_wire_value(header.name)
                 param_name = get_parameter_name(get_name_from_wire_value(header.name))
                 if self._is_enum_type_with_value(header.value_type, allow_optional=True):
-                    expr = AST.Expression(f"{param_name}.value if {param_name} is not None else None")
+                    provided_value = f"{param_name}.value"
                 else:
-                    expr = AST.Expression(f"str({param_name}) if {param_name} is not None else None")
-                headers.append((get_wire_value(header.name), expr))
+                    provided_value = f"str({param_name})"
+                if (
+                    auto_generate_idempotency_key
+                    and idempotency_key_generation is not None
+                    and wire_value.lower() == idempotency_key_generation.header_name.lower()
+                ):
+                    # Caller-supplied value wins; the generated UUID is the fallback.
+                    expr = self._get_idempotency_key_header_value(provided_value=provided_value, param_name=param_name)
+                    wrapped_declared_idempotency_key = True
+                else:
+                    expr = AST.Expression(f"{provided_value} if {param_name} is not None else None")
+                headers.append((wire_value, expr))
+
+        if (
+            auto_generate_idempotency_key
+            and idempotency_key_generation is not None
+            and not wrapped_declared_idempotency_key
+        ):
+            headers.append((idempotency_key_generation.header_name, self._generate_idempotency_key_expression()))
 
         if len(headers) == 0:
             return None
@@ -1489,6 +1513,25 @@ class EndpointFunctionGenerator:
             return AST.Expression(request_headers_var)
         else:
             return AST.Expression(AST.CodeWriter(write_headers_dict))
+
+    def _generate_idempotency_key_expression(self) -> AST.Expression:
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
+
+        def write(writer: NodeWriter) -> None:
+            writer.write_reference(generate_reference)
+            writer.write("()")
+
+        return AST.Expression(AST.CodeWriter(write))
+
+    def _get_idempotency_key_header_value(self, *, provided_value: str, param_name: str) -> AST.Expression:
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
+
+        def write(writer: NodeWriter) -> None:
+            writer.write(f"{provided_value} if {param_name} is not None else ")
+            writer.write_reference(generate_reference)
+            writer.write("()")
+
+        return AST.Expression(AST.CodeWriter(write))
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)

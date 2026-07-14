@@ -113,6 +113,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "MediaTypes");
     }
 
+    public ClassName getIdempotencyUtilsClassName() {
+        return ClassName.get(getCorePackage(), "IdempotencyUtils");
+    }
+
     public ClassName getOkhttp3MediaTypeClassName() {
         return ClassName.get("okhttp3", "MediaType");
     }

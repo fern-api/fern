@@ -145,13 +145,18 @@ func (r *Retrier) run(
 
 		time.Sleep(delay)
 
+		body, err := decompressedResponseBody(response)
+		if err != nil {
+			return nil, err
+		}
+
 		return r.run(
 			fn,
 			request,
 			errorDecoder,
 			maxRetryAttempts,
 			retryAttempt+1,
-			decodeError(response, response.Body, errorDecoder),
+			decodeError(response, body, errorDecoder),
 		)
 	}
 

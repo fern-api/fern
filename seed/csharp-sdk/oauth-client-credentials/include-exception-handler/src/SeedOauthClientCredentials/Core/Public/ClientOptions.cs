@@ -35,7 +35,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = new HttpClient();
+    } = DefaultHttpClientFactory.Create();
 
     /// <summary>
     /// Additional headers to be sent with HTTP requests.

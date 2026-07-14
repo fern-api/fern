@@ -1,8 +1,9 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { ClonedRepository, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
-import { access, writeFile } from "fs/promises";
+import { access, readFile, writeFile } from "fs/promises";
 import { join } from "path";
+import { changelogContainsVersion, prependChangelogBlock } from "../../autoversion/index";
 import { createReplayBranch } from "../github/createReplayBranch";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
@@ -484,32 +485,45 @@ export class GithubStep extends BaseStep {
     }
 
     /**
-     * Guarantees `changelog.md` is present in the output directory whenever a changelog entry
-     * exists for this run, so the file lands in the committed tree that GithubStep pushes and the
+     * Guarantees `changelog.md` records this run whenever there is a changelog entry or a
+     * resolved version, so the file lands in the committed tree that GithubStep pushes and the
      * "See full changelog" link resolves. AutoVersionStep normally writes this file via
-     * `prependChangelogEntry`; this is a safety net for paths where that write never reached the
-     * directory GithubStep commits (e.g. non-replay self-hosted generation), which previously left
-     * the link pointing at a non-existent blob (404).
+     * `prependChangelogEntry`; this covers the paths where that write never reached the
+     * directory GithubStep commits (e.g. non-replay self-hosted generation) and explicitly
+     * versioned runs (`--version X.Y.Z`), which record a version-only entry with an empty
+     * description. Existing entries are always preserved — the new block is prepended.
      *
-     * Returns `true` when it created the file, `false` when the file already existed (or there is
-     * no changelog entry to write).
+     * Returns `true` when it created or modified the file, `false` when the version's entry was
+     * already recorded (e.g. by AutoVersionStep) or there is nothing to write.
      */
     private async ensureChangelogFile(resolved: ResolvedPrFields): Promise<boolean> {
-        const entry = resolved.changelogEntry?.trim();
-        if (entry == null || entry.length === 0) {
+        const entry = resolved.changelogEntry?.trim() ?? "";
+        const version = resolved.newVersion ?? resolved.previousVersion;
+        // A version-only entry (empty description) is only recorded for runs that produced a
+        // new version (e.g. an explicit `--version X.Y.Z`).
+        if (entry.length === 0 && resolved.newVersion == null) {
             return false;
         }
         const changelogPath = join(this.outputDir, "changelog.md");
+        let existing: string | undefined;
         try {
-            await access(changelogPath);
-            // Already written (e.g. by AutoVersionStep) — don't duplicate the entry.
-            return false;
+            existing = await readFile(changelogPath, "utf-8");
         } catch {
-            const version = resolved.newVersion ?? resolved.previousVersion;
-            await writeFile(changelogPath, buildChangelogFileContents(entry, version), "utf-8");
-            this.logger.debug(`Wrote changelog.md${version != null ? ` for ${version}` : ""}.`);
-            return true;
+            existing = undefined;
         }
+        if (existing != null) {
+            if (version == null || changelogContainsVersion(existing, version)) {
+                // Already written (e.g. by AutoVersionStep) — don't duplicate the entry.
+                return false;
+            }
+        }
+        await writeFile(
+            changelogPath,
+            prependChangelogBlock({ existingContent: existing ?? "", version, entry }),
+            "utf-8"
+        );
+        this.logger.debug(`Wrote changelog.md${version != null ? ` for ${version}` : ""}.`);
+        return true;
     }
 
     private deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {

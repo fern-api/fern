@@ -602,7 +602,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [
+        const files = [
             AsIsFiles.BaseApiRequest,
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
@@ -617,6 +617,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             ...this.getCoreStreamAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
         ];
+        // Only ship the idempotency key helper when the IR enables idempotency-key generation.
+        if (this.ir.sdkConfig.idempotencyKeyGeneration != null) {
+            files.push(AsIsFiles.IdempotencyKey);
+        }
+        return files;
     }
 
     private getCoreStreamAsIsFiles(): string[] {

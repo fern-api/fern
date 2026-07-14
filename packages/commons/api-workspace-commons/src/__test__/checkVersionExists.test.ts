@@ -985,6 +985,17 @@ describe("getIdempotencyKeyGenerationFromGeneratorConfig", () => {
         });
     });
 
+    it("falls back to the resolved config for synthetic invocations without a raw block", () => {
+        const invocation = {
+            config: { "auto-generate-idempotency-key": true }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getIdempotencyKeyGenerationFromGeneratorConfig(invocation)).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST", "PUT"]
+        });
+    });
+
     it("returns undefined when neither stamped nor raw config is present", () => {
         const invocation = {
             raw: { config: {} }

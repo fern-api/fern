@@ -3247,6 +3247,100 @@ describe("addGoMajorVersionSuffix", () => {
             await fs.rm(tempDir, { recursive: true, force: true });
         }
     });
+
+    // The generated Go SDK embeds its own module path as the X-Fern-SDK-Name header
+    // value — a plain (non-import) string literal. Under --version AUTO the SDK is
+    // generated with a major-zero placeholder, so this literal has no /vN suffix and
+    // must be retrofitted alongside imports; otherwise the header ships without /v4.
+    it("adds suffix to the X-Fern-SDK-Name header string literal", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/anduril/lattice-sdk-go\n\ngo 1.21\n");
+            const requestOption =
+                "package core\n\n" +
+                "func (r *RequestOptions) cloneHeader() http.Header {\n" +
+                "\theaders := r.HTTPHeader.Clone()\n" +
+                '\theaders.Set("X-Fern-Language", "Go")\n' +
+                '\theaders.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go")\n' +
+                '\theaders.Set("X-Fern-SDK-Version", "v4.19.0")\n' +
+                "\treturn headers\n" +
+                "}\n";
+            await fs.mkdir(path.join(tempDir, "core"), { recursive: true });
+            await fs.writeFile(path.join(tempDir, "core", "request_option.go"), requestOption);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v4.19.0");
+
+            const goFile = await fs.readFile(path.join(tempDir, "core", "request_option.go"), "utf-8");
+            expect(goFile).toContain('headers.Set("X-Fern-SDK-Name", "github.com/anduril/lattice-sdk-go/v4")');
+            // The SDK version header keeps its own v-prefix and is not touched.
+            expect(goFile).toContain('headers.Set("X-Fern-SDK-Version", "v4.19.0")');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // The User-Agent value is "<modulePath>/<version>". The version segment already
+    // carries the module version, so the module-path portion must NOT gain a /vN
+    // segment on this non-import line (that would produce ".../v4/v4.19.0").
+    it("does not add suffix to the composite User-Agent value", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/anduril/lattice-sdk-go\n\ngo 1.21\n");
+            const requestOption =
+                "package core\n\n" +
+                "func (r *RequestOptions) cloneHeader() http.Header {\n" +
+                "\theaders := r.HTTPHeader.Clone()\n" +
+                '\theaders.Set("User-Agent", "github.com/anduril/lattice-sdk-go/v4.19.0")\n' +
+                "\treturn headers\n" +
+                "}\n";
+            await fs.writeFile(path.join(tempDir, "request_option.go"), requestOption);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v4.19.0");
+
+            const goFile = await fs.readFile(path.join(tempDir, "request_option.go"), "utf-8");
+            expect(goFile).toContain('headers.Set("User-Agent", "github.com/anduril/lattice-sdk-go/v4.19.0")');
+            expect(goFile).not.toContain("v4/v4.19.0");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // The README shows `go get <module>` and quoted import samples. Under
+    // --version AUTO these are generated without /vN and must be retrofitted so
+    // copy-pasted snippets compile. Badge/web URLs must remain untouched.
+    it("adds suffix to README install command and import samples but not web URLs", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "go-suffix-"));
+        try {
+            await fs.writeFile(path.join(tempDir, "go.mod"), "module github.com/anduril/lattice-sdk-go\n\ngo 1.21\n");
+            const readme =
+                "# lattice-sdk-go\n\n" +
+                "[![go shield](https://img.shields.io/badge/go-docs-blue)]" +
+                "(https://pkg.go.dev/github.com/anduril/lattice-sdk-go)\n\n" +
+                "## Installation\n\n" +
+                "```sh\n" +
+                "go get github.com/anduril/lattice-sdk-go\n" +
+                "```\n\n" +
+                "## Usage\n\n" +
+                "```go\n" +
+                "import (\n" +
+                '\tlattice "github.com/anduril/lattice-sdk-go"\n' +
+                '\tlatticeclient "github.com/anduril/lattice-sdk-go/client"\n' +
+                ")\n" +
+                "```\n";
+            await fs.writeFile(path.join(tempDir, "README.md"), readme);
+
+            await new AutoVersioningService({ logger: mockLogger }).addGoMajorVersionSuffix(tempDir, "v4.19.0");
+
+            const updated = await fs.readFile(path.join(tempDir, "README.md"), "utf-8");
+            expect(updated).toContain("go get github.com/anduril/lattice-sdk-go/v4\n");
+            expect(updated).toContain('lattice "github.com/anduril/lattice-sdk-go/v4"');
+            expect(updated).toContain('latticeclient "github.com/anduril/lattice-sdk-go/v4/client"');
+            // The pkg.go.dev badge URL is a web link and must not be rewritten.
+            expect(updated).toContain("(https://pkg.go.dev/github.com/anduril/lattice-sdk-go)");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
 });
 
 describe("cleanDiffForAI - Go module path suffix changes", () => {

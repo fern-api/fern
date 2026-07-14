@@ -9,6 +9,7 @@ import {
     AutoVersioningService,
     AutoVersionResult,
     CachedAnalysis,
+    changelogContainsVersion,
     countFilesInDiff,
     formatSizeKB,
     isAutoVersion,
@@ -17,13 +18,14 @@ import {
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
     mapMagicVersionForLanguage,
-    maxVersionBump
+    maxVersionBump,
+    prependChangelogBlock
 } from "@fern-api/generator-cli/autoversion";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import decompress from "decompress";
-import { cp, readdir, readFile, rm, stat } from "fs/promises";
+import { cp, readdir, readFile, rm, stat, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -112,6 +114,7 @@ export class LocalTaskHandler {
         // Read prior changelog BEFORE copy operations overwrite the output directory
         const priorChangelog =
             this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
+        const priorChangelogFile = await this.readChangelogFile();
 
         if (isFernIgnorePresent) {
             const absolutePathToFernignore = AbsoluteFilePath.of(
@@ -132,6 +135,19 @@ export class LocalTaskHandler {
             await this.copyGeneratedFilesNoFernIgnorePreservingGit();
         } else {
             await this.copyGeneratedFilesNoFernIgnoreDeleteAll();
+        }
+
+        // Generators don't emit changelog.md, so the copy operations above delete it.
+        // Restore it so changelog entries are never lost across regenerations.
+        await this.restoreChangelogFile(priorChangelogFile);
+
+        // An explicitly pinned version (e.g. `--version 0.1.0`) skips AI changelog generation,
+        // so record a version-only entry (empty description) in the changelog instead.
+        if (this.version != null && !isAutoVersion(this.version)) {
+            await this.prependExplicitVersionChangelogEntry({
+                version: this.version,
+                createIfMissing: isExistingGitRepo
+            });
         }
 
         if (
@@ -1045,6 +1061,73 @@ export class LocalTaskHandler {
             this.context.logger.debug(`Failed to read prior changelog: ${error}`);
             return "";
         }
+    }
+
+    /**
+     * Reads the full contents of the changelog file (case-insensitive `changelog.md`)
+     * in the output directory. Returns undefined when no changelog file exists.
+     */
+    private async readChangelogFile(): Promise<{ filename: string; content: string } | undefined> {
+        try {
+            const files = await readdir(this.absolutePathToLocalOutput);
+            const filename = files.find((f) => f.toLowerCase() === "changelog.md");
+            if (filename == null) {
+                return undefined;
+            }
+            const content = await readFile(
+                join(this.absolutePathToLocalOutput, RelativeFilePath.of(filename)),
+                "utf-8"
+            );
+            return { filename, content };
+        } catch (error) {
+            this.context.logger.debug(`Failed to read changelog file: ${error}`);
+            return undefined;
+        }
+    }
+
+    /**
+     * Restores the changelog file captured before the copy operations if those
+     * operations removed it (generators don't emit changelog.md, so a plain copy
+     * would silently drop all prior entries).
+     */
+    private async restoreChangelogFile(prior: { filename: string; content: string } | undefined): Promise<void> {
+        if (prior == null) {
+            return;
+        }
+        const current = await this.readChangelogFile();
+        if (current != null) {
+            return;
+        }
+        await writeFile(join(this.absolutePathToLocalOutput, RelativeFilePath.of(prior.filename)), prior.content);
+        this.context.logger.debug(`Restored ${prior.filename} removed during generation.`);
+    }
+
+    /**
+     * Prepends a version-only changelog entry (version header, empty description) for an
+     * explicitly pinned version. Skips when the version is already recorded. When no
+     * changelog file exists, one is created only if `createIfMissing` is set (SDK repos) —
+     * plain local filesystem outputs are left untouched.
+     */
+    private async prependExplicitVersionChangelogEntry({
+        version,
+        createIfMissing
+    }: {
+        version: string;
+        createIfMissing: boolean;
+    }): Promise<void> {
+        const existing = await this.readChangelogFile();
+        if (existing == null && !createIfMissing) {
+            return;
+        }
+        if (existing != null && changelogContainsVersion(existing.content, version)) {
+            return;
+        }
+        const filename = existing?.filename ?? "changelog.md";
+        await writeFile(
+            join(this.absolutePathToLocalOutput, RelativeFilePath.of(filename)),
+            prependChangelogBlock({ existingContent: existing?.content ?? "", version, entry: "" })
+        );
+        this.context.logger.debug(`Recorded version ${version} in ${filename}.`);
     }
 
     /**

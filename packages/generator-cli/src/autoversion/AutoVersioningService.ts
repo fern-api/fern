@@ -1028,10 +1028,14 @@ export class AutoVersioningService {
         // Update go.mod module line
         await this.addSuffixToGoMod(goModPath, modulePath, suffix);
 
-        // Update all .go files: add suffix to import paths
+        // Update all .go files: add suffix to import paths and the module path
+        // embedded as a string literal (e.g. the X-Fern-SDK-Name header value).
         await this.addSuffixToGoFiles(workingDirectory, modulePath, suffix);
 
-        this.logger.info(`Added ${suffix} to Go module path ${modulePath} and all import paths`);
+        // Update Markdown files (e.g. README.md): install commands and import samples.
+        await this.addSuffixToMarkdownFiles(workingDirectory, modulePath, suffix);
+
+        this.logger.info(`Added ${suffix} to Go module path ${modulePath} across imports, headers, and docs`);
     }
 
     /**
@@ -1125,7 +1129,8 @@ export class AutoVersioningService {
     }
 
     /**
-     * Adds a version suffix to import paths in all .go files in the repository.
+     * Adds a version suffix to import paths and embedded module-path string
+     * literals (e.g. the X-Fern-SDK-Name header value) in all .go files.
      */
     private async addSuffixToGoFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
         const goFiles = await this.walkDirectory(repoRoot, (filePath) => extname(filePath) === ".go");
@@ -1134,8 +1139,8 @@ export class AutoVersioningService {
     }
 
     /**
-     * Adds a version suffix to import paths in a single .go file.
-     * Replaces occurrences of the module path with modulePath + suffix in import statements.
+     * Adds a version suffix to import paths and embedded module-path string
+     * literals in a single .go file.
      */
     private async addSuffixToGoFile(filePath: string, modulePath: string, suffix: string): Promise<void> {
         const content = await readFile(filePath, "utf-8");
@@ -1157,25 +1162,33 @@ export class AutoVersioningService {
                 inImportBlock = false;
             }
 
-            // Only process import lines
             const isImportLine =
                 inImportBlock ||
                 trimmed.startsWith('import "') ||
                 trimmed.startsWith('import\t"') ||
                 /^import\s+\w+\s+"/.test(trimmed);
-            if (!isImportLine) {
-                continue;
-            }
 
             if (!line.includes(modulePath)) {
                 continue;
             }
 
-            // Use precise replacement to avoid corrupting paths that share a prefix
-            // e.g., "github.com/org/repo" should not match "github.com/org/repo-utils"
-            const newLine = line
-                .replace(`"${modulePath}/`, `"${modulePath}${suffix}/`)
-                .replace(`"${modulePath}"`, `"${modulePath}${suffix}"`);
+            // Use precise, quote-anchored replacement to avoid corrupting paths that
+            // share a prefix, e.g. "github.com/org/repo" must not match
+            // "github.com/org/repo-utils".
+            //
+            // Import lines get the suffix on both the bare module path and any
+            // subpackage path. Non-import lines only get the bare module-path literal
+            // rewritten — this covers the X-Fern-SDK-Name header value
+            // (`headers.Set("X-Fern-SDK-Name", "<modulePath>")`) while leaving composite
+            // values like the User-Agent (`"<modulePath>/<version>"`) untouched, since
+            // those already carry the version and must not gain a `/vN` segment.
+            const newLine = isImportLine
+                ? line
+                      .split(`"${modulePath}/`)
+                      .join(`"${modulePath}${suffix}/`)
+                      .split(`"${modulePath}"`)
+                      .join(`"${modulePath}${suffix}"`)
+                : line.split(`"${modulePath}"`).join(`"${modulePath}${suffix}"`);
             if (newLine !== line) {
                 lines[i] = newLine;
                 changed = true;
@@ -1185,6 +1198,58 @@ export class AutoVersioningService {
         if (changed) {
             await writeFile(filePath, lines.join("\n"), "utf-8");
             this.logger.debug(`Updated Go imports in ${filePath}`);
+        }
+    }
+
+    /**
+     * Adds a version suffix to Go module references in all Markdown files
+     * (e.g. README.md) in the repository, so documented install commands and
+     * import samples resolve to the correct /vN module path when copy-pasted.
+     */
+    private async addSuffixToMarkdownFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
+        const markdownFiles = await this.walkDirectory(
+            repoRoot,
+            (filePath) => extname(filePath).toLowerCase() === ".md"
+        );
+
+        await this.processInParallel(markdownFiles, (filePath) =>
+            this.addSuffixToMarkdownFile(filePath, modulePath, suffix)
+        );
+    }
+
+    /**
+     * Adds a version suffix to Go module references in a single Markdown file.
+     * Rewrites `go get`/`go install` install commands and quoted import paths in
+     * code samples. Web URLs (e.g. `https://pkg.go.dev/<modulePath>`) are left
+     * untouched because the module path there is neither quote-anchored nor
+     * preceded by an install command.
+     */
+    private async addSuffixToMarkdownFile(filePath: string, modulePath: string, suffix: string): Promise<void> {
+        const content = await readFile(filePath, "utf-8");
+        if (!content.includes(modulePath)) {
+            return;
+        }
+
+        // Quoted import paths in Go code samples: "<modulePath>" and "<modulePath>/<subpackage>".
+        let updated = content
+            .split(`"${modulePath}/`)
+            .join(`"${modulePath}${suffix}/`)
+            .split(`"${modulePath}"`)
+            .join(`"${modulePath}${suffix}"`);
+
+        // `go get`/`go install` install commands. The negative lookahead avoids
+        // double-suffixing an already-versioned path (`/vN`) and prefixes that merely
+        // share the module path (e.g. "<modulePath>-utils").
+        const escapedModulePath = modulePath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const installCommandPattern = new RegExp(
+            `(go (?:get|install)(?:\\s+-\\S+)*\\s+)${escapedModulePath}(?![\\w./-])`,
+            "g"
+        );
+        updated = updated.replace(installCommandPattern, `$1${modulePath}${suffix}`);
+
+        if (updated !== content) {
+            await writeFile(filePath, updated, "utf-8");
+            this.logger.debug(`Updated Go module path in ${filePath}`);
         }
     }
 

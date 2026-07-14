@@ -1,4 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.75.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an `Idempotency-Key` header on generated SDK
+        clients, driven by the IR. When `sdkConfig.idempotencyKeyGeneration` is present
+        (configured once via the `auto-generate-idempotency-key` generator config key
+        and resolved by the CLI), the SDK attaches an idempotency-key request header
+        whose value is a freshly generated UUIDv4 (`System.Guid.NewGuid().ToString()`)
+        at request time. The wire header name and the eligible HTTP methods come from
+        the IR, so behavior is consistent across every generator. A caller-provided
+        value always wins: a declared idempotency header or a header supplied through
+        request-options takes precedence, and the generated UUID is only a fallback.
+        The header is only injected on the eligible methods. Disabled by default, so
+        existing generated output is unchanged.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.74.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (region/edge routing). When an API's servers
+        declare URL variables (e.g. `https://api.{region}.example.com`), each variable is
+        now exposed as an optional string property on `ClientOptions` (idiomatic PascalCase,
+        e.g. `Region`). Variable names that collide with an existing client option are
+        prefixed with `ServerUrl` (e.g. an `environment` variable becomes `ServerUrlEnvironment`).
+        When set at construction time, the values are interpolated into the environment base
+        URL(s), falling back to each variable's default otherwise. Explicit `BaseUrl` or
+        `Environment` options take precedence, and interpolation fails clearly when a required
+        variable has neither a client option nor a default.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.73.2
+  changelogEntry:
+    - summary: |
+        Enable automatic response decompression on the default HttpClient. The default client
+        is now created with an HttpClientHandler configured with AutomaticDecompression
+        (DecompressionMethods.All on .NET 5+, GZip | Deflate on older targets), so responses
+        with a Content-Encoding of gzip or deflate are decompressed transparently — including
+        when an Accept-Encoding request header is set explicitly by the API spec. User-supplied
+        HttpClients provided via ClientOptions are not modified.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
 - version: 2.73.1
   changelogEntry:
     - summary: |
