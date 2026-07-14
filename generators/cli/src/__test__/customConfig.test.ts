@@ -82,4 +82,93 @@ describe("validateCustomConfig", () => {
     it("throws on empty rootGroup", () => {
         expect(() => validateCustomConfig({ rootGroup: "" })).toThrow(/contains invalid characters/);
     });
+
+    it("accepts OAuth client credentials, PKCE, and device-code flows", () => {
+        expect(
+            validateCustomConfig({
+                oauth: [
+                    {
+                        scheme: "MachineOAuth",
+                        flow: "client-credentials",
+                        tokenUrl: "https://auth.example.com/token",
+                        clientIdEnv: "ACME_CLIENT_ID",
+                        clientSecretEnv: "ACME_CLIENT_SECRET",
+                        scopes: ["read", "write"]
+                    },
+                    {
+                        scheme: "BrowserOAuth",
+                        flow: "pkce",
+                        authorizationUrl: "https://auth.example.com/authorize",
+                        tokenUrl: "https://auth.example.com/token",
+                        clientId: "public-client",
+                        redirectPort: 8765
+                    },
+                    {
+                        scheme: "DeviceOAuth",
+                        flow: "device-code",
+                        deviceAuthorizationUrl: "https://auth.example.com/device",
+                        tokenUrl: "https://auth.example.com/token",
+                        clientId: "public-client"
+                    }
+                ]
+            }).oauth
+        ).toHaveLength(3);
+    });
+
+    it("rejects malformed OAuth config", () => {
+        expect(() => validateCustomConfig({ oauth: {} })).toThrow(/expected an array/);
+        expect(() =>
+            validateCustomConfig({
+                oauth: [{ scheme: "OAuth2", flow: "pkce", tokenUrl: "/token", clientId: "public" }]
+            })
+        ).toThrow(/authorizationUrl/);
+        expect(() =>
+            validateCustomConfig({
+                oauth: [
+                    {
+                        scheme: "OAuth2",
+                        flow: "pkce",
+                        authorizationUrl: "https://auth.example.com/authorize",
+                        tokenUrl: "/token",
+                        clientId: "public"
+                    }
+                ]
+            })
+        ).toThrow(/absolute HTTP\(S\) URL/);
+        expect(() =>
+            validateCustomConfig({
+                oauth: [
+                    {
+                        scheme: "OAuth2",
+                        flow: "pkce",
+                        authorizationUrl: "https://auth.example.com/authorize",
+                        tokenUrl: "https://auth.example.com/token",
+                        clientId: "public",
+                        redirectPort: 70_000
+                    }
+                ]
+            })
+        ).toThrow(/between 1 and 65535/);
+    });
+
+    it("rejects duplicate OAuth schemes", () => {
+        expect(() =>
+            validateCustomConfig({
+                oauth: [
+                    {
+                        scheme: "OAuth2",
+                        flow: "client-credentials",
+                        tokenUrl: "https://auth.example.com/token"
+                    },
+                    {
+                        scheme: "OAuth2",
+                        flow: "device-code",
+                        deviceAuthorizationUrl: "https://auth.example.com/device",
+                        tokenUrl: "https://auth.example.com/token",
+                        clientId: "public"
+                    }
+                ]
+            })
+        ).toThrow(/duplicate scheme "OAuth2"/);
+    });
 });

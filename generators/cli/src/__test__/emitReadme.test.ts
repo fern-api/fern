@@ -195,6 +195,31 @@ describe("emitReadme", () => {
         expect(readme).toContain('export ACME_PASSWORD="<your credential>"');
     });
 
+    it("documents interactive OAuth login, status, and logout", async () => {
+        const oauthBinding: DetectedAuthBinding = {
+            schemeName: "OAuth2",
+            rustCall: '.login_flow(PkceLoginFlow::new("OAuth2"))',
+            placement: "root",
+            authTypeImport: "PkceLoginFlow",
+            envVars: [],
+            kind: "oauth-interactive"
+        };
+
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [oauthBinding],
+            npmPublishInfo: undefined,
+            repoUrl: undefined
+        });
+
+        expect(readme).toContain("acme auth login");
+        expect(readme).toContain("acme auth status");
+        expect(readme).toContain("acme auth logout");
+        expect(readme).not.toContain("export ");
+    });
+
     // ── Merge preserves customer-added sections ─────────────────────
 
     it("preserves a customer-added section while regenerating generated ones", async () => {

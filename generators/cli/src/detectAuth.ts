@@ -19,7 +19,7 @@ export interface DetectedAuthBinding {
     /** Resolved environment variable names the user must set for this binding. */
     envVars: string[];
     /** Auth kind for documentation purposes. */
-    kind: "bearer" | "header" | "basic";
+    kind: "bearer" | "header" | "basic" | "oauth-client-credentials" | "oauth-interactive";
 }
 
 /**
@@ -40,8 +40,8 @@ export interface DetectedAuthBinding {
  *   - `basic` with `usernameOmit: true` → symmetric
  *     `.auth_provider("<key>", BasicAuthProvider::password_only(...))`
  *   - `basic` with both omitted → skipped (nothing to bind)
- *   - `oauth` / `inferred` / unknown → skipped (the SDK currently has no
- *     runtime provider for these)
+ *   - `oauth` / `inferred` / unknown → skipped here. OAuth flow metadata
+ *     is lowered separately from validated `customConfig.oauth`.
  *
  * Env-var names come from the IR first (`usernameEnvVar`,
  * `passwordEnvVar`, `tokenEnvVar`, `headerEnvVar`). When the IR doesn't
@@ -69,6 +69,22 @@ export function detectAuthBindings(args: {
         }
     }
     return bindings;
+}
+
+export function getAuthSchemeNames(auth: { schemes: FernIr.AuthScheme[] }): Set<string> {
+    return new Set(
+        auth.schemes.flatMap((scheme) => {
+            const key = scheme._visit<string | undefined>({
+                bearer: (value) => value.key,
+                header: (value) => value.key,
+                basic: (value) => value.key,
+                oauth: (value) => value.key,
+                inferred: (value) => value.key,
+                _other: () => undefined
+            });
+            return key == null ? [] : [key];
+        })
+    );
 }
 
 function bindingForScheme(
@@ -151,9 +167,8 @@ function bindingForScheme(
                 kind: "basic"
             };
         },
-        // The SDK doesn't yet have a runtime provider for OAuth client
-        // credentials or inferred auth — skip rather than emit a call
-        // the user couldn't satisfy.
+        // OAuth flow metadata is supplied by CLI config until the
+        // published IR SDK carries all interactive flow fields.
         oauth: () => null,
         inferred: () => null,
         // Future IR auth variants we don't know about yet.
