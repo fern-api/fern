@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.70.1
+  changelogEntry:
+    - summary: |
+        `fern generate` with an explicit `--version X.Y.Z` now records a version-only entry
+        (version header with an empty description) in the SDK repo's `changelog.md`, and existing
+        changelog entries are preserved across regenerations instead of being wiped.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 5.70.0
   changelogEntry:
     - summary: |
