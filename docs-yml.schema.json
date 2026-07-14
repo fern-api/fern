@@ -6573,6 +6573,17 @@
               "type": "null"
             }
           ]
+        },
+        "disable-sri": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, skip computing a Subresource Integrity (SRI) hash for this\nremote script. The script is rendered without an `integrity` attribute.\nUseful for scripts whose contents change (e.g. rolling CDN builds) that\nwould otherwise fail integrity verification."
         }
       },
       "required": [
