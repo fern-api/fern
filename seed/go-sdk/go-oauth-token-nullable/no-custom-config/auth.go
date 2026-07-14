@@ -81,7 +81,7 @@ var (
 
 type TokenResponse struct {
 	AccessToken  *string `json:"access_token,omitempty" url:"access_token,omitempty"`
-	ExpiresIn    *int    `json:"expires_in,omitempty" url:"expires_in,omitempty"`
+	ExpiresIn    *int64  `json:"expires_in,omitempty" url:"expires_in,omitempty"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -98,7 +98,7 @@ func (t *TokenResponse) GetAccessToken() *string {
 	return t.AccessToken
 }
 
-func (t *TokenResponse) GetExpiresIn() *int {
+func (t *TokenResponse) GetExpiresIn() *int64 {
 	if t == nil {
 		return nil
 	}
@@ -135,7 +135,7 @@ func (t *TokenResponse) SetAccessToken(accessToken *string) {
 
 // SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenResponse) SetExpiresIn(expiresIn *int) {
+func (t *TokenResponse) SetExpiresIn(expiresIn *int64) {
 	t.ExpiresIn = expiresIn
 	t.require(tokenResponseFieldExpiresIn)
 }

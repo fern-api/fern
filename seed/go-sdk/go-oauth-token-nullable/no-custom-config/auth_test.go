@@ -104,7 +104,7 @@ func TestSettersTokenResponse(t *testing.T) {
 
 	t.Run("SetExpiresIn", func(t *testing.T) {
 		obj := &TokenResponse{}
-		var fernTestValueExpiresIn *int
+		var fernTestValueExpiresIn *int64
 		obj.SetExpiresIn(fernTestValueExpiresIn)
 		assert.Equal(t, fernTestValueExpiresIn, obj.ExpiresIn)
 		assert.NotNil(t, obj.explicitFields)
@@ -158,7 +158,7 @@ func TestGettersTokenResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TokenResponse{}
-		var expected *int
+		var expected *int64
 		obj.ExpiresIn = expected
 
 		// Act & Assert
@@ -258,7 +258,7 @@ func TestSettersMarkExplicitTokenResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TokenResponse{}
-		var fernTestValueExpiresIn *int
+		var fernTestValueExpiresIn *int64
 
 		// Act
 		obj.SetExpiresIn(fernTestValueExpiresIn)

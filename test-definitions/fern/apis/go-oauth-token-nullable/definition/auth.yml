@@ -4,7 +4,7 @@ types:
       An OAuth token response with nullable properties.
     properties:
       access_token: nullable<string>
-      expires_in: nullable<integer>
+      expires_in: nullable<long>
       refresh_token: nullable<string>
 
 service:

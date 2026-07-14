@@ -559,13 +559,7 @@ export class EndpointSnippetGenerator {
             }
             const wireValue = param.name.wireValue;
             const value = values.values?.[wireValue] ?? param.name.name.originalName;
-            const typeInstantiation = this.context.dynamicTypeInstantiationMapper.convert({
-                typeReference: param.typeReference,
-                value
-            });
-            if (go.TypeInstantiation.isNop(typeInstantiation)) {
-                continue;
-            }
+            const typeInstantiation = go.TypeInstantiation.string(typeof value === "string" ? value : String(value));
             args.push(
                 go.codeblock((writer) => {
                     writer.writeNode(
