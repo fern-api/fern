@@ -22,7 +22,7 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	if options.Region != "" || options.ServerURLEnvironment != "" {
+	if options.BaseURL == "" && (options.Region != "" || options.ServerURLEnvironment != "") {
 		region := options.Region
 		if region == "" {
 			region = "us-east-1"
