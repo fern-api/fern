@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.47.3
+  changelogEntry:
+    - summary: |
+        Decompress gzip-encoded error responses before decoding them when retry attempts
+        are exhausted.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
 - version: 1.47.2
   changelogEntry:
     - summary: |
