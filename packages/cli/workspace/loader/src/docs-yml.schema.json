@@ -4751,6 +4751,17 @@
             }
           ],
           "description": "Additional content sources that Ask Fern should index and search."
+        },
+        "mask-pii": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When enabled, personally identifiable information (PII) in user messages is masked before\nbeing sent to Ask Fern. Disabled by default."
         }
       },
       "additionalProperties": false

@@ -225,6 +225,7 @@ ${matrixIncludes}
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
+          node-version: "lts/Krypton"
           registry-url: "${npmPublishInfo.registryUrl}"
 
       - name: Install musl build tools
@@ -285,26 +286,23 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
-          publish() {  # use latest npm to ensure OIDC support
-            npx -y npm@latest publish "\$@"
-          }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
           # happens to contain "alpha"/"beta" as a substring isn't
           # mis-tagged on npm.
           if [[ "\${VERSION}" == *-alpha* ]]; then
-            publish --access public --tag alpha
+            npm publish --access public --tag alpha
           elif [[ "\${VERSION}" == *-beta* ]]; then
-            publish --access public --tag beta
+            npm publish --access public --tag beta
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
             if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
-              publish --access public --tag backport
+              npm publish --access public --tag backport
             else
-              publish --access public
+              npm publish --access public
             fi
           fi
 
@@ -319,6 +317,7 @@ ${matrixIncludes}
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
+          node-version: "lts/Krypton"
           registry-url: "${npmPublishInfo.registryUrl}"
 
       - name: Publish launcher package${tokenEnvBlock}
@@ -393,26 +392,23 @@ ${launcherPlatformEntries}
           LAUNCHER
 
           cd "\${PKG_DIR}"
-          publish() {  # use latest npm to ensure OIDC support
-            npx -y npm@latest publish "\$@"
-          }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
           # happens to contain "alpha"/"beta" as a substring isn't
           # mis-tagged on npm.
           if [[ "\${VERSION}" == *-alpha* ]]; then
-            publish --access public --tag alpha
+            npm publish --access public --tag alpha
           elif [[ "\${VERSION}" == *-beta* ]]; then
-            publish --access public --tag beta
+            npm publish --access public --tag beta
           else
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
             if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
-              publish --access public --tag backport
+              npm publish --access public --tag backport
             else
-              publish --access public
+              npm publish --access public
             fi
           fi
 `;

@@ -309,6 +309,9 @@ fixtures:
   oauth-client-credentials-reference:
     - outputFolder: .
       customConfig: null
+  ts-oauth-token-optional:
+    - outputFolder: no-custom-config
+      customConfig: null
   mixed-case:
     - outputFolder: no-custom-config
       customConfig: null
@@ -412,6 +415,9 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle
