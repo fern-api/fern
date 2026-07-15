@@ -614,7 +614,9 @@ export class AutoVersioningService {
             }
         }
 
-        let processedContent = this.removeVersionChangePairs(contentLines, mappedMagicVersion);
+        let processedContent = this.removeGoModulePathSuffixPairs(contentLines);
+
+        processedContent = this.removeVersionChangePairs(processedContent, mappedMagicVersion);
 
         processedContent = this.removeRemainingMagicVersionLines(processedContent, mappedMagicVersion);
 
@@ -786,33 +788,96 @@ export class AutoVersioningService {
      * so non-Go diffs like API URL version changes are not affected.
      */
     private isGoModulePathSuffixChange(minusLine: string, plusLine: string): boolean {
-        const minusContent = minusLine.substring(1);
-        const plusContent = plusLine.substring(1);
+        const minus = this.analyzeGoModulePathLine(minusLine);
+        const plus = this.analyzeGoModulePathLine(plusLine);
+        if (minus == null || plus == null) {
+            return false;
+        }
+        if (minus.strippedContent !== plus.strippedContent) {
+            return false;
+        }
+        // At least one line must actually contain a /vN suffix for this to be a suffix change
+        return minus.hasSuffix || plus.hasSuffix;
+    }
 
-        // Only apply to lines containing quoted Go module paths or go.mod module directives
+    /**
+     * Removes Go module path `/vN` suffix-only churn from a diff section, regardless of how the
+     * deletion and addition lines are laid out. `removeVersionChangePairs` only removes a deletion
+     * when it can pair it with a *nearby* addition and keeps every line in between — so a diff that
+     * groups all deletions before all additions (as Go import blocks do) leaks the suffix churn for
+     * every line except the first. That churn then reaches the AI diff analyzer, which sees the
+     * previously published `/vN` module path changing on every import and misclassifies a
+     * no-op regeneration as a breaking change (spurious major bump).
+     *
+     * This pass matches each suffix-bearing deletion with any suffix-only-equivalent addition in
+     * the section (by suffix-stripped content) and drops both, so only genuine content changes to
+     * Go module path lines survive.
+     */
+    private removeGoModulePathSuffixPairs(lines: string[]): string[] {
+        const additions: { index: number; strippedContent: string }[] = [];
+        for (let index = 0; index < lines.length; index++) {
+            const line = lines[index];
+            if (line == null || !this.isAdditionLine(line)) {
+                continue;
+            }
+            const info = this.analyzeGoModulePathLine(line);
+            if (info != null) {
+                additions.push({ index, strippedContent: info.strippedContent });
+            }
+        }
+
+        const removed = new Set<number>();
+        const usedAdditions = new Set<number>();
+        for (let index = 0; index < lines.length; index++) {
+            const line = lines[index];
+            if (line == null || !this.isDeletionLine(line)) {
+                continue;
+            }
+            const info = this.analyzeGoModulePathLine(line);
+            if (info == null || !info.hasSuffix) {
+                continue;
+            }
+            const match = additions.find(
+                (addition) => !usedAdditions.has(addition.index) && addition.strippedContent === info.strippedContent
+            );
+            if (match != null) {
+                usedAdditions.add(match.index);
+                removed.add(index);
+                removed.add(match.index);
+            }
+        }
+
+        if (removed.size === 0) {
+            return lines;
+        }
+        return lines.filter((_, index) => !removed.has(index));
+    }
+
+    /**
+     * If a diff line (with its leading +/- stripped) references a Go module path — either a quoted
+     * import path or a `module` directive — returns its content with any `/vN` module-version
+     * suffixes removed, plus whether a suffix was present. Returns undefined for non-Go lines so
+     * unrelated diffs (e.g. API URL version segments) are never touched.
+     */
+    private analyzeGoModulePathLine(line: string): { strippedContent: string; hasSuffix: boolean } | undefined {
+        const content = line.substring(1);
+
         const goModulePathPattern = /"[^"]*(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/[^"]*"/;
         const goModuleDirectivePattern = /^\s*module\s+(?:github\.com|golang\.org|google\.golang\.org|gopkg\.in)\/\S+/;
-        const hasGoModulePath =
-            goModulePathPattern.test(minusContent) ||
-            goModulePathPattern.test(plusContent) ||
-            goModuleDirectivePattern.test(minusContent.trim()) ||
-            goModuleDirectivePattern.test(plusContent.trim());
-        if (!hasGoModulePath) {
-            return false;
+        const isGoModulePathLine = goModulePathPattern.test(content) || goModuleDirectivePattern.test(content.trim());
+        if (!isGoModulePathLine) {
+            return undefined;
         }
 
-        // Only strip /vN when it appears as a Go module version suffix
-        // (followed by / or end of quoted string or end of line)
-        const suffixPattern = /\/v\d+(?=\/|"\s*$|$)/g;
-        const minusWithoutSuffix = minusContent.replace(suffixPattern, "");
-        const plusWithoutSuffix = plusContent.replace(suffixPattern, "");
-
-        if (minusWithoutSuffix !== plusWithoutSuffix) {
-            return false;
-        }
-
-        // At least one line must actually contain a /vN suffix for this to be a suffix change
-        return /\/v\d+(?=\/|"\s*$|$)/.test(minusContent) || /\/v\d+(?=\/|"\s*$|$)/.test(plusContent);
+        // Only strip /vN when it appears as a Go module version suffix: followed by a path
+        // separator (`/v4/core`), a closing quote (the module path may be embedded mid-line,
+        // e.g. the `X-Fern-SDK-Name` header value `"github.com/org/sdk/v4"`), or end of line
+        // (the bare `module` directive).
+        const suffixPattern = /\/v\d+(?=\/|"|$)/g;
+        return {
+            strippedContent: content.replace(suffixPattern, ""),
+            hasSuffix: suffixPattern.test(content)
+        };
     }
 
     /**
@@ -963,10 +1028,14 @@ export class AutoVersioningService {
         // Update go.mod module line
         await this.addSuffixToGoMod(goModPath, modulePath, suffix);
 
-        // Update all .go files: add suffix to import paths
+        // Update all .go files: add suffix to import paths and the module path
+        // embedded as a string literal (e.g. the X-Fern-SDK-Name header value).
         await this.addSuffixToGoFiles(workingDirectory, modulePath, suffix);
 
-        this.logger.info(`Added ${suffix} to Go module path ${modulePath} and all import paths`);
+        // Update Markdown files (e.g. README.md): install commands and import samples.
+        await this.addSuffixToMarkdownFiles(workingDirectory, modulePath, suffix);
+
+        this.logger.info(`Added ${suffix} to Go module path ${modulePath} across imports, headers, and docs`);
     }
 
     /**
@@ -1060,7 +1129,8 @@ export class AutoVersioningService {
     }
 
     /**
-     * Adds a version suffix to import paths in all .go files in the repository.
+     * Adds a version suffix to import paths and embedded module-path string
+     * literals (e.g. the X-Fern-SDK-Name header value) in all .go files.
      */
     private async addSuffixToGoFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
         const goFiles = await this.walkDirectory(repoRoot, (filePath) => extname(filePath) === ".go");
@@ -1069,8 +1139,8 @@ export class AutoVersioningService {
     }
 
     /**
-     * Adds a version suffix to import paths in a single .go file.
-     * Replaces occurrences of the module path with modulePath + suffix in import statements.
+     * Adds a version suffix to import paths and embedded module-path string
+     * literals in a single .go file.
      */
     private async addSuffixToGoFile(filePath: string, modulePath: string, suffix: string): Promise<void> {
         const content = await readFile(filePath, "utf-8");
@@ -1092,25 +1162,33 @@ export class AutoVersioningService {
                 inImportBlock = false;
             }
 
-            // Only process import lines
             const isImportLine =
                 inImportBlock ||
                 trimmed.startsWith('import "') ||
                 trimmed.startsWith('import\t"') ||
                 /^import\s+\w+\s+"/.test(trimmed);
-            if (!isImportLine) {
-                continue;
-            }
 
             if (!line.includes(modulePath)) {
                 continue;
             }
 
-            // Use precise replacement to avoid corrupting paths that share a prefix
-            // e.g., "github.com/org/repo" should not match "github.com/org/repo-utils"
-            const newLine = line
-                .replace(`"${modulePath}/`, `"${modulePath}${suffix}/`)
-                .replace(`"${modulePath}"`, `"${modulePath}${suffix}"`);
+            // Use precise, quote-anchored replacement to avoid corrupting paths that
+            // share a prefix, e.g. "github.com/org/repo" must not match
+            // "github.com/org/repo-utils".
+            //
+            // Import lines get the suffix on both the bare module path and any
+            // subpackage path. Non-import lines only get the bare module-path literal
+            // rewritten — this covers the X-Fern-SDK-Name header value
+            // (`headers.Set("X-Fern-SDK-Name", "<modulePath>")`) while leaving composite
+            // values like the User-Agent (`"<modulePath>/<version>"`) untouched, since
+            // those already carry the version and must not gain a `/vN` segment.
+            const newLine = isImportLine
+                ? line
+                      .split(`"${modulePath}/`)
+                      .join(`"${modulePath}${suffix}/`)
+                      .split(`"${modulePath}"`)
+                      .join(`"${modulePath}${suffix}"`)
+                : line.split(`"${modulePath}"`).join(`"${modulePath}${suffix}"`);
             if (newLine !== line) {
                 lines[i] = newLine;
                 changed = true;
@@ -1120,6 +1198,58 @@ export class AutoVersioningService {
         if (changed) {
             await writeFile(filePath, lines.join("\n"), "utf-8");
             this.logger.debug(`Updated Go imports in ${filePath}`);
+        }
+    }
+
+    /**
+     * Adds a version suffix to Go module references in all Markdown files
+     * (e.g. README.md) in the repository, so documented install commands and
+     * import samples resolve to the correct /vN module path when copy-pasted.
+     */
+    private async addSuffixToMarkdownFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
+        const markdownFiles = await this.walkDirectory(
+            repoRoot,
+            (filePath) => extname(filePath).toLowerCase() === ".md"
+        );
+
+        await this.processInParallel(markdownFiles, (filePath) =>
+            this.addSuffixToMarkdownFile(filePath, modulePath, suffix)
+        );
+    }
+
+    /**
+     * Adds a version suffix to Go module references in a single Markdown file.
+     * Rewrites `go get`/`go install` install commands and quoted import paths in
+     * code samples. Web URLs (e.g. `https://pkg.go.dev/<modulePath>`) are left
+     * untouched because the module path there is neither quote-anchored nor
+     * preceded by an install command.
+     */
+    private async addSuffixToMarkdownFile(filePath: string, modulePath: string, suffix: string): Promise<void> {
+        const content = await readFile(filePath, "utf-8");
+        if (!content.includes(modulePath)) {
+            return;
+        }
+
+        // Quoted import paths in Go code samples: "<modulePath>" and "<modulePath>/<subpackage>".
+        let updated = content
+            .split(`"${modulePath}/`)
+            .join(`"${modulePath}${suffix}/`)
+            .split(`"${modulePath}"`)
+            .join(`"${modulePath}${suffix}"`);
+
+        // `go get`/`go install` install commands. The negative lookahead avoids
+        // double-suffixing an already-versioned path (`/vN`) and prefixes that merely
+        // share the module path (e.g. "<modulePath>-utils").
+        const escapedModulePath = modulePath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const installCommandPattern = new RegExp(
+            `(go (?:get|install)(?:\\s+-\\S+)*\\s+)${escapedModulePath}(?![\\w./-])`,
+            "g"
+        );
+        updated = updated.replace(installCommandPattern, `$1${modulePath}${suffix}`);
+
+        if (updated !== content) {
+            await writeFile(filePath, updated, "utf-8");
+            this.logger.debug(`Updated Go module path in ${filePath}`);
         }
     }
 

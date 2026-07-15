@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n"
+                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n"
+                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
+                "client": "import { SeedInferredAuthImplicitNoExpiryClient } from \"@fern/inferred-auth-implicit-no-expiry\";\n\nconst client = new SeedInferredAuthImplicitNoExpiryClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
             }
         }
     ],

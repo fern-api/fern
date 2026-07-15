@@ -845,12 +845,12 @@
                                             "safeName": "s3Key"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "s3key",
-                                            "safeName": "s3key"
+                                            "unsafeName": "s3_key",
+                                            "safeName": "s3_key"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "S3KEY",
-                                            "safeName": "S3KEY"
+                                            "unsafeName": "S3_KEY",
+                                            "safeName": "S3_KEY"
                                         },
                                         "pascalCase": {
                                             "unsafeName": "S3Key",
@@ -1068,6 +1068,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

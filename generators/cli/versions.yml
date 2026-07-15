@@ -1,4 +1,54 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.23.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.42.1 updates.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 0.23.1
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `publish` and `publish-launcher` jobs in `.github/workflows/ci.yml` now
+        run on a pinned Node LTS (`node-version: "lts/Krypton"`) and call
+        `npm publish` directly instead of `npx -y npm@latest publish`. Relying on
+        `npm@latest` pulled whatever npm release was newest at publish time, so a
+        broken npm release could break publishing. The pinned Node LTS bundles an
+        npm that supports OIDC trusted publishing.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 0.23.0
+  changelogEntry:
+    - summary: |
+        Remove the current-working-directory sandbox on output paths. `--output`
+        and `--output-dir` now write wherever they are pointed — including
+        absolute paths and locations outside the current directory — instead of
+        failing with "resolves to ... which is outside the current directory".
+        Control-character rejection and the `O_NOFOLLOW` refusal of a
+        final-component symlink are retained; `--output` still requires its parent
+        directory to exist.
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 0.22.1
+  changelogEntry:
+    - summary: |
+        Fix aarch64-unknown-linux-musl build failure in generated CI workflow.
+        The emitted workflow now sets CARGO_TARGET_*_LINKER=musl-gcc and
+        CC=musl-gcc for musl targets so the Rust linker finds musl-gcc
+        instead of falling back to the system cc (which links against glibc).
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 0.22.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.42.0 updates.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 0.21.1
   changelogEntry:
     - summary: |

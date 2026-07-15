@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/docs-bundle-smoke-test.yml"
       - "packages/cli/docs-preview/**"
+      - "packages/cli/docs-resolver/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
       - "docs-preview-smoke-test/**"
@@ -14,6 +15,7 @@ on:
     paths:
       - ".github/workflows/docs-bundle-smoke-test.yml"
       - "packages/cli/docs-preview/**"
+      - "packages/cli/docs-resolver/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
       - "docs-preview-smoke-test/**"
@@ -141,6 +143,15 @@ jobs:
           cd ..
           echo "Installed fern CLI:"
           fern --version || echo "fern --version exited with $?"
+
+      # The smoke-test docs use a custom component that imports a third-party
+      # library, which the CLI bundles at docs-build time (resolved from the
+      # docs project's node_modules).
+      - name: Install docs project dependencies
+        if: steps.node-check.outputs.available == 'true'
+        shell: bash
+        run: |
+          cd docs-preview-smoke-test/fern && npm install
 
       - name: Install Playwright
         if: steps.node-check.outputs.available == 'true'

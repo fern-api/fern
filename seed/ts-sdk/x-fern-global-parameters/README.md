@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/x-fern-global-parameters";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.products.search({
     regionId: "regionId"
 });

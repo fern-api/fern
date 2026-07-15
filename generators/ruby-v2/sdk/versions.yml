@@ -1,4 +1,185 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.3
+  changelogEntry:
+    - summary: |
+        Expose non-literal global headers without a client default as root client
+        constructor parameters. Headers with a declared `env` default to that
+        environment variable (e.g. `version: ENV.fetch("MY_API_VERSION", nil)`), and
+        the header is only sent when the value is non-nil. Previously such headers
+        were omitted entirely and could only be sent via per-request
+        `additional_headers`.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.2
+  changelogEntry:
+    - summary: |
+        Serialize request bodies declared as aliases of objects through the aliased
+        class so wire names are applied. Previously the raw params hash was sent,
+        so properties whose Ruby name differs from the API wire name (e.g.
+        `display_name` vs. `displayName`) were sent with the wrong key.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.1
+  changelogEntry:
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the
+        token endpoint's `grant_type` property is a non-literal string. Previously the
+        property was omitted (when optional) or surfaced as a required constructor
+        parameter (when required), so token endpoints that require `grant_type`
+        rejected the request.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an idempotency-key request header. This is now driven
+        entirely by the IR (`SdkConfig.idempotencyKeyGeneration`), resolved once by the CLI from
+        the `auto-generate-idempotency-key` generator config key, so the header name and the set of
+        eligible HTTP methods are read identically across every generator. When enabled, the
+        generated SDK attaches the configured header (defaulting to `Idempotency-Key`) on the
+        configured methods (defaulting to `POST` and `PUT`) with a freshly generated UUIDv4
+        (`SecureRandom.uuid`) at request time. For endpoints that declare a matching idempotency
+        header the caller-supplied value wins and the generated UUID is only the fallback. When the
+        IR does not enable the feature, generated output is unchanged.
+      type: feat
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.16.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string keyword
+        arguments on the client initializer and interpolated into the base URL(s) when
+        provided, falling back to each variable's default. Reserved option names are
+        de-collided by prefixing with `server_url_` (e.g. a variable named `environment`
+        is exposed as `server_url_environment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.5
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Sub-client accessors and methods like `ConversationsV2Configuration` now generate
+        `conversations_v2_configuration` instead of `conversations_v2configuration`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.4
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies when the `Accept-Encoding`
+        header is set explicitly on the request. `Net::HTTP` disables its transparent
+        response decoding as soon as the caller sets an `Accept-Encoding` header, so
+        responses to requests with a spec-defined `Accept-Encoding: gzip` header were
+        previously returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.3
+  changelogEntry:
+    - summary: |
+        Fix `reference.md` endpoint titles to show path parameters in keyword-argument form
+        (e.g. `fetch_store(store_id:)` instead of `fetch_store(store_id)`). Generated Ruby methods
+        only accept keyword arguments, so the previous positional-looking titles were misleading.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 1.15.2
+  changelogEntry:
+    - summary: |
+        Fix OAuth (and inferred-auth) access tokens never being refreshed on expiry. The token was
+        resolved once at client construction and baked into the `RawClient`'s static default headers, so
+        every subsequent request kept sending the original (eventually stale) token until the client was
+        reconstructed. The `RawClient` now receives the auth provider and resolves its `auth_headers` on
+        every request, so the provider's existing refresh logic runs before each call. Api-key/basic/
+        bearer/no-auth flows are unaffected (no provider is passed, so header resolution is a no-op).
+      type: fix
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 1.15.1
+  changelogEntry:
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 1.15.0
+  changelogEntry:
+    - summary: |
+        Add support for OAuth 2.0 client-credentials authentication. Clients configured with an
+        `oauth`/`client-credentials` scheme now accept `client_id`/`client_secret` (with environment
+        variable fallback) and generate an OAuth token provider that fetches, caches, and refreshes the
+        access token from the configured token endpoint.
+      type: feat
+    - summary: |
+        Send `client_id`/`client_secret` (and other required token-request properties) when the OAuth
+        token endpoint's request body is a named/referenced type. Previously only inlined request bodies
+        were handled, so a referenced body produced an empty token request and authentication failed.
+      type: fix
+    - summary: |
+        When both an inferred-auth scheme and an OAuth scheme are present (e.g. `auth: any`), instantiate
+        a single auth provider instead of emitting two `@auth_provider` assignments where the OAuth block
+        silently clobbered the inferred-auth block. The provider that appears first in the declared auth
+        order is selected.
+      type: fix
+    - summary: |
+        Fix a backward-compatibility regression under `any`-composed multi-scheme auth: the OAuth (and
+        inferred-auth) provider is now conditional on its credentials being present. Previously the client
+        unconditionally instantiated the provider and merged its `auth_headers` in `initialize`, firing a
+        synchronous token request at construction — so an existing api-key-only consumer calling
+        `Client.new(api_key: ...)` without OAuth credentials made a live network call and raised. The
+        provider is now only created (and merged) when its credentials are supplied; otherwise the client
+        falls back to the other `any` scheme (api key/basic/bearer) and never touches the token endpoint.
+        Auth parameters are also relaxed to optional under `any`-with-multiple-schemes. A single mandatory
+        OAuth scheme keeps its existing (eager) behavior. The credentials check treats a set-but-empty
+        string (e.g. `OAUTH_CLIENT_ID=""`) the same as absent, so an existing api-key-only consumer with
+        empty OAuth environment variables still falls back to the api-key path instead of firing a token
+        fetch at construction.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 1.14.1
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `includePlatformHeaders` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.14.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated clients.
+        When enabled it reports the SDK name/version, operating system, CPU
+        architecture, and Ruby runtime version, e.g.
+        `my-sdk/0.0.1 (linux; x86_64) Ruby/3.2.0`. The operating system, architecture,
+        and version are resolved at runtime; unknown components are omitted rather
+        than emitted as placeholders. This is gated behind a new
+        `includePlatformHeaders` config option and is disabled by default, so existing
+        generated output is unchanged. When enabled it is still subject to the
+        `omitFernHeaders` option.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.13.4
+  changelogEntry:
+    - summary: |
+        Revert the automatic renaming of path parameters that collide with request body
+        properties (introduced in 1.13.3). These collisions are now rejected at the CLI
+        level: `fern check` errors and asks the user to deconflict the names (e.g. via
+        `x-fern-parameter-name`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 66
 - version: 1.13.3
   changelogEntry:
     - summary: |

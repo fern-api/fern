@@ -1955,6 +1955,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine(".Add(_client.Options.Headers)");
                 writer.writeLine(".Add(_client.Options.AdditionalHeaders)");
 
+                // Fallback auto-generated idempotency-key header for the eligible HTTP methods carried
+                // in the IR. Emitted before the declared idempotency headers and request-option headers
+                // so a caller-provided value wins.
+                if (this.context.shouldAutoGenerateIdempotencyKey(endpoint)) {
+                    writer.writeLine(".AddIdempotencyHeader()");
+                }
+
                 if (endpoint.idempotent) {
                     writer.writeLine(
                         `.Add(((${this.Types.IdempotentRequestOptionsInterface.name}?)${requestOptionsVar})?.GetIdempotencyHeaders())`

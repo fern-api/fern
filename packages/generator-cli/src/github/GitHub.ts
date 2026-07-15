@@ -7,6 +7,7 @@ import {
     parseRepository
 } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
+import { readdir } from "fs/promises";
 
 import type { FernGeneratorCli } from "../configuration/sdk/index.js";
 
@@ -45,9 +46,10 @@ export class GitHub {
             }
 
             const fernIgnoreFiles = await this.getFernignoreFiles(repository);
+            const changelogFiles = await this.getChangelogFilesToPreserve(repository, sourceDirectory);
             await repository.overwriteLocalContents(sourceDirectory);
             await repository.add(".");
-            await this.restoreFiles(repository, fernIgnoreFiles);
+            await this.restoreFiles(repository, [...fernIgnoreFiles, ...changelogFiles]);
             await repository.commit("SDK Generation");
 
             if (isEmptyRepo) {
@@ -92,9 +94,10 @@ export class GitHub {
             await repository.checkout(prBranch);
 
             const fernIgnoreFiles = await this.getFernignoreFiles(repository);
+            const changelogFiles = await this.getChangelogFilesToPreserve(repository, sourceDirectory);
             await repository.overwriteLocalContents(sourceDirectory);
             await repository.add(".");
-            await this.restoreFiles(repository, fernIgnoreFiles);
+            await this.restoreFiles(repository, [...fernIgnoreFiles, ...changelogFiles]);
             await repository.commit("SDK Generation");
             await repository.push();
 
@@ -144,6 +147,29 @@ export class GitHub {
         }
         const tracked = await repository.listTrackedFiles();
         return expandFernignorePatterns(fernignore, tracked);
+    }
+
+    /**
+     * Returns tracked changelog files (e.g. `changelog.md`) that should be restored after
+     * `overwriteLocalContents`, so existing changelog entries are never wiped when the
+     * generated output doesn't include a changelog of its own.
+     */
+    private async getChangelogFilesToPreserve(
+        repository: ClonedRepository,
+        sourceDirectory: string
+    ): Promise<string[]> {
+        const tracked = await repository.listTrackedFiles();
+        const trackedChangelogs = tracked.filter((file) => file.toLowerCase() === "changelog.md");
+        if (trackedChangelogs.length === 0) {
+            return [];
+        }
+        try {
+            const sourceFiles = await readdir(sourceDirectory);
+            const sourceHasChangelog = sourceFiles.some((file) => file.toLowerCase() === "changelog.md");
+            return sourceHasChangelog ? [] : trackedChangelogs;
+        } catch {
+            return trackedChangelogs;
+        }
     }
 
     private async restoreFiles(repository: ClonedRepository, files: string[]): Promise<void> {

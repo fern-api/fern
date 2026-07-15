@@ -328,6 +328,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.ErrorsConstraint,
             AsIsFiles.ErrorsType,
 
+            // Idempotency
+            ...(this.ir.sdkConfig.idempotencyKeyGeneration != null ? [AsIsFiles.IdempotencyKey] : []),
+
             // Iterators
             AsIsFiles.ItemIterator,
             AsIsFiles.CursorItemIterator,
@@ -384,6 +387,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getInferredAuth(): FernIr.InferredAuthScheme | undefined {
         for (const scheme of this.ir.auth.schemes) {
             if (scheme.type === "inferred") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    public getOAuthAuth(): FernIr.OAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
                 return scheme;
             }
         }

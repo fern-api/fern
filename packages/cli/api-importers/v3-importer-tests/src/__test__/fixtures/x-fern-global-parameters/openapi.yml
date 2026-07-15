@@ -47,14 +47,23 @@ x-fern-global-parameters:
     default: auto-generated
     x-fern-default: trace-default
     docs: x-fern-default should take precedence over default.
+  - name: tenant
+    in: body
+    target: metadata.tenantId
+    apply: explicit
+    optional: true
+    docs: Explicit body global; only applies where the body declares metadata.tenantId.
 paths:
   "/v1/products/{regionId}/search":
     post:
       x-fern-sdk-group-name: products
       x-fern-sdk-method-name: search
+      # currency is apply:auto and resolves via the request-body schema (config.currency),
+      # so it does not need an explicit opt-in here. tenant is an explicit body opt-in whose
+      # target (metadata.tenantId) is absent from this body, so it is dropped with a warning.
       x-fern-global-parameter:
         - region
-        - currency
+        - tenant
       operationId: searchProducts
       parameters:
         - in: path

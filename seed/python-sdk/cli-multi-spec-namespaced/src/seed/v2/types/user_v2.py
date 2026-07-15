@@ -4,7 +4,7 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .user_v2profile import UserV2Profile
+from .user_v2_profile import UserV2Profile
 
 
 class UserV2(UniversalBaseModel):

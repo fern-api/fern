@@ -66,6 +66,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     use_api_name_in_package: bool = False
     package_name: Optional[str] = None
     package_path: Optional[str] = None
+    # Request timeout, in seconds. Prefer `timeout`; `timeout_in_seconds` is a
+    # deprecated alias kept for backwards compatibility. Both mean seconds.
+    timeout: Optional[Union[Literal["infinity"], int]] = None
+    # deprecated, use `timeout` instead (same value, seconds)
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
     # Deprecated: prefer `output_directory`. `flat_layout` toggles only the `src/`
     # prefix and never skips project scaffolding; `output_directory: source-root`
@@ -189,6 +193,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # X-Fern-Runtime, X-Fern-Platform, User-Agent) from generated SDK requests.
     omit_fern_headers: bool = False
 
+    # If true, emits a structured `User-Agent` header of the form
+    # `{sdkName}/{version} ({os}; {arch}) Python/{pythonVersion}` that consolidates
+    # platform + runtime information. Disabled by default so existing output is
+    # unchanged. Subject to `omit_fern_headers`.
+    include_platform_headers: bool = False
+
     # The default number of retries for failed requests in the generated SDK.
     # Set to 0 to disable retries by default (useful for non-idempotent APIs).
     # SDK users can still override this per-request via request_options.
@@ -236,6 +246,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":
         self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
         return self
+
+    @property
+    def resolved_timeout(self) -> Union[Literal["infinity"], int]:
+        """Resolve the request timeout (in seconds), preferring `timeout` and
+        falling back to the deprecated `timeout_in_seconds` alias. Both keys mean
+        seconds, so no unit conversion is applied."""
+        return self.timeout if self.timeout is not None else self.timeout_in_seconds
 
     def get_resolved_defaults_mode(self) -> str:
         """Resolve the effective defaults mode from use_request_defaults (takes precedence)

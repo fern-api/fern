@@ -85,6 +85,9 @@ func TestNameFromStringSmartCasing(t *testing.T) {
 		// Smart snake_case keeps digits attached: EC2 -> ec2
 		{"EC2", "EC2", "ec2", "Ec2", "ec2", "EC2"},
 		{"S3", "S3", "s3", "S3", "s3", "S3"},
+		// A capitalized word after a digit run keeps its snake_case word boundary
+		{"ConversationsV2Configuration", "ConversationsV2Configuration", "conversationsV2Configuration", "ConversationsV2Configuration", "conversations_v2_configuration", "CONVERSATIONS_V2_CONFIGURATION"},
+		{"applicationV1", "applicationV1", "applicationV1", "ApplicationV1", "application_v1", "APPLICATION_V1"},
 	}
 
 	for _, tt := range tests {

@@ -56,7 +56,9 @@ export function convertGenericTypeDeclaration({
             extends: newExtends,
             properties: getObjectPropertiesFromRawObjectSchema({ properties: Object.fromEntries(newProperties) }, file),
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
-            extendedProperties: undefined
+            extendedProperties: undefined,
+            // Populated by the computeUnionBasePropertyDedupe post-build pass; undefined here.
+            deferredUnionBaseProperties: undefined
         });
     }
 

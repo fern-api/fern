@@ -28,7 +28,7 @@ func TestSettersGetTokenRequest(t *testing.T) {
 
 	t.Run("SetClientSecret", func(t *testing.T) {
 		obj := &GetTokenRequest{}
-		var fernTestValueClientSecret string
+		var fernTestValueClientSecret *string
 		obj.SetClientSecret(fernTestValueClientSecret)
 		assert.Equal(t, fernTestValueClientSecret, obj.ClientSecret)
 		assert.NotNil(t, obj.explicitFields)
@@ -111,7 +111,7 @@ func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetTokenRequest{}
-		var fernTestValueClientSecret string
+		var fernTestValueClientSecret *string
 
 		// Act
 		obj.SetClientSecret(fernTestValueClientSecret)

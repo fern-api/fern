@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedVersionClient } from "@fern/version-no-default";
 
-const client = new SeedVersionClient({ environment: "YOUR_BASE_URL", xApiVersion: "1.0.0" });
+const client = new SeedVersionClient({ baseUrl: "YOUR_BASE_URL", xApiVersion: "1.0.0" });
 await client.user.getUser("userId");
 ```
 

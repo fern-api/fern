@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a compile error in the generated `OAuthTokenProvider` when the token endpoint's
+    `expires-in` response property is optional. The provider now null-checks the value
+    before computing the token expiry instead of passing a nullable number to
+    `DateTime.AddSeconds`.
+  type: fix

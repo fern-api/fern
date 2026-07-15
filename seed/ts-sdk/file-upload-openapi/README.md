@@ -44,7 +44,7 @@ Instantiate and use the client with the following:
 import { createReadStream } from "fs";
 import { SeedApiClient } from "@fern/file-upload-openapi";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.fileUploadExample.uploadFile({
     name: "name"
 });
@@ -91,7 +91,7 @@ You can upload files using the client:
 import { createReadStream } from "fs";
 import { SeedApiClient } from "@fern/file-upload-openapi";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.fileUploadExample.uploadFile({
     name: "name"
 });

@@ -161,7 +161,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -251,7 +252,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:PostRootRequestBarInnerBar"
@@ -341,7 +343,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -431,7 +434,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:PostRootResponseBarInnerBar"
@@ -523,7 +527,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:PostRootResponseBar",
@@ -750,7 +755,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Schema1InlineUnionMapValue"
@@ -858,7 +864,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -918,7 +925,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1043,7 +1051,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1103,7 +1112,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1346,7 +1356,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:Schema2TestEnum",
@@ -3428,7 +3439,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:PostRootRequestBar": {
                 "type": "object",
@@ -3527,7 +3539,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:PostRootResponseBarInnerBar": {
                 "type": "object",
@@ -3626,7 +3639,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:PostRootResponseBar": {
                 "type": "object",
@@ -3725,7 +3739,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:PostRootResponse": {
                 "type": "object",
@@ -3824,7 +3839,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Schema1InlineUnionMapValue": {
                 "type": "undiscriminatedUnion",
@@ -3836,12 +3852,12 @@
                             "safeName": "schema1InlineUnionMapValue"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema1inline_union_map_value",
-                            "safeName": "schema1inline_union_map_value"
+                            "unsafeName": "schema1_inline_union_map_value",
+                            "safeName": "schema1_inline_union_map_value"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                            "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                            "unsafeName": "SCHEMA1_INLINE_UNION_MAP_VALUE",
+                            "safeName": "SCHEMA1_INLINE_UNION_MAP_VALUE"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema1InlineUnionMapValue",
@@ -4015,7 +4031,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Schema2TestEnum": {
                 "type": "enum",
@@ -4027,12 +4044,12 @@
                             "safeName": "schema2TestEnum"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema2test_enum",
-                            "safeName": "schema2test_enum"
+                            "unsafeName": "schema2_test_enum",
+                            "safeName": "schema2_test_enum"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA2TEST_ENUM",
-                            "safeName": "SCHEMA2TEST_ENUM"
+                            "unsafeName": "SCHEMA2_TEST_ENUM",
+                            "safeName": "SCHEMA2_TEST_ENUM"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema2TestEnum",
@@ -4124,12 +4141,12 @@
                             "safeName": "schema2TestDiscriminatedUnionZero"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema2test_discriminated_union_zero",
-                            "safeName": "schema2test_discriminated_union_zero"
+                            "unsafeName": "schema2_test_discriminated_union_zero",
+                            "safeName": "schema2_test_discriminated_union_zero"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO",
-                            "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ZERO"
+                            "unsafeName": "SCHEMA2_TEST_DISCRIMINATED_UNION_ZERO",
+                            "safeName": "SCHEMA2_TEST_DISCRIMINATED_UNION_ZERO"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema2TestDiscriminatedUnionZero",
@@ -4178,7 +4195,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Schema2TestDiscriminatedUnionOne": {
                 "type": "object",
@@ -4190,12 +4208,12 @@
                             "safeName": "schema2TestDiscriminatedUnionOne"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema2test_discriminated_union_one",
-                            "safeName": "schema2test_discriminated_union_one"
+                            "unsafeName": "schema2_test_discriminated_union_one",
+                            "safeName": "schema2_test_discriminated_union_one"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE",
-                            "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION_ONE"
+                            "unsafeName": "SCHEMA2_TEST_DISCRIMINATED_UNION_ONE",
+                            "safeName": "SCHEMA2_TEST_DISCRIMINATED_UNION_ONE"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema2TestDiscriminatedUnionOne",
@@ -4244,7 +4262,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Schema2TestDiscriminatedUnion": {
                 "type": "undiscriminatedUnion",
@@ -4256,12 +4275,12 @@
                             "safeName": "schema2TestDiscriminatedUnion"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema2test_discriminated_union",
-                            "safeName": "schema2test_discriminated_union"
+                            "unsafeName": "schema2_test_discriminated_union",
+                            "safeName": "schema2_test_discriminated_union"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA2TEST_DISCRIMINATED_UNION",
-                            "safeName": "SCHEMA2TEST_DISCRIMINATED_UNION"
+                            "unsafeName": "SCHEMA2_TEST_DISCRIMINATED_UNION",
+                            "safeName": "SCHEMA2_TEST_DISCRIMINATED_UNION"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema2TestDiscriminatedUnion",
@@ -4295,12 +4314,12 @@
                             "safeName": "schema2TestUnionA"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema2test_union_a",
-                            "safeName": "schema2test_union_a"
+                            "unsafeName": "schema2_test_union_a",
+                            "safeName": "schema2_test_union_a"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA2TEST_UNION_A",
-                            "safeName": "SCHEMA2TEST_UNION_A"
+                            "unsafeName": "SCHEMA2_TEST_UNION_A",
+                            "safeName": "SCHEMA2_TEST_UNION_A"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema2TestUnionA",
@@ -4349,7 +4368,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Schema2TestUnionB": {
                 "type": "object",
@@ -4361,12 +4381,12 @@
                             "safeName": "schema2TestUnionB"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema2test_union_b",
-                            "safeName": "schema2test_union_b"
+                            "unsafeName": "schema2_test_union_b",
+                            "safeName": "schema2_test_union_b"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA2TEST_UNION_B",
-                            "safeName": "SCHEMA2TEST_UNION_B"
+                            "unsafeName": "SCHEMA2_TEST_UNION_B",
+                            "safeName": "SCHEMA2_TEST_UNION_B"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema2TestUnionB",
@@ -4415,7 +4435,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:Schema2TestUnion": {
                 "type": "undiscriminatedUnion",
@@ -4427,12 +4448,12 @@
                             "safeName": "schema2TestUnion"
                         },
                         "snakeCase": {
-                            "unsafeName": "schema2test_union",
-                            "safeName": "schema2test_union"
+                            "unsafeName": "schema2_test_union",
+                            "safeName": "schema2_test_union"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SCHEMA2TEST_UNION",
-                            "safeName": "SCHEMA2TEST_UNION"
+                            "unsafeName": "SCHEMA2_TEST_UNION",
+                            "safeName": "SCHEMA2_TEST_UNION"
                         },
                         "pascalCase": {
                             "unsafeName": "Schema2TestUnion",
@@ -4652,7 +4673,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_:RootUnionMapValue": {
                 "type": "undiscriminatedUnion",
@@ -4992,6 +5014,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

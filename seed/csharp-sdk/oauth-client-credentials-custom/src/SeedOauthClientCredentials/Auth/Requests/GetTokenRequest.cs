@@ -27,6 +27,9 @@ public record GetTokenRequest
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
 
+    [JsonPropertyName("permissions")]
+    public IEnumerable<string>? Permissions { get; set; }
+
     /// <inheritdoc />
     public override string ToString()
     {
