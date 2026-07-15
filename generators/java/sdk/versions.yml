@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.14.2
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` when constructing an OAuth-only client under multi-scheme
+        (`any`) auth combining OAuth client-credentials with an API-key header. Building via
+        `withCredentials(...)` (no `apiKey(...)`) previously baked a `null` API-key header into
+        `ClientOptions`, which crashed okhttp `Headers.of` on the first HTTP call (the token
+        fetch). The generated `setAuthentication` now guards the API-key header add on a non-null
+        value, and `ClientOptions.Builder.addHeader(String, String)` defensively skips null values.
+        Supplying both credentials and an API key still sends both the `Authorization: Bearer`
+        and the API-key header, and an API-key-only client still validates the key at build time.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 4.14.1
   changelogEntry:
     - summary: |

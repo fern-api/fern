@@ -33095,7 +33095,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "headerName": "x-webhook-timestamp",
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
-                    }
+                    },
+                    "bodyHashBinding": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -33147,7 +33148,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "headerName": "x-webhook-timestamp",
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
-                    }
+                    },
+                    "bodyHashBinding": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,

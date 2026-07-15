@@ -16,6 +16,7 @@ import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { writeLiteralHeaders } from "../request/literalHeaders.js";
 import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
 import { getEndpointReturnType, getStreamElementType, isStreamingEndpoint } from "../utils/getEndpointReturnType.js";
 import { RawClient } from "./RawClient.js";
@@ -190,7 +191,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 rawClient,
                 endpoint,
                 rawClientReference,
-                parameters
+                parameters,
+                serviceId
             );
             if (isStreamingEndpoint(endpoint)) {
                 this.addStreamBodyIteratorMethod(cls, endpoint);
@@ -222,7 +224,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         queryParameterCodeBlock.code.write(writer);
         const headerParameterCodeBlock =
             endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
-            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+            this.getDefaultHeaderParameterCodeBlock({ endpoint, serviceId });
         headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
@@ -266,7 +268,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClient: RawClient,
         endpoint: HttpEndpoint,
         rawClientReference: string,
-        parameters: ast.Parameter[]
+        parameters: ast.Parameter[],
+        serviceId: ServiceId
     ) {
         // For async methods, we don't wrap in Task<> because the C# compiler does that automatically.
         // Three shapes:
@@ -306,7 +309,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             queryParameterCodeBlock.code.write(writer);
             const headerParameterCodeBlock =
                 endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
-                this.getDefaultHeaderParameterCodeBlock({ endpoint });
+                this.getDefaultHeaderParameterCodeBlock({ endpoint, serviceId });
             headerParameterCodeBlock.code.write(writer);
             const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
             if (requestBodyCodeBlock?.code != null) {
@@ -1595,7 +1598,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         queryParameterCodeBlock.code.write(writer);
         const headerParameterCodeBlock =
             endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
-            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+            this.getDefaultHeaderParameterCodeBlock({ endpoint, serviceId });
         headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
@@ -1940,7 +1943,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
      * Generates header code block for endpoints without a request parameter.
      * This ensures client-level headers (API key, SDK version, etc.) are always included.
      */
-    private getDefaultHeaderParameterCodeBlock({ endpoint }: { endpoint: HttpEndpoint }): {
+    private getDefaultHeaderParameterCodeBlock({
+        endpoint,
+        serviceId
+    }: {
+        endpoint: HttpEndpoint;
+        serviceId: ServiceId;
+    }): {
         code: ast.CodeBlock;
         headerParameterBagReference: string;
     } {
@@ -1952,6 +1961,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
+                writeLiteralHeaders({
+                    writer,
+                    context: this.context,
+                    serviceId,
+                    endpoint
+                });
+                writer.writeLine();
                 writer.writeLine(".Add(_client.Options.Headers)");
                 writer.writeLine(".Add(_client.Options.AdditionalHeaders)");
 

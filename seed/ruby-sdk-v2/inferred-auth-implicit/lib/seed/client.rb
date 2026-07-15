@@ -3,14 +3,14 @@
 module Seed
   class Client
     # @param client_id [String]
-    # @param client_secret [String]
     # @param x_api_key [String]
     # @param base_url [String, nil]
+    # @param client_secret [String, nil]
     # @param scope [String, nil]
     # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(client_id:, client_secret:, x_api_key:, base_url: nil, scope: nil, max_retries: 2)
+    def initialize(client_id:, x_api_key:, base_url: nil, client_secret: nil, scope: nil, max_retries: 2)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,

@@ -491,18 +491,39 @@ export class DynamicLiteralMapper extends WithGeneration {
             namespace: this.context.getNamespace(object_.declaration.fernFilepath)
         });
 
+        // When `dedupeUnionBaseProperties` is enabled, this object may be a discriminated-union variant
+        // whose base properties the model dropped as leaf fields (they are owned solely by the union
+        // envelope). Setting them inside this variant literal would reference members that no longer
+        // exist on the generated class, so omit them here. The decision is read straight from the IR
+        // fact `ObjectType.deferredUnionBaseProperties` (populated only for exclusive union variants),
+        // mirroring the model's `getBasePropertyWireNamesToOmitForType` — the snippet never re-derives it.
+        const omittedBasePropertyWireValues = this.getOmittedBasePropertyWireValues(object_);
+        const visibleProperties =
+            omittedBasePropertyWireValues.size === 0
+                ? object_.properties
+                : object_.properties.filter((property) => !omittedBasePropertyWireValues.has(property.name.wireValue));
+
         // Pre-register all property names through the TypeScope's collision detection.
         // registerField renames properties that collide with the enclosing type name (CS0542).
         const propertyNameByWireValue = new Map<string, string>();
-        for (const property of object_.properties) {
+        for (const property of visibleProperties) {
             const actualName = this.context.resolvePropertyName(classReference, property.name.name);
             propertyNameByWireValue.set(property.name.wireValue, actualName);
         }
 
         const record = this.context.getRecord(value) ?? {};
+        // Drop the omitted base-property values from the record too: they are consumed by the union
+        // envelope (via getBaseProperties), so leaving them here would make associateByWireValue flag
+        // them as unrecognized parameters for this leaf object.
+        const visibleRecord =
+            omittedBasePropertyWireValues.size === 0
+                ? record
+                : Object.fromEntries(
+                      Object.entries(record).filter(([wireValue]) => !omittedBasePropertyWireValues.has(wireValue))
+                  );
         const properties = this.context.associateByWireValue({
-            parameters: object_.properties,
-            values: record
+            parameters: visibleProperties,
+            values: visibleRecord
         });
 
         const fields = properties.map((property) => {
@@ -521,8 +542,8 @@ export class DynamicLiteralMapper extends WithGeneration {
 
         // Fill defaults for required properties that are either missing from
         // the example or whose provided value failed to convert (produced nop).
-        const providedWireValues = new Set(Object.keys(record));
-        for (const property of object_.properties) {
+        const providedWireValues = new Set(Object.keys(visibleRecord));
+        for (const property of visibleProperties) {
             const fieldName =
                 propertyNameByWireValue.get(property.name.wireValue) ?? this.context.getClassName(property.name.name);
             if (providedWireValues.has(property.name.wireValue)) {
@@ -553,6 +574,22 @@ export class DynamicLiteralMapper extends WithGeneration {
             reference: classReference,
             fields
         });
+    }
+
+    /**
+     * Returns the wire values of the base properties to omit from this object literal when it is
+     * emitted as a discriminated-union `samePropertiesAsObject` variant and `dedupeUnionBaseProperties`
+     * is enabled. Read directly from the IR fact `ObjectType.deferredUnionBaseProperties` (the dynamic-IR
+     * mirror of `ObjectTypeDeclaration.deferredUnionBaseProperties`), which the IR generator computes
+     * once with structural type equality and an exclusive-variant guard. Empty when the flag is off or
+     * the object carries no deferred properties, so behavior is unchanged by default and standalone
+     * objects are never stripped.
+     */
+    private getOmittedBasePropertyWireValues(object_: FernIr.dynamic.ObjectType): Set<string> {
+        if (!this.settings.dedupeUnionBaseProperties) {
+            return new Set();
+        }
+        return new Set((object_.deferredUnionBaseProperties ?? []).map((property) => property.wireValue));
     }
 
     private isRequiredProperty(typeReference: FernIr.dynamic.TypeReference): boolean {

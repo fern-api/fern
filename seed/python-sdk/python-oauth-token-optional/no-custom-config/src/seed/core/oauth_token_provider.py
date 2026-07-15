@@ -19,6 +19,7 @@ class OAuthTokenProvider:
         self._client_secret = client_secret
         self._access_token: typing.Optional[str] = None
         self._expires_at: dt.datetime = dt.datetime.now()
+        self._refresh_token: typing.Optional[str] = None
         self._auth_client = AuthClient(client_wrapper=client_wrapper)
         self._lock: threading_Lock = threading.Lock()
 
@@ -37,6 +38,7 @@ class OAuthTokenProvider:
         if token_response.access_token is None:
             raise RuntimeError("Access token not present in OAuth response")
         self._access_token = token_response.access_token
+        self._refresh_token = token_response.refresh_token
         self._expires_at = self._get_expires_at(
             expires_in_seconds=token_response.expires_in if token_response.expires_in is not None else 3600,
             buffer_in_minutes=self.BUFFER_IN_MINUTES,
@@ -55,6 +57,7 @@ class AsyncOAuthTokenProvider:
         self._client_secret = client_secret
         self._access_token: typing.Optional[str] = None
         self._expires_at: dt.datetime = dt.datetime.now()
+        self._refresh_token: typing.Optional[str] = None
         self._auth_client = AsyncAuthClient(client_wrapper=client_wrapper)
         self._lock: asyncio_Lock = asyncio.Lock()
 
@@ -73,6 +76,7 @@ class AsyncOAuthTokenProvider:
         if token_response.access_token is None:
             raise RuntimeError("Access token not present in OAuth response")
         self._access_token = token_response.access_token
+        self._refresh_token = token_response.refresh_token
         self._expires_at = self._get_expires_at(
             expires_in_seconds=token_response.expires_in if token_response.expires_in is not None else 3600,
             buffer_in_minutes=self.BUFFER_IN_MINUTES,
