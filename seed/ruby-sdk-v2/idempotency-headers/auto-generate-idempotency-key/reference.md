@@ -59,7 +59,7 @@ client.payment.create(
 </dl>
 </details>
 
-<details><summary><code>client.payment.<a href="/lib/seed/payment/client.rb">delete</a>(payment_id) -> </code></summary>
+<details><summary><code>client.payment.<a href="/lib/seed/payment/client.rb">delete</a>(payment_id:) -> </code></summary>
 <dl>
 <dd>
 

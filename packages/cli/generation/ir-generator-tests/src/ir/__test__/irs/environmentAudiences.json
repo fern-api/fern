@@ -1838,7 +1838,8 @@
                         "headerName": "x-webhook-timestamp",
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
-                    }
+                    },
+                    "bodyHashBinding": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -1873,6 +1874,61 @@
                     "docs": null
                 },
                 "signatureVerification": null,
+                "fileUploadPayload": null,
+                "responses": null,
+                "examples": null,
+                "v2Examples": null,
+                "availability": null,
+                "docs": null
+            },
+            {
+                "id": "webhooks_webhooks.messageStatus",
+                "displayName": "Message Status",
+                "method": "POST",
+                "name": "messageStatus",
+                "headers": [],
+                "payload": {
+                    "type": "reference",
+                    "payloadType": {
+                        "_type": "named",
+                        "name": "User",
+                        "fernFilepath": {
+                            "allParts": [
+                                "webhooks"
+                            ],
+                            "packagePath": [],
+                            "file": "webhooks"
+                        },
+                        "displayName": null,
+                        "typeId": "type_webhooks:User",
+                        "default": null,
+                        "inline": null
+                    },
+                    "docs": null
+                },
+                "signatureVerification": {
+                    "type": "hmac",
+                    "signatureHeaderName": "X-Twilio-Signature",
+                    "algorithm": "SHA1",
+                    "encoding": "BASE64",
+                    "signaturePrefix": null,
+                    "payloadFormat": {
+                        "components": [
+                            "NOTIFICATION_URL"
+                        ],
+                        "delimiter": "",
+                        "bodySort": null
+                    },
+                    "timestamp": null,
+                    "bodyHashBinding": {
+                        "algorithm": "SHA256",
+                        "encoding": "HEX",
+                        "location": {
+                            "type": "queryParameter",
+                            "name": "bodySHA256"
+                        }
+                    }
+                },
                 "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,

@@ -2537,10 +2537,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 return null;
             }
 
-            Boolean shouldWrapInConditional = header.getValueType().isContainer()
-                    && header.getValueType().getContainer().get().isOptional();
+            // A literal header credential is initialized to a constant and is never null, so it does not need a
+            // guard. Any other header credential is stored in a field that may be null: optional containers default
+            // to null and required string credentials default to null (or System.getenv, which may return null).
+            // Even a required credential can be left unset when the enclosing builder is constructible without it
+            // (e.g. the OAuth `_CredentialsAuth` / multi-scheme `any` path, which never sets the api-key header).
+            // Guarding the add on non-null keeps a `requestToken: null` header from being baked into ClientOptions
+            // and NPE-ing okhttp Headers.of; the single-scheme api-key-only builder still validates non-null in
+            // build(), so this runtime guard is harmless there.
+            boolean isLiteral = header.getValueType().isContainer()
+                    && header.getValueType().getContainer().get().isLiteral();
+            Boolean shouldWrapInConditional = !isLiteral;
             MethodSpec.Builder maybeConditionalAdditionFlow = targetMethod;
-            // If the header is optional, wrap the add in a presence check so it does not get added unless it's non-null
+            // Wrap the add in a presence check so the header is not added unless the credential value is non-null.
             if (shouldWrapInConditional) {
                 maybeConditionalAdditionFlow = targetMethod.beginControlFlow("if (this.$L != null)", fieldName);
             }

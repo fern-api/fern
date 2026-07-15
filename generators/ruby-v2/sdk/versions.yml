@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.5
+  changelogEntry:
+    - summary: |
+        Cap generated type filenames at 100 characters so `gem build` no longer fails
+        with `Gem::Package::TooLongFileName` (RubyGems packages into a tar format whose
+        header caps filenames at 100 chars). Deeply nested inline types — such as
+        anonymous `oneOf` variants — could previously overflow this limit. When a name
+        is too long it is truncated and a short deterministic hash is appended to keep
+        it unique. This changes only the filename and its `require_relative`; the
+        module/class name is unchanged, so it is non-breaking for consumers, who
+        reference the constant rather than the file.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.4
+  changelogEntry:
+    - summary: |
+        Send request bodies declared with the `application/x-www-form-urlencoded` content type
+        (e.g. OAuth token endpoints) as form-urlencoded instead of JSON. A new
+        `Internal::UrlEncoded::Request` encodes the body with `URI.encode_www_form` and sets the
+        `Content-Type: application/x-www-form-urlencoded` header.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 1.17.3
   changelogEntry:
     - summary: |

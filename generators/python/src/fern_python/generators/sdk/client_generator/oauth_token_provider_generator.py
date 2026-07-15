@@ -439,6 +439,7 @@ class OAuthTokenProviderGenerator:
                         self._get_write_response_property_setter(
                             response_property=refresh_token_property,
                             member_name=self._get_refresh_token_member_name(),
+                            raise_if_none=False,
                         ),
                     ),
                 )
@@ -471,6 +472,7 @@ class OAuthTokenProviderGenerator:
         self,
         response_property: ir_types.ResponseProperty,
         member_name: str,
+        raise_if_none: bool = True,
     ) -> AST.CodeWriterFunction:
         def _write_response_property_setter(writer: AST.NodeWriter) -> None:
             property_path = response_property.property_path
@@ -481,7 +483,7 @@ class OAuthTokenProviderGenerator:
             property_type = response_property.property.value_type
             property_is_optional = self._context.resolved_schema_is_optional_or_unknown(property_type)
 
-            if property_is_optional:
+            if property_is_optional and raise_if_none:
                 # For optional access tokens, raise an exception if None
                 writer.write_line(f"if {property_value} is None:")
                 with writer.indent():

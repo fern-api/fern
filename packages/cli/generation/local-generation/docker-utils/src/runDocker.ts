@@ -135,18 +135,6 @@ async function tryRunContainer({
     if (process.env["FERN_STACK_TRACK"]) {
         envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
     }
-    // Forward the GitHub Actions OIDC request variables so tooling inside the container (e.g. npm
-    // >= 11.5.1 publishing to a trusted publisher) can mint a short-lived OIDC token instead of a
-    // long-lived npm token. These are only set inside GitHub Actions jobs granted `id-token: write`,
-    // so this is a no-op everywhere else. Passed unquoted (an https URL and a JWT, neither containing
-    // shell-special characters) to avoid the surrounding-quote wrapping applied to `envVars` below.
-    const oidcEnvArgs = ["ACTIONS_ID_TOKEN_REQUEST_URL", "ACTIONS_ID_TOKEN_REQUEST_TOKEN"].flatMap((name) => {
-        const value = process.env[name];
-        return value != null ? ["-e", `${name}=${value}`] : [];
-    });
-    // The OIDC request token is a short-lived JWT; keep it out of the logged command line.
-    const oidcSecret = process.env["ACTIONS_ID_TOKEN_REQUEST_TOKEN"];
-    const secrets = oidcSecret != null ? [oidcSecret] : [];
     const containerArgs = [
         "run",
         "--user",
@@ -154,7 +142,6 @@ async function tryRunContainer({
         ...(pull ? ["--pull", "always"] : []),
         ...(platform != null ? ["--platform", platform] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
-        ...oidcEnvArgs,
         ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
@@ -167,7 +154,6 @@ async function tryRunContainer({
         reject: false,
         all: true,
         doNotPipeOutput: true,
-        secrets,
         signal
     });
 

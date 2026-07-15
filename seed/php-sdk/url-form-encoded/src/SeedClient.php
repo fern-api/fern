@@ -8,7 +8,7 @@ use Seed\Requests\PostSubmitRequest;
 use Seed\Types\PostSubmitResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\UrlEncodedApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -83,7 +83,7 @@ class SeedClient
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new UrlEncodedApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "submit",
                     method: HttpMethod::POST,
@@ -130,7 +130,7 @@ class SeedClient
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new UrlEncodedApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "token",
                     method: HttpMethod::POST,
