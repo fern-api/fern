@@ -57,25 +57,27 @@ jobs:
         run: npm install -g fern-api
 
       # `fern generate --local` runs the generator in Docker on this runner and writes the full
-      # @fern-api/dynamic-ir-sdk package to a temp dir WITHOUT publishing (remote generation would
-      # publish from Fiddle, where GitHub's OIDC token isn't available). We then publish that package
-      # from the runner via OIDC in a later step. The package name/version come from the generators.yml
+      # @fern-api/dynamic-ir-sdk package WITHOUT publishing (remote generation would publish from
+      # Fiddle, where GitHub's OIDC token isn't available). We then publish that package from the
+      # runner via OIDC in a later step. `--lfs-override` redirects the output to a deterministic
+      # directory (local-file-system output at the given path) so we don't have to scrape fern's
+      # stdout for the location; the package name/version still come from the generators.yml
       # `package-name` and `--version`.
       - name: Generate dynamic IR SDK package (no publish)
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          DYNAMIC_IR_OUTPUT: ${{ runner.temp }}/dynamic-ir-sdk
         run: |
+          set -euo pipefail
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
-          gen_output=$(fern generate --api ir-types-latest --group dynamic-ir --version "$version" --local 2>&1)
-          echo "$gen_output"
-          outdir=$(echo "$gen_output" | grep -oE "Wrote files to .+" | tail -1 | sed 's/^.*Wrote files to //')
-          if [ -z "$outdir" ] || [ ! -d "$outdir" ]; then
-            echo "::error::could not determine the generated output directory from fern output"
+          fern generate --api ir-types-latest --group dynamic-ir --version "$version" --local \
+            --lfs-override "$DYNAMIC_IR_OUTPUT"
+          if [ ! -f "$DYNAMIC_IR_OUTPUT/package.json" ]; then
+            echo "::error::fern did not write a package to $DYNAMIC_IR_OUTPUT"
             exit 1
           fi
-          echo "Generated package at: $outdir"
-          echo "DYNAMIC_IR_OUTPUT=$outdir" >> "$GITHUB_ENV"
+          echo "Generated package at: $DYNAMIC_IR_OUTPUT"
 
       # OIDC trusted publishing requires npm >= 11.5.1 / Node >= 22.14 and runs on the runner (inside
       # this job) so the id-token is available. No NPM_TOKEN — see the package's Trusted Publisher on npmjs.
@@ -86,11 +88,16 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: "@fern-api"
 
+      # Pin to the first npm that supports OIDC trusted publishing; a floating `npm@11` tag could
+      # in principle resolve below 11.5.1.
       - name: Update npm for OIDC publishing
         run: npm install -g npm@^11.5.1
 
       - name: Publish @fern-api/dynamic-ir-sdk via OIDC
+        env:
+          DYNAMIC_IR_OUTPUT: ${{ runner.temp }}/dynamic-ir-sdk
         run: |
+          set -euo pipefail
           cd "$DYNAMIC_IR_OUTPUT"
           echo "Publishing from $DYNAMIC_IR_OUTPUT"
           cat package.json
