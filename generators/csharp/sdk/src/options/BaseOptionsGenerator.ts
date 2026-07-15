@@ -51,7 +51,17 @@ export class BaseOptionsGenerator extends WithGeneration {
             get: true,
             init: true,
             type: optional ? type.asOptional() : type,
-            initializer: includeInitializer ? this.System.Net.Http.HttpClient.new() : undefined,
+            initializer: includeInitializer
+                ? this.csharp.codeblock((writer) => {
+                      writer.writeNode(
+                          this.csharp.invokeMethod({
+                              on: this.Types.DefaultHttpClientFactory,
+                              method: "Create",
+                              arguments_: []
+                          })
+                      );
+                  })
+                : undefined,
             summary: "The http client used to make requests."
         });
     }
@@ -120,11 +130,11 @@ export class BaseOptionsGenerator extends WithGeneration {
 
     public getTimeoutField(classOrInterface: ast.Interface | ast.Class, { optional, includeInitializer }: OptionArgs) {
         const type = this.System.TimeSpan;
-        const configured = this.settings.defaultTimeoutInSeconds;
+        const configured = this.settings.defaultTimeoutInMilliseconds;
         const initializer =
             configured === "infinity"
                 ? this.csharp.codeblock("System.Threading.Timeout.InfiniteTimeSpan")
-                : this.csharp.codeblock(`TimeSpan.FromSeconds(${configured ?? 30})`);
+                : this.csharp.codeblock(`TimeSpan.FromMilliseconds(${configured ?? 30000})`);
         classOrInterface.addField({
             origin: classOrInterface.explicit("Timeout"),
             access: ast.Access.Public,

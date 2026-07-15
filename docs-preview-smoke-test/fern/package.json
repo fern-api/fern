@@ -1,0 +1,7 @@
+{
+  "name": "docs-preview-smoke-test",
+  "private": true,
+  "dependencies": {
+    "pluralize": "8.0.0"
+  }
+}

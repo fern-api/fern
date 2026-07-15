@@ -98,6 +98,9 @@ fixtures:
         omit_fern_headers: true
       outputFolder: omit-fern-headers
     - customConfig:
+        include_platform_headers: true
+      outputFolder: include-platform-headers
+    - customConfig:
         additional_init_exports:
           - from: types.types
             imports:
@@ -329,6 +332,15 @@ fixtures:
     - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
+  idempotency-headers:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -446,6 +458,9 @@ fixtures:
         use_typeddict_requests: true
       outputFolder: use-typeddict-requests
   oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+  python-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config
   python-mypy-exclude:

@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .foo_extended import FooExtended
     from .second_item_type import SecondItemType
     from .type_with_optional_map import TypeWithOptionalMap
+    from .type_with_optional_reference_map import TypeWithOptionalReferenceMap
     from .union import Union
     from .union_with_base_properties import UnionWithBaseProperties
     from .union_with_discriminant import UnionWithDiscriminant
@@ -38,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FooExtended": ".foo_extended",
     "SecondItemType": ".second_item_type",
     "TypeWithOptionalMap": ".type_with_optional_map",
+    "TypeWithOptionalReferenceMap": ".type_with_optional_reference_map",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithDiscriminant": ".union_with_discriminant",
@@ -88,6 +90,7 @@ __all__ = [
     "FooExtended",
     "SecondItemType",
     "TypeWithOptionalMap",
+    "TypeWithOptionalReferenceMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",

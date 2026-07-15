@@ -10,7 +10,7 @@ public class Example1 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.postWithNullableNamedRequestBodyType(
-                "id",
+                "pathId",
                 PostWithNullableNamedRequestBodyTypeRequest.builder()
                         .body(NullableObject.builder()
                                 .id("id")

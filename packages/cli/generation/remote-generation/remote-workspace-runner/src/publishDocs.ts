@@ -1004,6 +1004,7 @@ export async function publishDocs({
                         // 5. Preserve editThisPageUrl/editThisPageLaunch from the base page
                         const collectedFileIds = resolver.getCollectedFileIds();
                         const docsWorkspacePath = resolver.getDocsWorkspacePath();
+                        const markdownFilesToPathName = resolver.getMarkdownFilesToPathName();
 
                         // Create a locale-aware file loader that prefers translated snippets
                         // (e.g., translations/zh/snippets/foo.mdx) over base snippets.
@@ -1072,7 +1073,7 @@ export async function publishDocs({
                                     processedMarkdown = replaceImagePathsAndUrls(
                                         processedMarkdown,
                                         collectedFileIds,
-                                        {}, // markdownFilesToPathName not needed for translations
+                                        markdownFilesToPathName,
                                         {
                                             absolutePathToMarkdownFile,
                                             absolutePathToFernFolder: docsWorkspacePath

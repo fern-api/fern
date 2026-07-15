@@ -47,11 +47,20 @@ export async function getGeneratorInvocation({
               }
             : undefined;
 
+    // Mirror the generators.yml loader, which stamps the per-generator
+    // `config.auto-generate-idempotency-key` value onto the invocation so the IR
+    // pipeline can enable idempotency-key generation.
+    const idempotencyKeyGenerationConfig =
+        typeof customConfig === "object" && customConfig !== null
+            ? (customConfig as { "auto-generate-idempotency-key"?: unknown })["auto-generate-idempotency-key"]
+            : undefined;
+
     return {
         name: docker.name,
         containerImage: undefined,
         version: docker.version,
         config: customConfig,
+        idempotencyKeyGenerationConfig,
         outputMode: await getOutputMode({ outputMode, language, fixtureName, publishConfig }),
         absolutePathToLocalOutput: absolutePathToOutput,
         absolutePathToLocalSnippets: undefined,

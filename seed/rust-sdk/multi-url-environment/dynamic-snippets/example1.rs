@@ -12,7 +12,7 @@ async fn main() {
         .s3
         .get_presigned_url(
             &GetPresignedUrlRequest {
-                s3key: "s3Key".to_string(),
+                s3_key: "s3Key".to_string(),
             },
             None,
         )

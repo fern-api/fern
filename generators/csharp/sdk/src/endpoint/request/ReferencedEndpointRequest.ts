@@ -58,6 +58,14 @@ export class ReferencedEndpointRequest extends EndpointRequest {
                 writer.writeLine();
                 writer.write(".Add(_client.Options.AdditionalHeaders)");
 
+                // Fallback auto-generated idempotency-key header for the eligible HTTP methods carried
+                // in the IR. Emitted before the declared idempotency headers and request-option headers
+                // so a caller-provided value wins.
+                if (this.context.shouldAutoGenerateIdempotencyKey(this.endpoint)) {
+                    writer.writeLine();
+                    writer.write(".AddIdempotencyHeader()");
+                }
+
                 // For idempotent requests, add idempotency headers (as Dictionary<string, string>)
                 if (this.endpoint.idempotent) {
                     writer.writeLine();

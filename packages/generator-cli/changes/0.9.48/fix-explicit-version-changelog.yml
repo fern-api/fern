@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Explicitly versioned generations (`--version X.Y.Z`) now record a version-only entry in
+    `changelog.md`, and existing changelog entries are always preserved: GithubStep prepends
+    new entries instead of only creating a fresh file, and the GitHub push/PR flows restore a
+    tracked `changelog.md` that the generated output would otherwise delete.
+  type: fix

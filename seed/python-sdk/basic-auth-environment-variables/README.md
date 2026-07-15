@@ -145,7 +145,7 @@ client = SeedBasicAuthEnvironmentVariables(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.basic_auth.post_with_basic_auth(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

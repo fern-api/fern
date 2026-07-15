@@ -216,6 +216,36 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return this.getIdempotencyHeaders().length > 0;
     }
 
+    /**
+     * Returns true when the IR requests idempotency-key auto-generation and the endpoint's HTTP
+     * method is one of the eligible methods carried in the IR. Whether the feature is enabled, which
+     * methods are eligible, and the wire header name are all resolved once by the CLI and carried in
+     * `sdkConfig.idempotencyKeyGeneration` so every generator applies it identically instead of
+     * re-deriving it from its own config. Callers use this to decide whether to emit a fallback
+     * idempotency-key header set to a freshly generated UUID.
+     */
+    public shouldAutoGenerateIdempotencyKey(endpoint: HttpEndpoint): boolean {
+        const idempotencyKeyGeneration = this.ir.sdkConfig.idempotencyKeyGeneration;
+        return idempotencyKeyGeneration != null && idempotencyKeyGeneration.methods.includes(endpoint.method);
+    }
+
+    /**
+     * Returns true when the IR requests idempotency-key auto-generation for the SDK (regardless of a
+     * particular endpoint's method). Used to decide whether to emit the shared
+     * `AddIdempotencyHeader` helper.
+     */
+    public isIdempotencyKeyAutoGenerationEnabled(): boolean {
+        return this.ir.sdkConfig.idempotencyKeyGeneration != null;
+    }
+
+    /**
+     * The wire header name used for the auto-generated idempotency key, sourced from the IR. Defaults
+     * to `Idempotency-Key` when the IR does not supply one.
+     */
+    public getIdempotencyKeyGenerationHeaderName(): string {
+        return this.ir.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key";
+    }
+
     public hasBaseUrl(): boolean {
         return this.ir.environments?.environments.type !== "multipleBaseUrls";
     }

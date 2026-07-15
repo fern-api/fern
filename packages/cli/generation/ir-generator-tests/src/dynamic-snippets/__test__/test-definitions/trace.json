@@ -89,6 +89,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "and": {
                     "type": "singleProperty",
@@ -453,6 +454,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "integerType": {
                     "type": "noProperties",
@@ -850,7 +852,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:MapType": {
             "type": "object",
@@ -981,7 +984,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:VariableValue": {
             "type": "discriminatedUnion",
@@ -1071,6 +1075,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "integerValue": {
                     "type": "singleProperty",
@@ -1479,6 +1484,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "integerValue": {
                     "type": "singleProperty",
@@ -1984,7 +1990,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:MapValue": {
             "type": "object",
@@ -2088,7 +2095,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:KeyValuePair": {
             "type": "object",
@@ -2219,7 +2227,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:BinaryTreeValue": {
             "type": "object",
@@ -2360,7 +2369,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:BinaryTreeNodeValue": {
             "type": "object",
@@ -2557,7 +2567,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:BinaryTreeNodeAndTreeValue": {
             "type": "object",
@@ -2688,7 +2699,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:SinglyLinkedListValue": {
             "type": "object",
@@ -2829,7 +2841,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:SinglyLinkedListNodeValue": {
             "type": "object",
@@ -2993,7 +3006,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:SinglyLinkedListNodeAndListValue": {
             "type": "object",
@@ -3124,7 +3138,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:DoublyLinkedListValue": {
             "type": "object",
@@ -3265,7 +3280,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:DoublyLinkedListNodeValue": {
             "type": "object",
@@ -3462,7 +3478,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:DoublyLinkedListNodeAndListValue": {
             "type": "object",
@@ -3593,7 +3610,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:DebugMapValue": {
             "type": "object",
@@ -3697,7 +3715,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:DebugKeyValuePairs": {
             "type": "object",
@@ -3828,7 +3847,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:TestCase": {
             "type": "object",
@@ -3962,7 +3982,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:TestCaseWithExpectedResult": {
             "type": "object",
@@ -4093,7 +4114,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:FileInfo": {
             "type": "object",
@@ -4224,7 +4246,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_commons:Language": {
             "type": "enum",
@@ -4459,7 +4482,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_lang-server:LangServerResponse": {
             "type": "object",
@@ -4559,7 +4583,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_migration:MigrationStatus": {
             "type": "enum",
@@ -4825,7 +4850,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_playlist:PlaylistId": {
             "type": "alias",
@@ -5092,7 +5118,8 @@
             "extends": [
                 "type_playlist:PlaylistCreateRequest"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_playlist:PlaylistCreateRequest": {
             "type": "object",
@@ -5226,7 +5253,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_playlist:UpdatePlaylistRequest": {
             "type": "object",
@@ -5360,7 +5388,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_playlist:PlaylistIdNotFoundErrorBody": {
             "type": "discriminatedUnion",
@@ -5450,6 +5479,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "playlistId": {
                     "type": "singleProperty",
@@ -5978,7 +6008,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_problem:ProblemDescription": {
             "type": "object",
@@ -6082,7 +6113,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_problem:ProblemDescriptionBoard": {
             "type": "discriminatedUnion",
@@ -6172,6 +6204,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "html": {
                     "type": "singleProperty",
@@ -6397,7 +6430,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_problem:VariableTypeAndName": {
             "type": "object",
@@ -6528,7 +6562,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_problem:CreateProblemRequest": {
             "type": "object",
@@ -6822,7 +6857,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_problem:CreateProblemResponse": {
             "type": "discriminatedUnion",
@@ -6912,6 +6948,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "success": {
                     "type": "singleProperty",
@@ -7074,7 +7111,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_problem:CreateProblemError": {
             "type": "discriminatedUnion",
@@ -7164,6 +7202,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "generic": {
                     "type": "samePropertiesAsObject",
@@ -7353,7 +7392,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_problem:GetDefaultStarterFilesResponse": {
             "type": "object",
@@ -7461,7 +7501,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:SubmissionId": {
             "type": "alias",
@@ -7693,6 +7734,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "initializeProblemRequest": {
                     "type": "samePropertiesAsObject",
@@ -7962,7 +8004,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:SubmitRequestV2": {
             "type": "object",
@@ -8222,7 +8265,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceSubmitRequest": {
             "type": "object",
@@ -8419,7 +8463,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:SubmissionFileInfo": {
             "type": "object",
@@ -8580,7 +8625,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:SubmissionTypeEnum": {
             "type": "enum",
@@ -8772,7 +8818,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:SubmissionResponse": {
             "type": "discriminatedUnion",
@@ -8862,6 +8909,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "serverInitialized": {
                     "type": "noProperties",
@@ -9119,6 +9167,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "buildingExecutor": {
                     "type": "samePropertiesAsObject",
@@ -9548,7 +9597,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:RunningResponse": {
             "type": "object",
@@ -9679,7 +9729,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:RunningSubmissionState": {
             "type": "enum",
@@ -9989,7 +10040,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:ErrorInfo": {
             "type": "discriminatedUnion",
@@ -10079,6 +10131,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "compileError": {
                     "type": "samePropertiesAsObject",
@@ -10262,7 +10315,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:RuntimeError": {
             "type": "object",
@@ -10363,7 +10417,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:InternalError": {
             "type": "object",
@@ -10464,7 +10519,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:StoppedResponse": {
             "type": "object",
@@ -10565,7 +10621,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceRanResponse": {
             "type": "object",
@@ -10696,7 +10753,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceRunDetails": {
             "type": "object",
@@ -10863,7 +10921,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:GradedResponse": {
             "type": "object",
@@ -11001,7 +11060,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:GradedResponseV2": {
             "type": "object",
@@ -11139,7 +11199,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TestCaseGrade": {
             "type": "discriminatedUnion",
@@ -11229,6 +11290,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "hidden": {
                     "type": "samePropertiesAsObject",
@@ -11385,7 +11447,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TestCaseNonHiddenGrade": {
             "type": "object",
@@ -11582,7 +11645,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:RecordedResponseNotification": {
             "type": "object",
@@ -11746,7 +11810,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:RecordingResponseNotification": {
             "type": "object",
@@ -11973,7 +12038,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:LightweightStackframeInformation": {
             "type": "object",
@@ -12104,7 +12170,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TestCaseResultWithStdout": {
             "type": "object",
@@ -12235,7 +12302,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TestCaseResult": {
             "type": "object",
@@ -12396,7 +12464,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:ActualResult": {
             "type": "discriminatedUnion",
@@ -12486,6 +12555,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "value": {
                     "type": "singleProperty",
@@ -12664,6 +12734,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "generic": {
                     "type": "samePropertiesAsObject",
@@ -12879,7 +12950,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:InvalidRequestResponse": {
             "type": "object",
@@ -13010,7 +13082,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:InvalidRequestCause": {
             "type": "discriminatedUnion",
@@ -13100,6 +13173,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "submissionIdNotFound": {
                     "type": "samePropertiesAsObject",
@@ -13283,7 +13357,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:SubmissionIdNotFound": {
             "type": "object",
@@ -13384,7 +13459,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:CustomTestCasesUnsupported": {
             "type": "object",
@@ -13515,7 +13591,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:UnexpectedLanguageError": {
             "type": "object",
@@ -13646,7 +13723,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TerminatedResponse": {
             "type": "object",
@@ -13716,7 +13794,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:FinishedResponse": {
             "type": "object",
@@ -13817,7 +13896,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:StdoutResponse": {
             "type": "object",
@@ -13948,7 +14028,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:StderrResponse": {
             "type": "object",
@@ -14079,7 +14160,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TraceResponse": {
             "type": "object",
@@ -14339,7 +14421,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TraceResponseV2": {
             "type": "object",
@@ -14629,7 +14712,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TracedFile": {
             "type": "object",
@@ -14760,7 +14844,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:ExpressionLocation": {
             "type": "object",
@@ -14891,7 +14976,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:StackInformation": {
             "type": "object",
@@ -15025,7 +15111,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:StackFrame": {
             "type": "object",
@@ -15189,7 +15276,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:Scope": {
             "type": "object",
@@ -15297,7 +15385,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:ExecutionSessionResponse": {
             "type": "object",
@@ -15491,7 +15580,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:ExecutionSessionStatus": {
             "type": "enum",
@@ -15782,6 +15872,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "test": {
                     "type": "samePropertiesAsObject",
@@ -16031,7 +16122,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceSubmissionStatusV2": {
             "type": "object",
@@ -16135,7 +16227,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TestSubmissionUpdate": {
             "type": "object",
@@ -16266,7 +16359,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TestSubmissionUpdateInfo": {
             "type": "discriminatedUnion",
@@ -16356,6 +16450,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "running": {
                     "type": "singleProperty",
@@ -16654,7 +16749,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceSubmissionUpdateInfo": {
             "type": "discriminatedUnion",
@@ -16744,6 +16840,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "running": {
                     "type": "singleProperty",
@@ -17068,7 +17165,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:RecordedTestCaseUpdate": {
             "type": "object",
@@ -17199,7 +17297,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceTracedUpdate": {
             "type": "object",
@@ -17300,7 +17399,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:SubmissionTypeState": {
             "type": "discriminatedUnion",
@@ -17390,6 +17490,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "test": {
                     "type": "samePropertiesAsObject",
@@ -17546,7 +17647,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceSubmissionStatus": {
             "type": "discriminatedUnion",
@@ -17636,6 +17738,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "stopped": {
                     "type": "noProperties",
@@ -17974,7 +18077,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TestSubmissionStatus": {
             "type": "discriminatedUnion",
@@ -18064,6 +18168,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "stopped": {
                     "type": "noProperties",
@@ -18278,6 +18383,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "graded": {
                     "type": "samePropertiesAsObject",
@@ -18494,7 +18600,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TraceResponsesPage": {
             "type": "object",
@@ -18631,7 +18738,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:TraceResponsesPageV2": {
             "type": "object",
@@ -18768,7 +18876,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:GetTraceResponsesPageRequest": {
             "type": "object",
@@ -18872,7 +18981,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceStarterFilesResponse": {
             "type": "object",
@@ -18980,7 +19090,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceStarterFilesResponseV2": {
             "type": "object",
@@ -19088,7 +19199,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:WorkspaceFiles": {
             "type": "object",
@@ -19222,7 +19334,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:ExecutionSessionState": {
             "type": "object",
@@ -19479,7 +19592,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:GetExecutionSessionStateResponse": {
             "type": "object",
@@ -19653,7 +19767,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_submission:GetSubmissionStateResponse": {
             "type": "object",
@@ -19847,7 +19962,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseTemplateId": {
             "type": "alias",
@@ -20596,7 +20712,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:LightweightProblemInfoV2": {
             "type": "object",
@@ -20829,7 +20946,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:CreateProblemRequestV2": {
             "type": "object",
@@ -21158,7 +21276,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseV2": {
             "type": "object",
@@ -21398,7 +21517,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseExpects": {
             "type": "object",
@@ -21541,7 +21661,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseImplementationReference": {
             "type": "discriminatedUnion",
@@ -21670,6 +21791,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "templateId": {
                     "type": "singleProperty",
@@ -21958,7 +22080,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseTemplate": {
             "type": "object",
@@ -22158,7 +22281,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseImplementation": {
             "type": "object",
@@ -22328,7 +22452,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseFunction": {
             "type": "discriminatedUnion",
@@ -22457,6 +22582,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "withActualResult": {
                     "type": "samePropertiesAsObject",
@@ -22682,7 +22808,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:VoidFunctionDefinition": {
             "type": "object",
@@ -22855,7 +22982,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:Parameter": {
             "type": "object",
@@ -23055,7 +23183,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:NonVoidFunctionDefinition": {
             "type": "object",
@@ -23225,7 +23354,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:VoidFunctionSignature": {
             "type": "object",
@@ -23368,7 +23498,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:NonVoidFunctionSignature": {
             "type": "object",
@@ -23541,7 +23672,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:VoidFunctionSignatureThatTakesActualResult": {
             "type": "object",
@@ -23714,7 +23846,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:AssertCorrectnessCheck": {
             "type": "discriminatedUnion",
@@ -23843,6 +23976,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "deepEquality": {
                     "type": "samePropertiesAsObject",
@@ -24038,7 +24172,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:VoidFunctionDefinitionThatTakesActualResult": {
             "type": "object",
@@ -24211,7 +24346,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseImplementationDescription": {
             "type": "object",
@@ -24354,7 +24490,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:TestCaseImplementationDescriptionBoard": {
             "type": "discriminatedUnion",
@@ -24483,6 +24620,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "html": {
                     "type": "singleProperty",
@@ -24744,7 +24882,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:FunctionImplementationForMultipleLanguages": {
             "type": "object",
@@ -24891,7 +25030,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:FunctionImplementation": {
             "type": "object",
@@ -25064,7 +25204,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:GeneratedFiles": {
             "type": "object",
@@ -25285,7 +25426,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:CustomFiles": {
             "type": "discriminatedUnion",
@@ -25414,6 +25556,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "basic": {
                     "type": "samePropertiesAsObject",
@@ -25716,7 +25859,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:Files": {
             "type": "object",
@@ -25859,7 +26003,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:FileInfoV2": {
             "type": "object",
@@ -26089,7 +26234,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:DefaultProvidedFile": {
             "type": "object",
@@ -26262,7 +26408,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:FunctionSignature": {
             "type": "discriminatedUnion",
@@ -26391,6 +26538,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "void": {
                     "type": "samePropertiesAsObject",
@@ -26613,7 +26761,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:GetFunctionSignatureResponse": {
             "type": "object",
@@ -26760,7 +26909,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:GetBasicSolutionFileRequest": {
             "type": "object",
@@ -26930,7 +27080,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:GetBasicSolutionFileResponse": {
             "type": "object",
@@ -27077,7 +27228,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:GetGeneratedTestCaseFileRequest": {
             "type": "object",
@@ -27250,7 +27402,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/problem:GetGeneratedTestCaseTemplateFileRequest": {
             "type": "object",
@@ -27390,7 +27543,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseTemplateId": {
             "type": "alias",
@@ -28291,7 +28445,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:LightweightProblemInfoV2": {
             "type": "object",
@@ -28562,7 +28717,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:CreateProblemRequestV2": {
             "type": "object",
@@ -28929,7 +29085,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseV2": {
             "type": "object",
@@ -29207,7 +29364,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseExpects": {
             "type": "object",
@@ -29388,7 +29546,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseImplementationReference": {
             "type": "discriminatedUnion",
@@ -29555,6 +29714,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "templateId": {
                     "type": "singleProperty",
@@ -29881,7 +30041,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseTemplate": {
             "type": "object",
@@ -30119,7 +30280,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseImplementation": {
             "type": "object",
@@ -30327,7 +30489,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseFunction": {
             "type": "discriminatedUnion",
@@ -30494,6 +30657,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "withActualResult": {
                     "type": "samePropertiesAsObject",
@@ -30757,7 +30921,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:VoidFunctionDefinition": {
             "type": "object",
@@ -30968,7 +31133,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:Parameter": {
             "type": "object",
@@ -31206,7 +31372,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:NonVoidFunctionDefinition": {
             "type": "object",
@@ -31414,7 +31581,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:VoidFunctionSignature": {
             "type": "object",
@@ -31595,7 +31763,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:NonVoidFunctionSignature": {
             "type": "object",
@@ -31806,7 +31975,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:VoidFunctionSignatureThatTakesActualResult": {
             "type": "object",
@@ -32017,7 +32187,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:AssertCorrectnessCheck": {
             "type": "discriminatedUnion",
@@ -32184,6 +32355,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "deepEquality": {
                     "type": "samePropertiesAsObject",
@@ -32417,7 +32589,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:VoidFunctionDefinitionThatTakesActualResult": {
             "type": "object",
@@ -32628,7 +32801,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseImplementationDescription": {
             "type": "object",
@@ -32809,7 +32983,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:TestCaseImplementationDescriptionBoard": {
             "type": "discriminatedUnion",
@@ -32976,6 +33151,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "html": {
                     "type": "singleProperty",
@@ -33275,7 +33451,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:FunctionImplementationForMultipleLanguages": {
             "type": "object",
@@ -33460,7 +33637,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:FunctionImplementation": {
             "type": "object",
@@ -33671,7 +33849,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:GeneratedFiles": {
             "type": "object",
@@ -33930,7 +34109,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:CustomFiles": {
             "type": "discriminatedUnion",
@@ -34097,6 +34277,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "basic": {
                     "type": "samePropertiesAsObject",
@@ -34437,7 +34618,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:Files": {
             "type": "object",
@@ -34618,7 +34800,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:FileInfoV2": {
             "type": "object",
@@ -34886,7 +35069,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:DefaultProvidedFile": {
             "type": "object",
@@ -35097,7 +35281,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:FunctionSignature": {
             "type": "discriminatedUnion",
@@ -35264,6 +35449,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "void": {
                     "type": "samePropertiesAsObject",
@@ -35524,7 +35710,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:GetFunctionSignatureResponse": {
             "type": "object",
@@ -35709,7 +35896,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:GetBasicSolutionFileRequest": {
             "type": "object",
@@ -35917,7 +36105,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:GetBasicSolutionFileResponse": {
             "type": "object",
@@ -36102,7 +36291,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:GetGeneratedTestCaseFileRequest": {
             "type": "object",
@@ -36313,7 +36503,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_v2/v3/problem:GetGeneratedTestCaseTemplateFileRequest": {
             "type": "object",
@@ -36491,7 +36682,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [

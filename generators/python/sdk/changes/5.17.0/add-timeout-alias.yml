@@ -1,0 +1,10 @@
+- summary: |
+    Add a `timeout` config option as an alias for `timeout_in_seconds`. Both keys
+    are in seconds and `timeout_in_seconds` continues to work, with `timeout`
+    taking precedence when both are set.
+  type: feat
+- summary: |
+    Add a `timeout` key to the generated SDK's `RequestOptions` as an alias for the
+    per-request `timeout_in_seconds`. Both are in seconds; `timeout_in_seconds` keeps
+    working, with `timeout` taking precedence when both are provided.
+  type: feat

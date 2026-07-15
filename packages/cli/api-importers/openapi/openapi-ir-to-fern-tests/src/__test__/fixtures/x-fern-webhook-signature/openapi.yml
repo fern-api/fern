@@ -91,6 +91,34 @@ paths:
             schema:
               $ref: "#/components/schemas/RefundEvent"
 
+  # Webhook that transmits a hash of the raw body separately (Twilio-style)
+  /webhooks/message-status:
+    post:
+      operationId: messageStatus
+      x-fern-webhook: true
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: messageStatus
+      x-fern-webhook-signature:
+        type: hmac
+        header: x-twilio-signature
+        algorithm: sha1
+        encoding: base64
+        payload-format:
+          components:
+            - notification-url
+            - body
+        body-hash-binding:
+          algorithm: sha256
+          encoding: hex
+          location:
+            type: query-parameter
+            name: bodySHA256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageStatusEvent"
+
 components:
   schemas:
     UserEvent:
@@ -139,3 +167,14 @@ components:
       required:
         - refundId
         - amount
+
+    MessageStatusEvent:
+      type: object
+      properties:
+        messageSid:
+          type: string
+        status:
+          type: string
+      required:
+        - messageSid
+        - status

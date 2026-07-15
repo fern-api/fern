@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAudiencesClient } from "@fern/audiences";
 
-const client = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedAudiencesClient({ baseUrl: "YOUR_BASE_URL" });
 await client.folderD.service.getDirectThread();
 ```
 

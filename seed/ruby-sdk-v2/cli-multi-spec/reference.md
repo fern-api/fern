@@ -39,7 +39,7 @@ client.list_users
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_user</a>(user_id) -> Seed::Types::User</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_user</a>(user_id:) -> Seed::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ client.list_invoices
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">get_invoice</a>(invoice_id) -> Seed::Types::Invoice</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_invoice</a>(invoice_id:) -> Seed::Types::Invoice</code></summary>
 <dl>
 <dd>
 

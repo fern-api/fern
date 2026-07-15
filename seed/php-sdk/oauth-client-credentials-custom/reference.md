@@ -22,6 +22,10 @@ $client->auth->getTokenWithClientCredentials(
         'audience' => 'https://api.example.com',
         'grantType' => 'client_credentials',
         'scope' => 'scope',
+        'permissions' => [
+            'permissions',
+            'permissions',
+        ],
     ]),
 );
 ```
@@ -87,6 +91,14 @@ $client->auth->getTokenWithClientCredentials(
 <dd>
 
 **$scope:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$permissions:** `?array` 
     
 </dd>
 </dl>

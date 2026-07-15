@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { vi } from "vitest";
 
-import { replaceReferencedCode } from "../replaceReferencedCode.js";
+import { collectCodeSrcUrls, prefetchCodeSrcUrls, replaceReferencedCode } from "../replaceReferencedCode.js";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
 const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
@@ -952,5 +952,318 @@ describe("replaceReferencedCode", () => {
             \`\`\`
 
         `);
+    });
+
+    it("should use cached content when urlCache is provided", async () => {
+        const markdown = `
+            <Code src="https://example.com/snippets/test.py" />
+        `;
+
+        const urlCache = new Map([["https://example.com/snippets/test.py", "cached python content"]]);
+
+        const originalFetch = globalThis.fetch;
+        const mockFetch = vi.fn();
+        globalThis.fetch = mockFetch as typeof fetch;
+
+        try {
+            const result = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile,
+                context,
+                urlCache
+            });
+
+            expect(mockFetch).not.toHaveBeenCalled();
+            expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            cached python content
+            \`\`\`
+
+        `);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should fall back to live fetch for URLs not in the cache", async () => {
+        const markdown = `
+            <Code src="https://example.com/snippets/test.py" />
+        `;
+
+        const urlCache = new Map<string, string>();
+
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn((url: string) => {
+            if (url === "https://example.com/snippets/test.py") {
+                return Promise.resolve({
+                    ok: true,
+                    text: async () => "fetched content"
+                } as Response);
+            }
+            return Promise.reject(new Error(`Unexpected URL: ${url}`));
+        }) as typeof fetch;
+
+        try {
+            const result = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile,
+                context,
+                urlCache
+            });
+
+            expect(globalThis.fetch).toHaveBeenCalledWith("https://example.com/snippets/test.py");
+            expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            fetched content
+            \`\`\`
+
+        `);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should extract language and title from URL pathname when using cache", async () => {
+        const markdown = `
+            <Code src="https://static.example.com/app/sdk-setup/go-server/init.txt" />
+        `;
+
+        const urlCache = new Map([["https://static.example.com/app/sdk-setup/go-server/init.txt", "func main() {}"]]);
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            urlCache
+        });
+
+        expect(result).toBe(`
+            \`\`\`txt title={"init.txt"}
+            func main() {}
+            \`\`\`
+
+        `);
+    });
+
+    it("should respect lines parameter with cached content", async () => {
+        const markdown = `
+            <Code src="https://example.com/snippets/test.py" lines="2-3" />
+        `;
+
+        const urlCache = new Map([["https://example.com/snippets/test.py", "line 1\nline 2\nline 3\nline 4\nline 5"]]);
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            urlCache
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 2
+            line 3
+            \`\`\`
+
+        `);
+    });
+});
+
+describe("collectCodeSrcUrls", () => {
+    it("should return empty array for markdown without Code tags", () => {
+        const markdown = "# Hello\n\nThis is plain markdown with no Code tags.";
+        expect(collectCodeSrcUrls(markdown)).toEqual([]);
+    });
+
+    it("should return empty array for markdown with Code tags but no src", () => {
+        const markdown = '<Code language="python">print("hello")</Code>';
+        expect(collectCodeSrcUrls(markdown)).toEqual([]);
+    });
+
+    it("should extract only external URLs and skip relative file paths", () => {
+        const markdown = `
+            <Code src="https://example.com/test.py" />
+            <Code src="../snippets/local.ts" />
+            <Code src="https://raw.githubusercontent.com/user/repo/main/example.go" />
+            <Code src="./relative.js" />
+        `;
+        const urls = collectCodeSrcUrls(markdown);
+        expect(urls).toEqual([
+            "https://example.com/test.py",
+            "https://raw.githubusercontent.com/user/repo/main/example.go"
+        ]);
+    });
+
+    it("should handle multiple URLs across multiple Code tags", () => {
+        const markdown = `
+            <Code src="https://example.com/a.py" />
+            Some text in between.
+            <Code src="https://example.com/b.py" />
+            <Code src="https://example.com/c.py" />
+        `;
+        const urls = collectCodeSrcUrls(markdown);
+        expect(urls).toEqual(["https://example.com/a.py", "https://example.com/b.py", "https://example.com/c.py"]);
+    });
+
+    it("should return all occurrences including duplicates", () => {
+        const markdown = `
+            <Code src="https://example.com/test.py" />
+            <Code src="https://example.com/test.py" />
+        `;
+        const urls = collectCodeSrcUrls(markdown);
+        expect(urls).toEqual(["https://example.com/test.py", "https://example.com/test.py"]);
+    });
+
+    it("should handle single quotes in src attribute", () => {
+        const markdown = `<Code src='https://example.com/test.py' />`;
+        const urls = collectCodeSrcUrls(markdown);
+        expect(urls).toEqual(["https://example.com/test.py"]);
+    });
+
+    it("should handle curly-brace src syntax", () => {
+        const markdown = `<Code src={'https://example.com/test.py'} />`;
+        const urls = collectCodeSrcUrls(markdown);
+        expect(urls).toEqual(["https://example.com/test.py"]);
+    });
+
+    it("should handle Code tags with additional attributes", () => {
+        const markdown = `
+            <Code src="https://example.com/test.py" language="python" title="Example" />
+            <Code language="go" src="https://example.com/test.go" maxLines={20} />
+        `;
+        const urls = collectCodeSrcUrls(markdown);
+        expect(urls).toEqual(["https://example.com/test.py", "https://example.com/test.go"]);
+    });
+
+    it("should handle http URLs", () => {
+        const markdown = `<Code src="http://example.com/test.py" />`;
+        const urls = collectCodeSrcUrls(markdown);
+        expect(urls).toEqual(["http://example.com/test.py"]);
+    });
+});
+
+describe("prefetchCodeSrcUrls", () => {
+    it("should return empty map for empty input", async () => {
+        const result = await prefetchCodeSrcUrls([], context);
+        expect(result.size).toBe(0);
+    });
+
+    it("should deduplicate URLs before fetching", async () => {
+        const originalFetch = globalThis.fetch;
+        const mockFetch = vi.fn((url: string) =>
+            Promise.resolve({
+                ok: true,
+                text: async () => `content for ${url}`
+            } as Response)
+        );
+        globalThis.fetch = mockFetch as typeof fetch;
+
+        try {
+            const urls = [
+                "https://example.com/a.py",
+                "https://example.com/b.py",
+                "https://example.com/a.py",
+                "https://example.com/b.py",
+                "https://example.com/a.py"
+            ];
+            await prefetchCodeSrcUrls(urls, context);
+            expect(mockFetch).toHaveBeenCalledTimes(2);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should populate the map with successful fetches", async () => {
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn((url: string) =>
+            Promise.resolve({
+                ok: true,
+                text: async () => `content for ${url}`
+            } as Response)
+        ) as typeof fetch;
+
+        try {
+            const result = await prefetchCodeSrcUrls(["https://example.com/a.py", "https://example.com/b.py"], context);
+            expect(result.size).toBe(2);
+            expect(result.get("https://example.com/a.py")).toBe("content for https://example.com/a.py");
+            expect(result.get("https://example.com/b.py")).toBe("content for https://example.com/b.py");
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should exclude failed fetches (non-200) without throwing", async () => {
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn((url: string) => {
+            if (url === "https://example.com/good.py") {
+                return Promise.resolve({
+                    ok: true,
+                    text: async () => "good content"
+                } as Response);
+            }
+            return Promise.resolve({
+                ok: false,
+                status: 404
+            } as Response);
+        }) as typeof fetch;
+
+        try {
+            const result = await prefetchCodeSrcUrls(
+                ["https://example.com/good.py", "https://example.com/not-found.py"],
+                context
+            );
+            expect(result.size).toBe(1);
+            expect(result.get("https://example.com/good.py")).toBe("good content");
+            expect(result.has("https://example.com/not-found.py")).toBe(false);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should handle network errors (rejected promises) gracefully", async () => {
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn((url: string) => {
+            if (url === "https://example.com/good.py") {
+                return Promise.resolve({
+                    ok: true,
+                    text: async () => "good content"
+                } as Response);
+            }
+            return Promise.reject(new Error("Network error"));
+        }) as typeof fetch;
+
+        try {
+            const result = await prefetchCodeSrcUrls(
+                ["https://example.com/good.py", "https://example.com/error.py"],
+                context
+            );
+            expect(result.size).toBe(1);
+            expect(result.get("https://example.com/good.py")).toBe("good content");
+            expect(result.has("https://example.com/error.py")).toBe(false);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should not throw on failed fetches and exclude them from result", async () => {
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn(() =>
+            Promise.resolve({
+                ok: false,
+                status: 500
+            } as Response)
+        ) as typeof fetch;
+
+        try {
+            const result = await prefetchCodeSrcUrls(["https://example.com/fail.py"], context);
+            expect(result.size).toBe(0);
+            expect(result.has("https://example.com/fail.py")).toBe(false);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
     });
 });

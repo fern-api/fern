@@ -110,7 +110,7 @@ function createClientClass(opts?: {
     allowCustomFetcher?: boolean;
     generateWebSocketClients?: boolean;
     requireDefaultEnvironment?: boolean;
-    defaultTimeoutInSeconds?: number | "infinity" | undefined;
+    defaultTimeout?: number | "infinity" | undefined;
     includeContentHeadersOnFileDownloadResponse?: boolean;
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
@@ -142,7 +142,7 @@ function createClientClass(opts?: {
         allowCustomFetcher: opts?.allowCustomFetcher ?? false,
         generateWebSocketClients: opts?.generateWebSocketClients ?? false,
         requireDefaultEnvironment: opts?.requireDefaultEnvironment ?? false,
-        defaultTimeoutInSeconds: opts?.defaultTimeoutInSeconds,
+        defaultTimeout: opts?.defaultTimeout,
         includeContentHeadersOnFileDownloadResponse: opts?.includeContentHeadersOnFileDownloadResponse ?? false,
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
@@ -1018,17 +1018,17 @@ describe("GeneratedSdkClientClassImpl", () => {
     });
 
     describe("getOptionsPropertiesForSnippet", () => {
-        it("includes environment property when no default environment and not requireDefaultEnvironment", () => {
+        it("includes baseUrl property when no environments are defined", () => {
             const clientClass = createClientClass({ requireDefaultEnvironment: false });
             const context = createMockFileContext();
             const props = clientClass.getOptionsPropertiesForSnippet(context);
-            // Should include environment: "YOUR_BASE_URL" since no default env and no first enum
+            // Should include baseUrl: "YOUR_BASE_URL" since no environments are defined
             expect(props.length).toBeGreaterThan(0);
-            const envProp = props.find((p) => {
+            const baseUrlProp = props.find((p) => {
                 const text = getTextOfTsNode(p);
-                return text.includes("environment");
+                return text.includes("baseUrl");
             });
-            expect(envProp).toBeDefined();
+            expect(baseUrlProp).toBeDefined();
         });
 
         it("includes auth snippet properties when auth provider exists", () => {

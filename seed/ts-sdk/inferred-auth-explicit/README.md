@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedInferredAuthExplicitClient } from "@fern/inferred-auth-explicit";
 
-const client = new SeedInferredAuthExplicitClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedInferredAuthExplicitClient({ baseUrl: "YOUR_BASE_URL" });
 await client.auth.getTokenWithClientCredentials({
     "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
