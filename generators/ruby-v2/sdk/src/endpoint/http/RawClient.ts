@@ -22,7 +22,7 @@ export declare namespace RawClient {
         baseUrlName?: string;
     }
 
-    export type RequestBodyType = "json" | "bytes" | "multipartform";
+    export type RequestBodyType = "json" | "bytes" | "multipartform" | "urlencodedform";
 }
 
 export class RawClient {
@@ -55,6 +55,31 @@ export class RawClient {
                 return ruby.codeblock((writer) => {
                     writer.writeLine(
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
+                    );
+                    writer.indent();
+                    this.writeBaseUrlDeclaration(writer, baseUrlName);
+                    writer.writeLine(",");
+                    writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
+                    writer.write(`path: `);
+                    this.writePathString({ writer, endpoint, pathParameterReferences });
+                    writer.writeLine(",");
+                    if (headerBagReference != null) {
+                        writer.writeLine(`headers: ${headerBagReference},`);
+                    }
+                    if (queryBagReference != null) {
+                        writer.writeLine(`query: ${queryBagReference},`);
+                    }
+                    if (bodyReference != null) {
+                        writer.writeLine(`body: ${bodyReference},`);
+                    }
+                    writer.writeLine(`request_options: request_options`);
+                    writer.dedent();
+                    writer.write(`)`);
+                });
+            case "urlencodedform":
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(
+                        `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalUrlEncodedRequest()}.new(`
                     );
                     writer.indent();
                     this.writeBaseUrlDeclaration(writer, baseUrlName);

@@ -36,6 +36,9 @@ export const AsIsFiles = {
     JsonRequest: "internal/json/request.Template.rb",
     JsonSerializable: "internal/json/serializable.Template.rb",
 
+    // URL-encoded form
+    UrlEncodedRequest: "internal/url_encoded/request.Template.rb",
+
     // Multipart
     MultipartEncoder: "internal/multipart/multipart_encoder.Template.rb",
     MultipartFormDataPart: "internal/multipart/multipart_form_data_part.Template.rb",
@@ -93,6 +96,7 @@ const asIsTopoValue = {
     [AsIsFiles.ErrorsType]: 5,
     [AsIsFiles.HttpBaseRequest]: 6,
     [AsIsFiles.JsonRequest]: 7,
+    [AsIsFiles.UrlEncodedRequest]: 7.5,
     [AsIsFiles.HttpRawClient]: 8,
     [AsIsFiles.MultipartEncoder]: 9,
     [AsIsFiles.MultipartFormDataPart]: 10,

@@ -59,6 +59,14 @@ export abstract class EndpointRequest {
         return currentTypeId;
     }
 
+    protected isUrlEncodedRequestBody(): boolean {
+        return (
+            (this.endpoint.requestBody?.type === "reference" ||
+                this.endpoint.requestBody?.type === "inlinedRequestBody") &&
+            this.endpoint.requestBody.contentType === "application/x-www-form-urlencoded"
+        );
+    }
+
     public abstract getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined;
 
     public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;

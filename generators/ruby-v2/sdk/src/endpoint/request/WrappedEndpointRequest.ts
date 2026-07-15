@@ -241,7 +241,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        return "json";
+        return this.isUrlEncodedRequestBody() ? "urlencodedform" : "json";
     }
 
     private getPathParameterNames(): string[] {
