@@ -6,7 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import OrderCompletedPayload, PaymentNotificationPayload, RefundProcessedPayload, UserCreatedPayload
+    from .types import (
+        OrderCompletedPayload,
+        PaymentNotificationPayload,
+        RefundProcessedPayload,
+        SmsStatusPayload,
+        UserCreatedPayload,
+    )
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedWebhooks, SeedWebhooks
     from .version import __version__
@@ -18,6 +24,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaymentNotificationPayload": ".types",
     "RefundProcessedPayload": ".types",
     "SeedWebhooks": ".client",
+    "SmsStatusPayload": ".types",
     "UserCreatedPayload": ".types",
     "__version__": ".version",
 }
@@ -52,6 +59,7 @@ __all__ = [
     "PaymentNotificationPayload",
     "RefundProcessedPayload",
     "SeedWebhooks",
+    "SmsStatusPayload",
     "UserCreatedPayload",
     "__version__",
 ]

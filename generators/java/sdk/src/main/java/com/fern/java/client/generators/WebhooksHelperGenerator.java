@@ -19,6 +19,9 @@ package com.fern.java.client.generators;
 import com.fern.ir.model.webhooks.HmacAlgorithm;
 import com.fern.ir.model.webhooks.HmacSignatureVerification;
 import com.fern.ir.model.webhooks.Webhook;
+import com.fern.ir.model.webhooks.WebhookBodyHashAlgorithm;
+import com.fern.ir.model.webhooks.WebhookBodyHashBinding;
+import com.fern.ir.model.webhooks.WebhookBodyHashQueryParameterLocation;
 import com.fern.ir.model.webhooks.WebhookName;
 import com.fern.ir.model.webhooks.WebhookPayloadComponent;
 import com.fern.ir.model.webhooks.WebhookPayloadFormat;
@@ -100,6 +103,22 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         return generatedFiles;
     }
 
+    public static boolean requiresBodyHashUtility(ClientGeneratorContext context) {
+        for (com.fern.ir.model.webhooks.WebhookGroup webhookGroup :
+                context.getIr().getWebhookGroups().values()) {
+            for (Webhook webhook : webhookGroup.get()) {
+                boolean present = webhook.getSignatureVerification()
+                        .flatMap(verification -> verification.getHmac())
+                        .flatMap(HmacSignatureVerification::getBodyHashBinding)
+                        .isPresent();
+                if (present) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public GeneratedJavaFile generateFile() {
         TypeSpec.Builder helper = TypeSpec.classBuilder(className)
@@ -150,6 +169,8 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .endControlFlow();
 
         config.getTimestamp().ifPresent(timestamp -> addTimestampValidation(method, timestamp));
+
+        config.getBodyHashBinding().ifPresent(binding -> addBodyHashValidation(method, binding));
 
         String signatureExpression = "signatureHeader";
         if (config.getSignaturePrefix().isPresent()) {
@@ -314,6 +335,36 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .endControlFlow();
     }
 
+    private void addBodyHashValidation(MethodSpec.Builder method, WebhookBodyHashBinding binding) {
+        WebhookBodyHashQueryParameterLocation location = binding.getLocation()
+                .getQueryParameter()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Unsupported webhook body hash location: " + binding.getLocation()));
+        boolean hasNotificationUrl = config.getPayloadFormat().getComponents().stream()
+                .anyMatch(component -> component.getEnumValue() == WebhookPayloadComponent.Value.NOTIFICATION_URL);
+        if (!hasNotificationUrl) {
+            throw new IllegalArgumentException(
+                    "Webhook body hash query-parameter binding requires the notification URL as a payload component");
+        }
+        ClassName bodyHashClass = generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookBodyHash");
+        method.addStatement(
+                "$T expectedBodyHash = $T.computeHash(requestBody, $S, $S)",
+                String.class,
+                bodyHashClass,
+                mapBodyHashAlgorithm(binding.getAlgorithm()),
+                mapEncoding(binding.getEncoding()));
+        method.addStatement(
+                "$T transmittedBodyHash = $T.getQueryParameter(notificationUrl, $S)",
+                String.class,
+                bodyHashClass,
+                location.getName());
+        method.beginControlFlow(
+                        "if (transmittedBodyHash == null || !$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))",
+                        generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookSignature"))
+                .addStatement("return false")
+                .endControlFlow();
+    }
+
     private void addPayloadConstruction(MethodSpec.Builder method, WebhookPayloadFormat payloadFormat) {
         List<String> componentExpressions = new ArrayList<>();
         for (WebhookPayloadComponent component : payloadFormat.getComponents()) {
@@ -380,6 +431,22 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             case UNKNOWN:
             default:
                 throw new IllegalArgumentException("Unrecognized HMAC algorithm: " + algorithm);
+        }
+    }
+
+    private static String mapBodyHashAlgorithm(WebhookBodyHashAlgorithm algorithm) {
+        switch (algorithm.getEnumValue()) {
+            case SHA_1:
+                return "SHA-1";
+            case SHA_256:
+                return "SHA-256";
+            case SHA_384:
+                return "SHA-384";
+            case SHA_512:
+                return "SHA-512";
+            case UNKNOWN:
+            default:
+                throw new IllegalArgumentException("Unrecognized webhook body hash algorithm: " + algorithm);
         }
     }
 
