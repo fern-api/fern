@@ -1,6 +1,9 @@
 export type { SignatureEncoding } from "./types";
 export { computeHmacSignature } from "./computeHmacSignature";
 export type { ComputeHmacSignatureArgs, HmacAlgorithm } from "./computeHmacSignature";
+export { computeHash } from "./computeHash";
+export type { ComputeHashArgs, HashAlgorithm } from "./computeHash";
+export { getWebhookQueryParameter } from "./getWebhookQueryParameter";
 export { verifyAsymmetricSignature } from "./verifyAsymmetricSignature";
 export type { VerifyAsymmetricSignatureArgs, AsymmetricAlgorithm } from "./verifyAsymmetricSignature";
 export { timingSafeEqual } from "./timingSafeEqual";

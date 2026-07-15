@@ -1,7 +1,10 @@
+export type { ComputeHashArgs, HashAlgorithm } from "./computeHash.js";
+export { computeHash } from "./computeHash.js";
 export type { ComputeHmacSignatureArgs, HmacAlgorithm } from "./computeHmacSignature.js";
 export { computeHmacSignature } from "./computeHmacSignature.js";
 export type { FetchJwksArgs } from "./fetchJwks.js";
 export { fetchJwks } from "./fetchJwks.js";
+export { getWebhookQueryParameter } from "./getWebhookQueryParameter.js";
 export { timingSafeEqual } from "./timingSafeEqual.js";
 export type { SignatureEncoding } from "./types.js";
 export type { AsymmetricAlgorithm, VerifyAsymmetricSignatureArgs } from "./verifyAsymmetricSignature.js";

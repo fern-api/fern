@@ -167,6 +167,14 @@ export class WebhooksHelperGenerator {
         lines.push("");
         this.addPayloadConstruction(lines, config.payloadFormat);
 
+        // Body-hash binding: the raw body is not in the signed payload; a hash of it is
+        // transmitted separately (e.g. Twilio's bodySHA256 query param). Recompute and compare
+        // before verifying the HMAC. Both checks must pass.
+        if (config.bodyHashBinding != null) {
+            lines.push("");
+            this.addBodyHashVerification(context, lines, config.bodyHashBinding);
+        }
+
         // HMAC computation
         lines.push("");
         const algorithm = this.mapHmacAlgorithm(config.algorithm);
@@ -392,6 +400,67 @@ export class WebhooksHelperGenerator {
         lines.push(`const payload = [${componentExprs.join(", ")}].join(${delimiter});`);
     }
 
+    private addBodyHashVerification(
+        context: FileContext,
+        lines: string[],
+        binding: FernIr.WebhookBodyHashBinding
+    ): void {
+        const algorithm = this.mapBodyHashAlgorithm(binding.algorithm);
+        const encoding = this.mapEncoding(binding.encoding);
+
+        const argsExpr = ts.factory.createObjectLiteralExpression(
+            [
+                ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("requestBody")),
+                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
+            ],
+            false
+        );
+        const hashCall = context.coreUtilities.webhookCrypto.computeHash._invoke(argsExpr);
+        lines.push(`const expectedBodyHash = ${getTextOfTsNode(hashCall)};`);
+
+        const paramName = this.getBodyHashQueryParameterName(binding.location);
+        const extractCall = context.coreUtilities.webhookCrypto.getWebhookQueryParameter._invoke(
+            ts.factory.createIdentifier("notificationUrl"),
+            ts.factory.createStringLiteral(paramName)
+        );
+        lines.push(`const transmittedBodyHash = ${getTextOfTsNode(extractCall)};`);
+
+        const compareCall = context.coreUtilities.webhookCrypto.timingSafeEqual._invoke(
+            ts.factory.createIdentifier("expectedBodyHash"),
+            ts.factory.createIdentifier("transmittedBodyHash")
+        );
+        lines.push(
+            `if (transmittedBodyHash == null || !(${getTextOfTsNode(compareCall)})) {`,
+            "    return false;",
+            "}"
+        );
+    }
+
+    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+        return location._visit({
+            queryParameter: (queryParameter) => queryParameter.name,
+            _other: () => {
+                throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
+            }
+        });
+    }
+
+    private mapBodyHashAlgorithm(algorithm: FernIr.WebhookBodyHashAlgorithm): string {
+        switch (algorithm) {
+            case "SHA256":
+                return "sha256";
+            case "SHA1":
+                return "sha1";
+            case "SHA384":
+                return "sha384";
+            case "SHA512":
+                return "sha512";
+            default:
+                throw new Error(`Unrecognized body-hash algorithm: ${algorithm}`);
+        }
+    }
+
     private mapHmacAlgorithm(algorithm: FernIr.HmacAlgorithm): string {
         switch (algorithm) {
             case "SHA256":
@@ -454,6 +523,11 @@ export class WebhooksHelperGenerator {
             lines.push(
                 "The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.",
                 "When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
+            );
+        }
+        if (config.bodyHashBinding != null) {
+            lines.push(
+                "The raw request body is verified against a hash transmitted separately (not signed directly): pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
             );
         }
         return lines.join("\n");

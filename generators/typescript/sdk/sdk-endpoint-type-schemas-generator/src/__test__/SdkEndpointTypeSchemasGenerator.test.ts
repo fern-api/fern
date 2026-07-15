@@ -72,7 +72,8 @@ function createMockFileContext() {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             })
         },
@@ -1224,7 +1225,8 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                     properties: [],
                     extends: [],
                     extraProperties: true,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
             const schemas = createEndpointSchemas({

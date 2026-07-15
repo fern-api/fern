@@ -538,3 +538,32 @@ export class WebhooksHelper {
 }
 "
 `;
+
+exports[`WebhooksHelperGenerator > body-hash binding > computes a body hash and compares it to the transmitted query parameter before HMAC 1`] = `
+"/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Twilio-Signature" header and pass it as the signatureHeader parameter.
+ * The raw request body is verified against a hash transmitted separately (not signed directly): pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, notificationUrl: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = [notificationUrl].join("");
+
+        const expectedBodyHash = webhookCrypto.computeHash({ payload: requestBody, algorithm: "sha256", encoding: "hex" });
+        const transmittedBodyHash = webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256");
+        if (transmittedBodyHash == null || !(webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+            return false;
+        }
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;

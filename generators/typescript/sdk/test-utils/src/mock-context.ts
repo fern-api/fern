@@ -23,7 +23,8 @@ export function createMockTypeContext() {
                 properties: [],
                 extends: [],
                 extraProperties: false,
-                extendedProperties: undefined
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
             })
         }),
         getReferenceToType: () => ({ isOptional: false })

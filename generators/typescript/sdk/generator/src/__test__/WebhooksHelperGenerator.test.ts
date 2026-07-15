@@ -58,6 +58,28 @@ function createMockFileContext() {
                             undefined,
                             [argsExpr]
                         )
+                },
+                computeHash: {
+                    _invoke: (argsExpr: ts.Expression) =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("webhookCrypto"),
+                                "computeHash"
+                            ),
+                            undefined,
+                            [argsExpr]
+                        )
+                },
+                getWebhookQueryParameter: {
+                    _invoke: (url: ts.Expression, name: ts.Expression) =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("webhookCrypto"),
+                                "getWebhookQueryParameter"
+                            ),
+                            undefined,
+                            [url, name]
+                        )
                 }
             }
         }
@@ -86,6 +108,7 @@ describe("WebhooksHelperGenerator", () => {
     describe("HMAC verification", () => {
         it("writes basic HMAC SHA256 class with hex encoding", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -105,6 +128,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC SHA512 class with base64 encoding", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA512",
                 encoding: "BASE64",
                 signatureHeaderName: createWireValue("X-Webhook-Signature"),
@@ -124,6 +148,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with signature prefix", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -146,6 +171,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with UNIX_SECONDS timestamp validation", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -173,6 +199,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with UNIX_MILLIS timestamp format", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -199,6 +226,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with ISO8601 timestamp format", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -225,6 +253,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with multi-component payload format", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -251,6 +280,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with NOTIFICATION_URL payload component", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -273,6 +303,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC SHA1 algorithm variant", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA1",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -294,6 +325,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC SHA384 algorithm variant", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA384",
                 encoding: "BASE64",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -315,6 +347,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("uses custom class name", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -335,6 +368,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with ALPHABETICAL bodySort and BODY-only payload", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA1",
                 encoding: "BASE64",
                 signatureHeaderName: createWireValue("X-Webhook-Signature"),
@@ -359,6 +393,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("writes HMAC class with ALPHABETICAL bodySort and NOTIFICATION_URL + BODY payload", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA1",
                 encoding: "BASE64",
                 signatureHeaderName: createWireValue("X-Webhook-Signature"),
@@ -384,6 +419,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("generates JSDoc with bodySort documentation", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA1",
                 encoding: "BASE64",
                 signatureHeaderName: createWireValue("X-Webhook-Signature"),
@@ -624,6 +660,7 @@ describe("WebhooksHelperGenerator", () => {
     describe("JSDoc", () => {
         it("generates HMAC JSDoc with signature header name", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-My-Signature"),
@@ -645,6 +682,7 @@ describe("WebhooksHelperGenerator", () => {
 
         it("generates HMAC JSDoc with timestamp header name", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
                 algorithm: "SHA256",
                 encoding: "HEX",
                 signatureHeaderName: createWireValue("X-Signature"),
@@ -687,6 +725,86 @@ describe("WebhooksHelperGenerator", () => {
             expect(text).toContain("Verify an asymmetric webhook signature");
             expect(text).toContain("https://keys.example.com/jwks");
             expect(text).toContain("X-Key-Id");
+        });
+    });
+
+    // ────────────────────────────────────────────────────────────────────────
+    // Body-hash binding (Twilio JSON bodySHA256)
+    // ────────────────────────────────────────────────────────────────────────
+
+    describe("body-hash binding", () => {
+        function twilioStyleVerification(): FernIr.WebhookSignatureVerification {
+            return FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: {
+                    algorithm: "SHA256",
+                    encoding: "HEX",
+                    location: FernIr.WebhookBodyHashLocation.queryParameter({ name: "bodySHA256" })
+                },
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Twilio-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL"],
+                    delimiter: "",
+                    bodySort: undefined
+                }
+            });
+        }
+
+        it("computes a body hash and compares it to the transmitted query parameter before HMAC", () => {
+            const generator = new WebhooksHelperGenerator(twilioStyleVerification());
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+
+            // hashes the raw body (unkeyed) with the binding's own algorithm/encoding
+            expect(text).toContain("expectedBodyHash");
+            expect(text).toContain("webhookCrypto.computeHash");
+            // extracts the transmitted hash from the notification URL verbatim
+            expect(text).toContain("transmittedBodyHash");
+            expect(text).toContain('webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256")');
+            // fails closed when the parameter is missing or mismatched, before HMAC
+            expect(text).toContain("transmittedBodyHash == null");
+            expect(text).toContain("return false;");
+            // outer HMAC (SHA1/base64 over the URL) is still emitted
+            expect(text).toContain("webhookCrypto.computeHmacSignature");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("uses the body-hash algorithm/encoding independently of the outer HMAC's", () => {
+            const generator = new WebhooksHelperGenerator(twilioStyleVerification());
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            // body hash is sha256/hex; outer HMAC is sha1/base64
+            expect(text).toContain('"sha256"');
+            expect(text).toContain('"hex"');
+            expect(text).toContain('"sha1"');
+            expect(text).toContain('"base64"');
+        });
+
+        it("does not emit body-hash logic when no binding is configured", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
+                algorithm: "SHA256",
+                encoding: "HEX",
+                signatureHeaderName: createWireValue("X-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["BODY"],
+                    delimiter: ".",
+                    bodySort: undefined
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).not.toContain("transmittedBodyHash");
+            expect(text).not.toContain("computeHash");
         });
     });
 });
