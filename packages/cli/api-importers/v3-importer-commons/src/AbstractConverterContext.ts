@@ -1,6 +1,7 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
+import { capBreadcrumbToken } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -152,7 +153,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return true;
         });
 
-        const camelCased = camelCase(filteredBreadcrumbs.join("_"));
+        const camelCased = camelCase(filteredBreadcrumbs.map(capBreadcrumbToken).join("_"));
         return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
     }
 
