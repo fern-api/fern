@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.82.1
+  changelogEntry:
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the token
+        endpoint models `grant_type` as a plain (non-literal) string. Previously the
+        generated `OAuthAuthProvider` omitted `grant_type` entirely, so token requests
+        against OpenAPI-imported specs (where `grant_type` is an optional string rather
+        than a literal) failed. A required non-literal `grant_type` is no longer surfaced
+        as a user-supplied client-credentials option; it is synthesized automatically.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 3.82.0
   changelogEntry:
     - summary: |
