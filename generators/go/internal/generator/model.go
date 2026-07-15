@@ -1743,8 +1743,17 @@ func (t *typeVisitor) unionInheritedBasePropertyNames(union *ir.UnionTypeDeclara
 		}
 		fieldName := goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)
 		if _, ok := structurallyInherited[property.Name.WireValue]; ok {
-			// Confirmed by the shared IR fact — variants carry a structurally-equal type.
-			inherited[fieldName] = struct{}{}
+			// The IR marked this wire value as structurally inherited, so every variant redeclares it
+			// with an equal type and the delegating getter's return type always matches — no need to
+			// re-render types here. Go still confirms every variant exposes it under the SAME Go field
+			// name and as a non-literal: writeUnionInheritedBasePropertyGetters emits
+			// variant.Get<fieldName>() verbatim, and the IR matches variants by wire value, which a
+			// name-casing override could satisfy without producing a same-named getter. This guard keeps
+			// the deduped set a subset of what the getter-matching widening accepts, so a non-compiling
+			// getter is never emitted (see everyVariantExposesNonLiteralProperty).
+			if t.everyVariantExposesNonLiteralProperty(variantProperties, fieldName) {
+				inherited[fieldName] = struct{}{}
+			}
 			continue
 		}
 		// Go-render widening: dedupe when every variant carries a Go-render-equivalent property,
@@ -1778,6 +1787,27 @@ func (t *typeVisitor) everyVariantHasMatchingGetter(
 		}
 		variantGetterType, _, _, _ := processTypeFieldForOptional(variantProperty.ValueType, t.writer.types, comparisonScope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		if variantGetterType != baseGetterType {
+			return false
+		}
+	}
+	return true
+}
+
+// everyVariantExposesNonLiteralProperty reports whether every variant declares a non-literal
+// property under the Go field name fieldName — i.e. whether a delegating variant.Get<fieldName>()
+// exists on every variant. Used for base properties the IR already marked as structurally inherited
+// (so their getter types match across variants by construction); only the getter's existence — not
+// its rendered type — still needs confirming before the caller emits a delegating getter.
+func (t *typeVisitor) everyVariantExposesNonLiteralProperty(
+	variantProperties []map[string]*ir.ObjectProperty,
+	fieldName string,
+) bool {
+	for _, properties := range variantProperties {
+		variantProperty, ok := properties[fieldName]
+		if !ok {
+			return false
+		}
+		if isLiteralType(variantProperty.ValueType, t.writer.types) {
 			return false
 		}
 	}

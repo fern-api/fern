@@ -514,8 +514,14 @@ export class DynamicTypeInstantiationMapper {
      *
      * Literal base properties are always kept at the union root (they render as `<Name>()` methods,
      * not delegatable fields), matching the model. Base properties that a variant does not carry, or
-     * that a variant redeclares with a different Go type, keep their top-level field and must still be
-     * set at the union root, so they are excluded here.
+     * that a variant redeclares with a different Go getter type, keep their top-level field and must
+     * still be set at the union root, so they are excluded here.
+     *
+     * To stay in lockstep with the model, base<->variant properties are matched by Go field name (not
+     * wire value) via {@link getObjectExportedProperties}, and compared through
+     * {@link getGoGetterTypeString} — the single comparison primitive that renders a getter's Go type
+     * including the `getters-pass-by-value` `*`-stripping the model applies. Both the structural-core
+     * and the widening path route through it, so the two generators cannot drift.
      */
     private getDedupedBasePropertyWireValues(discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType): Set<string> {
         if (!this.context.customConfig?.dedupeUnionBaseProperties) {
@@ -527,7 +533,10 @@ export class DynamicTypeInstantiationMapper {
         if (variants.length === 0 || !variants.every((variant) => variant.type === "samePropertiesAsObject")) {
             return new Set();
         }
-        // Base properties are the same across variants; take them from the first variant.
+        // A `samePropertiesAsObject` variant's `properties` are, per the dynamic IR, "the base and/or
+        // extended properties from the union" — the union's base-property set projected onto every
+        // variant, so it is identical across variants. Take it from the first variant; this mirrors
+        // the model iterating `union.BaseProperties`.
         const baseProperties = variants[0]?.properties ?? [];
         if (baseProperties.length === 0) {
             return new Set();
@@ -542,31 +551,46 @@ export class DynamicTypeInstantiationMapper {
         // produces to avoid failing an otherwise-valid snippet.
         const errorsBefore = this.context.errors.size();
         try {
-            const declaredByEveryVariant = variants.map((variant) => this.getObjectDeclaredProperties(variant.typeId));
+            // Each variant's exported properties (following `extends`), keyed by Go field name — the
+            // same key `variant.Get<FieldName>()` uses — matching the model's objectExportedProperties.
+            const variantPropertiesByField = variants.map((variant) => this.getObjectExportedProperties(variant.typeId));
+            const everyVariantExposesNonLiteralProperty = (fieldName: string): boolean =>
+                variantPropertiesByField.every((declared) => {
+                    const variantProperty = declared.get(fieldName);
+                    return variantProperty != null && variantProperty.typeReference.type !== "literal";
+                });
             const deduped = new Set<string>();
             for (const baseProperty of baseProperties) {
-                const wireValue = baseProperty.name.wireValue;
                 // Local Go rendering policy: literals render as methods, not delegatable fields, so
                 // they are never deduped (kept at the union root), even if the IR marked them.
                 if (baseProperty.typeReference.type === "literal") {
                     continue;
                 }
-                if (structurallyInherited.has(wireValue)) {
-                    // Confirmed by the shared IR fact — variants carry a structurally-equal type.
-                    deduped.add(wireValue);
+                const fieldName = this.context.getFieldName(baseProperty.name.name);
+                if (structurallyInherited.has(baseProperty.name.wireValue)) {
+                    // The IR proved every variant redeclares this wire value with a structurally-equal
+                    // type, so the getter's return type matches by construction; only confirm every
+                    // variant exposes it under the same Go field name as a non-literal (a wire-value
+                    // match can survive a name-casing override that leaves variant.Get<FieldName>()
+                    // undefined). Keeps the deduped set a subset of what the widening accepts.
+                    if (everyVariantExposesNonLiteralProperty(fieldName)) {
+                        deduped.add(baseProperty.name.wireValue);
+                    }
                     continue;
                 }
                 // Go-render widening: dedupe when every variant carries a Go-render-equivalent
                 // property, even though the IR's conservative structural equality did not mark it.
-                const baseGoType = this.getGoTypeString(baseProperty.typeReference);
-                const carriedByEveryVariant = declaredByEveryVariant.every((declared) => {
-                    const variantProperty = declared.get(wireValue);
+                const baseGetterType = this.getGoGetterTypeString(baseProperty.typeReference);
+                const carriedByEveryVariant = variantPropertiesByField.every((declared) => {
+                    const variantProperty = declared.get(fieldName);
                     return (
-                        variantProperty != null && this.getGoTypeString(variantProperty.typeReference) === baseGoType
+                        variantProperty != null &&
+                        variantProperty.typeReference.type !== "literal" &&
+                        this.getGoGetterTypeString(variantProperty.typeReference) === baseGetterType
                     );
                 });
                 if (carriedByEveryVariant) {
-                    deduped.add(wireValue);
+                    deduped.add(baseProperty.name.wireValue);
                 }
             }
             return deduped;
@@ -576,11 +600,12 @@ export class DynamicTypeInstantiationMapper {
     }
 
     /**
-     * Collects the properties declared by the object with the given type id, keyed by wire value,
-     * following its `extends` chain (matching the model's inherited-property resolution). A property
-     * declared directly on the object takes precedence over one inherited via `extends`.
+     * Collects the properties an object exports, keyed by Go field name, following its `extends` chain
+     * (matching the model's `objectExportedProperties`). Extended properties are collected first so a
+     * property declared directly on the object overrides one inherited via `extends`, exactly as the
+     * model does. Empty for anything that does not resolve to an object.
      */
-    private getObjectDeclaredProperties(typeId: FernIr.dynamic.TypeId): Map<string, FernIr.dynamic.NamedParameter> {
+    private getObjectExportedProperties(typeId: FernIr.dynamic.TypeId): Map<string, FernIr.dynamic.NamedParameter> {
         const properties = new Map<string, FernIr.dynamic.NamedParameter>();
         const visited = new Set<string>();
         const collect = (id: FernIr.dynamic.TypeId): void => {
@@ -592,13 +617,11 @@ export class DynamicTypeInstantiationMapper {
             if (named?.type !== "object") {
                 return;
             }
-            for (const property of named.properties) {
-                if (!properties.has(property.name.wireValue)) {
-                    properties.set(property.name.wireValue, property);
-                }
-            }
             for (const extended of named.extends ?? []) {
                 collect(extended);
+            }
+            for (const property of named.properties) {
+                properties.set(this.context.getFieldName(property.name.name), property);
             }
         };
         collect(typeId);
@@ -606,18 +629,32 @@ export class DynamicTypeInstantiationMapper {
     }
 
     /**
-     * Renders a dynamic type reference to its Go type string using the same mapper the snippet
-     * emitter uses, so two references can be compared for Go-type equality. Rendering (rather than
-     * structurally comparing the type references) reuses the mapper's Go-type collapse rules — e.g.
-     * `list` and `set` both render to a slice, `optional` and `nullable` both to a pointer — instead
-     * of duplicating them here, which keeps the comparison in step with how the model decides.
+     * Renders the Go type a getter for `typeReference` would return, so two references can be compared
+     * for Go-getter-type equality. This is the single comparison primitive the dedupe decision uses,
+     * mirroring the model's `processTypeFieldForOptional`:
+     *   - the type mapper collapses Go-render-equivalent shapes (`list`/`set` -> `[]T`,
+     *     `optional`/`nullable` -> `*T`), and
+     *   - when `getters-pass-by-value` is enabled the model returns the DEREFERENCED type for an
+     *     optional/nullable field, so we render the unwrapped type here to match. Without this the
+     *     snippet would keep a base field the model dropped under that config, re-introducing drift.
      *
      * `packageName`/`importPath` are arbitrary: the result is only ever compared against another
      * string produced by this same method, so any consistent values work, and rendering against a
      * throwaway file means it never registers imports on real output.
      */
-    private getGoTypeString(typeReference: FernIr.dynamic.TypeReference): string {
-        return this.context.dynamicTypeMapper.convert({ typeReference }).toString({
+    private getGoGetterTypeString(typeReference: FernIr.dynamic.TypeReference): string {
+        // Mirror the model: a `getters-pass-by-value` getter returns the value (dereferenced) type for
+        // an optional/nullable field. Unwrap the optional/nullable wrapper(s) before rendering so the
+        // comparison sees `string` (not `*string`), exactly as the model's dereferenced getter type
+        // does. `optional`/`nullable` collapse to a single Go pointer, so unwrapping every level here
+        // matches the model stripping that one pointer.
+        let effectiveTypeReference = typeReference;
+        if (this.context.customConfig?.gettersPassByValue) {
+            while (effectiveTypeReference.type === "optional" || effectiveTypeReference.type === "nullable") {
+                effectiveTypeReference = effectiveTypeReference.value;
+            }
+        }
+        return this.context.dynamicTypeMapper.convert({ typeReference: effectiveTypeReference }).toString({
             packageName: "example",
             importPath: "fern",
             rootImportPath: this.context.rootImportPath,

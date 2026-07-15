@@ -65,16 +65,59 @@ function injectBasePropertiesIntoVariantObjects(
     return ir;
 }
 
+/**
+ * Sets up the `getters-pass-by-value` drift case: every variant object carries `name`/`id` as
+ * NON-optional (via {@link injectBasePropertiesIntoVariantObjects}), then makes the union's base
+ * `name` OPTIONAL. With `gettersPassByValue` the model's getter for an optional field returns the
+ * dereferenced type, so base `name` (`*string` -> `string`) matches the variant's `string` and the
+ * model dedupes it; the snippet must apply the same `*`-stripping to agree, or it would keep `Name`
+ * at the union root the model dropped (a non-compiling snippet).
+ */
+function setupPassByValueOptionalityMismatch(
+    ir: FernIr.dynamic.DynamicIntermediateRepresentation
+): FernIr.dynamic.DynamicIntermediateRepresentation {
+    const shape = ir.types[SHAPE_TYPE_ID];
+    if (shape?.type !== "discriminatedUnion") {
+        throw new Error(`Expected ${SHAPE_TYPE_ID} to be a discriminatedUnion`);
+    }
+    for (const variant of Object.values(shape.types)) {
+        if (variant.type !== "samePropertiesAsObject") {
+            continue;
+        }
+        const variantObject = ir.types[variant.typeId];
+        if (variantObject?.type !== "object") {
+            continue;
+        }
+        // Give every variant object a NON-optional copy of each base property (deep-cloned so it is
+        // independent of the union's base-property objects mutated below).
+        const existing = new Set(variantObject.properties.map((property) => property.name.wireValue));
+        for (const baseProperty of variant.properties) {
+            if (!existing.has(baseProperty.name.wireValue)) {
+                variantObject.properties.push(structuredClone(baseProperty));
+            }
+        }
+        // Now make the union's base `name` optional, leaving the variant objects' `name` non-optional.
+        for (const baseProperty of variant.properties) {
+            if (baseProperty.name.wireValue === "name") {
+                baseProperty.typeReference = { type: "optional", value: baseProperty.typeReference };
+            }
+        }
+    }
+    return ir;
+}
+
 async function generateShapeSnippet({
     ir,
-    dedupeUnionBaseProperties
+    dedupeUnionBaseProperties,
+    gettersPassByValue
 }: {
     ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     dedupeUnionBaseProperties: boolean;
+    gettersPassByValue?: boolean;
 }): Promise<string> {
     const generator = new DynamicSnippetsGenerator({
         ir,
-        config: buildGeneratorConfig({ customConfig: { dedupeUnionBaseProperties } }),
+        config: buildGeneratorConfig({ customConfig: { dedupeUnionBaseProperties, gettersPassByValue } }),
         formatter: new GoFormatter()
     });
     const response = await generator.generate(UPDATE_SHAPE_REQUEST, { endpointId: "endpoint_union.update" });
@@ -173,6 +216,85 @@ describe("dedupeUnionBaseProperties", () => {
           			Name:   "name",
           			ID:     "id",
           		},
+          	}
+          	client.Union.Update(
+          		context.TODO(),
+          		request,
+          	)
+          }
+          "
+        `);
+    });
+
+    it("mirrors the model's getters-pass-by-value widening: dedupes an optional base prop vs a non-optional variant prop", async () => {
+        // base `name` is optional, every variant object declares `name` as non-optional. With
+        // `gettersPassByValue` the model's getter comparison strips the pointer (`*string` -> `string`),
+        // so it dedupes `name` (and `id`, which already matches). The snippet must strip the same
+        // pointer to agree — otherwise it would emit `Name` at the union root the model dropped.
+        const snippet = await generateShapeSnippet({
+            ir: setupPassByValueOptionalityMismatch(loadUnionsIr()),
+            dedupeUnionBaseProperties: true,
+            gettersPassByValue: true
+        });
+        expect(snippet).toMatchInlineSnapshot(`
+          "package example
+
+          import (
+          	context "context"
+
+          	acme "github.com/acme/acme-go"
+          	client "github.com/acme/acme-go/client"
+          )
+
+          func do() {
+          	client := client.NewClient()
+          	request := &acme.Shape{
+          		Circle: &acme.Circle{
+          			Radius: 1.1,
+          			Name:   "name",
+          			ID:     "id",
+          		},
+          	}
+          	client.Union.Update(
+          		context.TODO(),
+          		request,
+          	)
+          }
+          "
+        `);
+    });
+
+    it("keeps the optional base prop at the union root without getters-pass-by-value (types differ)", async () => {
+        // Same shape, but with `gettersPassByValue` off the model compares `*string` (optional base)
+        // against `string` (non-optional variant) — a mismatch — so it keeps `Name` at the union root.
+        // `id` still matches (both non-optional) and is deduped. The snippet must match: `Name` stays at
+        // the root, `ID` moves into the variant.
+        const snippet = await generateShapeSnippet({
+            ir: setupPassByValueOptionalityMismatch(loadUnionsIr()),
+            dedupeUnionBaseProperties: true,
+            gettersPassByValue: false
+        });
+        expect(snippet).toMatchInlineSnapshot(`
+          "package example
+
+          import (
+          	context "context"
+
+          	acme "github.com/acme/acme-go"
+          	client "github.com/acme/acme-go/client"
+          )
+
+          func do() {
+          	client := client.NewClient()
+          	request := &acme.Shape{
+          		Circle: &acme.Circle{
+          			Radius: 1.1,
+          			Name:   "name",
+          			ID:     "id",
+          		},
+          		Name: acme.String(
+          			"name",
+          		),
           	}
           	client.Union.Update(
           		context.TODO(),

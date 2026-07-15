@@ -55,6 +55,16 @@ func setStringProperty(pascal string) *ir.ObjectProperty {
 	}
 }
 
+func optionalStringProperty(pascal string) *ir.ObjectProperty {
+	return &ir.ObjectProperty{
+		Name: nameAndWireValue(pascal),
+		ValueType: &ir.TypeReference{Container: &ir.ContainerType{
+			Type:     "optional",
+			Optional: &ir.TypeReference{Primitive: &ir.PrimitiveType{V1: common.PrimitiveTypeV1String}},
+		}},
+	}
+}
+
 func objectType(properties ...*ir.ObjectProperty) *ir.TypeDeclaration {
 	return &ir.TypeDeclaration{Shape: &ir.Type{Object: &ir.ObjectTypeDeclaration{Properties: properties}}}
 }
@@ -107,6 +117,41 @@ func TestUnionInheritedBasePropertyNames(t *testing.T) {
 		}
 	})
 
+	t.Run("does not dedupe an IR-marked prop a variant exposes under a different Go field name", func(t *testing.T) {
+		// The IR marks `shared` (matched by wire value) as structurally inherited, but the variant
+		// objects redeclare that wire value under a different Go field name (`Renamed`, e.g. a name
+		// override). writeUnionInheritedBasePropertyGetters would emit variant.GetShared(), which does
+		// not exist — so the getter-existence guard must keep the field on the envelope instead.
+		renamedShared := &ir.ObjectProperty{
+			Name: &common.NameAndWireValue{
+				WireValue: "shared",
+				Name: &common.Name{
+					OriginalName: "shared",
+					PascalCase:   &common.SafeAndUnsafeString{UnsafeName: "Renamed", SafeName: "Renamed"},
+				},
+			},
+			ValueType: &ir.TypeReference{Primitive: &ir.PrimitiveType{V1: common.PrimitiveTypeV1String}},
+		}
+		guard := &typeVisitor{
+			dedupeUnionBaseProperties: true,
+			writer: &fileWriter{types: map[common.TypeId]*ir.TypeDeclaration{
+				"A": objectType(renamedShared),
+				"B": objectType(renamedShared),
+			}},
+		}
+		union := &ir.UnionTypeDeclaration{
+			BaseProperties:          []*ir.ObjectProperty{objectProperty("shared")},
+			InheritedBaseProperties: []*common.NameAndWireValue{nameAndWireValue("shared")},
+			Types: []*ir.SingleUnionType{
+				samePropertiesAsObjectVariant("A"),
+				samePropertiesAsObjectVariant("B"),
+			},
+		}
+		if got := guard.unionInheritedBasePropertyNames(union); len(got) != 0 {
+			t.Errorf("expected no dedupe: no variant exposes a GetShared() getter, got %v", got)
+		}
+	})
+
 	t.Run("Go-render widening dedupes list/set that the IR left unmarked", func(t *testing.T) {
 		// The union base property `tags` is a list<string>; each variant carries it as a set<string>.
 		// These are structurally distinct (so the IR does NOT list it in InheritedBaseProperties), but
@@ -149,6 +194,55 @@ func TestUnionInheritedBasePropertyNames(t *testing.T) {
 		}
 		if got := mismatch.unionInheritedBasePropertyNames(union); len(got) != 0 {
 			t.Errorf("expected no dedupe when base (string) and variant (int) render differently, got %v", got)
+		}
+	})
+
+	// Mirror of the go-dynamic-snippets "getters-pass-by-value" tests: with the config on, an optional
+	// base property and a non-optional variant property have the SAME getter type (the getter returns
+	// the dereferenced value), so the field is deduped; with the config off, the getter types differ
+	// (`*string` vs `string`) and it is kept. Both generators must agree on this set, so the snippet
+	// has the matching pair of tests over the same shape.
+	t.Run("getters-pass-by-value dedupes an optional base prop vs a non-optional variant prop", func(t *testing.T) {
+		pbv := &typeVisitor{
+			dedupeUnionBaseProperties: true,
+			gettersPassByValue:        true,
+			writer: &fileWriter{types: map[common.TypeId]*ir.TypeDeclaration{
+				"A": objectType(objectProperty("name")),
+				"B": objectType(objectProperty("name")),
+			}},
+		}
+		union := &ir.UnionTypeDeclaration{
+			BaseProperties:          []*ir.ObjectProperty{optionalStringProperty("name")},
+			InheritedBaseProperties: nil, // structurally distinct (optional vs non-optional), so unmarked
+			Types: []*ir.SingleUnionType{
+				samePropertiesAsObjectVariant("A"),
+				samePropertiesAsObjectVariant("B"),
+			},
+		}
+		if _, ok := pbv.unionInheritedBasePropertyNames(union)["Name"]; !ok {
+			t.Errorf("expected Name to be deduped: with getters-pass-by-value the optional base getter returns the same type as the non-optional variant getter")
+		}
+	})
+
+	t.Run("without getters-pass-by-value keeps an optional base prop vs a non-optional variant prop", func(t *testing.T) {
+		noPbv := &typeVisitor{
+			dedupeUnionBaseProperties: true,
+			gettersPassByValue:        false,
+			writer: &fileWriter{types: map[common.TypeId]*ir.TypeDeclaration{
+				"A": objectType(objectProperty("name")),
+				"B": objectType(objectProperty("name")),
+			}},
+		}
+		union := &ir.UnionTypeDeclaration{
+			BaseProperties:          []*ir.ObjectProperty{optionalStringProperty("name")},
+			InheritedBaseProperties: nil,
+			Types: []*ir.SingleUnionType{
+				samePropertiesAsObjectVariant("A"),
+				samePropertiesAsObjectVariant("B"),
+			},
+		}
+		if _, ok := noPbv.unionInheritedBasePropertyNames(union)["Name"]; ok {
+			t.Errorf("did not expect Name to be deduped: *string (optional base getter) and string (variant getter) differ")
 		}
 	})
 
