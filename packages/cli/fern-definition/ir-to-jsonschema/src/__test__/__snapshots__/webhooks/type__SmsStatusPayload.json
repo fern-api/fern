@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "messageSid": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "messageSid",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
