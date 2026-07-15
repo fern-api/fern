@@ -6,7 +6,11 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { getOAuthTokenRequestProperties, OAuthTokenRequestProperty } from "./oauthTokenRequestProperties.js";
+import {
+    getOAuthTokenRequestProperties,
+    isGrantTypeProperty,
+    OAuthTokenRequestProperty
+} from "./oauthTokenRequestProperties.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -18,6 +22,7 @@ export declare namespace OauthTokenProviderGenerator {
 export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly CLASS_NAME = "OAuthTokenProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
+    private static readonly CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
     private readonly case: CaseConverter;
     private scheme: FernIr.OAuthScheme;
@@ -252,6 +257,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                     const literal = this.context.maybeLiteral(customProperty.property.valueType);
                     if (literal != null) {
                         writer.writeLine(`'${propName}' => ${this.context.getLiteralAsString(literal)},`);
+                    } else if (isGrantTypeProperty(customProperty)) {
+                        writer.writeLine(
+                            `'${propName}' => '${OauthTokenProviderGenerator.CLIENT_CREDENTIALS_GRANT_TYPE}',`
+                        );
                     }
                 }
 

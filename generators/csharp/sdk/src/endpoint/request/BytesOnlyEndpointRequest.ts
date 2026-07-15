@@ -3,6 +3,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 type SdkRequest = FernIr.SdkRequest;
+type ServiceId = FernIr.ServiceId;
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
@@ -12,10 +13,15 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+import { writeLiteralHeaders } from "./literalHeaders.js";
 
 export class BytesOnlyEndpointRequest extends EndpointRequest {
-    // biome-ignore lint/complexity/noUselessConstructor: allow
-    public constructor(context: SdkGeneratorContext, sdkRequest: SdkRequest, endpoint: HttpEndpoint) {
+    public constructor(
+        context: SdkGeneratorContext,
+        sdkRequest: SdkRequest,
+        endpoint: HttpEndpoint,
+        private readonly serviceId: ServiceId
+    ) {
         super(context, sdkRequest, endpoint);
     }
 
@@ -39,6 +45,14 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
                     `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
+
+                // Add literal service- and endpoint-level headers (no request object carries them)
+                writeLiteralHeaders({
+                    writer,
+                    context: this.context,
+                    serviceId: this.serviceId,
+                    endpoint: this.endpoint
+                });
 
                 // Add client-level headers (from root client constructor)
                 writer.writeLine();

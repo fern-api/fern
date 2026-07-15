@@ -8,7 +8,7 @@ use Seed\Auth\Requests\GetTokenRequest;
 use Seed\Auth\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\UrlEncodedApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -69,7 +69,7 @@ class AuthClient
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new UrlEncodedApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/token",
                     method: HttpMethod::POST,
@@ -116,7 +116,7 @@ class AuthClient
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new UrlEncodedApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/token",
                     method: HttpMethod::POST,

@@ -7,7 +7,7 @@ import { changelogContainsVersion, prependChangelogBlock } from "../../autoversi
 import { createReplayBranch } from "../github/createReplayBranch";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
-import { pushSignedCommit } from "../github/pushSignedCommit";
+import { pushSignedCommit, resolveCommitAuthor } from "../github/pushSignedCommit";
 import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type {
@@ -210,7 +210,7 @@ export class GithubStep extends BaseStep {
                 repo,
                 branch: prBranch,
                 force: isUpdatingExistingPR,
-                author: this.config.author,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
                 logger: this.logger
             });
             const pushedBranch = await repository.getCurrentBranch();
@@ -370,7 +370,7 @@ export class GithubStep extends BaseStep {
                 branch: baseBranch,
                 force: false,
                 rebaseOnConflict: true,
-                author: this.config.author,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
                 logger: this.logger
             });
 
@@ -425,7 +425,7 @@ export class GithubStep extends BaseStep {
                 branch: baseBranch,
                 force: false,
                 rebaseOnConflict: true,
-                author: this.config.author,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
                 logger: this.logger
             });
 

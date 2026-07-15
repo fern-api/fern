@@ -1142,6 +1142,32 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     /**
+     * Returns the set of property wire names to suppress when generating the object type for the
+     * given typeId, because it is a discriminated-union variant whose owning union(s) already declare
+     * those fields as base properties.
+     *
+     * The decision is read directly from the IR fact `ObjectTypeDeclaration.deferredUnionBaseProperties`,
+     * which the IR generator computes once with structural type equality and an exclusive-variant guard
+     * (an object referenced anywhere other than as a union variant carries no deferred set). This
+     * generator does not re-derive it — so a same-named-but-differently-typed field is never dropped,
+     * and an object used standalone is never stripped.
+     *
+     * Empty when the opt-in `dedupeUnionBaseProperties` flag is off, or for any type that is not an
+     * exclusively-variant object with deferred properties. Removing the duplicated leaf fields is a
+     * breaking change to the generated surface, so existing users keep them until they opt in.
+     */
+    public getBasePropertyWireNamesToOmitForType(typeId: TypeId): Set<string> {
+        if (!this.settings.dedupeUnionBaseProperties) {
+            return new Set();
+        }
+        const typeDeclaration = this.ir.types[typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "object") {
+            return new Set();
+        }
+        return new Set((typeDeclaration.shape.deferredUnionBaseProperties ?? []).map((property) => property.wireValue));
+    }
+
+    /**
      * Returns true if the given typeId is an inline type AND the inline-types feature is enabled.
      */
     public isInlineType(typeId: TypeId): boolean {

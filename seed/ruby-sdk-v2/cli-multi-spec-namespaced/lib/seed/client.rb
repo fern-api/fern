@@ -4,17 +4,20 @@ module Seed
   class Client
     # @param token [String]
     # @param base_url [String, nil]
+    # @param api_key [String, nil]
     # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, max_retries: 2)
+    def initialize(token:, base_url: nil, api_key: nil, max_retries: 2)
+      headers = {
+        "User-Agent" => "fern_cli-multi-spec-namespaced/0.0.1",
+        "X-Fern-Language" => "Ruby",
+        Authorization: "Bearer #{token}"
+      }
+      headers["X-Api-Key"] = api_key.to_s unless api_key.nil?
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url || Seed::Environment::DEFAULT,
-        headers: {
-          "User-Agent" => "fern_cli-multi-spec-namespaced/0.0.1",
-          "X-Fern-Language" => "Ruby",
-          Authorization: "Bearer #{token}"
-        },
+        headers: headers,
         max_retries: max_retries
       )
     end

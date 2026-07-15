@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.49.4
+  changelogEntry:
+    - summary: |
+        OAuth client credentials token requests now send `grant_type: "client_credentials"`
+        when the token endpoint declares a non-literal `grant_type` request property.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.3
+  changelogEntry:
+    - summary: |
+        Fix a generator compile error introduced by two concurrent changes: the optional
+        global-header env fallback now uses `isTypeReferencePointer` (which also covers
+        `nullable` and aliased optional headers) instead of the removed
+        `isTypeReferenceOptional` export.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.2
+  changelogEntry:
+    - summary: |
+        Fix a compile error when a global header is `optional` and has an `env` fallback.
+        The generated env-fallback code compared and assigned the pointer-typed options
+        field as a plain `string` (e.g. `options.Version == ""`). Optional header fields
+        are now nil-checked and assigned via a pointer
+        (`if options.Version == nil { if value := os.Getenv("MY_API_VERSION"); value != "" { options.Version = &value } }`).
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.1
+  changelogEntry:
+    - summary: |
+        Fix compile errors in the generated OAuth and inferred auth token fetching code when
+        the token endpoint's response properties are optional or nullable (generated as
+        pointer types in Go), or when `expires_in` is an int64. Also ensure required nullable
+        inferred-auth credentials are included in token requests as pointers.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
 - version: 1.49.0
   changelogEntry:
     - summary: |

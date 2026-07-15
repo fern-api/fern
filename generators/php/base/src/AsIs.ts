@@ -21,6 +21,7 @@ export enum AsIsFiles {
     SseStream = "Client/SseStream.Template.php",
     SseEvent = "Client/SseEvent.Template.php",
     JsonStream = "Client/JsonStream.Template.php",
+    UrlEncodedApiRequest = "Client/UrlEncodedApiRequest.Template.php",
     TextStream = "Client/TextStream.Template.php",
 
     // Core/Json files.

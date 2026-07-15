@@ -32,4 +32,12 @@ public class HeadersClient {
     public SendResponse send(SendLiteralsInHeadersRequest request, RequestOptions requestOptions) {
         return this.rawClient.send(request, requestOptions).body();
     }
+
+    public SendResponse sendLiteralsOnly() {
+        return this.rawClient.sendLiteralsOnly().body();
+    }
+
+    public SendResponse sendLiteralsOnly(RequestOptions requestOptions) {
+        return this.rawClient.sendLiteralsOnly(requestOptions).body();
+    }
 }
