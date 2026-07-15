@@ -87,7 +87,7 @@ jobs:
           scope: "@fern-api"
 
       - name: Update npm for OIDC publishing
-        run: npm install -g npm@11
+        run: npm install -g npm@^11.5.1
 
       - name: Publish @fern-api/dynamic-ir-sdk via OIDC
         run: |
