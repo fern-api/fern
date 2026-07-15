@@ -1,0 +1,5 @@
+- summary: |
+    Endpoints with `application/x-www-form-urlencoded` request bodies (e.g. OAuth token
+    endpoints) now send form-encoded bodies with the correct `Content-Type` header instead
+    of serializing the body as JSON.
+  type: fix

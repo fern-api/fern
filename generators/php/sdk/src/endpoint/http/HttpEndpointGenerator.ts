@@ -725,8 +725,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getRequestTypeClassReference(requestBody: FernIr.HttpRequestBody): php.ClassReference {
         return requestBody._visit({
-            inlinedRequestBody: () => this.context.getJsonApiRequestClassReference(),
-            reference: () => this.context.getJsonApiRequestClassReference(),
+            inlinedRequestBody: (inlinedRequestBody) =>
+                inlinedRequestBody.contentType === "application/x-www-form-urlencoded"
+                    ? this.context.getUrlEncodedApiRequestClassReference()
+                    : this.context.getJsonApiRequestClassReference(),
+            reference: (reference) =>
+                reference.contentType === "application/x-www-form-urlencoded"
+                    ? this.context.getUrlEncodedApiRequestClassReference()
+                    : this.context.getJsonApiRequestClassReference(),
             fileUpload: () => this.context.getMultipartApiRequestClassReference(),
             bytes: () => this.context.getJsonApiRequestClassReference(), // TODO: Add support for BytesApiRequest
             _other: () => this.context.getJsonApiRequestClassReference()

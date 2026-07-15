@@ -8,6 +8,7 @@ export enum AsIsFiles {
 
     // Core/Client files.
     BaseApiRequest = "Client/BaseApiRequest.Template.php",
+    UrlEncodedApiRequest = "Client/UrlEncodedApiRequest.Template.php",
     HttpMethod = "Client/HttpMethod.Template.php",
     RawClient = "Client/RawClient.Template.php",
     IdempotencyKey = "Client/IdempotencyKey.Template.php",

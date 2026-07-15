@@ -179,6 +179,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getCoreJsonClassReference("JsonApiRequest");
     }
 
+    public getUrlEncodedApiRequestClassReference(): php.ClassReference {
+        return this.getCoreClientClassReference("UrlEncodedApiRequest");
+    }
+
     public getJsonDecoderClassReference(): php.ClassReference {
         return this.getCoreJsonClassReference("JsonDecoder");
     }
@@ -604,6 +608,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getCoreAsIsFiles(): string[] {
         const files = [
             AsIsFiles.BaseApiRequest,
+            AsIsFiles.UrlEncodedApiRequest,
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
             AsIsFiles.RawClient,
