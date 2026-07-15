@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.49
+  changelogEntry:
+    - summary: |
+        Pin the Fern bot identity as author/committer on API-created commits when the
+        GitHub token is a personal access token (`ghp_`/`github_pat_`). PATs cannot
+        auto-sign commits, so omitting the identity fields (the 0.9.40 behavior)
+        attributed self-hosted push/PR commits to the PAT owner, breaking CI filters
+        that key off the `fern-api[bot]` committer. Signing-capable tokens (App
+        installation, OAuth) are unchanged and keep the "Verified" signature.
+      type: fix
+  createdAt: "2026-07-15"
 - version: 0.9.48
   changelogEntry:
     - summary: |
