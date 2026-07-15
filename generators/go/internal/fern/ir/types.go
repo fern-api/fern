@@ -8358,9 +8358,9 @@ var (
 type UnionTypeDeclaration struct {
 	Discriminant *common.NameAndWireValue `json:"discriminant" url:"discriminant"`
 	// A list of other types to inherit from
-	Extends              []*DeclaredTypeName `json:"extends" url:"extends"`
-	Types                []*SingleUnionType  `json:"types" url:"types"`
-	BaseProperties       []*ObjectProperty   `json:"baseProperties" url:"baseProperties"`
+	Extends        []*DeclaredTypeName `json:"extends" url:"extends"`
+	Types          []*SingleUnionType  `json:"types" url:"types"`
+	BaseProperties []*ObjectProperty   `json:"baseProperties" url:"baseProperties"`
 	// Base properties that every `samePropertiesAsObject` variant of this union redeclares with a
 	// structurally-equal type. Computed by the IR generator; consumers must not recompute it.
 	InheritedBaseProperties []*common.NameAndWireValue `json:"inheritedBaseProperties,omitempty" url:"inheritedBaseProperties,omitempty"`

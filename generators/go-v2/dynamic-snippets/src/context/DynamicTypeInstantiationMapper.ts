@@ -393,7 +393,13 @@ export class DynamicTypeInstantiationMapper {
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const baseFields = this.getBaseFields({
             discriminatedUnionTypeInstance,
-            singleDiscriminatedUnionType: unionVariant
+            singleDiscriminatedUnionType: unionVariant,
+            // When `dedupeUnionBaseProperties` removes a base property from the union's top-level
+            // fields (exposing it through a discriminant-switching getter instead), that field no
+            // longer exists on the struct, so setting it at the union root would fail to compile.
+            // Those base properties are always carried by the variant's own object, so the value is
+            // still present in the snippet. See getDedupedBasePropertyWireValues.
+            excludeWireValues: this.getDedupedBasePropertyWireValues(discriminatedUnion)
         });
         switch (unionVariant.type) {
             case "samePropertiesAsObject": {
@@ -457,19 +463,25 @@ export class DynamicTypeInstantiationMapper {
 
     private getBaseFields({
         discriminatedUnionTypeInstance,
-        singleDiscriminatedUnionType
+        singleDiscriminatedUnionType,
+        excludeWireValues
     }: {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
+        // Base properties whose top-level struct field has been removed by
+        // `dedupeUnionBaseProperties`; setting them at the union root would not compile.
+        excludeWireValues?: Set<string>;
     }): go.StructField[] {
-        const properties = this.context.associateByWireValue({
-            parameters: singleDiscriminatedUnionType.properties ?? [],
-            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
+        const properties = this.context
+            .associateByWireValue({
+                parameters: singleDiscriminatedUnionType.properties ?? [],
+                values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
 
-            // We're only selecting the base properties here. The rest of the properties
-            // are handled by the union variant.
-            ignoreMissingParameters: true
-        });
+                // We're only selecting the base properties here. The rest of the properties
+                // are handled by the union variant.
+                ignoreMissingParameters: true
+            })
+            .filter((property) => !(excludeWireValues?.has(property.name.wireValue) ?? false));
         return properties.map((property) => {
             this.context.errors.scope(property.name.wireValue);
             try {
@@ -480,6 +492,136 @@ export class DynamicTypeInstantiationMapper {
             } finally {
                 this.context.errors.unscope();
             }
+        });
+    }
+
+    /**
+     * Returns the wire values of the union base properties that the Go model generator drops as
+     * top-level struct fields when `dedupeUnionBaseProperties` is enabled — mirroring the model's
+     * `unionInheritedBasePropertyNames` so the snippet and the generated model dedupe an identical
+     * set.
+     *
+     * The decision has a language-agnostic core and a thin Go-specific widening, exactly as in the
+     * model:
+     *   - Core: the IR marks (in `DiscriminatedUnionType.inheritedBaseProperties`, the dynamic-IR
+     *     mirror of `UnionTypeDeclaration.inheritedBaseProperties`) the base properties every
+     *     `samePropertiesAsObject` variant redeclares with a structurally-equal type. This is the
+     *     shared source of truth, so the decision is not re-derived per language.
+     *   - Go-render widening: Go additionally dedupes a base property that every variant redeclares
+     *     with a Go-RENDER-equivalent type (e.g. `list`/`set` both render `[]T`, `optional`/`nullable`
+     *     both `*T`) even though the IR's conservative structural equality left it unmarked; the
+     *     delegating getter still compiles, so the top-level field is safe to drop.
+     *
+     * Literal base properties are always kept at the union root (they render as `<Name>()` methods,
+     * not delegatable fields), matching the model. Base properties that a variant does not carry, or
+     * that a variant redeclares with a different Go type, keep their top-level field and must still be
+     * set at the union root, so they are excluded here.
+     */
+    private getDedupedBasePropertyWireValues(discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType): Set<string> {
+        if (!this.context.customConfig?.dedupeUnionBaseProperties) {
+            return new Set();
+        }
+        const variants = Object.values(discriminatedUnion.types);
+        // The IR only marks inheritedBaseProperties when every variant is `samePropertiesAsObject`,
+        // and the delegating getter is only valid in that case, so bail otherwise.
+        if (variants.length === 0 || !variants.every((variant) => variant.type === "samePropertiesAsObject")) {
+            return new Set();
+        }
+        // Base properties are the same across variants; take them from the first variant.
+        const baseProperties = variants[0]?.properties ?? [];
+        if (baseProperties.length === 0) {
+            return new Set();
+        }
+        // Wire values the IR marked as structurally inherited (the language-agnostic core).
+        const structurallyInherited = new Set(
+            (discriminatedUnion.inheritedBaseProperties ?? []).map((property) => property.wireValue)
+        );
+        // Resolving each variant's object and rendering property types below is a read-only probe
+        // used only to decide which fields to drop — not snippet emission. `resolveNamedType`
+        // reports a Critical error when a type id is missing, so discard any errors this probe
+        // produces to avoid failing an otherwise-valid snippet.
+        const errorsBefore = this.context.errors.size();
+        try {
+            const declaredByEveryVariant = variants.map((variant) => this.getObjectDeclaredProperties(variant.typeId));
+            const deduped = new Set<string>();
+            for (const baseProperty of baseProperties) {
+                const wireValue = baseProperty.name.wireValue;
+                // Local Go rendering policy: literals render as methods, not delegatable fields, so
+                // they are never deduped (kept at the union root), even if the IR marked them.
+                if (baseProperty.typeReference.type === "literal") {
+                    continue;
+                }
+                if (structurallyInherited.has(wireValue)) {
+                    // Confirmed by the shared IR fact — variants carry a structurally-equal type.
+                    deduped.add(wireValue);
+                    continue;
+                }
+                // Go-render widening: dedupe when every variant carries a Go-render-equivalent
+                // property, even though the IR's conservative structural equality did not mark it.
+                const baseGoType = this.getGoTypeString(baseProperty.typeReference);
+                const carriedByEveryVariant = declaredByEveryVariant.every((declared) => {
+                    const variantProperty = declared.get(wireValue);
+                    return (
+                        variantProperty != null && this.getGoTypeString(variantProperty.typeReference) === baseGoType
+                    );
+                });
+                if (carriedByEveryVariant) {
+                    deduped.add(wireValue);
+                }
+            }
+            return deduped;
+        } finally {
+            this.context.errors.truncate(errorsBefore);
+        }
+    }
+
+    /**
+     * Collects the properties declared by the object with the given type id, keyed by wire value,
+     * following its `extends` chain (matching the model's inherited-property resolution). A property
+     * declared directly on the object takes precedence over one inherited via `extends`.
+     */
+    private getObjectDeclaredProperties(typeId: FernIr.dynamic.TypeId): Map<string, FernIr.dynamic.NamedParameter> {
+        const properties = new Map<string, FernIr.dynamic.NamedParameter>();
+        const visited = new Set<string>();
+        const collect = (id: FernIr.dynamic.TypeId): void => {
+            if (visited.has(id)) {
+                return;
+            }
+            visited.add(id);
+            const named = this.context.resolveNamedType({ typeId: id });
+            if (named?.type !== "object") {
+                return;
+            }
+            for (const property of named.properties) {
+                if (!properties.has(property.name.wireValue)) {
+                    properties.set(property.name.wireValue, property);
+                }
+            }
+            for (const extended of named.extends ?? []) {
+                collect(extended);
+            }
+        };
+        collect(typeId);
+        return properties;
+    }
+
+    /**
+     * Renders a dynamic type reference to its Go type string using the same mapper the snippet
+     * emitter uses, so two references can be compared for Go-type equality. Rendering (rather than
+     * structurally comparing the type references) reuses the mapper's Go-type collapse rules — e.g.
+     * `list` and `set` both render to a slice, `optional` and `nullable` both to a pointer — instead
+     * of duplicating them here, which keeps the comparison in step with how the model decides.
+     *
+     * `packageName`/`importPath` are arbitrary: the result is only ever compared against another
+     * string produced by this same method, so any consistent values work, and rendering against a
+     * throwaway file means it never registers imports on real output.
+     */
+    private getGoTypeString(typeReference: FernIr.dynamic.TypeReference): string {
+        return this.context.dynamicTypeMapper.convert({ typeReference }).toString({
+            packageName: "example",
+            importPath: "fern",
+            rootImportPath: this.context.rootImportPath,
+            customConfig: this.context.customConfig ?? {}
         });
     }
 
