@@ -11,9 +11,9 @@ type UnionTypeDeclaration = FernIr.UnionTypeDeclaration;
 
 import { generateFields, getGeneratedPropertyName } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
-import { VariantStripInput, planVariantJsonStripping } from "./planVariantJsonStripping.js";
 import { ObjectGenerator } from "../object/ObjectGenerator.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
+import { planVariantJsonStripping, VariantStripInput } from "./planVariantJsonStripping.js";
 
 const basePropertiesClassName = "BaseProperties";
 
@@ -619,9 +619,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     return {
                         discriminantValue: getWireValue(type.discriminantValue),
                         declaresDiscriminant,
-                        baseWireNamesToOmit: [
-                            ...this.context.getBasePropertyWireNamesToOmitForType(type.shape.typeId)
-                        ]
+                        baseWireNamesToOmit: [...this.context.getBasePropertyWireNamesToOmitForType(type.shape.typeId)]
                     };
                 });
 
