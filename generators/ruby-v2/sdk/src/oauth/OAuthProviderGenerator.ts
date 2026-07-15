@@ -15,10 +15,21 @@ export declare namespace OAuthProviderGenerator {
     }
 }
 
+const GRANT_TYPE_SNAKE_NAME = "grant_type";
+const CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
+
 interface TokenEndpointProperty {
     snakeName: string;
     isOptional: boolean;
     literal?: FernIr.Literal;
+}
+
+/**
+ * The client-credentials grant type is synthesized in the token request
+ * rather than surfaced as a constructor parameter.
+ */
+function isGrantTypeProperty(property: TokenEndpointProperty): boolean {
+    return property.snakeName === GRANT_TYPE_SNAKE_NAME;
 }
 
 /**
@@ -317,6 +328,11 @@ export class OAuthProviderGenerator extends FileGenerator<RubyFile, SdkCustomCon
                 });
             } else if (property.literal != null) {
                 entries.push({ wireName: property.snakeName, value: this.getLiteralAsRubyString(property.literal) });
+            } else if (isGrantTypeProperty(property)) {
+                entries.push({
+                    wireName: property.snakeName,
+                    value: `"${CLIENT_CREDENTIALS_GRANT_TYPE}"`
+                });
             } else if (!property.isOptional) {
                 entries.push({ wireName: property.snakeName, value: `@options[:${property.snakeName}]` });
             }
@@ -344,7 +360,7 @@ export class OAuthProviderGenerator extends FileGenerator<RubyFile, SdkCustomCon
             if (property.snakeName === clientIdWire || property.snakeName === clientSecretWire) {
                 continue;
             }
-            if (property.literal != null || property.isOptional) {
+            if (property.literal != null || property.isOptional || isGrantTypeProperty(property)) {
                 continue;
             }
             names.push(property.snakeName);

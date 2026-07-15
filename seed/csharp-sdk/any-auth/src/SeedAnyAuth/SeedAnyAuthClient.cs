@@ -55,16 +55,14 @@ public partial class SeedAnyAuthClient : ISeedAnyAuthClient
         }
         if (clientId != null && clientSecret != null)
         {
-            var inferredAuthProvider = new InferredAuthTokenProvider(
+            var tokenProvider = new OAuthTokenProvider(
                 clientId,
                 clientSecret,
                 new AuthClient(new RawClient(clientOptions))
             );
             clientOptionsWithAuth.Headers["Authorization"] =
                 new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                    (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
-                        .First()
-                        .Value
+                    await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
                 );
         }
         _client = new RawClient(clientOptionsWithAuth);
