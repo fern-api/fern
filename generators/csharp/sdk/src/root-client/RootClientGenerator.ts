@@ -2,7 +2,7 @@ import { fail } from "node:assert";
 import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
-import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, lazy, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -31,6 +31,12 @@ import {
     buildUserAgentReturnPrefix
 } from "./buildUserAgentMethodBody.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
+import {
+    getServerVariableOptions,
+    getServerVariableValueExpression,
+    type ServerVariableOption,
+    urlTemplateToInterpolatedString
+} from "./serverVariables.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -83,6 +89,31 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
+    }
+
+    /**
+     * Both OAuth and inferred auth attach their Authorization header through a
+     * token provider, and only one provider can drive the root client's auth
+     * header. When both schemes are present (e.g. `auth: any` with an OAuth and
+     * an inferred scheme), pick the provider-based scheme that appears first in
+     * `ir.auth.schemes`, which mirrors the declared `any` order.
+     */
+    private shouldUseOAuthProvider(): boolean {
+        if (this.oauth == null) {
+            return false;
+        }
+        if (this.inferred == null) {
+            return true;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
     }
 
     private members = lazy({
@@ -485,6 +516,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                     }
 
+                    this.writeServerVariableInterpolation(innerWriter);
+
                     // Add platform headers to clientOptions
                     innerWriter.write("var platformHeaders = ");
                     innerWriter.writeNodeStatement(
@@ -613,7 +646,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    if (this.oauth != null) {
+                    if (this.oauth != null && this.shouldUseOAuthProvider()) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                         );
@@ -659,7 +692,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    if (this.inferred != null) {
+                    if (this.inferred != null && !this.shouldUseOAuthProvider()) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.inferred.tokenEndpoint.endpoint.serviceId
                         );
@@ -773,6 +806,84 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
             })
         };
+    }
+
+    /**
+     * Rebuilds the environment base URL(s) from the API's URL template(s) when the user
+     * sets any server URL variable (e.g. region/edge) at construction time. Each `{id}`
+     * placeholder is substituted with the provided value, falling back to the variable's
+     * IR default when omitted. Emits nothing when the API declares no server variables.
+     */
+    private writeServerVariableInterpolation(writer: Writer): void {
+        const config = this.context.ir.environments;
+        const options = getServerVariableOptions(config, this.case);
+        if (options.length === 0 || config == null) {
+            return;
+        }
+        const environments = config.environments;
+        const variableSetCondition = options
+            .map(({ optionName }) => `clientOptions.${optionName} != null`)
+            .join(" || ");
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
+                if (templatedEnvironment?.urlTemplate == null) {
+                    return;
+                }
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsBaseUrlExplicitlySet`)
+                );
+                this.writeServerVariableLocals(writer, options);
+                writer.writeTextStatement(
+                    `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(templatedEnvironment.urlTemplate, options)}`
+                );
+                writer.endControlFlow();
+                break;
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
+                if (templatedEnvironment?.urlTemplates == null) {
+                    return;
+                }
+                const urlTemplates = templatedEnvironment.urlTemplates;
+                const staticUrls = templatedEnvironment.urls;
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsEnvironmentExplicitlySet`)
+                );
+                this.writeServerVariableLocals(writer, options);
+                writer.write("clientOptions.Environment = ");
+                writer.writeNodeStatement(
+                    this.csharp.instantiateClass({
+                        classReference: this.Types.Environments,
+                        arguments_: environments.baseUrls.map((baseUrl) => {
+                            const template = urlTemplates[baseUrl.id];
+                            return {
+                                name: this.case.pascalSafe(baseUrl.name),
+                                assignment:
+                                    template != null
+                                        ? this.csharp.codeblock(urlTemplateToInterpolatedString(template, options))
+                                        : this.csharp.codeblock(
+                                              this.csharp.string_({ string: staticUrls[baseUrl.id] ?? "" })
+                                          )
+                            };
+                        }),
+                        multiline: true
+                    })
+                );
+                writer.endControlFlow();
+                break;
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    private writeServerVariableLocals(writer: Writer, options: ServerVariableOption[]): void {
+        for (const option of options) {
+            writer.writeTextStatement(`var ${option.localName} = ${getServerVariableValueExpression(option)}`);
+        }
     }
 
     public generateExampleClientInstantiationSnippet({

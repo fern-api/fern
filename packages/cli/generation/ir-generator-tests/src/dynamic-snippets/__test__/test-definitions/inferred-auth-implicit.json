@@ -163,7 +163,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -256,8 +257,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -522,8 +526,11 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -727,8 +734,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1228,8 +1238,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1474,8 +1487,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1720,8 +1736,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null

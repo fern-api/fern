@@ -29,7 +29,8 @@ export class AuthClient {
      * @example
      *     await client.auth.createOauth2Token({
      *         client_id: "my_oauth_app_123",
-     *         client_secret: "sk_live_abcdef123456789"
+     *         client_secret: "sk_live_abcdef123456789",
+     *         grant_type: "client_credentials"
      *     })
      */
     public createOauth2Token(
@@ -55,10 +56,7 @@ export class AuthClient {
             contentType: "application/x-www-form-urlencoded",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "form",
-            body: mergeAdditionalBodyParameters(
-                { ...request, grant_type: "client_credentials" },
-                requestOptions?.additionalBodyParameters,
-            ),
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

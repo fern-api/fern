@@ -38,6 +38,7 @@ export const AsIsFiles = {
     NdJsonContent: "NdJsonContent.Template.cs",
     NdJsonRequest: "NdJsonRequest.Template.cs",
     HeadersBuilder: "HeadersBuilder.Template.cs",
+    IdempotencyHeaderExtensions: "IdempotencyHeaderExtensions.Template.cs",
     QueryStringBuilder: "QueryStringBuilder.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
     DefaultHttpClientFactory: "DefaultHttpClientFactory.Template.cs",

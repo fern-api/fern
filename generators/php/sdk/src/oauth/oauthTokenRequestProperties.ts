@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -15,6 +16,16 @@ export interface OAuthTokenRequestProperty {
     valueType: FernIr.TypeReference;
     /** Whether the property is optional on the token request. */
     isOptional: boolean;
+}
+
+const GRANT_TYPE_WIRE_VALUE = "grant_type";
+
+/**
+ * The client-credentials grant type is synthesized in the token request
+ * rather than surfaced as a constructor parameter.
+ */
+export function isGrantTypeProperty(requestProperty: FernIr.RequestProperty): boolean {
+    return getOriginalName(requestProperty.property.name) === GRANT_TYPE_WIRE_VALUE;
 }
 
 /**
@@ -40,6 +51,9 @@ export function getOAuthTokenRequestProperties(
             continue;
         }
         if (context.isOptional(valueType)) {
+            continue;
+        }
+        if (isGrantTypeProperty(candidate)) {
             continue;
         }
         properties.push({

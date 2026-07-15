@@ -1759,6 +1759,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         if (isLiteralProperty(customProp)) {
                             continue;
                         }
+                        // grant_type is synthesized as "client_credentials" by the OAuth
+                        // token supplier, so it is never surfaced as a builder option.
+                        if (OAuthTokenSupplierGenerator.isGrantTypeProperty(customProp)) {
+                            continue;
+                        }
                         String propName = NameUtils.toName(customProp
                                         .getProperty()
                                         .visit(new RequestPropertyToNameVisitor())

@@ -23,7 +23,7 @@ interface InferredAuthServiceInfo {
     /** Credential parameters that are passed as client options */
     credentialParams: Array<{
         fieldName: string;
-        isOptional: boolean;
+        isPointer: boolean;
     }>;
     /** The auth service */
     authService: FernIr.HttpService;
@@ -204,7 +204,7 @@ export class InferredAuthWireTestGenerator {
     /**
      * Gets credential parameters from the token endpoint (non-literal body/header params).
      */
-    private getCredentialParameters(endpoint: FernIr.HttpEndpoint): Array<{ fieldName: string; isOptional: boolean }> {
+    private getCredentialParameters(endpoint: FernIr.HttpEndpoint): Array<{ fieldName: string; isPointer: boolean }> {
         return getInferredAuthCredentialParams(endpoint, this.context.ir.types, this.context);
     }
 

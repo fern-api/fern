@@ -14,10 +14,32 @@ import { Comments } from "../utils/comments.js";
 
 const TOKEN_PARAMETER_NAME = "token";
 
+/**
+ * Initializer keyword names already used by the client. A server URL variable whose
+ * name collides with one of these is exposed under a `server_url_`-prefixed name so it
+ * does not shadow an existing option.
+ */
+const RESERVED_OPTION_NAMES = new Set<string>([
+    "base_url",
+    "environment",
+    "max_retries",
+    "token",
+    "client",
+    "request_options"
+]);
+
 interface InferredAuthParameter {
     snakeName: string;
     isOptional: boolean;
     literal?: FernIr.Literal;
+}
+
+interface ServerVariableOption {
+    variable: FernIr.ServerVariable;
+    /** The initializer keyword exposed to the user (idiomatic snake_case). */
+    optionName: string;
+    /** The local variable name used when interpolating the URL template. */
+    localName: string;
 }
 
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -101,6 +123,25 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const globalHeaderParameters = this.getGlobalHeaderParameters();
         parameters.push(...globalHeaderParameters);
 
+        const serverVariableOptions = this.getServerVariableOptions();
+        for (const { variable, optionName } of serverVariableOptions) {
+            const docLines: string[] = [];
+            if (variable.values != null && variable.values.length > 0) {
+                docLines.push(`Allowed values (not enforced): ${variable.values.join(", ")}.`);
+            }
+            if (variable.default != null) {
+                docLines.push(`Defaults to "${variable.default}".`);
+            }
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: optionName,
+                    type: ruby.Type.nilable(ruby.Type.string()),
+                    initializer: ruby.nilValue(),
+                    docs: docLines.length > 0 ? docLines.join(" ") : undefined
+                })
+            );
+        }
+
         const maxRetriesParameter = ruby.parameters.keyword({
             name: "max_retries",
             type: ruby.Type.integer(),
@@ -124,6 +165,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             },
             returnType: ruby.Type.void()
         });
+
+        const serverVariableInterpolation = this.getServerVariableInterpolationStatement(serverVariableOptions);
+        if (serverVariableInterpolation != null) {
+            method.addStatement(serverVariableInterpolation);
+        }
 
         // Both inferred-auth and OAuth attach their Authorization header through a
         // single `@auth_provider`. When BOTH schemes are present (e.g. `auth: any`
@@ -171,11 +217,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         );
         const hasBasicAuth = basicAuthSchemes.length > 0;
         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+        const conditionalHeaderStatements = this.getConditionalGlobalHeaderStatements();
+        const buildHeadersVariable = hasBasicAuth || conditionalHeaderStatements.length > 0;
 
         method.addStatement(
             ruby.codeblock((writer) => {
-                if (hasBasicAuth) {
-                    // Build headers in a variable so we can conditionally add basic auth
+                if (buildHeadersVariable) {
+                    // Build headers in a variable so we can conditionally add
+                    // basic auth and nilable global headers
                     writer.write(`headers = `);
                     writer.writeNode(this.getRawClientHeaders());
                     writer.newLine();
@@ -240,6 +289,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         writer.writeLine(`end`);
                     }
                 }
+                for (const statement of conditionalHeaderStatements) {
+                    writer.writeLine(statement);
+                }
                 writer.write(`@raw_client = `);
                 writer.writeNode(this.context.getRawClientClassReference());
                 writer.writeLine(`.new(`);
@@ -262,7 +314,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     }
                     writer.writeLine(`,`);
                 }
-                if (hasBasicAuth) {
+                if (buildHeadersVariable) {
                     writer.writeLine(`headers: headers,`);
                 } else {
                     writer.write(`headers: `);
@@ -774,31 +826,28 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     /**
-     * Returns constructor keyword parameters for global headers that have a clientDefault.
+     * Returns constructor keyword parameters for non-literal global headers.
      * For headers with env AND clientDefault, precedence is: caller > env var > clientDefault.
+     * Headers without a clientDefault fall back to their env var (when declared) or nil.
      */
     private getGlobalHeaderParameters(): ruby.KeywordParameter[] {
         const parameters: ruby.KeywordParameter[] = [];
         const defaultExtractor = new DefaultValueExtractor(this.context);
 
-        for (const header of this.context.ir.headers) {
-            // Skip literal-typed headers (they're always sent with the literal value)
-            if (this.maybeLiteral(header.valueType) != null) {
-                continue;
-            }
-
+        for (const header of this.getNonLiteralGlobalHeaders()) {
             const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
-            if (clientDefault == null) {
-                continue;
-            }
 
             const paramName = this.case.snakeSafe(header.name);
             let initializer: ruby.CodeBlock;
-            if (header.env != null) {
+            if (header.env != null && clientDefault != null) {
                 // Precedence: caller > env var > clientDefault
                 initializer = ruby.codeblock(`ENV.fetch("${header.env}", ${clientDefault})`);
-            } else {
+            } else if (header.env != null) {
+                initializer = ruby.codeblock(`ENV.fetch("${header.env}", nil)`);
+            } else if (clientDefault != null) {
                 initializer = ruby.codeblock(clientDefault);
+            } else {
+                initializer = ruby.codeblock("nil");
             }
 
             parameters.push(
@@ -812,6 +861,29 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
 
         return parameters;
+    }
+
+    private getNonLiteralGlobalHeaders(): FernIr.HttpHeader[] {
+        return this.context.ir.headers.filter((header) => this.maybeLiteral(header.valueType) == null);
+    }
+
+    /**
+     * Statements that conditionally add global headers whose value may be nil at
+     * construction time (no clientDefault), e.g.
+     * `headers["X-Api-Version"] = api_version.to_s unless api_version.nil?`.
+     */
+    private getConditionalGlobalHeaderStatements(): string[] {
+        const statements: string[] = [];
+        const defaultExtractor = new DefaultValueExtractor(this.context);
+        for (const header of this.getNonLiteralGlobalHeaders()) {
+            if (defaultExtractor.extractClientDefault(header.clientDefault) != null) {
+                continue;
+            }
+            const paramName = this.case.snakeSafe(header.name);
+            const wireValue = getWireValue(header.name);
+            statements.push(`headers["${wireValue}"] = ${paramName}.to_s unless ${paramName}.nil?`);
+        }
+        return statements;
     }
 
     private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): InferredAuthParameter[] {
@@ -958,12 +1030,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
         }
 
-        // Add global headers that have clientDefault values
+        // Add global headers that have clientDefault values (always non-nil).
+        // Headers without a clientDefault may be nil and are added conditionally
+        // in the constructor body (see getConditionalGlobalHeaderStatements).
         const defaultExtractor = new DefaultValueExtractor(this.context);
-        for (const header of this.context.ir.headers) {
-            if (this.maybeLiteral(header.valueType) != null) {
-                continue;
-            }
+        for (const header of this.getNonLiteralGlobalHeaders()) {
             const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
             if (clientDefault == null) {
                 continue;
@@ -1017,6 +1088,187 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return this.context.ir.rootPackage.subpackages.map((subpackageId) => {
             return this.context.getSubpackageOrThrow(subpackageId);
         });
+    }
+
+    /**
+     * Returns the server URL variables (e.g. region) declared on the API's environments,
+     * each paired with the initializer keyword it is exposed under. Variables are
+     * de-duplicated by id and de-collided against existing initializer keyword names.
+     */
+    private getServerVariableOptions(): ServerVariableOption[] {
+        return this.collectServerVariables().map((variable) => {
+            const snake = this.case.snakeSafe(variable.name);
+            const optionName = RESERVED_OPTION_NAMES.has(snake) ? `server_url_${snake}` : snake;
+            return { variable, optionName, localName: `${optionName}_value` };
+        });
+    }
+
+    private collectServerVariables(): FernIr.ServerVariable[] {
+        const config = this.context.ir.environments;
+        if (config == null) {
+            return [];
+        }
+        const seen = new Set<string>();
+        const result: FernIr.ServerVariable[] = [];
+        const add = (variables: FernIr.ServerVariable[]): void => {
+            for (const variable of variables) {
+                if (!seen.has(variable.id)) {
+                    seen.add(variable.id);
+                    result.push(variable);
+                }
+            }
+        };
+
+        const environments = config.environments;
+        switch (environments.type) {
+            case "singleBaseUrl":
+                for (const environment of environments.environments) {
+                    if (environment.urlVariables != null) {
+                        add(environment.urlVariables);
+                        break;
+                    }
+                }
+                break;
+            case "multipleBaseUrls":
+                for (const environment of environments.environments) {
+                    if (environment.urlVariables != null) {
+                        for (const variables of Object.values(environment.urlVariables)) {
+                            add(variables);
+                        }
+                        break;
+                    }
+                }
+                break;
+            default:
+                assertNever(environments);
+        }
+
+        return result;
+    }
+
+    /**
+     * Emits the interpolation of server URL variables (e.g. region/edge) into the base URL.
+     * When any server variable is provided at construction time, the base URL(s) are rebuilt
+     * from the environment's URL template(s), falling back to each variable's default (or its
+     * first allowed value). For a single base URL, an explicitly supplied `base_url` always
+     * takes precedence and suppresses interpolation.
+     * Returns undefined when the API declares no server variables (behavior unchanged).
+     */
+    private getServerVariableInterpolationStatement(options: ServerVariableOption[]): ruby.AstNode | undefined {
+        if (options.length === 0) {
+            return undefined;
+        }
+        const config = this.context.ir.environments;
+        if (config == null) {
+            return undefined;
+        }
+        const environments = config.environments;
+        const condition = options.map(({ optionName }) => `!${optionName}.nil?`).join(" || ");
+
+        const writeLocalDeclarations = (writer: ruby.Writer): void => {
+            for (const { optionName, localName, variable } of options) {
+                // Server variables always declare a default (OpenAPI requires one); fall back to
+                // the first allowed value when a Fern-native environment omits it. Failing at
+                // generation time is preferable to silently interpolating an empty URL segment.
+                const fallbackValue = variable.default ?? variable.values?.[0];
+                if (fallbackValue == null) {
+                    throw new Error(
+                        `Server URL variable "${variable.id}" has no default or allowed values; ` +
+                            "cannot generate a fallback for the base URL."
+                    );
+                }
+                writer.writeLine(
+                    `${localName} = ${optionName}.nil? ? ${JSON.stringify(fallbackValue)} : ${optionName}`
+                );
+            }
+        };
+
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
+                if (templatedEnvironment?.urlTemplate == null) {
+                    return undefined;
+                }
+                const template = templatedEnvironment.urlTemplate;
+                return ruby.codeblock((writer) => {
+                    // Only rebuild the base URL from the template when the caller did not pass an
+                    // explicit base_url; an explicitly supplied base_url always takes precedence.
+                    writer.writeLine(`if base_url.nil? && (${condition})`);
+                    writer.indent();
+                    writeLocalDeclarations(writer);
+                    writer.writeLine(`base_url = ${this.urlTemplateToRubyString(template, options)}`);
+                    writer.dedent();
+                    writer.writeLine(`end`);
+                });
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
+                if (templatedEnvironment?.urlTemplates == null) {
+                    return undefined;
+                }
+                const templates = templatedEnvironment.urlTemplates;
+                const staticUrls = templatedEnvironment.urls;
+                const entries = environments.baseUrls.map((baseUrl) => {
+                    const key = this.case.snakeSafe(baseUrl.name);
+                    const template = templates[baseUrl.id];
+                    if (template != null) {
+                        return `${key}: ${this.urlTemplateToRubyString(template, options)}`;
+                    }
+                    const staticUrl = staticUrls[baseUrl.id];
+                    if (staticUrl == null) {
+                        throw new Error(
+                            `Base URL "${baseUrl.id}" has neither a URL template nor a static URL; ` +
+                                "cannot generate server URL variable interpolation."
+                        );
+                    }
+                    return `${key}: ${JSON.stringify(staticUrl)}`;
+                });
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(`if ${condition}`);
+                    writer.indent();
+                    writeLocalDeclarations(writer);
+                    writer.writeLine(`environment = {`);
+                    writer.indent();
+                    entries.forEach((entry, index) => {
+                        writer.writeLine(`${entry}${index < entries.length - 1 ? "," : ""}`);
+                    });
+                    writer.dedent();
+                    writer.writeLine(`}`);
+                    writer.dedent();
+                    writer.writeLine(`end`);
+                });
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    /**
+     * Substitutes `{id}` placeholders in a URL template with `#{localName}` and returns
+     * the result as a double-quoted (interpolated) Ruby string literal.
+     *
+     * The template text is author-controlled (it comes from the API spec's `server.url`),
+     * so it is escaped for the Ruby double-quoted string context before our own
+     * interpolations are inserted. This prevents a malicious template from breaking out of
+     * the string literal or injecting arbitrary Ruby via `#{...}`. Placeholder substitution
+     * uses NUL-delimited sentinels so the intentional interpolations survive escaping.
+     */
+    private urlTemplateToRubyString(template: string, options: ServerVariableOption[]): string {
+        const sentinels: { sentinel: string; interpolation: string }[] = [];
+        let result = template;
+        options.forEach(({ variable, localName }, index) => {
+            const sentinel = `\u0000${index}\u0000`;
+            sentinels.push({ sentinel, interpolation: `#{${localName}}` });
+            result = result.split(`{${variable.id}}`).join(sentinel);
+        });
+        result = result
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/#(?=[{@$])/g, "\\#");
+        for (const { sentinel, interpolation } of sentinels) {
+            result = result.split(sentinel).join(interpolation);
+        }
+        return `"${result}"`;
     }
 
     /**

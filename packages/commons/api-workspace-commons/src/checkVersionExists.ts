@@ -136,14 +136,25 @@ export function getIdempotencyKeyGenerationFromGeneratorConfig(
     return resolveIdempotencyKeyGeneration(value);
 }
 
-/** Reads the raw `auto-generate-idempotency-key` value from a generator's own `config` block. */
+/**
+ * Reads the raw `auto-generate-idempotency-key` value from a generator's own `config` block.
+ *
+ * Prefers the raw (unvalidated) generators.yml config, which is always present in the production
+ * generation path and preserves CLI-only keys verbatim. Falls back to the resolved `config` when
+ * `raw` is absent — this happens for synthetic invocations (e.g. the seed test harness) that
+ * populate `config` directly without a `raw` block.
+ */
 function getRawPerGeneratorIdempotencyKeyConfig(generatorInvocation: generatorsYml.GeneratorInvocation): unknown {
-    if (typeof generatorInvocation.raw?.config !== "object" || generatorInvocation.raw?.config === null) {
+    const config =
+        typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
+            ? generatorInvocation.raw.config
+            : typeof generatorInvocation.config === "object" && generatorInvocation.config !== null
+              ? generatorInvocation.config
+              : undefined;
+    if (config == null) {
         return undefined;
     }
-    return (generatorInvocation.raw.config as { "auto-generate-idempotency-key"?: unknown })[
-        "auto-generate-idempotency-key"
-    ];
+    return (config as { "auto-generate-idempotency-key"?: unknown })["auto-generate-idempotency-key"];
 }
 
 /**

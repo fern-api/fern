@@ -79,6 +79,12 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
@@ -174,6 +180,12 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
 scripts:
   - image: fernapi/php-seed
     commands:

@@ -46,7 +46,8 @@ import { SeedTsOauthTokenOptionalClient } from "@fern/ts-oauth-token-optional";
 const client = new SeedTsOauthTokenOptionalClient({ baseUrl: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
 await client.auth.createOauth2Token({
     client_id: "my_oauth_app_123",
-    client_secret: "sk_live_abcdef123456789"
+    client_secret: "sk_live_abcdef123456789",
+    grant_type: "client_credentials"
 });
 ```
 

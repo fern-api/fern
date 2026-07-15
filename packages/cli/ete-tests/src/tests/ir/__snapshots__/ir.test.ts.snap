@@ -224,7 +224,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_commons:Deployment",
@@ -451,7 +452,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_commons:AppId"
@@ -628,7 +630,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                 "extends": [
                     "type_commons:Deployment"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons:AppId": {
                 "type": "alias",
@@ -800,7 +803,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -16407,7 +16411,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_nested:Product"
@@ -16463,7 +16468,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -17304,7 +17310,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_nested:Product": {
                 "type": "object",
@@ -17407,7 +17414,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_nested:StringAlias": {
                 "type": "alias",
@@ -17873,7 +17881,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_:RootString",
@@ -18340,7 +18349,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_package/a:A": {
                 "type": "alias",
@@ -18712,7 +18722,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -18768,7 +18779,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -18864,7 +18876,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_service:WithDocs",
@@ -19632,7 +19645,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_service:Movie": {
                 "type": "object",
@@ -19733,7 +19747,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_service:Response": {
                 "type": "object",
@@ -19866,7 +19881,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                 "extends": [
                     "type_service:WithDocs"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -20212,7 +20228,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -20260,7 +20277,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -20858,7 +20876,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:UnknownRequest": {
                 "type": "object",
@@ -20958,7 +20977,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -21310,7 +21330,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -21486,7 +21507,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -22774,7 +22796,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:MovieId": {
                 "type": "alias",
@@ -22979,7 +23002,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -23332,7 +23356,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -23388,7 +23413,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -23576,7 +23602,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_director:Age"
@@ -24155,7 +24182,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_imdb:MovieId"
@@ -24360,7 +24388,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -24539,7 +24568,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_director:Director",
@@ -24710,7 +24740,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "extends": [],
                 "properties": [],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -24743,6 +24774,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "actor",
@@ -25059,7 +25091,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -25189,7 +25222,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_imdb:CreateMovieRequest",
@@ -28742,7 +28776,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons:Type": {
                 "type": "object",
@@ -28843,7 +28878,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_commons:UndiscriminatedUnion": {
                 "type": "undiscriminatedUnion",
@@ -29068,7 +29104,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_director:Age": {
                 "type": "alias",
@@ -29661,7 +29698,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:CreateMovieRequest": {
                 "type": "object",
@@ -29795,7 +29833,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:DirectorWrapper": {
                 "type": "object",
@@ -29896,7 +29935,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:EmptyObject": {
                 "type": "object",
@@ -29966,7 +30006,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                 },
                 "properties": [],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:Person": {
                 "type": "discriminatedUnion",
@@ -30056,6 +30097,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "actor": {
                         "type": "singleProperty",
@@ -30268,7 +30310,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:RecursiveType": {
                 "type": "object",
@@ -30437,7 +30480,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "extends": [
                     "type_imdb:CreateMovieRequest"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -32681,7 +32725,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -32759,7 +32804,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -32859,7 +32905,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -32965,7 +33012,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -33340,7 +33388,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_webhooks:OrderCompletedPayload": {
                 "type": "object",
@@ -33471,7 +33520,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_webhooks:PaymentNotificationPayload": {
                 "type": "object",
@@ -33632,7 +33682,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_webhooks:RefundProcessedPayload": {
                 "type": "object",
@@ -33796,7 +33847,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],

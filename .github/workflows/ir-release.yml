@@ -2,6 +2,18 @@ name: Release IR SDKs
 
 on:
   workflow_dispatch:
+    inputs:
+      group:
+        description: "Generator group to release. Pick a single group (e.g. dynamic-ir) to test one publish on a branch; 'all' releases everything (default, matches the push trigger)."
+        type: choice
+        default: all
+        options:
+          - all
+          - node
+          - dynamic-ir
+          - python
+          - go
+          - java
   push:
     branches:
       - main
@@ -17,6 +29,7 @@ env:
 
 jobs:
   node:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.group == 'all' || inputs.group == 'node' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,6 +47,7 @@ jobs:
           fern generate --api ir-types-latest --group node --version $version
 
   dynamic-ir:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.group == 'all' || inputs.group == 'dynamic-ir' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -45,13 +59,17 @@ jobs:
       - name: Release SDKs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
         run: |
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
-          fern generate --api ir-types-latest --group dynamic-ir --version $version
+          # Generate locally (in Docker on this runner) rather than remotely, so the npm publish runs
+          # inside the GitHub Actions job and can authenticate to the trusted publisher via OIDC
+          # (id-token: write above). runDocker forwards ACTIONS_ID_TOKEN_REQUEST_* into the container;
+          # no NPM_TOKEN is needed — see the package's Trusted Publisher config on npmjs.
+          fern generate --api ir-types-latest --group dynamic-ir --version $version --local
 
   python:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.group == 'all' || inputs.group == 'python' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -69,6 +87,7 @@ jobs:
           fern generate --api ir-types-latest --group python --version $version
 
   go:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.group == 'all' || inputs.group == 'go' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -86,6 +105,7 @@ jobs:
           fern generate --api ir-types-latest --group go --version $version
 
   java:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.group == 'all' || inputs.group == 'java' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

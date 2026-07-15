@@ -8,6 +8,13 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import {
+    getMultipleBaseUrlsTemplatedEnvironment,
+    getServerVariableOptions,
+    getSingleBaseUrlTemplatedEnvironment,
+    ServerVariableOption,
+    urlTemplateToPhpConcatenation
+} from "./serverVariables.js";
 
 interface ConstructorParameters {
     all: ConstructorParameter[];
@@ -101,7 +108,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         // Add field for OAuth token provider if using client credentials OAuth
         const oauth = this.context.getOauth();
-        if (oauth != null && oauth.configuration.type === "clientCredentials") {
+        if (oauth != null && oauth.configuration.type === "clientCredentials" && this.shouldUseOAuthProvider()) {
             class_.addField(
                 php.field({
                     name: "$oauthTokenProvider",
@@ -118,7 +125,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         // Add field for inferred auth provider if using inferred auth
         const inferredAuth = this.context.getInferredAuth();
-        if (inferredAuth != null) {
+        if (inferredAuth != null && !this.shouldUseOAuthProvider()) {
             class_.addField(
                 php.field({
                     name: "$inferredAuthProvider",
@@ -202,6 +209,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // scheme's header only when its cred is present, and must only wire up a
         // token provider when that scheme's creds were actually supplied.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
+        const serverVariableOptions = getServerVariableOptions(
+            this.context.ir.environments,
+            this.case,
+            constructorParameters.all.map((parameter) => parameter.name)
+        );
 
         const parameters: php.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {
@@ -238,6 +250,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     type: environmentType,
                     initializer: hasDefaultEnvironment ? php.codeblock("null") : undefined,
                     docs: "The environment to use for API requests."
+                })
+            );
+        }
+
+        for (const option of serverVariableOptions) {
+            parameters.push(
+                php.parameter({
+                    name: option.optionName,
+                    type: php.Type.optional(php.Type.string()),
+                    initializer: php.codeblock("null"),
+                    docs: this.getServerVariableParameterDocs(option)
                 })
             );
         }
@@ -453,6 +476,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     })
                 );
 
+                this.writeServerVariableInterpolation({ writer, serverVariableOptions });
+
                 if (isMultiUrl && hasDefaultEnvironment) {
                     const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
                     if (defaultEnvironmentId != null) {
@@ -483,8 +508,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 // OAuth and inferred auth provider setup - moved after environment setup
                 const oauth = this.context.getOauth();
                 const inferredAuth = this.context.getInferredAuth();
-                const hasOAuth = oauth != null && oauth.configuration.type === "clientCredentials";
-                const hasInferredAuth = inferredAuth != null;
+                const hasOAuth =
+                    oauth != null && oauth.configuration.type === "clientCredentials" && this.shouldUseOAuthProvider();
+                const hasInferredAuth = inferredAuth != null && !this.shouldUseOAuthProvider();
                 const oauthCredGuard = "$clientId !== null && $clientSecret !== null";
                 const inferredCredGuard =
                     inferredAuth != null ? this.getInferredAuthCredentialGuard(inferredAuth) : null;
@@ -598,6 +624,134 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
             })
         };
+    }
+
+    private getServerVariableParameterDocs(option: ServerVariableOption): string {
+        const docs: string[] = [];
+        if (option.variable.values != null && option.variable.values.length > 0) {
+            docs.push(
+                `The ${option.optionName} to route requests to. Allowed values: ${option.variable.values.join(", ")}.`
+            );
+        } else {
+            docs.push(`The ${option.optionName} to substitute into the base URL.`);
+        }
+        if (option.variable.default != null) {
+            docs.push(`Defaults to "${option.variable.default}".`);
+        } else {
+            docs.push("Required when any other server URL variable is provided.");
+        }
+        return docs.join(" ");
+    }
+
+    /**
+     * Emits interpolation of server URL variables (e.g. region/edge) into the base URL(s).
+     * When the API declares server variables, each is exposed as an optional constructor
+     * parameter; if any is provided the base URL(s) are rebuilt from the environment's URL
+     * template(s), falling back to each variable's IR default when it is not provided.
+     * Emits nothing when the API declares no server variables, leaving output unchanged.
+     */
+    private writeServerVariableInterpolation({
+        writer,
+        serverVariableOptions
+    }: {
+        writer: php.Writer;
+        serverVariableOptions: ServerVariableOption[];
+    }): void {
+        if (serverVariableOptions.length === 0) {
+            return;
+        }
+        const config = this.context.ir.environments;
+        if (config == null) {
+            return;
+        }
+        const environments = config.environments;
+
+        const anyProvided = serverVariableOptions.map((option) => `$${option.optionName} != null`).join(" || ");
+        const writeMissingDefaultGuards = (): void => {
+            for (const option of serverVariableOptions) {
+                if (option.variable.default == null) {
+                    writer.controlFlow("if", php.codeblock(`$${option.optionName} == null`));
+                    writer.writeTextStatement(
+                        `throw new \\InvalidArgumentException('${option.optionName} is required when overriding the server URL with variables.')`
+                    );
+                    writer.endControlFlow();
+                }
+            }
+        };
+        const writeDefaults = (): void => {
+            for (const option of serverVariableOptions) {
+                if (option.variable.default != null) {
+                    writer.writeTextStatement(
+                        `$${option.optionName} ??= '${this.escapeSingleQuoted(option.variable.default)}'`
+                    );
+                }
+            }
+        };
+
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironment = getSingleBaseUrlTemplatedEnvironment(config);
+                if (templatedEnvironment?.urlTemplate == null) {
+                    return;
+                }
+                const optionsName = this.context.getClientOptionsName();
+                const phpString = urlTemplateToPhpConcatenation(
+                    templatedEnvironment.urlTemplate,
+                    serverVariableOptions
+                );
+                writer.controlFlow("if", php.codeblock(`(${anyProvided}) && !isset($this->${optionsName}['baseUrl'])`));
+                writeMissingDefaultGuards();
+                writeDefaults();
+                writer.writeTextStatement(`$this->${optionsName}['baseUrl'] = ${phpString}`);
+                writer.endControlFlow();
+                writer.writeLine();
+                return;
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironment = getMultipleBaseUrlsTemplatedEnvironment(config);
+                if (templatedEnvironment?.urlTemplates == null) {
+                    return;
+                }
+                const templates = templatedEnvironment.urlTemplates;
+                const staticUrls = templatedEnvironment.urls;
+                writer.controlFlow("if", php.codeblock(`$environment == null && (${anyProvided})`));
+                writeMissingDefaultGuards();
+                writeDefaults();
+                writer.write("$environment = ");
+                writer.writeNodeStatement(
+                    php.codeblock((w) => {
+                        w.writeNode(this.context.getEnvironmentsClassReference());
+                        w.write("::custom(");
+                        w.indent();
+                        w.newLine();
+                        environments.baseUrls.forEach((baseUrl, index) => {
+                            const propertyName = this.case.camelSafe(baseUrl.name);
+                            const template = templates[baseUrl.id];
+                            const value =
+                                template != null
+                                    ? urlTemplateToPhpConcatenation(template, serverVariableOptions)
+                                    : `'${this.escapeSingleQuoted(staticUrls[baseUrl.id] ?? "")}'`;
+                            w.write(`${propertyName}: ${value}`);
+                            if (index < environments.baseUrls.length - 1) {
+                                w.write(",");
+                            }
+                            w.newLine();
+                        });
+                        w.dedent();
+                        w.write(")");
+                    })
+                );
+                writer.endControlFlow();
+                writer.writeLine();
+                return;
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    private escapeSingleQuoted(value: string): string {
+        return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
     }
 
     private getSubpackageGetterMethod(subpackage: FernIr.Subpackage): php.Method {
@@ -1008,10 +1162,18 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.writeNode(oauthTokenProviderClassReference);
         // When wrapped in a credential guard (any-composed auth), clientId/clientSecret
         // are non-null inside the block, so the `?? ''` fallback would be redundant.
+        // Env-var-backed params are also non-null, but only when the OAuth scheme's own
+        // constructor parameters were generated (they are skipped when a bearer scheme
+        // exists) — the env-or-throw assignment is tied to those parameters.
+        const oauthParamsSkipped = this.context.ir.auth.schemes.some((s) => s.type === "bearer");
         const clientIdFallback =
-            guarded || oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
+            guarded || (oauth.configuration.clientIdEnvVar != null && !oauthParamsSkipped)
+                ? "$clientId"
+                : "$clientId ?? ''";
         const clientSecretFallback =
-            guarded || oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
+            guarded || (oauth.configuration.clientSecretEnvVar != null && !oauthParamsSkipped)
+                ? "$clientSecret"
+                : "$clientSecret ?? ''";
         const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
         const extraArgs = getOAuthTokenRequestProperties(
             this.context,
@@ -1212,6 +1374,32 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
      * exactly one scheme's creds), so we must not throw for missing creds and must
      * only wire up a scheme's token provider / header when its creds are present.
      */
+    /**
+     * Both OAuth and inferred auth attach their auth headers through a token
+     * provider, and only one provider can drive the root client's
+     * `getAuthHeaders` callback. When both schemes are present (e.g. `auth: any`
+     * with an OAuth and an inferred scheme), pick the provider-based scheme that
+     * appears first in `ir.auth.schemes`, which mirrors the declared `any` order.
+     */
+    private shouldUseOAuthProvider(): boolean {
+        const oauth = this.context.getOauth();
+        if (oauth == null || oauth.configuration.type !== "clientCredentials") {
+            return false;
+        }
+        if (this.context.getInferredAuth() == null) {
+            return true;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private isAnyAuthWithMultipleSchemes(): boolean {
         return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
     }
