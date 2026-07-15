@@ -84,10 +84,7 @@ function validateHmac(signature: RawSchemas.WebhookSignatureSchema.Hmac, violati
     }
 }
 
-function validateBodyHashBinding(
-    signature: RawSchemas.WebhookSignatureSchema.Hmac,
-    violations: RuleViolation[]
-): void {
+function validateBodyHashBinding(signature: RawSchemas.WebhookSignatureSchema.Hmac, violations: RuleViolation[]): void {
     const binding = signature["body-hash-binding"];
     if (binding == null) {
         return;

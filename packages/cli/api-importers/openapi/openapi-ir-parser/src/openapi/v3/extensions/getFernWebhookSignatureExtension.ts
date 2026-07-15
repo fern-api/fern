@@ -137,9 +137,7 @@ function convertBodyHashAlgorithm(
     }
 }
 
-function convertBodyHashLocation(
-    location: WebhookBodyHashLocationExtensionSchema
-): finalIr.WebhookBodyHashLocation {
+function convertBodyHashLocation(location: WebhookBodyHashLocationExtensionSchema): finalIr.WebhookBodyHashLocation {
     switch (location.type) {
         case "query-parameter":
             return finalIr.WebhookBodyHashLocation.queryParameter({ name: location.name });

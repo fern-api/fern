@@ -387,9 +387,7 @@ function convertBodyHashBinding(
     };
 }
 
-function convertBodyHashAlgorithm(
-    algorithm: WebhookBodyHashAlgorithm
-): RawSchemas.WebhookBodyHashAlgorithmSchema {
+function convertBodyHashAlgorithm(algorithm: WebhookBodyHashAlgorithm): RawSchemas.WebhookBodyHashAlgorithmSchema {
     switch (algorithm) {
         case "sha256":
             return "sha256";
@@ -402,9 +400,7 @@ function convertBodyHashAlgorithm(
     }
 }
 
-function convertBodyHashLocation(
-    location: WebhookBodyHashLocation
-): RawSchemas.WebhookBodyHashLocationSchema {
+function convertBodyHashLocation(location: WebhookBodyHashLocation): RawSchemas.WebhookBodyHashLocationSchema {
     switch (location.type) {
         case "queryParameter":
             return {
