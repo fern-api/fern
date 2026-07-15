@@ -10,8 +10,11 @@ import {
     getInferredAuthScheme,
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
+    getRequestPropertyValueType,
+    isGrantTypeRequestProperty,
     isPlainStringType,
     isRequestPropertyPointer,
+    isTypeReferenceLiteral,
     isTypeReferencePointer,
     resolveTokenEndpointBodyProperties
 } from "../authUtils.js";
@@ -762,6 +765,35 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     w.write("options.ClientSecret");
                 }
                 w.writeLine(",");
+                // A non-literal grant_type property is always sent with the
+                // "client_credentials" value: the client credentials flow requires
+                // grant_type=client_credentials (RFC 6749 §4.4.2), and nothing else
+                // supplies it when the spec models it as a plain string.
+                for (const customProperty of requestProperties.customProperties ?? []) {
+                    if (!isGrantTypeRequestProperty(customProperty)) {
+                        continue;
+                    }
+                    const valueType = getRequestPropertyValueType(customProperty);
+                    if (valueType != null && isTypeReferenceLiteral(valueType, this.context.ir.types)) {
+                        continue;
+                    }
+                    const grantTypeFieldName = getRequestPropertyFieldName(this.context, customProperty);
+                    w.write(`${grantTypeFieldName}: `);
+                    if (isRequestPropertyPointer(customProperty, this.context.ir.types)) {
+                        w.writeNode(
+                            go.invokeFunc({
+                                func: go.typeReference({
+                                    name: "String",
+                                    importPath: this.context.getRootImportPath()
+                                }),
+                                arguments_: [go.codeblock('"client_credentials"')]
+                            })
+                        );
+                    } else {
+                        w.write('"client_credentials"');
+                    }
+                    w.writeLine(",");
+                }
                 w.dedent();
                 w.writeLine("})");
                 w.writeLine("if err != nil {");

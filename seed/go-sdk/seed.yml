@@ -290,6 +290,9 @@ fixtures:
   go-oauth-token-nullable:
     - outputFolder: no-custom-config
       customConfig: null
+  go-oauth-token-optional:
+    - outputFolder: no-custom-config
+      customConfig: null
   pagination-custom:
     - outputFolder: .
       customConfig:
