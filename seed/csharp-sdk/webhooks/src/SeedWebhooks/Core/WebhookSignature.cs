@@ -38,6 +38,83 @@ internal static class WebhookSignature
         };
     }
 
+    /// <summary>
+    /// Compute an unkeyed digest of a payload using the given algorithm and encoding.
+    /// Used to verify a body-hash binding, where a hash of the raw request body is
+    /// transmitted separately from (and independently of) the outer HMAC signature.
+    /// </summary>
+    internal static string ComputeHash(string payload, string algorithm, string encoding)
+    {
+        var payloadBytes = Encoding.UTF8.GetBytes(payload);
+        using var hasher = CreateHashAlgorithm(algorithm);
+        var hash = hasher.ComputeHash(payloadBytes);
+        return encoding == "hex" ? ToHex(hash) : Convert.ToBase64String(hash);
+    }
+
+    private static HashAlgorithm CreateHashAlgorithm(string algorithm)
+    {
+        return algorithm switch
+        {
+            "sha1" => SHA1.Create(),
+            "sha256" => SHA256.Create(),
+            "sha384" => SHA384.Create(),
+            "sha512" => SHA512.Create(),
+            _ => throw new ArgumentException($"Unrecognized hash algorithm: {algorithm}"),
+        };
+    }
+
+    /// <summary>
+    /// Read a single query parameter from a URL without modifying, reordering, or
+    /// reconstructing the URL. Returns null when the URL cannot be parsed or the
+    /// parameter is absent.
+    /// </summary>
+    internal static string? GetQueryParameter(string url, string name)
+    {
+        if (url == null || name == null)
+        {
+            return null;
+        }
+
+        string query;
+        try
+        {
+            query = new Uri(url, UriKind.Absolute).Query;
+        }
+        catch (FormatException)
+        {
+            return null;
+        }
+
+        if (query.Length == 0)
+        {
+            return null;
+        }
+
+        // Strip the leading '?' that Uri.Query includes.
+        if (query[0] == '?')
+        {
+            query = query.Substring(1);
+        }
+
+        foreach (var pair in query.Split('&'))
+        {
+            if (pair.Length == 0)
+            {
+                continue;
+            }
+            var separatorIndex = pair.IndexOf('=');
+            var key = separatorIndex >= 0 ? pair.Substring(0, separatorIndex) : pair;
+            if (Uri.UnescapeDataString(key) != name)
+            {
+                continue;
+            }
+            var value = separatorIndex >= 0 ? pair.Substring(separatorIndex + 1) : string.Empty;
+            return Uri.UnescapeDataString(value);
+        }
+
+        return null;
+    }
+
     private static string ToHex(byte[] bytes)
     {
         var builder = new StringBuilder(bytes.Length * 2);

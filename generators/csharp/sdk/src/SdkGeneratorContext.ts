@@ -268,6 +268,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
         }
+        if (this.hasWebhookSignatureVerification()) {
+            files.push(AsIsFiles.Test.WebhookSignatureTests);
+        }
         if (this.hasWebSocketEndpoints) {
             Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));
         }

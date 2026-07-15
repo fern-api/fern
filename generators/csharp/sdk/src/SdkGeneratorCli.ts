@@ -196,7 +196,8 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 components: verification.payloadFormat.components,
                 delimiter: verification.payloadFormat.delimiter,
                 bodySort: verification.payloadFormat.bodySort
-            }
+            },
+            bodyHashBinding: verification.bodyHashBinding ?? null
         });
     }
 

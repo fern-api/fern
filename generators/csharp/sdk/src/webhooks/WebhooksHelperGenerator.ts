@@ -164,6 +164,11 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             writer.newLine();
         }
 
+        if (this.config.bodyHashBinding != null) {
+            this.writeBodyHashValidation(writer, this.config.bodyHashBinding, webhookSignatureReference);
+            writer.newLine();
+        }
+
         this.writePayload(writer);
         writer.newLine();
 
@@ -245,6 +250,59 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.dedent();
         writer.writeLine("}");
         writer.newLine();
+    }
+
+    private writeBodyHashValidation(
+        writer: ast.Writer,
+        bodyHashBinding: FernIr.WebhookBodyHashBinding,
+        webhookSignatureReference: ast.ClassReference
+    ): void {
+        const algorithm = this.mapBodyHashAlgorithm(bodyHashBinding.algorithm);
+        const encoding = this.mapEncoding(bodyHashBinding.encoding);
+        const queryParameterName = this.getBodyHashQueryParameterName(bodyHashBinding.location);
+
+        writer.write("var expectedBodyHash = ");
+        writer.writeNode(webhookSignatureReference);
+        writer.writeTextStatement(`.ComputeHash(requestBody, "${algorithm}", "${encoding}")`);
+
+        writer.write("var transmittedBodyHash = ");
+        writer.writeNode(webhookSignatureReference);
+        writer.write(".GetQueryParameter(notificationUrl, ");
+        writer.writeNode(this.csharp.string_({ string: queryParameterName }));
+        writer.writeTextStatement(")");
+
+        writer.write("if (transmittedBodyHash == null || !");
+        writer.writeNode(webhookSignatureReference);
+        writer.writeLine(".TimingSafeEqual(expectedBodyHash, transmittedBodyHash))");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+        switch (location.type) {
+            case "queryParameter":
+                return location.name;
+            default:
+                return assertNever(location.type);
+        }
+    }
+
+    private mapBodyHashAlgorithm(algorithm: FernIr.WebhookBodyHashAlgorithm): string {
+        switch (algorithm) {
+            case "SHA1":
+                return "sha1";
+            case "SHA256":
+                return "sha256";
+            case "SHA384":
+                return "sha384";
+            case "SHA512":
+                return "sha512";
+            default:
+                return assertNever(algorithm);
+        }
     }
 
     private writePayload(writer: ast.Writer): void {
