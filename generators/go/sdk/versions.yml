@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.49.3
+  changelogEntry:
+    - summary: |
+        Fix a generator compile error introduced by two concurrent changes: the optional
+        global-header env fallback now uses `isTypeReferencePointer` (which also covers
+        `nullable` and aliased optional headers) instead of the removed
+        `isTypeReferenceOptional` export.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
 - version: 1.49.2
   changelogEntry:
     - summary: |
