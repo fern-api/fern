@@ -155,7 +155,9 @@ public class AsyncSeedHeaderTokenClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        builder.addHeader("x-api-key", "test_prefix " + this.headerTokenAuth);
+        if (this.headerTokenAuth != null) {
+            builder.addHeader("x-api-key", "test_prefix " + this.headerTokenAuth);
+        }
     }
 
     /**
