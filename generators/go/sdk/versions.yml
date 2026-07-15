@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.49.1
+  changelogEntry:
+    - summary: |
+        Fix compile errors in the generated OAuth and inferred auth token fetching code when
+        the token endpoint's response properties are optional or nullable (generated as
+        pointer types in Go), or when `expires_in` is an int64. Also ensure required nullable
+        inferred-auth credentials are included in token requests as pointers.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
 - version: 1.49.0
   changelogEntry:
     - summary: |
