@@ -241,6 +241,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
+        if (
+            (this.endpoint.requestBody?.type === "inlinedRequestBody" ||
+                this.endpoint.requestBody?.type === "reference") &&
+            this.endpoint.requestBody.contentType === "application/x-www-form-urlencoded"
+        ) {
+            return "urlencoded";
+        }
         return "json";
     }
 
