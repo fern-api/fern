@@ -317,6 +317,9 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  java-oauth-token-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
   header-auth:
     - customConfig:
         enable-wire-tests: true
