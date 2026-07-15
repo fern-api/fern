@@ -1047,6 +1047,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             });
         }
 
+        // Add global headers whose type is a literal (e.g. `Accept-Encoding: literal<"gzip">`).
+        // These have no constructor parameter, so their value is emitted directly.
+        for (const header of this.context.ir.headers) {
+            const literal = this.maybeLiteral(header.valueType);
+            if (literal == null) {
+                continue;
+            }
+            const literalValue = literal.type === "string" ? literal.string : String(literal.boolean);
+            headers.push({
+                key: ruby.TypeLiteral.string(getWireValue(header.name)),
+                value: ruby.TypeLiteral.string(literalValue)
+            });
+        }
+
         return ruby.TypeLiteral.hash(headers);
     }
 
