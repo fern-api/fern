@@ -959,6 +959,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (contentTypeHeader != null) {
                 writer.writeNode(this.setHeaderValue({ wireValue: "Content-Type", value: contentTypeHeader }));
             }
+            // A caller-supplied value is already merged into headers and takes precedence.
+            const idempotencyKeyGeneration = this.context.getIdempotencyKeyGeneration(endpoint);
+            if (idempotencyKeyGeneration != null) {
+                writer.writeNewLineIfLastLineNot();
+                writer.writeNode(this.context.callSetIdempotencyKeyHeader(go.codeblock("headers")));
+                writer.newLine();
+            }
         });
     }
 

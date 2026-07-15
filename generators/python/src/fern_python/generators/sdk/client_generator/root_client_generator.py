@@ -15,6 +15,7 @@ from .inferred_auth_token_provider_generator import (
     CredentialProperty,
     InferredAuthTokenProviderGenerator,
 )
+from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -23,7 +24,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
-from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, resolve_name
 from typing_extensions import Unpack
 
 import fern.ir.resources as ir_types
@@ -146,6 +147,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             body=lambda b: resolve_name(get_name_from_wire_value(b.name)).snake_case.safe_name,
         )
 
+    @staticmethod
+    def _get_request_property_wire_value(request_property: ir_types.RequestProperty) -> str:
+        return request_property.property.visit(
+            query=lambda q: get_original_name(get_name_from_wire_value(q.name)),
+            body=lambda b: get_original_name(get_name_from_wire_value(b.name)),
+        )
+
     def _get_additional_oauth_param_names(self, client_credentials: ir_types.OAuthClientCredentials) -> List[str]:
         """
         Returns parameter names for additional token endpoint parameters beyond
@@ -165,6 +173,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     body=lambda b: b.value_type,
                 )
                 if self._is_literal_type_reference(prop_type) or self._is_optional_type_reference(prop_type):
+                    continue
+                # grant_type is synthesized as "client_credentials" in the token
+                # request, so it is never surfaced as a user-supplied option.
+                if self._get_request_property_wire_value(custom_prop) == GRANT_TYPE_WIRE_VALUE:
                     continue
                 result.append(self._get_request_property_param_name(custom_prop))
 

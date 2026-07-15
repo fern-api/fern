@@ -37,11 +37,13 @@ func NewClient(opts ...option.RequestOption) *Client {
 		&authOptions,
 	)
 	options.SetTokenGetter(func() (string, error) {
-		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
+		return inferredAuthProvider.GetOrFetch(func() (string, int64, error) {
 			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
-				XAPIKey:      options.XAPIKey,
-				ClientID:     options.ClientID,
-				ClientSecret: options.ClientSecret,
+				XAPIKey:  options.XAPIKey,
+				ClientID: options.ClientID,
+				ClientSecret: fern.String(
+					options.ClientSecret,
+				),
 			})
 			if err != nil {
 				return "", 0, err
@@ -51,9 +53,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 					"inferred auth response missing access token",
 				)
 			}
-			expiresIn := core.DefaultExpirySeconds
+			expiresIn := int64(core.DefaultExpirySeconds)
 			if response.ExpiresIn > 0 {
-				expiresIn = response.ExpiresIn
+				expiresIn = int64(response.ExpiresIn)
 			}
 			return response.AccessToken, expiresIn, nil
 		})

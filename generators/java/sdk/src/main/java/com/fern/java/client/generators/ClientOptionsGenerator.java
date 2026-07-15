@@ -1040,7 +1040,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .returns(builderClassName)
                 .addParameter(String.class, "key")
                 .addParameter(String.class, "value")
+                // Defensively skip null header values so that no codegen path can bake a null header into
+                // ClientOptions (okhttp Headers.of NPEs on null values).
+                .beginControlFlow("if ($L != null)", "value")
                 .addStatement("this.$L.put($L, $L)", HEADERS_FIELD.name, "key", "value")
+                .endControlFlow()
                 .addStatement("return this")
                 .build();
     }

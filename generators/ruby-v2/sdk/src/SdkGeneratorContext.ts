@@ -61,7 +61,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return this.caseConverter.snakeSafe(typeDeclaration.name.name) + ".rb";
+        return this.buildTypeFileName(typeDeclaration.name.name);
     }
 
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
@@ -274,6 +274,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
+    public getReferenceToInternalUrlEncodedRequest(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Request",
+            modules: [this.getRootModuleName(), "Internal", "UrlEncoded"]
+        });
+    }
+
     public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
@@ -328,6 +335,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.ErrorsConstraint,
             AsIsFiles.ErrorsType,
 
+            // Idempotency
+            ...(this.ir.sdkConfig.idempotencyKeyGeneration != null ? [AsIsFiles.IdempotencyKey] : []),
+
             // Iterators
             AsIsFiles.ItemIterator,
             AsIsFiles.CursorItemIterator,
@@ -343,6 +353,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // JSON
             AsIsFiles.JsonRequest,
             AsIsFiles.JsonSerializable,
+
+            // URL-encoded forms
+            AsIsFiles.UrlEncodedRequest,
 
             // Multipart
             AsIsFiles.MultipartEncoder,

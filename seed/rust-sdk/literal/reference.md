@@ -61,6 +61,40 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.headers.<a href="/src/api/resources/headers/client.rs">send_literals_only</a>() -> Result&lt;SendResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_literal::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = LiteralClient::new(config).expect("Failed to build client");
+    client.headers.send_literals_only(None).await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client.rs">send</a>(request: SendLiteralsInlinedRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>

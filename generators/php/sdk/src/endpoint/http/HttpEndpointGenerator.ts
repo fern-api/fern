@@ -1,4 +1,11 @@
-import { Arguments, GeneratorError, getOriginalName, NameInput, UnnamedArgument } from "@fern-api/base-generator";
+import {
+    Arguments,
+    GeneratorError,
+    getOriginalName,
+    getWireValue,
+    NameInput,
+    UnnamedArgument
+} from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -24,6 +31,7 @@ export declare namespace EndpointGenerator {
 const JSON_VARIABLE_NAME = "$json";
 const RESPONSE_VARIABLE_NAME = "$response";
 const STATUS_CODE_VARIABLE_NAME = "$statusCode";
+const HEADER_BAG_NAME = "$headers";
 
 export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     public constructor({ context }: { context: SdkGeneratorContext }) {
@@ -149,6 +157,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (headerParameterCodeBlock != null) {
                     headerParameterCodeBlock.code.write(writer);
                 }
+                const idempotencyKeyCodeBlock = this.getIdempotencyKeyCodeBlock({
+                    endpoint,
+                    existingHeaderBagReference: headerParameterCodeBlock?.headerParameterBagReference
+                });
+                if (idempotencyKeyCodeBlock != null) {
+                    idempotencyKeyCodeBlock.code.write(writer);
+                }
                 const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
                 if (requestBodyCodeBlock?.code != null) {
                     writer.writeNode(requestBodyCodeBlock.code);
@@ -169,7 +184,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         endpoint,
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
                         pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-                        headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+                        headerBagReference:
+                            idempotencyKeyCodeBlock?.headerBagReference ??
+                            headerParameterCodeBlock?.headerParameterBagReference,
                         queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
                         requestTypeClassReference: classReference,
                         optionsArgument: php.variable(this.context.getRequestOptionsName())
@@ -196,6 +213,61 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
             })
         });
+    }
+
+    /**
+     * When the IR enables idempotency-key generation, requests whose method is one of the
+     * IR-configured eligible methods attach the configured idempotency header whose value is a
+     * freshly generated UUIDv4. If the endpoint already declares that header as an idempotency
+     * header, a caller-supplied value wins and the generated UUID is only the fallback. The set
+     * of eligible methods and the header name come from the IR (`sdkConfig.idempotencyKeyGeneration`)
+     * so behavior is identical across generators instead of being hard-coded here.
+     */
+    private getIdempotencyKeyCodeBlock({
+        endpoint,
+        existingHeaderBagReference
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        existingHeaderBagReference: string | undefined;
+    }): { code: php.CodeBlock; headerBagReference: string } | undefined {
+        const idempotencyKeyGeneration = this.context.ir.sdkConfig.idempotencyKeyGeneration;
+        if (idempotencyKeyGeneration == null) {
+            return undefined;
+        }
+        if (!idempotencyKeyGeneration.methods.includes(endpoint.method)) {
+            return undefined;
+        }
+        const headerName = idempotencyKeyGeneration.headerName;
+        const declaredIdempotencyHeader = endpoint.idempotent
+            ? this.context.ir.idempotencyHeaders.find(
+                  (header) => getWireValue(header.name).toLowerCase() === headerName.toLowerCase()
+              )
+            : undefined;
+        // Reuse the existing header bag when the endpoint already writes header params so declared
+        // header params are never dropped; otherwise declare a fresh bag.
+        const headerBagReference = existingHeaderBagReference ?? HEADER_BAG_NAME;
+        // Emit and look up using the declared wire name (when present) so casing stays consistent
+        // with the case-insensitive match above.
+        const headerKey = declaredIdempotencyHeader != null ? getWireValue(declaredIdempotencyHeader.name) : headerName;
+        const generateCall = php.invokeMethod({
+            on: this.context.getCoreClientClassReference("IdempotencyKey"),
+            method: "generate",
+            arguments_: [],
+            static_: true
+        });
+        return {
+            headerBagReference,
+            code: php.codeblock((writer) => {
+                if (existingHeaderBagReference == null) {
+                    writer.writeTextStatement(`${headerBagReference} = []`);
+                }
+                writer.write(`${headerBagReference}['${headerKey}'] = `);
+                if (declaredIdempotencyHeader != null) {
+                    writer.write(`$${this.context.getRequestOptionsName()}['headers']['${headerKey}'] ?? `);
+                }
+                writer.writeNodeStatement(generateCall);
+            })
+        };
     }
 
     public generatePagedEndpointMethod({
@@ -653,8 +725,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getRequestTypeClassReference(requestBody: FernIr.HttpRequestBody): php.ClassReference {
         return requestBody._visit({
-            inlinedRequestBody: () => this.context.getJsonApiRequestClassReference(),
-            reference: () => this.context.getJsonApiRequestClassReference(),
+            inlinedRequestBody: (inlinedRequestBody) =>
+                inlinedRequestBody.contentType === "application/x-www-form-urlencoded"
+                    ? this.context.getUrlEncodedApiRequestClassReference()
+                    : this.context.getJsonApiRequestClassReference(),
+            reference: (reference) =>
+                reference.contentType === "application/x-www-form-urlencoded"
+                    ? this.context.getUrlEncodedApiRequestClassReference()
+                    : this.context.getJsonApiRequestClassReference(),
             fileUpload: () => this.context.getMultipartApiRequestClassReference(),
             bytes: () => this.context.getJsonApiRequestClassReference(), // TODO: Add support for BytesApiRequest
             _other: () => this.context.getJsonApiRequestClassReference()

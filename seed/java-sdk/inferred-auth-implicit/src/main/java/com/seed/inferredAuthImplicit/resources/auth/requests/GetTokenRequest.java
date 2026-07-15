@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.inferredAuthImplicit.core.Nullable;
+import com.seed.inferredAuthImplicit.core.NullableNonemptyFilter;
 import com.seed.inferredAuthImplicit.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +28,7 @@ public final class GetTokenRequest {
 
     private final String clientId;
 
-    private final String clientSecret;
+    private final Optional<String> clientSecret;
 
     private final Optional<String> scope;
 
@@ -35,7 +37,7 @@ public final class GetTokenRequest {
     private GetTokenRequest(
             String xApiKey,
             String clientId,
-            String clientSecret,
+            Optional<String> clientSecret,
             Optional<String> scope,
             Map<String, Object> additionalProperties) {
         this.xApiKey = xApiKey;
@@ -55,8 +57,11 @@ public final class GetTokenRequest {
         return clientId;
     }
 
-    @JsonProperty("client_secret")
-    public String getClientSecret() {
+    @JsonIgnore
+    public Optional<String> getClientSecret() {
+        if (clientSecret == null) {
+            return Optional.empty();
+        }
         return clientSecret;
     }
 
@@ -73,6 +78,12 @@ public final class GetTokenRequest {
     @JsonProperty("scope")
     public Optional<String> getScope() {
         return scope;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("client_secret")
+    private Optional<String> _getClientSecret() {
+        return clientSecret;
     }
 
     @java.lang.Override
@@ -114,11 +125,7 @@ public final class GetTokenRequest {
     }
 
     public interface ClientIdStage {
-        ClientSecretStage clientId(@NotNull String clientId);
-    }
-
-    public interface ClientSecretStage {
-        _FinalStage clientSecret(@NotNull String clientSecret);
+        _FinalStage clientId(@NotNull String clientId);
     }
 
     public interface _FinalStage {
@@ -128,20 +135,26 @@ public final class GetTokenRequest {
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
+        _FinalStage clientSecret(Optional<String> clientSecret);
+
+        _FinalStage clientSecret(String clientSecret);
+
+        _FinalStage clientSecret(Nullable<String> clientSecret);
+
         _FinalStage scope(Optional<String> scope);
 
         _FinalStage scope(String scope);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements XApiKeyStage, ClientIdStage, ClientSecretStage, _FinalStage {
+    public static final class Builder implements XApiKeyStage, ClientIdStage, _FinalStage {
         private String xApiKey;
 
         private String clientId;
 
-        private String clientSecret;
-
         private Optional<String> scope = Optional.empty();
+
+        private Optional<String> clientSecret = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -165,15 +178,8 @@ public final class GetTokenRequest {
 
         @java.lang.Override
         @JsonSetter("client_id")
-        public ClientSecretStage clientId(@NotNull String clientId) {
+        public _FinalStage clientId(@NotNull String clientId) {
             this.clientId = Objects.requireNonNull(clientId, "clientId must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("client_secret")
-        public _FinalStage clientSecret(@NotNull String clientSecret) {
-            this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret must not be null");
             return this;
         }
 
@@ -187,6 +193,31 @@ public final class GetTokenRequest {
         @JsonSetter(value = "scope", nulls = Nulls.SKIP)
         public _FinalStage scope(Optional<String> scope) {
             this.scope = scope;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage clientSecret(Nullable<String> clientSecret) {
+            if (clientSecret.isNull()) {
+                this.clientSecret = null;
+            } else if (clientSecret.isEmpty()) {
+                this.clientSecret = Optional.empty();
+            } else {
+                this.clientSecret = Optional.of(clientSecret.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage clientSecret(String clientSecret) {
+            this.clientSecret = Optional.ofNullable(clientSecret);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "client_secret", nulls = Nulls.SKIP)
+        public _FinalStage clientSecret(Optional<String> clientSecret) {
+            this.clientSecret = clientSecret;
             return this;
         }
 

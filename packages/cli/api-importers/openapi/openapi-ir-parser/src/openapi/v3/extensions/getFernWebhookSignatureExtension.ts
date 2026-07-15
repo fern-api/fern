@@ -1,7 +1,16 @@
+import { assertNever } from "@fern-api/core-utils";
+import type { Logger } from "@fern-api/logger";
 import { finalIr } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension.js";
 import { FernOpenAPIExtension } from "./fernExtensions.js";
+
+const BODY_HASH_ALGORITHMS = ["sha256", "sha1", "sha384", "sha512"] as const;
+type BodyHashAlgorithmString = (typeof BODY_HASH_ALGORITHMS)[number];
+
+function isBodyHashAlgorithm(value: string): value is BodyHashAlgorithmString {
+    return (BODY_HASH_ALGORITHMS as readonly string[]).includes(value);
+}
 
 type AsymmetricAlgorithmString =
     | "rsa-sha256"
@@ -24,6 +33,17 @@ interface WebhookPayloadFormatExtensionSchema {
     "body-sort"?: "alphabetical";
 }
 
+interface WebhookBodyHashBindingExtensionSchema {
+    algorithm: "sha256" | "sha1" | "sha384" | "sha512";
+    encoding?: "base64" | "hex";
+    location: WebhookBodyHashLocationExtensionSchema;
+}
+
+interface WebhookBodyHashLocationExtensionSchema {
+    type: "query-parameter";
+    name: string;
+}
+
 interface WebhookSignatureExtensionSchema {
     type: "hmac" | "asymmetric";
     header: string;
@@ -33,6 +53,7 @@ interface WebhookSignatureExtensionSchema {
     "signature-prefix"?: string;
     "payload-format"?: WebhookPayloadFormatExtensionSchema;
     timestamp?: WebhookTimestampExtensionSchema;
+    "body-hash-binding"?: WebhookBodyHashBindingExtensionSchema;
     // Asymmetric fields
     "asymmetric-algorithm"?: AsymmetricAlgorithmString;
     "jwks-url"?: string;
@@ -97,6 +118,60 @@ function convertBodySort(bodySort: "alphabetical" | undefined): finalIr.WebhookP
     }
 }
 
+function convertBodyHashBinding(
+    binding: WebhookBodyHashBindingExtensionSchema | undefined,
+    logger: Logger
+): finalIr.WebhookBodyHashBinding | undefined {
+    if (binding == null) {
+        return undefined;
+    }
+    // The extension is untyped user input at runtime, so validate the shape before conversion and
+    // drop just the binding (rather than throwing, which would discard the entire spec) on bad input.
+    if (!isBodyHashAlgorithm(binding.algorithm)) {
+        logger.warn(
+            `Ignoring webhook body-hash-binding: unsupported algorithm "${binding.algorithm}". ` +
+                `Supported algorithms are: ${BODY_HASH_ALGORITHMS.join(", ")}.`
+        );
+        return undefined;
+    }
+    if (binding.location?.type !== "query-parameter") {
+        logger.warn(
+            `Ignoring webhook body-hash-binding: unsupported location type "${binding.location?.type}". ` +
+                `The only supported location is "query-parameter".`
+        );
+        return undefined;
+    }
+    return {
+        algorithm: convertBodyHashAlgorithm(binding.algorithm),
+        encoding: convertEncoding(binding.encoding),
+        location: convertBodyHashLocation(binding.location)
+    };
+}
+
+function convertBodyHashAlgorithm(algorithm: BodyHashAlgorithmString): finalIr.WebhookBodyHashAlgorithm {
+    switch (algorithm) {
+        case "sha256":
+            return finalIr.WebhookBodyHashAlgorithm.Sha256;
+        case "sha1":
+            return finalIr.WebhookBodyHashAlgorithm.Sha1;
+        case "sha384":
+            return finalIr.WebhookBodyHashAlgorithm.Sha384;
+        case "sha512":
+            return finalIr.WebhookBodyHashAlgorithm.Sha512;
+        default:
+            assertNever(algorithm);
+    }
+}
+
+function convertBodyHashLocation(location: WebhookBodyHashLocationExtensionSchema): finalIr.WebhookBodyHashLocation {
+    switch (location.type) {
+        case "query-parameter":
+            return finalIr.WebhookBodyHashLocation.queryParameter({ name: location.name });
+        default:
+            assertNever(location.type);
+    }
+}
+
 function convertAlgorithm(
     algorithm: "sha256" | "sha1" | "sha384" | "sha512" | undefined
 ): finalIr.WebhookSignatureAlgorithm | undefined {
@@ -152,7 +227,8 @@ function convertAsymmetricAlgorithm(
 }
 
 function convertSignatureSchema(
-    extension: WebhookSignatureExtensionSchema
+    extension: WebhookSignatureExtensionSchema,
+    logger: Logger
 ): finalIr.WebhookSignatureVerification | undefined {
     if (extension.type === "hmac") {
         return finalIr.WebhookSignatureVerification.hmac({
@@ -161,7 +237,8 @@ function convertSignatureSchema(
             encoding: convertEncoding(extension.encoding),
             signaturePrefix: extension["signature-prefix"],
             payloadFormat: convertPayloadFormat(extension["payload-format"]),
-            timestamp: convertTimestamp(extension.timestamp)
+            timestamp: convertTimestamp(extension.timestamp),
+            bodyHashBinding: convertBodyHashBinding(extension["body-hash-binding"], logger)
         });
     }
 
@@ -185,17 +262,21 @@ function convertSignatureSchema(
     return undefined;
 }
 
-function getDocumentLevelSignature(document: OpenAPIV3.Document): finalIr.WebhookSignatureVerification | undefined {
+function getDocumentLevelSignature(
+    document: OpenAPIV3.Document,
+    logger: Logger
+): finalIr.WebhookSignatureVerification | undefined {
     const extension = getExtension<WebhookSignatureExtensionSchema>(document, FernOpenAPIExtension.WEBHOOK_SIGNATURE);
     if (extension == null || typeof extension === "boolean") {
         return undefined;
     }
-    return convertSignatureSchema(extension);
+    return convertSignatureSchema(extension, logger);
 }
 
 export function getFernWebhookSignatureExtension(
     document: OpenAPIV3.Document,
-    operation: OpenAPIV3.OperationObject
+    operation: OpenAPIV3.OperationObject,
+    logger: Logger
 ): finalIr.WebhookSignatureVerification | undefined {
     const extension = getExtension<WebhookSignatureExtensionSchema | boolean>(
         operation,
@@ -205,11 +286,11 @@ export function getFernWebhookSignatureExtension(
     if (extension != null) {
         if (typeof extension === "boolean") {
             // Operation says "true" → inherit from document-level config
-            return getDocumentLevelSignature(document);
+            return getDocumentLevelSignature(document, logger);
         }
-        return convertSignatureSchema(extension);
+        return convertSignatureSchema(extension, logger);
     }
 
     // No operation-level extension; fall back to document-level default for all webhooks
-    return getDocumentLevelSignature(document);
+    return getDocumentLevelSignature(document, logger);
 }

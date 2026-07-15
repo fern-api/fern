@@ -20,6 +20,7 @@ import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.AuthScope;
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.http.*;
+import com.fern.ir.model.ir.IdempotencyKeyGeneration;
 import com.fern.ir.model.types.*;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -636,12 +637,16 @@ public abstract class AbstractEndpointWriter {
                                 httpEndpoint.getMethod().toString(),
                                 variables.getOkhttpRequestBodyName());
                         methodBody.addStatement(
-                                "$L.headers($T.of(this.$L.$L(($T) null)))",
+                                "$L.headers($T.of($L))",
                                 "_requestBuilder",
                                 ClassName.get("okhttp3", "Headers"),
-                                clientOptionsField.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                                clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName());
+                                maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                                        "this.$L.$L(($T) null)",
+                                        clientOptionsField.name,
+                                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getRequestOptionsClassName())));
                         methodBody.addStatement(
                                 "$T $L = $L.build()",
                                 ClassName.get("okhttp3", "Request"),
@@ -710,12 +715,16 @@ public abstract class AbstractEndpointWriter {
                                 httpEndpoint.getMethod().toString(),
                                 variables.getOkhttpRequestBodyName());
                         withMediaTypeBody.addStatement(
-                                "$L.headers($T.of(this.$L.$L(($T) null)))",
+                                "$L.headers($T.of($L))",
                                 "_requestBuilder",
                                 ClassName.get("okhttp3", "Headers"),
-                                clientOptionsField.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                                clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName());
+                                maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                                        "this.$L.$L(($T) null)",
+                                        clientOptionsField.name,
+                                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                        clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getRequestOptionsClassName())));
                         withMediaTypeBody.addStatement(
                                 "$T $L = $L.build()",
                                 ClassName.get("okhttp3", "Request"),
@@ -783,12 +792,14 @@ public abstract class AbstractEndpointWriter {
                                 httpEndpoint.getMethod().toString(),
                                 variables.getOkhttpRequestBodyName());
                         withRequestOptionsBody.addStatement(
-                                "$L.headers($T.of(this.$L.$L($L)))",
+                                "$L.headers($T.of($L))",
                                 "_requestBuilder",
                                 ClassName.get("okhttp3", "Headers"),
-                                clientOptionsField.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                                maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                                        "this.$L.$L($L)",
+                                        clientOptionsField.name,
+                                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
                         withRequestOptionsBody.addStatement(
                                 "$T $L = $L.build()",
                                 ClassName.get("okhttp3", "Request"),
@@ -848,12 +859,14 @@ public abstract class AbstractEndpointWriter {
                                 httpEndpoint.getMethod().toString(),
                                 variables.getOkhttpRequestBodyName());
                         withBothBody.addStatement(
-                                "$L.headers($T.of(this.$L.$L($L)))",
+                                "$L.headers($T.of($L))",
                                 "_requestBuilder",
                                 ClassName.get("okhttp3", "Headers"),
-                                clientOptionsField.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                                maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                                        "this.$L.$L($L)",
+                                        clientOptionsField.name,
+                                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
                         withBothBody.addStatement(
                                 "$T $L = $L.build()",
                                 ClassName.get("okhttp3", "Request"),
@@ -897,6 +910,38 @@ public abstract class AbstractEndpointWriter {
                         clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .build();
+    }
+
+    /**
+     * Returns the IR-configured idempotency-key auto-generation settings when they apply to this endpoint. Present only
+     * when the IR's {@code SdkConfig.idempotencyKeyGeneration} is set and this endpoint's HTTP method is one of the
+     * configured eligible methods.
+     */
+    protected final Optional<IdempotencyKeyGeneration> idempotencyKeyGenerationForEndpoint() {
+        return clientGeneratorContext
+                .getIr()
+                .getSdkConfig()
+                .getIdempotencyKeyGeneration()
+                .filter(idempotencyKeyGeneration ->
+                        idempotencyKeyGeneration.getMethods().contains(httpEndpoint.getMethod()));
+    }
+
+    /**
+     * Wraps a headers-map expression so that a freshly generated idempotency key is added when the map does not already
+     * contain one. A caller-provided value always wins. The header name and eligible HTTP methods come from the IR
+     * ({@code SdkConfig.idempotencyKeyGeneration}). When auto-generation does not apply, the original expression is
+     * returned unchanged so existing output is byte-identical.
+     */
+    protected final CodeBlock maybeWrapHeadersWithIdempotencyKey(CodeBlock headersExpression) {
+        Optional<IdempotencyKeyGeneration> idempotencyKeyGeneration = idempotencyKeyGenerationForEndpoint();
+        if (idempotencyKeyGeneration.isEmpty()) {
+            return headersExpression;
+        }
+        return CodeBlock.of(
+                "$T.withGeneratedIdempotencyKey($L, $S)",
+                clientGeneratorContext.getPoetClassNameFactory().getIdempotencyUtilsClassName(),
+                headersExpression,
+                idempotencyKeyGeneration.get().getHeaderName());
     }
 
     protected final MethodSpec getEnvironmentToUrlMethod() {
@@ -1100,6 +1145,49 @@ public abstract class AbstractEndpointWriter {
         public Boolean _visitUnknown(Object unknownType) {
             return false;
         }
+    }
+
+    /**
+     * Builds {@code .addHeader(...)} calls for service and endpoint headers whose types are literals. Endpoints without
+     * a request wrapper still need to send these headers, since there is no request object to carry them.
+     */
+    protected final CodeBlock literalHeadersCodeBlock() {
+        CodeBlock.Builder builder = CodeBlock.builder();
+        Stream.concat(httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
+                .forEach(httpHeader -> literalHeaderValue(httpHeader.getValueType())
+                        .ifPresent(value -> builder.add(
+                                ".addHeader($S, $S)\n", NameUtils.getWireValue(httpHeader.getName()), value)));
+        return builder.build();
+    }
+
+    private Optional<String> literalHeaderValue(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            ContainerType container = typeReference.getContainer().get();
+            if (container.isLiteral()) {
+                Literal literal = container.getLiteral().get();
+                if (literal.isString()) {
+                    return literal.getString();
+                }
+                return literal.getBoolean().map(String::valueOf);
+            }
+            if (container.isOptional()) {
+                return literalHeaderValue(container.getOptional().get());
+            }
+            if (container.isNullable()) {
+                return literalHeaderValue(container.getNullable().get());
+            }
+            return Optional.empty();
+        }
+        if (typeReference.isNamed()) {
+            TypeDeclaration typeDeclaration = clientGeneratorContext
+                    .getTypeDeclarations()
+                    .get(typeReference.getNamed().get().getTypeId());
+            if (typeDeclaration != null && typeDeclaration.getShape().isAlias()) {
+                return literalHeaderValue(
+                        typeDeclaration.getShape().getAlias().get().getAliasOf());
+            }
+        }
+        return Optional.empty();
     }
 
     public static Optional<CodeBlock> maybeAcceptsHeader(HttpEndpoint httpEndpoint) {

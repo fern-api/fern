@@ -8,7 +8,7 @@ module Seed
 
         field :client_id, -> { String }, optional: false, nullable: false
 
-        field :client_secret, -> { String }, optional: false, nullable: false
+        field :client_secret, -> { String }, optional: false, nullable: true
 
         field :audience, -> { String }, optional: false, nullable: false
 

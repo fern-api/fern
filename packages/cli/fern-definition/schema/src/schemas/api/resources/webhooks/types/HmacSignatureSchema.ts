@@ -13,4 +13,10 @@ export interface HmacSignatureSchema {
     /** Defaults to body-only (components: [body], delimiter: ""). */
     "payload-format"?: FernDefinition.WebhookPayloadFormatSchema;
     timestamp?: FernDefinition.WebhookTimestampSchema;
+    /**
+     * When set, the raw body is not signed directly; instead a hash of the body is
+     * transmitted separately (e.g. Twilio's "bodySHA256" query parameter for JSON
+     * bodies) and verification also recomputes and compares the body hash.
+     */
+    "body-hash-binding"?: FernDefinition.WebhookBodyHashBindingSchema;
 }
