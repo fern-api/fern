@@ -264,12 +264,22 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             );
 
             if (this.expiresIn != null && this.expiresAtField != null) {
-                writer.writeTextStatement(
-                    `${this.expiresAtField.name} = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
-                        this.expiresIn.property,
-                        this.expiresIn.propertyPath?.map((val) => val.name) ?? []
-                    )}).AddMinutes(-${this.bufferInMinutesField.name})`
-                );
+                const expiresInAccessor = `tokenResponse.${this.dotAccess(
+                    this.expiresIn.property,
+                    this.expiresIn.propertyPath?.map((val) => val.name) ?? []
+                )}`;
+                const expiresInType = this.context.csharpTypeMapper.convert({
+                    reference: this.expiresIn.property.valueType
+                });
+                if (expiresInType.isOptional) {
+                    writer.writeTextStatement(
+                        `${this.expiresAtField.name} = ${expiresInAccessor} is { } expiresIn ? DateTime.UtcNow.AddSeconds(expiresIn).AddMinutes(-${this.bufferInMinutesField.name}) : null`
+                    );
+                } else {
+                    writer.writeTextStatement(
+                        `${this.expiresAtField.name} = DateTime.UtcNow.AddSeconds(${expiresInAccessor}).AddMinutes(-${this.bufferInMinutesField.name})`
+                    );
+                }
             }
 
             writer.endControlFlow();
