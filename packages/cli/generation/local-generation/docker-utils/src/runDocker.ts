@@ -144,6 +144,9 @@ async function tryRunContainer({
         const value = process.env[name];
         return value != null ? ["-e", `${name}=${value}`] : [];
     });
+    // The OIDC request token is a short-lived JWT; keep it out of the logged command line.
+    const oidcSecret = process.env["ACTIONS_ID_TOKEN_REQUEST_TOKEN"];
+    const secrets = oidcSecret != null ? [oidcSecret] : [];
     const containerArgs = [
         "run",
         "--user",
@@ -164,6 +167,7 @@ async function tryRunContainer({
         reject: false,
         all: true,
         doNotPipeOutput: true,
+        secrets,
         signal
     });
 
