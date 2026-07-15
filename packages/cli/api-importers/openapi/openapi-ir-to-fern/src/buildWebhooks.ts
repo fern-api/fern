@@ -1,4 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     AsymmetricAlgorithm,
@@ -382,7 +383,7 @@ function convertBodyHashBinding(
     }
     return {
         algorithm: convertBodyHashAlgorithm(binding.algorithm),
-        encoding: convertSignatureEncoding(binding.encoding),
+        encoding: binding.encoding != null ? convertSignatureEncoding(binding.encoding) : undefined,
         location: convertBodyHashLocation(binding.location)
     };
 }
@@ -397,6 +398,8 @@ function convertBodyHashAlgorithm(algorithm: WebhookBodyHashAlgorithm): RawSchem
             return "sha384";
         case "sha512":
             return "sha512";
+        default:
+            assertNever(algorithm);
     }
 }
 
@@ -407,6 +410,8 @@ function convertBodyHashLocation(location: WebhookBodyHashLocation): RawSchemas.
                 type: "query-parameter",
                 name: location.name
             };
+        default:
+            assertNever(location.type);
     }
 }
 

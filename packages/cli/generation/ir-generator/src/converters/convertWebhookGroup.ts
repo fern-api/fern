@@ -453,6 +453,8 @@ function convertBodyHashAlgorithm(algorithm: RawSchemas.WebhookBodyHashAlgorithm
             return WebhookBodyHashAlgorithm.Sha512;
         case "sha256":
             return WebhookBodyHashAlgorithm.Sha256;
+        default:
+            assertNever(algorithm);
     }
 }
 
