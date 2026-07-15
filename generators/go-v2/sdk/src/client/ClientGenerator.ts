@@ -11,8 +11,8 @@ import {
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
     isPlainStringType,
-    isRequestPropertyOptional,
-    isTypeReferenceOptional,
+    isRequestPropertyPointer,
+    isTypeReferencePointer,
     resolveTokenEndpointBodyProperties
 } from "../authUtils.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
@@ -697,7 +697,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Set up the token getter function
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");
                 w.indent();
-                w.writeLine("return oauthTokenProvider.GetOrFetch(func() (string, int, error) {");
+                w.writeLine("return oauthTokenProvider.GetOrFetch(func() (string, int64, error) {");
                 w.indent();
 
                 // Fetch a new token from the auth endpoint
@@ -718,12 +718,14 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeNode(requestTypeRef);
                 w.writeLine("{");
                 w.indent();
-                // Check if request fields are optional (pointer types) and wrap accordingly
-                const clientIdIsOptional = isRequestPropertyOptional(requestProperties.clientId);
-                const clientSecretIsOptional = isRequestPropertyOptional(requestProperties.clientSecret);
+                const clientIdIsPointer = isRequestPropertyPointer(requestProperties.clientId, this.context.ir.types);
+                const clientSecretIsPointer = isRequestPropertyPointer(
+                    requestProperties.clientSecret,
+                    this.context.ir.types
+                );
 
                 w.write(`${clientIdFieldName}: `);
-                if (clientIdIsOptional) {
+                if (clientIdIsPointer) {
                     w.writeNode(
                         go.invokeFunc({
                             func: go.typeReference({
@@ -738,7 +740,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 }
                 w.writeLine(",");
                 w.write(`${clientSecretFieldName}: `);
-                if (clientSecretIsOptional) {
+                if (clientSecretIsPointer) {
                     w.writeNode(
                         go.invokeFunc({
                             func: go.typeReference({
@@ -759,44 +761,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine('return "", 0, err');
                 w.dedent();
                 w.writeLine("}");
-                // Check for empty access token
-                w.writeLine('if response.AccessToken == "" {');
-                w.indent();
-                w.write('return "", 0, ');
-                w.writeNode(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: "New",
-                            importPath: "errors"
-                        }),
-                        arguments_: [go.codeblock('"oauth response missing access token"')]
-                    })
-                );
-                w.newLine();
-                w.dedent();
-                w.writeLine("}");
-                // Handle ExpiresIn with fallback to default
-                // Check if expiresIn is optional (pointer type) to determine how to access it
                 const responseProperties = oauthScheme.configuration.tokenEndpoint.responseProperties;
-                const expiresInIsOptional =
-                    responseProperties.expiresIn != null &&
-                    this.isResponsePropertyOptional(responseProperties.expiresIn);
-
-                w.writeLine("expiresIn := core.DefaultExpirySeconds");
-                if (expiresInIsOptional) {
-                    w.writeLine("if response.ExpiresIn != nil {");
-                    w.indent();
-                    w.writeLine("expiresIn = *response.ExpiresIn");
-                    w.dedent();
-                    w.writeLine("}");
-                } else {
-                    w.writeLine("if response.ExpiresIn > 0 {");
-                    w.indent();
-                    w.writeLine("expiresIn = response.ExpiresIn");
-                    w.dedent();
-                    w.writeLine("}");
-                }
-                w.writeLine("return response.AccessToken, expiresIn, nil");
+                const accessTokenField = this.context.getFieldName(responseProperties.accessToken.property.name);
+                this.writeTokenResponse({
+                    writer: w,
+                    accessTokenField,
+                    accessTokenIsPointer: this.isResponsePropertyPointer(responseProperties.accessToken),
+                    expiryProperty: responseProperties.expiresIn,
+                    missingAccessTokenError: "oauth response missing access token"
+                });
                 w.dedent();
                 w.writeLine("})");
                 w.dedent();
@@ -818,8 +791,65 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return service.endpoints.find((ep) => ep.id === endpointId);
     }
 
-    private isResponsePropertyOptional(responseProperty: FernIr.ResponseProperty): boolean {
-        return isTypeReferenceOptional(responseProperty.property.valueType);
+    private isResponsePropertyPointer(responseProperty: FernIr.ResponseProperty): boolean {
+        return isTypeReferencePointer(responseProperty.property.valueType, this.context.ir.types);
+    }
+
+    private writeTokenResponse({
+        writer,
+        accessTokenField,
+        accessTokenIsPointer,
+        expiryProperty,
+        missingAccessTokenError
+    }: {
+        writer: go.Writer;
+        accessTokenField: string;
+        accessTokenIsPointer: boolean;
+        expiryProperty: FernIr.ResponseProperty | undefined;
+        missingAccessTokenError: string;
+    }): void {
+        if (accessTokenIsPointer) {
+            writer.writeLine(`if response.${accessTokenField} == nil || *response.${accessTokenField} == "" {`);
+        } else {
+            writer.writeLine(`if response.${accessTokenField} == "" {`);
+        }
+        writer.indent();
+        writer.write('return "", 0, ');
+        writer.writeNode(
+            go.invokeFunc({
+                func: go.typeReference({
+                    name: "New",
+                    importPath: "errors"
+                }),
+                arguments_: [go.codeblock(JSON.stringify(missingAccessTokenError))]
+            })
+        );
+        writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
+
+        const accessTokenValue = accessTokenIsPointer
+            ? `*response.${accessTokenField}`
+            : `response.${accessTokenField}`;
+        if (expiryProperty == null) {
+            writer.writeLine(`return ${accessTokenValue}, int64(core.DefaultExpirySeconds), nil`);
+            return;
+        }
+
+        const expiryField = this.context.getFieldName(expiryProperty.property.name);
+        const expiryIsPointer = this.isResponsePropertyPointer(expiryProperty);
+        const expiryValue = expiryIsPointer ? `*response.${expiryField}` : `response.${expiryField}`;
+        writer.writeLine("expiresIn := int64(core.DefaultExpirySeconds)");
+        if (expiryIsPointer) {
+            writer.writeLine(`if response.${expiryField} != nil {`);
+        } else {
+            writer.writeLine(`if response.${expiryField} > 0 {`);
+        }
+        writer.indent();
+        writer.writeLine(`expiresIn = int64(${expiryValue})`);
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine(`return ${accessTokenValue}, expiresIn, nil`);
     }
 
     private getAuthServiceFernFilepath(): FernIr.FernFilepath | undefined {
@@ -918,7 +948,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Set up the token getter function
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");
                 w.indent();
-                w.writeLine("return inferredAuthProvider.GetOrFetch(func() (string, int, error) {");
+                w.writeLine("return inferredAuthProvider.GetOrFetch(func() (string, int64, error) {");
                 w.indent();
 
                 // Build the request struct for the token endpoint call
@@ -942,7 +972,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
                 // Set credential parameters from options
                 for (const param of credentialParams) {
-                    if (param.isOptional) {
+                    if (param.isPointer) {
                         w.write(`${param.fieldName}: `);
                         w.writeNode(
                             go.invokeFunc({
@@ -976,48 +1006,16 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     accessTokenField = this.context.getFieldName(firstAuthHeader.responseProperty.property.name);
                 }
 
-                // Check for empty access token
-                w.writeLine(`if response.${accessTokenField} == "" {`);
-                w.indent();
-                w.write('return "", 0, ');
-                w.writeNode(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: "New",
-                            importPath: "errors"
-                        }),
-                        arguments_: [go.codeblock('"inferred auth response missing access token"')]
-                    })
-                );
-                w.newLine();
-                w.dedent();
-                w.writeLine("}");
-
-                // Handle ExpiresIn with fallback to default
-                const expiryProperty = inferredScheme.tokenEndpoint.expiryProperty;
-                if (expiryProperty != null) {
-                    const expiryField = this.context.getFieldName(expiryProperty.property.name);
-                    const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
-
-                    w.writeLine("expiresIn := core.DefaultExpirySeconds");
-                    if (expiryIsOptional) {
-                        w.writeLine(`if response.${expiryField} != nil {`);
-                        w.indent();
-                        w.writeLine(`expiresIn = *response.${expiryField}`);
-                        w.dedent();
-                        w.writeLine("}");
-                    } else {
-                        w.writeLine(`if response.${expiryField} > 0 {`);
-                        w.indent();
-                        w.writeLine(`expiresIn = response.${expiryField}`);
-                        w.dedent();
-                        w.writeLine("}");
-                    }
-                    w.writeLine(`return response.${accessTokenField}, expiresIn, nil`);
-                } else {
-                    // No expiry property — use default
-                    w.writeLine(`return response.${accessTokenField}, core.DefaultExpirySeconds, nil`);
-                }
+                const accessTokenIsPointer =
+                    firstAuthHeader?.responseProperty != null &&
+                    this.isResponsePropertyPointer(firstAuthHeader.responseProperty);
+                this.writeTokenResponse({
+                    writer: w,
+                    accessTokenField,
+                    accessTokenIsPointer,
+                    expiryProperty: inferredScheme.tokenEndpoint.expiryProperty,
+                    missingAccessTokenError: "inferred auth response missing access token"
+                });
 
                 w.dedent();
                 w.writeLine("})");
@@ -1055,7 +1053,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
     private getInferredAuthCredentialParameters(): Array<{
         fieldName: string;
-        isOptional: boolean;
+        isPointer: boolean;
         envVar: string | undefined;
     }> {
         const tokenEndpoint = this.getInferredAuthTokenEndpoint();
