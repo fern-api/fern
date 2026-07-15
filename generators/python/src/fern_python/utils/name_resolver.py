@@ -35,10 +35,7 @@ def configure_smart_casing(enabled: bool, digit_word_boundary: bool = False) -> 
     """Set whether _smart_snake uses smartCasing semantics. Must be called before
     any name resolution (cache is cleared to invalidate any pre-flag results)."""
     global _smart_casing_enabled, _smart_casing_digit_word_boundary_enabled
-    if (
-        _smart_casing_enabled == enabled
-        and _smart_casing_digit_word_boundary_enabled == digit_word_boundary
-    ):
+    if _smart_casing_enabled == enabled and _smart_casing_digit_word_boundary_enabled == digit_word_boundary:
         return
     _smart_casing_enabled = enabled
     _smart_casing_digit_word_boundary_enabled = digit_word_boundary
