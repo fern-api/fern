@@ -13,12 +13,17 @@ describe("capBreadcrumbToken", () => {
         expect(capBreadcrumbToken(atLimit)).toBe(atLimit);
     });
 
-    test("caps a token past the limit to a bounded length", () => {
+    test("caps a token past the limit to at most the maximum length", () => {
         const long = "a".repeat(300_000);
         const capped = capBreadcrumbToken(long);
-        expect(capped.length).toBeLessThan(long.length);
-        expect(capped.length).toBeLessThan(1024);
-        expect(capped.startsWith("a".repeat(512))).toBe(true);
+        expect(capped.length).toBeLessThanOrEqual(512);
+        expect(capped.startsWith("a".repeat(100))).toBe(true);
+    });
+
+    test("is idempotent: capping an already-capped token is a no-op", () => {
+        const long = "a".repeat(300_000);
+        const capped = capBreadcrumbToken(long);
+        expect(capBreadcrumbToken(capped)).toBe(capped);
     });
 
     test("is deterministic and distinguishes tokens sharing a prefix", () => {
