@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Let a CLI-level custom root `auth` command replace the framework auth
+    surface and credential management. This prevents duplicate clap commands
+    and ensures the custom handler receives `auth` invocations.
+  type: fix

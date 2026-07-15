@@ -11,8 +11,9 @@
 //! - `PkceLoginFlow` — authorization-code + PKCE with a loopback
 //!   listener. **TB4, in [`crate::auth::oauth2`].**
 //!
-//! The `auth` subcommand is always grafted into every CliApp at run
-//! time (ADR-0007 § "always-graft"). It exposes:
+//! The `auth` subcommand is grafted into every CliApp at run time unless a
+//! custom root `auth` command replaces it (ADR-0007 § "always-graft").
+//! It exposes:
 //!
 //! ```text
 //! <bin> auth login              # run the declared flow

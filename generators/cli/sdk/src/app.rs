@@ -625,6 +625,13 @@ impl CliApp {
         rt.block_on(self.run_inner(args, out))
     }
 
+    /// Whether a custom command owns a framework-reserved root command.
+    fn has_custom_root_command(&self, name: &str) -> bool {
+        self.cli_commands
+            .iter()
+            .any(|command| command.path.is_empty() && command.cmd.get_name() == name)
+    }
+
     /// Pass root-level auth bindings to each registered binding and
     /// validate that specs don't reference unregistered schemes.
     /// Must be called before `run_inner` / `dispatch_pipeline`.
@@ -633,7 +640,10 @@ impl CliApp {
         // before propagating, so `<bin> auth login` populating the keyring
         // is visible to the binding-level auth provider without per-binary
         // wiring (ADR-0008 § precedence).
-        crate::auth::login::inject_keyring_sources(&self.name, &mut self.auth_bindings);
+        // A custom root `auth` command owns credential management end to end.
+        if !self.has_custom_root_command("auth") {
+            crate::auth::login::inject_keyring_sources(&self.name, &mut self.auth_bindings);
+        }
 
         // Wire on-disk token caching into OAuth2 providers that were
         // constructed without a cache (i.e. via `root_builder`).
@@ -949,15 +959,20 @@ impl CliApp {
             cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cc.cmd.clone());
         }
 
-        // 1c. Register `completion`, `man`, and `auth` subcommands.
+        // 1c. Register framework-owned `completion`, `man`, and `auth`
+        // subcommands. A custom root `auth` command replaces the framework
+        // surface, matching custom-command collision semantics elsewhere.
         //
-        // `auth` is always grafted, even on binaries that declare no OAuth
-        // flow — `auth login --with-token` is the universal credential
-        // entry point that ships on every Fern CLI (ADR-0007 § always-graft).
+        // `auth` is grafted even on binaries that declare no OAuth flow —
+        // `auth login --with-token` is the universal credential entry point
+        // unless the binary explicitly owns `auth` itself.
         cli = cli
             .subcommand(crate::completions::completion_command())
-            .subcommand(crate::man::man_command())
-            .subcommand(crate::auth::login::build_auth_command());
+            .subcommand(crate::man::man_command());
+        let custom_auth = self.has_custom_root_command("auth");
+        if !custom_auth {
+            cli = cli.subcommand(crate::auth::login::build_auth_command());
+        }
 
         // 1d. Apply Tier 1 deferred operations (alias, hide, stability)
         // before completion/man generation so aliases appear in tab-
@@ -1038,18 +1053,18 @@ impl CliApp {
         // 4. Resolve which binding owns the matched subcommand.
         let (op_path, sub_matches) = resolve_op_path(&matches);
 
-        // 3a. Intercept the always-grafted `auth` subcommand before binding
-        // resolution — it's framework-owned, not spec-owned, and runs
-        // synchronously without touching any binding (ADR-0007 § always-graft).
-        if let Some(("auth", auth_matches)) = matches.subcommand() {
-            crate::auth::login::dispatch_auth(
-                auth_matches,
-                &self.name,
-                &self.auth_bindings,
-                &self.login_flows,
-                out,
-            )?;
-            return Ok(PipelineOutcome::Success);
+        // 3a. Intercept framework `auth` unless a custom root command owns it.
+        if !custom_auth {
+            if let Some(("auth", auth_matches)) = matches.subcommand() {
+                crate::auth::login::dispatch_auth(
+                    auth_matches,
+                    &self.name,
+                    &self.auth_bindings,
+                    &self.login_flows,
+                    out,
+                )?;
+                return Ok(PipelineOutcome::Success);
+            }
         }
 
         // 4a. Check CLI-level custom commands first.
@@ -1160,8 +1175,8 @@ fn graft_merged_subtree(
     //    Skip subcommands named `completion`, `man`, or `auth` — the
     //    built-in counterparts are registered AFTER this graft (at
     //    step 1c in `CliApp::run`) and clap panics on duplicate
-    //    top-level subcommands. `auth` is the always-grafted framework
-    //    surface for `auth login` / `logout` / `status` (ADR-0007).
+    //    top-level subcommands. `auth` is the default framework surface
+    //    unless a custom root command replaces it (ADR-0007).
     //    No known spec uses these names, but the guard matches the old
     //    pre-refactor behavior and keeps us safe against adversarial specs.
     for sub in merged_subtree.get_subcommands().cloned() {
@@ -1485,6 +1500,10 @@ fn global_flags() -> Vec<serde_json::Value> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::sync::{
+        atomic::{AtomicBool, Ordering},
+        Arc,
+    };
 
     #[test]
     fn resolve_op_path_extracts_chain() {
@@ -1673,6 +1692,42 @@ mod tests {
         // This test verifies the builder compiles — #[must_use]
         // would fire a warning if the value were dropped without use.
         let _app = CliApp::new("test");
+    }
+
+    #[test]
+    fn custom_root_auth_replaces_framework_auth() {
+        let called = Arc::new(AtomicBool::new(false));
+        let handler_called = Arc::clone(&called);
+        let app = CliApp::new("test")
+            .binding(TestBinding::new("binding", clap::Command::new("binding")))
+            .command(
+                clap::Command::new("auth").subcommand(clap::Command::new("status")),
+                Box::new(move |_matches, _context| {
+                    handler_called.store(true, Ordering::SeqCst);
+                    Ok(())
+                }),
+            );
+        let mut output = Vec::new();
+
+        let exit = app.try_run_from_with_output(["test", "auth", "status"], &mut output);
+
+        assert_eq!(exit, 0, "{}", String::from_utf8_lossy(&output));
+        assert!(called.load(Ordering::SeqCst), "custom auth handler was not dispatched");
+    }
+
+    #[test]
+    fn custom_root_auth_owns_credential_sources() {
+        let mut app = CliApp::new("test")
+            .auth(crate::auth::BearerAuth::new("bearer").env("TEST_TOKEN"))
+            .command(clap::Command::new("auth"), Box::new(|_, _| Ok(())));
+
+        app.propagate_root_auth();
+
+        assert!(matches!(
+            &app.auth_bindings[0].1,
+            crate::auth::SchemeBinding::Token(crate::auth::AuthCredentialSource::Env(name))
+                if name == "TEST_TOKEN"
+        ));
     }
 
     #[test]
