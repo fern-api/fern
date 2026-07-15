@@ -476,7 +476,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     private writeHeaderEnvironmentVariables({ writer }: { writer: go.Writer }): void {
         for (const header of this.context.ir.headers) {
             if (header.env != null) {
-                if (isTypeReferenceOptional(header.valueType)) {
+                if (isTypeReferencePointer(header.valueType, this.context.ir.types)) {
                     this.writeOptionalEnvConditional({
                         writer,
                         propertyReference: this.getOptionsPropertyReference(header.name),
