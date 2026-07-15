@@ -156,13 +156,13 @@ class SdkGenerator(AbstractGenerator):
         )
 
         # `socket_options=` on httpx.HTTPTransport/AsyncHTTPTransport (used for TCP
-        # keepalive) requires httpx>=0.24 / httpcore>=0.17. The generated SDK's floor
-        # is otherwise httpx>=0.21.2, so bump it only when keepalive is opted in.
+        # keepalive) was added in httpx>=0.25 / httpcore>=0.18. The generated SDK's
+        # floor is otherwise httpx>=0.21.2, so bump it only when keepalive is opted in.
         if custom_config.tcp_keepalive.enabled:
             project.add_dependency(
                 dependency=AST.Dependency(
                     name="httpx",
-                    version="0.24.0",
+                    version="0.25.0",
                     compatibility=DependencyCompatibility.GREATER_THAN_OR_EQUAL,
                 ),
                 is_user_override=True,

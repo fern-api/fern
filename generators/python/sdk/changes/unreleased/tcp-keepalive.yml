@@ -10,7 +10,7 @@
     older/minimal platforms) so long, non-streaming requests survive
     idle-connection reaping by a firewall/load balancer/NAT. A user-supplied
     `httpx_client` or a `custom_transport` `http_client` always takes precedence
-    over the keepalive default. Opting in requires `httpx>=0.24`.
+    over the keepalive default. Opting in requires `httpx>=0.25`.
   type: feat
 
 - summary: |

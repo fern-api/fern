@@ -102,6 +102,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
@@ -116,7 +121,7 @@ jobs:
         run: poetry run pytest -sv tests/utils/test_keepalive_socket_options.py
 
   # Verify the keepalive socket options are accepted by both the pinned floor
-  # (httpx>=0.24, the version required when tcp_keepalive is opted in) and the
+  # (httpx>=0.25, the version required when tcp_keepalive is opted in) and the
   # latest httpx. Mirrors the intent of the pydantic v1/v2 floor-vs-latest
   # matrix, kept as a dedicated job so it does not run across every seed fixture.
   keepalive-httpx-matrix:
@@ -124,10 +129,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        httpx: ["0.24.1", "latest"]
+        httpx: ["0.25.0", "latest"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
 
       - name: Install Poetry
         uses: snok/install-poetry@v1

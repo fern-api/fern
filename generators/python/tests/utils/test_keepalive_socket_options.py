@@ -69,7 +69,7 @@ def test_old_windows_or_minimal_only_so_keepalive(monkeypatch) -> None:  # type:
 def test_httpx_transports_accept_socket_options() -> None:
     """The generated default transport passes these tuples to
     ``httpx.HTTPTransport``/``httpx.AsyncHTTPTransport`` via ``socket_options=``,
-    which requires httpx>=0.24. Constructing both transports here proves the kwarg
+    which requires httpx>=0.25. Constructing both transports here proves the kwarg
     is accepted on whichever httpx version is installed (floor and latest in CI)."""
     opts = get_keepalive_socket_options()
 
