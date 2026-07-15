@@ -1147,6 +1147,49 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
+    /**
+     * Builds {@code .addHeader(...)} calls for service and endpoint headers whose types are literals. Endpoints without
+     * a request wrapper still need to send these headers, since there is no request object to carry them.
+     */
+    protected final CodeBlock literalHeadersCodeBlock() {
+        CodeBlock.Builder builder = CodeBlock.builder();
+        Stream.concat(httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
+                .forEach(httpHeader -> literalHeaderValue(httpHeader.getValueType())
+                        .ifPresent(value -> builder.add(
+                                ".addHeader($S, $S)\n", NameUtils.getWireValue(httpHeader.getName()), value)));
+        return builder.build();
+    }
+
+    private Optional<String> literalHeaderValue(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            ContainerType container = typeReference.getContainer().get();
+            if (container.isLiteral()) {
+                Literal literal = container.getLiteral().get();
+                if (literal.isString()) {
+                    return literal.getString();
+                }
+                return literal.getBoolean().map(String::valueOf);
+            }
+            if (container.isOptional()) {
+                return literalHeaderValue(container.getOptional().get());
+            }
+            if (container.isNullable()) {
+                return literalHeaderValue(container.getNullable().get());
+            }
+            return Optional.empty();
+        }
+        if (typeReference.isNamed()) {
+            TypeDeclaration typeDeclaration = clientGeneratorContext
+                    .getTypeDeclarations()
+                    .get(typeReference.getNamed().get().getTypeId());
+            if (typeDeclaration != null && typeDeclaration.getShape().isAlias()) {
+                return literalHeaderValue(
+                        typeDeclaration.getShape().getAlias().get().getAliasOf());
+            }
+        }
+        return Optional.empty();
+    }
+
     public static Optional<CodeBlock> maybeAcceptsHeader(HttpEndpoint httpEndpoint) {
         // Don't set Accept header for streaming responses - the streaming format
         // (SSE, NDJSON, etc.) should be negotiated differently

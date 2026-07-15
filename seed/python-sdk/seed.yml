@@ -460,6 +460,9 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  python-oauth-token-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
   python-mypy-exclude:
     - customConfig: null
       outputFolder: no-custom-config

@@ -5,13 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v67.13.0] - 2026-07-15
+## [v67.14.0] - 2026-07-15
 
 - Add `CasingsConfig.smartCasingDigitWordBoundary` (`optional<boolean>`): when smart casing
   is enabled, opts snake_case into preserving the word boundary after a digit run
   (`ConversationsV2Configuration` → `conversations_v2_configuration`). Defaults to false,
   preserving the previous behavior (`conversations_v2configuration`). Driven by the
   `smart-casing-digit-word-boundary` flag in `generators.yml`.
+
+## [v67.13.0] - 2026-07-15
+
+- Add `HmacSignatureVerification.bodyHashBinding` (optional `WebhookBodyHashBinding`)
+  for webhook schemes that do not include the raw body in the signed payload directly,
+  but instead transmit a hash of the body separately (for example, Twilio's `bodySHA256`
+  query parameter for JSON bodies). When present, signature verification must also
+  recompute the encoded hash of the raw body and compare it to the transmitted value.
+  - `WebhookBodyHashBinding` carries `algorithm` (`WebhookBodyHashAlgorithm`: `SHA256`,
+    `SHA1`, `SHA384`, `SHA512`), `encoding` (`WebhookSignatureEncoding`), and `location`
+    (`WebhookBodyHashLocation`). The hash algorithm/encoding are independent of the outer
+    HMAC's.
+  - `WebhookBodyHashLocation` is a union; the `queryParameter` variant
+    (`WebhookBodyHashQueryParameterLocation` with a `name`) describes a hash carried as a
+    query parameter on the notification URL.
 
 ## [v67.12.0] - 2026-07-13
 

@@ -36,6 +36,9 @@ export const AsIsFiles = {
     JsonRequest: "internal/json/request.Template.rb",
     JsonSerializable: "internal/json/serializable.Template.rb",
 
+    // URL-encoded forms
+    UrlEncodedRequest: "internal/url_encoded/request.Template.rb",
+
     // Multipart
     MultipartEncoder: "internal/multipart/multipart_encoder.Template.rb",
     MultipartFormDataPart: "internal/multipart/multipart_form_data_part.Template.rb",

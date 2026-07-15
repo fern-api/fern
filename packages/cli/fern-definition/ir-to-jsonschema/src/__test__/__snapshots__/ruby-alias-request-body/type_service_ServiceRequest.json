@@ -1,0 +1,17 @@
+{
+  "$ref": "#/definitions/service.StoreRequest",
+  "definitions": {
+    "service.StoreRequest": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "displayName"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

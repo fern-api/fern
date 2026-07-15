@@ -1,4 +1,4 @@
-import { CaseConverter, NameInput } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
@@ -56,6 +56,19 @@ export function getRequestPropertyFieldName(
     }
     // Fallback to default names if we can't extract from IR
     return "ClientId";
+}
+
+const GRANT_TYPE_WIRE_VALUE = "grant_type";
+
+/**
+ * The client-credentials grant type is synthesized in the token request
+ * rather than surfaced as a client option.
+ */
+export function isGrantTypeRequestProperty(requestProperty: FernIr.RequestProperty): boolean {
+    if (requestProperty.property.type === "body" || requestProperty.property.type === "query") {
+        return getOriginalName(requestProperty.property.name) === GRANT_TYPE_WIRE_VALUE;
+    }
+    return false;
 }
 
 /**
@@ -140,7 +153,7 @@ function isTypeReferenceOptional(
     return false;
 }
 
-function isTypeReferenceLiteral(
+export function isTypeReferenceLiteral(
     typeRef: FernIr.TypeReference,
     irTypes: Record<string, FernIr.TypeDeclaration>,
     seen: Set<string> = new Set()

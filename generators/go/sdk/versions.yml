@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.49.4
+  changelogEntry:
+    - summary: |
+        OAuth client credentials token requests now send `grant_type: "client_credentials"`
+        when the token endpoint declares a non-literal `grant_type` request property.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
 - version: 1.49.3
   changelogEntry:
     - summary: |
