@@ -1,4 +1,5 @@
 import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -42,6 +43,15 @@ export class WebhooksHelperGenerator {
                 config: defaultEntry.config
             })
         ];
+        if (this.shouldGenerateBodyHashRuntimeTest(defaultEntry.config)) {
+            files.push(
+                this.buildBodyHashRuntimeTestFile({
+                    className: DEFAULT_HELPER_CLASS_NAME,
+                    filename: "test_webhooks_helper.rb",
+                    config: defaultEntry.config
+                })
+            );
+        }
 
         for (const entry of overrideEntries) {
             const firstWebhookName = entry.webhookNames[0];
@@ -49,13 +59,17 @@ export class WebhooksHelperGenerator {
                 continue;
             }
             const className = `${this.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
-            files.push(
-                this.buildHelperFile({
-                    className,
-                    filename: `${this.case.snakeSafe(className)}.rb`,
-                    config: entry.config
-                })
-            );
+            const helperFilename = `${this.case.snakeSafe(className)}.rb`;
+            files.push(this.buildHelperFile({ className, filename: helperFilename, config: entry.config }));
+            if (this.shouldGenerateBodyHashRuntimeTest(entry.config)) {
+                files.push(
+                    this.buildBodyHashRuntimeTestFile({
+                        className,
+                        filename: `test_${helperFilename}`,
+                        config: entry.config
+                    })
+                );
+            }
         }
 
         return files;
@@ -122,6 +136,17 @@ export class WebhooksHelperGenerator {
                 delimiter: config.payloadFormat.delimiter,
                 bodySort: config.payloadFormat.bodySort ?? null
             },
+            bodyHashBinding:
+                config.bodyHashBinding == null
+                    ? null
+                    : {
+                          algorithm: config.bodyHashBinding.algorithm,
+                          encoding: config.bodyHashBinding.encoding,
+                          location: {
+                              type: config.bodyHashBinding.location.type,
+                              name: this.getBodyHashQueryParameterName(config.bodyHashBinding.location)
+                          }
+                      },
             timestamp:
                 config.timestamp == null
                     ? null
@@ -179,6 +204,130 @@ export class WebhooksHelperGenerator {
             return ["time"];
         }
         return [];
+    }
+
+    private shouldGenerateBodyHashRuntimeTest(config: FernIr.HmacSignatureVerification): boolean {
+        return (
+            config.bodyHashBinding != null &&
+            config.payloadFormat.components.length === 1 &&
+            config.payloadFormat.components[0] === "NOTIFICATION_URL"
+        );
+    }
+
+    private buildBodyHashRuntimeTestFile({
+        className,
+        filename,
+        config
+    }: {
+        className: string;
+        filename: string;
+        config: FernIr.HmacSignatureVerification;
+    }): RubyFile {
+        const binding = config.bodyHashBinding;
+        if (binding == null) {
+            throw new Error("Cannot generate a body-hash runtime test without a body-hash binding");
+        }
+        const bodyHashAlgorithm = mapBodyHashAlgorithm(binding.algorithm);
+        const bodyHashEncoding = mapEncoding(binding.encoding);
+        const hmacAlgorithm = mapHmacAlgorithm(config.algorithm);
+        const hmacEncoding = mapEncoding(config.encoding);
+        const queryParameterName = this.getBodyHashQueryParameterName(binding.location);
+        const rootModuleName = this.context.getRootModuleName();
+
+        return new RubyFile({
+            node: ruby.codeblock((writer) => {
+                ruby.comment({ docs: Comments.FrozenStringLiteral }).write(writer);
+                writer.newLine();
+                writer.writeLine('require "test_helper"');
+                writer.newLine();
+                writer.writeLine(`describe ${rootModuleName}::${className} do`);
+                writer.indent();
+                writer.writeLine('it "verifies the raw body binding before the HMAC over the verbatim URL" do');
+                writer.indent();
+                writer.writeLine(`body = ${rubyStringLiteral('{"messageSid":"SM123","status":"delivered"}')}`);
+                writer.writeLine('secret = "supersecret"');
+                writer.writeLine(`body_hash = ${rootModuleName}::Internal::WebhookBodyHash.compute_hash(`);
+                writer.indent();
+                writer.writeLine("payload: body,");
+                writer.writeLine(`algorithm: "${bodyHashAlgorithm}",`);
+                writer.writeLine(`encoding: "${bodyHashEncoding}"`);
+                writer.dedent();
+                writer.writeLine(")");
+                writer.writeLine(
+                    `body_hash_query = URI.encode_www_form([[${rubyStringLiteral(queryParameterName)}, body_hash]])`
+                );
+                writer.writeLine(
+                    'notification_url = "https://example.com/hooks/sms?z=last&#{body_hash_query}&' +
+                        'a=first%20value&dup=1&dup=2"'
+                );
+                writer.writeLine("sign = ->(url) do");
+                writer.indent();
+                writer.writeLine(`${rootModuleName}::Internal::WebhookSignature.compute_hmac_signature(`);
+                writer.indent();
+                writer.writeLine("payload: url,");
+                writer.writeLine("secret: secret,");
+                writer.writeLine(`algorithm: "${hmacAlgorithm}",`);
+                writer.writeLine(`encoding: "${hmacEncoding}"`);
+                writer.dedent();
+                writer.writeLine(")");
+                writer.dedent();
+                writer.writeLine("end");
+                writer.writeLine("verify = ->(request_body:, url:, signature:, signature_key: secret) do");
+                writer.indent();
+                writer.writeLine(`${rootModuleName}::${className}.verify_signature(`);
+                writer.indent();
+                writer.writeLine("request_body: request_body,");
+                writer.writeLine("signature_header: signature,");
+                writer.writeLine("signature_key: signature_key,");
+                writer.writeLine("notification_url: url");
+                writer.dedent();
+                writer.writeLine(")");
+                writer.dedent();
+                writer.writeLine("end");
+                writer.newLine();
+                writer.writeLine("signature = sign.call(notification_url)");
+                writer.newLine();
+                writer.writeLine("assert verify.call(request_body: body, url: notification_url, signature: signature)");
+                writer.newLine();
+                writer.writeLine(
+                    'refute verify.call(request_body: "#{body} ", url: notification_url, signature: signature)'
+                );
+                writer.newLine();
+                writer.writeLine(
+                    `tampered_query = URI.encode_www_form([[${rubyStringLiteral(queryParameterName)}, "#{body_hash}x"]])`
+                );
+                writer.writeLine("tampered_url = notification_url.sub(body_hash_query, tampered_query)");
+                writer.newLine();
+                writer.writeLine(
+                    "refute verify.call(request_body: body, url: tampered_url, signature: sign.call(tampered_url))"
+                );
+                writer.newLine();
+                writer.writeLine(
+                    'refute verify.call(request_body: body, url: notification_url, signature: "x#{signature[1..]}")'
+                );
+                writer.writeLine("refute verify.call(");
+                writer.indent();
+                writer.writeLine("request_body: body,");
+                writer.writeLine("url: notification_url,");
+                writer.writeLine("signature: signature,");
+                writer.writeLine('signature_key: "wrong-secret"');
+                writer.dedent();
+                writer.writeLine(")");
+                writer.newLine();
+                writer.writeLine('url_without_hash = "https://example.com/hooks/sms?z=last"');
+                writer.newLine();
+                writer.writeLine(
+                    "refute verify.call(request_body: body, url: url_without_hash, signature: sign.call(url_without_hash))"
+                );
+                writer.dedent();
+                writer.writeLine("end");
+                writer.dedent();
+                writer.writeLine("end");
+            }),
+            directory: RelativeFilePath.of("test/unit"),
+            filename,
+            customConfig: this.context.customConfig
+        });
     }
 
     private buildConstants(config: FernIr.HmacSignatureVerification): string[] {
@@ -241,7 +390,12 @@ export class WebhooksHelperGenerator {
         const signatureExpr = this.writeSignatureExtraction(writer, config.signaturePrefix);
 
         writer.newLine();
-        this.writePayloadConstruction(writer, config.payloadFormat);
+        this.writePayloadConstruction(writer, config.payloadFormat, config.bodyHashBinding != null);
+
+        if (config.bodyHashBinding != null) {
+            writer.newLine();
+            this.writeBodyHashVerification(writer, config.bodyHashBinding);
+        }
 
         writer.newLine();
         const algorithm = mapHmacAlgorithm(config.algorithm);
@@ -325,7 +479,11 @@ export class WebhooksHelperGenerator {
         return "signature";
     }
 
-    private writePayloadConstruction(writer: ruby.Writer, payloadFormat: FernIr.WebhookPayloadFormat): void {
+    private writePayloadConstruction(
+        writer: ruby.Writer,
+        payloadFormat: FernIr.WebhookPayloadFormat,
+        hasBodyHashBinding: boolean
+    ): void {
         const hasBodySort = payloadFormat.bodySort != null;
         if (hasBodySort) {
             writer.writeLine(
@@ -336,6 +494,19 @@ export class WebhooksHelperGenerator {
         const bodyExpr = hasBodySort ? "body_string" : "request_body";
 
         const components = payloadFormat.components;
+        if (hasBodyHashBinding && components.length === 1) {
+            const component = components[0];
+            if (component === "BODY") {
+                writer.writeLine(`payload = ${bodyExpr}`);
+            } else if (component === "TIMESTAMP") {
+                writer.writeLine("payload = timestamp_header");
+            } else if (component === "NOTIFICATION_URL") {
+                writer.writeLine("payload = notification_url");
+            } else if (component === "MESSAGE_ID") {
+                writer.writeLine("payload = message_id");
+            }
+            return;
+        }
         if (components.length === 1 && components[0] === "BODY") {
             writer.writeLine(`payload = ${bodyExpr}`);
             return;
@@ -364,6 +535,38 @@ export class WebhooksHelperGenerator {
         writer.writeLine(`payload = [${componentExprs.join(", ")}].join(${delimiter})`);
     }
 
+    private writeBodyHashVerification(writer: ruby.Writer, binding: FernIr.WebhookBodyHashBinding): void {
+        const algorithm = mapBodyHashAlgorithm(binding.algorithm);
+        const encoding = mapEncoding(binding.encoding);
+        const queryParameterName = this.getBodyHashQueryParameterName(binding.location);
+
+        writer.writeLine("expected_body_hash = Internal::WebhookBodyHash.compute_hash(");
+        writer.indent();
+        writer.writeLine("payload: request_body,");
+        writer.writeLine(`algorithm: "${algorithm}",`);
+        writer.writeLine(`encoding: "${encoding}"`);
+        writer.dedent();
+        writer.writeLine(")");
+        writer.writeLine(
+            `transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, ${rubyStringLiteral(
+                queryParameterName
+            )})`
+        );
+        writer.writeLine(
+            "return false if transmitted_body_hash.nil? || " +
+                "!Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)"
+        );
+    }
+
+    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+        return location._visit({
+            queryParameter: (queryParameter) => queryParameter.name,
+            _other: (other) => {
+                throw new Error(`Unsupported webhook body-hash location: ${other.type}`);
+            }
+        });
+    }
+
     private buildDocstring(config: FernIr.HmacSignatureVerification): string {
         const signatureHeader = getWireValue(config.signatureHeaderName);
         const lines: string[] = [
@@ -385,7 +588,28 @@ export class WebhooksHelperGenerator {
                     "key-value pairs before signing."
             );
         }
+        if (config.bodyHashBinding != null) {
+            lines.push(
+                "The raw request body is verified against a separately transmitted hash. Pass the exact raw body " +
+                    "as request_body and the verbatim notification URL as notification_url."
+            );
+        }
         return lines.join("\n");
+    }
+}
+
+function mapBodyHashAlgorithm(algorithm: FernIr.WebhookBodyHashAlgorithm): string {
+    switch (algorithm) {
+        case "SHA256":
+            return "sha256";
+        case "SHA1":
+            return "sha1";
+        case "SHA384":
+            return "sha384";
+        case "SHA512":
+            return "sha512";
+        default:
+            throw new Error(`Unrecognized body-hash algorithm: ${algorithm}`);
     }
 }
 

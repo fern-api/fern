@@ -34,6 +34,7 @@ export const AsIsFiles = {
 
     // Webhooks
     WebhookSignature: "internal/webhook_signature.Template.rb",
+    WebhookBodyHash: "internal/webhook_body_hash.Template.rb",
 
     // JSON
     JsonRequest: "internal/json/request.Template.rb",
@@ -76,7 +77,10 @@ export const AsIsFiles = {
     TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb",
 
     // HTTP tests
-    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb"
+    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
+
+    // Webhook tests
+    TestWebhookBodyHash: "test/unit/internal/test_webhook_body_hash.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
@@ -124,5 +128,6 @@ const asIsTopoValue = {
     [AsIsFiles.OffsetPageIterator]: 30,
     [AsIsFiles.CustomPager]: 31,
     [AsIsFiles.IdempotencyKey]: 32,
-    [AsIsFiles.WebhookSignature]: 33
+    [AsIsFiles.WebhookSignature]: 33,
+    [AsIsFiles.WebhookBodyHash]: 34
 };

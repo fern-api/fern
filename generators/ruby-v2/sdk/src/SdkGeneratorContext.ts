@@ -395,6 +395,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             files.push(AsIsFiles.WebhookSignature);
         }
 
+        if (this.hasWebhookBodyHashBinding()) {
+            files.push(AsIsFiles.WebhookBodyHash);
+            files.push(AsIsFiles.TestWebhookBodyHash);
+        }
+
         return files;
     }
 
@@ -402,6 +407,20 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public hasWebhookBodyHashBinding(): boolean {
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (
+                    webhook.signatureVerification?.type === "hmac" &&
+                    webhook.signatureVerification.bodyHashBinding != null
+                ) {
                     return true;
                 }
             }
