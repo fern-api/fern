@@ -11,6 +11,7 @@ type UnionTypeDeclaration = FernIr.UnionTypeDeclaration;
 
 import { generateFields, getGeneratedPropertyName } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { VariantStripInput, planVariantJsonStripping } from "./planVariantJsonStripping.js";
 import { ObjectGenerator } from "../object/ObjectGenerator.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
 
@@ -603,75 +604,48 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     (type): type is FernIr.SingleUnionType & { shape: { propertiesType: "samePropertiesAsObject" } } =>
                         type.shape.propertiesType === "samePropertiesAsObject"
                 );
-                // Compute, per variant, the wire names to strip from its JSON before deserializing: the
-                // discriminant (unless the variant declares a property with that wire name) plus the base
-                // properties suppressed from *this* variant's leaf (see ObjectGenerator). The strip set is
-                // per-variant, never aggregated across variants — a base property a variant keeps on its
-                // leaf must not be stripped, or that variant's value would be lost on deserialization.
-                const variantStripSpecs = samePropertiesAsObjectTypes
-                    .map((type) => {
-                        const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
-                        const declaresDiscriminant =
-                            typeDecl.shape.type === "object" &&
-                            [...typeDecl.shape.properties, ...(typeDecl.shape.extendedProperties ?? [])].some(
-                                (prop) => getWireValue(prop.name) === discriminatorPropName
-                            );
-                        const baseWireNames = [
+                // Compute, per variant, the inputs the strip planner needs: whether the variant declares
+                // the discriminant (so it must be preserved) and the base properties suppressed from
+                // *this* variant's leaf (see ObjectGenerator). The strip set is per-variant, never
+                // aggregated across variants — a base property a variant keeps on its leaf must not be
+                // stripped, or that variant's value would be lost on deserialization.
+                const variantStripInputs: VariantStripInput[] = samePropertiesAsObjectTypes.map((type) => {
+                    const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
+                    const declaresDiscriminant =
+                        typeDecl.shape.type === "object" &&
+                        [...typeDecl.shape.properties, ...(typeDecl.shape.extendedProperties ?? [])].some(
+                            (prop) => getWireValue(prop.name) === discriminatorPropName
+                        );
+                    return {
+                        discriminantValue: getWireValue(type.discriminantValue),
+                        declaresDiscriminant,
+                        baseWireNamesToOmit: [
                             ...this.context.getBasePropertyWireNamesToOmitForType(type.shape.typeId)
-                        ];
-                        const wireNames = declaresDiscriminant
-                            ? baseWireNames
-                            : [discriminatorPropName, ...baseWireNames];
-                        return {
-                            discriminantValue: getWireValue(type.discriminantValue),
-                            wireNames,
-                            stripsDiscriminant: !declaresDiscriminant
-                        };
-                    })
-                    .filter((spec) => spec.wireNames.length > 0);
+                        ]
+                    };
+                });
 
                 // Emit one stripped-JSON local per distinct strip set (variants that strip the same set
                 // share it); a variant that strips nothing reads the raw `json`. The legacy variable names
                 // are reused for the single-set common cases so unchanged unions keep identical output.
-                const strippedJsonVarByDiscriminant = new Map<string, string>();
-                const varNameBySignature = new Map<string, string>();
-                const usedVarNames = new Set<string>();
-                for (const { discriminantValue, wireNames, stripsDiscriminant } of variantStripSpecs) {
-                    const signature = [...wireNames].sort().join(" ");
-                    let varName = varNameBySignature.get(signature);
-                    if (varName == null) {
-                        const preferredName = stripsDiscriminant
-                            ? "jsonWithoutDiscriminator"
-                            : "jsonWithoutBaseProperties";
-                        varName = preferredName;
-                        for (let suffix = 2; usedVarNames.has(varName); suffix++) {
-                            varName = `${preferredName}${suffix}`;
-                        }
-                        usedVarNames.add(varName);
-                        varNameBySignature.set(signature, varName);
-                        const objName =
-                            varName === "jsonWithoutDiscriminator"
-                                ? "jsonObject"
-                                : varName === "jsonWithoutBaseProperties"
-                                  ? "basePropertiesJsonObject"
-                                  : `${varName}Object`;
-                        writer.writeLine(
-                            !stripsDiscriminant
-                                ? "// Strip base properties owned by the union to prevent them from leaking into AdditionalProperties"
-                                : wireNames.length > 1
-                                  ? "// Strip properties owned by the union (discriminant and base properties) to prevent them from leaking into AdditionalProperties"
-                                  : "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
-                        );
-                        writer.writeLine(`var ${objName} = System.Text.Json.Nodes.JsonObject.Create(json);`);
-                        for (const wireName of wireNames) {
-                            writer.writeLine(`${objName}?.Remove("${wireName}");`);
-                        }
-                        writer.writeTextStatement(
-                            `var ${varName} = ${objName} != null ? JsonSerializer.SerializeToElement(${objName}, options) : json`
-                        );
-                        writer.writeLine();
+                const { locals: stripLocals, varByDiscriminant: strippedJsonVarByDiscriminant } =
+                    planVariantJsonStripping(variantStripInputs, discriminatorPropName);
+                for (const local of stripLocals) {
+                    writer.writeLine(
+                        local.commentKind === "base-properties"
+                            ? "// Strip base properties owned by the union to prevent them from leaking into AdditionalProperties"
+                            : local.commentKind === "discriminant-and-base-properties"
+                              ? "// Strip properties owned by the union (discriminant and base properties) to prevent them from leaking into AdditionalProperties"
+                              : "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
+                    );
+                    writer.writeLine(`var ${local.objName} = System.Text.Json.Nodes.JsonObject.Create(json);`);
+                    for (const wireName of local.wireNames) {
+                        writer.writeLine(`${local.objName}?.Remove("${wireName}");`);
                     }
-                    strippedJsonVarByDiscriminant.set(discriminantValue, varName);
+                    writer.writeTextStatement(
+                        `var ${local.varName} = ${local.objName} != null ? JsonSerializer.SerializeToElement(${local.objName}, options) : json`
+                    );
+                    writer.writeLine();
                 }
 
                 writer.writeLine("var value = discriminator switch");
@@ -1045,18 +1019,32 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
      * The envelope's C# property name for a base property. Resolves through the shared name registry
      * so the object-initializer name matches the exact field the envelope generates — including any
      * keyword/builtin/collision redirection (e.g. a base property named `getHashCode` becomes
-     * `GetHashCode_`, which the naming heuristic alone cannot see). Falls back to the heuristic only
-     * if the envelope's fields have not been registered yet (its `doGenerate` has not run).
+     * `GetHashCode_`, which the naming heuristic alone cannot see).
+     *
+     * Ordering contract: the registry entry is created by the union envelope's `doGenerate`, where
+     * `generateFields` registers each base-property field under its IR node as origin. The generator
+     * runs `generateModels()` — which invokes every type's `doGenerate` — before any example/snippet
+     * generation, so by the time this is called the lookup hits. If it ever misses (the envelope has
+     * not been generated yet) we log a warning and fall back to the naming heuristic; because that
+     * heuristic cannot see keyword/collision redirection, a miss signals a real ordering bug rather
+     * than something to silently paper over.
      */
     private getBasePropertyName(baseProperty: FernIr.ObjectProperty): string {
-        return (
-            this.model.registry.getFieldNameByOrigin(baseProperty) ??
-            getGeneratedPropertyName({
-                caseConverter: this.case,
-                className: this.classReference.name,
-                name: baseProperty.name
-            })
+        const registeredName = this.model.registry.getFieldNameByOrigin(baseProperty);
+        if (registeredName != null) {
+            return registeredName;
+        }
+        this.context.logger.warn(
+            `Base property "${getWireValue(baseProperty.name)}" of union ${this.classReference.name} was not ` +
+                "registered before its snippet was generated; falling back to the naming heuristic, which cannot " +
+                "see keyword/collision redirection. This means the union envelope was generated after its " +
+                "example — see the ordering contract on getBasePropertyName."
         );
+        return getGeneratedPropertyName({
+            caseConverter: this.case,
+            className: this.classReference.name,
+            name: baseProperty.name
+        });
     }
 
     public doGenerateSnippet({
