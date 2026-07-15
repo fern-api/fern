@@ -114,6 +114,14 @@ export class WebhooksHelperGenerator {
                           headerName: getWireValue(config.timestamp.headerName),
                           format: config.timestamp.format,
                           tolerance: config.timestamp.tolerance
+                      },
+            bodyHashBinding:
+                config.bodyHashBinding == null
+                    ? null
+                    : {
+                          algorithm: config.bodyHashBinding.algorithm,
+                          encoding: config.bodyHashBinding.encoding,
+                          location: config.bodyHashBinding.location
                       }
         });
     }
@@ -214,6 +222,11 @@ export class WebhooksHelperGenerator {
 
             writer.newLine();
             this.writePayloadConstruction(writer, config.payloadFormat);
+
+            if (config.bodyHashBinding != null) {
+                writer.newLine();
+                this.writeBodyHashVerification(writer, config.bodyHashBinding);
+            }
 
             writer.newLine();
             writer.write("$expected = ");
@@ -348,6 +361,67 @@ export class WebhooksHelperGenerator {
         writer.writeLine(`$payload = implode(${this.phpString(payloadFormat.delimiter)}, [${components.join(", ")}]);`);
     }
 
+    private writeBodyHashVerification(writer: php.Writer, binding: FernIr.WebhookBodyHashBinding): void {
+        const algorithm = this.mapBodyHashAlgorithm(binding.algorithm);
+        const encoding = this.mapEncoding(binding.encoding);
+        const parameterName = this.getBodyHashQueryParameterName(binding.location);
+
+        writer.write("$expectedBodyHash = ");
+        writer.writeNode(
+            php.classReference({
+                name: "WebhookSignature",
+                namespace: this.context.getCoreNamespace()
+            })
+        );
+        writer.writeLine(`::computeHash($requestBody, ${this.phpString(algorithm)}, ${this.phpString(encoding)});`);
+
+        writer.write("$transmittedBodyHash = ");
+        writer.writeNode(
+            php.classReference({
+                name: "WebhookSignature",
+                namespace: this.context.getCoreNamespace()
+            })
+        );
+        writer.writeLine(`::getWebhookQueryParameter($notificationUrl, ${this.phpString(parameterName)});`);
+
+        writer.write("if ($transmittedBodyHash === null || !");
+        writer.writeNode(
+            php.classReference({
+                name: "WebhookSignature",
+                namespace: this.context.getCoreNamespace()
+            })
+        );
+        writer.writeLine("::timingSafeEqual($transmittedBodyHash, $expectedBodyHash)) {");
+        writer.indent();
+        writer.writeLine("return false;");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+        return location._visit({
+            queryParameter: (queryParameter) => queryParameter.name,
+            _other: () => {
+                throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
+            }
+        });
+    }
+
+    private mapBodyHashAlgorithm(algorithm: FernIr.WebhookBodyHashAlgorithm): string {
+        switch (algorithm) {
+            case "SHA1":
+                return "sha1";
+            case "SHA256":
+                return "sha256";
+            case "SHA384":
+                return "sha384";
+            case "SHA512":
+                return "sha512";
+            default:
+                assertNever(algorithm);
+        }
+    }
+
     private mapHmacAlgorithm(algorithm: FernIr.HmacAlgorithm): string {
         switch (algorithm) {
             case "SHA1":
@@ -393,6 +467,11 @@ export class WebhooksHelperGenerator {
             lines.push(
                 "The requestBody parameter accepts either a raw string or an array of POST body parameters.",
                 "When an array is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
+            );
+        }
+        if (config.bodyHashBinding != null) {
+            lines.push(
+                "The raw request body is verified against a hash transmitted separately (not signed directly): pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
             );
         }
         return lines.join("\n");

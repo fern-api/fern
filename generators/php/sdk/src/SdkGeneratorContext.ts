@@ -682,8 +682,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.RawClientTest,
             ...this.getCoreStreamTestAsIsFiles(),
             ...this.getCorePagerTestAsIsFiles(),
-            ...this.getCoreSerializationTestAsIsFiles()
+            ...this.getCoreSerializationTestAsIsFiles(),
+            ...this.getCoreWebhookTestAsIsFiles()
         ];
+    }
+
+    private getCoreWebhookTestAsIsFiles(): string[] {
+        return this.hasHmacWebhookSignatureVerification() ? [AsIsFiles.WebhookSignatureTest] : [];
     }
 
     private getCoreStreamTestAsIsFiles(): string[] {
