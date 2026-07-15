@@ -196,7 +196,7 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
         });
     });
 
-    describe("smartCasing snake_case digit boundaries", () => {
+    describe("smartCasing snake_case digit boundaries (default: fused)", () => {
         const generator = constructFullCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
@@ -213,6 +213,44 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
             expect(result.snakeCase.unsafeName).toBe("2v22");
         });
 
+        it("keeps a capitalized word following digits fused by default", () => {
+            const result = generator.generateName("ConversationsV2Configuration");
+            expect(result.snakeCase.unsafeName).toBe("conversations_v2configuration");
+            expect(result.camelCase.unsafeName).toBe("conversationsV2Configuration");
+            expect(result.pascalCase.unsafeName).toBe("ConversationsV2Configuration");
+        });
+
+        it("keeps a capitalized word following digits fused in endpoint-style names", () => {
+            const result = generator.generateName("CreateOauth2Token");
+            expect(result.snakeCase.unsafeName).toBe("create_oauth2token");
+        });
+
+        it("keeps digits fused in proto-style names by default", () => {
+            expect(generator.generateName("Int32Value").snakeCase.unsafeName).toBe("int32value");
+            expect(generator.generateName("Mode5InterrogationResponse").snakeCase.unsafeName).toBe(
+                "mode5interrogation_response"
+            );
+        });
+    });
+
+    describe("smartCasing snake_case digit boundaries with smartCasingDigitWordBoundary", () => {
+        const generator = constructFullCasingsGenerator({
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: true,
+            smartCasingDigitWordBoundary: true
+        });
+
+        it("keeps trailing digits fused to the previous word", () => {
+            const result = generator.generateName("applicationV1");
+            expect(result.snakeCase.unsafeName).toBe("application_v1");
+        });
+
+        it("keeps standalone digit words unchanged", () => {
+            expect(generator.generateName("v2").snakeCase.unsafeName).toBe("v2");
+            expect(generator.generateName("2v22").snakeCase.unsafeName).toBe("2v22");
+        });
+
         it("separates a capitalized word following digits", () => {
             const result = generator.generateName("ConversationsV2Configuration");
             expect(result.snakeCase.unsafeName).toBe("conversations_v2_configuration");
@@ -223,6 +261,13 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
         it("separates a capitalized word following digits in endpoint-style names", () => {
             const result = generator.generateName("CreateOauth2Token");
             expect(result.snakeCase.unsafeName).toBe("create_oauth2_token");
+        });
+
+        it("separates proto-style names after digit runs", () => {
+            expect(generator.generateName("Int32Value").snakeCase.unsafeName).toBe("int32_value");
+            expect(generator.generateName("Mode5InterrogationResponse").snakeCase.unsafeName).toBe(
+                "mode5_interrogation_response"
+            );
         });
 
         it("preserves existing underscore boundaries after digits", () => {
