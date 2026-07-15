@@ -553,7 +553,9 @@ export class DynamicTypeInstantiationMapper {
         try {
             // Each variant's exported properties (following `extends`), keyed by Go field name — the
             // same key `variant.Get<FieldName>()` uses — matching the model's objectExportedProperties.
-            const variantPropertiesByField = variants.map((variant) => this.getObjectExportedProperties(variant.typeId));
+            const variantPropertiesByField = variants.map((variant) =>
+                this.getObjectExportedProperties(variant.typeId)
+            );
             const everyVariantExposesNonLiteralProperty = (fieldName: string): boolean =>
                 variantPropertiesByField.every((declared) => {
                     const variantProperty = declared.get(fieldName);
