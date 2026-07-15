@@ -1148,17 +1148,15 @@ public abstract class AbstractEndpointWriter {
     }
 
     /**
-     * Builds {@code .addHeader(...)} calls for service and endpoint headers whose types are literals. Endpoints
-     * without a request wrapper still need to send these headers, since there is no request object to carry them.
+     * Builds {@code .addHeader(...)} calls for service and endpoint headers whose types are literals. Endpoints without
+     * a request wrapper still need to send these headers, since there is no request object to carry them.
      */
     protected final CodeBlock literalHeadersCodeBlock() {
         CodeBlock.Builder builder = CodeBlock.builder();
         Stream.concat(httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
                 .forEach(httpHeader -> literalHeaderValue(httpHeader.getValueType())
                         .ifPresent(value -> builder.add(
-                                ".addHeader($S, $S)\n",
-                                NameUtils.getWireValue(httpHeader.getName()),
-                                value)));
+                                ".addHeader($S, $S)\n", NameUtils.getWireValue(httpHeader.getName()), value)));
         return builder.build();
     }
 
