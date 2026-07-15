@@ -78,6 +78,55 @@ function validateHmac(signature: RawSchemas.WebhookSignatureSchema.Hmac, violati
             }
         }
     }
+
+    if (signature["body-hash-binding"] != null) {
+        validateBodyHashBinding(signature, violations);
+    }
+}
+
+function validateBodyHashBinding(
+    signature: RawSchemas.WebhookSignatureSchema.Hmac,
+    violations: RuleViolation[]
+): void {
+    const binding = signature["body-hash-binding"];
+    if (binding == null) {
+        return;
+    }
+
+    if (binding.encoding != null && !VALID_ENCODINGS.has(binding.encoding)) {
+        violations.push({
+            severity: "error",
+            message: `Invalid body-hash-binding encoding "${binding.encoding}". Must be one of: ${[...VALID_ENCODINGS].join(", ")}`
+        });
+    }
+
+    const validBodyHashAlgorithms = new Set<string>(Object.values(RawSchemas.WebhookBodyHashAlgorithmSchema));
+    if (!validBodyHashAlgorithms.has(binding.algorithm)) {
+        violations.push({
+            severity: "error",
+            message: `Invalid body-hash-binding algorithm "${binding.algorithm}". Must be one of: ${[...validBodyHashAlgorithms].join(", ")}`
+        });
+    }
+
+    if (binding.location.type === "query-parameter") {
+        if (binding.location.name.length === 0) {
+            violations.push({
+                severity: "error",
+                message: "body-hash-binding query-parameter location must specify a name"
+            });
+        }
+
+        const components = signature["payload-format"]?.components;
+        const includesNotificationUrl = components != null && components.includes("notification-url");
+        if (!includesNotificationUrl) {
+            violations.push({
+                severity: "error",
+                message:
+                    "A query-parameter body-hash-binding requires payload-format.components to include " +
+                    '"notification-url", since the body hash is transmitted in the notification URL that is signed.'
+            });
+        }
+    }
 }
 
 function validateAsymmetric(

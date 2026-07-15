@@ -24,6 +24,17 @@ interface WebhookPayloadFormatExtensionSchema {
     "body-sort"?: "alphabetical";
 }
 
+interface WebhookBodyHashBindingExtensionSchema {
+    algorithm: "sha256" | "sha1" | "sha384" | "sha512";
+    encoding?: "base64" | "hex";
+    location: WebhookBodyHashLocationExtensionSchema;
+}
+
+interface WebhookBodyHashLocationExtensionSchema {
+    type: "query-parameter";
+    name: string;
+}
+
 interface WebhookSignatureExtensionSchema {
     type: "hmac" | "asymmetric";
     header: string;
@@ -33,6 +44,7 @@ interface WebhookSignatureExtensionSchema {
     "signature-prefix"?: string;
     "payload-format"?: WebhookPayloadFormatExtensionSchema;
     timestamp?: WebhookTimestampExtensionSchema;
+    "body-hash-binding"?: WebhookBodyHashBindingExtensionSchema;
     // Asymmetric fields
     "asymmetric-algorithm"?: AsymmetricAlgorithmString;
     "jwks-url"?: string;
@@ -94,6 +106,43 @@ function convertBodySort(bodySort: "alphabetical" | undefined): finalIr.WebhookP
     switch (bodySort) {
         case "alphabetical":
             return finalIr.WebhookPayloadBodySort.Alphabetical;
+    }
+}
+
+function convertBodyHashBinding(
+    binding: WebhookBodyHashBindingExtensionSchema | undefined
+): finalIr.WebhookBodyHashBinding | undefined {
+    if (binding == null) {
+        return undefined;
+    }
+    return {
+        algorithm: convertBodyHashAlgorithm(binding.algorithm),
+        encoding: convertEncoding(binding.encoding),
+        location: convertBodyHashLocation(binding.location)
+    };
+}
+
+function convertBodyHashAlgorithm(
+    algorithm: "sha256" | "sha1" | "sha384" | "sha512"
+): finalIr.WebhookBodyHashAlgorithm {
+    switch (algorithm) {
+        case "sha256":
+            return finalIr.WebhookBodyHashAlgorithm.Sha256;
+        case "sha1":
+            return finalIr.WebhookBodyHashAlgorithm.Sha1;
+        case "sha384":
+            return finalIr.WebhookBodyHashAlgorithm.Sha384;
+        case "sha512":
+            return finalIr.WebhookBodyHashAlgorithm.Sha512;
+    }
+}
+
+function convertBodyHashLocation(
+    location: WebhookBodyHashLocationExtensionSchema
+): finalIr.WebhookBodyHashLocation {
+    switch (location.type) {
+        case "query-parameter":
+            return finalIr.WebhookBodyHashLocation.queryParameter({ name: location.name });
     }
 }
 
@@ -161,7 +210,8 @@ function convertSignatureSchema(
             encoding: convertEncoding(extension.encoding),
             signaturePrefix: extension["signature-prefix"],
             payloadFormat: convertPayloadFormat(extension["payload-format"]),
-            timestamp: convertTimestamp(extension.timestamp)
+            timestamp: convertTimestamp(extension.timestamp),
+            bodyHashBinding: convertBodyHashBinding(extension["body-hash-binding"])
         });
     }
 

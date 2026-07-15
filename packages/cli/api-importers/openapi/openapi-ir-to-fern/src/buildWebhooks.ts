@@ -3,6 +3,9 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     AsymmetricAlgorithm,
     Webhook,
+    WebhookBodyHashAlgorithm,
+    WebhookBodyHashBinding,
+    WebhookBodyHashLocation,
     WebhookPayloadBodySort,
     WebhookPayloadComponent,
     WebhookPayloadFormat,
@@ -281,7 +284,8 @@ function convertSignatureVerification(
                 encoding: convertSignatureEncoding(signatureVerification.encoding),
                 "signature-prefix": signatureVerification.signaturePrefix,
                 "payload-format": convertPayloadFormat(signatureVerification.payloadFormat),
-                timestamp: convertTimestamp(signatureVerification.timestamp)
+                timestamp: convertTimestamp(signatureVerification.timestamp),
+                "body-hash-binding": convertBodyHashBinding(signatureVerification.bodyHashBinding)
             };
         case "asymmetric":
             return {
@@ -368,6 +372,46 @@ function convertPayloadFormat(
         delimiter: payloadFormat.delimiter,
         "body-sort": convertBodySort(payloadFormat.bodySort)
     };
+}
+
+function convertBodyHashBinding(
+    binding: WebhookBodyHashBinding | undefined
+): RawSchemas.WebhookBodyHashBindingSchema | undefined {
+    if (binding == null) {
+        return undefined;
+    }
+    return {
+        algorithm: convertBodyHashAlgorithm(binding.algorithm),
+        encoding: convertSignatureEncoding(binding.encoding),
+        location: convertBodyHashLocation(binding.location)
+    };
+}
+
+function convertBodyHashAlgorithm(
+    algorithm: WebhookBodyHashAlgorithm
+): RawSchemas.WebhookBodyHashAlgorithmSchema {
+    switch (algorithm) {
+        case "sha256":
+            return "sha256";
+        case "sha1":
+            return "sha1";
+        case "sha384":
+            return "sha384";
+        case "sha512":
+            return "sha512";
+    }
+}
+
+function convertBodyHashLocation(
+    location: WebhookBodyHashLocation
+): RawSchemas.WebhookBodyHashLocationSchema {
+    switch (location.type) {
+        case "queryParameter":
+            return {
+                type: "query-parameter",
+                name: location.name
+            };
+    }
 }
 
 function convertBodySort(

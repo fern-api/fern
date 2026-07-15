@@ -107,6 +107,7 @@
             "payload": "root.OrderEvent",
             "signature": {
               "algorithm": "sha256",
+              "body-hash-binding": undefined,
               "encoding": "hex",
               "header": "x-webhook-signature",
               "payload-format": {
@@ -204,6 +205,7 @@
             "payload": "root.UserEvent",
             "signature": {
               "algorithm": "sha256",
+              "body-hash-binding": undefined,
               "encoding": "hex",
               "header": "x-webhook-signature",
               "payload-format": {
