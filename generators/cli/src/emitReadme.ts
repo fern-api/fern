@@ -240,27 +240,17 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
         });
     }
     const envLines: string[] = [];
-    const hasInteractiveOAuth = authBindings.some((binding) => binding.kind === "oauth-interactive");
     for (const binding of authBindings) {
         for (const envVar of binding.envVars) {
             envLines.push(`export ${envVar}="${placeholderForKind(binding.kind)}"`);
         }
     }
-    const sections = ["## Authentication", ""];
-    if (hasInteractiveOAuth) {
-        sections.push(
-            "Log in through the configured OAuth provider:",
+    return new Block({
+        id: "AUTHENTICATION",
+        content: lines(
+            "## Authentication",
             "",
-            "```bash",
-            `${binaryName} auth login`,
-            `${binaryName} auth status`,
-            "```",
-            ""
-        );
-    }
-    if (envLines.length > 0) {
-        sections.push(
-            "Set the following environment variable(s):",
+            "Set the following environment variable(s) before using the CLI:",
             "",
             "```bash",
             ...envLines,
@@ -268,14 +258,7 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
             "",
             "A `.env` file in the working directory is also supported — the CLI auto-loads it on startup.",
             ""
-        );
-    }
-    if (hasInteractiveOAuth) {
-        sections.push(`Run \`${binaryName} auth logout\` to remove stored OAuth credentials.`, "");
-    }
-    return new Block({
-        id: "AUTHENTICATION",
-        content: lines(...sections)
+        )
     });
 }
 
@@ -419,8 +402,6 @@ function placeholderForKind(kind: DetectedAuthBinding["kind"]): string {
             return "<your credential>";
         case "oauth-client-credentials":
             return "<your OAuth client credential>";
-        case "oauth-interactive":
-            return "<managed by auth login>";
     }
 }
 

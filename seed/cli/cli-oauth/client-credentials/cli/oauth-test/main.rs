@@ -3,11 +3,11 @@
 
 use fern_cli_sdk::app::CliApp;
 use fern_cli_sdk::openapi::OpenApiBinding;
-use fern_cli_sdk::auth::{PkceLoginFlow};
+use fern_cli_sdk::auth::{OAuth2Auth};
 
 fn main() {
     let app = CliApp::new("oauth-test")
-        .login_flow(PkceLoginFlow::new("OAuth2").client_id("public-client").authorization_url("https://auth.example.com/authorize").token_url("https://auth.example.com/token").scopes(["read:pets"]).redirect_port(8765))
+        .auth(OAuth2Auth::new("OAuth2").token_url("https://api.example.com/token").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET").scopes(["read:pets"]))
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

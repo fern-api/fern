@@ -3,8 +3,7 @@ import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
-import { detectAuthBindings, getAuthSchemeNames } from "./detectAuth.js";
-import { detectConfiguredOAuthBindings } from "./detectConfiguredOAuth.js";
+import { detectAuthBindings } from "./detectAuth.js";
 import { detectGlobalParams } from "./detectGlobalParams.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
@@ -61,18 +60,12 @@ export async function runPipeline(args: {
     // (e.g. missing apiDisplayName + no customConfig override)
     // rather than half-producing output.
     const binaryName = deriveBinaryName({ customConfig, ir });
-    const configuredOAuthBindings = detectConfiguredOAuthBindings({
-        oauth: customConfig.oauth,
+    const authBindings = detectAuthBindings({
+        auth: ir.auth,
         binaryName,
-        authSchemeNames: getAuthSchemeNames(ir.auth)
+        services: ir.services,
+        environments: ir.environments
     });
-    const configuredOAuthSchemes = new Set(configuredOAuthBindings.map((binding) => binding.schemeName));
-    const authBindings = [
-        ...detectAuthBindings({ auth: ir.auth, binaryName }).filter(
-            (binding) => !configuredOAuthSchemes.has(binding.schemeName)
-        ),
-        ...configuredOAuthBindings
-    ];
     const globalParamBindings = detectGlobalParams({ globalParameters: ir.globalParameters });
 
     await mkdir(outputDir, { recursive: true });

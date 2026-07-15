@@ -40,14 +40,14 @@ cargo build --release
 
 ## Authentication
 
-Log in through the configured OAuth provider:
+Set the following environment variable(s) before using the CLI:
 
 ```bash
-oauth-test auth login
-oauth-test auth status
+export ACME_CLIENT_ID="<your OAuth client credential>"
+export ACME_CLIENT_SECRET="<your OAuth client credential>"
 ```
 
-Run `oauth-test auth logout` to remove stored OAuth credentials.
+A `.env` file in the working directory is also supported — the CLI auto-loads it on startup.
 
 ## Quick start
 

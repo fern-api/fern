@@ -262,7 +262,9 @@ impl AuthProvider for LayeredAuthProvider {
 /// 2. Otherwise, find the first requirement whose every scheme has a
 ///    registered provider with credentials, and apply each provider in turn
 ///    (their headers compose).
-/// 3. If no requirement is satisfiable, fail before sending the request.
+/// 3. If no requirement is satisfiable, return the request unchanged. The
+///    server will respond 401/403 and `handle_error_response`
+///    will surface a helpful "no credentials configured" message.
 #[derive(Debug, Clone)]
 pub struct RoutingAuthProvider {
     name: String,
@@ -377,19 +379,11 @@ impl AuthProvider for RoutingAuthProvider {
         });
 
         let Some(requirement) = satisfiable else {
-            let requirements = requirements
-                .iter()
-                .map(|requirement| {
-                    let mut names: Vec<&str> = requirement.keys().map(String::as_str).collect();
-                    names.sort();
-                    names.join(" + ")
-                })
-                .collect::<Vec<_>>()
-                .join(" or ");
-            return Err(CliError::Auth(format!(
-                "No configured credentials satisfy this endpoint's authentication requirement ({requirements}). \
-                 Refusing to send an unauthenticated request."
-            )));
+            // No declared requirement is satisfiable. Diverges from the TS
+            // generator (which throws): we let the request go out unauthed
+            // so the server's 401/403 + `handle_error_response`
+            // can surface a friendly "no credentials configured" message.
+            return Ok(request);
         };
 
         let mut req = request;
@@ -710,7 +704,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn routing_no_satisfiable_requirement_fails_closed() {
+    async fn routing_no_satisfiable_requirement_is_passthrough() {
         let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
         schemes.insert(
             "bearer".to_string(),
@@ -723,8 +717,8 @@ mod tests {
         let mut requirement = HashMap::new();
         requirement.insert("bearer".to_string(), Vec::<String>::new());
         let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
-        let error = routing.apply(req(), &endpoint).unwrap_err();
-        assert!(error.to_string().contains("Refusing to send an unauthenticated request"));
+        let out = routing.apply(req(), &endpoint).unwrap();
+        assert_eq!(auth_header(out), None);
     }
 
     // -------- has_credentials_for(endpoint) --------

@@ -316,10 +316,6 @@ function renderSkill(args: {
         lines.push("The following auth schemes are configured:");
         lines.push("");
         for (const binding of authBindings) {
-            if (binding.kind === "oauth-interactive") {
-                lines.push(`- **${binding.schemeName}** (OAuth): run \`${binaryName} auth login\``);
-                continue;
-            }
             const envList = binding.envVars.join("`, `");
             lines.push(`- **${binding.schemeName}** (${binding.kind}): env \`${envList}\``);
         }

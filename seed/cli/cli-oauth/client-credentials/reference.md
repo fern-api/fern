@@ -4,24 +4,41 @@ Full command reference for `oauth-test`.
 
 ## Commands
 
-- [`oauth-test health`](#oauth-test-health)
+- [`oauth-test auth`](#oauth-test-auth)
 - [`oauth-test pets`](#oauth-test-pets)
+- [`oauth-test system`](#oauth-test-system)
 
 ---
 
-### `oauth-test health`
+### `oauth-test auth`
 
-#### `oauth-test health health`
+#### `oauth-test auth get-token`
 
-`GET /health`
+Exchange client credentials for an access token
+
+`POST /token`
+
+| Flag | Type | Required | Description |
+|------|------|----------|-------------|
+| `--json` | `JSON` | Yes | Request body as JSON (or use individual body-field flags) |
 
 ---
 
 ### `oauth-test pets`
 
-#### `oauth-test pets list-pets`
+#### `oauth-test pets list`
+
+List pets
 
 `GET /pets`
+
+---
+
+### `oauth-test system`
+
+#### `oauth-test system health`
+
+`GET /health`
 
 ---
 

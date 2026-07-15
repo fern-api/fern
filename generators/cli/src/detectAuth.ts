@@ -19,7 +19,7 @@ export interface DetectedAuthBinding {
     /** Resolved environment variable names the user must set for this binding. */
     envVars: string[];
     /** Auth kind for documentation purposes. */
-    kind: "bearer" | "header" | "basic" | "oauth-client-credentials" | "oauth-interactive";
+    kind: "bearer" | "header" | "basic" | "oauth-client-credentials";
 }
 
 /**
@@ -40,8 +40,18 @@ export interface DetectedAuthBinding {
  *   - `basic` with `usernameOmit: true` → symmetric
  *     `.auth_provider("<key>", BasicAuthProvider::password_only(...))`
  *   - `basic` with both omitted → skipped (nothing to bind)
- *   - `oauth` / `inferred` / unknown → skipped here. OAuth flow metadata
- *     is lowered separately from validated `customConfig.oauth`.
+ *   - `oauth` with a `clientCredentials` configuration → root-level
+ *     `.auth(OAuth2Auth::new(...)...)`. The token URL is resolved from
+ *     the IR: the configuration's `tokenEndpoint` reference is looked up
+ *     in `services` and joined onto the default environment's base URL.
+ *     Client id/secret env vars come from the IR (`clientIdEnvVar` /
+ *     `clientSecretEnvVar`), falling back to `<BIN>_CLIENT_ID` /
+ *     `<BIN>_CLIENT_SECRET`. If the token URL can't be resolved (no
+ *     environment/server, or the token endpoint isn't in the IR), the
+ *     scheme is skipped rather than emitting an unusable builder.
+ *     Interactive flows (PKCE, device-code) are not modeled by the IR and
+ *     are not emitted.
+ *   - `inferred` / unknown → skipped (no runtime provider).
  *
  * Env-var names come from the IR first (`usernameEnvVar`,
  * `passwordEnvVar`, `tokenEnvVar`, `headerEnvVar`). When the IR doesn't
@@ -50,8 +60,12 @@ export interface DetectedAuthBinding {
 export function detectAuthBindings(args: {
     auth: { schemes: FernIr.AuthScheme[] };
     binaryName: string;
+    /** IR services, used to resolve an OAuth token endpoint reference to a path. */
+    services?: Record<string, FernIr.HttpService>;
+    /** IR environments, used to resolve the OAuth token endpoint base URL. */
+    environments?: FernIr.EnvironmentsConfig;
 }): DetectedAuthBinding[] {
-    const { auth, binaryName } = args;
+    const { auth, binaryName, services = {}, environments } = args;
     const envPrefix = toEnvVarPrefix(binaryName);
 
     // When the spec declares more than one `header` API-key scheme, a shared
@@ -63,7 +77,7 @@ export function detectAuthBindings(args: {
 
     const bindings: DetectedAuthBinding[] = [];
     for (const scheme of auth.schemes) {
-        const binding = bindingForScheme(scheme, envPrefix, multipleHeaderSchemes);
+        const binding = bindingForScheme({ scheme, envPrefix, multipleHeaderSchemes, services, environments });
         if (binding != null) {
             bindings.push(binding);
         }
@@ -71,27 +85,14 @@ export function detectAuthBindings(args: {
     return bindings;
 }
 
-export function getAuthSchemeNames(auth: { schemes: FernIr.AuthScheme[] }): Set<string> {
-    return new Set(
-        auth.schemes.flatMap((scheme) => {
-            const key = scheme._visit<string | undefined>({
-                bearer: (value) => value.key,
-                header: (value) => value.key,
-                basic: (value) => value.key,
-                oauth: (value) => value.key,
-                inferred: (value) => value.key,
-                _other: () => undefined
-            });
-            return key == null ? [] : [key];
-        })
-    );
-}
-
-function bindingForScheme(
-    scheme: FernIr.AuthScheme,
-    envPrefix: string,
-    multipleHeaderSchemes: boolean
-): DetectedAuthBinding | null {
+function bindingForScheme(args: {
+    scheme: FernIr.AuthScheme;
+    envPrefix: string;
+    multipleHeaderSchemes: boolean;
+    services: Record<string, FernIr.HttpService>;
+    environments: FernIr.EnvironmentsConfig | undefined;
+}): DetectedAuthBinding | null {
+    const { scheme, envPrefix, multipleHeaderSchemes, services, environments } = args;
     return scheme._visit<DetectedAuthBinding | null>({
         bearer: (bearer) => {
             const env = bearer.tokenEnvVar ?? `${envPrefix}_TOKEN`;
@@ -167,11 +168,147 @@ function bindingForScheme(
                 kind: "basic"
             };
         },
-        // OAuth flow metadata is supplied by CLI config until the
-        // published IR SDK carries all interactive flow fields.
-        oauth: () => null,
+        // OAuth: the IR only models the client-credentials flow. Lower it
+        // to the SDK's `OAuth2Auth` builder, resolving the token URL from
+        // the IR (token endpoint reference + default environment). Any
+        // other/unknown configuration is skipped.
+        oauth: (oauth) =>
+            oauth.configuration._visit<DetectedAuthBinding | null>({
+                clientCredentials: (clientCredentials) =>
+                    clientCredentialsBinding({ key: oauth.key, clientCredentials, envPrefix, services, environments }),
+                _other: () => null
+            }),
         inferred: () => null,
         // Future IR auth variants we don't know about yet.
         _other: () => null
     });
+}
+
+function clientCredentialsBinding(args: {
+    key: string;
+    clientCredentials: FernIr.OAuthClientCredentials;
+    envPrefix: string;
+    services: Record<string, FernIr.HttpService>;
+    environments: FernIr.EnvironmentsConfig | undefined;
+}): DetectedAuthBinding | null {
+    const { key, clientCredentials, envPrefix, services, environments } = args;
+    const clientIdEnv = clientCredentials.clientIdEnvVar ?? `${envPrefix}_CLIENT_ID`;
+    const clientSecretEnv = clientCredentials.clientSecretEnvVar ?? `${envPrefix}_CLIENT_SECRET`;
+    const tokenUrl = resolveTokenUrl({
+        endpointReference: clientCredentials.tokenEndpoint.endpointReference,
+        services,
+        environments
+    });
+    // If the token URL can't be resolved (the API declares no
+    // environment/server, or the token endpoint isn't in the IR), fall
+    // back to the pre-OAuth behavior of skipping the scheme rather than
+    // emitting a builder the runtime can't satisfy. This keeps generation
+    // working for specs that declare OAuth but no server.
+    if (tokenUrl == null) {
+        return null;
+    }
+
+    let rustCall = `.auth(OAuth2Auth::new(${rustString(key)})`;
+    rustCall += `.token_url(${rustString(tokenUrl)})`;
+    rustCall += `.client_id_env(${rustString(clientIdEnv)})`;
+    rustCall += `.client_secret_env(${rustString(clientSecretEnv)})`;
+    const scopes = clientCredentials.scopes ?? [];
+    if (scopes.length > 0) {
+        rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
+    }
+    rustCall += ")";
+
+    return {
+        schemeName: key,
+        rustCall,
+        placement: "root",
+        authTypeImport: "OAuth2Auth",
+        envVars: [clientIdEnv, clientSecretEnv],
+        kind: "oauth-client-credentials"
+    };
+}
+
+/**
+ * Resolve the absolute OAuth token URL from the IR. The
+ * client-credentials configuration references the token endpoint by id;
+ * we look it up in `services` for its path and join it onto the default
+ * environment's base URL.
+ *
+ * Returns `undefined` when the endpoint can't be found or no base URL is
+ * declared — the caller then skips the OAuth binding rather than emitting
+ * a builder the runtime couldn't satisfy. (A runtime `--base-url` override
+ * does not move the token endpoint; resolving it at request time would
+ * require SDK support and is deliberately out of scope here.)
+ */
+function resolveTokenUrl(args: {
+    endpointReference: FernIr.EndpointReference;
+    services: Record<string, FernIr.HttpService>;
+    environments: FernIr.EnvironmentsConfig | undefined;
+}): string | undefined {
+    const { endpointReference, services, environments } = args;
+    const endpoint = services[endpointReference.serviceId]?.endpoints.find(
+        (candidate) => candidate.id === endpointReference.endpointId
+    );
+    if (endpoint == null) {
+        return undefined;
+    }
+    const baseUrl = resolveDefaultBaseUrl({ environments, baseUrlId: endpoint.baseUrl });
+    if (baseUrl == null) {
+        return undefined;
+    }
+    return joinUrl(baseUrl, renderFullPath(endpoint.fullPath));
+}
+
+export function resolveDefaultBaseUrl(args: {
+    environments: FernIr.EnvironmentsConfig | undefined;
+    baseUrlId: string | undefined;
+}): string | undefined {
+    const { environments, baseUrlId } = args;
+    if (environments == null) {
+        return undefined;
+    }
+    const defaultEnvironmentId = environments.defaultEnvironment;
+    return environments.environments._visit<string | undefined>({
+        singleBaseUrl: (single) => {
+            const chosen =
+                single.environments.find((environment) => environment.id === defaultEnvironmentId) ??
+                single.environments[0];
+            return chosen?.url;
+        },
+        multipleBaseUrls: (multiple) => {
+            const chosen =
+                multiple.environments.find((environment) => environment.id === defaultEnvironmentId) ??
+                multiple.environments[0];
+            if (chosen == null) {
+                return undefined;
+            }
+            // Prefer the base URL the endpoint is pinned to; otherwise take
+            // the first declared one.
+            if (baseUrlId != null && chosen.urls[baseUrlId] != null) {
+                return chosen.urls[baseUrlId];
+            }
+            return Object.values(chosen.urls)[0];
+        },
+        _other: () => undefined
+    });
+}
+
+/** Render an endpoint's `fullPath` (which already includes base paths) to a string. */
+export function renderFullPath(fullPath: FernIr.HttpPath): string {
+    let path = fullPath.head;
+    for (const part of fullPath.parts) {
+        path += `{${part.pathParameter}}${part.tail}`;
+    }
+    return path.startsWith("/") ? path : `/${path}`;
+}
+
+export function joinUrl(baseUrl: string, path: string): string {
+    const base = baseUrl.replace(/\/+$/, "");
+    const suffix = path.startsWith("/") ? path : `/${path}`;
+    return `${base}${suffix}`;
+}
+
+/** Encode a value as a Rust string literal. */
+function rustString(value: string): string {
+    return JSON.stringify(value);
 }

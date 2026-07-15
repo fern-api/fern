@@ -21,11 +21,12 @@ thing: the literal bytes baked into `main.rs` via `include_str!`. We do
 **not** walk `info.title` or `components.securitySchemes` — those are
 either redundant with or strictly less rich than the IR.
 
-Interactive OAuth metadata that is not yet represented in the published
-IR SDK is supplied through the generator's `config.oauth` block. Each
-entry must reference a scheme key present in `ir.auth.schemes`; the
-generator replaces that scheme's bearer fallback with the configured
-client-credentials, PKCE, or device-code runtime builder.
+OAuth **client-credentials** is driven entirely from the IR's `oauth`
+auth scheme (`configuration.clientCredentials`), matching the SDK
+generators. The generator resolves the token endpoint reference to a
+path via `ir.services`, joins it onto the default environment's base URL,
+and emits the runtime `OAuth2Auth` builder. Interactive flows (PKCE,
+device-code) are not modeled by the IR and are not emitted.
 
 We deserialize through `@fern-fern/ir-sdk`'s `IrSerialization`, so
 downstream code consumes typed `FernIr.IntermediateRepresentation` /
@@ -92,9 +93,8 @@ the path the patched Cargo.toml references).
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block, including OAuth flow configuration. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`. |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, and two-field basic go to root (typed builders like `BasicAuth`) so `auth status` enumerates them; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
-| [`src/detectConfiguredOAuth.ts`](src/detectConfiguredOAuth.ts) | Converts validated `config.oauth` entries into `OAuth2Auth`, `PkceLoginFlow`, or `DeviceCodeLoginFlow` builders and verifies every configured scheme exists in the IR. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
 | [`./sdk/`](./sdk/) | Hand-authored Rust SDK — the bulk of the CLI's runtime behavior. Edit this when you need to extend what `CliApp` can do. |
@@ -130,7 +130,8 @@ Each scheme in the IR's `auth.schemes` is visited via
 | `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
 | `basic` (both halves bound) | `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))` at root, so `auth status` enumerates it [FER-11474] | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}` |
 | `basic` (`usernameOmit`/`passwordOmit`) | `.auth_provider("<key>", BasicAuthProvider::…)` — stays binding-level; no root path for `BasicAuthProvider` | the bound half's env var; omitted half is a literal `""` |
-| `oauth`, `inferred`, `_other` | Skipped by IR detection; a matching `config.oauth` entry emits the OAuth runtime binding | flow-specific |
+| `oauth` (`clientCredentials`) | `.auth(OAuth2Auth::new("<key>").token_url(...).client_id_env(...).client_secret_env(...).scopes([...]))` at root. Token URL = default environment base URL + the token endpoint's resolved path | `scheme.clientId/clientSecretEnvVar` ?? `<BIN>_CLIENT_ID`/`<BIN>_CLIENT_SECRET` |
+| `oauth` (other config), `inferred`, `_other` | Skipped — no IR-modeled runtime provider | — |
 
 Env-var names come from the IR first because that's where the user's
 `generators.yml`-declared values end up after Fern resolves them. The

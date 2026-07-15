@@ -1,5 +1,0 @@
-- summary: |
-    Add configurable client-credentials, PKCE, and device-code OAuth flows
-    to generated CLIs, including login documentation, client-credential
-    scopes, and fail-closed enforcement for protected operations.
-  type: feat

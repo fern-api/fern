@@ -103,7 +103,9 @@ describe("runPipeline", () => {
     const ir = (overrides: Partial<IrSummary> = {}): IrSummary => ({
         apiDisplayName: overrides.apiDisplayName,
         auth: overrides.auth ?? { schemes: [] },
-        globalParameters: overrides.globalParameters ?? []
+        globalParameters: overrides.globalParameters ?? [],
+        services: overrides.services ?? {},
+        environments: overrides.environments
     });
 
     const localFilesConfig: ResolvedOutputConfig = {
@@ -247,57 +249,6 @@ describe("runPipeline", () => {
         );
         expect(main).toContain('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
         expect(main).toContain("use fern_cli_sdk::auth::{AuthCredentialSource, BasicAuthProvider, BearerAuth};");
-    });
-
-    it("configured PKCE replaces the IR bearer fallback and emits login usability", async () => {
-        await stageSdkTemplate();
-        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
-
-        await runPipeline({
-            outputDir,
-            customConfig: {
-                binaryName: "acme",
-                oauth: [
-                    {
-                        scheme: "OAuth2",
-                        flow: "pkce",
-                        authorizationUrl: "https://auth.example.com/authorize",
-                        tokenUrl: "https://auth.example.com/token",
-                        clientId: "public-client",
-                        scopes: ["read"]
-                    }
-                ]
-            },
-            ir: ir({
-                apiDisplayName: "Acme",
-                auth: {
-                    schemes: [
-                        FernIr.AuthScheme.bearer({
-                            key: "OAuth2",
-                            token: "token",
-                            tokenEnvVar: undefined,
-                            tokenPlaceholder: undefined,
-                            docs: undefined
-                        })
-                    ]
-                }
-            }),
-            outputConfig: localFilesConfig,
-            sdkTemplateDir,
-            specsDir
-        });
-
-        const main = await readFile(path.join(outputDir, "cli", "acme", "main.rs"), "utf-8");
-        expect(main).toContain("use fern_cli_sdk::auth::{PkceLoginFlow};");
-        expect(main).toContain(
-            '.login_flow(PkceLoginFlow::new("OAuth2").client_id("public-client").authorization_url("https://auth.example.com/authorize").token_url("https://auth.example.com/token").scopes(["read"]))'
-        );
-        expect(main).not.toContain("BearerAuth");
-
-        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
-        expect(readme).toContain("acme auth login");
-        expect(readme).toContain("acme auth status");
-        expect(readme).toContain("acme auth logout");
     });
 
     it("no customConfig.binaryName + no IR apiDisplayName surfaces a clear error before any disk write", async () => {

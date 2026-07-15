@@ -1,5 +1,23 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+auth-schemes:
+  OAuth2:
+    scheme: oauth
+    type: client-credentials
+    client-id-env: ACME_CLIENT_ID
+    client-secret-env: ACME_CLIENT_SECRET
+    scopes:
+      - read:pets
+    get-token:
+      endpoint: POST /token
+      request-properties:
+        client-id: $request.client_id
+        client-secret: $request.client_secret
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
 api:
+  auth: OAuth2
   specs:
     - openapi: ./openapi.yml
 

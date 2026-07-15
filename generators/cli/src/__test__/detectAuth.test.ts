@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { detectAuthBindings } from "../detectAuth.js";
+import { detectAuthBindings, joinUrl, renderFullPath, resolveDefaultBaseUrl } from "../detectAuth.js";
 
 /**
  * Coverage for the IR → auth binding mapping. The IR SDK's
@@ -187,9 +187,109 @@ describe("detectAuthBindings", () => {
         expect(bindings[1]?.placement).toBe("root");
     });
 
-    // `oauth: () => null` and `inferred: () => null` branches are
-    // exhaustive by visitor — no need to build heavy OAuth fixtures
-    // just to assert "we returned null". If we ever start binding
-    // those variants, the visitor's type signature will force the
-    // test to come back.
+    // The `oauth` client-credentials binding — including endpoint lookup
+    // and emitted `OAuth2Auth` call — is covered end-to-end by the seed
+    // `cli-oauth` fixture, which exercises a real parsed IR (constructing
+    // a full `HttpEndpoint` by hand here would be all noise fields). The
+    // token-URL resolution helpers below are unit-tested directly.
+});
+
+// ---------------------------------------------------------------------------
+// Token-URL resolution helpers
+// ---------------------------------------------------------------------------
+
+const singleEnv = (args: { url: string; id?: string; defaultEnvironment?: string }): FernIr.EnvironmentsConfig => ({
+    defaultEnvironment: args.defaultEnvironment,
+    environments: FernIr.Environments.singleBaseUrl({
+        environments: [
+            {
+                id: args.id ?? "prod",
+                name: "Production",
+                url: args.url,
+                audiences: undefined,
+                defaultUrl: undefined,
+                urlTemplate: undefined,
+                urlVariables: undefined,
+                docs: undefined
+            }
+        ]
+    })
+});
+
+const multiEnv = (args: { urls: Record<string, string>; defaultEnvironment?: string }): FernIr.EnvironmentsConfig => ({
+    defaultEnvironment: args.defaultEnvironment,
+    environments: FernIr.Environments.multipleBaseUrls({
+        baseUrls: Object.keys(args.urls).map((id) => ({ id, name: id })),
+        environments: [
+            {
+                id: args.defaultEnvironment ?? "prod",
+                name: "Production",
+                urls: args.urls,
+                audiences: undefined,
+                defaultUrls: undefined,
+                urlTemplates: undefined,
+                urlVariables: undefined,
+                docs: undefined
+            }
+        ]
+    })
+});
+
+describe("resolveDefaultBaseUrl", () => {
+    it("returns the pinned default single-base-url environment's URL", () => {
+        expect(
+            resolveDefaultBaseUrl({
+                environments: singleEnv({ url: "https://api.example.com", id: "prod", defaultEnvironment: "prod" }),
+                baseUrlId: undefined
+            })
+        ).toBe("https://api.example.com");
+    });
+
+    it("falls back to the first environment when no default is pinned", () => {
+        expect(
+            resolveDefaultBaseUrl({
+                environments: singleEnv({ url: "https://api.example.com", defaultEnvironment: undefined }),
+                baseUrlId: undefined
+            })
+        ).toBe("https://api.example.com");
+    });
+
+    it("returns undefined when the API declares no environment", () => {
+        expect(resolveDefaultBaseUrl({ environments: undefined, baseUrlId: undefined })).toBeUndefined();
+    });
+
+    it("selects the endpoint's pinned base URL from a multi-base-url environment", () => {
+        expect(
+            resolveDefaultBaseUrl({
+                environments: multiEnv({
+                    urls: { auth: "https://auth.example.com", api: "https://api.example.com" },
+                    defaultEnvironment: "prod"
+                }),
+                baseUrlId: "auth"
+            })
+        ).toBe("https://auth.example.com");
+    });
+});
+
+describe("renderFullPath", () => {
+    it("ensures a leading slash", () => {
+        expect(renderFullPath({ head: "identity/token", parts: [] })).toBe("/identity/token");
+    });
+
+    it("renders path parameters inline", () => {
+        expect(renderFullPath({ head: "/orgs/", parts: [{ pathParameter: "orgId", tail: "/token" }] })).toBe(
+            "/orgs/{orgId}/token"
+        );
+    });
+});
+
+describe("joinUrl", () => {
+    it("joins base URL and path with a single slash", () => {
+        expect(joinUrl("https://api.example.com/", "/token")).toBe("https://api.example.com/token");
+        expect(joinUrl("https://api.example.com", "token")).toBe("https://api.example.com/token");
+    });
+
+    it("preserves a base-path segment on the base URL", () => {
+        expect(joinUrl("https://api.example.com/v1", "/token")).toBe("https://api.example.com/v1/token");
+    });
 });

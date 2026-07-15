@@ -195,14 +195,15 @@ describe("emitReadme", () => {
         expect(readme).toContain('export ACME_PASSWORD="<your credential>"');
     });
 
-    it("documents interactive OAuth login, status, and logout", async () => {
+    it("documents OAuth client-credentials env vars", async () => {
         const oauthBinding: DetectedAuthBinding = {
             schemeName: "OAuth2",
-            rustCall: '.login_flow(PkceLoginFlow::new("OAuth2"))',
+            rustCall:
+                '.auth(OAuth2Auth::new("OAuth2").token_url("https://api.example.com/token").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET"))',
             placement: "root",
-            authTypeImport: "PkceLoginFlow",
-            envVars: [],
-            kind: "oauth-interactive"
+            authTypeImport: "OAuth2Auth",
+            envVars: ["ACME_CLIENT_ID", "ACME_CLIENT_SECRET"],
+            kind: "oauth-client-credentials"
         };
 
         const readme = await emitAndRead({
@@ -214,10 +215,8 @@ describe("emitReadme", () => {
             repoUrl: undefined
         });
 
-        expect(readme).toContain("acme auth login");
-        expect(readme).toContain("acme auth status");
-        expect(readme).toContain("acme auth logout");
-        expect(readme).not.toContain("export ");
+        expect(readme).toContain('export ACME_CLIENT_ID="<your OAuth client credential>"');
+        expect(readme).toContain('export ACME_CLIENT_SECRET="<your OAuth client credential>"');
     });
 
     // ── Merge preserves customer-added sections ─────────────────────
