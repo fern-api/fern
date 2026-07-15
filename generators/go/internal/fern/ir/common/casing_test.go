@@ -8,7 +8,7 @@ import (
 func TestNameFromStringNoSmartCasing(t *testing.T) {
 	// Explicitly set smartCasing=false
 	resetCasingConfig()
-	ConfigureCasing(false, "", nil)
+	ConfigureCasing(false, false, "", nil)
 
 	tests := []struct {
 		input         string
@@ -57,7 +57,7 @@ func TestNameFromStringNoSmartCasing(t *testing.T) {
 func TestNameFromStringSmartCasing(t *testing.T) {
 	// smartCasing=true with generationLanguage="go" (Go is in CAPITALIZE_INITIALISM)
 	resetCasingConfig()
-	ConfigureCasing(true, "go", nil)
+	ConfigureCasing(true, false, "go", nil)
 
 	tests := []struct {
 		input         string
@@ -85,8 +85,8 @@ func TestNameFromStringSmartCasing(t *testing.T) {
 		// Smart snake_case keeps digits attached: EC2 -> ec2
 		{"EC2", "EC2", "ec2", "Ec2", "ec2", "EC2"},
 		{"S3", "S3", "s3", "S3", "s3", "S3"},
-		// A capitalized word after a digit run keeps its snake_case word boundary
-		{"ConversationsV2Configuration", "ConversationsV2Configuration", "conversationsV2Configuration", "ConversationsV2Configuration", "conversations_v2_configuration", "CONVERSATIONS_V2_CONFIGURATION"},
+		// By default the digit run stays fused to the following word
+		{"ConversationsV2Configuration", "ConversationsV2Configuration", "conversationsV2Configuration", "ConversationsV2Configuration", "conversations_v2configuration", "CONVERSATIONS_V2CONFIGURATION"},
 		{"applicationV1", "applicationV1", "applicationV1", "ApplicationV1", "application_v1", "APPLICATION_V1"},
 	}
 
@@ -107,6 +107,34 @@ func TestNameFromStringSmartCasing(t *testing.T) {
 			}
 			if n.ScreamingSnakeCase.UnsafeName != tt.wantScreaming {
 				t.Errorf("ScreamingSnakeCase.UnsafeName: got %q, want %q", n.ScreamingSnakeCase.UnsafeName, tt.wantScreaming)
+			}
+		})
+	}
+}
+
+func TestNameFromStringSmartCasingDigitWordBoundary(t *testing.T) {
+	// smartCasingDigitWordBoundary=true: a capitalized word after a digit run
+	// keeps its snake_case word boundary
+	resetCasingConfig()
+	ConfigureCasing(true, true, "go", nil)
+
+	tests := []struct {
+		input     string
+		wantSnake string
+	}{
+		{"ConversationsV2Configuration", "conversations_v2_configuration"},
+		{"Mode5InterrogationResponse", "mode5_interrogation_response"},
+		{"Int32Value", "int32_value"},
+		{"applicationV1", "application_v1"},
+		{"EC2", "ec2"},
+		{"v2", "v2"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.input, func(t *testing.T) {
+			n := nameFromString(tt.input)
+			if n.SnakeCase.SafeName != tt.wantSnake {
+				t.Errorf("SnakeCase.SafeName: got %q, want %q", n.SnakeCase.SafeName, tt.wantSnake)
 			}
 		})
 	}
@@ -179,7 +207,7 @@ func TestNameAndWireValueUnmarshalJSONObjectWithStringName(t *testing.T) {
 func TestKeywordSanitization(t *testing.T) {
 	// No language set, no keywords => no keyword sanitization (matches TS getKeywords returning undefined)
 	resetCasingConfig()
-	ConfigureCasing(false, "", nil)
+	ConfigureCasing(false, false, "", nil)
 	n := nameFromString("type")
 	if n.CamelCase.SafeName != "type" {
 		t.Errorf("CamelCase.SafeName: got %q, want %q", n.CamelCase.SafeName, "type")
@@ -187,7 +215,7 @@ func TestKeywordSanitization(t *testing.T) {
 
 	// With generationLanguage="go" but no explicit keywords => uses Go reserved keywords
 	resetCasingConfig()
-	ConfigureCasing(false, "go", nil)
+	ConfigureCasing(false, false, "go", nil)
 	n = nameFromString("type")
 	if n.CamelCase.SafeName != "type_" {
 		t.Errorf("CamelCase.SafeName with go lang: got %q, want %q", n.CamelCase.SafeName, "type_")
@@ -198,7 +226,7 @@ func TestKeywordSanitization(t *testing.T) {
 
 	// With explicit keywords from IR => uses those instead of defaults
 	resetCasingConfig()
-	ConfigureCasing(false, "go", []string{"custom", "reserved"})
+	ConfigureCasing(false, false, "go", []string{"custom", "reserved"})
 	n = nameFromString("type")
 	// "type" is NOT in the custom keywords, so should NOT be sanitized
 	if n.CamelCase.SafeName != "type" {

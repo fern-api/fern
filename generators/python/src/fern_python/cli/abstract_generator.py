@@ -40,7 +40,10 @@ class AbstractGenerator(ABC):
         # `smart-casing` flag in generators.yml). Must run before any name resolution
         # so _smart_snake matches the IR server's pre-computed snake_case values.
         smart_casing = ir.casings_config.smart_casing if ir.casings_config is not None else True
-        configure_smart_casing(smart_casing)
+        digit_word_boundary = (
+            (ir.casings_config.smart_casing_digit_word_boundary or False) if ir.casings_config is not None else False
+        )
+        configure_smart_casing(smart_casing, digit_word_boundary)
 
         project_config = generator_config.output.mode.visit(
             download_files=lambda: None,

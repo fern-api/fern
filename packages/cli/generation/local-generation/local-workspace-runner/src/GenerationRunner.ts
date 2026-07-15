@@ -226,6 +226,7 @@ export class GenerationRunner {
             generationLanguage: generatorInvocation.language,
             keywords: generatorInvocation.keywords,
             smartCasing: generatorInvocation.smartCasing,
+            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples: true,
                 disabled: generatorInvocation.disableExamples,

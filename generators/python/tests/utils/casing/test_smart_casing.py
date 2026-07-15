@@ -40,14 +40,40 @@ class TestSmartCasingTrue:
         assert _smart_snake("2fa") == "2fa"
 
     def test_digit_in_middle_of_camelcase(self) -> None:
-        # A capitalized word after a digit run keeps its word boundary, while the
-        # digit stays fused to the previous word. Matches the canonical TS smartSnakeFn.
-        assert _smart_snake("setFcmv1Provider") == "set_fcmv1_provider"
-        assert _smart_snake("auth0Mapping") == "auth0_mapping"
+        # By default, a digit between camelCase words collapses to no separator.
+        # This matches the canonical TS smartSnakeFn default.
+        assert _smart_snake("setFcmv1Provider") == "set_fcmv1provider"
+        assert _smart_snake("auth0Mapping") == "auth0mapping"
+
+    def test_capitalized_word_after_digit_stays_fused(self) -> None:
+        assert _smart_snake("ConversationsV2Configuration") == "conversations_v2configuration"
+        assert _smart_snake("CreateOauth2Token") == "create_oauth2token"
+
+    def test_digit_then_lowercase_stays_fused(self) -> None:
+        assert _smart_snake("2v22") == "2v22"
+        assert _smart_snake("v2beta") == "v2beta"
+
+
+class TestSmartCasingDigitWordBoundary:
+    """smart-casing-digit-word-boundary: true — a capitalized word after a digit
+    run keeps its word boundary."""
+
+    def setup_method(self) -> None:
+        configure_smart_casing(True, True)
 
     def test_capitalized_word_after_digit_separates(self) -> None:
         assert _smart_snake("ConversationsV2Configuration") == "conversations_v2_configuration"
         assert _smart_snake("CreateOauth2Token") == "create_oauth2_token"
+        assert _smart_snake("Mode5InterrogationResponse") == "mode5_interrogation_response"
+        assert _smart_snake("Int32Value") == "int32_value"
+
+    def test_digit_in_middle_of_camelcase(self) -> None:
+        assert _smart_snake("setFcmv1Provider") == "set_fcmv1_provider"
+        assert _smart_snake("auth0Mapping") == "auth0_mapping"
+
+    def test_trailing_digits_stay_attached(self) -> None:
+        assert _smart_snake("applicationV1") == "application_v1"
+        assert _smart_snake("v2") == "v2"
 
     def test_digit_then_lowercase_stays_fused(self) -> None:
         assert _smart_snake("2v22") == "2v22"
@@ -82,12 +108,22 @@ class TestConfigureSmartCasing:
     def test_toggling_clears_resolve_cache(self) -> None:
         configure_smart_casing(True)
         smart = _resolve_string_name("setFcmv1Provider")
-        assert smart.snake_case.safe_name == "set_fcmv1_provider"
+        assert smart.snake_case.safe_name == "set_fcmv1provider"
 
         configure_smart_casing(False)
         plain = _resolve_string_name("setFcmv1Provider")
         assert plain.snake_case.safe_name == "set_fcmv_1_provider"
         assert plain is not smart
+
+    def test_toggling_digit_word_boundary_clears_resolve_cache(self) -> None:
+        configure_smart_casing(True)
+        fused = _resolve_string_name("setFcmv1Provider")
+        assert fused.snake_case.safe_name == "set_fcmv1provider"
+
+        configure_smart_casing(True, True)
+        boundary = _resolve_string_name("setFcmv1Provider")
+        assert boundary.snake_case.safe_name == "set_fcmv1_provider"
+        assert boundary is not fused
 
     def test_no_op_configure_preserves_cache(self) -> None:
         configure_smart_casing(True)

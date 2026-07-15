@@ -1922,6 +1922,7 @@ async function generateLanguageSpecificDynamicIRs({
                         generationLanguage: generatorInvocation.language,
                         keywords: undefined,
                         smartCasing: generatorInvocation.smartCasing,
+                        smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
                         exampleGeneration: {
                             disabled: true,
                             skipAutogenerationIfManualExamplesExist: true,
@@ -1942,6 +1943,7 @@ async function generateLanguageSpecificDynamicIRs({
                         ir: irForDynamicSnippets,
                         disableExamples: true,
                         smartCasing: generatorInvocation.smartCasing,
+                        smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
                         generationLanguage: generatorInvocation.language,
                         generatorConfig: dynamicGeneratorConfig
                     });
