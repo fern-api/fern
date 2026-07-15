@@ -98,6 +98,12 @@ jobs:
       matrix:
         os: [ubuntu-22.04, macos-14, windows-latest]
     runs-on: ${{ matrix.os }}
+    # Run every step under bash (Git Bash on Windows) so `poetry` resolves on PATH
+    # consistently across all three OSes; the default Windows shell (pwsh) does not
+    # pick up the snok/install-poetry PATH entry, causing "poetry: not recognized".
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
