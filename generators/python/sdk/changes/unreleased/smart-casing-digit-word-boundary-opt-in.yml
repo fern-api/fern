@@ -1,7 +1,7 @@
 - summary: |
-    Make the smart-casing digit/word boundary behavior opt-in via the new
-    `smart-casing-digit-word-boundary` option in `generators.yml`. By default, snake_case
+    Revert the smart-casing digit/word boundary behavior introduced in 5.18.4. snake_case
     names keep a digit run fused to the following word (`conversations_v2configuration`),
-    restoring pre-5.18.4 output. When enabled, the word boundary after the digit run is
-    preserved (`conversations_v2_configuration`).
+    restoring pre-5.18.4 output. The behavior will become opt-in via the new
+    `smart-casing-digit-word-boundary` option in `generators.yml` once the generator
+    consumes the IR version that carries the setting.
   type: fix

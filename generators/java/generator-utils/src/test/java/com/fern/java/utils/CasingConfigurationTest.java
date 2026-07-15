@@ -269,14 +269,16 @@ public class CasingConfigurationTest {
 
         @Test
         void toSmartSnakeCase_applicationV1() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("applicationV1", false)).isEqualTo("application_v1");
+            assertThat(CasingConfiguration.toSmartSnakeCase("applicationV1", false))
+                    .isEqualTo("application_v1");
         }
 
         @Test
         void toSmartSnakeCase_test2This2() {
             // "test2This2" -> splitByDigits: "test", "2", "This", "2"
             // By default the digit run stays fused to the following word
-            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2", false)).isEqualTo("test2this2");
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2", false))
+                    .isEqualTo("test2this2");
             // With digitWordBoundary, "This" keeps its boundary after the digit run
             assertThat(CasingConfiguration.toSmartSnakeCase("test2This2", true)).isEqualTo("test2_this2");
         }
@@ -287,8 +289,10 @@ public class CasingConfigurationTest {
             // "test2This2" -> "test2_this2" (with digitWordBoundary)
             // "2v22" -> splitByDigits: "2", "v", "22" -> "2v22" (lowercase after digits stays fused)
             // join with "_": "test2_this2_2v22"
-            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22", true)).isEqualTo("test2_this2_2v22");
-            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22", false)).isEqualTo("test2this2_2v22");
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22", true))
+                    .isEqualTo("test2_this2_2v22");
+            assertThat(CasingConfiguration.toSmartSnakeCase("test2This2 2v22", false))
+                    .isEqualTo("test2this2_2v22");
         }
 
         @Test
@@ -315,12 +319,14 @@ public class CasingConfigurationTest {
 
         @Test
         void toSmartSnakeCase_camelCase() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("helloWorld", false)).isEqualTo("hello_world");
+            assertThat(CasingConfiguration.toSmartSnakeCase("helloWorld", false))
+                    .isEqualTo("hello_world");
         }
 
         @Test
         void toSmartSnakeCase_withSpaces() {
-            assertThat(CasingConfiguration.toSmartSnakeCase("hello world", false)).isEqualTo("hello_world");
+            assertThat(CasingConfiguration.toSmartSnakeCase("hello world", false))
+                    .isEqualTo("hello_world");
         }
 
         @Test
@@ -493,7 +499,7 @@ public class CasingConfigurationTest {
             CasingConfiguration config = buildConfig(true, null, null);
             CasingConfiguration.NameParts parts = config.computeName("test2This2 2v22");
 
-            assertThat(parts.snakeUnsafe).isEqualTo("test2_this2_2v22");
+            assertThat(parts.snakeUnsafe).isEqualTo("test2this2_2v22");
         }
 
         // --- smartCasing + initialism capitalization (Go language) ---

@@ -300,11 +300,11 @@ public final class CasingConfiguration {
     }
 
     /**
-     * Smart snake_case: keeps numbers adjacent to letters ("v2" stays "v2" instead of "v_2"). When
-     * digitWordBoundary is enabled, a segment that starts a new word after a digit run keeps its word boundary
-     * ("ConversationsV2Configuration" becomes "conversations_v2_configuration"); otherwise the digit run stays
-     * fused to the following word ("conversations_v2configuration"). Matches TypeScript: split on spaces, then
-     * each part split on digits, snake_case each non-digit segment.
+     * Smart snake_case: keeps numbers adjacent to letters ("v2" stays "v2" instead of "v_2"). When digitWordBoundary is
+     * enabled, a segment that starts a new word after a digit run keeps its word boundary
+     * ("ConversationsV2Configuration" becomes "conversations_v2_configuration"); otherwise the digit run stays fused to
+     * the following word ("conversations_v2configuration"). Matches TypeScript: split on spaces, then each part split
+     * on digits, snake_case each non-digit segment.
      */
     static String toSmartSnakeCase(String s, boolean digitWordBoundary) {
         String[] spaceParts = s.split(" ");
