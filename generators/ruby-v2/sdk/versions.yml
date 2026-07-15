@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.4
+  changelogEntry:
+    - summary: |
+        Send request bodies declared with the `application/x-www-form-urlencoded` content type
+        (e.g. OAuth token endpoints) as form-urlencoded instead of JSON. A new
+        `Internal::UrlEncoded::Request` encodes the body with `URI.encode_www_form` and sets the
+        `Content-Type: application/x-www-form-urlencoded` header.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 1.17.3
   changelogEntry:
     - summary: |
