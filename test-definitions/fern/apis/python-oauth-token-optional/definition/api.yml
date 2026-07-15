@@ -12,3 +12,4 @@ auth-schemes:
       response-properties:
         access-token: $response.access_token
         expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
