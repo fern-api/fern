@@ -21,5 +21,7 @@ export enum AsIsFiles {
     Idempotency = "core/idempotency.go_",
     Streamer = "internal/streamer.go_",
     TokenProvider = "core/token_provider.go_",
+    WebhookBodyHash = "core/webhook_body_hash.go_",
+    WebhookBodyHashTest = "core/webhook_body_hash_test.go_",
     WebhookSignature = "core/webhook_signature.go_"
 }

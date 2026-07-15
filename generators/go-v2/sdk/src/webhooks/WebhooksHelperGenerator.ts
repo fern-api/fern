@@ -27,15 +27,23 @@ export class WebhooksHelperGenerator {
             return [];
         }
 
-        const files: GoFile[] = [this.generateHelperFile("WebhooksHelper", defaultEntry.config)];
+        const files: GoFile[] = [];
+        this.addHelperFiles(files, "WebhooksHelper", defaultEntry.config);
 
         for (const entry of overrideEntries) {
             const [firstWebhookName] = entry.webhookNames;
             const className = `${this.context.getClassName(firstWebhookName)}WebhooksHelper`;
-            files.push(this.generateHelperFile(className, entry.config));
+            this.addHelperFiles(files, className, entry.config);
         }
 
         return files;
+    }
+
+    private addHelperFiles(files: GoFile[], className: string, config: FernIr.HmacSignatureVerification): void {
+        files.push(this.generateHelperFile(className, config));
+        if (config.bodyHashBinding != null) {
+            files.push(this.generateBodyHashHelperTestFile(className, config));
+        }
     }
 
     private collectHmacConfigs(): {
@@ -97,6 +105,14 @@ export class WebhooksHelperGenerator {
                 delimiter: config.payloadFormat.delimiter,
                 bodySort: config.payloadFormat.bodySort ?? null
             },
+            bodyHashBinding:
+                config.bodyHashBinding == null
+                    ? null
+                    : {
+                          algorithm: config.bodyHashBinding.algorithm,
+                          encoding: config.bodyHashBinding.encoding,
+                          queryParameterName: this.getBodyHashQueryParameterName(config.bodyHashBinding.location)
+                      },
             timestamp:
                 timestamp == null
                     ? null
@@ -108,12 +124,34 @@ export class WebhooksHelperGenerator {
         });
     }
 
+    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+        return location._visit({
+            queryParameter: (queryParameter) => queryParameter.name,
+            _other: () => {
+                throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
+            }
+        });
+    }
+
     private generateHelperFile(className: string, config: FernIr.HmacSignatureVerification): GoFile {
         const node = new HmacHelperWriter({ context: this.context, className, config }).write();
         return new GoFile({
             node,
             directory: RelativeFilePath.of(""),
             filename: `${this.context.getFilename(className).toLowerCase()}.go`,
+            packageName: this.context.getRootPackageName(),
+            rootImportPath: this.context.getRootImportPath(),
+            importPath: this.context.getRootImportPath(),
+            customConfig: this.context.customConfig
+        });
+    }
+
+    private generateBodyHashHelperTestFile(className: string, config: FernIr.HmacSignatureVerification): GoFile {
+        const node = new BodyHashHelperTestWriter({ context: this.context, className, config }).write();
+        return new GoFile({
+            node,
+            directory: RelativeFilePath.of(""),
+            filename: `${this.context.getFilename(className).toLowerCase()}_test.go`,
             packageName: this.context.getRootPackageName(),
             rootImportPath: this.context.getRootImportPath(),
             importPath: this.context.getRootImportPath(),
@@ -170,7 +208,7 @@ class HmacHelperWriter {
     }
 
     private buildParameters(): string[] {
-        const bodyType = this.hasBodySort ? "interface{}" : "string";
+        const bodyType = this.config.bodyHashBinding != null ? "string" : this.hasBodySort ? "interface{}" : "string";
         const parameters: string[] = [`requestBody ${bodyType}`, "signatureHeader string", "signatureKey string"];
         for (const component of this.components) {
             if (component === "NOTIFICATION_URL") {
@@ -204,6 +242,11 @@ class HmacHelperWriter {
         writer.newLine();
         this.writePayloadConstruction(writer);
 
+        if (this.config.bodyHashBinding != null) {
+            writer.newLine();
+            this.writeBodyHashVerification(writer, coreAlias, this.config.bodyHashBinding);
+        }
+
         writer.newLine();
         const algorithm = this.mapAlgorithm(this.config.algorithm);
         const encoding = this.mapEncoding(this.config.encoding);
@@ -216,6 +259,30 @@ class HmacHelperWriter {
 
         writer.newLine();
         writer.writeLine(`\treturn ${coreAlias}.TimingSafeEqual(${signatureExpr}, expected), nil`);
+    }
+
+    private writeBodyHashVerification(
+        writer: go.Writer,
+        coreAlias: string,
+        binding: FernIr.WebhookBodyHashBinding
+    ): void {
+        const algorithm = this.mapBodyHashAlgorithm(binding.algorithm);
+        const encoding = this.mapEncoding(binding.encoding);
+        const queryParameterName = this.getBodyHashQueryParameterName(binding.location);
+
+        writer.writeLine(
+            `\texpectedBodyHash, err := ${coreAlias}.ComputeHash(requestBody, "${algorithm}", "${encoding}")`
+        );
+        writer.writeLine("\tif err != nil {");
+        writer.writeLine("\t\treturn false, err");
+        writer.writeLine("\t}");
+        writer.newLine();
+        writer.writeLine(
+            `\ttransmittedBodyHash, ok := ${coreAlias}.GetWebhookQueryParameter(notificationUrl, ${JSON.stringify(queryParameterName)})`
+        );
+        writer.writeLine(`\tif !ok || !${coreAlias}.TimingSafeEqual(expectedBodyHash, transmittedBodyHash) {`);
+        writer.writeLine("\t\treturn false, nil");
+        writer.writeLine("\t}");
     }
 
     private writeTimestampValidation(
@@ -372,10 +439,283 @@ class HmacHelperWriter {
                 "// When a map is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
             );
         }
+        if (this.config.bodyHashBinding != null) {
+            lines.push(
+                "// Pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
+            );
+        }
         return lines;
     }
 
+    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+        return location._visit({
+            queryParameter: (queryParameter) => queryParameter.name,
+            _other: () => {
+                throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
+            }
+        });
+    }
+
+    private mapBodyHashAlgorithm(algorithm: FernIr.WebhookBodyHashAlgorithm): string {
+        switch (algorithm) {
+            case "SHA256":
+                return "sha256";
+            case "SHA1":
+                return "sha1";
+            case "SHA384":
+                return "sha384";
+            case "SHA512":
+                return "sha512";
+            default:
+                assertNever(algorithm);
+        }
+    }
+
     private mapAlgorithm(algorithm: FernIr.HmacAlgorithm): string {
+        switch (algorithm) {
+            case "SHA256":
+                return "sha256";
+            case "SHA1":
+                return "sha1";
+            case "SHA384":
+                return "sha384";
+            case "SHA512":
+                return "sha512";
+            default:
+                assertNever(algorithm);
+        }
+    }
+
+    private mapEncoding(encoding: FernIr.WebhookSignatureEncoding): string {
+        switch (encoding) {
+            case "BASE64":
+                return "base64";
+            case "HEX":
+                return "hex";
+            default:
+                assertNever(encoding);
+        }
+    }
+}
+
+class BodyHashHelperTestWriter {
+    private readonly context: SdkGeneratorContext;
+    private readonly className: string;
+    private readonly config: FernIr.HmacSignatureVerification;
+    private readonly bodyHashBinding: FernIr.WebhookBodyHashBinding;
+    private readonly components: FernIr.WebhookPayloadComponent[];
+
+    public constructor({
+        context,
+        className,
+        config
+    }: {
+        context: SdkGeneratorContext;
+        className: string;
+        config: FernIr.HmacSignatureVerification;
+    }) {
+        const bodyHashBinding = config.bodyHashBinding;
+        if (bodyHashBinding == null) {
+            throw new Error("Body-hash helper tests require a body-hash binding");
+        }
+        this.context = context;
+        this.className = className;
+        this.config = config;
+        this.bodyHashBinding = bodyHashBinding;
+        this.components = config.payloadFormat.components;
+    }
+
+    public write(): go.CodeBlock {
+        return go.codeblock((writer) => {
+            const coreAlias = writer.addImport(this.context.getCoreImportPath());
+            const fmtAlias = writer.addImport("fmt");
+            const urlAlias = writer.addImport("net/url");
+            const stringsAlias = writer.addImport("strings");
+            const testingAlias = writer.addImport("testing");
+
+            writer.writeLine(`func Test${this.className}BodyHashBinding(t *${testingAlias}.T) {`);
+            writer.writeLine('\trequestBody := `{"event":"example"}`');
+            writer.writeLine('\tsignatureKey := "test-secret"');
+            writer.writeLine(
+                `\texpectedBodyHash, err := ${coreAlias}.ComputeHash(requestBody, "${this.mapBodyHashAlgorithm(this.bodyHashBinding.algorithm)}", "${this.mapEncoding(this.bodyHashBinding.encoding)}")`
+            );
+            writer.writeLine("\tif err != nil {");
+            writer.writeLine("\t\tt.Fatal(err)");
+            writer.writeLine("\t}");
+            writer.writeLine(
+                `\tqueryParameterName := ${JSON.stringify(this.getBodyHashQueryParameterName(this.bodyHashBinding.location))}`
+            );
+            writer.writeLine(
+                `\tnotificationURL := ${fmtAlias}.Sprintf("https://example.com/webhook?z=last&%s=%s&a=first%%20value", ${urlAlias}.QueryEscape(queryParameterName), ${urlAlias}.QueryEscape(expectedBodyHash))`
+            );
+            this.writeAdditionalParameters(writer);
+
+            writer.newLine();
+            writer.writeLine(
+                `\tsign := func(t *${testingAlias}.T, requestBody string, notificationURL string, signatureKey string) string {`
+            );
+            this.writePayloadConstruction(writer, stringsAlias);
+            writer.writeLine(
+                `\t\tsignature, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${this.mapHmacAlgorithm(this.config.algorithm)}", "${this.mapEncoding(this.config.encoding)}")`
+            );
+            writer.writeLine("\t\tif err != nil {");
+            writer.writeLine("\t\t\tt.Fatal(err)");
+            writer.writeLine("\t\t}");
+            if (this.config.signaturePrefix != null) {
+                writer.writeLine(`\t\treturn ${JSON.stringify(this.config.signaturePrefix)} + signature`);
+            } else {
+                writer.writeLine("\t\treturn signature");
+            }
+            writer.writeLine("\t}");
+
+            writer.newLine();
+            writer.writeLine(
+                `\tverify := func(t *${testingAlias}.T, requestBody string, notificationURL string, signatureKey string, signatureHeader string) bool {`
+            );
+            writer.writeLine(`\t\tvalid, err := (${this.className}{}).VerifySignature(`);
+            for (const argument of this.buildVerifyArguments()) {
+                writer.writeLine(`\t\t\t${argument},`);
+            }
+            writer.writeLine("\t\t)");
+            writer.writeLine("\t\tif err != nil {");
+            writer.writeLine("\t\t\tt.Fatal(err)");
+            writer.writeLine("\t\t}");
+            writer.writeLine("\t\treturn valid");
+            writer.writeLine("\t}");
+
+            writer.newLine();
+            writer.writeLine("\tvalidSignature := sign(t, requestBody, notificationURL, signatureKey)");
+            writer.writeLine(`\tt.Run("valid body and verbatim notification URL", func(t *${testingAlias}.T) {`);
+            writer.writeLine("\t\tif !verify(t, requestBody, notificationURL, signatureKey, validSignature) {");
+            writer.writeLine('\t\t\tt.Fatal("expected valid body hash and signature over verbatim notification URL")');
+            writer.writeLine("\t\t}");
+            writer.writeLine("\t})");
+
+            writer.newLine();
+            writer.writeLine('\ttamperedBody := requestBody + " "');
+            writer.writeLine(`\tt.Run("tampered raw body", func(t *${testingAlias}.T) {`);
+            writer.writeLine(
+                "\t\tif verify(t, tamperedBody, notificationURL, signatureKey, sign(t, tamperedBody, notificationURL, signatureKey)) {"
+            );
+            writer.writeLine('\t\t\tt.Fatal("expected tampered raw body to fail verification")');
+            writer.writeLine("\t\t}");
+            writer.writeLine("\t})");
+
+            writer.newLine();
+            writer.writeLine(
+                `\ttamperedURL := ${fmtAlias}.Sprintf("https://example.com/webhook?z=last&%s=%s&a=first%%20value", ${urlAlias}.QueryEscape(queryParameterName), ${urlAlias}.QueryEscape("tampered"))`
+            );
+            writer.writeLine(`\tt.Run("tampered query hash", func(t *${testingAlias}.T) {`);
+            writer.writeLine(
+                "\t\tif verify(t, requestBody, tamperedURL, signatureKey, sign(t, requestBody, tamperedURL, signatureKey)) {"
+            );
+            writer.writeLine('\t\t\tt.Fatal("expected tampered query hash to fail verification")');
+            writer.writeLine("\t\t}");
+            writer.writeLine("\t})");
+
+            writer.newLine();
+            writer.writeLine(`\tt.Run("tampered HMAC signature", func(t *${testingAlias}.T) {`);
+            writer.writeLine('\t\tif verify(t, requestBody, notificationURL, signatureKey, "tampered-signature") {');
+            writer.writeLine('\t\t\tt.Fatal("expected tampered HMAC signature to fail verification")');
+            writer.writeLine("\t\t}");
+            writer.writeLine("\t})");
+
+            writer.newLine();
+            writer.writeLine(`\tt.Run("wrong secret", func(t *${testingAlias}.T) {`);
+            writer.writeLine('\t\tif verify(t, requestBody, notificationURL, "wrong-secret", validSignature) {');
+            writer.writeLine('\t\t\tt.Fatal("expected wrong secret to fail verification")');
+            writer.writeLine("\t\t}");
+            writer.writeLine("\t})");
+            writer.writeLine("}");
+        });
+    }
+
+    private writeAdditionalParameters(writer: go.Writer): void {
+        if (this.components.includes("MESSAGE_ID")) {
+            writer.writeLine('\tmessageID := "message-id"');
+        }
+        if (this.config.timestamp != null || this.components.includes("TIMESTAMP")) {
+            const timeAlias = writer.addImport("time");
+            const timestamp = this.config.timestamp;
+            if (timestamp == null || timestamp.format === "UNIX_SECONDS") {
+                const strconvAlias = writer.addImport("strconv");
+                writer.writeLine(`\ttimestampHeader := ${strconvAlias}.FormatInt(${timeAlias}.Now().Unix(), 10)`);
+            } else if (timestamp.format === "UNIX_MILLIS") {
+                const strconvAlias = writer.addImport("strconv");
+                writer.writeLine(`\ttimestampHeader := ${strconvAlias}.FormatInt(${timeAlias}.Now().UnixMilli(), 10)`);
+            } else if (timestamp.format === "ISO8601") {
+                writer.writeLine(`\ttimestampHeader := ${timeAlias}.Now().UTC().Format(${timeAlias}.RFC3339)`);
+            } else {
+                assertNever(timestamp.format);
+            }
+        }
+    }
+
+    private writePayloadConstruction(writer: go.Writer, stringsAlias: string): void {
+        const componentExprs: string[] = [];
+        for (const component of this.components) {
+            switch (component) {
+                case "BODY":
+                    componentExprs.push("requestBody");
+                    break;
+                case "TIMESTAMP":
+                    componentExprs.push("timestampHeader");
+                    break;
+                case "NOTIFICATION_URL":
+                    componentExprs.push("notificationURL");
+                    break;
+                case "MESSAGE_ID":
+                    componentExprs.push("messageID");
+                    break;
+                default:
+                    assertNever(component);
+            }
+        }
+        writer.writeLine(
+            `\t\tpayload := ${stringsAlias}.Join([]string{${componentExprs.join(", ")}}, ${JSON.stringify(this.config.payloadFormat.delimiter)})`
+        );
+    }
+
+    private buildVerifyArguments(): string[] {
+        const arguments_ = ["requestBody", "signatureHeader", "signatureKey"];
+        for (const component of this.components) {
+            if (component === "NOTIFICATION_URL") {
+                arguments_.push("notificationURL");
+            } else if (component === "MESSAGE_ID") {
+                arguments_.push("messageID");
+            }
+        }
+        if (this.config.timestamp != null || this.components.includes("TIMESTAMP")) {
+            arguments_.push("timestampHeader");
+        }
+        return arguments_;
+    }
+
+    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+        return location._visit({
+            queryParameter: (queryParameter) => queryParameter.name,
+            _other: () => {
+                throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
+            }
+        });
+    }
+
+    private mapBodyHashAlgorithm(algorithm: FernIr.WebhookBodyHashAlgorithm): string {
+        switch (algorithm) {
+            case "SHA256":
+                return "sha256";
+            case "SHA1":
+                return "sha1";
+            case "SHA384":
+                return "sha384";
+            case "SHA512":
+                return "sha512";
+            default:
+                assertNever(algorithm);
+        }
+    }
+
+    private mapHmacAlgorithm(algorithm: FernIr.HmacAlgorithm): string {
         switch (algorithm) {
             case "SHA256":
                 return "sha256";
