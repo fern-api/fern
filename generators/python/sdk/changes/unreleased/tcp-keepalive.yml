@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add opt-in, platform-guarded TCP keepalive for the generated default HTTP
+    transport. Enable it via the new `tcp_keepalive` custom config
+    (`enabled`, `idle_seconds`, `interval_seconds`, `count`); it is disabled by
+    default so existing generated output is unchanged. When enabled, the default
+    httpx transport applies `SO_KEEPALIVE` plus the platform's idle/interval/count
+    knobs (with a macOS `TCP_KEEPIDLE` -> `TCP_KEEPALIVE` fallback and guards for
+    older/minimal platforms) so long, non-streaming requests survive
+    idle-connection reaping by a firewall/load balancer/NAT. A user-supplied
+    `httpx_client` or a `custom_transport` `http_client` always takes precedence
+    over the keepalive default. Opting in requires `httpx>=0.24`.
+  type: feat
+
+- summary: |
+    Fix the async default client dropping a `custom_transport` `http_client`.
+    `_make_default_async_client` now threads the supplied transport through to the
+    underlying `httpx.AsyncClient` (the httpx-aiohttp path remains a documented
+    no-op, since aiohttp manages its own connector).
+  type: fix
