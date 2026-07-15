@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { finalIr } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension.js";
@@ -134,6 +135,8 @@ function convertBodyHashAlgorithm(
             return finalIr.WebhookBodyHashAlgorithm.Sha384;
         case "sha512":
             return finalIr.WebhookBodyHashAlgorithm.Sha512;
+        default:
+            assertNever(algorithm);
     }
 }
 
@@ -141,6 +144,8 @@ function convertBodyHashLocation(location: WebhookBodyHashLocationExtensionSchem
     switch (location.type) {
         case "query-parameter":
             return finalIr.WebhookBodyHashLocation.queryParameter({ name: location.name });
+        default:
+            assertNever(location.type);
     }
 }
 
