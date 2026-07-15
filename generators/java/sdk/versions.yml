@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.14.4
+  changelogEntry:
+    - summary: |
+        Make the smart-casing digit/word boundary behavior opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml`. By default, snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-4.13.4 output. When enabled, the word boundary after the digit run is
+        preserved (`conversations_v2_configuration`).
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 4.14.3
   changelogEntry:
     - summary: |
