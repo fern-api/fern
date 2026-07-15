@@ -56,17 +56,46 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
 
-      - name: Release SDKs
+      # `fern generate --local` runs the generator in Docker on this runner and writes the full
+      # @fern-api/dynamic-ir-sdk package to a temp dir WITHOUT publishing (remote generation would
+      # publish from Fiddle, where GitHub's OIDC token isn't available). We then publish that package
+      # from the runner via OIDC in a later step. The package name/version come from the generators.yml
+      # `package-name` and `--version`.
+      - name: Generate dynamic IR SDK package (no publish)
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd packages/ir-sdk
           version=$(cat fern/apis/ir-types-latest/VERSION)
-          # Generate locally (in Docker on this runner) rather than remotely, so the npm publish runs
-          # inside the GitHub Actions job and can authenticate to the trusted publisher via OIDC
-          # (id-token: write above). runDocker forwards ACTIONS_ID_TOKEN_REQUEST_* into the container;
-          # no NPM_TOKEN is needed — see the package's Trusted Publisher config on npmjs.
-          fern generate --api ir-types-latest --group dynamic-ir --version $version --local
+          gen_output=$(fern generate --api ir-types-latest --group dynamic-ir --version "$version" --local 2>&1)
+          echo "$gen_output"
+          outdir=$(echo "$gen_output" | grep -oE "Wrote files to .+" | tail -1 | sed 's/^.*Wrote files to //')
+          if [ -z "$outdir" ] || [ ! -d "$outdir" ]; then
+            echo "::error::could not determine the generated output directory from fern output"
+            exit 1
+          fi
+          echo "Generated package at: $outdir"
+          echo "DYNAMIC_IR_OUTPUT=$outdir" >> "$GITHUB_ENV"
+
+      # OIDC trusted publishing requires npm >= 11.5.1 / Node >= 22.14 and runs on the runner (inside
+      # this job) so the id-token is available. No NPM_TOKEN — see the package's Trusted Publisher on npmjs.
+      - name: Setup Node for OIDC npm publish
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          scope: "@fern-api"
+
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@11
+
+      - name: Publish @fern-api/dynamic-ir-sdk via OIDC
+        run: |
+          cd "$DYNAMIC_IR_OUTPUT"
+          echo "Publishing from $DYNAMIC_IR_OUTPUT"
+          cat package.json
+          npm install
+          npm publish --provenance --access public
 
   python:
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.group == 'all' || inputs.group == 'python' }}
