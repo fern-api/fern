@@ -49,6 +49,19 @@ def _map_encoding(encoding: ir_types.WebhookSignatureEncoding) -> str:
     }[encoding]
 
 
+def _map_body_hash_algorithm(algorithm: ir_types.WebhookBodyHashAlgorithm) -> str:
+    return {
+        ir_types.WebhookBodyHashAlgorithm.SHA_256: "sha256",
+        ir_types.WebhookBodyHashAlgorithm.SHA_1: "sha1",
+        ir_types.WebhookBodyHashAlgorithm.SHA_384: "sha384",
+        ir_types.WebhookBodyHashAlgorithm.SHA_512: "sha512",
+    }[algorithm]
+
+
+def _body_hash_query_param_name(binding: ir_types.WebhookBodyHashBinding) -> str:
+    return binding.location.visit(query_parameter=lambda location: location.name)
+
+
 class WebhooksHelperGenerator:
     def __init__(self, context: SdkGeneratorContext, project: Project) -> None:
         self._context = context
@@ -122,6 +135,7 @@ class WebhooksHelperGenerator:
 
     def _compute_verification_key(self, config: ir_types.HmacSignatureVerification) -> str:
         timestamp = config.timestamp
+        body_hash_binding = config.body_hash_binding
         return json.dumps(
             {
                 "algorithm": config.algorithm.value,
@@ -142,6 +156,15 @@ class WebhooksHelperGenerator:
                         "headerName": _wire_value(timestamp.header_name),
                         "format": timestamp.format.value,
                         "tolerance": timestamp.tolerance,
+                    }
+                ),
+                "bodyHashBinding": (
+                    None
+                    if body_hash_binding is None
+                    else {
+                        "algorithm": body_hash_binding.algorithm.value,
+                        "encoding": body_hash_binding.encoding.value,
+                        "queryParameter": _body_hash_query_param_name(body_hash_binding),
                     }
                 ),
             },
@@ -170,6 +193,7 @@ class _HmacHelperWriter:
         self._has_body_sort = config.payload_format.body_sort is not None
         self._has_timestamp = config.timestamp is not None
         self._components = list(config.payload_format.components)
+        self._body_hash_binding = config.body_hash_binding
 
     def write(self) -> str:
         imports = self._build_imports()
@@ -210,7 +234,11 @@ class _HmacHelperWriter:
         if self._has_body_sort:
             imports.append("import typing")
         imports.append("")
-        imports.append("from ..core.webhook_signature import compute_hmac_signature, timing_safe_equal")
+        signature_imports = ["compute_hmac_signature"]
+        if self._body_hash_binding is not None:
+            signature_imports.extend(["compute_hash", "get_webhook_query_parameter"])
+        signature_imports.append("timing_safe_equal")
+        imports.append(f"from ..core.webhook_signature import {', '.join(sorted(signature_imports))}")
         return imports
 
     def _build_constants(self) -> List[str]:
@@ -231,11 +259,15 @@ class _HmacHelperWriter:
             "signature_header: str",
             "signature_key: str",
         ]
+        has_notification_url = False
         for component in self._components:
             if component == ir_types.WebhookPayloadComponent.NOTIFICATION_URL:
                 params.append("notification_url: str")
+                has_notification_url = True
             elif component == ir_types.WebhookPayloadComponent.MESSAGE_ID:
                 params.append("message_id: str")
+        if self._body_hash_binding is not None and not has_notification_url:
+            params.append("notification_url: str")
         if self._has_timestamp:
             params.append("timestamp_header: str")
         return params
@@ -249,6 +281,10 @@ class _HmacHelperWriter:
         if self._has_timestamp and self._config.timestamp is not None:
             lines.append("")
             lines.extend(self._build_timestamp_validation(self._config.timestamp))
+
+        if self._body_hash_binding is not None:
+            lines.append("")
+            lines.extend(self._build_body_hash_verification(self._body_hash_binding))
 
         signature_expr = self._build_signature_extraction(lines)
 
@@ -268,6 +304,23 @@ class _HmacHelperWriter:
         lines.append("")
         lines.append(f"return timing_safe_equal({signature_expr}, expected)")
         return lines
+
+    def _build_body_hash_verification(self, binding: ir_types.WebhookBodyHashBinding) -> List[str]:
+        algorithm = _map_body_hash_algorithm(binding.algorithm)
+        encoding = _map_encoding(binding.encoding)
+        query_param = _body_hash_query_param_name(binding)
+        return [
+            "expected_body_hash = compute_hash(",
+            "    payload=request_body,",
+            f'    algorithm="{algorithm}",',
+            f'    encoding="{encoding}",',
+            ")",
+            f"transmitted_body_hash = get_webhook_query_parameter(notification_url, {json.dumps(query_param)})",
+            "if transmitted_body_hash is None or not timing_safe_equal(",
+            "    expected_body_hash, transmitted_body_hash",
+            "):",
+            "    return False",
+        ]
 
     def _build_timestamp_validation(self, timestamp: ir_types.WebhookTimestampConfig) -> List[str]:
         header_name = _wire_value(timestamp.header_name)
@@ -382,6 +435,12 @@ class _HmacHelperWriter:
                     "The request_body parameter accepts either a raw string or a dict of POST body parameters.",
                     "When a dict is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.",
                 ]
+            )
+        if self._body_hash_binding is not None:
+            query_param = _body_hash_query_param_name(self._body_hash_binding)
+            lines.append(
+                f'The raw request_body is hashed and compared against the "{query_param}" query parameter '
+                "on the notification_url before the HMAC signature is verified."
             )
         result = ['"""']
         result.extend(lines)

@@ -2,6 +2,7 @@ import base64
 import hashlib
 import hmac
 import typing
+from urllib.parse import parse_qs, urlsplit
 
 HmacAlgorithm = typing.Literal["sha1", "sha256", "sha384", "sha512"]
 SignatureEncoding = typing.Literal["base64", "hex"]
@@ -29,6 +30,44 @@ def compute_hmac_signature(
     if encoding == "hex":
         return mac.hexdigest()
     return base64.b64encode(mac.digest()).decode("utf-8")
+
+
+def compute_hash(
+    *,
+    payload: str,
+    algorithm: HmacAlgorithm,
+    encoding: SignatureEncoding,
+) -> str:
+    """
+    Compute an unkeyed digest of a payload using the given algorithm and encoding.
+
+    This is distinct from compute_hmac_signature: no secret is involved. It is used to
+    recompute the hash of a raw request body so it can be compared against a hash that a
+    webhook provider transmits out-of-band (e.g. as a query parameter on the notification URL).
+    """
+    digestmod = _HASH_CONSTRUCTORS[algorithm]
+    digest = digestmod()
+    digest.update(payload.encode("utf-8"))
+    if encoding == "hex":
+        return digest.hexdigest()
+    return base64.b64encode(digest.digest()).decode("utf-8")
+
+
+def get_webhook_query_parameter(url: str, name: str) -> typing.Optional[str]:
+    """
+    Read a single query parameter from a URL without mutating or reordering the URL.
+
+    Returns the first value for the parameter, or None if the URL cannot be parsed or the
+    parameter is absent. This is read-only: it never reconstructs or normalizes the URL.
+    """
+    try:
+        query = urlsplit(url).query
+    except ValueError:
+        return None
+    values = parse_qs(query).get(name)
+    if not values:
+        return None
+    return values[0]
 
 
 def timing_safe_equal(a: str, b: str) -> bool:

@@ -6,8 +6,12 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .sms_status_webhooks_helper import SmsStatusWebhooksHelper
     from .webhooks_helper import WebhooksHelper
-_dynamic_imports: typing.Dict[str, str] = {"WebhooksHelper": ".webhooks_helper"}
+_dynamic_imports: typing.Dict[str, str] = {
+    "SmsStatusWebhooksHelper": ".sms_status_webhooks_helper",
+    "WebhooksHelper": ".webhooks_helper",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["WebhooksHelper"]
+__all__ = ["SmsStatusWebhooksHelper", "WebhooksHelper"]
