@@ -16,8 +16,8 @@ import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
-import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
 import { writeLiteralHeaders } from "../request/literalHeaders.js";
+import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
 import { getEndpointReturnType, getStreamElementType, isStreamingEndpoint } from "../utils/getEndpointReturnType.js";
 import { RawClient } from "./RawClient.js";
 
