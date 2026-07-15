@@ -217,11 +217,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         );
         const hasBasicAuth = basicAuthSchemes.length > 0;
         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+        const conditionalHeaderStatements = this.getConditionalGlobalHeaderStatements();
+        const buildHeadersVariable = hasBasicAuth || conditionalHeaderStatements.length > 0;
 
         method.addStatement(
             ruby.codeblock((writer) => {
-                if (hasBasicAuth) {
-                    // Build headers in a variable so we can conditionally add basic auth
+                if (buildHeadersVariable) {
+                    // Build headers in a variable so we can conditionally add
+                    // basic auth and nilable global headers
                     writer.write(`headers = `);
                     writer.writeNode(this.getRawClientHeaders());
                     writer.newLine();
@@ -286,6 +289,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         writer.writeLine(`end`);
                     }
                 }
+                for (const statement of conditionalHeaderStatements) {
+                    writer.writeLine(statement);
+                }
                 writer.write(`@raw_client = `);
                 writer.writeNode(this.context.getRawClientClassReference());
                 writer.writeLine(`.new(`);
@@ -308,7 +314,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     }
                     writer.writeLine(`,`);
                 }
-                if (hasBasicAuth) {
+                if (buildHeadersVariable) {
                     writer.writeLine(`headers: headers,`);
                 } else {
                     writer.write(`headers: `);
@@ -820,31 +826,28 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     /**
-     * Returns constructor keyword parameters for global headers that have a clientDefault.
+     * Returns constructor keyword parameters for non-literal global headers.
      * For headers with env AND clientDefault, precedence is: caller > env var > clientDefault.
+     * Headers without a clientDefault fall back to their env var (when declared) or nil.
      */
     private getGlobalHeaderParameters(): ruby.KeywordParameter[] {
         const parameters: ruby.KeywordParameter[] = [];
         const defaultExtractor = new DefaultValueExtractor(this.context);
 
-        for (const header of this.context.ir.headers) {
-            // Skip literal-typed headers (they're always sent with the literal value)
-            if (this.maybeLiteral(header.valueType) != null) {
-                continue;
-            }
-
+        for (const header of this.getNonLiteralGlobalHeaders()) {
             const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
-            if (clientDefault == null) {
-                continue;
-            }
 
             const paramName = this.case.snakeSafe(header.name);
             let initializer: ruby.CodeBlock;
-            if (header.env != null) {
+            if (header.env != null && clientDefault != null) {
                 // Precedence: caller > env var > clientDefault
                 initializer = ruby.codeblock(`ENV.fetch("${header.env}", ${clientDefault})`);
-            } else {
+            } else if (header.env != null) {
+                initializer = ruby.codeblock(`ENV.fetch("${header.env}", nil)`);
+            } else if (clientDefault != null) {
                 initializer = ruby.codeblock(clientDefault);
+            } else {
+                initializer = ruby.codeblock("nil");
             }
 
             parameters.push(
@@ -858,6 +861,29 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
 
         return parameters;
+    }
+
+    private getNonLiteralGlobalHeaders(): FernIr.HttpHeader[] {
+        return this.context.ir.headers.filter((header) => this.maybeLiteral(header.valueType) == null);
+    }
+
+    /**
+     * Statements that conditionally add global headers whose value may be nil at
+     * construction time (no clientDefault), e.g.
+     * `headers["X-Api-Version"] = api_version.to_s unless api_version.nil?`.
+     */
+    private getConditionalGlobalHeaderStatements(): string[] {
+        const statements: string[] = [];
+        const defaultExtractor = new DefaultValueExtractor(this.context);
+        for (const header of this.getNonLiteralGlobalHeaders()) {
+            if (defaultExtractor.extractClientDefault(header.clientDefault) != null) {
+                continue;
+            }
+            const paramName = this.case.snakeSafe(header.name);
+            const wireValue = getWireValue(header.name);
+            statements.push(`headers["${wireValue}"] = ${paramName}.to_s unless ${paramName}.nil?`);
+        }
+        return statements;
     }
 
     private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): InferredAuthParameter[] {
@@ -1004,12 +1030,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
         }
 
-        // Add global headers that have clientDefault values
+        // Add global headers that have clientDefault values (always non-nil).
+        // Headers without a clientDefault may be nil and are added conditionally
+        // in the constructor body (see getConditionalGlobalHeaderStatements).
         const defaultExtractor = new DefaultValueExtractor(this.context);
-        for (const header of this.context.ir.headers) {
-            if (this.maybeLiteral(header.valueType) != null) {
-                continue;
-            }
+        for (const header of this.getNonLiteralGlobalHeaders()) {
             const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
             if (clientDefault == null) {
                 continue;
