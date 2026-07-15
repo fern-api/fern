@@ -104,7 +104,9 @@ def test_getsockopt_readback_on_real_socket() -> None:
         for level, name, value in opts:
             client.setsockopt(level, name, value)
 
-        assert client.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) == 1
+        # macOS returns a nonzero value (e.g. 8), not exactly 1, when keepalive is on,
+        # so assert "enabled" (truthy) rather than == 1.
+        assert client.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE) != 0
 
         idle_const = getattr(socket, "TCP_KEEPIDLE", None) or getattr(socket, "TCP_KEEPALIVE", None)
         if idle_const:
