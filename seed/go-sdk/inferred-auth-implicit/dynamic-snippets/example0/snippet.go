@@ -26,7 +26,9 @@ func do() {
     request := &fern.GetTokenRequest{
         XAPIKey: "X-Api-Key",
         ClientID: "client_id",
-        ClientSecret: "client_secret",
+        ClientSecret: fern.String(
+            "client_secret",
+        ),
         Scope: fern.String(
             "scope",
         ),

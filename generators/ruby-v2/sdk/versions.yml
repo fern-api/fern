@@ -1,4 +1,55 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.3
+  changelogEntry:
+    - summary: |
+        Expose non-literal global headers without a client default as root client
+        constructor parameters. Headers with a declared `env` default to that
+        environment variable (e.g. `version: ENV.fetch("MY_API_VERSION", nil)`), and
+        the header is only sent when the value is non-nil. Previously such headers
+        were omitted entirely and could only be sent via per-request
+        `additional_headers`.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.2
+  changelogEntry:
+    - summary: |
+        Serialize request bodies declared as aliases of objects through the aliased
+        class so wire names are applied. Previously the raw params hash was sent,
+        so properties whose Ruby name differs from the API wire name (e.g.
+        `display_name` vs. `displayName`) were sent with the wrong key.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.1
+  changelogEntry:
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the
+        token endpoint's `grant_type` property is a non-literal string. Previously the
+        property was omitted (when optional) or surfaced as a required constructor
+        parameter (when required), so token endpoints that require `grant_type`
+        rejected the request.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an idempotency-key request header. This is now driven
+        entirely by the IR (`SdkConfig.idempotencyKeyGeneration`), resolved once by the CLI from
+        the `auto-generate-idempotency-key` generator config key, so the header name and the set of
+        eligible HTTP methods are read identically across every generator. When enabled, the
+        generated SDK attaches the configured header (defaulting to `Idempotency-Key`) on the
+        configured methods (defaulting to `POST` and `PUT`) with a freshly generated UUIDv4
+        (`SecureRandom.uuid`) at request time. For endpoints that declare a matching idempotency
+        header the caller-supplied value wins and the generated UUID is only the fallback. When the
+        IR does not enable the feature, generated output is unchanged.
+      type: feat
+    - summary: |
+        Upgrade the generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-14"
+  irVersion: 67
 - version: 1.16.0
   changelogEntry:
     - summary: |

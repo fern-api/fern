@@ -6,7 +6,7 @@ use Seed\Auth\AuthClient;
 use Seed\User\UserClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Core\InferredAuthProvider;
+use Seed\Core\OAuthTokenProvider;
 
 class SeedClient
 {
@@ -37,9 +37,9 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var InferredAuthProvider $inferredAuthProvider
+     * @var OAuthTokenProvider $oauthTokenProvider
      */
-    private InferredAuthProvider $inferredAuthProvider;
+    private OAuthTokenProvider $oauthTokenProvider;
 
     /**
      * @param ?string $token The token to use for authentication.
@@ -90,13 +90,7 @@ class SeedClient
         if ($clientId !== null && $clientSecret !== null) {
             $authRawClient = new RawClient(['headers' => []]);
             $authClient = new AuthClient($authRawClient);
-            $inferredAuthOptions = [
-                'clientId' => $clientId,
-                'clientSecret' => $clientSecret,
-                'audience' => 'https://api.example.com',
-                'grantType' => 'client_credentials',
-            ];
-            $this->inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
+            $this->oauthTokenProvider = new OAuthTokenProvider($clientId, $clientSecret, $authClient);
 
         }
         $this->options['headers'] = array_merge(
@@ -106,7 +100,7 @@ class SeedClient
 
         if ($clientId !== null && $clientSecret !== null) {
             $this->options['getAuthHeaders'] = fn () =>
-                $this->inferredAuthProvider->getAuthHeaders();
+                ['Authorization' => "Bearer " . $this->oauthTokenProvider->getToken()];
         }
 
         $this->client = new RawClient(

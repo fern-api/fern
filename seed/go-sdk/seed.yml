@@ -260,6 +260,14 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+    - outputFolder: auto-generate-idempotency-key
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: fern
+        module:
+          path: github.com/idempotency-headers/fern
+        includeLegacyClientOptions: true
+        auto-generate-idempotency-key: true
   literals-unions:
     - outputFolder: no-custom-config
       customConfig: null
@@ -277,6 +285,12 @@ fixtures:
       customConfig:
         enableWireTests: true
   oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+  go-oauth-token-nullable:
+    - outputFolder: no-custom-config
+      customConfig: null
+  go-oauth-token-optional:
     - outputFolder: no-custom-config
       customConfig: null
   pagination-custom:

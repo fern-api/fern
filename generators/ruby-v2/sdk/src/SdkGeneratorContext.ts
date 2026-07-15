@@ -328,6 +328,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.ErrorsConstraint,
             AsIsFiles.ErrorsType,
 
+            // Idempotency
+            ...(this.ir.sdkConfig.idempotencyKeyGeneration != null ? [AsIsFiles.IdempotencyKey] : []),
+
             // Iterators
             AsIsFiles.ItemIterator,
             AsIsFiles.CursorItemIterator,

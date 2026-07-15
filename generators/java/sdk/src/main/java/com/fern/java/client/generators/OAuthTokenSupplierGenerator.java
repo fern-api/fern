@@ -52,6 +52,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String BUFFER_IN_MINUTES_CONSTANT_NAME = "BUFFER_IN_MINUTES";
     private static final String EXPIRES_IN_SECONDS_PARAMETER_NAME = "expiresInSeconds";
 
+    private static final String GRANT_TYPE_WIRE_VALUE = "grant_type";
+    private static final String CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
+
     private static final String FETCH_TOKEN_METHOD_NAME = "fetchToken";
     private static final String GET_METHOD_NAME = "get";
     private static final String GET_EXPIRES_AT_METHOD_NAME = "getExpiresAt";
@@ -133,6 +136,15 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                 .getName())
                         .getCamelCase()
                         .getSafeName();
+                // A non-literal grant_type property is always sent with the
+                // "client_credentials" value rather than surfaced as a
+                // user-supplied option: the client credentials flow requires
+                // grant_type=client_credentials (RFC 6749 §4.4.2).
+                if (isGrantTypeProperty(customProp)) {
+                    customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                            propName, getPropertyTypeName(customProp), CLIENT_CREDENTIALS_GRANT_TYPE));
+                    continue;
+                }
                 customPropertiesWithNames.add(
                         new OAuthTokenSupplierProperty(propName, getPropertyTypeName(customProp)));
             }
@@ -259,6 +271,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addParameter(String.class, CLIENT_SECRET_FIELD_NAME);
 
         for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                continue;
+            }
             constructorBuilder.addParameter(customProp.type, customProp.name);
         }
 
@@ -268,6 +283,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME);
 
         for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                continue;
+            }
             constructorBuilder.addStatement("this.$L = $L", customProp.name, customProp.name);
         }
 
@@ -285,6 +303,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .build());
 
         for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                continue;
+            }
             oauthTypeSpecBuilder.addField(
                     FieldSpec.builder(customProp.type, customProp.name, Modifier.PRIVATE, Modifier.FINAL)
                             .build());
@@ -363,6 +384,10 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
 
         for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
+            if (customProp.hardcodedStringValue != null) {
+                requestBuilderCode.add(".$L($S)", customProp.name, customProp.hardcodedStringValue);
+                continue;
+            }
             requestBuilderCode.add(".$L($L)", customProp.name, customProp.name);
         }
 
@@ -461,11 +486,24 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final class OAuthTokenSupplierProperty {
         private final String name;
         private final TypeName type;
+        private final String hardcodedStringValue;
 
         private OAuthTokenSupplierProperty(String name, TypeName type) {
+            this(name, type, null);
+        }
+
+        private OAuthTokenSupplierProperty(String name, TypeName type, String hardcodedStringValue) {
             this.name = name;
             this.type = type;
+            this.hardcodedStringValue = hardcodedStringValue;
         }
+    }
+
+    public static boolean isGrantTypeProperty(RequestProperty requestProperty) {
+        return GRANT_TYPE_WIRE_VALUE.equals(requestProperty
+                .getProperty()
+                .visit(new RequestPropertyToNameVisitor())
+                .getWireValue());
     }
 
     private boolean isLiteralProperty(RequestProperty requestProperty) {

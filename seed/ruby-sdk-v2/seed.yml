@@ -69,6 +69,12 @@ fixtures:
         enableWireTests: true
         clientModuleName: MyClient
         maxRetries: 5
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   pagination:
     - customConfig: null
       outputFolder: no-custom-config

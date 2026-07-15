@@ -37,7 +37,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 		&authOptions,
 	)
 	options.SetTokenGetter(func() (string, error) {
-		return oauthTokenProvider.GetOrFetch(func() (string, int, error) {
+		return oauthTokenProvider.GetOrFetch(func() (string, int64, error) {
 			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
 				Cid: options.ClientID,
 				Csr: options.ClientSecret,
@@ -50,9 +50,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 					"oauth response missing access token",
 				)
 			}
-			expiresIn := core.DefaultExpirySeconds
+			expiresIn := int64(core.DefaultExpirySeconds)
 			if response.ExpiresIn > 0 {
-				expiresIn = response.ExpiresIn
+				expiresIn = int64(response.ExpiresIn)
 			}
 			return response.AccessToken, expiresIn, nil
 		})

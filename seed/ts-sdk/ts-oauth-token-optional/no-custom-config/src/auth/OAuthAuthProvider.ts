@@ -91,6 +91,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
                 const tokenResponse = await this.authClient.createOauth2Token({
                     client_id: clientId,
                     client_secret: clientSecret,
+                    grant_type: "client_credentials",
                 });
 
                 const accessToken = tokenResponse.access_token;
