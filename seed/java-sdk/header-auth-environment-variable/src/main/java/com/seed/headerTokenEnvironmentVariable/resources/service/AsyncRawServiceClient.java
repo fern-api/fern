@@ -3,6 +3,7 @@
  */
 package com.seed.headerTokenEnvironmentVariable.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.headerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.headerTokenEnvironmentVariable.core.ObjectMappers;
 import com.seed.headerTokenEnvironmentVariable.core.RequestOptions;
@@ -83,6 +84,9 @@ public class AsyncRawServiceClient {
                     future.completeExceptionally(new SeedHeaderTokenEnvironmentVariableApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedHeaderTokenEnvironmentVariableException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedHeaderTokenEnvironmentVariableException("Network error executing HTTP request", e));

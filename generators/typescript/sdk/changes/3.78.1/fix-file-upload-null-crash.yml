@@ -1,0 +1,6 @@
+- summary: |
+    Fix `TypeError: Cannot use 'in' operator to search for 'path' in undefined`
+    crash when `null` or `undefined` is passed to a file upload parameter at
+    runtime. The error is now a clear `TypeError` describing the expected types
+    instead of a cryptic `in` operator failure.
+  type: fix

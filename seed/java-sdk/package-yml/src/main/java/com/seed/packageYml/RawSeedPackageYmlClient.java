@@ -80,6 +80,8 @@ public class RawSeedPackageYmlClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPackageYmlApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedPackageYmlException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedPackageYmlException("Network error executing HTTP request", e);
         }

@@ -74,16 +74,14 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
             clientOptionsWithAuth.Headers["Authorization"] =
                 $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"))}";
         }
-        var inferredAuthProvider = new InferredAuthTokenProvider(
+        var tokenProvider = new OAuthTokenProvider(
             clientId,
             clientSecret,
             new AuthClient(new RawClient(clientOptions))
         );
         clientOptionsWithAuth.Headers["Authorization"] =
             new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
-                    .First()
-                    .Value
+                await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
             );
         _client = new RawClient(clientOptionsWithAuth);
         Auth = new AuthClient(_client);

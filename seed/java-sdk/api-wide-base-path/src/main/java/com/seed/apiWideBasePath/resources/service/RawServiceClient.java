@@ -3,6 +3,7 @@
  */
 package com.seed.apiWideBasePath.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.apiWideBasePath.core.ClientOptions;
 import com.seed.apiWideBasePath.core.ObjectMappers;
 import com.seed.apiWideBasePath.core.RequestOptions;
@@ -71,6 +72,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiWideBasePathApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiWideBasePathException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiWideBasePathException("Network error executing HTTP request", e);
         }

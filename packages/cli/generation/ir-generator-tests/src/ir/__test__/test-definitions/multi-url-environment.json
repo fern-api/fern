@@ -188,6 +188,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -388,6 +389,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -450,6 +452,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -842,12 +845,12 @@
                                             "safeName": "s3Key"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "s3key",
-                                            "safeName": "s3key"
+                                            "unsafeName": "s3_key",
+                                            "safeName": "s3_key"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "S3KEY",
-                                            "safeName": "S3KEY"
+                                            "unsafeName": "S3_KEY",
+                                            "safeName": "S3_KEY"
                                         },
                                         "pascalCase": {
                                             "unsafeName": "S3Key",
@@ -985,6 +988,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -1064,6 +1068,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

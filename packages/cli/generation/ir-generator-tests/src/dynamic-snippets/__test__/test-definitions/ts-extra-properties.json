@@ -155,7 +155,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": true
+            "additionalProperties": true,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -353,5 +354,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

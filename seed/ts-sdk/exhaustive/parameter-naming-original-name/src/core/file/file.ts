@@ -37,6 +37,11 @@ async function getFileWithMetadata(
     file: Uploadable,
     { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
 ): Promise<Uploadable.WithMetadata> {
+    if (file == null) {
+        throw new Error(
+            `Expected file to be a Blob, Buffer, ReadableStream, or an object with a "path" or "data" property, but received ${file === null ? "null" : "undefined"}.`,
+        );
+    }
     if (isFileLike(file)) {
         return getFileWithMetadata(
             {
@@ -48,7 +53,7 @@ async function getFileWithMetadata(
 
     if ("path" in file) {
         const fs = await import("fs");
-        if (!fs || !fs.createReadStream) {
+        if (!fs?.createReadStream) {
             throw new Error("File path uploads are not supported in this environment.");
         }
         const data = fs.createReadStream(file.path);
@@ -97,7 +102,7 @@ function isFileLike(value: unknown): value is Uploadable.FileLike {
 async function tryGetFileSizeFromPath(path: string): Promise<number | undefined> {
     try {
         const fs = await import("fs");
-        if (!fs || !fs.promises || !fs.promises.stat) {
+        if (!fs?.promises?.stat) {
             return undefined;
         }
         const fileStat = await fs.promises.stat(path);

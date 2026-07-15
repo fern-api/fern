@@ -5,6 +5,12 @@ features:
 
   - id: ENVIRONMENTS
 
+  - id: OAUTH
+    description: |
+      The SDK supports OAuth 2.0 client-credentials authentication. Provide your `client_id` and
+      `client_secret` when constructing the client, and the SDK will automatically fetch an access
+      token from the configured token endpoint, cache it, and refresh it before it expires.
+
   - id: PAGINATION
     description: |
       List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.

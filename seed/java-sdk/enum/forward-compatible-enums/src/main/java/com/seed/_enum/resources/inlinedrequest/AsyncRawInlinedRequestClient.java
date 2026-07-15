@@ -87,6 +87,9 @@ public class AsyncRawInlinedRequestClient {
                     future.completeExceptionally(new SeedEnumApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedEnumException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedEnumException("Network error executing HTTP request", e));
                 }

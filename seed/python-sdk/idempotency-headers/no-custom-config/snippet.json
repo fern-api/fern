@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/payment",
+                "method": "POST",
+                "identifier_override": "endpoint_payment.create"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedIdempotencyHeaders\n\nclient = SeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.payment.create(\n    amount=1,\n    currency=\"USD\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedIdempotencyHeaders\n\nclient = AsyncSeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.payment.create(\n        amount=1,\n        currency=\"USD\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/payment/{paymentId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_payment.delete"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedIdempotencyHeaders\n\nclient = SeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.payment.delete(\n    payment_id=\"paymentId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedIdempotencyHeaders\n\nclient = AsyncSeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.payment.delete(\n        payment_id=\"paymentId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -26,6 +26,26 @@ webhooks:
     method: POST
     payload: User
 
+  messageStatus:
+    display-name: Message Status
+    method: POST
+    payload: User
+    signature:
+      type: hmac
+      header: X-Twilio-Signature
+      algorithm: sha1
+      encoding: base64
+      payload-format:
+        components:
+          - notification-url
+        delimiter: ""
+      body-hash-binding:
+        algorithm: sha256
+        encoding: hex
+        location:
+          type: query-parameter
+          name: bodySHA256
+
 types:
   User:
     properties:

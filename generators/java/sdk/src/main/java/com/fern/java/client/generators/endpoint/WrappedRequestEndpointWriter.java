@@ -201,14 +201,17 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         }
         Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
         if (clientGeneratorContext.isEndpointSecurity()) {
-            requestBodyCodeBlock.add(".headers($T.of(_headers))", Headers.class);
+            requestBodyCodeBlock.add(
+                    ".headers($T.of($L))", Headers.class, maybeWrapHeadersWithIdempotencyKey(CodeBlock.of("_headers")));
         } else {
             requestBodyCodeBlock.add(
-                    ".headers($T.of($L.$L($L)))",
+                    ".headers($T.of($L))",
                     Headers.class,
-                    clientOptionsMember.name,
-                    ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    maybeWrapHeadersWithIdempotencyKey(CodeBlock.of(
+                            "$L.$L($L)",
+                            clientOptionsMember.name,
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
         }
         if (sendContentType && !isFileUpload) {
             requestBodyCodeBlock.add("\n.addHeader($S, $S)", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);

@@ -28,6 +28,7 @@ export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
         idempotent: boolean | undefined;
         subtitle: string | undefined;
+        globalParameterIds: string[] | undefined;
         idToAuthScheme?: Record<string, FernIr.AuthScheme>;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
         pathLevelServers?: OpenAPIV3_1.ServerObject[];
@@ -62,6 +63,7 @@ export declare namespace OperationConverter {
 export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
     private readonly subtitle: string | undefined;
+    private readonly globalParameterIds: string[] | undefined;
     private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
     private readonly pathLevelServers?: OpenAPIV3_1.ServerObject[];
@@ -78,6 +80,7 @@ export class OperationConverter extends AbstractOperationConverter {
         pathItemParameters,
         idempotent,
         subtitle,
+        globalParameterIds,
         idToAuthScheme,
         topLevelServers,
         pathLevelServers,
@@ -86,6 +89,7 @@ export class OperationConverter extends AbstractOperationConverter {
         super({ context, breadcrumbs, operation, method, path, pathItemParameters });
         this.idempotent = idempotent;
         this.subtitle = subtitle;
+        this.globalParameterIds = globalParameterIds;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
         this.pathLevelServers = pathLevelServers;
@@ -279,6 +283,7 @@ export class OperationConverter extends AbstractOperationConverter {
             source: HttpEndpointSource.openapi(),
             audiences,
             retries: undefined,
+            globalParameters: this.globalParameterIds,
             apiPlayground
         };
 

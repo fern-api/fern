@@ -253,6 +253,7 @@
   },
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -285,6 +286,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
@@ -338,6 +340,7 @@
             "head": "/transaction",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.createTransaction",
           "idempotent": false,
@@ -563,6 +566,7 @@
             "head": "/user-transaction",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.createUserTransaction",
           "idempotent": false,
@@ -792,6 +796,7 @@
             "head": "/merchant/settings",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.getMerchantSettings",
           "idempotent": false,
@@ -955,6 +960,7 @@
             "head": "/admin/users",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.listUsers",
           "idempotent": false,
@@ -1160,6 +1166,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -1260,6 +1267,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -1360,6 +1368,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -1461,6 +1470,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -1561,6 +1571,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

@@ -73,6 +73,8 @@ public class RawHttpMethodsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -130,6 +132,8 @@ public class RawHttpMethodsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -188,6 +192,8 @@ public class RawHttpMethodsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -254,6 +260,8 @@ public class RawHttpMethodsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -302,6 +310,8 @@ public class RawHttpMethodsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }

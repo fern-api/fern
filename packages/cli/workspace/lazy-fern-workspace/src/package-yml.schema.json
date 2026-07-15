@@ -3205,6 +3205,20 @@
               "type": "null"
             }
           ]
+        },
+        "global-parameters": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "List of global parameter IDs that this endpoint opts into.\nUsed with apply: explicit mode."
         }
       },
       "required": [
@@ -3572,6 +3586,70 @@
       ],
       "additionalProperties": false
     },
+    "webhooks.WebhookBodyHashAlgorithmSchema": {
+      "type": "string",
+      "enum": [
+        "sha256",
+        "sha1",
+        "sha384",
+        "sha512"
+      ]
+    },
+    "webhooks.WebhookBodyHashLocationSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "query-parameter"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "query-parameter"
+            },
+            "name": {
+              "type": "string",
+              "description": "The query-parameter name that carries the body hash (e.g. \"bodySHA256\")."
+            }
+          },
+          "required": [
+            "type",
+            "name"
+          ]
+        }
+      ]
+    },
+    "webhooks.WebhookBodyHashBindingSchema": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "$ref": "#/definitions/webhooks.WebhookBodyHashAlgorithmSchema"
+        },
+        "encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookSignatureEncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Defaults to base64."
+        },
+        "location": {
+          "$ref": "#/definitions/webhooks.WebhookBodyHashLocationSchema"
+        }
+      },
+      "required": [
+        "algorithm",
+        "location"
+      ],
+      "additionalProperties": false
+    },
     "webhooks.AsymmetricAlgorithmSchema": {
       "type": "string",
       "enum": [
@@ -3657,6 +3735,17 @@
                   "type": "null"
                 }
               ]
+            },
+            "body-hash-binding": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookBodyHashBindingSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "When set, the raw body is not signed directly; instead a hash of the body is\ntransmitted separately (e.g. Twilio's \"bodySHA256\" query parameter for JSON\nbodies) and verification also recomputes and compares the body hash."
             }
           },
           "required": [

@@ -42,6 +42,7 @@
   "errors": {},
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "globalParameters": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -72,6 +73,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
@@ -112,6 +114,7 @@
             "head": "/rates",
             "parts": [],
           },
+          "globalParameters": undefined,
           "headers": [],
           "id": "endpoint_.getRates",
           "idempotent": false,
@@ -347,6 +350,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -432,6 +436,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -585,6 +590,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

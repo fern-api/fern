@@ -272,6 +272,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -291,6 +292,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
@@ -650,6 +652,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "pathParameters": [],
         "environments": null,
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -763,6 +766,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -773,4 +777,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2290791`;
+exports[`dependencies > file dependencies 1`] = `2296469`;

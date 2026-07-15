@@ -83,6 +83,8 @@ public class RawVendorClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }
@@ -142,6 +144,8 @@ public class RawVendorClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }

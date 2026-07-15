@@ -3,6 +3,7 @@
  */
 package com.seed.undiscriminatedUnionWithResponseProperty;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ClientOptions;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ObjectMappers;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.RequestOptions;
@@ -73,6 +74,9 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionWithResponsePropertyException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionWithResponsePropertyException("Network error executing HTTP request", e);
         }
@@ -123,6 +127,9 @@ public class RawSeedUndiscriminatedUnionWithResponsePropertyClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionWithResponsePropertyException(
+                    "Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedUndiscriminatedUnionWithResponsePropertyException("Network error executing HTTP request", e);
         }

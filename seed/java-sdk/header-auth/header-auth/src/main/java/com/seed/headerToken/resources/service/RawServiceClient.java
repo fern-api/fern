@@ -3,6 +3,7 @@
  */
 package com.seed.headerToken.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.headerToken.core.ClientOptions;
 import com.seed.headerToken.core.ObjectMappers;
 import com.seed.headerToken.core.RequestOptions;
@@ -73,6 +74,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedHeaderTokenApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedHeaderTokenException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedHeaderTokenException("Network error executing HTTP request", e);
         }

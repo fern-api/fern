@@ -220,16 +220,17 @@ func (r *RawClient) GetOptionalMovie(
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
+			URL:                endpointURL,
+			Method:             http.MethodPost,
+			Headers:            headers,
+			MaxAttempts:        options.MaxAttempts,
+			DisableRetries:     options.DisableRetries,
+			BodyProperties:     options.BodyProperties,
+			QueryParameters:    options.QueryParameters,
+			Client:             options.HTTPClient,
+			Request:            request,
+			Response:           &response,
+			ResponseIsOptional: true,
 		},
 	)
 	if err != nil {

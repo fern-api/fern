@@ -187,7 +187,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_imdb:MovieId",
@@ -269,7 +270,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -329,6 +331,7 @@
                         "docs": null
                     }
                 ],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "actor",
@@ -459,7 +462,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -789,6 +793,7 @@
                         "external"
                     ],
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1721,6 +1726,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1772,6 +1778,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
@@ -1831,7 +1838,8 @@
                         "headerName": "x-webhook-timestamp",
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
-                    }
+                    },
+                    "bodyHashBinding": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -1866,6 +1874,61 @@
                     "docs": null
                 },
                 "signatureVerification": null,
+                "fileUploadPayload": null,
+                "responses": null,
+                "examples": null,
+                "v2Examples": null,
+                "availability": null,
+                "docs": null
+            },
+            {
+                "id": "webhooks_webhooks.messageStatus",
+                "displayName": "Message Status",
+                "method": "POST",
+                "name": "messageStatus",
+                "headers": [],
+                "payload": {
+                    "type": "reference",
+                    "payloadType": {
+                        "_type": "named",
+                        "name": "User",
+                        "fernFilepath": {
+                            "allParts": [
+                                "webhooks"
+                            ],
+                            "packagePath": [],
+                            "file": "webhooks"
+                        },
+                        "displayName": null,
+                        "typeId": "type_webhooks:User",
+                        "default": null,
+                        "inline": null
+                    },
+                    "docs": null
+                },
+                "signatureVerification": {
+                    "type": "hmac",
+                    "signatureHeaderName": "X-Twilio-Signature",
+                    "algorithm": "SHA1",
+                    "encoding": "BASE64",
+                    "signaturePrefix": null,
+                    "payloadFormat": {
+                        "components": [
+                            "NOTIFICATION_URL"
+                        ],
+                        "delimiter": "",
+                        "bodySort": null
+                    },
+                    "timestamp": null,
+                    "bodyHashBinding": {
+                        "algorithm": "SHA256",
+                        "encoding": "HEX",
+                        "location": {
+                            "type": "queryParameter",
+                            "name": "bodySHA256"
+                        }
+                    }
+                },
                 "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
@@ -2145,7 +2208,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:CreateMovieRequest": {
                 "type": "object",
@@ -2276,7 +2340,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_imdb:Cast": {
                 "type": "discriminatedUnion",
@@ -2366,6 +2431,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "actor": {
                         "type": "noProperties",
@@ -2653,7 +2719,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [],
@@ -2914,6 +2981,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -3007,6 +3075,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

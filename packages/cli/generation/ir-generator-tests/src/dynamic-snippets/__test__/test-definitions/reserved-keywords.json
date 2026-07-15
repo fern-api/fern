@@ -100,7 +100,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_package:Record": {
             "type": "object",
@@ -238,7 +239,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_package:SipHeaderAction": {
             "type": "discriminatedUnion",
@@ -328,6 +330,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "static": {
                     "type": "samePropertiesAsObject",
@@ -514,7 +517,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_package:BackupConfig": {
             "type": "discriminatedUnion",
@@ -604,6 +608,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "override": {
                     "type": "samePropertiesAsObject",
@@ -760,7 +765,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_package:DependencyItem": {
             "type": "discriminatedUnion",
@@ -850,6 +856,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "known": {
                     "type": "samePropertiesAsObject",
@@ -1006,7 +1013,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -1196,5 +1204,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

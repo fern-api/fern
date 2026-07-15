@@ -2,24 +2,23 @@ import { toMultipartDataPart, type Uploadable } from "../../core/file/index.js";
 import { toJson } from "../../core/json.js";
 import { RUNTIME } from "../runtime/index.js";
 
+export async function toReadableStream(
+    encoder: import("form-data-encoder").FormDataEncoder,
+): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> {
+    const iterator = encoder.encode();
 
+    return new ReadableStream({
+        async pull(controller) {
+            const { value, done } = await iterator.next();
 
-export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> {
-  const iterator = encoder.encode()
+            if (done) {
+                return controller.close();
+            }
 
-  return new ReadableStream({
-    async pull(controller) {
-      const {value, done} = await iterator.next()
-
-      if (done) {
-        return controller.close()
-      }
-
-      controller.enqueue(value)
-    }
-  })
+            controller.enqueue(value);
+        },
+    });
 }
-
 
 export type MaybePromise<T> = Promise<T> | T;
 
@@ -75,6 +74,11 @@ export class Node18FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
+        if (value == null) {
+            throw new Error(
+                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`,
+            );
+        }
         const { data, filename } = await toMultipartDataPart(value);
 
         if (data instanceof Blob) {
@@ -86,7 +90,7 @@ export class Node18FormData implements CrossPlatformFormData {
                 [Symbol.toStringTag]: "File",
                 stream() {
                     return data;
-                }
+                },
             });
         }
     }
@@ -96,7 +100,7 @@ export class Node18FormData implements CrossPlatformFormData {
         return {
             body: await toReadableStream(encoder),
             headers: encoder.headers,
-            duplex: "half"
+            duplex: "half",
         };
     }
 }
@@ -114,7 +118,7 @@ export type Node16FormDataFd =
                         filename?: string;
                         filepath?: string;
                         contentType?: string;
-                    }
+                    },
           ): void;
 
           getHeaders(): Record<string, string>;
@@ -136,6 +140,11 @@ export class Node16FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
+        if (value == null) {
+            throw new Error(
+                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`,
+            );
+        }
         const { data, filename } = await toMultipartDataPart(value);
 
         let bufferedValue;
@@ -155,7 +164,7 @@ export class Node16FormData implements CrossPlatformFormData {
     public getRequest(): FormDataRequest<Node16FormDataFd> {
         return {
             body: this.fd,
-            headers: this.fd ? this.fd.getHeaders() : {}
+            headers: this.fd ? this.fd.getHeaders() : {},
         };
     }
 }
@@ -177,6 +186,11 @@ export class WebFormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
+        if (value == null) {
+            throw new Error(
+                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`,
+            );
+        }
         const { data, filename, contentType } = await toMultipartDataPart(value);
 
         if (data instanceof Blob) {
@@ -193,7 +207,6 @@ export class WebFormData implements CrossPlatformFormData {
         };
     }
 }
-
 
 type StreamLike = {
     read?: () => unknown;

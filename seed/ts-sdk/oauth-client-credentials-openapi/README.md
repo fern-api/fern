@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/oauth-client-credentials-openapi";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
 await client.identity.getToken({
     username: "username",
     password: "password"

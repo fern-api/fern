@@ -9,6 +9,7 @@ import { SecuritySchemeId } from "../../commons/types/SecuritySchemeId.js";
 import { Server } from "../../commons/types/Server.js";
 import { Endpoint } from "./Endpoint.js";
 import { GlobalHeader } from "./GlobalHeader.js";
+import { GlobalParameter } from "./GlobalParameter.js";
 import { GlobalSecurity } from "./GlobalSecurity.js";
 import { IdempotencyHeader } from "./IdempotencyHeader.js";
 import { PathParameter } from "./PathParameter.js";
@@ -43,6 +44,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     securitySchemes: core.serialization.record(SecuritySchemeId, SecurityScheme),
     security: GlobalSecurity.optional(),
     globalHeaders: core.serialization.list(GlobalHeader).optional(),
+    globalParameters: core.serialization.list(GlobalParameter).optional(),
     idempotencyHeaders: core.serialization.list(IdempotencyHeader).optional(),
 });
 
@@ -68,6 +70,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         securitySchemes: Record<SecuritySchemeId.Raw, SecurityScheme.Raw>;
         security?: GlobalSecurity.Raw | null;
         globalHeaders?: GlobalHeader.Raw[] | null;
+        globalParameters?: GlobalParameter.Raw[] | null;
         idempotencyHeaders?: IdempotencyHeader.Raw[] | null;
     }
 }

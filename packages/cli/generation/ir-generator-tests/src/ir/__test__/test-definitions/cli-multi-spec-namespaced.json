@@ -122,7 +122,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -214,7 +215,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -300,7 +302,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_v2:UserV2Profile"
@@ -862,6 +865,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1763,6 +1767,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "globalParameters": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -1799,6 +1804,7 @@
     "basePath": null,
     "pathParameters": [],
     "variables": [],
+    "globalParameters": null,
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_v1": [
@@ -1953,7 +1959,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_v2:UserV2Profile": {
                 "type": "object",
@@ -1965,12 +1972,12 @@
                             "safeName": "userV2Profile"
                         },
                         "snakeCase": {
-                            "unsafeName": "user_v2profile",
-                            "safeName": "user_v2profile"
+                            "unsafeName": "user_v2_profile",
+                            "safeName": "user_v2_profile"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "USER_V2PROFILE",
-                            "safeName": "USER_V2PROFILE"
+                            "unsafeName": "USER_V2_PROFILE",
+                            "safeName": "USER_V2_PROFILE"
                         },
                         "pascalCase": {
                             "unsafeName": "UserV2Profile",
@@ -2092,7 +2099,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_v2:UserV2": {
                 "type": "object",
@@ -2225,7 +2233,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             }
         },
         "headers": [
@@ -2608,6 +2617,7 @@
             }
         },
         "variables": null,
+        "globalParameters": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -2696,6 +2706,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

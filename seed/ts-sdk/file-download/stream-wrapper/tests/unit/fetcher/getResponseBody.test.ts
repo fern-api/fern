@@ -90,7 +90,6 @@ describe("Test getResponseBody", () => {
         }
     });
 
-
     it("should handle streaming response type", async () => {
         if (RUNTIME.type === "node") {
             const mockStream = new ReadableStream();
@@ -113,5 +112,4 @@ describe("Test getResponseBody", () => {
             expect(descriptor?.enumerable).toBe(false);
         }
     });
-
 });

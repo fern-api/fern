@@ -88,6 +88,8 @@ public class RawBasicAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBasicAuthPwOmittedApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBasicAuthPwOmittedException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBasicAuthPwOmittedException("Network error executing HTTP request", e);
         }
@@ -164,6 +166,8 @@ public class RawBasicAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBasicAuthPwOmittedApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBasicAuthPwOmittedException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBasicAuthPwOmittedException("Network error executing HTTP request", e);
         }

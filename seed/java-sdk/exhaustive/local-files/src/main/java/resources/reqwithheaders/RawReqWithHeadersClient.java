@@ -4,6 +4,7 @@
 
 package com.fern.sdk.resources.reqwithheaders;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
@@ -77,6 +78,9 @@ public class RawReqWithHeadersClient {
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
         throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+      }
+      catch (JsonProcessingException e) {
+        throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
       }
       catch (IOException e) {
         throw new SeedExhaustiveException("Network error executing HTTP request", e);

@@ -7,6 +7,7 @@ import { buildAuthSchemes } from "./buildAuthSchemes.js";
 import { buildChannel } from "./buildChannel.js";
 import { buildEnvironments } from "./buildEnvironments.js";
 import { buildGlobalHeaders } from "./buildGlobalHeaders.js";
+import { buildGlobalParameters } from "./buildGlobalParameters.js";
 import { buildIdempotencyHeaders } from "./buildIdempotencyHeaders.js";
 import { buildServices } from "./buildServices.js";
 import { buildObjectTypeDeclaration, buildTypeDeclaration } from "./buildTypeDeclaration.js";
@@ -142,6 +143,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     }
     buildEnvironments(context);
     buildGlobalHeaders(context);
+    buildGlobalParameters(context);
     buildIdempotencyHeaders(context);
     buildAuthSchemes(context);
     buildVariables(context);

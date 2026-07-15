@@ -1,5 +1,6 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.java.client.ClientGeneratorContext;
@@ -271,6 +272,10 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
     @Override
     public void addGenericFailureCodeBlock(CodeBlock.Builder httpResponseBuilder) {
         httpResponseBuilder
+                .beginControlFlow("catch ($T e)", JsonProcessingException.class)
+                .addStatement(
+                        "throw new $T($S + e.getMessage(), e)", baseErrorClassName, "Failed to deserialize response: ")
+                .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("throw new $T($S, e)", baseErrorClassName, "Network error executing HTTP request")
                 .endControlFlow()

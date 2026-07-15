@@ -86,6 +86,8 @@ public class RawAuthClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }

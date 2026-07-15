@@ -125,7 +125,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Invoice": {
             "type": "object",
@@ -251,7 +252,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -585,5 +587,6 @@
         }
     },
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

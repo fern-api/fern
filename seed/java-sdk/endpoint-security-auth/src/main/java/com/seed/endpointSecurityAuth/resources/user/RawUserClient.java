@@ -3,6 +3,7 @@
  */
 package com.seed.endpointSecurityAuth.resources.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
 import com.seed.endpointSecurityAuth.core.EndpointMetadata;
@@ -77,6 +78,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -128,6 +131,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -179,6 +184,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -230,6 +237,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -281,6 +290,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -336,6 +347,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }
@@ -391,6 +404,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedEndpointSecurityAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedEndpointSecurityAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedEndpointSecurityAuthException("Network error executing HTTP request", e);
         }

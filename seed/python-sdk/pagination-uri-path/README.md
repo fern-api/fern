@@ -170,7 +170,7 @@ client = SeedPaginationUriPath(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.users.list_with_uri_pagination(request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

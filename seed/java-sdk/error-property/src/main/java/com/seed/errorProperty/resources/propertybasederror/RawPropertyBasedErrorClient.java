@@ -3,6 +3,7 @@
  */
 package com.seed.errorProperty.resources.propertybasederror;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.errorProperty.core.ClientOptions;
 import com.seed.errorProperty.core.ObjectMappers;
 import com.seed.errorProperty.core.RequestOptions;
@@ -73,6 +74,8 @@ public class RawPropertyBasedErrorClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedErrorPropertyApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedErrorPropertyException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedErrorPropertyException("Network error executing HTTP request", e);
         }

@@ -100,7 +100,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_service:User": {
             "type": "object",
@@ -271,7 +272,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_service:NestedUser": {
             "type": "object",
@@ -402,7 +404,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_service:ResourceStatus": {
             "type": "enum",
@@ -605,6 +608,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "user": {
                     "type": "samePropertiesAsObject",
@@ -1053,5 +1057,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

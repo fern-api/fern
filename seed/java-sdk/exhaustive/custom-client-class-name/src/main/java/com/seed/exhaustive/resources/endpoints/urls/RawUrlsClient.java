@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.endpoints.urls;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.BestApiException;
 import com.seed.exhaustive.core.BestException;
 import com.seed.exhaustive.core.BestHttpResponse;
@@ -68,6 +69,8 @@ public class RawUrlsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -116,6 +119,8 @@ public class RawUrlsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -164,6 +169,8 @@ public class RawUrlsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }
@@ -212,6 +219,8 @@ public class RawUrlsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new BestApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new BestException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new BestException("Network error executing HTTP request", e);
         }

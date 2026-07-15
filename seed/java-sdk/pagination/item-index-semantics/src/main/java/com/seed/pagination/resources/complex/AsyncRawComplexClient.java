@@ -127,6 +127,9 @@ public class AsyncRawComplexClient {
                     future.completeExceptionally(new SeedPaginationApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedPaginationException("Network error executing HTTP request", e));

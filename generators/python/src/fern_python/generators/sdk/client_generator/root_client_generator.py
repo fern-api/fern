@@ -15,6 +15,7 @@ from .inferred_auth_token_provider_generator import (
     CredentialProperty,
     InferredAuthTokenProviderGenerator,
 )
+from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -23,7 +24,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
-from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, resolve_name
 from typing_extensions import Unpack
 
 import fern.ir.resources as ir_types
@@ -146,6 +147,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             body=lambda b: resolve_name(get_name_from_wire_value(b.name)).snake_case.safe_name,
         )
 
+    @staticmethod
+    def _get_request_property_wire_value(request_property: ir_types.RequestProperty) -> str:
+        return request_property.property.visit(
+            query=lambda q: get_original_name(get_name_from_wire_value(q.name)),
+            body=lambda b: get_original_name(get_name_from_wire_value(b.name)),
+        )
+
     def _get_additional_oauth_param_names(self, client_credentials: ir_types.OAuthClientCredentials) -> List[str]:
         """
         Returns parameter names for additional token endpoint parameters beyond
@@ -165,6 +173,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     body=lambda b: b.value_type,
                 )
                 if self._is_literal_type_reference(prop_type) or self._is_optional_type_reference(prop_type):
+                    continue
+                # grant_type is synthesized as "client_credentials" in the token
+                # request, so it is never surfaced as a user-supplied option.
+                if self._get_request_property_wire_value(custom_prop) == GRANT_TYPE_WIRE_VALUE:
                     continue
                 result.append(self._get_request_property_param_name(custom_prop))
 
@@ -220,6 +232,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
         has_inferred_auth = self._get_inferred_auth_scheme() is not None
 
+        # Resolve the actual bearer token parameter name (e.g. "api_key" instead of default "token")
+        bearer_token_param_name = self._get_wrapper_bearer_token_kwarg_name(
+            client_wrapper_generator=client_wrapper_generator
+        )
+
         base_url_example_value: Optional[AST.Expression] = None
         if has_inferred_auth:
             base_url_param = client_wrapper_generator._get_base_url_constructor_parameter()
@@ -244,6 +261,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 else self._root_client_constructor_params
             ),
             oauth_token_override=is_oauth_client_credentials,
+            bearer_token_param_name=bearer_token_param_name,
             # OAuth token-override and inferred-auth SDKs should always use kwargs-style snippets;
             # positional snippets are unstable and can degrade badly when defaults are expressions
             # like os.getenv("...").
@@ -787,9 +805,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
             )
 
+        resolved_timeout = self._context.custom_config.resolved_timeout
         timeout_phrase = (
-            f"the timeout is {self._context.custom_config.timeout_in_seconds} seconds"
-            if isinstance(self._context.custom_config.timeout_in_seconds, int)
+            f"the timeout is {resolved_timeout} seconds"
+            if isinstance(resolved_timeout, int)
             else "there is no timeout set"
         )
         parameters.append(
@@ -1064,6 +1083,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             timeout_local_variable = "_defaulted_timeout"
+            resolved_timeout = self._context.custom_config.resolved_timeout
             writer.write(f"{timeout_local_variable} = ")
             writer.write_node(
                 AST.Expression(
@@ -1071,8 +1091,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
                         right=AST.ConditionalExpression(
                             left=(
-                                AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
-                                if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                                AST.Expression(f"{resolved_timeout}")
+                                if isinstance(resolved_timeout, int)
                                 else AST.Expression(AST.TypeHint.none())
                             ),
                             right=AST.Expression(AST.TypeHint.none()),
@@ -1482,13 +1502,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             writer.write_newline_if_last_line_not()
 
-        # else: fall back to header-auth-only or raise error
-        has_header_auth_schemes = len(client_wrapper_generator._get_header_auth_schemes()) > 0
+        # else: fall back to non-OAuth auth schemes or raise error
+        has_non_oauth_auth_schemes = (
+            len(client_wrapper_generator._get_header_auth_schemes()) > 0
+            or client_wrapper_generator._get_basic_auth_scheme() is not None
+        )
         writer.write_line("else:")
         with writer.indent():
-            if has_header_auth_schemes:
-                # When header auth schemes exist (e.g. api_key via auth: any), allow constructing
-                # the client without a bearer token — the header auth alone is sufficient.
+            if has_non_oauth_auth_schemes:
+                # When other auth schemes exist (e.g. api_key or basic auth via auth: any), allow
+                # constructing the client without a bearer token — that auth alone is sufficient.
                 header_only_kwargs = self._get_client_wrapper_kwargs(
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
@@ -1885,6 +1908,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             async_class_name: str,
             constructor_parameters: Sequence[ConstructorParameter],
             oauth_token_override: bool = False,
+            bearer_token_param_name: str = "token",
             use_kwargs_snippets: bool = False,
             base_url_example_value: Optional[AST.Expression] = None,
             sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
@@ -1905,6 +1929,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._sync_constructor_overloads = sync_constructor_overloads
             self._async_constructor_overloads = async_constructor_overloads
             self._oauth_token_override = oauth_token_override
+            self._bearer_token_param_name = bearer_token_param_name
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
 
@@ -1956,9 +1981,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     if p.initializer is None and (p.type_hint is None or not p.type_hint.is_optional)
                 ]
 
-                # If there is inferred auth, use a nicer placeholder for those credentials (usually api_key),
+                # If there is inferred auth, use a nicer placeholder for those credentials,
                 # but still include other required parameters (e.g. base_url).
-                inferred_auth_param_names = {"api_key"}
+                inferred_auth_param_names = {self._bearer_token_param_name}
                 kwargs: List[typing.Tuple[str, AST.Expression]] = []
                 for p in required_params:
                     # Skip internal/private params in examples.
@@ -2011,7 +2036,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 oauth_param_names = {
                     "client_id",
                     "client_secret",
-                    RootClientGenerator.TOKEN_PARAMETER_NAME,
+                    self._bearer_token_param_name,
                     RootClientGenerator.TOKEN_GETTER_PARAM_NAME,
                 }
                 default_args = []
@@ -2040,7 +2065,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 if self._use_kwargs_snippets:
                     token_kwargs: List[typing.Tuple[str, AST.Expression]] = [
                         ("base_url", AST.Expression('"https://yourhost.com/path/to/api"')),
-                        ("token", AST.Expression('"YOUR_BEARER_TOKEN"')),
+                        (self._bearer_token_param_name, AST.Expression('"YOUR_BEARER_TOKEN"')),
                     ]
                     async_instantiations.append(
                         AST.Expression(
@@ -2055,7 +2080,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 else:
                     token_args = [
                         AST.Expression('base_url="https://yourhost.com/path/to/api"'),
-                        AST.Expression('token="YOUR_BEARER_TOKEN"'),
+                        AST.Expression(f'{self._bearer_token_param_name}="YOUR_BEARER_TOKEN"'),
                     ]
                     async_instantiations.append(
                         AST.Expression(

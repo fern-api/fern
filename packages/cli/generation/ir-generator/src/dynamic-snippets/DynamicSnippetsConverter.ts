@@ -25,6 +25,7 @@ import {
     InferredAuthScheme,
     IntermediateRepresentation,
     Literal,
+    NameAndWireValue,
     NameAndWireValueOrString,
     NamedType,
     NameOrString,
@@ -149,6 +150,7 @@ export class DynamicSnippetsConverter {
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments != null ? this.convertEnvironments(this.ir.environments) : undefined,
             variables: this.convertVariables(),
+            globalParameters: this.ir.globalParameters,
             generatorConfig: this.generatorConfig
         };
     }
@@ -567,7 +569,8 @@ export class DynamicSnippetsConverter {
             declaration,
             properties,
             extends_: extendsTypeIds,
-            additionalProperties: object.extraProperties
+            additionalProperties: object.extraProperties,
+            deferredUnionBaseProperties: object.deferredUnionBaseProperties
         });
     }
 
@@ -575,18 +578,24 @@ export class DynamicSnippetsConverter {
         declaration,
         properties,
         extends_,
-        additionalProperties
+        additionalProperties,
+        deferredUnionBaseProperties
     }: {
         declaration: DynamicSnippets.Declaration;
         properties: ObjectProperty[];
         extends_?: TypeId[];
         additionalProperties: boolean;
+        deferredUnionBaseProperties?: NameAndWireValue[];
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
             properties: this.convertBodyPropertiesToParameters({ properties }),
             extends: extends_,
-            additionalProperties
+            additionalProperties,
+            // Mirror the pre-computed regular-IR fact; computed once by the IR generator, never here.
+            deferredUnionBaseProperties: deferredUnionBaseProperties?.map((property) =>
+                this.inflateNameAndWireValue(property)
+            )
         });
     }
 
@@ -601,6 +610,10 @@ export class DynamicSnippetsConverter {
         return DynamicSnippets.NamedType.discriminatedUnion({
             declaration,
             discriminant: this.inflateNameAndWireValue(union.discriminant),
+            // Mirror the pre-computed regular-IR fact; computed once by the IR generator, never here.
+            inheritedBaseProperties: (union.inheritedBaseProperties ?? []).map((property) =>
+                this.inflateNameAndWireValue(property)
+            ),
             types: Object.fromEntries(
                 union.types.map((unionType) => [
                     getWireValue(unionType.discriminantValue),

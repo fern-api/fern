@@ -113,6 +113,9 @@ public class AsyncRawInlinedRequestsClient {
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new BestException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new BestException("Network error executing HTTP request", e));
                 }
@@ -211,6 +214,9 @@ public class AsyncRawInlinedRequestsClient {
                     future.completeExceptionally(new BestApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new BestException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new BestException("Network error executing HTTP request", e));
                 }

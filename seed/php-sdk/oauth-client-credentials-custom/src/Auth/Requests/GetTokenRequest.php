@@ -4,6 +4,7 @@ namespace Seed\Auth\Requests;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
 class GetTokenRequest extends JsonSerializableType
 {
@@ -50,6 +51,12 @@ class GetTokenRequest extends JsonSerializableType
     public ?string $scope;
 
     /**
+     * @var ?array<string> $permissions
+     */
+    #[JsonProperty('permissions'), ArrayType(['string'])]
+    public ?array $permissions;
+
+    /**
      * @param array{
      *   cid: string,
      *   csr: string,
@@ -58,6 +65,7 @@ class GetTokenRequest extends JsonSerializableType
      *   audience: 'https://api.example.com',
      *   grantType: 'client_credentials',
      *   scope?: ?string,
+     *   permissions?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -70,5 +78,6 @@ class GetTokenRequest extends JsonSerializableType
         $this->audience = $values['audience'];
         $this->grantType = $values['grantType'];
         $this->scope = $values['scope'] ?? null;
+        $this->permissions = $values['permissions'] ?? null;
     }
 }

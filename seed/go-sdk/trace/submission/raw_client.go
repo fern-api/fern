@@ -100,15 +100,16 @@ func (r *RawClient) GetExecutionSession(
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
+			URL:                endpointURL,
+			Method:             http.MethodGet,
+			Headers:            headers,
+			MaxAttempts:        options.MaxAttempts,
+			DisableRetries:     options.DisableRetries,
+			BodyProperties:     options.BodyProperties,
+			QueryParameters:    options.QueryParameters,
+			Client:             options.HTTPClient,
+			Response:           &response,
+			ResponseIsOptional: true,
 		},
 	)
 	if err != nil {

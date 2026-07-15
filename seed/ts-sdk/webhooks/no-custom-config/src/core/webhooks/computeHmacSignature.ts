@@ -38,7 +38,7 @@ export async function computeHmacSignature(args: ComputeHmacSignatureArgs): Prom
         enc.encode(args.secret),
         { name: "HMAC", hash: hmacAlgorithmToSubtleName(args.algorithm) },
         false,
-        ["sign"]
+        ["sign"],
     );
     const signatureBuffer = await subtle.sign("HMAC", keyMaterial, enc.encode(args.payload));
     const bytes = new Uint8Array(signatureBuffer);

@@ -2,13 +2,10 @@
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "module": "esnext",
+        "moduleResolution": "bundler",
         "outDir": "dist/esm",
         "verbatimModuleSyntax": true
     },
-    "include": [
-        "src/test-packagePath"
-    ],
-    "exclude": [
-        "src/test-packagePath/tests"
-    ]
+    "include": ["src/test-packagePath"],
+    "exclude": ["src/test-packagePath/tests"]
 }

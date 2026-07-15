@@ -3,6 +3,7 @@
  */
 package com.seed.anyAuth.resources.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.ObjectMappers;
@@ -72,6 +73,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedAnyAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedAnyAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedAnyAuthException("Network error executing HTTP request", e);
         }
@@ -120,6 +123,8 @@ public class RawUserClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedAnyAuthApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedAnyAuthException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedAnyAuthException("Network error executing HTTP request", e);
         }

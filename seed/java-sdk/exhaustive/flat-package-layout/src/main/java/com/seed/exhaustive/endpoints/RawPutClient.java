@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.endpoints;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
@@ -78,6 +79,8 @@ public class RawPutClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedExhaustiveApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedExhaustiveException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }

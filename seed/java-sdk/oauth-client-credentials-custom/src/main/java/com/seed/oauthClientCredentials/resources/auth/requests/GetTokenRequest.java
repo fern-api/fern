@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.oauthClientCredentials.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,6 +32,8 @@ public final class GetTokenRequest {
 
     private final Optional<String> scope;
 
+    private final Optional<List<String>> permissions;
+
     private final Map<String, Object> additionalProperties;
 
     private GetTokenRequest(
@@ -39,12 +42,14 @@ public final class GetTokenRequest {
             String scp,
             String entityId,
             Optional<String> scope,
+            Optional<List<String>> permissions,
             Map<String, Object> additionalProperties) {
         this.cid = cid;
         this.csr = csr;
         this.scp = scp;
         this.entityId = entityId;
         this.scope = scope;
+        this.permissions = permissions;
         this.additionalProperties = additionalProperties;
     }
 
@@ -83,6 +88,11 @@ public final class GetTokenRequest {
         return scope;
     }
 
+    @JsonProperty("permissions")
+    public Optional<List<String>> getPermissions() {
+        return permissions;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -99,12 +109,13 @@ public final class GetTokenRequest {
                 && csr.equals(other.csr)
                 && scp.equals(other.scp)
                 && entityId.equals(other.entityId)
-                && scope.equals(other.scope);
+                && scope.equals(other.scope)
+                && permissions.equals(other.permissions);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.cid, this.csr, this.scp, this.entityId, this.scope);
+        return Objects.hash(this.cid, this.csr, this.scp, this.entityId, this.scope, this.permissions);
     }
 
     @java.lang.Override
@@ -144,6 +155,10 @@ public final class GetTokenRequest {
         _FinalStage scope(Optional<String> scope);
 
         _FinalStage scope(String scope);
+
+        _FinalStage permissions(Optional<List<String>> permissions);
+
+        _FinalStage permissions(List<String> permissions);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -155,6 +170,8 @@ public final class GetTokenRequest {
         private String scp;
 
         private String entityId;
+
+        private Optional<List<String>> permissions = Optional.empty();
 
         private Optional<String> scope = Optional.empty();
 
@@ -170,6 +187,7 @@ public final class GetTokenRequest {
             scp(other.getScp());
             entityId(other.getEntityId());
             scope(other.getScope());
+            permissions(other.getPermissions());
             return this;
         }
 
@@ -202,6 +220,19 @@ public final class GetTokenRequest {
         }
 
         @java.lang.Override
+        public _FinalStage permissions(List<String> permissions) {
+            this.permissions = Optional.ofNullable(permissions);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "permissions", nulls = Nulls.SKIP)
+        public _FinalStage permissions(Optional<List<String>> permissions) {
+            this.permissions = permissions;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage scope(String scope) {
             this.scope = Optional.ofNullable(scope);
             return this;
@@ -216,7 +247,7 @@ public final class GetTokenRequest {
 
         @java.lang.Override
         public GetTokenRequest build() {
-            return new GetTokenRequest(cid, csr, scp, entityId, scope, additionalProperties);
+            return new GetTokenRequest(cid, csr, scp, entityId, scope, permissions, additionalProperties);
         }
 
         @java.lang.Override

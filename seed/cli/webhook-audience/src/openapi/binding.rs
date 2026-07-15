@@ -205,6 +205,18 @@ impl OpenApiBinding {
         self
     }
 
+    /// Register a global parameter that surfaces as a top-level CLI flag
+    /// and is injected into outgoing requests at the configured wire
+    /// location. Emitted by the TypeScript codegen layer
+    /// (`detectGlobalParams.ts`) from `ir.globalParameters`; delegates to
+    /// [`super::CliApp::global_parameter`], which merges these (with
+    /// precedence) over any params parsed from the spec's
+    /// `x-fern-global-parameters` extension.
+    pub fn global_parameter(mut self, param: crate::openapi::discovery::GlobalParameter) -> Self {
+        self.inner = self.inner.global_parameter(param);
+        self
+    }
+
     /// Mount all spec-derived subcommands under a namespace prefix.
     ///
     /// Without a namespace the generated commands are top-level:
@@ -296,11 +308,25 @@ impl OpenApiBinding {
                 Some((h.header.clone(), val))
             })
             .collect();
+        let global_params: Vec<super::app::ResolvedGlobalParam> = doc
+            .global_parameters
+            .iter()
+            .filter_map(|p| {
+                let val = super::app::resolve_global_parameter_value(matches, p)?;
+                Some(super::app::ResolvedGlobalParam {
+                    name: p.name.clone(),
+                    location: p.location,
+                    target: p.target.clone(),
+                    value: val,
+                })
+            })
+            .collect();
         Ok(super::app::BindingEntry {
             doc: doc.clone(),
             auth_provider,
             http_config: prepared.http_config.clone(),
             global_headers,
+            global_params,
         })
     }
 
@@ -348,6 +374,30 @@ impl Binding for OpenApiBinding {
         let mut merged = bindings.to_vec();
         merged.extend(std::mem::take(&mut self.inner.auth_bindings));
         self.inner.auth_bindings = merged;
+    }
+
+    fn set_root_global_parameters(
+        &mut self,
+        params: &[crate::openapi::discovery::GlobalParameter],
+    ) {
+        // Root-level global parameters are prepended to the inner CliApp's
+        // builder_global_parameters. Any parameter the binding declared
+        // directly (via its own `.global_parameter()` call) takes priority
+        // and suppresses the same-named root parameter — mirroring how
+        // binding-level auth overrides root auth by scheme name.
+        let binding_names: std::collections::HashSet<String> = self
+            .inner
+            .builder_global_parameters
+            .iter()
+            .map(|p| p.name.clone())
+            .collect();
+        let mut merged: Vec<crate::openapi::discovery::GlobalParameter> = params
+            .iter()
+            .filter(|p| !binding_names.contains(&p.name))
+            .cloned()
+            .collect();
+        merged.extend(std::mem::take(&mut self.inner.builder_global_parameters));
+        self.inner.builder_global_parameters = merged;
     }
 
     fn validate_auth(&self) -> Result<(), CliError> {
@@ -594,6 +644,13 @@ impl Binding for OpenApiBinding {
                 &params,
             )?;
 
+            let global_param_overrides = super::app::build_global_parameter_overrides(
+                matched_args,
+                doc,
+                method,
+                &params,
+            )?;
+
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
             let base_url_override_owned =
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
@@ -604,8 +661,10 @@ impl Binding for OpenApiBinding {
             // path validation — handle_binary_response branches on it to
             // stream raw bytes to stdout instead of touching the filesystem.
             // Every other value flows through validate_safe_file_path, which
-            // rejects traversal, symlink escapes, and control characters
-            // per AGENTS.md.
+            // rejects control characters and requires the parent directory to
+            // exist, but does not sandbox the path to CWD — the file is
+            // written wherever the user points it (final-component symlinks
+            // are still refused at open time via O_NOFOLLOW).
             let output_path_owned = matched_args
                 .try_get_one::<String>("output")
                 .ok()
@@ -673,6 +732,7 @@ impl Binding for OpenApiBinding {
                 no_stream,
                 debug,
                 &global_header_overrides,
+                &global_param_overrides,
             )
             .await?;
 
@@ -702,6 +762,7 @@ impl Binding for OpenApiBinding {
             entry.auth_provider,
             entry.http_config,
             entry.global_headers,
+            entry.global_params,
         ).with_quiet(quiet)
          .with_base_url_override(base_url_override)
          .with_debug(debug);
@@ -740,6 +801,7 @@ impl Binding for OpenApiBinding {
                         entry.auth_provider,
                         entry.http_config,
                         entry.global_headers,
+                        entry.global_params,
                     ).with_quiet(quiet)
                      .with_base_url_override(base_url_override)
                      .with_debug(debug);
@@ -753,6 +815,7 @@ impl Binding for OpenApiBinding {
                     entry.auth_provider,
                     entry.http_config,
                     entry.global_headers,
+                    entry.global_params,
                 ).with_quiet(quiet)
                  .with_base_url_override(base_url_override)
                  .with_debug(debug);
@@ -928,5 +991,62 @@ mod tests {
     #[should_panic(expected = "collides with a reserved framework subcommand")]
     fn command_namespace_rejects_reserved_name() {
         OpenApiBinding::default().command_namespace("auth");
+    }
+
+    fn gp(name: &str, env: Option<&str>) -> crate::openapi::discovery::GlobalParameter {
+        crate::openapi::discovery::GlobalParameter {
+            name: name.into(),
+            parameter_name: None,
+            location: crate::openapi::discovery::GlobalParameterLocation::Query,
+            target: name.into(),
+            env: env.map(Into::into),
+            default: None,
+            optional: false,
+            apply: crate::openapi::discovery::GlobalParameterApplyMode::Auto,
+            docs: None,
+        }
+    }
+
+    #[test]
+    fn set_root_global_parameters_populates_binding() {
+        // Root-declared params (like `CliApp::global_parameter`) are handed
+        // to the binding via `set_root_global_parameters` and land in the
+        // inner CliApp's builder_global_parameters.
+        let mut binding = OpenApiBinding::new();
+        binding.set_root_global_parameters(&[gp("currency", Some("CURRENCY_ENV")), gp("region", None)]);
+        let names: Vec<&str> = binding
+            .inner
+            .builder_global_parameters
+            .iter()
+            .map(|p| p.name.as_str())
+            .collect();
+        assert_eq!(names, vec!["currency", "region"]);
+    }
+
+    #[test]
+    fn set_root_global_parameters_binding_level_wins() {
+        // A parameter declared directly on the binding takes precedence over
+        // a same-named root parameter (dedup by name, binding wins), while
+        // root-only params are still merged in.
+        let binding = OpenApiBinding::new().global_parameter(gp("currency", Some("BINDING_ENV")));
+        let mut binding = binding;
+        binding.set_root_global_parameters(&[gp("currency", Some("ROOT_ENV")), gp("region", None)]);
+
+        let params = &binding.inner.builder_global_parameters;
+        let currency = params.iter().find(|p| p.name == "currency").unwrap();
+        assert_eq!(
+            currency.env.as_deref(),
+            Some("BINDING_ENV"),
+            "binding-level param must win over the same-named root param"
+        );
+        assert_eq!(
+            params.iter().filter(|p| p.name == "currency").count(),
+            1,
+            "no duplicate currency entry"
+        );
+        assert!(
+            params.iter().any(|p| p.name == "region"),
+            "root-only param must still be merged in"
+        );
     }
 }

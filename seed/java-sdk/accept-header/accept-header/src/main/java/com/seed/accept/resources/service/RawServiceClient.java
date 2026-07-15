@@ -76,6 +76,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedAcceptApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedAcceptException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedAcceptException("Network error executing HTTP request", e);
         }

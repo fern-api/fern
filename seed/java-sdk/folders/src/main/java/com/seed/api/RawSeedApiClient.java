@@ -3,6 +3,7 @@
  */
 package com.seed.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
@@ -66,6 +67,8 @@ public class RawSeedApiClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedApiException("Network error executing HTTP request", e);
         }

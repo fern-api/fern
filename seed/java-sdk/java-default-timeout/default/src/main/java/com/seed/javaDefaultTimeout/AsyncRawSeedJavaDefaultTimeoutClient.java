@@ -3,6 +3,7 @@
  */
 package com.seed.javaDefaultTimeout;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.javaDefaultTimeout.core.ClientOptions;
 import com.seed.javaDefaultTimeout.core.ObjectMappers;
 import com.seed.javaDefaultTimeout.core.RequestOptions;
@@ -77,6 +78,9 @@ public class AsyncRawSeedJavaDefaultTimeoutClient {
                     future.completeExceptionally(new SeedJavaDefaultTimeoutApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaDefaultTimeoutException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new SeedJavaDefaultTimeoutException("Network error executing HTTP request", e));

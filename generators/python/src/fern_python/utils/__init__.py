@@ -4,6 +4,7 @@ from .name_resolver import (
     get_original_name,
     get_wire_value,
     resolve_name,
+    resolve_name_preserving_underscores,
     resolve_wire_name,
 )
 from .pascal_case import pascal_case
@@ -26,6 +27,7 @@ __all__ = [
     "get_wire_value",
     "pascal_case",
     "resolve_name",
+    "resolve_name_preserving_underscores",
     "resolve_wire_name",
     "snake_case",
 ]

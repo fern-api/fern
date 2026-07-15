@@ -40,6 +40,25 @@ export abstract class EndpointRequest {
 
     public abstract getParameterType(): ruby.Type;
 
+    /**
+     * Follows alias-of-named chains to the terminal type id so request bodies
+     * declared as aliases of objects are serialized through the aliased class
+     * (applying wire-name mappings) rather than passed through as a raw hash.
+     */
+    protected resolveNamedTypeId(typeId: FernIr.TypeId): FernIr.TypeId {
+        const seen = new Set<FernIr.TypeId>();
+        let currentTypeId = typeId;
+        while (!seen.has(currentTypeId)) {
+            seen.add(currentTypeId);
+            const declaration = this.context.getTypeDeclarationOrThrow(currentTypeId);
+            if (declaration.shape.type !== "alias" || declaration.shape.aliasOf.type !== "named") {
+                break;
+            }
+            currentTypeId = declaration.shape.aliasOf.typeId;
+        }
+        return currentTypeId;
+    }
+
     public abstract getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined;
 
     public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;

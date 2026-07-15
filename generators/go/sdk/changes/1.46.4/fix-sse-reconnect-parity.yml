@@ -1,0 +1,15 @@
+- summary: |
+    Align SSE stream auto-reconnection with the reference TypeScript implementation:
+    (1) Do not reconnect when no stream terminator is configured (prevents reconnect
+    storms on clean EOF). (2) Apply a default 1 s minimum backoff between reconnects
+    when the server sends no `retry:` directive. (3) Only commit `Last-Event-ID` on
+    dispatched events (blank-line boundary), not on parsed-but-undispatched ids from
+    incomplete events dropped mid-stream — fixes silent event loss on reconnect.
+    (4) Reset the consecutive-reconnect-attempt counter on progress (each yielded
+    event). (5) Gracefully handle failed/nil-body reconnect responses by consuming
+    an attempt and retrying instead of surfacing the error immediately. (6) Do not
+    reconnect when no event ID has been dispatched — reconnecting with an empty
+    Last-Event-ID would replay the entire stream (duplicate events). (7) Guard
+    against nil *http.Response from reconnectFn to prevent nil-pointer panics.
+    (8) Close response body when reconnectFn returns both a response and an error.
+  type: fix

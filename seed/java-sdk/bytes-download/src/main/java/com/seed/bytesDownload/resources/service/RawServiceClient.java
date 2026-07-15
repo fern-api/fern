@@ -3,6 +3,7 @@
  */
 package com.seed.bytesDownload.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.bytesDownload.core.ClientOptions;
 import com.seed.bytesDownload.core.ObjectMappers;
 import com.seed.bytesDownload.core.RequestOptions;
@@ -66,6 +67,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBytesDownloadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBytesDownloadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBytesDownloadException("Network error executing HTTP request", e);
         }
@@ -113,6 +116,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedBytesDownloadApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedBytesDownloadException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedBytesDownloadException("Network error executing HTTP request", e);
         }

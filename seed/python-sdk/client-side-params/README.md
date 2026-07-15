@@ -153,7 +153,7 @@ client = SeedClientSideParams(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.service.search_resources(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

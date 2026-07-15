@@ -2,6 +2,7 @@ package internal
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"errors"
@@ -237,6 +238,41 @@ func TestCall(t *testing.T) {
 			assert.Equal(t, test.wantResponse, response)
 		})
 	}
+}
+
+func TestCallWithGzipResponse(t *testing.T) {
+	server := httptest.NewServer(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			assert.Equal(t, "gzip", r.Header.Get("Accept-Encoding"))
+			w.Header().Set("Content-Encoding", "gzip")
+			w.Header().Set("Content-Type", "application/json")
+			gzipWriter := gzip.NewWriter(w)
+			_, err := gzipWriter.Write([]byte(`{"id": "123"}`))
+			require.NoError(t, err)
+			require.NoError(t, gzipWriter.Close())
+		}),
+	)
+	defer server.Close()
+
+	caller := NewCaller(
+		&CallerParams{
+			Client: server.Client(),
+		},
+	)
+	var response *InternalTestResponse
+	_, err := caller.Call(
+		context.Background(),
+		&CallParams{
+			URL:    server.URL,
+			Method: http.MethodGet,
+			Headers: http.Header{
+				"Accept-Encoding": []string{"gzip"},
+			},
+			Response: &response,
+		},
+	)
+	require.NoError(t, err)
+	assert.Equal(t, &InternalTestResponse{Id: "123"}, response)
 }
 
 func TestMergeHeaders(t *testing.T) {

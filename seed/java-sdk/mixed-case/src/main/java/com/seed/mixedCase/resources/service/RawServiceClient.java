@@ -3,6 +3,7 @@
  */
 package com.seed.mixedCase.resources.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.mixedCase.core.ClientOptions;
 import com.seed.mixedCase.core.ObjectMappers;
@@ -73,6 +74,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMixedCaseApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedMixedCaseException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedMixedCaseException("Network error executing HTTP request", e);
         }
@@ -124,6 +127,8 @@ public class RawServiceClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedMixedCaseApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new SeedMixedCaseException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new SeedMixedCaseException("Network error executing HTTP request", e);
         }

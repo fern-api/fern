@@ -90,10 +90,11 @@ RUN pnpm add -g typescript@~5.9.3 \
   msw@2.12.14 \
   vitest@^4.1.1
 
-# Clean pnpm content-addressable store and corepack cache to reduce
-# image size. Patch pnpm's bundled undici to 6.27.0 to clear
-# CVE-2026-12151.
-RUN rm -rf /.pnpm/store /.pnpm-cache /root/.cache/node/corepack && \
+# Clean caches to reduce image size. Do NOT remove /.pnpm/store —
+# pnpm 11 global packages are symlinked into it; deleting it breaks
+# every globally installed tool (biome, oxfmt, prettier, etc.).
+# Patch pnpm's bundled undici to 6.27.0 to clear CVE-2026-12151.
+RUN rm -rf /.pnpm-cache /root/.cache/node/corepack && \
     cd /usr/local/lib/node_modules/pnpm/dist/node_modules && \
     npm pack undici@6.27.0 && \
     rm -rf undici && \

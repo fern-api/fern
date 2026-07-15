@@ -239,7 +239,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Column": {
             "type": "object",
@@ -401,7 +402,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:CreateResponse": {
             "type": "object",
@@ -533,7 +535,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DeleteResponse": {
             "type": "object",
@@ -565,7 +568,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DescribeResponse": {
             "type": "object",
@@ -737,7 +741,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:FetchResponse": {
             "type": "object",
@@ -876,7 +881,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:FieldBehavior": {
             "type": "enum",
@@ -1171,7 +1177,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": true
+            "additionalProperties": true,
+            "deferredUnionBaseProperties": null
         },
         "type_:GoogleRpcStatus": {
             "type": "object",
@@ -1306,7 +1313,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:IndexType": {
             "type": "enum",
@@ -1502,7 +1510,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ListElement": {
             "type": "object",
@@ -1568,7 +1577,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ListResponse": {
             "type": "object",
@@ -1736,7 +1746,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NamespaceSummary": {
             "type": "object",
@@ -1802,7 +1813,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Pagination": {
             "type": "object",
@@ -1868,7 +1880,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:QueryColumn": {
             "type": "object",
@@ -2066,7 +2079,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:QueryResponse": {
             "type": "object",
@@ -2237,7 +2251,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:QueryResult": {
             "type": "object",
@@ -2339,7 +2354,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ScoredColumn": {
             "type": "object",
@@ -2537,7 +2553,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ToolChoice": {
             "type": "object",
@@ -2636,7 +2653,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ToolMode": {
             "type": "enum",
@@ -2956,7 +2974,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UpdateResponse_Status": {
             "type": "enum",
@@ -3141,7 +3160,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Usage": {
             "type": "object",
@@ -3207,7 +3227,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Metadata": {
             "type": "undiscriminatedUnion",
@@ -6019,5 +6040,6 @@
         }
     },
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

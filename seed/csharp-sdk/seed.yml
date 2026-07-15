@@ -216,6 +216,9 @@ fixtures:
     - customConfig:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        include-platform-headers: true
+      outputFolder: include-platform-headers
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
@@ -223,6 +226,12 @@ fixtures:
     - customConfig:
         environment-class-name: CustomEnvironment
       outputFolder: environment-class-name
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
   exhaustive:
     - customConfig:
         explicit-namespaces: true
@@ -242,6 +251,9 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
     - publishConfig:
         type: nuget
         registryUrl: ""
@@ -260,6 +272,9 @@ fixtures:
     - customConfig:
         inline-path-parameters: false
       outputFolder: no-inline-path-parameters
+  csharp-path-param-order:
+    - customConfig: null
+      outputFolder: no-custom-config
   csharp-grpc-proto:
     - customConfig: null
       outputFolder: no-custom-config
@@ -423,5 +438,11 @@ fixtures:
     - customConfig:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
+  idempotency-headers:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
 allowedFailures:
   - oauth-client-credentials-custom

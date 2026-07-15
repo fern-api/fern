@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
@@ -69,6 +69,12 @@ fixtures:
         enableWireTests: true
         clientModuleName: MyClient
         maxRetries: 5
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   pagination:
     - customConfig: null
       outputFolder: no-custom-config
@@ -85,6 +91,9 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
@@ -119,12 +128,18 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
 
 features:
   requestOptions: true
   idempotency: false
   autoPagination: false
-  oauth: false
+  oauth: true
   authEnvVarScanning: true
   websocket: false
   streamingJson: false

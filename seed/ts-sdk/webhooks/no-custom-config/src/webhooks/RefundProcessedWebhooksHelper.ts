@@ -10,16 +10,30 @@ import * as core from "../core/index.js";
  * When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.
  */
 export class RefundProcessedWebhooksHelper {
-    public static async verifySignature(requestBody: string | Record<string, string>, signatureHeader: string, publicKey: string): Promise<boolean> {
+    public static async verifySignature(
+        requestBody: string | Record<string, string>,
+        signatureHeader: string,
+        publicKey: string,
+    ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null || publicKey == null) {
             throw new Error("Missing required parameters for webhook signature verification");
         }
 
-        const bodyString = typeof requestBody === "string"
-            ? requestBody
-            : Object.keys(requestBody).sort().map(key => key + requestBody[key]).join("");
+        const bodyString =
+            typeof requestBody === "string"
+                ? requestBody
+                : Object.keys(requestBody)
+                      .sort()
+                      .map((key) => key + requestBody[key])
+                      .join("");
         const payload = bodyString;
 
-        return await core.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "ECDSA_SHA256", encoding: "hex" });
+        return await core.verifyAsymmetricSignature({
+            payload: payload,
+            signature: signatureHeader,
+            publicKey: publicKey,
+            algorithm: "ECDSA_SHA256",
+            encoding: "hex",
+        });
     }
 }

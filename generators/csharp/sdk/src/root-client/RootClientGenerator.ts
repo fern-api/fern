@@ -2,7 +2,7 @@ import { fail } from "node:assert";
 import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
-import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, lazy, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -24,7 +24,19 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 import { buildUserAgentHeaderEntry } from "./buildUserAgentHeaderEntry.js";
+import {
+    BUILD_USER_AGENT_METHOD_NAME,
+    BUILD_USER_AGENT_RETURN_SUFFIX,
+    buildUserAgentLocalLines,
+    buildUserAgentReturnPrefix
+} from "./buildUserAgentMethodBody.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
+import {
+    getServerVariableOptions,
+    getServerVariableValueExpression,
+    type ServerVariableOption,
+    urlTemplateToInterpolatedString
+} from "./serverVariables.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -77,6 +89,31 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
+    }
+
+    /**
+     * Both OAuth and inferred auth attach their Authorization header through a
+     * token provider, and only one provider can drive the root client's auth
+     * header. When both schemes are present (e.g. `auth: any` with an OAuth and
+     * an inferred scheme), pick the provider-based scheme that appears first in
+     * `ir.auth.schemes`, which mirrors the declared `any` order.
+     */
+    private shouldUseOAuthProvider(): boolean {
+        if (this.oauth == null) {
+            return false;
+        }
+        if (this.inferred == null) {
+            return true;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return true;
+            }
+            if (scheme.type === "inferred") {
+                return false;
+            }
+        }
+        return true;
     }
 
     private members = lazy({
@@ -154,6 +191,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         class_.addConstructor(this.getConstructorMethod());
 
+        if (this.settings.includePlatformHeaders) {
+            this.addBuildUserAgentMethod(class_);
+        }
+
         for (const subpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                 class_.addField({
@@ -184,7 +225,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
 
         const { optionalParameters } = this.getConstructorParameters();
-        if (optionalParameters.some((parameter) => parameter.environmentVariable != null)) {
+        if (
+            !this.isAnyAuthWithMultipleSchemes() &&
+            optionalParameters.some((parameter) => parameter.environmentVariable != null)
+        ) {
             this.getFromEnvironmentOrThrowMethod(class_);
         }
         return new CSharpFile({
@@ -200,6 +244,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private getConstructorMethod() {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
         const unified = this.settings.unifiedClientOptions;
+        // Under `any`-composed auth with more than one scheme, each scheme's
+        // credentials are independently optional: the caller supplies exactly one
+        // scheme's creds. We must not throw for missing creds nor wire up a token
+        // provider / auth header unless that scheme's creds were actually provided.
+        const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
         const parameters: ast.Parameter[] = [];
 
         // In unified mode, check if any ClientOptions fields are truly required.
@@ -272,6 +321,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // win; we preserve the IR-established ordering of required > optional
         // > literal so the most specific / required scheme takes precedence.
         const authHeaderCandidates: { headerName: string; entry: ast.Dictionary.MapEntry }[] = [];
+        // Parallel list used only under `any`-composed multi-scheme auth: each auth
+        // header is written conditionally (guarded on its credential being non-null)
+        // instead of via an unconditional dictionary initializer.
+        const authHeaderConditionalWrites: { headerName: string; condition: string | null; value: string }[] = [];
 
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
@@ -290,11 +343,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         )
                     }
                 });
+                authHeaderConditionalWrites.push({
+                    headerName: param.header.name,
+                    condition: `${access} != null`,
+                    value: param.header.prefix != null ? `$"${param.header.prefix} {${access}}"` : access
+                });
             }
         }
 
         for (const param of literalParameters) {
             if (param.header != null) {
+                const literalValue =
+                    param.value.type === "string"
+                        ? `"${escapeForCSharpString(param.value.string)}"`
+                        : param.value.boolean
+                          ? `"${true.toString()}"`
+                          : `"${false.toString()}"`;
                 authHeaderCandidates.push({
                     headerName: param.header.name,
                     entry: {
@@ -308,11 +372,20 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         )
                     }
                 });
+                authHeaderConditionalWrites.push({
+                    headerName: param.header.name,
+                    condition: null,
+                    value: literalValue
+                });
             }
         }
 
         const authHeaderEntries = dedupAuthHeaderEntries(authHeaderCandidates, (item) => item.headerName).map(
             (item) => item.entry
+        );
+        const authHeaderConditionalWriteEntries = dedupAuthHeaderEntries(
+            authHeaderConditionalWrites,
+            (item) => item.headerName
         );
 
         // Platform headers (no auth)
@@ -331,20 +404,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
                 value: this.context.getCurrentVersionValueAccess()
             });
-            // When `user-agent-name-from-package` is enabled, falls back to
-            // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
-            // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
-            // TypeScript generator's npm-package-name fallback. Defaults off so
-            // existing C# SDKs imported from OpenAPI keep emitting no User-Agent.
-            const userAgentEntry = buildUserAgentHeaderEntry({
-                userAgent: platformHeaders.userAgent,
-                packageName: this.generation.names.project.packageId,
-                csharp: this.csharp,
-                versionValueAccess: this.context.getCurrentVersionValueAccess(),
-                userAgentNameFromPackage: this.settings.userAgentNameFromPackage
-            });
-            if (userAgentEntry != null) {
-                platformHeaderEntries.push(userAgentEntry);
+            if (this.settings.includePlatformHeaders) {
+                // Emit a single structured `User-Agent` consolidating the SDK
+                // name/version with the OS, architecture, and runtime, all
+                // resolved at runtime by the `BuildUserAgent` helper.
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock('"User-Agent"'),
+                    value: this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`)
+                });
+            } else {
+                // When `user-agent-name-from-package` is enabled, falls back to
+                // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
+                // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
+                // TypeScript generator's npm-package-name fallback. Defaults off so
+                // existing C# SDKs imported from OpenAPI keep emitting no User-Agent.
+                const userAgentEntry = buildUserAgentHeaderEntry({
+                    userAgent: platformHeaders.userAgent,
+                    packageName: this.generation.names.project.packageId,
+                    csharp: this.csharp,
+                    versionValueAccess: this.context.getCurrentVersionValueAccess(),
+                    userAgentNameFromPackage: this.settings.userAgentNameFromPackage
+                });
+                if (userAgentEntry != null) {
+                    platformHeaderEntries.push(userAgentEntry);
+                }
             }
         }
 
@@ -387,15 +470,23 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     for (const param of optionalParameters) {
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
-                            innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
-                            innerWriter.indent();
-                            innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
-                            innerWriter.writeLine(",");
-                            innerWriter.writeLine(
-                                `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
-                            );
-                            innerWriter.dedent();
-                            innerWriter.writeLine(");");
+                            if (anyAuthMultiScheme) {
+                                // Fall back to the env var if set, but do not throw when it is
+                                // missing — the caller may be authenticating with another scheme.
+                                innerWriter.write(`${target} ??= Environment.GetEnvironmentVariable(`);
+                                innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
+                                innerWriter.writeTextStatement(")");
+                            } else {
+                                innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
+                                innerWriter.indent();
+                                innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
+                                innerWriter.writeLine(",");
+                                innerWriter.writeLine(
+                                    `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
+                                );
+                                innerWriter.dedent();
+                                innerWriter.writeLine(");");
+                            }
                         }
                     }
 
@@ -424,6 +515,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         );
                     }
+
+                    this.writeServerVariableInterpolation(innerWriter);
 
                     // Add platform headers to clientOptions
                     innerWriter.write("var platformHeaders = ");
@@ -471,16 +564,34 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                         // Add auth headers to the cloned clientOptions
                         if (authHeaderEntries.length > 0) {
-                            innerWriter.write("var authHeaders = ");
-                            innerWriter.writeNodeStatement(
-                                this.csharp.instantiateClass({
-                                    classReference: this.generation.Types.Headers,
-                                    arguments_: [authHeaderDictionary]
-                                })
-                            );
-                            innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in authHeaders"));
-                            innerWriter.writeLine("clientOptionsWithAuth.Headers[header.Key] = header.Value;");
-                            innerWriter.endControlFlow();
+                            if (anyAuthMultiScheme) {
+                                // Only set a scheme's auth header when its credential was provided,
+                                // so callers can authenticate with just one of the `any` schemes.
+                                for (const write of authHeaderConditionalWriteEntries) {
+                                    if (write.condition != null) {
+                                        innerWriter.controlFlow("if", this.csharp.codeblock(write.condition));
+                                        innerWriter.writeTextStatement(
+                                            `clientOptionsWithAuth.Headers["${write.headerName}"] = ${write.value}`
+                                        );
+                                        innerWriter.endControlFlow();
+                                    } else {
+                                        innerWriter.writeTextStatement(
+                                            `clientOptionsWithAuth.Headers["${write.headerName}"] = ${write.value}`
+                                        );
+                                    }
+                                }
+                            } else {
+                                innerWriter.write("var authHeaders = ");
+                                innerWriter.writeNodeStatement(
+                                    this.csharp.instantiateClass({
+                                        classReference: this.generation.Types.Headers,
+                                        arguments_: [authHeaderDictionary]
+                                    })
+                                );
+                                innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in authHeaders"));
+                                innerWriter.writeLine("clientOptionsWithAuth.Headers[header.Key] = header.Value;");
+                                innerWriter.endControlFlow();
+                            }
                         }
                     }
 
@@ -489,7 +600,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         const basicSchemes = this.context.ir.auth.schemes.filter(
                             (s): s is typeof s & { type: "basic" } => s.type === "basic"
                         );
-                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory || anyAuthMultiScheme;
                         let isFirstBlock = true;
                         for (let i = 0; i < basicSchemes.length; i++) {
                             const basicScheme = basicSchemes[i];
@@ -535,7 +646,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    if (this.oauth != null) {
+                    if (this.oauth != null && this.shouldUseOAuthProvider()) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                         );
@@ -549,6 +660,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
                         const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
                         const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                        // Only wire up the OAuth token provider when OAuth creds were supplied;
+                        // otherwise the caller is using another `any` scheme (e.g. an API key).
+                        if (anyAuthMultiScheme) {
+                            innerWriter.controlFlow(
+                                "if",
+                                this.csharp.codeblock(`${clientIdAccess} != null && ${clientSecretAccess} != null`)
+                            );
+                        }
                         innerWriter.write(
                             `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
                         );
@@ -568,9 +687,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         innerWriter.writeTextStatement(
                             `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
                         );
+                        if (anyAuthMultiScheme) {
+                            innerWriter.endControlFlow();
+                        }
                     }
 
-                    if (this.inferred != null) {
+                    if (this.inferred != null && !this.shouldUseOAuthProvider()) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.inferred.tokenEndpoint.endpoint.serviceId
                         );
@@ -583,6 +705,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 arguments_: [this.csharp.codeblock("clientOptions")]
                             })
                         ];
+
+                        // Only wire up the inferred-auth token provider when its creds were
+                        // supplied; otherwise the caller is using another `any` scheme.
+                        const shouldGuardInferred = anyAuthMultiScheme && credentialParams.length > 0;
+                        if (shouldGuardInferred) {
+                            const guard = credentialParams
+                                .map(
+                                    (param) =>
+                                        `${unified ? `clientOptions.${this.toPascalCase(param)}` : param} != null`
+                                )
+                                .join(" && ");
+                            innerWriter.controlFlow("if", this.csharp.codeblock(guard));
+                        }
 
                         innerWriter.write("var inferredAuthProvider = new InferredAuthTokenProvider(");
                         for (const param of credentialParams) {
@@ -613,6 +748,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                     );
                                 })
                             );
+                        }
+                        if (shouldGuardInferred) {
+                            innerWriter.endControlFlow();
                         }
                     }
 
@@ -668,6 +806,84 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
             })
         };
+    }
+
+    /**
+     * Rebuilds the environment base URL(s) from the API's URL template(s) when the user
+     * sets any server URL variable (e.g. region/edge) at construction time. Each `{id}`
+     * placeholder is substituted with the provided value, falling back to the variable's
+     * IR default when omitted. Emits nothing when the API declares no server variables.
+     */
+    private writeServerVariableInterpolation(writer: Writer): void {
+        const config = this.context.ir.environments;
+        const options = getServerVariableOptions(config, this.case);
+        if (options.length === 0 || config == null) {
+            return;
+        }
+        const environments = config.environments;
+        const variableSetCondition = options
+            .map(({ optionName }) => `clientOptions.${optionName} != null`)
+            .join(" || ");
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
+                if (templatedEnvironment?.urlTemplate == null) {
+                    return;
+                }
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsBaseUrlExplicitlySet`)
+                );
+                this.writeServerVariableLocals(writer, options);
+                writer.writeTextStatement(
+                    `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(templatedEnvironment.urlTemplate, options)}`
+                );
+                writer.endControlFlow();
+                break;
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
+                if (templatedEnvironment?.urlTemplates == null) {
+                    return;
+                }
+                const urlTemplates = templatedEnvironment.urlTemplates;
+                const staticUrls = templatedEnvironment.urls;
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsEnvironmentExplicitlySet`)
+                );
+                this.writeServerVariableLocals(writer, options);
+                writer.write("clientOptions.Environment = ");
+                writer.writeNodeStatement(
+                    this.csharp.instantiateClass({
+                        classReference: this.Types.Environments,
+                        arguments_: environments.baseUrls.map((baseUrl) => {
+                            const template = urlTemplates[baseUrl.id];
+                            return {
+                                name: this.case.pascalSafe(baseUrl.name),
+                                assignment:
+                                    template != null
+                                        ? this.csharp.codeblock(urlTemplateToInterpolatedString(template, options))
+                                        : this.csharp.codeblock(
+                                              this.csharp.string_({ string: staticUrls[baseUrl.id] ?? "" })
+                                          )
+                            };
+                        }),
+                        multiline: true
+                    })
+                );
+                writer.endControlFlow();
+                break;
+            }
+            default:
+                assertNever(environments);
+        }
+    }
+
+    private writeServerVariableLocals(writer: Writer, options: ServerVariableOption[]): void {
+        for (const option of options) {
+            writer.writeTextStatement(`var ${option.localName} = ${getServerVariableValueExpression(option)}`);
+        }
     }
 
     public generateExampleClientInstantiationSnippet({
@@ -803,7 +1019,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private getParameterFromAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
-        const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
+        const isOptional = this.context.ir.sdkConfig.isAuthMandatory || this.isAnyAuthWithMultipleSchemes();
         if (scheme.type === "header") {
             {
                 const name = this.case.camelSafe(scheme.name);
@@ -1042,6 +1258,36 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         });
     }
 
+    /**
+     * Emits a static helper that builds a structured `User-Agent` of the shape
+     * `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`, with the
+     * OS, architecture, and runtime version resolved at runtime. The OS/arch group
+     * is omitted when neither can be determined (and reduced to a single value when
+     * only one is), and the runtime version is dropped when unavailable, so the
+     * helper never emits an empty group and never throws.
+     */
+    private addBuildUserAgentMethod(cls: ast.Class) {
+        const packageName = this.generation.names.project.packageId;
+        cls.addMethod({
+            access: ast.Access.Private,
+            name: BUILD_USER_AGENT_METHOD_NAME,
+            return_: this.Primitive.string,
+            parameters: [],
+            isAsync: false,
+            body: this.csharp.codeblock((writer) => {
+                for (const line of buildUserAgentLocalLines()) {
+                    writer.writeLine(line);
+                }
+                writer.write(buildUserAgentReturnPrefix(packageName));
+                // Written via `writeNode` so the generated `Version` reference
+                // registers its using directive.
+                writer.writeNode(this.context.getCurrentVersionValueAccess());
+                writer.writeLine(BUILD_USER_AGENT_RETURN_SUFFIX);
+            }),
+            type: ast.MethodType.STATIC
+        });
+    }
+
     private getSubpackages(): Subpackage[] {
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
     }
@@ -1121,6 +1367,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private toPascalCase(name: string): string {
         return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    /**
+     * True when auth is `any`-composed across more than one scheme. In that case
+     * each scheme's credentials are independently optional (the caller supplies
+     * exactly one scheme's creds), so we must not throw for missing creds and must
+     * only wire up a scheme's token provider / header when its creds are present.
+     */
+    private isAnyAuthWithMultipleSchemes(): boolean {
+        return this.context.ir.auth.requirement === "ANY" && this.context.ir.auth.schemes.length > 1;
     }
 }
 

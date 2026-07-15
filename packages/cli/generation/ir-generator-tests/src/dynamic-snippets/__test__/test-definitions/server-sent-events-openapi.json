@@ -51,6 +51,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -212,6 +213,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -373,6 +375,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -480,6 +483,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -587,6 +591,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -694,6 +699,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "heartbeat": {
                     "type": "samePropertiesAsObject",
@@ -855,6 +861,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "message": {
                     "type": "samePropertiesAsObject",
@@ -1091,6 +1098,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "message": {
                     "type": "samePropertiesAsObject",
@@ -1341,7 +1349,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:StreamRequest": {
             "type": "object",
@@ -1407,7 +1416,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:Event": {
             "type": "object",
@@ -1569,7 +1579,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:StatusPayload": {
             "type": "object",
@@ -1662,7 +1673,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ObjectPayloadWithEventField": {
             "type": "object",
@@ -1785,7 +1797,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:HeartbeatPayload": {
             "type": "object",
@@ -1851,7 +1864,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:EntityEventPayloadEventType": {
             "type": "enum",
@@ -2102,7 +2116,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolHeartbeat": {
             "type": "object",
@@ -2134,7 +2149,8 @@
             },
             "properties": [],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolStringEvent": {
             "type": "object",
@@ -2197,7 +2213,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolNumberEvent": {
             "type": "object",
@@ -2260,7 +2277,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolObjectEvent": {
             "type": "object",
@@ -2323,7 +2341,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ProtocolCollisionObjectEvent": {
             "type": "object",
@@ -2386,7 +2405,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DataContextHeartbeat": {
             "type": "object",
@@ -2454,7 +2474,8 @@
             "extends": [
                 "type_:HeartbeatPayload"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:DataContextEntityEvent": {
             "type": "object",
@@ -2588,7 +2609,8 @@
             "extends": [
                 "type_:EntityEventPayload"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:CompletionRequest": {
             "type": "object",
@@ -2684,7 +2706,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:NullableStreamRequest": {
             "type": "object",
@@ -2783,7 +2806,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:CompletionFullResponseFinishReason": {
             "type": "enum",
@@ -2979,7 +3003,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:CompletionStreamChunk": {
             "type": "object",
@@ -3078,7 +3103,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamRequestBase": {
             "type": "object",
@@ -3174,7 +3200,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamMessageVariant": {
             "type": "object",
@@ -3302,7 +3329,8 @@
             "extends": [
                 "type_:UnionStreamRequestBase"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamInterruptVariant": {
             "type": "object",
@@ -3400,7 +3428,8 @@
             "extends": [
                 "type_:UnionStreamRequestBase"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamCompactVariant": {
             "type": "object",
@@ -3528,7 +3557,8 @@
             "extends": [
                 "type_:UnionStreamRequestBase"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:UnionStreamRequest": {
             "type": "discriminatedUnion",
@@ -3580,6 +3610,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "message": {
                     "type": "samePropertiesAsObject",
@@ -5276,5 +5307,6 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
+    "globalParameters": null,
     "generatorConfig": null
 }

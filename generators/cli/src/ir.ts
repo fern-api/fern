@@ -18,6 +18,7 @@ import { readFile } from "fs/promises";
 export interface IrSummary {
     apiDisplayName: string | undefined;
     auth: { schemes: FernIr.AuthScheme[] };
+    globalParameters: FernIr.GlobalParameter[];
 }
 
 /**
@@ -56,6 +57,7 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
 
     return {
         apiDisplayName: ir.apiDisplayName,
-        auth: { schemes: ir.auth.schemes }
+        auth: { schemes: ir.auth.schemes },
+        globalParameters: ir.globalParameters ?? []
     };
 }

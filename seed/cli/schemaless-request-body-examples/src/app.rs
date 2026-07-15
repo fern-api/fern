@@ -108,6 +108,12 @@ pub struct CliApp {
     /// Login flows declared for this CLI. Each populates one auth
     /// scheme's keyring entry on `<bin> auth login`. See ADR-0007.
     login_flows: Vec<crate::auth::login::DynLoginFlow>,
+    /// Root-level global parameters. Declared once here (like
+    /// [`auth_bindings`](Self::auth_bindings)) and shared across all
+    /// bindings — `propagate_root_global_parameters` hands them to each
+    /// binding via [`Binding::set_root_global_parameters`], which
+    /// surfaces them as top-level flags and injects them into requests.
+    global_parameters: Vec<crate::openapi::discovery::GlobalParameter>,
     /// Optional base URL for per-status-code error documentation links.
     /// When set, API errors append `<base_url>/<http_status_code>` to stderr.
     error_docs_base_url: Option<String>,
@@ -125,6 +131,7 @@ impl CliApp {
             cli_commands: Vec::new(),
             auth_bindings: Vec::new(),
             login_flows: Vec::new(),
+            global_parameters: Vec::new(),
             error_docs_base_url: None,
         }
     }
@@ -183,6 +190,50 @@ impl CliApp {
     /// ```
     pub fn auth(mut self, builder: impl AuthSchemeBuilder) -> Self {
         self.auth_bindings.push(builder.into_binding());
+        self
+    }
+
+    // ── Global parameter registration ─────────────────────────────────
+
+    /// Register a global parameter at the root CLI level.
+    ///
+    /// Global parameters are declared once here and shared across all
+    /// bindings — mirroring [`auth`](Self::auth). Before the CLI runs,
+    /// `propagate_root_global_parameters` hands the full set to each
+    /// binding via [`Binding::set_root_global_parameters`]; the binding
+    /// surfaces them as top-level flags and injects the resolved value
+    /// into outgoing requests at the configured wire location.
+    ///
+    /// This is the builder entry point emitted by the TypeScript codegen
+    /// layer (`detectGlobalParams.ts`) from `ir.globalParameters`.
+    ///
+    /// ```rust,ignore
+    /// use fern_cli_sdk::app::CliApp;
+    /// use fern_cli_sdk::openapi::OpenApiBinding;
+    /// use fern_cli_sdk::openapi::discovery::{
+    ///     GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+    /// };
+    ///
+    /// CliApp::new("my-cli")
+    ///     .global_parameter(GlobalParameter {
+    ///         name: "api-version".into(),
+    ///         location: GlobalParameterLocation::Query,
+    ///         target: "api-version".into(),
+    ///         env: Some("MY_API_VERSION".into()),
+    ///         default: None,
+    ///         optional: false,
+    ///         apply: GlobalParameterApplyMode::Auto,
+    ///         parameter_name: None,
+    ///         docs: None,
+    ///     })
+    ///     .binding(OpenApiBinding::new().spec(include_str!("openapi.yaml")))
+    ///     .run()
+    /// ```
+    pub fn global_parameter(
+        mut self,
+        param: crate::openapi::discovery::GlobalParameter,
+    ) -> Self {
+        self.global_parameters.push(param);
         self
     }
 
@@ -529,6 +580,7 @@ impl CliApp {
         crate::init_logging(&self.name);
 
         self.propagate_root_auth();
+        self.propagate_root_global_parameters();
 
         let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
@@ -547,6 +599,7 @@ impl CliApp {
         T: Into<std::ffi::OsString>,
     {
         self.propagate_root_auth();
+        self.propagate_root_global_parameters();
         let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
         let mut out = std::io::stdout().lock();
@@ -566,6 +619,7 @@ impl CliApp {
         W: std::io::Write,
     {
         self.propagate_root_auth();
+        self.propagate_root_global_parameters();
         let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
         rt.block_on(self.run_inner(args, out))
@@ -588,6 +642,19 @@ impl CliApp {
         if !self.auth_bindings.is_empty() {
             for binding in &mut self.bindings {
                 binding.set_root_auth(&self.auth_bindings);
+            }
+        }
+    }
+
+    /// Pass root-level global parameters to each registered binding.
+    /// Mirrors [`propagate_root_auth`](Self::propagate_root_auth):
+    /// parameters are declared once on the root `CliApp` and shared with
+    /// every binding, which surfaces them as flags and injects them into
+    /// requests. Must be called before `run_inner` / `dispatch_pipeline`.
+    fn propagate_root_global_parameters(&mut self) {
+        if !self.global_parameters.is_empty() {
+            for binding in &mut self.bindings {
+                binding.set_root_global_parameters(&self.global_parameters);
             }
         }
     }

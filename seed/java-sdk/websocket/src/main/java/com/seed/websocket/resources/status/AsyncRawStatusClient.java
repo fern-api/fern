@@ -3,6 +3,7 @@
  */
 package com.seed.websocket.resources.status;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.RequestOptions;
@@ -78,6 +79,9 @@ public class AsyncRawStatusClient {
                     future.completeExceptionally(new SeedWebsocketApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new SeedWebsocketException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedWebsocketException("Network error executing HTTP request", e));
                 }

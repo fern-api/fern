@@ -56,6 +56,11 @@ types:
       transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
       retries: optional<RetriesConfiguration>
+      global-parameters:
+        type: optional<list<string>>
+        docs: |
+          List of global parameter IDs that this endpoint opts into.
+          Used with apply: explicit mode.
 
   HttpEndpointAuth:
     discriminated: false

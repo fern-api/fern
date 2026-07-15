@@ -311,7 +311,9 @@ class HttpClient:
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
@@ -472,7 +474,9 @@ class HttpClient:
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
@@ -602,7 +606,9 @@ class AsyncHttpClient:
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
@@ -766,7 +772,9 @@ class AsyncHttpClient:
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )

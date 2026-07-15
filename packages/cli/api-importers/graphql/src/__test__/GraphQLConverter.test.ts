@@ -83,6 +83,40 @@ describe("GraphQLConverter custom scalars", () => {
         expect(createdAt?.valueType).toEqual({ type: "id", value: FdrAPI.TypeId("DateTime"), default: undefined });
     });
 
+    it("resolves colliding namespace operations to distinct ids without dropping any", async () => {
+        const schema = join(
+            FIXTURES_DIR,
+            RelativeFilePath.of("namespace-collisions"),
+            RelativeFilePath.of("schema.graphql")
+        );
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: schema
+        });
+
+        const { graphqlOperations } = await converter.convert();
+        const ids = Object.keys(graphqlOperations);
+
+        // 3 parent operations (inventory, stock, catalog) + 6 namespaced children
+        // (inventory/stock each contribute inventory + search; catalog contributes
+        // search + featured). A silent id collision would shrink this count.
+        expect(ids).toHaveLength(9);
+        expect(new Set(ids).size).toBe(ids.length);
+
+        // The root parent operation keeps the flat id even though a child field shares its name.
+        expect(graphqlOperations[FdrAPI.GraphQlOperationId("query_inventory")]).toBeDefined();
+        // The colliding child and the cross-namespace duplicates fall back to namespaced ids.
+        for (const id of [
+            "query_inventory.inventory",
+            "query_stock.inventory",
+            "query_inventory.search",
+            "query_stock.search",
+            "query_catalog.search"
+        ]) {
+            expect(graphqlOperations[FdrAPI.GraphQlOperationId(id)], `expected operation "${id}"`).toBeDefined();
+        }
+    });
+
     it("namespaces custom scalar ids", async () => {
         const converter = new GraphQLConverter({
             context: createMockTaskContext(),
