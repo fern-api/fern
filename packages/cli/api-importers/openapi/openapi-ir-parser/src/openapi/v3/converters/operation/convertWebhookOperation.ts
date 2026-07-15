@@ -64,7 +64,7 @@ export function convertWebhookOperation({
           })
         : undefined;
 
-    const signatureVerification = getFernWebhookSignatureExtension(document, operation);
+    const signatureVerification = getFernWebhookSignatureExtension(document, operation, context.logger);
 
     // For GET webhooks without a request body, synthesize a payload from query parameters
     if (operation.requestBody == null) {

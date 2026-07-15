@@ -238,7 +238,9 @@ public class AsyncSeedAnyAuthClientBuilder {
         if (this.token != null) {
             builder.addHeader("Authorization", "Bearer " + this.token);
         }
-        builder.addHeader("X-API-Key", this.apiKey);
+        if (this.apiKey != null) {
+            builder.addHeader("X-API-Key", this.apiKey);
+        }
         if (this.username != null && this.password != null) {
             String unencodedToken = this.username + ":" + this.password;
             String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
