@@ -115,6 +115,12 @@ export class RawClient {
             writer.write(`path: `);
             this.writePathString({ writer, endpoint, pathParameterReferences });
             writer.writeLine(",");
+            if (headerBagReference != null) {
+                writer.writeLine(`headers: ${headerBagReference},`);
+            }
+            if (queryBagReference != null) {
+                writer.writeLine(`query: ${queryBagReference},`);
+            }
             writer.writeLine(`request_options: request_options`);
             writer.dedent();
             writer.write(`)`);
