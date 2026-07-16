@@ -235,10 +235,12 @@ impl HttpConfig {
     }
 
     /// Read the optional consumer-supplied `User-Agent` suffix. The
-    /// `--user-agent-suffix` flag (surfaced via
+    /// configured suffix flag (surfaced via
     /// [`HttpConfig::with_user_agent_suffix_override`]) takes precedence; if
-    /// unset, falls back to the `<NAME>_USER_AGENT_SUFFIX` env var. This lets
-    /// a tool built on top of the CLI voluntarily tag its traffic (e.g.
+    /// unset, falls back to the scoped env var. Both the flag and the env var
+    /// default to `--user-agent-suffix` / `<NAME>_USER_AGENT_SUFFIX` but can
+    /// be renamed at generation time (see [`crate::user_agent`]). This lets a
+    /// tool built on top of the CLI voluntarily tag its traffic (e.g.
     /// `partner-app/3.1`) without replacing the CLI's own identity.
     ///
     /// The value is trimmed and only accepted if it is non-empty and valid
@@ -247,7 +249,7 @@ impl HttpConfig {
     fn user_agent_suffix(&self) -> Option<String> {
         let raw = match &self.user_agent_suffix_override {
             Some(s) => Some(s.to_string()),
-            None => first_env([scoped(&self.prefix, "_USER_AGENT_SUFFIX")]),
+            None => first_env([scoped(&self.prefix, &crate::user_agent::suffix_env_segment())]),
         };
         raw.map(|s| s.trim().to_string())
             .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())

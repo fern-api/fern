@@ -159,6 +159,18 @@ impl CliApp {
         self
     }
 
+    /// Rename the consumer `User-Agent` suffix flag (and its derived env
+    /// var). By default the CLI exposes `--user-agent-suffix` and
+    /// `<NAME>_USER_AGENT_SUFFIX`; passing `"via"` here exposes `--via` and
+    /// `<NAME>_VIA` instead. The name is the flag's long form without the
+    /// leading `--`. Wired from the generator's `userAgentSuffixFlag`
+    /// custom config; it sets a process-wide value read by the flag
+    /// registration, help/schema text, and env-var lookup.
+    pub fn user_agent_suffix_flag(self, name: &str) -> Self {
+        crate::user_agent::set_suffix_flag(name);
+        self
+    }
+
     // ── Binding registration ────────────────────────────────────────
 
     /// Add a binding (protocol adapter) to this CLI. The CLI name is
@@ -907,8 +919,11 @@ impl CliApp {
             )
             .arg(
                 clap::Arg::new("user-agent-suffix")
-                    .long("user-agent-suffix")
-                    .help("Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>_USER_AGENT_SUFFIX.")
+                    .long(crate::user_agent::suffix_flag())
+                    .help(format!(
+                        "Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>{}.",
+                        crate::user_agent::suffix_env_segment()
+                    ))
                     .value_name("TOKEN")
                     .global(true),
             )
@@ -1465,9 +1480,12 @@ fn global_flags() -> Vec<serde_json::Value> {
             "description": "Override the API base URL (e.g. for testing against a mock server)",
         }),
         serde_json::json!({
-            "flag": "--user-agent-suffix",
+            "flag": format!("--{}", crate::user_agent::suffix_flag()),
             "valueName": "TOKEN",
-            "description": "Product token appended to the User-Agent (e.g. my-app/1.0). Takes precedence over <NAME>_USER_AGENT_SUFFIX.",
+            "description": format!(
+                "Product token appended to the User-Agent (e.g. my-app/1.0). Takes precedence over <NAME>{}.",
+                crate::user_agent::suffix_env_segment()
+            ),
         }),
         serde_json::json!({
             "flag": "--quiet",

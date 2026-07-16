@@ -82,4 +82,45 @@ describe("validateCustomConfig", () => {
     it("throws on empty rootGroup", () => {
         expect(() => validateCustomConfig({ rootGroup: "" })).toThrow(/contains invalid characters/);
     });
+
+    it("accepts a valid userAgentSuffixFlag", () => {
+        expect(validateCustomConfig({ userAgentSuffixFlag: "via" })).toEqual({ userAgentSuffixFlag: "via" });
+    });
+
+    it("accepts a kebab userAgentSuffixFlag with digits", () => {
+        expect(validateCustomConfig({ userAgentSuffixFlag: "user-agent-suffix" })).toEqual({
+            userAgentSuffixFlag: "user-agent-suffix"
+        });
+        expect(validateCustomConfig({ userAgentSuffixFlag: "app-info2" })).toEqual({
+            userAgentSuffixFlag: "app-info2"
+        });
+    });
+
+    it("ignores undefined userAgentSuffixFlag explicitly set (default applied downstream)", () => {
+        expect(validateCustomConfig({ userAgentSuffixFlag: undefined })).toEqual({});
+    });
+
+    it("throws on non-string userAgentSuffixFlag", () => {
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: 42 })).toThrow(/expected a string, got number/);
+    });
+
+    it("throws on userAgentSuffixFlag with a leading --", () => {
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "--via" })).toThrow(/is not a valid flag name/);
+    });
+
+    it("throws on userAgentSuffixFlag with uppercase letters", () => {
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "Via" })).toThrow(/is not a valid flag name/);
+    });
+
+    it("throws on userAgentSuffixFlag starting with a digit", () => {
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "1x" })).toThrow(/is not a valid flag name/);
+    });
+
+    it("throws on userAgentSuffixFlag with underscores", () => {
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "user_agent" })).toThrow(/is not a valid flag name/);
+    });
+
+    it("throws on empty userAgentSuffixFlag", () => {
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "" })).toThrow(/is not a valid flag name/);
+    });
 });

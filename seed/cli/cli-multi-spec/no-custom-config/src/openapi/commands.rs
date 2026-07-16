@@ -115,6 +115,10 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
 /// avoids stale `{NAME}_API_KEY` boilerplate.
 pub fn after_help_footer(binary_name: &str) -> String {
     let prefix = binary_name.to_uppercase().replace('-', "_");
+    // The suffix flag/env names default to `--user-agent-suffix` /
+    // `<NAME>_USER_AGENT_SUFFIX` but can be renamed at generation time.
+    let ua_env = format!("{prefix}{}", crate::user_agent::suffix_env_segment());
+    let ua_flag = crate::user_agent::suffix_flag();
     format!(
         "Environment variables:\n  \
          {prefix}_BASE_URL             Override the API base URL\n  \
@@ -122,7 +126,7 @@ pub fn after_help_footer(binary_name: &str) -> String {
          {prefix}_INSECURE=1           Skip TLS verification (debugging only)\n  \
          {prefix}_PROXY                HTTP(S) proxy URL\n  \
          {prefix}_TIMEOUT_SECS         Total request timeout\n  \
-         {prefix}_USER_AGENT_SUFFIX    Product token appended to the User-Agent (e.g. my-app/1.0; --user-agent-suffix wins)\n\n\
+         {ua_env}    Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)\n\n\
          Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored."
     )
 }
@@ -163,8 +167,11 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         )
         .arg(
             clap::Arg::new("user-agent-suffix")
-                .long("user-agent-suffix")
-                .help("Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>_USER_AGENT_SUFFIX.")
+                .long(crate::user_agent::suffix_flag())
+                .help(format!(
+                    "Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>{}.",
+                    crate::user_agent::suffix_env_segment()
+                ))
                 .value_name("TOKEN")
                 .global(true),
         )
@@ -375,7 +382,7 @@ fn build_resource_command(
         // matching the regular-param convention above.
         for field in &method.multipart_fields {
             let kebab = to_kebab_flag(&field.wire_name);
-            if BUILTIN_FLAG_NAMES.contains(&kebab.as_str()) {
+            if is_reserved_flag_name(&kebab) {
                 continue;
             }
             method_cmd = method_cmd.arg(build_multipart_field_arg(field));
@@ -648,10 +655,19 @@ pub(crate) fn resolve_param_flag_name(param: &MethodParameter, wire_name: &str) 
             }
         }
     };
-    if BUILTIN_FLAG_NAMES.contains(&flag.as_str()) {
+    if is_reserved_flag_name(&flag) {
         flag = format!("{flag}-param");
     }
     Some(flag)
+}
+
+/// Whether a parameter-derived flag long name is reserved by the runtime
+/// and therefore must be mangled (`-param` suffix) to avoid a clap
+/// duplicate-flag panic. Covers the always-present built-in flags plus a
+/// customer-configured `userAgentSuffixFlag` name that would otherwise
+/// clash with the consumer suffix flag.
+fn is_reserved_flag_name(flag: &str) -> bool {
+    BUILTIN_FLAG_NAMES.contains(&flag) || crate::user_agent::collides_with_suffix_flag(flag)
 }
 
 /// Build a `PossibleValuesParser` that respects an optional `x-fern-enum`

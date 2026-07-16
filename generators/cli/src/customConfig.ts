@@ -40,6 +40,22 @@ export interface FernCliCustomConfig {
      * sit beside the namespace node.
      */
     rootGroup?: string;
+
+    /**
+     * Name of the global flag (and, by derivation, the environment
+     * variable) a downstream consumer uses to append a product token to
+     * the generated CLI's `User-Agent`.
+     *
+     * The value is the flag's long name *without* the leading `--`. It
+     * must be a clap-safe kebab identifier (`^[a-z][a-z0-9-]*$`).
+     *
+     * When omitted, defaults to `user-agent-suffix`, so the CLI exposes
+     * `--user-agent-suffix` and `<NAME>_USER_AGENT_SUFFIX`. Setting
+     * `userAgentSuffixFlag: "via"` instead exposes `--via` and
+     * `<NAME>_VIA` (the env var is `<NAME>_` + the flag uppercased with
+     * hyphens converted to underscores).
+     */
+    userAgentSuffixFlag?: string;
 }
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
@@ -93,6 +109,21 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.rootGroup = obj.rootGroup;
+    }
+    if ("userAgentSuffixFlag" in obj && obj.userAgentSuffixFlag !== undefined) {
+        if (typeof obj.userAgentSuffixFlag !== "string") {
+            throw new Error(
+                `Invalid customConfig.userAgentSuffixFlag: expected a string, got ${typeof obj.userAgentSuffixFlag}.`
+            );
+        }
+        if (!/^[a-z][a-z0-9-]*$/.test(obj.userAgentSuffixFlag)) {
+            throw new Error(
+                `Invalid customConfig.userAgentSuffixFlag: "${obj.userAgentSuffixFlag}" is not a valid flag name. ` +
+                    "Provide the long flag name without the leading \"--\": it must start with a lowercase " +
+                    "letter and contain only [a-z0-9-] (e.g. \"via\" or \"user-agent-suffix\")."
+            );
+        }
+        result.userAgentSuffixFlag = obj.userAgentSuffixFlag;
     }
     return result;
 }
