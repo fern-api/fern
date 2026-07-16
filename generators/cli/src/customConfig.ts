@@ -119,8 +119,8 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         if (!/^[a-z][a-z0-9-]*$/.test(obj.userAgentSuffixFlag)) {
             throw new Error(
                 `Invalid customConfig.userAgentSuffixFlag: "${obj.userAgentSuffixFlag}" is not a valid flag name. ` +
-                    "Provide the long flag name without the leading \"--\": it must start with a lowercase " +
-                    "letter and contain only [a-z0-9-] (e.g. \"via\" or \"user-agent-suffix\")."
+                    'Provide the long flag name without the leading "--": it must start with a lowercase ' +
+                    'letter and contain only [a-z0-9-] (e.g. "via" or "user-agent-suffix").'
             );
         }
         result.userAgentSuffixFlag = obj.userAgentSuffixFlag;
