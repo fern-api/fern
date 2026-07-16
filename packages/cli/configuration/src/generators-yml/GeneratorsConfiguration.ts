@@ -203,6 +203,7 @@ export interface GeneratorInvocation {
     absolutePathToLocalSnippets: AbsoluteFilePath | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    smartCasingDigitWordBoundary: boolean;
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;

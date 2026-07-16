@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.75.0
+  changelogEntry:
+    - summary: |
+        Add a new `smart-casing-digit-word-boundary` option to `generators.yml`. When enabled
+        alongside `smart-casing`, snake_case names preserve the word boundary after a digit run
+        (e.g., `ConversationsV2Configuration` → `conversations_v2_configuration`,
+        `Int32Value` → `int32_value`). The option defaults to `false`, restoring the
+        pre-5.70.3 behavior where the digit run stays fused to the following word
+        (`conversations_v2configuration`).
+      type: feat
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 5.74.3
+  changelogEntry:
+    - summary: |
+        Move internal docs-publish logs that expose implementation details (docs ledger deploy mode, per-locale segment counts, FDR publish, ledger deployment IDs) from INFO to DEBUG level, so they only appear when debug logging is enabled.
+      type: chore
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 5.74.2
   changelogEntry:
     - summary: |

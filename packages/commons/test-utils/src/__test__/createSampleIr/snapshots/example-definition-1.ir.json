@@ -15,6 +15,7 @@
     "generationLanguage": undefined,
     "keywords": undefined,
     "smartCasing": true,
+    "smartCasingDigitWordBoundary": undefined,
   },
   "constants": {
     "errorInstanceIdKey": "errorInstanceId",

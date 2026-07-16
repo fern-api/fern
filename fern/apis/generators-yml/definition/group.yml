@@ -52,6 +52,12 @@ types:
       smart-casing:
         type: optional<boolean>
         docs: Feature flag used to enable better IR naming.
+      smart-casing-digit-word-boundary:
+        type: optional<boolean>
+        docs: |
+          When smart casing is enabled, preserves the word boundary after a digit run in
+          snake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).
+          Defaults to false, which keeps the digit run fused to the following word.
       api:
         type: optional<GeneratorAPISettingsSchema>
         docs: Override API import settings (this is applied across all specs)
