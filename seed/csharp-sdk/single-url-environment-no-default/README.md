@@ -54,7 +54,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedSingleUrlEnvironmentNoDefault;
 
-var client = new SeedSingleUrlEnvironmentNoDefaultClient(new ClientOptions
+var client = new SeedSingleUrlEnvironmentNoDefaultClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedSingleUrlEnvironmentNoDefaultEnvironment.Production
 });

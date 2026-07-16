@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.76.3
+  changelogEntry:
+    - summary: |
+        The README "Environments" usage example now passes the client options via the
+        `clientOptions:` named argument so the generated snippet compiles. The root
+        client constructor's first positional parameter is the auth token string, so
+        the previous `new Client(new ClientOptions { ... })` snippet passed
+        `ClientOptions` where a `string?` token was expected (CS1503).
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 2.76.1
   changelogEntry:
     - summary: |

@@ -61,7 +61,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedAudiences;
 
-var client = new SeedAudiencesClient(new ClientOptions
+var client = new SeedAudiencesClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedAudiencesEnvironment.EnvironmentA
 });
