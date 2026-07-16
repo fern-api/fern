@@ -1,5 +1,5 @@
 import { getWireValue } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
@@ -125,7 +125,7 @@ export class WebhooksHelperGenerator {
     }
 
     private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
-        return location._visit({
+        return visitDiscriminatedUnion(location)._visit({
             queryParameter: (queryParameter) => queryParameter.name,
             _other: () => {
                 throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
@@ -448,7 +448,7 @@ class HmacHelperWriter {
     }
 
     private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
-        return location._visit({
+        return visitDiscriminatedUnion(location)._visit({
             queryParameter: (queryParameter) => queryParameter.name,
             _other: () => {
                 throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
@@ -692,7 +692,7 @@ class BodyHashHelperTestWriter {
     }
 
     private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
-        return location._visit({
+        return visitDiscriminatedUnion(location)._visit({
             queryParameter: (queryParameter) => queryParameter.name,
             _other: () => {
                 throw new Error(`Unsupported webhook body-hash location: ${location.type}`);
