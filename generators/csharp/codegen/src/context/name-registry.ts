@@ -656,7 +656,7 @@ export class NameRegistry {
      * enclosing type's lexical scope. We therefore record the enclosing types rather than
      * the name globally, so references are qualified only when written inside that scope.
      *
-     * Key: Nested type name that shadows its root namespace segment (e.g. "Auth0")
+     * Key: Nested type name that shadows its root namespace segment (e.g. "Acme")
      * Value: Set of enclosing-type fully qualified names the shadow is visible in
      */
     private readonly nestedTypeShadows = new Map<string, Set<string>>();

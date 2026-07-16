@@ -594,44 +594,42 @@ describe("NameRegistry", () => {
     });
 
     describe("hasNestedTypeShadowInScope", () => {
-        const enclosingFqn = "Auth0.ManagementApi.ConnectionResponseContent";
+        const enclosingFqn = "Acme.Api.ConnectionResponse";
 
         it("should detect a nested type whose name equals the root namespace segment only within its enclosing scope", () => {
-            // Reproduces the CS0426 case: a union variant "auth0" generates a nested struct
-            // `Auth0` inside `ConnectionResponseContent`, which lives in namespace
-            // `Auth0.ManagementApi`. Within the enclosing type's body, the unqualified `Auth0`
-            // resolves to the nested struct instead of the namespace root.
-            const enclosing = createClassRef("ConnectionResponseContent", "Auth0.ManagementApi");
+            // Reproduces the CS0426 case: a union variant "acme" generates a nested struct
+            // `Acme` inside `ConnectionResponse`, which lives in namespace `Acme.Api`. Within
+            // the enclosing type's body, the unqualified `Acme` resolves to the nested struct
+            // instead of the namespace root.
+            const enclosing = createClassRef("ConnectionResponse", "Acme.Api");
             nameRegistry.trackType(enclosing);
-            const nestedAuth0 = createClassRef("Auth0", "Auth0.ManagementApi", enclosing);
-            nameRegistry.trackType(nestedAuth0);
+            const nestedAcme = createClassRef("Acme", "Acme.Api", enclosing);
+            nameRegistry.trackType(nestedAcme);
 
             // The nested type is NOT tracked as a global type name: unlike a top-level type that
             // shadows the namespace everywhere, this shadow is confined to the enclosing scope.
-            expect(nameRegistry.hasTypeNamespaceConflict("Auth0")).toBe(false);
+            expect(nameRegistry.hasTypeNamespaceConflict("Acme")).toBe(false);
 
             // Inside the enclosing type's body the shadow is visible, so the reference must be
             // qualified.
-            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", [enclosingFqn])).toBe(true);
+            expect(nameRegistry.hasNestedTypeShadowInScope("Acme", [enclosingFqn])).toBe(true);
             // ...as it is inside a further-nested type within that enclosing type.
-            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", [enclosingFqn, `${enclosingFqn}+Auth0`])).toBe(
-                true
-            );
+            expect(nameRegistry.hasNestedTypeShadowInScope("Acme", [enclosingFqn, `${enclosingFqn}+Acme`])).toBe(true);
 
             // Outside the enclosing type (a different type / file), there is no shadow, so no
             // qualification is needed.
-            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", [])).toBe(false);
-            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", ["Auth0.ManagementApi.SomeOtherType"])).toBe(false);
+            expect(nameRegistry.hasNestedTypeShadowInScope("Acme", [])).toBe(false);
+            expect(nameRegistry.hasNestedTypeShadowInScope("Acme", ["Acme.Api.SomeOtherType"])).toBe(false);
         });
 
         it("should not record a shadow for a nested type whose name does not match the root segment", () => {
-            // A nested type named "Foo" lives in a namespace whose root is "Auth0".
-            const enclosing = createClassRef("ConnectionResponseContent", "Auth0.ManagementApi");
+            // A nested type named "Foo" lives in a namespace whose root is "Acme".
+            const enclosing = createClassRef("ConnectionResponse", "Acme.Api");
             nameRegistry.trackType(enclosing);
-            const nestedFoo = createClassRef("Foo", "Auth0.ManagementApi", enclosing);
+            const nestedFoo = createClassRef("Foo", "Acme.Api", enclosing);
             nameRegistry.trackType(nestedFoo);
 
-            // "Foo" does not match its own root segment ("Auth0"), so it does not shadow anything
+            // "Foo" does not match its own root segment ("Acme"), so it does not shadow anything
             // and must never be qualified on that basis.
             expect(nameRegistry.hasNestedTypeShadowInScope("Foo", [enclosingFqn])).toBe(false);
         });

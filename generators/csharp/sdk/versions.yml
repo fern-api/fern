@@ -3,14 +3,14 @@
   changelogEntry:
     - summary: |
         A generated nested type whose name matches the SDK's root namespace segment (e.g.
-        a union variant `auth0` that produces a nested `Auth0` struct inside
-        `ConnectionResponseContent` in the `Auth0.ManagementApi` namespace) now emits
-        `global::`-qualified references. Previously such a nested type shadowed the
-        namespace root within its enclosing type's body, so references like
-        `Auth0.ManagementApi.SomeType` resolved to the nested type and failed to compile
-        with CS0426. The `global::` qualifier is applied only to references written inside
-        the enclosing type where the shadow is visible, so unrelated references to the same
-        root segment elsewhere in the SDK are left unqualified.
+        a union variant `acme` that produces a nested `Acme` struct inside
+        `ConnectionResponse` in the `Acme.Api` namespace) now emits `global::`-qualified
+        references. Previously such a nested type shadowed the namespace root within its
+        enclosing type's body, so references like `Acme.Api.SomeType` resolved to the
+        nested type and failed to compile with CS0426. The `global::` qualifier is applied
+        only to references written inside the enclosing type where the shadow is visible, so
+        unrelated references to the same root segment elsewhere in the SDK are left
+        unqualified.
       type: fix
   createdAt: "2026-07-16"
   irVersion: 67
