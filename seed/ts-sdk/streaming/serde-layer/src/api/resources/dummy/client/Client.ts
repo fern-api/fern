@@ -101,6 +101,9 @@ export class DummyClient {
      * @param {SeedStreaming.Generateequest} request
      * @param {DummyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedStreamingError}
+     * @throws {@link errors.SeedStreamingTimeoutError}
+     *
      * @example
      *     await client.dummy.generate({
      *         numEvents: 5

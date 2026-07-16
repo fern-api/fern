@@ -30,6 +30,9 @@ export class UserClient {
      *                          This ID is unique to each user.
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMultiLineDocsError}
+     * @throws {@link errors.SeedMultiLineDocsTimeoutError}
+     *
      * @example
      *     await client.user.getUser("userId")
      */
@@ -78,6 +81,9 @@ export class UserClient {
      *
      * @param {SeedMultiLineDocs.CreateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedMultiLineDocsError}
+     * @throws {@link errors.SeedMultiLineDocsTimeoutError}
      *
      * @example
      *     await client.user.createUser({

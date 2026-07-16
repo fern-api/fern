@@ -528,6 +528,9 @@ export class SeedApiClient {
      * @param {SeedApi.StreamXFernStreamingConditionRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.streamXFernStreamingCondition({
      *         query: "query"
@@ -659,6 +662,9 @@ export class SeedApiClient {
      * @param {SeedApi.StreamXFernStreamingSharedSchemaRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.streamXFernStreamingSharedSchema({
      *         prompt: "prompt",
@@ -723,6 +729,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.SharedCompletionRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.validateCompletion({
@@ -846,6 +855,9 @@ export class SeedApiClient {
      * @param {SeedApi.StreamXFernStreamingUnionRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.streamXFernStreamingUnion({
      *         type: "message",
@@ -910,6 +922,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.UnionStreamRequestBase} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.validateUnionRequest({
@@ -1033,6 +1048,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.StreamXFernStreamingNullableConditionRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.streamXFernStreamingNullableCondition({

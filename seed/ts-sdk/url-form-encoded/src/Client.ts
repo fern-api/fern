@@ -26,6 +26,9 @@ export class SeedApiClient {
      * @param {SeedApi.PostSubmitRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.submitFormData({
      *         username: "johndoe",
@@ -80,6 +83,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApi.TokenRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.getToken({

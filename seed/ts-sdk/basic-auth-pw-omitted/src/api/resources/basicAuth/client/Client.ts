@@ -28,6 +28,8 @@ export class BasicAuthClient {
      * @param {BasicAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedBasicAuthPwOmitted.UnauthorizedRequest}
+     * @throws {@link errors.SeedBasicAuthPwOmittedError}
+     * @throws {@link errors.SeedBasicAuthPwOmittedTimeoutError}
      *
      * @example
      *     await client.basicAuth.getWithBasicAuth()
@@ -91,6 +93,8 @@ export class BasicAuthClient {
      *
      * @throws {@link SeedBasicAuthPwOmitted.UnauthorizedRequest}
      * @throws {@link SeedBasicAuthPwOmitted.BadRequest}
+     * @throws {@link errors.SeedBasicAuthPwOmittedError}
+     * @throws {@link errors.SeedBasicAuthPwOmittedTimeoutError}
      *
      * @example
      *     await client.basicAuth.postWithBasicAuth({

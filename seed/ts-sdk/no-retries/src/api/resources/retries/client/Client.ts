@@ -24,6 +24,9 @@ export class RetriesClient {
     /**
      * @param {RetriesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNoRetriesError}
+     * @throws {@link errors.SeedNoRetriesTimeoutError}
+     *
      * @example
      *     await client.retries.getUsers()
      */

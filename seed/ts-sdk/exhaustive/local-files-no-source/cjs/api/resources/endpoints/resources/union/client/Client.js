@@ -58,6 +58,9 @@ class UnionClient {
      * @param {SeedExhaustive.types.Animal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.union.getAndReturnUnion({
      *         animal: "dog",

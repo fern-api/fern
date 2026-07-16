@@ -26,6 +26,9 @@ export class HttpMethodsClient {
      * @param {string} id
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
      */
@@ -78,6 +81,9 @@ export class HttpMethodsClient {
      *
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.httpMethods.testPost({
@@ -143,6 +149,9 @@ export class HttpMethodsClient {
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.httpMethods.testPut("id", {
@@ -210,6 +219,9 @@ export class HttpMethodsClient {
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.httpMethods.testPatch("id", {
@@ -290,6 +302,9 @@ export class HttpMethodsClient {
      *
      * @param {string} id
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")

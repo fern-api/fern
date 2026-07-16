@@ -26,6 +26,9 @@ export class SeedApiClient {
      *
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.listPlants()
      */
@@ -72,6 +75,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.GetPlantRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.getPlant({

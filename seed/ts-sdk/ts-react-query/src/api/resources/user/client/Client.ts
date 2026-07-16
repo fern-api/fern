@@ -27,6 +27,9 @@ export class UserClient {
      *
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.user.list()
      */
@@ -71,6 +74,9 @@ export class UserClient {
      *
      * @param {string} userId
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.get("userId")
@@ -119,6 +125,9 @@ export class UserClient {
      *
      * @param {SeedApi.CreateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.create({
@@ -177,6 +186,9 @@ export class UserClient {
      * @param {string} userId
      * @param {SeedApi.UpdateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.update("userId", {
@@ -238,6 +250,9 @@ export class UserClient {
      * @param {SeedApi.UpdateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.user.patch("userId", {
      *         name: "name",
@@ -296,6 +311,9 @@ export class UserClient {
      *
      * @param {string} userId
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.delete("userId")

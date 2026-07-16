@@ -27,6 +27,9 @@ export class S3Client {
      * @param {SeedMultiUrlEnvironment.GetPresignedUrlRequest} request
      * @param {S3Client.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMultiUrlEnvironmentError}
+     * @throws {@link errors.SeedMultiUrlEnvironmentTimeoutError}
+     *
      * @example
      *     await client.s3.getPresignedUrl({
      *         s3Key: "s3Key"

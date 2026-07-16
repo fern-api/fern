@@ -26,6 +26,9 @@ export class ServiceClient {
      * @param {SeedContentTypes.PatchProxyRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedContentTypesError}
+     * @throws {@link errors.SeedContentTypesTimeoutError}
+     *
      * @example
      *     await client.service.patch({
      *         application: "application",
@@ -84,6 +87,9 @@ export class ServiceClient {
      * @param {string} id
      * @param {SeedContentTypes.PatchComplexRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedContentTypesError}
+     * @throws {@link errors.SeedContentTypesTimeoutError}
      *
      * @example
      *     await client.service.patchComplex("id", {
@@ -162,6 +168,9 @@ export class ServiceClient {
      * @param {SeedContentTypes.NamedMixedPatchRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedContentTypesError}
+     * @throws {@link errors.SeedContentTypesTimeoutError}
+     *
      * @example
      *     await client.service.namedPatchWithMixed("id", {
      *         appId: "appId",
@@ -225,6 +234,9 @@ export class ServiceClient {
      * @param {SeedContentTypes.OptionalMergePatchRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedContentTypesError}
+     * @throws {@link errors.SeedContentTypesTimeoutError}
+     *
      * @example
      *     await client.service.optionalMergePatchTest({
      *         requiredField: "requiredField",
@@ -285,6 +297,9 @@ export class ServiceClient {
      * @param {string} id
      * @param {SeedContentTypes.RegularPatchRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedContentTypesError}
+     * @throws {@link errors.SeedContentTypesTimeoutError}
      *
      * @example
      *     await client.service.regularPatch("id", {
