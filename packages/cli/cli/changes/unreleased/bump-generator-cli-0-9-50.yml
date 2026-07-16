@@ -1,0 +1,6 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.50, which upgrades @fern-api/replay to 0.19.1.
+    The autoversion SDK version is now treated as pipeline-owned rather than a customer
+    customization, preventing recurring version-line conflicts in replay.lock and
+    mistaken `0.0.0-fern-placeholder` publishes.
+  type: fix
