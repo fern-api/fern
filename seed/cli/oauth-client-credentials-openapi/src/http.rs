@@ -1,8 +1,9 @@
 //! HTTP client construction and TLS-error diagnostics.
 //!
 //! [`HttpConfig`] holds the inputs that go into building a [`reqwest::Client`]
-//! for a CLI: the binary name (used to scope env vars) and any compile-time
-//! trust roots a binary author baked in via `CliApp::extra_root_cert`.
+//! for a CLI: the binary name (used to scope env vars and to compose the
+//! `User-Agent`) and any compile-time trust roots a binary author baked in
+//! via `CliApp::extra_root_cert`.
 //!
 //! [`HttpConfig::build_client`] honors a small set of environment variables
 //! so users can adapt TLS / proxy behavior without rebuilding the CLI.
@@ -173,6 +174,18 @@ impl HttpConfig {
         &self.prefix
     }
 
+    /// Compose the `User-Agent` header value this CLI's HTTP client sends:
+    /// `{binaryName}/{version}` (e.g. `elevenlabs/1.4.0`).
+    ///
+    /// The binary name identifies the specific CLI rather than the shared
+    /// `fern-cli-sdk` crate, so each generated CLI's traffic is
+    /// distinguishable on the API backend. The version is the crate version
+    /// stamped in at generation time (`CARGO_PKG_VERSION`), which for a
+    /// generated CLI is the release version from `fern generate`.
+    pub fn user_agent(&self) -> String {
+        format!("{}/{}", self.name, env!("CARGO_PKG_VERSION"))
+    }
+
     /// Resolve the transport-neutral view of this config: compile-time
     /// trust roots concatenated with the env-resolved `<NAME>_CA_BUNDLE`,
     /// the `<NAME>_INSECURE` flag, the proxy override, and timeouts.
@@ -250,7 +263,7 @@ impl HttpConfig {
         let prefix = &self.prefix;
 
         let mut builder = reqwest::Client::builder();
-        let user_agent = format!("{}/{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+        let user_agent = self.user_agent();
         if let Ok(header_value) = HeaderValue::from_str(&user_agent) {
             let mut headers = HeaderMap::new();
             headers.insert(USER_AGENT, header_value);
@@ -766,6 +779,15 @@ mod tests {
         let cfg = HttpConfig::new("openapi-fixture").unwrap();
         assert_eq!(cfg.env_prefix(), "OPENAPI_FIXTURE");
         assert_eq!(cfg.name(), "openapi-fixture");
+    }
+
+    #[test]
+    fn user_agent_uses_binary_name_and_crate_version() {
+        let cfg = HttpConfig::new("elevenlabs").unwrap();
+        let ua = cfg.user_agent();
+        assert_eq!(ua, format!("elevenlabs/{}", env!("CARGO_PKG_VERSION")));
+        // Must not fall back to the shared crate name.
+        assert!(!ua.starts_with("fern-cli-sdk/"));
     }
 
     #[test]
