@@ -97,7 +97,6 @@ const asIsTopoValue = {
     [AsIsFiles.HttpBaseRequest]: 6,
     [AsIsFiles.JsonRequest]: 7,
     [AsIsFiles.HttpRawClient]: 8,
-    [AsIsFiles.UrlEncodedRequest]: 33,
     [AsIsFiles.MultipartEncoder]: 9,
     [AsIsFiles.MultipartFormDataPart]: 10,
     [AsIsFiles.MultipartFormData]: 11,
@@ -121,5 +120,9 @@ const asIsTopoValue = {
     [AsIsFiles.CursorPageIterator]: 29,
     [AsIsFiles.OffsetPageIterator]: 30,
     [AsIsFiles.CustomPager]: 31,
-    [AsIsFiles.IdempotencyKey]: 32
+    [AsIsFiles.IdempotencyKey]: 32,
+    // Only constraint is that this loads after HttpBaseRequest (6), which its
+    // Request class extends. Ordered last (max value) so introducing it does not
+    // shift the position of any pre-existing require in the generated root file.
+    [AsIsFiles.UrlEncodedRequest]: 33
 };
