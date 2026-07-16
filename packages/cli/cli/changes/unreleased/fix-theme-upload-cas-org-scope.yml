@@ -1,0 +1,5 @@
+- summary: |
+    Fix `fern docs theme upload` failing with a 422 "Content has not been uploaded" error
+    when binding theme assets. The content-existence check now uses the org-scoped registry
+    content path so uploaded content is stored under the same org as the subsequent file bind.
+  type: fix
