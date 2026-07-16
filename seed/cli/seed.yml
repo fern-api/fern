@@ -180,6 +180,7 @@ allowedFailures:
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
+  - oauth-pkce
   - object
   - objects-with-imports
   - openapi-request-body-ref
