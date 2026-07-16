@@ -1,11 +1,17 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { detectAuthBindings, joinUrl, renderFullPath, resolveDefaultBaseUrl } from "../detectAuth.js";
+import {
+    detectAuthBindings,
+    joinUrl,
+    renderFullPath,
+    renderRequestProperty,
+    resolveDefaultBaseUrl
+} from "../detectAuth.js";
 
 /**
  * Coverage for the IR → auth binding mapping. The IR SDK's
- * `AuthScheme` constructors install the `_visit` method `detectAuth`
- * relies on, so we always go through them — never hand-assemble raw
+ * `AuthScheme` constructors preserve the typed union shape consumed by
+ * `detectAuth`, so we always go through them — never hand-assemble raw
  * `{ type: "bearer", ... }` objects.
  *
  * Helpers below skip the noise fields (docs/placeholder/etc.) the
@@ -187,16 +193,37 @@ describe("detectAuthBindings", () => {
         expect(bindings[1]?.placement).toBe("root");
     });
 
-    // The `oauth` client-credentials binding — including endpoint lookup
-    // and emitted `OAuth2Auth` call — is covered end-to-end by the seed
-    // `cli-oauth` fixture, which exercises a real parsed IR (constructing
-    // a full `HttpEndpoint` by hand here would be all noise fields). The
-    // token-URL resolution helpers below are unit-tested directly.
+    // The complete client-credentials binding is covered end-to-end by the
+    // `cli-oauth` seed, which exercises a real parsed IR. Focused descriptor
+    // rendering and endpoint resolution helpers are tested below.
 });
 
 // ---------------------------------------------------------------------------
-// Token-URL resolution helpers
+// OAuth descriptor rendering and endpoint resolution helpers
 // ---------------------------------------------------------------------------
+
+describe("renderRequestProperty", () => {
+    it("renders nested body request paths", () => {
+        expect(
+            renderRequestProperty({
+                location: "body",
+                path: ["credentials", "client_id"],
+                value: "OAuth2RequestValue::ClientId"
+            })
+        ).toBe('OAuth2RequestProperty::body(["credentials", "client_id"], OAuth2RequestValue::ClientId)');
+    });
+
+    it("preserves repeated query parameter serialization", () => {
+        expect(
+            renderRequestProperty({
+                location: "query",
+                path: ["audience"],
+                value: "OAuth2RequestValue::ScopesList",
+                allowMultiple: true
+            })
+        ).toBe('OAuth2RequestProperty::query_multiple("audience", OAuth2RequestValue::ScopesList)');
+    });
+});
 
 const singleEnv = (args: { url: string; id?: string; defaultEnvironment?: string }): FernIr.EnvironmentsConfig => ({
     defaultEnvironment: args.defaultEnvironment,

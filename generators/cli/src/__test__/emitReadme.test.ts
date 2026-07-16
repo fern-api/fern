@@ -203,6 +203,7 @@ describe("emitReadme", () => {
             placement: "root",
             authTypeImport: "OAuth2Auth",
             envVars: ["ACME_CLIENT_ID", "ACME_CLIENT_SECRET"],
+            optionalEnvVars: ["ACME_AUDIENCE"],
             kind: "oauth-client-credentials"
         };
 
@@ -217,6 +218,7 @@ describe("emitReadme", () => {
 
         expect(readme).toContain('export ACME_CLIENT_ID="<your OAuth client credential>"');
         expect(readme).toContain('export ACME_CLIENT_SECRET="<your OAuth client credential>"');
+        expect(readme).toContain('# export ACME_AUDIENCE="<your OAuth client credential>" # optional');
     });
 
     // ── Merge preserves customer-added sections ─────────────────────

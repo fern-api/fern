@@ -317,7 +317,11 @@ function renderSkill(args: {
         lines.push("");
         for (const binding of authBindings) {
             const envList = binding.envVars.join("`, `");
-            lines.push(`- **${binding.schemeName}** (${binding.kind}): env \`${envList}\``);
+            const optionalEnvList =
+                binding.optionalEnvVars != null && binding.optionalEnvVars.length > 0
+                    ? `; optional env \`${binding.optionalEnvVars.join("`, `")}\``
+                    : "";
+            lines.push(`- **${binding.schemeName}** (${binding.kind}): env \`${envList}\`${optionalEnvList}`);
         }
         lines.push("");
         lines.push("No manual auth wiring is needed in custom command handlers.");

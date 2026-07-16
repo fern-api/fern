@@ -3,11 +3,11 @@
 
 use fern_cli_sdk::app::CliApp;
 use fern_cli_sdk::openapi::OpenApiBinding;
-use fern_cli_sdk::auth::{OAuth2Auth};
+use fern_cli_sdk::auth::{OAuth2Auth, OAuth2Endpoint, OAuth2RequestProperty, OAuth2RequestValue};
 
 fn main() {
     let app = CliApp::new("oauth-test")
-        .auth(OAuth2Auth::new("OAuth2").token_url("https://api.example.com/token").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET").scopes(["read:pets"]))
+        .auth(OAuth2Auth::new("OAuth2").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET").scopes(["read:pets"]).token_header("X-Access-Token").token_prefix("").token_endpoint(OAuth2Endpoint::new("https://api.example.com/token", "/token").method("POST").use_base_url_override().json_body("application/json").request_property(OAuth2RequestProperty::body(["credentials", "client_id"], OAuth2RequestValue::ClientId)).request_property(OAuth2RequestProperty::body(["credentials", "client_secret"], OAuth2RequestValue::ClientSecret)).request_property(OAuth2RequestProperty::body(["credentials", "scopes"], OAuth2RequestValue::ScopesList)).request_property(OAuth2RequestProperty::body(["grant_type"], OAuth2RequestValue::env("OAUTH_TEST_OAUTH2_TOKEN_GRANT_TYPE", true))).request_property(OAuth2RequestProperty::body(["tenant"], OAuth2RequestValue::env("OAUTH_TEST_OAUTH2_TOKEN_TENANT", false))).request_property(OAuth2RequestProperty::body(["optional_hint"], OAuth2RequestValue::optional_env("OAUTH_TEST_OAUTH2_TOKEN_OPTIONAL_HINT", false))).access_token_path(["result", "access_token"]).expires_in_path(["result", "expires_in"]).refresh_token_path(["result", "refresh_token"])).refresh_endpoint(OAuth2Endpoint::new("https://api.example.com/refresh", "/refresh").method("POST").use_base_url_override().json_body("application/json").request_property(OAuth2RequestProperty::body(["grant_type"], OAuth2RequestValue::env("OAUTH_TEST_OAUTH2_REFRESH_GRANT_TYPE", true))).request_property(OAuth2RequestProperty::body(["refresh_token"], OAuth2RequestValue::RefreshToken)).access_token_path(["result", "access_token"]).expires_in_path(["result", "expires_in"]).refresh_token_path(["result", "refresh_token"])))
         .binding(
             OpenApiBinding::new()
                 .spec(include_str!("openapi0.json"))

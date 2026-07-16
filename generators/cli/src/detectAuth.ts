@@ -1,3 +1,4 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { toEnvVarPrefix } from "./identity.js";
 
@@ -18,6 +19,8 @@ export interface DetectedAuthBinding {
     authTypeImport: string | null;
     /** Resolved environment variable names the user must set for this binding. */
     envVars: string[];
+    /** Environment variables that add optional auth request properties when set. */
+    optionalEnvVars?: string[];
     /** Auth kind for documentation purposes. */
     kind: "bearer" | "header" | "basic" | "oauth-client-credentials";
 }
@@ -41,14 +44,15 @@ export interface DetectedAuthBinding {
  *     `.auth_provider("<key>", BasicAuthProvider::password_only(...))`
  *   - `basic` with both omitted → skipped (nothing to bind)
  *   - `oauth` with a `clientCredentials` configuration → root-level
- *     `.auth(OAuth2Auth::new(...)...)`. The token URL is resolved from
- *     the IR: the configuration's `tokenEndpoint` reference is looked up
- *     in `services` and joined onto the default environment's base URL.
- *     Client id/secret env vars come from the IR (`clientIdEnvVar` /
- *     `clientSecretEnvVar`), falling back to `<BIN>_CLIENT_ID` /
- *     `<BIN>_CLIENT_SECRET`. If the token URL can't be resolved (no
- *     environment/server, or the token endpoint isn't in the IR), the
- *     scheme is skipped rather than emitting an unusable builder.
+ *     `.auth(OAuth2Auth::new(...)...)`. Token and refresh endpoint
+ *     references, request/response mappings, environment URLs, scopes,
+ *     and token application settings are lowered into structured runtime
+ *     descriptors. Client id/secret env vars come from the IR
+ *     (`clientIdEnvVar` / `clientSecretEnvVar`), falling back to
+ *     `<BIN>_CLIENT_ID` / `<BIN>_CLIENT_SECRET`. Required custom request
+ *     properties receive deterministic env vars; optional properties are
+ *     included only when their generated env vars are set.
+ *     Unresolvable or unsupported endpoint contracts fail generation.
  *     Interactive flows (PKCE, device-code) are not modeled by the IR and
  *     are not emitted.
  *   - `inferred` / unknown → skipped (no runtime provider).
@@ -93,7 +97,7 @@ function bindingForScheme(args: {
     environments: FernIr.EnvironmentsConfig | undefined;
 }): DetectedAuthBinding | null {
     const { scheme, envPrefix, multipleHeaderSchemes, services, environments } = args;
-    return scheme._visit<DetectedAuthBinding | null>({
+    return visitDiscriminatedUnion(scheme)._visit<DetectedAuthBinding | null>({
         bearer: (bearer) => {
             const env = bearer.tokenEnvVar ?? `${envPrefix}_TOKEN`;
             return {
@@ -173,7 +177,7 @@ function bindingForScheme(args: {
         // the IR (token endpoint reference + default environment). Any
         // other/unknown configuration is skipped.
         oauth: (oauth) =>
-            oauth.configuration._visit<DetectedAuthBinding | null>({
+            visitDiscriminatedUnion(oauth.configuration)._visit<DetectedAuthBinding | null>({
                 clientCredentials: (clientCredentials) =>
                     clientCredentialsBinding({ key: oauth.key, clientCredentials, envPrefix, services, environments }),
                 _other: () => null
@@ -194,27 +198,71 @@ function clientCredentialsBinding(args: {
     const { key, clientCredentials, envPrefix, services, environments } = args;
     const clientIdEnv = clientCredentials.clientIdEnvVar ?? `${envPrefix}_CLIENT_ID`;
     const clientSecretEnv = clientCredentials.clientSecretEnvVar ?? `${envPrefix}_CLIENT_SECRET`;
-    const tokenUrl = resolveTokenUrl({
+    const tokenEndpoint = resolveOAuthEndpoint({
         endpointReference: clientCredentials.tokenEndpoint.endpointReference,
         services,
         environments
     });
-    // If the token URL can't be resolved (the API declares no
-    // environment/server, or the token endpoint isn't in the IR), fall
-    // back to the pre-OAuth behavior of skipping the scheme rather than
-    // emitting a builder the runtime can't satisfy. This keeps generation
-    // working for specs that declare OAuth but no server.
-    if (tokenUrl == null) {
-        return null;
-    }
 
     let rustCall = `.auth(OAuth2Auth::new(${rustString(key)})`;
-    rustCall += `.token_url(${rustString(tokenUrl)})`;
     rustCall += `.client_id_env(${rustString(clientIdEnv)})`;
     rustCall += `.client_secret_env(${rustString(clientSecretEnv)})`;
     const scopes = clientCredentials.scopes ?? [];
     if (scopes.length > 0) {
         rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
+    }
+    rustCall += `.token_header(${rustString(clientCredentials.tokenHeader ?? "Authorization")})`;
+    rustCall += `.token_prefix(${rustString(clientCredentials.tokenPrefix ?? "Bearer")})`;
+
+    const envVars = [clientIdEnv, clientSecretEnv];
+    const optionalEnvVars: string[] = [];
+    rustCall += `.token_endpoint(${renderOAuthEndpoint({
+        endpoint: tokenEndpoint,
+        requestProperties: [
+            requestPropertyBinding(clientCredentials.tokenEndpoint.requestProperties.clientId, "client-id"),
+            requestPropertyBinding(clientCredentials.tokenEndpoint.requestProperties.clientSecret, "client-secret"),
+            ...(clientCredentials.tokenEndpoint.requestProperties.scopes != null
+                ? [requestPropertyBinding(clientCredentials.tokenEndpoint.requestProperties.scopes, "scopes")]
+                : []),
+            ...(clientCredentials.tokenEndpoint.requestProperties.customProperties ?? []).map((property) => {
+                const binding = customRequestPropertyBinding({
+                    property,
+                    envPrefix,
+                    schemeName: key,
+                    endpointKind: "TOKEN"
+                });
+                if (binding.envVar != null) {
+                    (binding.optional ? optionalEnvVars : envVars).push(binding.envVar);
+                }
+                return binding;
+            })
+        ],
+        responseProperties: clientCredentials.tokenEndpoint.responseProperties
+    })})`;
+
+    if (clientCredentials.refreshEndpoint != null) {
+        const refreshEndpoint = resolveOAuthEndpoint({
+            endpointReference: clientCredentials.refreshEndpoint.endpointReference,
+            services,
+            environments
+        });
+        const refreshProperties = inferRefreshRequestProperties({
+            endpoint: refreshEndpoint.endpoint,
+            refreshToken: clientCredentials.refreshEndpoint.requestProperties.refreshToken,
+            tokenRequestProperties: clientCredentials.tokenEndpoint.requestProperties,
+            envPrefix,
+            schemeName: key
+        });
+        for (const property of refreshProperties) {
+            if (property.envVar != null) {
+                (property.optional ? optionalEnvVars : envVars).push(property.envVar);
+            }
+        }
+        rustCall += `.refresh_endpoint(${renderOAuthEndpoint({
+            endpoint: refreshEndpoint,
+            requestProperties: refreshProperties,
+            responseProperties: clientCredentials.refreshEndpoint.responseProperties
+        })})`;
     }
     rustCall += ")";
 
@@ -222,41 +270,313 @@ function clientCredentialsBinding(args: {
         schemeName: key,
         rustCall,
         placement: "root",
-        authTypeImport: "OAuth2Auth",
-        envVars: [clientIdEnv, clientSecretEnv],
+        authTypeImport: "OAuth2Auth, OAuth2Endpoint, OAuth2RequestProperty, OAuth2RequestValue",
+        envVars: [...new Set(envVars)],
+        optionalEnvVars: [...new Set(optionalEnvVars)],
         kind: "oauth-client-credentials"
     };
 }
 
-/**
- * Resolve the absolute OAuth token URL from the IR. The
- * client-credentials configuration references the token endpoint by id;
- * we look it up in `services` for its path and join it onto the default
- * environment's base URL.
- *
- * Returns `undefined` when the endpoint can't be found or no base URL is
- * declared — the caller then skips the OAuth binding rather than emitting
- * a builder the runtime couldn't satisfy. (A runtime `--base-url` override
- * does not move the token endpoint; resolving it at request time would
- * require SDK support and is deliberately out of scope here.)
- */
-function resolveTokenUrl(args: {
+interface ResolvedOAuthEndpoint {
+    endpoint: FernIr.HttpEndpoint;
+    defaultUrl: string;
+    path: string;
+    useBaseUrlOverride: boolean;
+}
+
+export interface OAuthRequestPropertyBinding {
+    location: "body" | "query";
+    path: string[];
+    value: string;
+    allowMultiple?: boolean;
+    envVar?: string;
+    optional?: boolean;
+}
+
+function resolveOAuthEndpoint(args: {
     endpointReference: FernIr.EndpointReference;
     services: Record<string, FernIr.HttpService>;
     environments: FernIr.EnvironmentsConfig | undefined;
-}): string | undefined {
+}): ResolvedOAuthEndpoint {
     const { endpointReference, services, environments } = args;
     const endpoint = services[endpointReference.serviceId]?.endpoints.find(
         (candidate) => candidate.id === endpointReference.endpointId
     );
     if (endpoint == null) {
-        return undefined;
+        throw new Error(
+            `OAuth endpoint '${endpointReference.serviceId}/${endpointReference.endpointId}' could not be resolved`
+        );
+    }
+    if (endpoint.fullPath.parts.length > 0) {
+        throw new Error(
+            `OAuth endpoint '${endpointReference.endpointId}' contains path parameters, which cannot be sourced by the CLI`
+        );
     }
     const baseUrl = resolveDefaultBaseUrl({ environments, baseUrlId: endpoint.baseUrl });
     if (baseUrl == null) {
+        throw new Error(`OAuth endpoint '${endpointReference.endpointId}' has no resolvable default base URL`);
+    }
+    const path = renderFullPath(endpoint.fullPath);
+    return {
+        endpoint,
+        defaultUrl: joinUrl(baseUrl, path),
+        path,
+        useBaseUrlOverride:
+            (environments == null
+                ? undefined
+                : visitDiscriminatedUnion(environments.environments)._visit({
+                      singleBaseUrl: () => true,
+                      multipleBaseUrls: () => false,
+                      _other: () => false
+                  })) ?? false
+    };
+}
+
+function renderOAuthEndpoint(args: {
+    endpoint: ResolvedOAuthEndpoint;
+    requestProperties: OAuthRequestPropertyBinding[];
+    responseProperties: FernIr.OAuthAccessTokenResponseProperties;
+}): string {
+    const { endpoint, requestProperties, responseProperties } = args;
+    const contentType = endpoint.endpoint.requestBody?.contentType ?? "application/json";
+    if (
+        requestProperties.some((property) => property.location === "body") &&
+        contentType !== "application/json" &&
+        !contentType.endsWith("+json") &&
+        contentType !== "application/x-www-form-urlencoded"
+    ) {
+        throw new Error(
+            `OAuth endpoint '${endpoint.endpoint.id}' uses unsupported request content type '${contentType}'`
+        );
+    }
+    if (
+        contentType === "application/x-www-form-urlencoded" &&
+        requestProperties.some((property) => property.location === "body" && property.path.length > 1)
+    ) {
+        throw new Error(
+            `OAuth endpoint '${endpoint.endpoint.id}' uses nested form body properties, which are ambiguous`
+        );
+    }
+
+    let rendered = `OAuth2Endpoint::new(${rustString(endpoint.defaultUrl)}, ${rustString(endpoint.path)})`;
+    rendered += `.method(${rustString(String(endpoint.endpoint.method))})`;
+    if (endpoint.useBaseUrlOverride) {
+        rendered += ".use_base_url_override()";
+    }
+    if (requestProperties.some((property) => property.location === "body")) {
+        rendered +=
+            contentType === "application/x-www-form-urlencoded"
+                ? ".form_body()"
+                : `.json_body(${rustString(contentType)})`;
+    }
+    for (const property of requestProperties) {
+        rendered += `.request_property(${renderRequestProperty(property)})`;
+    }
+    rendered += `.access_token_path(${renderRustStringArray(responsePropertyPath(responseProperties.accessToken))})`;
+    if (responseProperties.expiresIn != null) {
+        rendered += `.expires_in_path(${renderRustStringArray(responsePropertyPath(responseProperties.expiresIn))})`;
+    }
+    if (responseProperties.refreshToken != null) {
+        rendered += `.refresh_token_path(${renderRustStringArray(responsePropertyPath(responseProperties.refreshToken))})`;
+    }
+    return rendered;
+}
+
+export function renderRequestProperty(property: OAuthRequestPropertyBinding): string {
+    if (property.location === "query") {
+        const builder = property.allowMultiple ? "query_multiple" : "query";
+        return `OAuth2RequestProperty::${builder}(${rustString(property.path[property.path.length - 1] ?? "")}, ${property.value})`;
+    }
+    return `OAuth2RequestProperty::body(${renderRustStringArray(property.path)}, ${property.value})`;
+}
+
+function requestPropertyBinding(
+    property: FernIr.RequestProperty,
+    source: "client-id" | "client-secret" | "scopes" | "refresh-token"
+): OAuthRequestPropertyBinding {
+    const value = (() => {
+        switch (source) {
+            case "client-id":
+                return "OAuth2RequestValue::ClientId";
+            case "client-secret":
+                return "OAuth2RequestValue::ClientSecret";
+            case "scopes":
+                return isListType(property.property.valueType)
+                    ? "OAuth2RequestValue::ScopesList"
+                    : "OAuth2RequestValue::Scopes";
+            case "refresh-token":
+                return "OAuth2RequestValue::RefreshToken";
+        }
+    })();
+    return {
+        location: property.property.type,
+        path:
+            property.property.type === "body"
+                ? [
+                      ...(property.propertyPath ?? []).map((item) => nameValue(item.name)),
+                      wireValue(property.property.name)
+                  ]
+                : [wireValue(property.property.name)],
+        allowMultiple: property.property.type === "query" ? property.property.allowMultiple : undefined,
+        value
+    };
+}
+
+function customRequestPropertyBinding(args: {
+    property: FernIr.RequestProperty;
+    envPrefix: string;
+    schemeName: string;
+    endpointKind: "TOKEN" | "REFRESH";
+}): OAuthRequestPropertyBinding {
+    const { property, envPrefix, schemeName, endpointKind } = args;
+    const literal = literalValue(property.property.valueType);
+    const defaultValue = property.property.defaultValue;
+    const base = {
+        location: property.property.type,
+        path:
+            property.property.type === "body"
+                ? [
+                      ...(property.propertyPath ?? []).map((item) => nameValue(item.name)),
+                      wireValue(property.property.name)
+                  ]
+                : [wireValue(property.property.name)],
+        allowMultiple: property.property.type === "query" ? property.property.allowMultiple : undefined
+    };
+    if (literal !== undefined || defaultValue !== undefined) {
+        return {
+            ...base,
+            value: `OAuth2RequestValue::literal(serde_json::json!(${rustJsonValue(
+                literal !== undefined ? literal : defaultValue
+            )}))`
+        };
+    }
+    const envVar = [envPrefix, envSegment(schemeName), endpointKind, ...base.path.map(envSegment)].join("_");
+    const optional = isOptionalType(property.property.valueType);
+    const envBuilder = optional ? "optional_env" : "env";
+    return {
+        ...base,
+        value: `OAuth2RequestValue::${envBuilder}(${rustString(envVar)}, ${!isStringType(property.property.valueType)})`,
+        envVar,
+        optional
+    };
+}
+
+function inferRefreshRequestProperties(args: {
+    endpoint: FernIr.HttpEndpoint;
+    refreshToken: FernIr.RequestProperty;
+    tokenRequestProperties: FernIr.OAuthAccessTokenRequestProperties;
+    envPrefix: string;
+    schemeName: string;
+}): OAuthRequestPropertyBinding[] {
+    const { endpoint, refreshToken, tokenRequestProperties, envPrefix, schemeName } = args;
+    const refreshTokenBinding = requestPropertyBinding(refreshToken, "refresh-token");
+    const result: OAuthRequestPropertyBinding[] = [];
+    const mappedKey = requestPropertyKey(refreshToken);
+    const sourceByWireName = new Map<string, "client-id" | "client-secret" | "scopes">([
+        [wireValue(tokenRequestProperties.clientId.property.name), "client-id"],
+        [wireValue(tokenRequestProperties.clientSecret.property.name), "client-secret"]
+    ]);
+    if (tokenRequestProperties.scopes != null) {
+        sourceByWireName.set(wireValue(tokenRequestProperties.scopes.property.name), "scopes");
+    }
+
+    const candidates: FernIr.RequestProperty[] = [
+        ...endpoint.queryParameters.map((property) => ({
+            propertyPath: [],
+            property: FernIr.RequestPropertyValue.query(property)
+        })),
+        ...(endpoint.requestBody?.type === "inlinedRequestBody"
+            ? endpoint.requestBody.properties.map((property) => ({
+                  propertyPath: [],
+                  property: FernIr.RequestPropertyValue.body(property)
+              }))
+            : [])
+    ];
+    for (const property of candidates) {
+        if (requestPropertyKey(property) === mappedKey) {
+            continue;
+        }
+        const source = sourceByWireName.get(wireValue(property.property.name));
+        if (source != null) {
+            result.push(requestPropertyBinding(property, source));
+            continue;
+        }
+        const custom = customRequestPropertyBinding({
+            property,
+            envPrefix,
+            schemeName,
+            endpointKind: "REFRESH"
+        });
+        result.push(custom);
+    }
+    result.push(refreshTokenBinding);
+    return result;
+}
+
+function requestPropertyKey(property: FernIr.RequestProperty): string {
+    return `${property.property.type}:${(property.propertyPath ?? [])
+        .map((item) => nameValue(item.name))
+        .join(".")}:${wireValue(property.property.name)}`;
+}
+
+function responsePropertyPath(property: FernIr.ResponseProperty): string[] {
+    return [...(property.propertyPath ?? []).map((item) => nameValue(item.name)), wireValue(property.property.name)];
+}
+
+function wireValue(name: FernIr.NameAndWireValueOrString): string {
+    return typeof name === "string" ? name : name.wireValue;
+}
+
+function nameValue(name: FernIr.NameOrString): string {
+    return typeof name === "string" ? name : name.originalName;
+}
+
+function isOptionalType(type: FernIr.TypeReference): boolean {
+    return type.type === "container" && type.container.type === "optional";
+}
+
+function unwrapOptional(type: FernIr.TypeReference): FernIr.TypeReference {
+    return isOptionalType(type) && type.type === "container" && type.container.type === "optional"
+        ? type.container.optional
+        : type;
+}
+
+function isListType(type: FernIr.TypeReference): boolean {
+    const unwrapped = unwrapOptional(type);
+    return unwrapped.type === "container" && unwrapped.container.type === "list";
+}
+
+function isStringType(type: FernIr.TypeReference): boolean {
+    const unwrapped = unwrapOptional(type);
+    return (
+        unwrapped.type === "primitive" &&
+        (unwrapped.primitive.v1 === "STRING" || unwrapped.primitive.v2?.type === "string")
+    );
+}
+
+function literalValue(type: FernIr.TypeReference): string | boolean | undefined {
+    const unwrapped = unwrapOptional(type);
+    if (unwrapped.type !== "container" || unwrapped.container.type !== "literal") {
         return undefined;
     }
-    return joinUrl(baseUrl, renderFullPath(endpoint.fullPath));
+    return unwrapped.container.literal.type === "string"
+        ? unwrapped.container.literal.string
+        : unwrapped.container.literal.boolean;
+}
+
+function renderRustStringArray(values: string[]): string {
+    return `[${values.map(rustString).join(", ")}]`;
+}
+
+function rustJsonValue(value: unknown): string {
+    return JSON.stringify(value) ?? "null";
+}
+
+function envSegment(value: string): string {
+    return value
+        .replace(/[^a-zA-Z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "")
+        .toUpperCase();
 }
 
 export function resolveDefaultBaseUrl(args: {
@@ -268,7 +588,7 @@ export function resolveDefaultBaseUrl(args: {
         return undefined;
     }
     const defaultEnvironmentId = environments.defaultEnvironment;
-    return environments.environments._visit<string | undefined>({
+    return visitDiscriminatedUnion(environments.environments)._visit<string | undefined>({
         singleBaseUrl: (single) => {
             const chosen =
                 single.environments.find((environment) => environment.id === defaultEnvironmentId) ??

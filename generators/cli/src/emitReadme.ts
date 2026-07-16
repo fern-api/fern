@@ -244,6 +244,9 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
         for (const envVar of binding.envVars) {
             envLines.push(`export ${envVar}="${placeholderForKind(binding.kind)}"`);
         }
+        for (const envVar of binding.optionalEnvVars ?? []) {
+            envLines.push(`# export ${envVar}="${placeholderForKind(binding.kind)}" # optional`);
+        }
     }
     return new Block({
         id: "AUTHENTICATION",
