@@ -16,6 +16,12 @@ export interface BaseGeneratorInvocationSchema {
     "ir-version"?: string;
     /** Feature flag used to enable better IR naming. */
     "smart-casing"?: boolean;
+    /**
+     * When smart casing is enabled, preserves the word boundary after a digit run in
+     * snake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).
+     * Defaults to false, which keeps the digit run fused to the following word.
+     */
+    "smart-casing-digit-word-boundary"?: boolean;
     /** Override API import settings (this is applied across all specs) */
     api?: GeneratorsYml.GeneratorApiSettingsSchema;
     /** Temporary way to unblock example serialization. */

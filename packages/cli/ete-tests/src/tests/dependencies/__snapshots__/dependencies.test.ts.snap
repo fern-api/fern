@@ -661,7 +661,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": false
+        "smartCasing": false,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_imported": {
@@ -777,4 +778,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2296469`;
+exports[`dependencies > file dependencies 1`] = `2296515`;

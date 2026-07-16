@@ -1542,6 +1542,27 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 )
                 writer.write_newline_if_last_line_not()
 
+    def _get_keepalive_transport_expression(self, *, is_async: bool) -> AST.Expression:
+        """Build a default httpx transport carrying platform-guarded TCP keepalive
+        socket options, e.g. ``httpx.HTTPTransport(socket_options=get_keepalive_socket_options(...))``."""
+        keepalive = self._context.custom_config.tcp_keepalive
+        socket_options = AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=self._context.core_utilities.get_reference_to_keepalive_socket_options(),
+                kwargs=[
+                    ("idle", AST.Expression(str(keepalive.idle_seconds))),
+                    ("intvl", AST.Expression(str(keepalive.interval_seconds))),
+                    ("cnt", AST.Expression(str(keepalive.count))),
+                ],
+            )
+        )
+        return AST.Expression(
+            AST.ClassInstantiation(
+                HttpX.ASYNC_HTTP_TRANSPORT if is_async else HttpX.HTTP_TRANSPORT,
+                kwargs=[("socket_options", socket_options)],
+            )
+        )
+
     def _get_client_wrapper_kwargs(
         self,
         client_wrapper_generator: ClientWrapperGenerator,
@@ -1642,9 +1663,20 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         httpx_client_kwargs_without_redirects: List[typing.Tuple[str, AST.Expression]] = [
             ("timeout", AST.Expression(f"{timeout_local_variable}")),
         ]
+        # Transport precedence for the generated default client: a custom_transport
+        # http_client (when configured) always wins; otherwise, if TCP keepalive is
+        # enabled, inject a keepalive transport. A user-supplied httpx_client wins
+        # over both (the whole default construction is skipped when it is provided).
         if transport_variable_name is not None:
             httpx_client_kwargs_with_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
             httpx_client_kwargs_without_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
+        elif self._context.custom_config.tcp_keepalive.enabled:
+            httpx_client_kwargs_with_redirects.append(
+                ("transport", self._get_keepalive_transport_expression(is_async=is_async))
+            )
+            httpx_client_kwargs_without_redirects.append(
+                ("transport", self._get_keepalive_transport_expression(is_async=is_async))
+            )
 
         if ignore_httpx_constructor_parameter:
             client_wrapper_constructor_kwargs.append(
@@ -1672,15 +1704,23 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
             )
         elif is_async:
+            # The async default is built by _make_default_async_client. Thread the
+            # custom_transport http_client through it (previously dropped on the
+            # async path); the keepalive default is applied inside that helper.
+            async_default_client_call = (
+                f"_make_default_async_client(timeout={timeout_local_variable}, "
+                f"follow_redirects={self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"
+            )
+            if transport_variable_name is not None:
+                async_default_client_call += f", transport={transport_variable_name}"
+            async_default_client_call += ")"
             client_wrapper_constructor_kwargs.append(
                 (
                     ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
                     AST.Expression(
                         AST.ConditionalExpression(
                             left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
-                            right=AST.Expression(
-                                f"_make_default_async_client(timeout={timeout_local_variable}, follow_redirects={self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME})"
-                            ),
+                            right=AST.Expression(async_default_client_call),
                             test=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
                             ),
@@ -1761,13 +1801,28 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         return client_wrapper_constructor_kwargs
 
     def _write_make_default_async_client(self, writer: AST.NodeWriter) -> None:
+        keepalive_enabled = self._context.custom_config.tcp_keepalive.enabled
+        # The transport parameter exists when either a custom_transport http_client
+        # must be threaded through the async default (previously dropped) or when a
+        # keepalive default transport is applied. Otherwise the signature/body are
+        # left exactly as-is to keep generated output unchanged.
+        accepts_transport = keepalive_enabled or self._context.custom_config.custom_transport
+
         writer.write_line("")
         writer.write_line("def _make_default_async_client(")
         with writer.indent():
             writer.write_line("timeout: typing.Optional[float],")
             writer.write_line("follow_redirects: typing.Optional[bool],")
+            if accepts_transport:
+                writer.write_line("transport: typing.Optional[httpx.AsyncBaseTransport] = None,")
         writer.write_line(") -> httpx.AsyncClient:")
         with writer.indent():
+            if keepalive_enabled:
+                writer.write_line("if transport is None:")
+                with writer.indent():
+                    writer.write("transport = ")
+                    writer.write_node(self._get_keepalive_transport_expression(is_async=True))
+                    writer.write_newline_if_last_line_not()
             writer.write_line("try:")
             with writer.indent():
                 writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
@@ -1776,6 +1831,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 writer.write_line("pass")
             writer.write_line("else:")
             with writer.indent():
+                # aiohttp uses its own TCPConnector, not httpx socket_options, so the
+                # keepalive/custom transport is a documented no-op on this path.
                 writer.write_line("if follow_redirects is not None:")
                 with writer.indent():
                     writer.write_line(
@@ -1783,10 +1840,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
             writer.write_line("")
-            writer.write_line("if follow_redirects is not None:")
-            with writer.indent():
-                writer.write_line("return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)")
-            writer.write_line("return httpx.AsyncClient(timeout=timeout)")
+            if accepts_transport:
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line(
+                        "return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport)"
+                    )
+                writer.write_line("return httpx.AsyncClient(timeout=timeout, transport=transport)")
+            else:
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line("return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)")
+                writer.write_line("return httpx.AsyncClient(timeout=timeout)")
         writer.write_line("")
 
     def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:

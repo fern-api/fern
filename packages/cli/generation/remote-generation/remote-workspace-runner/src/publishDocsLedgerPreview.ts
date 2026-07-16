@@ -158,7 +158,7 @@ export async function publishDocsViaLedgerPreview({
     // Log translation results if any were processed.
     if (finishResult.translationsProcessed != null) {
         for (const tp of finishResult.translationsProcessed) {
-            context.logger.info(`[ledger-preview] Locale "${tp.locale}": ${tp.segmentsAdded} segment(s) added`);
+            context.logger.debug(`[ledger-preview] Locale "${tp.locale}": ${tp.segmentsAdded} segment(s) added`);
         }
     }
 

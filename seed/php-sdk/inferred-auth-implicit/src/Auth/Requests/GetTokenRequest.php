@@ -19,10 +19,10 @@ class GetTokenRequest extends JsonSerializableType
     public string $clientId;
 
     /**
-     * @var string $clientSecret
+     * @var ?string $clientSecret
      */
     #[JsonProperty('client_secret')]
-    public string $clientSecret;
+    public ?string $clientSecret;
 
     /**
      * @var 'https://api.example.com' $audience
@@ -46,9 +46,9 @@ class GetTokenRequest extends JsonSerializableType
      * @param array{
      *   xApiKey: string,
      *   clientId: string,
-     *   clientSecret: string,
      *   audience: 'https://api.example.com',
      *   grantType: 'client_credentials',
+     *   clientSecret?: ?string,
      *   scope?: ?string,
      * } $values
      */
@@ -57,7 +57,7 @@ class GetTokenRequest extends JsonSerializableType
     ) {
         $this->xApiKey = $values['xApiKey'];
         $this->clientId = $values['clientId'];
-        $this->clientSecret = $values['clientSecret'];
+        $this->clientSecret = $values['clientSecret'] ?? null;
         $this->audience = $values['audience'];
         $this->grantType = $values['grantType'];
         $this->scope = $values['scope'] ?? null;

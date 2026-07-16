@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.7
+  changelogEntry:
+    - summary: |
+        Revert the smart-casing digit/word boundary behavior introduced in 1.15.5. snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-1.15.5 output. The behavior will become opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml` once the generator
+        consumes the IR version that carries the setting.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.6
+  changelogEntry:
+    - summary: |
+        Endpoints now send service- and endpoint-level headers whose types are literals
+        (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers were silently
+        dropped for endpoints without a request wrapper, and service-level literal headers
+        were never sent at all. Caller-supplied values via the request params still take
+        precedence over the literal defaults.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.5
+  changelogEntry:
+    - summary: |
+        Cap generated type filenames at 100 characters so `gem build` no longer fails
+        with `Gem::Package::TooLongFileName` (RubyGems packages into a tar format whose
+        header caps filenames at 100 chars). Deeply nested inline types — such as
+        anonymous `oneOf` variants — could previously overflow this limit. When a name
+        is too long it is truncated and a short deterministic hash is appended to keep
+        it unique. This changes only the filename and its `require_relative`; the
+        module/class name is unchanged, so it is non-breaking for consumers, who
+        reference the constant rather than the file.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 1.17.4
+  changelogEntry:
+    - summary: |
+        Send request bodies declared with the `application/x-www-form-urlencoded` content type
+        (e.g. OAuth token endpoints) as form-urlencoded instead of JSON. A new
+        `Internal::UrlEncoded::Request` encodes the body with `URI.encode_www_form` and sets the
+        `Content-Type: application/x-www-form-urlencoded` header.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 1.17.3
   changelogEntry:
     - summary: |

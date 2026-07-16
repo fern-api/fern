@@ -330,6 +330,10 @@ fixtures:
         custom_transport: true
       outputFolder: custom-transport
     - customConfig:
+        tcp_keepalive:
+          enabled: true
+      outputFolder: tcp-keepalive
+    - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
     - customConfig:

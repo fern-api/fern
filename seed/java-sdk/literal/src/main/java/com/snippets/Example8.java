@@ -1,25 +1,22 @@
 package com.snippets;
 
 import com.seed.literal.SeedLiteralClient;
-import com.seed.literal.resources.reference.types.ContainerObject;
-import com.seed.literal.resources.reference.types.NestedObjectWithLiterals;
-import com.seed.literal.resources.reference.types.SendRequest;
-import java.util.Arrays;
+import com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;
 
 public class Example8 {
     public static void main(String[] args) {
         SeedLiteralClient client =
                 SeedLiteralClient.builder().url("https://api.fern.com").build();
 
-        client.reference()
-                .send(SendRequest.builder()
+        client.query()
+                .send(SendLiteralsInQueryRequest.builder()
+                        .aliasPrompt("You are a helpful assistant")
                         .query("What is the weather today")
-                        .context("You're super wise")
-                        .containerObject(ContainerObject.builder()
-                                .nestedObjects(Arrays.asList(NestedObjectWithLiterals.builder()
-                                        .strProp("strProp")
-                                        .build()))
-                                .build())
+                        .aliasStream(false)
+                        .optionalPrompt("You are a helpful assistant")
+                        .aliasOptionalPrompt("You are a helpful assistant")
+                        .optionalStream(false)
+                        .aliasOptionalStream(false)
                         .build());
     }
 }

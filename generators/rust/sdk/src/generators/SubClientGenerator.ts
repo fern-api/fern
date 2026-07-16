@@ -951,6 +951,7 @@ export class SubClientGenerator {
         // Only apply to execute_request and execute_stream_request (we have _with_base_url variants for these).
         const urlMethodName = this.getEndpointUrlMethodName(endpoint);
         const supportsBaseUrlOverride = executeMethod === "execute_request" || executeMethod === "execute_stream_request";
+        const literalHeadersPrelude = this.buildLiteralHeadersPrelude(endpoint);
         let body: string;
 
         if (urlMethodName && supportsBaseUrlOverride) {
@@ -958,11 +959,11 @@ export class SubClientGenerator {
             const baseUrlResolution =
                 `let base_url = self.http_client.config().environment.as_ref()\n` +
                 `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
-            body = `${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
+            body = `${literalHeadersPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
             base_url,${executeArgs}
         ).await`;
         } else {
-            body = `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
+            body = `${literalHeadersPrelude}self.http_client.${executeMethod}${typeParameter}(${executeArgs}
         ).await`;
         }
 
@@ -982,6 +983,62 @@ export class SubClientGenerator {
                   })
                 : undefined
         };
+    }
+
+    /**
+     * Builds a prelude that merges service- and endpoint-level literal headers
+     * (e.g. `Accept-Encoding: literal<"gzip">`) into the request options.
+     * Caller-supplied values in `additional_headers` take precedence.
+     */
+    private buildLiteralHeadersPrelude(endpoint: FernIr.HttpEndpoint): string {
+        const literalHeaders: { wireValue: string; value: string }[] = [];
+        for (const header of [...(this.context.ir.headers ?? []), ...(this.service?.headers ?? []), ...(endpoint.headers ?? [])]) {
+            const value = this.getLiteralHeaderValue(header.valueType);
+            if (value != null) {
+                literalHeaders.push({ wireValue: getWireValue(header.name), value });
+            }
+        }
+        if (literalHeaders.length === 0) {
+            return "";
+        }
+        const inserts = literalHeaders
+            .map(
+                ({ wireValue, value }) =>
+                    `            o.additional_headers.entry(${JSON.stringify(wireValue)}.to_string()).or_insert_with(|| ${JSON.stringify(value)}.to_string());\n`
+            )
+            .join("");
+        return (
+            `let options = {\n` +
+            `            let mut o = options.unwrap_or_default();\n` +
+            inserts +
+            `            Some(o)\n` +
+            `        };\n        `
+        );
+    }
+
+    private getLiteralHeaderValue(typeReference: FernIr.TypeReference): string | undefined {
+        if (typeReference.type === "container") {
+            const container = typeReference.container;
+            switch (container.type) {
+                case "literal": {
+                    const literal = container.literal;
+                    return literal.type === "string" ? literal.string : String(literal.boolean);
+                }
+                case "optional":
+                    return this.getLiteralHeaderValue(container.optional);
+                case "nullable":
+                    return this.getLiteralHeaderValue(container.nullable);
+                default:
+                    return undefined;
+            }
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.context.ir.types[typeReference.typeId];
+            if (typeDeclaration != null && typeDeclaration.shape.type === "alias") {
+                return this.getLiteralHeaderValue(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return undefined;
     }
 
     private buildMethodParameters(params: EndpointParameter[], _endpoint: FernIr.HttpEndpoint): string[] {

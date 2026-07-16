@@ -177,6 +177,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
                                 AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
             }
+            builder.add(literalHeadersCodeBlock());
             if (sendContentType) {
                 sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
 
@@ -311,6 +312,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                                 ClientOptionsGenerator.HEADERS_METHOD_NAME,
                                 AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)));
             }
+            builder.add(literalHeadersCodeBlock());
             if (sendContentType) {
                 builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
             }

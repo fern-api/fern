@@ -373,7 +373,7 @@ export async function publishDocsViaLedger({
     // Log translation results if any were processed.
     if (finishResult.translationsProcessed != null) {
         for (const tp of finishResult.translationsProcessed) {
-            context.logger.info(`[ledger] Locale "${tp.locale}": ${tp.segmentsAdded} segment(s) added`);
+            context.logger.debug(`[ledger] Locale "${tp.locale}": ${tp.segmentsAdded} segment(s) added`);
         }
     }
 
@@ -638,7 +638,7 @@ export async function buildAllTranslationInputs({
     }
 
     const localeEntries = Object.entries(translationPages);
-    context.logger.info(`[ledger] Building ${localeEntries.length} translation locale(s)...`);
+    context.logger.debug(`[ledger] Building ${localeEntries.length} translation locale(s)...`);
     const { buildTranslatedDocsDefinition } = await import("./buildTranslatedDocsDefinition.js");
 
     return asyncPool(
