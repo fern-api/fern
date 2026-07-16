@@ -895,8 +895,7 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true,
-        "smartCasingDigitWordBoundary": null
+        "smartCasing": true
     },
     "subpackages": {},
     "rootPackage": {

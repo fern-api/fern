@@ -11,12 +11,12 @@
                         "safeName": "catalogV1ID"
                     },
                     "snakeCase": {
-                        "unsafeName": "catalog_v1id",
-                        "safeName": "catalog_v1id"
+                        "unsafeName": "catalog_v1_id",
+                        "safeName": "catalog_v1_id"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CATALOG_V1ID",
-                        "safeName": "CATALOG_V1ID"
+                        "unsafeName": "CATALOG_V1_ID",
+                        "safeName": "CATALOG_V1_ID"
                     },
                     "pascalCase": {
                         "unsafeName": "CatalogV1ID",
@@ -40,12 +40,12 @@
                                 "safeName": "catalogV1ID"
                             },
                             "snakeCase": {
-                                "unsafeName": "catalog_v1id",
-                                "safeName": "catalog_v1id"
+                                "unsafeName": "catalog_v1_id",
+                                "safeName": "catalog_v1_id"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "CATALOG_V1ID",
-                                "safeName": "CATALOG_V1ID"
+                                "unsafeName": "CATALOG_V1_ID",
+                                "safeName": "CATALOG_V1_ID"
                             },
                             "pascalCase": {
                                 "unsafeName": "CatalogV1ID",
