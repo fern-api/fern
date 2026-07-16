@@ -26,6 +26,9 @@ export class AuthClient {
      * @param {SeedInferredAuthExplicit.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedInferredAuthExplicitError}
+     * @throws {@link errors.SeedInferredAuthExplicitTimeoutError}
+     *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
      *         "X-Api-Key": "X-Api-Key",
@@ -93,6 +96,9 @@ export class AuthClient {
     /**
      * @param {SeedInferredAuthExplicit.RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedInferredAuthExplicitError}
+     * @throws {@link errors.SeedInferredAuthExplicitTimeoutError}
      *
      * @example
      *     await client.auth.refreshToken({

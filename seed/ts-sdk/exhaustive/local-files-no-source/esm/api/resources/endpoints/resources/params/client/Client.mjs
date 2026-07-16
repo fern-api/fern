@@ -25,6 +25,9 @@ export class ParamsClient {
      * @param {string} param
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.getWithPath("param")
      */
@@ -65,6 +68,9 @@ export class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithInlinePath({
@@ -109,6 +115,9 @@ export class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithQuery({
@@ -162,6 +171,9 @@ export class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
@@ -217,6 +229,9 @@ export class ParamsClient {
      * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.getWithPathAndQuery("param", {
      *         query: "query"
@@ -267,6 +282,9 @@ export class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithInlinePathAndQuery({
@@ -321,6 +339,9 @@ export class ParamsClient {
      * @param {string} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
@@ -364,6 +385,9 @@ export class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.modifyWithInlinePath({
@@ -414,6 +438,9 @@ export class ParamsClient {
      * @param {string} param
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     import { createReadStream } from "fs";
      *     await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path")
@@ -462,6 +489,9 @@ export class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.CreateWithBodyAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.createWithBodyAndQuery({
@@ -523,6 +553,9 @@ export class ParamsClient {
      * @param {core.file.Uploadable} uploadable
      * @param {SeedExhaustive.endpoints.UploadBytesWithQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      */
     uploadBytesWithQuery(uploadable, request, requestOptions) {
         return core.HttpResponsePromise.fromPromise(this.__uploadBytesWithQuery(uploadable, request, requestOptions));
@@ -576,6 +609,9 @@ export class ParamsClient {
      * @param {boolean} param
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.getWithBooleanPath(true)
      */
@@ -618,6 +654,8 @@ export class ParamsClient {
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithPathAndErrors("param")

@@ -1,0 +1,8 @@
+- summary: |
+    Fix `--version AUTO` producing a false "changed"/"removed" changelog entry (e.g.
+    claiming the `User-Agent` header is no longer sent) when several version-bearing
+    lines bump together. Unified diffs group all deletions before all additions, so the
+    diff-cleaning pass left interleaved version-only deletions behind after stripping the
+    magic-version additions; the AI then read those orphan deletions as removals. Version
+    change pairs are now matched across the whole diff section regardless of layout.
+  type: fix

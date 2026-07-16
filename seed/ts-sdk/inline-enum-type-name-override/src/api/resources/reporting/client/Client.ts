@@ -26,6 +26,9 @@ export class ReportingClient {
      * @param {SeedApi.LoadRequest} request
      * @param {ReportingClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.reporting.load()
      */

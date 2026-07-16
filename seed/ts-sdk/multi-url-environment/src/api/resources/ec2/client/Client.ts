@@ -27,6 +27,9 @@ export class Ec2Client {
      * @param {SeedMultiUrlEnvironment.BootInstanceRequest} request
      * @param {Ec2Client.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMultiUrlEnvironmentError}
+     * @throws {@link errors.SeedMultiUrlEnvironmentTimeoutError}
+     *
      * @example
      *     await client.ec2.bootInstance({
      *         size: "size"

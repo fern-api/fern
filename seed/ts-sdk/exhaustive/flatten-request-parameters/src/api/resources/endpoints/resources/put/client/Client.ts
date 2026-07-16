@@ -25,6 +25,9 @@ export class PutClient {
      * @param {SeedExhaustive.endpoints.PutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.put.add({
      *         id: "id"

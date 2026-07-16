@@ -26,6 +26,9 @@ export class ServiceClient {
      * @param {string} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedResponsePropertyError}
+     * @throws {@link errors.SeedResponsePropertyTimeoutError}
+     *
      * @example
      *     await client.service.getMovie("string")
      */
@@ -77,6 +80,9 @@ export class ServiceClient {
     /**
      * @param {string} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedResponsePropertyError}
+     * @throws {@link errors.SeedResponsePropertyTimeoutError}
      *
      * @example
      *     await client.service.getMovieDocs("string")
@@ -130,6 +136,9 @@ export class ServiceClient {
      * @param {string} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedResponsePropertyError}
+     * @throws {@link errors.SeedResponsePropertyTimeoutError}
+     *
      * @example
      *     await client.service.getMovieName("string")
      */
@@ -182,6 +191,9 @@ export class ServiceClient {
      * @param {string} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedResponsePropertyError}
+     * @throws {@link errors.SeedResponsePropertyTimeoutError}
+     *
      * @example
      *     await client.service.getMovieMetadata("string")
      */
@@ -233,6 +245,9 @@ export class ServiceClient {
     /**
      * @param {string} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedResponsePropertyError}
+     * @throws {@link errors.SeedResponsePropertyTimeoutError}
      *
      * @example
      *     await client.service.getOptionalMovie("string")
@@ -289,6 +304,9 @@ export class ServiceClient {
      * @param {string} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedResponsePropertyError}
+     * @throws {@link errors.SeedResponsePropertyTimeoutError}
+     *
      * @example
      *     await client.service.getOptionalMovieDocs("string")
      */
@@ -343,6 +361,9 @@ export class ServiceClient {
     /**
      * @param {string} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedResponsePropertyError}
+     * @throws {@link errors.SeedResponsePropertyTimeoutError}
      *
      * @example
      *     await client.service.getOptionalMovieName("string")

@@ -25,6 +25,9 @@ export class OrganizationsClient {
      * @param {string} organization_id
      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.organizations.getOrganization("organization_id")
      */
@@ -80,6 +83,9 @@ export class OrganizationsClient {
      * @param {string} user_id
      * @param {SeedPathParameters.GetOrganizationUserRequest} request
      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.organizations.getOrganizationUser("organization_id", "user_id")
@@ -141,6 +147,9 @@ export class OrganizationsClient {
      * @param {string} organization_id
      * @param {SeedPathParameters.SearchOrganizationsRequest} request
      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.organizations.searchOrganizations("organization_id", {

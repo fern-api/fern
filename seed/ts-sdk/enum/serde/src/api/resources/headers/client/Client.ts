@@ -27,6 +27,9 @@ export class HeadersClient {
      * @param {SeedEnum.SendEnumAsHeaderRequest} request
      * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedEnumError}
+     * @throws {@link errors.SeedEnumTimeoutError}
+     *
      * @example
      *     await client.headers.send({
      *         operand: ">",

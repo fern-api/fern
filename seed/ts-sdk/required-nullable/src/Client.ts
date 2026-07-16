@@ -26,6 +26,9 @@ export class SeedApiClient {
      * @param {SeedApi.GetFooRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.getFoo({
      *         required_baz: "required_baz",
@@ -94,6 +97,9 @@ export class SeedApiClient {
      * @param {string} id
      * @param {SeedApi.UpdateFooRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.updateFoo("id", {

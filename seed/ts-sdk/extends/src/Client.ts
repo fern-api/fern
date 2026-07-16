@@ -26,6 +26,9 @@ export class SeedExtendsClient {
      * @param {SeedExtends.Inlined} request
      * @param {SeedExtendsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExtendsError}
+     * @throws {@link errors.SeedExtendsTimeoutError}
+     *
      * @example
      *     await client.extendedInlineRequestBody({
      *         unique: "unique",

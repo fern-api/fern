@@ -29,6 +29,9 @@ export class ServiceClient {
      * @param {SeedClientSideParams.ListResourcesRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
+     *
      * @example
      *     await client.service.listResources({
      *         page: 1,
@@ -103,6 +106,9 @@ export class ServiceClient {
      * @param {SeedClientSideParams.GetResourceRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
+     *
      * @example
      *     await client.service.getResource("resourceId", {
      *         include_metadata: true,
@@ -167,6 +173,9 @@ export class ServiceClient {
      *
      * @param {SeedClientSideParams.SearchResourcesRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.searchResources({
@@ -239,6 +248,9 @@ export class ServiceClient {
      *
      * @param {SeedClientSideParams.ListUsersRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.listUsers({
@@ -328,6 +340,9 @@ export class ServiceClient {
      * @param {SeedClientSideParams.GetUserRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
+     *
      * @example
      *     await client.service.getUserById("userId", {
      *         fields: "fields",
@@ -392,6 +407,9 @@ export class ServiceClient {
      *
      * @param {SeedClientSideParams.CreateUserRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.createUser({
@@ -465,6 +483,9 @@ export class ServiceClient {
      * @param {string} userId
      * @param {SeedClientSideParams.UpdateUserRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.updateUser("userId", {
@@ -540,6 +561,9 @@ export class ServiceClient {
      * @param {string} userId
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
+     *
      * @example
      *     await client.service.deleteUser("userId")
      */
@@ -587,6 +611,9 @@ export class ServiceClient {
      *
      * @param {SeedClientSideParams.ListConnectionsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.listConnections({
@@ -653,6 +680,9 @@ export class ServiceClient {
      * @param {string} connectionId
      * @param {SeedClientSideParams.GetConnectionRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.getConnection("connectionId", {
@@ -721,6 +751,9 @@ export class ServiceClient {
      *
      * @param {SeedClientSideParams.ListClientsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.listClients({
@@ -809,6 +842,9 @@ export class ServiceClient {
      * @param {string} clientId
      * @param {SeedClientSideParams.GetClientRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedClientSideParamsError}
+     * @throws {@link errors.SeedClientSideParamsTimeoutError}
      *
      * @example
      *     await client.service.getClient("clientId", {
