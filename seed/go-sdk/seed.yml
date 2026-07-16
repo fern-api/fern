@@ -356,6 +356,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  literal:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:

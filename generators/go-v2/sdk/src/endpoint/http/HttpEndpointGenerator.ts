@@ -826,7 +826,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.dedent();
             writer.writeLine("}");
             for (const queryParameter of endpoint.queryParameters) {
-                const literal = this.context.maybeLiteral(queryParameter.valueType);
+                // Literal query parameters have no request field and are injected here with
+                // their constant value. Unwrap optional/nullable wrappers so optional literals
+                // are sent too.
+                let valueType = queryParameter.valueType;
+                let unwrapped = this.context.maybeUnwrapOptionalOrNullable(valueType);
+                while (unwrapped != null) {
+                    valueType = unwrapped;
+                    unwrapped = this.context.maybeUnwrapOptionalOrNullable(valueType);
+                }
+                const literal = this.context.maybeLiteral(valueType);
                 if (literal != null) {
                     writer.writeNode(
                         this.addQueryValue({

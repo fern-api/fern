@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Auto-inject optional literal query parameters on the wire. Previously only
+    required literal query parameters (e.g. `response_type=code`) were sent, while
+    optional literals such as PKCE's `code_challenge_method=S256` were dropped, causing
+    generated wire tests to fail with a WireMock mismatch. Optional and nullable
+    literal query parameters are now sent with their constant value.
+  type: fix

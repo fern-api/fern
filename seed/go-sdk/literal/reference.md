@@ -63,6 +63,57 @@ client.Headers.Send(
 </dl>
 </details>
 
+<details><summary><code>client.Headers.SendLiteralsOnly() -> *fern.SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Headers.SendLiteralsOnly(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**endpointVersion:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.Inlined.Send(request) -> *fern.SendResponse</code></summary>
 <dl>

@@ -707,6 +707,33 @@ export class EndpointSnippetGenerator {
         }
     }
 
+    private resolvesToNonOptionalLiteralType(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "literal":
+                return true;
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return false;
+                }
+                if (named.type === "alias") {
+                    return this.resolvesToNonOptionalLiteralType(named.typeReference);
+                }
+                return false;
+            }
+            case "optional":
+            case "nullable":
+            case "list":
+            case "map":
+            case "set":
+            case "primitive":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
     private getBodyRequestArgsForBytes({
         body,
         value
@@ -881,10 +908,14 @@ export class EndpointSnippetGenerator {
             parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
-        const queryParameterFields = queryParameters.map((queryParameter) => ({
-            name: this.context.getPropertyName(queryParameter.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
-        }));
+        const queryParameterFields = queryParameters
+            // Required literals are hardcoded in the generated method and omitted from its
+            // signature, so they are not valid keyword arguments. Optional literals remain.
+            .filter((queryParameter) => !this.resolvesToNonOptionalLiteralType(queryParameter.typeReference))
+            .map((queryParameter) => ({
+                name: this.context.getPropertyName(queryParameter.name.name),
+                value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+            }));
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.Headers);
@@ -892,10 +923,14 @@ export class EndpointSnippetGenerator {
             parameters: request.headers ?? [],
             values: snippet.headers ?? {}
         });
-        const headerFields = headers.map((header) => ({
-            name: this.context.getPropertyName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(header)
-        }));
+        const headerFields = headers
+            // Required literals are hardcoded in the generated method and omitted from its
+            // signature, so they are not valid keyword arguments. Optional literals remain.
+            .filter((header) => !this.resolvesToNonOptionalLiteralType(header.typeReference))
+            .map((header) => ({
+                name: this.context.getPropertyName(header.name.name),
+                value: this.context.dynamicTypeLiteralMapper.convert(header)
+            }));
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
