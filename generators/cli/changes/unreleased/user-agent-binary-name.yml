@@ -2,9 +2,11 @@
 
 - summary: |
     The generated CLI now sends a `User-Agent` header identifying itself by its
-    own binary name and version (e.g. `mycli/1.4.0`) instead of the shared
+    own binary name and version (e.g. `mycli-cli/1.4.0`) instead of the shared
     `fern-cli-sdk` crate name. This lets each CLI's traffic be tracked
-    distinctly on the API backend.
+    distinctly on the API backend. The product token is normalized to end with
+    `-cli` so it unambiguously denotes CLI traffic (a binary named `mycli`
+    reports `mycli-cli`; one already named `mycli-cli` is left unchanged).
 
     A tool built on top of the CLI can voluntarily tag its traffic, either with
     the `--user-agent-suffix` flag or the `<NAME>_USER_AGENT_SUFFIX` environment
