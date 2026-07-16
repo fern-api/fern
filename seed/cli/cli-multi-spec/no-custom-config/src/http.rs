@@ -69,6 +69,11 @@ pub struct HttpConfig {
     /// than reqwest-typed certs. Each `Vec<u8>` is the raw bytes supplied
     /// to [`HttpConfig::with_extra_root_cert`].
     extra_root_certs_pem: Vec<Vec<u8>>,
+    /// Consumer-supplied `User-Agent` suffix resolved from the
+    /// `--user-agent-suffix` flag. Takes precedence over the
+    /// `<NAME>_USER_AGENT_SUFFIX` env var when set. `None` means fall back
+    /// to the env var (or no suffix).
+    user_agent_suffix_override: Option<Arc<str>>,
 }
 
 /// Transport-neutral view of the resolved HTTP/TLS configuration.
@@ -133,6 +138,7 @@ impl HttpConfig {
             prefix,
             extra_root_certs: Vec::new(),
             extra_root_certs_pem: Vec::new(),
+            user_agent_suffix_override: None,
         })
     }
 
@@ -163,6 +169,18 @@ impl HttpConfig {
         self
     }
 
+    /// Set the consumer-supplied `User-Agent` suffix (from the
+    /// `--user-agent-suffix` flag). When present it takes precedence over
+    /// the `<NAME>_USER_AGENT_SUFFIX` env var. A blank value clears the
+    /// override so the env-var fallback still applies.
+    pub fn with_user_agent_suffix_override(mut self, suffix: Option<String>) -> Self {
+        self.user_agent_suffix_override = suffix
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+            .map(Arc::from);
+        self
+    }
+
     /// CLI binary name (e.g. `"bigcommerce"`).
     pub fn name(&self) -> &str {
         &self.name
@@ -185,10 +203,11 @@ impl HttpConfig {
     /// stamped in at generation time (`CARGO_PKG_VERSION`), which for a
     /// generated CLI is the release version from `fern generate`.
     ///
-    /// A tool built on top of this CLI can append its own product token by
-    /// setting `<NAME>_USER_AGENT_SUFFIX` (see [`HttpConfig::user_agent_suffix`]);
-    /// the suffix is added after the CLI's own identity rather than replacing
-    /// it, so both are visible to the backend.
+    /// A tool built on top of this CLI can append its own product token
+    /// either with the `--user-agent-suffix` flag or by setting
+    /// `<NAME>_USER_AGENT_SUFFIX` (see [`HttpConfig::user_agent_suffix`]); the
+    /// suffix is added after the CLI's own identity rather than replacing it,
+    /// so both are visible to the backend.
     pub fn user_agent(&self) -> String {
         let base = format!("{}/{}", self.name, env!("CARGO_PKG_VERSION"));
         match self.user_agent_suffix() {
@@ -197,17 +216,22 @@ impl HttpConfig {
         }
     }
 
-    /// Read the optional consumer-supplied `User-Agent` suffix from
-    /// `<NAME>_USER_AGENT_SUFFIX`. This lets a tool built on top of the CLI
-    /// voluntarily tag its traffic (e.g. `partner-app/3.1`) without replacing
-    /// the CLI's own identity.
+    /// Read the optional consumer-supplied `User-Agent` suffix. The
+    /// `--user-agent-suffix` flag (surfaced via
+    /// [`HttpConfig::with_user_agent_suffix_override`]) takes precedence; if
+    /// unset, falls back to the `<NAME>_USER_AGENT_SUFFIX` env var. This lets
+    /// a tool built on top of the CLI voluntarily tag its traffic (e.g.
+    /// `partner-app/3.1`) without replacing the CLI's own identity.
     ///
     /// The value is trimmed and only accepted if it is non-empty and valid
     /// HTTP header content; otherwise it is ignored so a malformed suffix can
     /// never drop the CLI's own `User-Agent`.
     fn user_agent_suffix(&self) -> Option<String> {
-        first_env([scoped(&self.prefix, "_USER_AGENT_SUFFIX")])
-            .map(|s| s.trim().to_string())
+        let raw = match &self.user_agent_suffix_override {
+            Some(s) => Some(s.to_string()),
+            None => first_env([scoped(&self.prefix, "_USER_AGENT_SUFFIX")]),
+        };
+        raw.map(|s| s.trim().to_string())
             .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
     }
 
@@ -844,6 +868,51 @@ mod tests {
         // ignored rather than dropping the CLI's own User-Agent.
         env.set("ELEVENLABS_USER_AGENT_SUFFIX", "bad\nvalue");
         assert_eq!(HttpConfig::new("elevenlabs").unwrap().user_agent(), base);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_flag_override_takes_precedence_over_env() {
+        let mut env = EnvGuard::default();
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "from-env/1.0");
+        // The `--user-agent-suffix` flag override wins over the env var.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("from-flag/2.0".to_string()));
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs/{} from-flag/2.0", env!("CARGO_PKG_VERSION")),
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_blank_flag_override_falls_back_to_env() {
+        let mut env = EnvGuard::default();
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "from-env/1.0");
+        // A blank/whitespace flag value clears the override, so the env-var
+        // fallback still applies.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("   ".to_string()));
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs/{} from-env/1.0", env!("CARGO_PKG_VERSION")),
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_flag_override_ignores_invalid_value() {
+        let mut env = EnvGuard::default();
+        env.unset("ELEVENLABS_USER_AGENT_SUFFIX");
+        let base = format!("elevenlabs/{}", env!("CARGO_PKG_VERSION"));
+        // An override that is not valid header content is dropped rather than
+        // corrupting the CLI's own User-Agent.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("bad\nvalue".to_string()));
+        assert_eq!(cfg.user_agent(), base);
     }
 
     #[test]

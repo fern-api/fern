@@ -905,6 +905,13 @@ impl CliApp {
                     .value_name("URL")
                     .global(true),
             )
+            .arg(
+                clap::Arg::new("user-agent-suffix")
+                    .long("user-agent-suffix")
+                    .help("Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>_USER_AGENT_SUFFIX.")
+                    .value_name("TOKEN")
+                    .global(true),
+            )
             // Discoverability only — the `--schema` flag is intercepted before
             // clap parses (see step 0b above). Registering it here makes it
             // appear in `--help` output so users / agents discover it
@@ -1177,6 +1184,7 @@ fn graft_merged_subtree(
     let mut seen_arg_ids: std::collections::HashSet<String> = [
         "format".to_string(),
         "base-url".to_string(),
+        "user-agent-suffix".to_string(),
         "schema".to_string(),
         "spec".to_string(),
         "spec-raw".to_string(),
@@ -1455,6 +1463,11 @@ fn global_flags() -> Vec<serde_json::Value> {
             "flag": "--base-url",
             "valueName": "URL",
             "description": "Override the API base URL (e.g. for testing against a mock server)",
+        }),
+        serde_json::json!({
+            "flag": "--user-agent-suffix",
+            "valueName": "TOKEN",
+            "description": "Product token appended to the User-Agent (e.g. my-app/1.0). Takes precedence over <NAME>_USER_AGENT_SUFFIX.",
         }),
         serde_json::json!({
             "flag": "--quiet",

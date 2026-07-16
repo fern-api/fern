@@ -106,6 +106,7 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
     "help",
     "debug",
     "schema",
+    "user-agent-suffix",
 ];
 
 /// The non-auth portion of the `--help` footer. Auth env vars are
@@ -121,7 +122,7 @@ pub fn after_help_footer(binary_name: &str) -> String {
          {prefix}_INSECURE=1           Skip TLS verification (debugging only)\n  \
          {prefix}_PROXY                HTTP(S) proxy URL\n  \
          {prefix}_TIMEOUT_SECS         Total request timeout\n  \
-         {prefix}_USER_AGENT_SUFFIX    Product token appended to the User-Agent (e.g. my-app/1.0)\n\n\
+         {prefix}_USER_AGENT_SUFFIX    Product token appended to the User-Agent (e.g. my-app/1.0; --user-agent-suffix wins)\n\n\
          Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored."
     )
 }
@@ -158,6 +159,13 @@ pub fn build_cli(doc: &RestDescription) -> Command {
                 .long("base-url")
                 .help("Override the API base URL (e.g. for testing against a mock server)")
                 .value_name("URL")
+                .global(true),
+        )
+        .arg(
+            clap::Arg::new("user-agent-suffix")
+                .long("user-agent-suffix")
+                .help("Product token appended to the User-Agent (e.g. my-app/1.0), so a tool built on top of this CLI can tag its traffic. Takes precedence over <NAME>_USER_AGENT_SUFFIX.")
+                .value_name("TOKEN")
                 .global(true),
         )
         .arg(
