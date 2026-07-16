@@ -52,7 +52,8 @@ export interface DetectedAuthBinding {
  *     `<BIN>_CLIENT_ID` / `<BIN>_CLIENT_SECRET`. Required custom request
  *     properties receive deterministic env vars; optional properties are
  *     included only when their generated env vars are set.
- *     Unresolvable or unsupported endpoint contracts fail generation.
+ *     Unresolvable or unsupported endpoint contracts fail generation;
+ *     endpoints without a default server use the runtime base URL.
  *     Interactive flows (PKCE, device-code) are not modeled by the IR and
  *     are not emitted.
  *   - `inferred` / unknown → skipped (no runtime provider).
@@ -312,23 +313,21 @@ function resolveOAuthEndpoint(args: {
             `OAuth endpoint '${endpointReference.endpointId}' contains path parameters, which cannot be sourced by the CLI`
         );
     }
-    const baseUrl = resolveDefaultBaseUrl({ environments, baseUrlId: endpoint.baseUrl });
-    if (baseUrl == null) {
-        throw new Error(`OAuth endpoint '${endpointReference.endpointId}' has no resolvable default base URL`);
-    }
     const path = renderFullPath(endpoint.fullPath);
+    const baseUrl = resolveDefaultBaseUrl({ environments, baseUrlId: endpoint.baseUrl });
+    const useBaseUrlOverride =
+        baseUrl == null ||
+        (environments != null &&
+            visitDiscriminatedUnion(environments.environments)._visit({
+                singleBaseUrl: () => true,
+                multipleBaseUrls: () => false,
+                _other: () => false
+            }));
     return {
         endpoint,
-        defaultUrl: joinUrl(baseUrl, path),
+        defaultUrl: baseUrl == null ? path : joinUrl(baseUrl, path),
         path,
-        useBaseUrlOverride:
-            (environments == null
-                ? undefined
-                : visitDiscriminatedUnion(environments.environments)._visit({
-                      singleBaseUrl: () => true,
-                      multipleBaseUrls: () => false,
-                      _other: () => false
-                  })) ?? false
+        useBaseUrlOverride
     };
 }
 

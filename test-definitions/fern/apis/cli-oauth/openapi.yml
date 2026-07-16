@@ -27,21 +27,12 @@ paths:
             schema:
               type: object
               properties:
-                credentials:
-                  type: object
-                  properties:
-                    client_id:
-                      type: string
-                    client_secret:
-                      type: string
-                    scopes:
-                      type: array
-                      items:
-                        type: string
-                  required:
-                    - client_id
-                    - client_secret
-                    - scopes
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                scopes:
+                  type: string
                 grant_type:
                   type: string
                   enum:
@@ -51,7 +42,9 @@ paths:
                 optional_hint:
                   type: string
               required:
-                - credentials
+                - client_id
+                - client_secret
+                - scopes
                 - grant_type
                 - tenant
       responses:
@@ -130,17 +123,12 @@ components:
     TokenResponse:
       type: object
       properties:
-        result:
-          type: object
-          properties:
-            access_token:
-              type: string
-            expires_in:
-              type: integer
-            refresh_token:
-              type: string
-          required:
-            - access_token
-            - expires_in
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        refresh_token:
+          type: string
       required:
-        - result
+        - access_token
+        - expires_in

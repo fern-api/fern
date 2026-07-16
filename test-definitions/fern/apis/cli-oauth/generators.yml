@@ -12,21 +12,21 @@ auth-schemes:
     get-token:
       endpoint: POST /token
       request-properties:
-        client-id: $request.credentials.client_id
-        client-secret: $request.credentials.client_secret
-        scopes: $request.credentials.scopes
+        client-id: $request.client_id
+        client-secret: $request.client_secret
+        scopes: $request.scopes
       response-properties:
-        access-token: $response.result.access_token
-        expires-in: $response.result.expires_in
-        refresh-token: $response.result.refresh_token
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
     refresh-token:
       endpoint: POST /refresh
       request-properties:
         refresh-token: $request.refresh_token
       response-properties:
-        access-token: $response.result.access_token
-        expires-in: $response.result.expires_in
-        refresh-token: $response.result.refresh_token
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
 api:
   auth: OAuth2
   specs:
