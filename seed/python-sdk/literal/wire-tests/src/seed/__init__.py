@@ -21,12 +21,13 @@ if typing.TYPE_CHECKING:
         SomeAliasedLiteral,
         UndiscriminatedLiteral,
     )
-    from .query import AliasToPrompt, AliasToStream
+    from .query import AliasToOptionalPrompt, AliasToPrompt, AliasToStream
     from .reference import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "ANestedLiteral": ".inlined",
     "ATopLevelLiteral": ".inlined",
+    "AliasToOptionalPrompt": ".query",
     "AliasToPrompt": ".query",
     "AliasToStream": ".query",
     "AsyncSeedLiteral": ".client",
@@ -78,6 +79,7 @@ def __dir__():
 __all__ = [
     "ANestedLiteral",
     "ATopLevelLiteral",
+    "AliasToOptionalPrompt",
     "AliasToPrompt",
     "AliasToStream",
     "AsyncSeedLiteral",

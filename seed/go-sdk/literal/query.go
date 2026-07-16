@@ -7,25 +7,27 @@ import (
 )
 
 var (
-	sendLiteralsInQueryRequestFieldOptionalPrompt      = big.NewInt(1 << 0)
-	sendLiteralsInQueryRequestFieldAliasPrompt         = big.NewInt(1 << 1)
-	sendLiteralsInQueryRequestFieldAliasOptionalPrompt = big.NewInt(1 << 2)
-	sendLiteralsInQueryRequestFieldQuery               = big.NewInt(1 << 3)
-	sendLiteralsInQueryRequestFieldOptionalStream      = big.NewInt(1 << 4)
-	sendLiteralsInQueryRequestFieldAliasStream         = big.NewInt(1 << 5)
-	sendLiteralsInQueryRequestFieldAliasOptionalStream = big.NewInt(1 << 6)
+	sendLiteralsInQueryRequestFieldOptionalPrompt             = big.NewInt(1 << 0)
+	sendLiteralsInQueryRequestFieldAliasPrompt                = big.NewInt(1 << 1)
+	sendLiteralsInQueryRequestFieldAliasOptionalPrompt        = big.NewInt(1 << 2)
+	sendLiteralsInQueryRequestFieldQuery                      = big.NewInt(1 << 3)
+	sendLiteralsInQueryRequestFieldOptionalStream             = big.NewInt(1 << 4)
+	sendLiteralsInQueryRequestFieldAliasStream                = big.NewInt(1 << 5)
+	sendLiteralsInQueryRequestFieldAliasOptionalStream        = big.NewInt(1 << 6)
+	sendLiteralsInQueryRequestFieldAliasOptionalLiteralPrompt = big.NewInt(1 << 7)
 )
 
 type SendLiteralsInQueryRequest struct {
-	OptionalPrompt      *string        `json:"-" url:"optional_prompt,omitempty"`
-	AliasPrompt         AliasToPrompt  `json:"-" url:"alias_prompt"`
-	AliasOptionalPrompt *AliasToPrompt `json:"-" url:"alias_optional_prompt,omitempty"`
-	Query               string         `json:"-" url:"query"`
-	OptionalStream      *bool          `json:"-" url:"optional_stream,omitempty"`
-	AliasStream         AliasToStream  `json:"-" url:"alias_stream"`
-	AliasOptionalStream *AliasToStream `json:"-" url:"alias_optional_stream,omitempty"`
-	prompt              string
-	stream              bool
+	OptionalPrompt             *string               `json:"-" url:"optional_prompt,omitempty"`
+	AliasPrompt                AliasToPrompt         `json:"-" url:"alias_prompt"`
+	AliasOptionalPrompt        *AliasToPrompt        `json:"-" url:"alias_optional_prompt,omitempty"`
+	Query                      string                `json:"-" url:"query"`
+	OptionalStream             *bool                 `json:"-" url:"optional_stream,omitempty"`
+	AliasStream                AliasToStream         `json:"-" url:"alias_stream"`
+	AliasOptionalStream        *AliasToStream        `json:"-" url:"alias_optional_stream,omitempty"`
+	AliasOptionalLiteralPrompt AliasToOptionalPrompt `json:"-" url:"alias_optional_literal_prompt,omitempty"`
+	prompt                     string
+	stream                     bool
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -94,6 +96,15 @@ func (s *SendLiteralsInQueryRequest) SetAliasOptionalStream(aliasOptionalStream 
 	s.AliasOptionalStream = aliasOptionalStream
 	s.require(sendLiteralsInQueryRequestFieldAliasOptionalStream)
 }
+
+// SetAliasOptionalLiteralPrompt sets the AliasOptionalLiteralPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendLiteralsInQueryRequest) SetAliasOptionalLiteralPrompt(aliasOptionalLiteralPrompt AliasToOptionalPrompt) {
+	s.AliasOptionalLiteralPrompt = aliasOptionalLiteralPrompt
+	s.require(sendLiteralsInQueryRequestFieldAliasOptionalLiteralPrompt)
+}
+
+type AliasToOptionalPrompt = *string
 
 type AliasToPrompt = string
 

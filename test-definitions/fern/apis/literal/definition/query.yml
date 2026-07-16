@@ -20,6 +20,7 @@ service:
           optional_stream: optional<literal<false>>
           alias_stream: AliasToStream
           alias_optional_stream: optional<AliasToStream>
+          alias_optional_literal_prompt: AliasToOptionalPrompt
       response: root.SendResponse
       examples:
         - headers:
@@ -34,6 +35,7 @@ service:
             optional_stream: false
             alias_stream: false
             alias_optional_stream: false
+            alias_optional_literal_prompt: "You are a helpful assistant"
             query: "What is the weather today"
           response:
             body:
@@ -44,3 +46,4 @@ service:
 types:
   AliasToPrompt: literal<"You are a helpful assistant">
   AliasToStream: literal<false>
+  AliasToOptionalPrompt: optional<literal<"You are a helpful assistant">>

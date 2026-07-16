@@ -29,7 +29,7 @@ if typing.TYPE_CHECKING:
         UndiscriminatedLiteral,
         UndiscriminatedLiteralParams,
     )
-    from .query import AliasToPrompt, AliasToStream
+    from .query import AliasToOptionalPrompt, AliasToPrompt, AliasToStream
     from .reference import (
         ContainerObject,
         ContainerObjectParams,
@@ -46,6 +46,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ANestedLiteralParams": ".inlined",
     "ATopLevelLiteral": ".inlined",
     "ATopLevelLiteralParams": ".inlined",
+    "AliasToOptionalPrompt": ".query",
     "AliasToPrompt": ".query",
     "AliasToStream": ".query",
     "AsyncSeedLiteral": ".client",
@@ -109,6 +110,7 @@ __all__ = [
     "ANestedLiteralParams",
     "ATopLevelLiteral",
     "ATopLevelLiteralParams",
+    "AliasToOptionalPrompt",
     "AliasToPrompt",
     "AliasToStream",
     "AsyncSeedLiteral",

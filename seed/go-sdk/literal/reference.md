@@ -311,6 +311,9 @@ request := &fern.SendLiteralsInQueryRequest{
         AliasOptionalStream: fern.Bool(
             false,
         ),
+        AliasOptionalLiteralPrompt: fern.String(
+            "You are a helpful assistant",
+        ),
         Query: "What is the weather today",
     }
 client.Query.Send(
@@ -397,6 +400,14 @@ client.Query.Send(
 <dd>
 
 **aliasOptionalStream:** `*fern.AliasToStream` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aliasOptionalLiteralPrompt:** `fern.AliasToOptionalPrompt` 
     
 </dd>
 </dl>

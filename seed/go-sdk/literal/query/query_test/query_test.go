@@ -106,6 +106,9 @@ func TestQuerySendWithWireMock(
 		AliasOptionalStream: fern.Bool(
 			false,
 		),
+		AliasOptionalLiteralPrompt: fern.String(
+			"You are a helpful assistant",
+		),
 		Query: "What is the weather today",
 	}
 	_, invocationErr := client.Query.Send(
@@ -117,5 +120,5 @@ func TestQuerySendWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestQuerySendWithWireMock", "POST", "/query", map[string]interface{}{"prompt": "You are a helpful assistant", "optional_prompt": "You are a helpful assistant", "alias_prompt": "You are a helpful assistant", "alias_optional_prompt": "You are a helpful assistant", "stream": "false", "optional_stream": "false", "alias_stream": "false", "alias_optional_stream": "false", "query": "What is the weather today"}, 1)
+	VerifyRequestCount(t, "TestQuerySendWithWireMock", "POST", "/query", map[string]interface{}{"prompt": "You are a helpful assistant", "optional_prompt": "You are a helpful assistant", "alias_prompt": "You are a helpful assistant", "alias_optional_prompt": "You are a helpful assistant", "stream": "false", "optional_stream": "false", "alias_stream": "false", "alias_optional_stream": "false", "alias_optional_literal_prompt": "You are a helpful assistant", "query": "What is the weather today"}, 1)
 }
