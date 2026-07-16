@@ -139,3 +139,94 @@ describe("ThemeConfigProcessor field sync", () => {
         expect(filesUploaded).toBe(expectedPaths.length);
     });
 });
+
+describe("ThemeConfigProcessor CAS URL contract", () => {
+    let fetchMock: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+        fetchMock = vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({ status: "already_exists" }),
+            text: async () => ""
+        });
+        vi.stubGlobal("fetch", fetchMock);
+    });
+
+    afterEach(() => {
+        vi.unstubAllGlobals();
+    });
+
+    function casUrls(): string[] {
+        return fetchMock.mock.calls
+            .map(([url]) => url)
+            .filter((url): url is string => typeof url === "string" && url.includes("/v2/registry/content/"));
+    }
+
+    // Regression: the content-existence check must pass orgId as a path segment, not a query
+    // param. FDR ignores `?orgId=` and falls back to the wrong org, so the content lands under
+    // a different org than the subsequent file bind and the bind 422s.
+    it("puts orgId in the content path (not as a query param) so it matches the file bind", async () => {
+        await makeProcessor().process({ favicon: "favicon.ico" });
+
+        const urls = casUrls();
+        expect(urls).toHaveLength(1);
+        const casUrl = urls[0]!;
+        expect(casUrl).toMatch(/\/v2\/registry\/content\/test-org\/[0-9a-f]{64}$/);
+        expect(casUrl).not.toContain("orgId=");
+    });
+
+    it("binds the asset under the same org used for the content check", async () => {
+        await makeProcessor().process({ favicon: "favicon.ico" });
+
+        const bindUrls = fetchMock.mock.calls
+            .map(([url]) => url)
+            .filter((url): url is string => typeof url === "string" && url.includes("/v2/registry/files/"));
+        expect(bindUrls).toHaveLength(1);
+        expect(bindUrls[0]!).toContain("/v2/registry/files/test-org/");
+    });
+
+    it("URL-encodes an orgId containing special characters", async () => {
+        const processor = new ThemeConfigProcessor({
+            docsWorkspace: MOCK_DOCS_WORKSPACE,
+            orgId: "org/with space",
+            token: "test-token",
+            context: createMockTaskContext()
+        });
+        await processor.process({ favicon: "favicon.ico" });
+
+        expect(casUrls()[0]!).toContain("/v2/registry/content/org%2Fwith%20space/");
+    });
+});
+
+describe("themeOrigin FDR_ORIGIN resolution", () => {
+    afterEach(() => {
+        vi.unstubAllEnvs();
+        vi.resetModules();
+    });
+
+    async function loadOrigin(): Promise<string> {
+        vi.resetModules();
+        const mod = await import("../commands/docs-theme/themeOrigin.js");
+        return mod.FDR_ORIGIN;
+    }
+
+    it("prefers OVERRIDE_FDR_ORIGIN when set", async () => {
+        vi.stubEnv("OVERRIDE_FDR_ORIGIN", "https://override.example.com");
+        vi.stubEnv("DEFAULT_FDR_ORIGIN", "https://registry-dev2.buildwithfern.com");
+        expect(await loadOrigin()).toBe("https://override.example.com");
+    });
+
+    // Regression: without this fallback the theme command always hit the prod default, so a dev
+    // CLI build sent a dev token to prod FDR and got a 403 "Failed to resolve organizations".
+    it("falls back to the build-configured DEFAULT_FDR_ORIGIN when OVERRIDE is unset", async () => {
+        vi.stubEnv("OVERRIDE_FDR_ORIGIN", undefined);
+        vi.stubEnv("DEFAULT_FDR_ORIGIN", "https://registry-dev2.buildwithfern.com");
+        expect(await loadOrigin()).toBe("https://registry-dev2.buildwithfern.com");
+    });
+
+    it("defaults to the production registry when neither is set", async () => {
+        vi.stubEnv("OVERRIDE_FDR_ORIGIN", undefined);
+        vi.stubEnv("DEFAULT_FDR_ORIGIN", undefined);
+        expect(await loadOrigin()).toBe("https://registry.buildwithfern.com");
+    });
+});
