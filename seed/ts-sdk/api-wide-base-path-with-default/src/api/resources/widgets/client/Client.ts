@@ -26,6 +26,9 @@ export class WidgetsClient {
      * @param {SeedApi.Widget} request
      * @param {WidgetsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.widgets.create({
      *         name: "name"

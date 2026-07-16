@@ -26,6 +26,9 @@ export class UnknownClient {
      * @param {unknown} request
      * @param {UnknownClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUnknownAsAnyError}
+     * @throws {@link errors.SeedUnknownAsAnyTimeoutError}
+     *
      * @example
      *     await client.unknown.post({
      *         "key": "value"
@@ -74,6 +77,9 @@ export class UnknownClient {
     /**
      * @param {SeedUnknownAsAny.MyObject} request
      * @param {UnknownClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnknownAsAnyError}
+     * @throws {@link errors.SeedUnknownAsAnyTimeoutError}
      *
      * @example
      *     await client.unknown.postObject({

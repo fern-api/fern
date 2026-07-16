@@ -27,6 +27,9 @@ export class FilesClient {
      * @param {SeedApi.FilesUploadRequest} request
      * @param {FilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.files.upload({
      *         name: "name",

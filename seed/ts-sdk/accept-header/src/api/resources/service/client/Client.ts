@@ -25,6 +25,8 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedAccept.NotFoundError}
+     * @throws {@link errors.SeedAcceptError}
+     * @throws {@link errors.SeedAcceptTimeoutError}
      *
      * @example
      *     await client.service.endpoint()

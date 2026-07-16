@@ -25,6 +25,9 @@ export class UserClient {
      * @param {SeedVersion.UserId} userId
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedVersionError}
+     * @throws {@link errors.SeedVersionTimeoutError}
+     *
      * @example
      *     await client.user.getUser("userId")
      */

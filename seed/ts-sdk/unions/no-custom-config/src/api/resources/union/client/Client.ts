@@ -26,6 +26,9 @@ export class UnionClient {
      * @param {string} id
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.get("id")
      */
@@ -71,6 +74,9 @@ export class UnionClient {
     /**
      * @param {SeedUnions.Shape} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
      *
      * @example
      *     await client.union.update({

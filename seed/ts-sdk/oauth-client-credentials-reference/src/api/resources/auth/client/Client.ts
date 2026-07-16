@@ -26,6 +26,9 @@ export class AuthClient {
      * @param {SeedOauthClientCredentialsReference.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedOauthClientCredentialsReferenceError}
+     * @throws {@link errors.SeedOauthClientCredentialsReferenceTimeoutError}
+     *
      * @example
      *     await client.auth.getToken({
      *         client_id: "client_id",

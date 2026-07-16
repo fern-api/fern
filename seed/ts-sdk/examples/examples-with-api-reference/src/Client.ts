@@ -44,6 +44,9 @@ export class SeedExamplesClient {
      * @param {string} request
      * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
+     *
      * @example
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
@@ -90,6 +93,9 @@ export class SeedExamplesClient {
     /**
      * @param {SeedExamples.Type} request
      * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
      *
      * @example
      *     await client.createType("primitive")

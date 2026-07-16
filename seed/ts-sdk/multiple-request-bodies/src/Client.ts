@@ -27,6 +27,9 @@ export class SeedApiClient {
      * @param {SeedApi.UploadDocumentRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.uploadJsonDocument()
      */
@@ -84,6 +87,9 @@ export class SeedApiClient {
     /**
      * @param {core.file.Uploadable} uploadable
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      */
     public uploadPdfDocument(
         uploadable: core.file.Uploadable,

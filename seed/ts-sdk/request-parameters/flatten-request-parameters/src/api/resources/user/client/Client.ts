@@ -27,6 +27,9 @@ export class UserClient {
      * @param {SeedRequestParameters.CreateUsernameRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedRequestParametersError}
+     * @throws {@link errors.SeedRequestParametersTimeoutError}
+     *
      * @example
      *     await client.user.createUsername({
      *         tags: ["tags", "tags"],
@@ -91,6 +94,9 @@ export class UserClient {
     /**
      * @param {SeedRequestParameters.CreateUsernameReferencedRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedRequestParametersError}
+     * @throws {@link errors.SeedRequestParametersTimeoutError}
      *
      * @example
      *     await client.user.createUsernameWithReferencedType({
@@ -157,6 +163,9 @@ export class UserClient {
      * @param {SeedRequestParameters.CreateUsernameBodyOptionalProperties | null} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedRequestParametersError}
+     * @throws {@link errors.SeedRequestParametersTimeoutError}
+     *
      * @example
      *     await client.user.createUsernameOptional()
      */
@@ -208,6 +217,9 @@ export class UserClient {
     /**
      * @param {SeedRequestParameters.GetUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedRequestParametersError}
+     * @throws {@link errors.SeedRequestParametersTimeoutError}
      *
      * @example
      *     await client.user.getUsername({

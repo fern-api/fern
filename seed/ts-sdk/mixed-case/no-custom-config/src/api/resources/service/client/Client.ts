@@ -25,6 +25,9 @@ export class ServiceClient {
      * @param {string} ResourceID
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMixedCaseError}
+     * @throws {@link errors.SeedMixedCaseTimeoutError}
+     *
      * @example
      *     await client.service.getResource("rsc-xyz")
      */
@@ -73,6 +76,9 @@ export class ServiceClient {
     /**
      * @param {SeedMixedCase.ListResourcesRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedMixedCaseError}
+     * @throws {@link errors.SeedMixedCaseTimeoutError}
      *
      * @example
      *     await client.service.listResources({

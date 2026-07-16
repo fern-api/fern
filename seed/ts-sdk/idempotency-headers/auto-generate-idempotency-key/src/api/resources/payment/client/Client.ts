@@ -29,6 +29,9 @@ export class PaymentClient {
      * @param {SeedIdempotencyHeaders.CreatePaymentRequest} request
      * @param {PaymentClient.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedIdempotencyHeadersError}
+     * @throws {@link errors.SeedIdempotencyHeadersTimeoutError}
+     *
      * @example
      *     await client.payment.create({
      *         amount: 1,
@@ -92,6 +95,9 @@ export class PaymentClient {
     /**
      * @param {string} paymentId
      * @param {PaymentClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedIdempotencyHeadersError}
+     * @throws {@link errors.SeedIdempotencyHeadersTimeoutError}
      *
      * @example
      *     await client.payment.delete("paymentId")

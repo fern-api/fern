@@ -37,6 +37,9 @@ export class SeedApiClient {
      *
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.status()
      */
@@ -80,6 +83,9 @@ export class SeedApiClient {
      * Root-level endpoint named invalidate to test collision handling
      *
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.invalidate()
