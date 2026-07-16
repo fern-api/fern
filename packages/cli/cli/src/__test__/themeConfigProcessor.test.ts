@@ -170,7 +170,7 @@ describe("ThemeConfigProcessor CAS URL contract", () => {
 
         const urls = casUrls();
         expect(urls).toHaveLength(1);
-        const casUrl = urls[0]!;
+        const [casUrl] = urls;
         expect(casUrl).toMatch(/\/v2\/registry\/content\/test-org\/[0-9a-f]{64}$/);
         expect(casUrl).not.toContain("orgId=");
     });
@@ -182,7 +182,8 @@ describe("ThemeConfigProcessor CAS URL contract", () => {
             .map(([url]) => url)
             .filter((url): url is string => typeof url === "string" && url.includes("/v2/registry/files/"));
         expect(bindUrls).toHaveLength(1);
-        expect(bindUrls[0]!).toContain("/v2/registry/files/test-org/");
+        const [bindUrl] = bindUrls;
+        expect(bindUrl).toContain("/v2/registry/files/test-org/");
     });
 
     it("URL-encodes an orgId containing special characters", async () => {
@@ -194,7 +195,8 @@ describe("ThemeConfigProcessor CAS URL contract", () => {
         });
         await processor.process({ favicon: "favicon.ico" });
 
-        expect(casUrls()[0]!).toContain("/v2/registry/content/org%2Fwith%20space/");
+        const [casUrl] = casUrls();
+        expect(casUrl).toContain("/v2/registry/content/org%2Fwith%20space/");
     });
 });
 
