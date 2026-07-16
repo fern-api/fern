@@ -13,6 +13,7 @@ import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
 import { ValidInstanceUrlRule } from "./rules/valid-instance-url/index.js";
+import { ValidLlmsTxtRule } from "./rules/valid-llms-txt/index.js";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
@@ -44,7 +45,8 @@ const allRules = [
     TranslationDirectoriesExistRule,
     ValidChangelogSlugRule,
     ValidWellKnownSkillsRule, // Validate author-supplied Agent Skills bundles under .well-known/
-    ValidSkillsPageActionRule // Validate the "Install skills" page action display config
+    ValidSkillsPageActionRule, // Validate the "Install skills" page action display config
+    ValidLlmsTxtRule // Validate custom llms.txt links against the resolved navigation
     // ValidMarkdownFileReferences
 ];
 
