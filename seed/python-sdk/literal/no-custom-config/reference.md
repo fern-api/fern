@@ -338,7 +338,6 @@ client.query.send(
     alias_optional_prompt="You are a helpful assistant",
     optional_stream=False,
     alias_optional_stream=False,
-    alias_optional_literal_prompt="You are a helpful assistant",
     query="What is the weather today",
 )
 
@@ -389,14 +388,6 @@ client.query.send(
 <dd>
 
 **alias_stream:** `AliasToStream` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alias_optional_literal_prompt:** `AliasToOptionalPrompt` 
     
 </dd>
 </dl>

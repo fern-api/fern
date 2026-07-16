@@ -10,7 +10,6 @@ def test_query_send() -> None:
         alias_optional_prompt="You are a helpful assistant",
         optional_stream=False,
         alias_optional_stream=False,
-        alias_optional_literal_prompt="You are a helpful assistant",
         query="What is the weather today",
     )
     verify_request_count(
@@ -26,7 +25,6 @@ def test_query_send() -> None:
             "optional_stream": "false",
             "alias_stream": "false",
             "alias_optional_stream": "false",
-            "alias_optional_literal_prompt": "You are a helpful assistant",
             "query": "What is the weather today",
         },
         1,

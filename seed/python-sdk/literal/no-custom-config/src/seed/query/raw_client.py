@@ -10,7 +10,6 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
-from .types.alias_to_optional_prompt import AliasToOptionalPrompt
 from .types.alias_to_prompt import AliasToPrompt
 from .types.alias_to_stream import AliasToStream
 from pydantic import ValidationError
@@ -24,7 +23,6 @@ class RawQueryClient:
         self,
         *,
         query: str,
-        alias_optional_literal_prompt: AliasToOptionalPrompt,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -35,8 +33,6 @@ class RawQueryClient:
         Parameters
         ----------
         query : str
-
-        alias_optional_literal_prompt : AliasToOptionalPrompt
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
@@ -66,7 +62,6 @@ class RawQueryClient:
                 "optional_stream": optional_stream,
                 "alias_stream": False,
                 "alias_optional_stream": alias_optional_stream,
-                "alias_optional_literal_prompt": alias_optional_literal_prompt,
             },
             request_options=request_options,
         )
@@ -98,7 +93,6 @@ class AsyncRawQueryClient:
         self,
         *,
         query: str,
-        alias_optional_literal_prompt: AliasToOptionalPrompt,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -109,8 +103,6 @@ class AsyncRawQueryClient:
         Parameters
         ----------
         query : str
-
-        alias_optional_literal_prompt : AliasToOptionalPrompt
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
@@ -140,7 +132,6 @@ class AsyncRawQueryClient:
                 "optional_stream": optional_stream,
                 "alias_stream": False,
                 "alias_optional_stream": alias_optional_stream,
-                "alias_optional_literal_prompt": alias_optional_literal_prompt,
             },
             request_options=request_options,
         )

@@ -6,7 +6,6 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
 from .raw_client import AsyncRawQueryClient, RawQueryClient
-from .types.alias_to_optional_prompt import AliasToOptionalPrompt
 from .types.alias_to_prompt import AliasToPrompt
 from .types.alias_to_stream import AliasToStream
 
@@ -30,7 +29,6 @@ class QueryClient:
         self,
         *,
         query: str,
-        alias_optional_literal_prompt: AliasToOptionalPrompt,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -41,8 +39,6 @@ class QueryClient:
         Parameters
         ----------
         query : str
-
-        alias_optional_literal_prompt : AliasToOptionalPrompt
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
@@ -72,7 +68,6 @@ class QueryClient:
         """
         _response = self._raw_client.send(
             query=query,
-            alias_optional_literal_prompt=alias_optional_literal_prompt,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
             optional_stream=optional_stream,
@@ -101,7 +96,6 @@ class AsyncQueryClient:
         self,
         *,
         query: str,
-        alias_optional_literal_prompt: AliasToOptionalPrompt,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -112,8 +106,6 @@ class AsyncQueryClient:
         Parameters
         ----------
         query : str
-
-        alias_optional_literal_prompt : AliasToOptionalPrompt
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
@@ -151,7 +143,6 @@ class AsyncQueryClient:
         """
         _response = await self._raw_client.send(
             query=query,
-            alias_optional_literal_prompt=alias_optional_literal_prompt,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
             optional_stream=optional_stream,

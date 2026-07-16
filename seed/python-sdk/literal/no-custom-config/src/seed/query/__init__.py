@@ -6,12 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import AliasToOptionalPrompt, AliasToPrompt, AliasToStream
-_dynamic_imports: typing.Dict[str, str] = {
-    "AliasToOptionalPrompt": ".types",
-    "AliasToPrompt": ".types",
-    "AliasToStream": ".types",
-}
+    from .types import AliasToPrompt, AliasToStream
+_dynamic_imports: typing.Dict[str, str] = {"AliasToPrompt": ".types", "AliasToStream": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -35,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AliasToOptionalPrompt", "AliasToPrompt", "AliasToStream"]
+__all__ = ["AliasToPrompt", "AliasToStream"]

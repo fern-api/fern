@@ -140,9 +140,6 @@
           "alias_optional_stream": {
             "equalTo": "false"
           },
-          "alias_optional_literal_prompt": {
-            "equalTo": "You are a helpful assistant"
-          },
           "query": {
             "equalTo": "What is the weather today"
           }
