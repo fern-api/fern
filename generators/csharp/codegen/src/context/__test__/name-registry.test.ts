@@ -593,40 +593,47 @@ describe("NameRegistry", () => {
         });
     });
 
-    describe("hasTypeNamespaceConflict", () => {
-        it("should detect a nested type whose name equals the root namespace segment", () => {
+    describe("hasNestedTypeShadowInScope", () => {
+        const enclosingFqn = "Auth0.ManagementApi.ConnectionResponseContent";
+
+        it("should detect a nested type whose name equals the root namespace segment only within its enclosing scope", () => {
             // Reproduces the CS0426 case: a union variant "auth0" generates a nested struct
             // `Auth0` inside `ConnectionResponseContent`, which lives in namespace
             // `Auth0.ManagementApi`. Within the enclosing type's body, the unqualified `Auth0`
             // resolves to the nested struct instead of the namespace root.
             const enclosing = createClassRef("ConnectionResponseContent", "Auth0.ManagementApi");
             nameRegistry.trackType(enclosing);
-
-            // The enclosing type alone makes "Auth0" a root namespace segment, but it is not
-            // yet a tracked type name, so there is no conflict.
-            expect(nameRegistry.hasTypeNamespaceConflict("Auth0")).toBe(false);
-
-            // The nested type named "Auth0" shadows the root namespace segment.
             const nestedAuth0 = createClassRef("Auth0", "Auth0.ManagementApi", enclosing);
             nameRegistry.trackType(nestedAuth0);
 
-            expect(nameRegistry.hasTypeNamespaceConflict("Auth0")).toBe(true);
+            // The nested type is NOT tracked as a global type name: unlike a top-level type that
+            // shadows the namespace everywhere, this shadow is confined to the enclosing scope.
+            expect(nameRegistry.hasTypeNamespaceConflict("Auth0")).toBe(false);
+
+            // Inside the enclosing type's body the shadow is visible, so the reference must be
+            // qualified.
+            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", [enclosingFqn])).toBe(true);
+            // ...as it is inside a further-nested type within that enclosing type.
+            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", [enclosingFqn, `${enclosingFqn}+Auth0`])).toBe(
+                true
+            );
+
+            // Outside the enclosing type (a different type / file), there is no shadow, so no
+            // qualification is needed.
+            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", [])).toBe(false);
+            expect(nameRegistry.hasNestedTypeShadowInScope("Auth0", ["Auth0.ManagementApi.SomeOtherType"])).toBe(false);
         });
 
-        it("should not create a spurious conflict for a nested type whose name does not match the root segment", () => {
-            // "Foo" is a root-level namespace segment (via a type in "Foo.Bar").
-            const rootNsType = createClassRef("Widget", "Foo.Bar");
-            nameRegistry.trackType(rootNsType);
-
-            // A nested type named "Foo" lives in an unrelated namespace whose root is "Auth0".
+        it("should not record a shadow for a nested type whose name does not match the root segment", () => {
+            // A nested type named "Foo" lives in a namespace whose root is "Auth0".
             const enclosing = createClassRef("ConnectionResponseContent", "Auth0.ManagementApi");
             nameRegistry.trackType(enclosing);
             const nestedFoo = createClassRef("Foo", "Auth0.ManagementApi", enclosing);
             nameRegistry.trackType(nestedFoo);
 
-            // "Foo" does not match its own root segment ("Auth0"), so it must not be tracked as
-            // a type name; otherwise it would spuriously conflict with the "Foo" namespace root.
-            expect(nameRegistry.hasTypeNamespaceConflict("Foo")).toBe(false);
+            // "Foo" does not match its own root segment ("Auth0"), so it does not shadow anything
+            // and must never be qualified on that basis.
+            expect(nameRegistry.hasNestedTypeShadowInScope("Foo", [enclosingFqn])).toBe(false);
         });
     });
 

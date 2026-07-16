@@ -8,7 +8,9 @@
         `global::`-qualified references. Previously such a nested type shadowed the
         namespace root within its enclosing type's body, so references like
         `Auth0.ManagementApi.SomeType` resolved to the nested type and failed to compile
-        with CS0426.
+        with CS0426. The `global::` qualifier is applied only to references written inside
+        the enclosing type where the shadow is visible, so unrelated references to the same
+        root segment elsewhere in the SDK are left unqualified.
       type: fix
   createdAt: "2026-07-16"
   irVersion: 67

@@ -648,6 +648,20 @@ export class NameRegistry {
     private readonly namespaceNames = new Map<string, Set<string>>();
 
     /**
+     * Registry tracking nested types whose name equals the root segment of their own
+     * namespace, which shadows that namespace inside the enclosing type's body (CS0426).
+     *
+     * Unlike a top-level type/namespace conflict (which shadows everywhere and is recorded
+     * as a tracked type name), a nested type only shadows the namespace root within its
+     * enclosing type's lexical scope. We therefore record the enclosing types rather than
+     * the name globally, so references are qualified only when written inside that scope.
+     *
+     * Key: Nested type name that shadows its root namespace segment (e.g. "Auth0")
+     * Value: Set of enclosing-type fully qualified names the shadow is visible in
+     */
+    private readonly nestedTypeShadows = new Map<string, Set<string>>();
+
+    /**
      * Set of namespaces that are implicitly imported/available.
      * Types in nested namespaces under these prefixes are tracked for ambiguity detection.
      */
@@ -888,6 +902,29 @@ export class NameRegistry {
     }
 
     /**
+     * Checks whether `name` is a nested type that shadows its own root namespace segment
+     * (see {@link nestedTypeShadows}) AND whether we are currently writing inside one of the
+     * enclosing types where that shadow is visible. This is the scoped counterpart to
+     * {@link hasTypeNamespaceConflict}: it lets reference sites emit a `global::` qualifier
+     * only within the shadow's lexical scope, rather than everywhere the root segment appears.
+     *
+     * @param name - The first namespace segment of the reference being written (optional)
+     * @param typeScopeStack - Fully qualified names of the enclosing types currently open,
+     *                         outermost first (see `Writer.typeScopeStack`)
+     * @returns `true` if a matching nested-type shadow is in scope, `false` otherwise
+     */
+    public hasNestedTypeShadowInScope(name: string | undefined, typeScopeStack: readonly string[]): boolean {
+        if (!name || this.knownBuiltInIdentifiers.has(name)) {
+            return false;
+        }
+        const enclosers = this.nestedTypeShadows.get(name);
+        if (!enclosers) {
+            return false;
+        }
+        return typeScopeStack.some((fullyQualifiedName) => enclosers.has(fullyQualifiedName));
+    }
+
+    /**
      * Generates a fully qualified name string from a class reference identity.
      * For nested types, includes the enclosing type in the qualified name.
      *
@@ -985,10 +1022,17 @@ export class NameRegistry {
                 // A nested type whose name equals the root namespace segment shadows that
                 // namespace within its enclosing type's body, so any `<Root>.<Sub>.Type`
                 // reference emitted there resolves to the nested type and fails with CS0426.
-                // Track it so hasTypeNamespaceConflict() detects the shadow and callers emit
-                // a global:: qualifier at the reference sites. Scoped to the exact collision
-                // so unrelated nested types are not over-qualified.
-                this.trackTypeName(name, namespace);
+                // The shadow is confined to the enclosing type's lexical scope, so — unlike a
+                // top-level conflict — we record the enclosing type rather than tracking the
+                // name globally. hasNestedTypeShadowInScope() then lets reference sites emit a
+                // global:: qualifier only when writing inside that scope, instead of qualifying
+                // every (unrelated) reference to the same root segment elsewhere in the SDK.
+                let enclosers = this.nestedTypeShadows.get(name);
+                if (!enclosers) {
+                    enclosers = new Set();
+                    this.nestedTypeShadows.set(name, enclosers);
+                }
+                enclosers.add(enclosingType.fullyQualifiedName);
             }
 
             for (const each of [this.generation.namespaces.root, ...this.implicitNamespaces]) {
