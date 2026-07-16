@@ -5,4 +5,9 @@
     own binary name and version (e.g. `mycli/1.4.0`) instead of the shared
     `fern-cli-sdk` crate name. This lets each CLI's traffic be tracked
     distinctly on the API backend.
+
+    A tool built on top of the CLI can voluntarily tag its traffic by setting
+    the `<NAME>_USER_AGENT_SUFFIX` environment variable, which is appended to
+    (rather than replacing) the CLI's own identity — e.g.
+    `mycli/1.4.0 partner-app/3.1`.
   type: feat

@@ -120,7 +120,8 @@ pub fn after_help_footer(binary_name: &str) -> String {
          {prefix}_CA_BUNDLE            Path to PEM file with extra trust roots (or SSL_CERT_FILE)\n  \
          {prefix}_INSECURE=1           Skip TLS verification (debugging only)\n  \
          {prefix}_PROXY                HTTP(S) proxy URL\n  \
-         {prefix}_TIMEOUT_SECS         Total request timeout\n\n\
+         {prefix}_TIMEOUT_SECS         Total request timeout\n  \
+         {prefix}_USER_AGENT_SUFFIX    Product token appended to the User-Agent (e.g. my-app/1.0)\n\n\
          Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored."
     )
 }
