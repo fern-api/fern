@@ -981,6 +981,14 @@ export class NameRegistry {
                 // the node was being rendered
                 // (ie, in the code generator, keep track of where we are, not *just* the current namespace)
                 this.trackTypeName(name, namespace);
+            } else if (name === namespace.split(".")[0]) {
+                // A nested type whose name equals the root namespace segment shadows that
+                // namespace within its enclosing type's body, so any `<Root>.<Sub>.Type`
+                // reference emitted there resolves to the nested type and fails with CS0426.
+                // Track it so hasTypeNamespaceConflict() detects the shadow and callers emit
+                // a global:: qualifier at the reference sites. Scoped to the exact collision
+                // so unrelated nested types are not over-qualified.
+                this.trackTypeName(name, namespace);
             }
 
             for (const each of [this.generation.namespaces.root, ...this.implicitNamespaces]) {

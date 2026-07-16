@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.76.2
+  changelogEntry:
+    - summary: |
+        A generated nested type whose name matches the SDK's root namespace segment (e.g.
+        a union variant `auth0` that produces a nested `Auth0` struct inside
+        `ConnectionResponseContent` in the `Auth0.ManagementApi` namespace) now emits
+        `global::`-qualified references. Previously such a nested type shadowed the
+        namespace root within its enclosing type's body, so references like
+        `Auth0.ManagementApi.SomeType` resolved to the nested type and failed to compile
+        with CS0426.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 2.76.1
   changelogEntry:
     - summary: |
