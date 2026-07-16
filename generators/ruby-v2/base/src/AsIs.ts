@@ -97,6 +97,7 @@ const asIsTopoValue = {
     [AsIsFiles.HttpBaseRequest]: 6,
     [AsIsFiles.JsonRequest]: 7,
     [AsIsFiles.HttpRawClient]: 8,
+    [AsIsFiles.UrlEncodedRequest]: 33,
     [AsIsFiles.MultipartEncoder]: 9,
     [AsIsFiles.MultipartFormDataPart]: 10,
     [AsIsFiles.MultipartFormData]: 11,
