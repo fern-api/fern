@@ -49,9 +49,7 @@ func (r *RawClient) Send(
 		return nil, err
 	}
 	queryParams.Add("prompt", "You are a helpful assistant")
-	queryParams.Add("optional_prompt", "You are a helpful assistant")
 	queryParams.Add("stream", "false")
-	queryParams.Add("optional_stream", "false")
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}

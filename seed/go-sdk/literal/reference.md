@@ -129,6 +129,9 @@ client.Headers.SendLiteralsOnly(
 
 ```go
 request := &fern.SendLiteralsInlinedRequest{
+        Context: fern.String(
+            "You're super wise",
+        ),
         Query: "What is the weather today",
         Temperature: fern.Float64(
             10.1,
@@ -290,11 +293,17 @@ client.Path.Send(
 
 ```go
 request := &fern.SendLiteralsInQueryRequest{
+        OptionalPrompt: fern.String(
+            "You are a helpful assistant",
+        ),
         AliasPrompt: fern.AliasToPrompt(
             "You are a helpful assistant",
         ),
         AliasOptionalPrompt: fern.String(
             "You are a helpful assistant",
+        ),
+        OptionalStream: fern.Bool(
+            false,
         ),
         AliasStream: fern.AliasToStream(
             false,
