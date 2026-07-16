@@ -31,6 +31,7 @@ import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.TcpKeepaliveConfig;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.NameUtils;
@@ -1368,8 +1369,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class,
                         TimeUnit.class)
-                .endControlFlow()
-                .beginControlFlow("else")
+                .endControlFlow();
+
+        builder.beginControlFlow("else")
                 .addCode(
                         "$L.callTimeout(this.$L.orElse($L), $T.SECONDS)"
                                 + ".connectTimeout(0, $T.SECONDS)"
@@ -1381,8 +1383,23 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class,
                         TimeUnit.class,
-                        TimeUnit.class)
-                .addCode(
+                        TimeUnit.class);
+
+        // Apply platform-guarded TCP keepalive to the default client only. A user-supplied
+        // OkHttpClient (the `if` branch above) owns its own socket configuration and is never
+        // overridden, matching the opt-in precedence used across the other SDK generators.
+        TcpKeepaliveConfig tcpKeepalive =
+                clientGeneratorContext.getCustomConfig().tcpKeepalive();
+        if (tcpKeepalive.enabled()) {
+            builder.addCode(
+                    ".socketFactory(new $T($L, $L, $L))",
+                    clientGeneratorContext.getPoetClassNameFactory().getKeepAliveSocketFactoryClassName(),
+                    tcpKeepalive.idleSeconds(),
+                    tcpKeepalive.intervalSeconds(),
+                    tcpKeepalive.count());
+        }
+
+        builder.addCode(
                         ".addInterceptor(new $T(this.$L, this.$L, this.$L, this.$L));\n",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
                         MAX_RETRIES_FIELD.name,

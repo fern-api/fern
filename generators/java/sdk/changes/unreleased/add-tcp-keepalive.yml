@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add opt-in, platform-guarded TCP keepalive for the generated default OkHttp client. Enable it
+    via the new `tcp-keepalive` custom config (`enabled`, `idle-seconds`, `interval-seconds`,
+    `count`); it is disabled by default so existing generated output is unchanged. When enabled, the
+    default `OkHttpClient` is built with a `SocketFactory` that always sets the portable
+    `SO_KEEPALIVE` flag and best-effort applies the idle/interval/count knobs via
+    `jdk.net.ExtendedSocketOptions` (guarded by reflection for older JDKs and platforms that lack
+    them), so long, non-streaming requests survive idle-connection reaping by a firewall/load
+    balancer/NAT. A user-supplied `OkHttpClient` (via `.httpClient(...)`) always takes precedence
+    over the keepalive default.
+  type: feat

@@ -86,6 +86,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fileResponseType: parsed?.fileResponseType ?? "binary-response",
             formDataSupport: parsed?.formDataSupport ?? "Node18",
             fetchSupport: parsed?.fetchSupport ?? "native",
+            tcpKeepalive: parsed?.tcpKeepalive,
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             includePlatformHeaders: parsed?.includePlatformHeaders ?? false,
@@ -252,6 +253,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 fileResponseType: customConfig.fileResponseType ?? "binary-response",
                 formDataSupport: customConfig.formDataSupport ?? "Node18",
                 fetchSupport: customConfig.fetchSupport ?? "native",
+                tcpKeepalive: customConfig.tcpKeepalive,
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 includePlatformHeaders: customConfig.includePlatformHeaders ?? false,
@@ -300,7 +302,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             formDataSupport: customConfig.formDataSupport,
             fetchSupport: customConfig.fetchSupport,
             testFramework: customConfig.testFramework,
-            retryStatusCodes: customConfig.retryStatusCodes ?? "legacy"
+            retryStatusCodes: customConfig.retryStatusCodes ?? "legacy",
+            tcpKeepalive: customConfig.tcpKeepalive ?? { enabled: false }
         };
     }
 

@@ -156,6 +156,7 @@ export declare namespace SdkGenerator {
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
         fetchSupport: "node-fetch" | "native";
+        tcpKeepalive?: { enabled: boolean; idleSeconds?: number };
         packagePath: string | undefined;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
@@ -329,6 +330,7 @@ export class SdkGenerator {
             streamType: config.streamType,
             formDataSupport: config.formDataSupport,
             fetchSupport: config.fetchSupport,
+            tcpKeepalive: config.tcpKeepalive,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             generateEndpointMetadata: config.generateEndpointMetadata,

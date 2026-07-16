@@ -136,6 +136,18 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return "legacy";
     }
 
+    /**
+     * Opt-in, platform-guarded TCP keepalive for the generated default OkHttp client. Disabled by default so existing
+     * generated output is unchanged. When enabled, the default client is built with a {@code SocketFactory} that emits
+     * TCP keepalive probes so long, non-streaming requests survive idle-connection reaping by a firewall/load
+     * balancer/NAT. A user-supplied {@code OkHttpClient} always takes precedence over the keepalive default.
+     */
+    @Value.Default
+    @JsonProperty("tcp-keepalive")
+    default TcpKeepaliveConfig tcpKeepalive() {
+        return TcpKeepaliveConfig.builder().build();
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

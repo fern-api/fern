@@ -9,6 +9,7 @@ export declare namespace CoreUtility {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
         fetchSupport: "node-fetch" | "native";
+        tcpKeepalive?: { enabled: boolean; idleSeconds?: number };
     }
     export interface Init {
         getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;

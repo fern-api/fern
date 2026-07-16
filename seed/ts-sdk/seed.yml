@@ -111,6 +111,10 @@ fixtures:
     - outputFolder: node-fetch
       customConfig:
         fetchSupport: node-fetch
+    - outputFolder: tcp-keepalive
+      customConfig:
+        tcpKeepalive:
+          enabled: true
     - outputFolder: local-files
       outputMode: local_files
     - outputFolder: local-files-no-source

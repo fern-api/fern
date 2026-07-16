@@ -116,7 +116,20 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // internal - license name extracted from custom license file
     _fernLicenseName: z.optional(z.string()),
     maxRetries: z.optional(z.number().int().min(0)),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+
+    // Opt-in, platform-guarded TCP keepalive for the generated default HTTP client. Disabled by
+    // default so existing generated output is unchanged. When enabled, the generated SDK installs a
+    // Node-only undici dispatcher that emits TCP keepalive probes so long, non-streaming requests
+    // survive idle-connection reaping by a firewall/load balancer/NAT. A user-supplied `fetch` (or
+    // custom `fetcher`) always takes precedence over the keepalive default. `idleSeconds` maps to
+    // undici's `keepAliveInitialDelay`; Node's socket API does not expose the probe interval/count.
+    tcpKeepalive: z.optional(
+        z.strictObject({
+            enabled: z.boolean(),
+            idleSeconds: z.optional(z.number().int().min(0))
+        })
+    )
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
