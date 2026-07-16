@@ -100,6 +100,59 @@ describe("warn about unmapped oneOf members", () => {
         expect(relevant).toBeDefined();
     });
 
+    it("warns only once when the same union is converted multiple times", () => {
+        const warn = vi.fn();
+        // An inline request-body union is converted more than once by the parser (request and
+        // non-request passes), so without deduping the same warning is emitted multiple times.
+        const inlineUnion: OpenAPIV3.SchemaObject = {
+            type: "object",
+            properties: { type: { type: "string" } },
+            required: ["type"],
+            discriminator: {
+                propertyName: "type",
+                mapping: { text: "#/components/schemas/TextNode" }
+            },
+            oneOf: [{ $ref: "#/components/schemas/TextNode" }, { $ref: "#/components/schemas/NullNode" }]
+        };
+        const doc: OpenAPIV3.Document = {
+            openapi: "3.0.0",
+            info: { title: "Test API", version: "1.0" },
+            paths: {
+                "/nodes": {
+                    post: {
+                        operationId: "createNode",
+                        requestBody: {
+                            required: true,
+                            content: { "application/json": { schema: inlineUnion } }
+                        },
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            },
+            components: {
+                schemas: {
+                    TextNode: {
+                        type: "object",
+                        properties: { type: { type: "string", enum: ["text"] } },
+                        required: ["type"]
+                    },
+                    NullNode: {
+                        type: "object",
+                        properties: { type: { type: "string", enum: ["null_literal"] } },
+                        required: ["type"]
+                    }
+                }
+            }
+        };
+        parseWith(warn, doc);
+
+        const warnings = warn.mock.calls.map((call) => String(call[0]));
+        const relevant = warnings.filter(
+            (message) => message.includes("NullNode") && message.includes("discriminator mapping")
+        );
+        expect(relevant).toHaveLength(1);
+    });
+
     it("does not warn for an inline null-type member (OpenAPI 3.1 nullable pattern)", () => {
         const warn = vi.fn();
         const doc = buildDoc({ text: "#/components/schemas/TextNode" });

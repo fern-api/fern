@@ -1,3 +1,4 @@
+import type { Logger } from "@fern-api/logger";
 import {
     Availability,
     CommonPropertyWithExample,
@@ -153,6 +154,27 @@ function getSchemaNameFromReference(ref: string): string {
 }
 
 /**
+ * `convertDiscriminatedOneOf` runs more than once for the same union during parsing (e.g. an inline
+ * request-body union is converted separately for the request and non-request passes), so the same
+ * warning would otherwise be emitted several times. The parser spins up multiple context objects but
+ * shares a single logger, so we track the warnings already emitted per logger to avoid log spam.
+ */
+const alreadyWarnedUnmappedMembersByLogger = new WeakMap<Logger, Set<string>>();
+
+function warnOnce(context: SchemaParserContext, message: string): void {
+    let alreadyWarned = alreadyWarnedUnmappedMembersByLogger.get(context.logger);
+    if (alreadyWarned == null) {
+        alreadyWarned = new Set<string>();
+        alreadyWarnedUnmappedMembersByLogger.set(context.logger, alreadyWarned);
+    }
+    if (alreadyWarned.has(message)) {
+        return;
+    }
+    alreadyWarned.add(message);
+    context.logger.warn(message);
+}
+
+/**
  * A discriminated union is built exclusively from `discriminator.mapping`. Any member listed in the
  * spec's `oneOf`/`anyOf` that is not represented in the mapping is silently omitted from the generated
  * union, producing an SDK whose wire contract does not match the spec. Emit a warning so this failure
@@ -179,14 +201,16 @@ function warnAboutUnmappedOneOfMembers({
     for (const member of oneOfSchemas) {
         if (isReferenceObject(member)) {
             if (!mappedSchemaNames.has(getSchemaNameFromReference(member.$ref))) {
-                context.logger.warn(
+                warnOnce(
+                    context,
                     `Discriminated union "${location}" lists "${member.$ref}" in its oneOf/anyOf, but it is not present in ` +
                         `the discriminator mapping. This variant will be omitted from the generated union, so payloads using it ` +
                         `will fail to serialize or deserialize. Add it to the discriminator mapping to include it.`
                 );
             }
         } else if ((member.type as string) !== "null") {
-            context.logger.warn(
+            warnOnce(
+                context,
                 `Discriminated union "${location}" contains an inline oneOf/anyOf member that is not referenced by the ` +
                     `discriminator mapping. This variant will be omitted from the generated union, so payloads using it will fail ` +
                     `to serialize or deserialize. Extract it into a named schema and add it to the discriminator mapping to include it.`
