@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated CLI now sends a `User-Agent` header identifying itself by its
+    own binary name and version (e.g. `mycli/1.4.0`) instead of the shared
+    `fern-cli-sdk` crate name. This lets each CLI's traffic be tracked
+    distinctly on the API backend.
+  type: feat
