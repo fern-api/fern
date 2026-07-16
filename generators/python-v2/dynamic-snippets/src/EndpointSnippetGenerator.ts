@@ -679,6 +679,10 @@ export class EndpointSnippetGenerator {
         }
     }
 
+    // Whether a type resolves to a literal, treating optional/nullable literals AS literals.
+    // Used for request-body properties and path parameters, which omit ALL literals (required
+    // and optional alike) from the generated method call because they are set internally.
+    // Contrast with resolvesToNonOptionalLiteralType below, which keeps optional literals.
     private resolvesToLiteralType(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
             case "literal":
@@ -707,6 +711,18 @@ export class EndpointSnippetGenerator {
         }
     }
 
+    // Whether a type resolves to a REQUIRED literal, i.e. a literal NOT wrapped in optional/nullable.
+    // Used to filter query parameters and headers: a required literal (e.g. response_type="code") is
+    // hardcoded inside the generated method and omitted from its signature, so passing it as a keyword
+    // argument raises TypeError. An optional literal, by contrast, stays in the signature, so it must
+    // remain a valid keyword argument and is kept.
+    //
+    // This deliberately differs from resolvesToLiteralType above in the optional/nullable cases: here
+    // they return false (keep the parameter) instead of recursing. The asymmetry is intentional and is
+    // validated by the literal fixture's wire tests. Note the two cannot be collapsed into a single
+    // guard like `t.type !== "optional" && resolvesToLiteralType(t)`: a named alias whose target is
+    // optional<literal> has top-level type "named", so such a guard would misclassify it as a required
+    // literal and wrongly drop it, whereas recursing through the alias here correctly returns false.
     private resolvesToNonOptionalLiteralType(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
             case "literal":
