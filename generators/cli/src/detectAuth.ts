@@ -52,10 +52,12 @@ export interface DetectedAuthBinding {
  *     `<BIN>_CLIENT_ID` / `<BIN>_CLIENT_SECRET`. Required custom request
  *     properties receive deterministic env vars; optional properties are
  *     included only when their generated env vars are set.
- *     Unresolvable or unsupported endpoint contracts fail generation;
- *     endpoints without a default server use the runtime base URL.
- *     Interactive flows (PKCE, device-code) are not modeled by the IR and
- *     are not emitted.
+ *     Unresolvable or unsupported token-endpoint contracts (missing endpoint,
+ *     path params, unsupported content type, nested form body) skip the scheme
+ *     rather than failing generation; an unsupported refresh endpoint drops
+ *     just the refresh path. Endpoints without a default server use the runtime
+ *     base URL. Interactive flows (PKCE, device-code) are not modeled by the IR
+ *     and are not emitted.
  *   - `inferred` / unknown → skipped (no runtime provider).
  *
  * Env-var names come from the IR first (`usernameEnvVar`,
@@ -199,25 +201,24 @@ function clientCredentialsBinding(args: {
     const { key, clientCredentials, envPrefix, services, environments } = args;
     const clientIdEnv = clientCredentials.clientIdEnvVar ?? `${envPrefix}_CLIENT_ID`;
     const clientSecretEnv = clientCredentials.clientSecretEnvVar ?? `${envPrefix}_CLIENT_SECRET`;
+
+    const envVars = [clientIdEnv, clientSecretEnv];
+    const optionalEnvVars: string[] = [];
+
+    // Resolve + render the token endpoint. If the endpoint contract can't be
+    // faithfully built (missing/path-param endpoint, unsupported content type,
+    // nested form body), skip the whole OAuth scheme rather than aborting the
+    // entire CLI generation — matching the graceful skip when no base URL is
+    // declared. Client-credentials can't work without a usable token endpoint.
     const tokenEndpoint = resolveOAuthEndpoint({
         endpointReference: clientCredentials.tokenEndpoint.endpointReference,
         services,
         environments
     });
-
-    let rustCall = `.auth(OAuth2Auth::new(${rustString(key)})`;
-    rustCall += `.client_id_env(${rustString(clientIdEnv)})`;
-    rustCall += `.client_secret_env(${rustString(clientSecretEnv)})`;
-    const scopes = clientCredentials.scopes ?? [];
-    if (scopes.length > 0) {
-        rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
+    if (tokenEndpoint == null) {
+        return null;
     }
-    rustCall += `.token_header(${rustString(clientCredentials.tokenHeader ?? "Authorization")})`;
-    rustCall += `.token_prefix(${rustString(clientCredentials.tokenPrefix ?? "Bearer")})`;
-
-    const envVars = [clientIdEnv, clientSecretEnv];
-    const optionalEnvVars: string[] = [];
-    rustCall += `.token_endpoint(${renderOAuthEndpoint({
+    const tokenRendered = renderOAuthEndpoint({
         endpoint: tokenEndpoint,
         requestProperties: [
             requestPropertyBinding(clientCredentials.tokenEndpoint.requestProperties.clientId, "client-id"),
@@ -239,31 +240,53 @@ function clientCredentialsBinding(args: {
             })
         ],
         responseProperties: clientCredentials.tokenEndpoint.responseProperties
-    })})`;
+    });
+    if (tokenRendered == null) {
+        return null;
+    }
 
+    let rustCall = `.auth(OAuth2Auth::new(${rustString(key)})`;
+    rustCall += `.client_id_env(${rustString(clientIdEnv)})`;
+    rustCall += `.client_secret_env(${rustString(clientSecretEnv)})`;
+    const scopes = clientCredentials.scopes ?? [];
+    if (scopes.length > 0) {
+        rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
+    }
+    rustCall += `.token_header(${rustString(clientCredentials.tokenHeader ?? "Authorization")})`;
+    rustCall += `.token_prefix(${rustString(clientCredentials.tokenPrefix ?? "Bearer")})`;
+    rustCall += `.token_endpoint(${tokenRendered})`;
+
+    // The refresh endpoint is optional. If it can't be built, omit just the
+    // refresh path and keep the token endpoint — client-credentials still works,
+    // re-authenticating on expiry instead of refreshing.
     if (clientCredentials.refreshEndpoint != null) {
         const refreshEndpoint = resolveOAuthEndpoint({
             endpointReference: clientCredentials.refreshEndpoint.endpointReference,
             services,
             environments
         });
-        const refreshProperties = inferRefreshRequestProperties({
-            endpoint: refreshEndpoint.endpoint,
-            refreshToken: clientCredentials.refreshEndpoint.requestProperties.refreshToken,
-            tokenRequestProperties: clientCredentials.tokenEndpoint.requestProperties,
-            envPrefix,
-            schemeName: key
-        });
-        for (const property of refreshProperties) {
-            if (property.envVar != null) {
-                (property.optional ? optionalEnvVars : envVars).push(property.envVar);
+        if (refreshEndpoint != null) {
+            const refreshProperties = inferRefreshRequestProperties({
+                endpoint: refreshEndpoint.endpoint,
+                refreshToken: clientCredentials.refreshEndpoint.requestProperties.refreshToken,
+                tokenRequestProperties: clientCredentials.tokenEndpoint.requestProperties,
+                envPrefix,
+                schemeName: key
+            });
+            const refreshRendered = renderOAuthEndpoint({
+                endpoint: refreshEndpoint,
+                requestProperties: refreshProperties,
+                responseProperties: clientCredentials.refreshEndpoint.responseProperties
+            });
+            if (refreshRendered != null) {
+                for (const property of refreshProperties) {
+                    if (property.envVar != null) {
+                        (property.optional ? optionalEnvVars : envVars).push(property.envVar);
+                    }
+                }
+                rustCall += `.refresh_endpoint(${refreshRendered})`;
             }
         }
-        rustCall += `.refresh_endpoint(${renderOAuthEndpoint({
-            endpoint: refreshEndpoint,
-            requestProperties: refreshProperties,
-            responseProperties: clientCredentials.refreshEndpoint.responseProperties
-        })})`;
     }
     rustCall += ")";
 
@@ -298,20 +321,19 @@ function resolveOAuthEndpoint(args: {
     endpointReference: FernIr.EndpointReference;
     services: Record<string, FernIr.HttpService>;
     environments: FernIr.EnvironmentsConfig | undefined;
-}): ResolvedOAuthEndpoint {
+}): ResolvedOAuthEndpoint | null {
     const { endpointReference, services, environments } = args;
     const endpoint = services[endpointReference.serviceId]?.endpoints.find(
         (candidate) => candidate.id === endpointReference.endpointId
     );
+    // The token endpoint reference doesn't resolve to an endpoint in the IR.
     if (endpoint == null) {
-        throw new Error(
-            `OAuth endpoint '${endpointReference.serviceId}/${endpointReference.endpointId}' could not be resolved`
-        );
+        return null;
     }
+    // The CLI builds the token request internally, so it has no way to source
+    // path-parameter values — a token endpoint with path params can't be built.
     if (endpoint.fullPath.parts.length > 0) {
-        throw new Error(
-            `OAuth endpoint '${endpointReference.endpointId}' contains path parameters, which cannot be sourced by the CLI`
-        );
+        return null;
     }
     const path = renderFullPath(endpoint.fullPath);
     const baseUrl = resolveDefaultBaseUrl({ environments, baseUrlId: endpoint.baseUrl });
@@ -335,26 +357,24 @@ function renderOAuthEndpoint(args: {
     endpoint: ResolvedOAuthEndpoint;
     requestProperties: OAuthRequestPropertyBinding[];
     responseProperties: FernIr.OAuthAccessTokenResponseProperties;
-}): string {
+}): string | null {
     const { endpoint, requestProperties, responseProperties } = args;
     const contentType = endpoint.endpoint.requestBody?.contentType ?? "application/json";
+    // The runtime can only serialize a JSON or form-urlencoded token body.
     if (
         requestProperties.some((property) => property.location === "body") &&
         contentType !== "application/json" &&
         !contentType.endsWith("+json") &&
         contentType !== "application/x-www-form-urlencoded"
     ) {
-        throw new Error(
-            `OAuth endpoint '${endpoint.endpoint.id}' uses unsupported request content type '${contentType}'`
-        );
+        return null;
     }
+    // Form encoding is flat `key=value`; a nested body path can't be expressed.
     if (
         contentType === "application/x-www-form-urlencoded" &&
         requestProperties.some((property) => property.location === "body" && property.path.length > 1)
     ) {
-        throw new Error(
-            `OAuth endpoint '${endpoint.endpoint.id}' uses nested form body properties, which are ambiguous`
-        );
+        return null;
     }
 
     let rendered = `OAuth2Endpoint::new(${rustString(endpoint.defaultUrl)}, ${rustString(endpoint.path)})`;

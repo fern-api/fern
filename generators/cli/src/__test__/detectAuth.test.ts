@@ -196,6 +196,64 @@ describe("detectAuthBindings", () => {
     // The complete client-credentials binding is covered end-to-end by the
     // `cli-oauth` seed, which exercises a real parsed IR. Focused descriptor
     // rendering and endpoint resolution helpers are tested below.
+
+    it("skips an oauth client-credentials scheme when its token endpoint can't be resolved (no throw)", () => {
+        const bodyProp = (wireValue: string): FernIr.RequestProperty => ({
+            propertyPath: undefined,
+            property: FernIr.RequestPropertyValue.body({
+                name: wireValue,
+                valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                propertyAccess: undefined,
+                availability: undefined,
+                docs: undefined,
+                defaultValue: undefined,
+                v2Examples: undefined
+            })
+        });
+        const responseProp = (wireValue: string): FernIr.ResponseProperty => ({
+            propertyPath: undefined,
+            property: {
+                name: wireValue,
+                valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                propertyAccess: undefined,
+                availability: undefined,
+                docs: undefined,
+                defaultValue: undefined,
+                v2Examples: undefined
+            }
+        });
+        const oauth = FernIr.AuthScheme.oauth({
+            key: "OAuth2",
+            docs: undefined,
+            configuration: FernIr.OAuthConfiguration.clientCredentials({
+                clientIdEnvVar: undefined,
+                clientSecretEnvVar: undefined,
+                tokenPrefix: undefined,
+                tokenHeader: undefined,
+                scopes: undefined,
+                tokenEndpoint: {
+                    endpointReference: { endpointId: "missing", serviceId: "svc", subpackageId: undefined },
+                    requestProperties: {
+                        clientId: bodyProp("client_id"),
+                        clientSecret: bodyProp("client_secret"),
+                        scopes: undefined,
+                        customProperties: undefined
+                    },
+                    responseProperties: {
+                        accessToken: responseProp("access_token"),
+                        expiresIn: undefined,
+                        refreshToken: undefined
+                    }
+                },
+                refreshEndpoint: undefined
+            })
+        });
+        // `services` is empty, so the token endpoint reference can't be resolved.
+        // The scheme is skipped rather than throwing and aborting generation.
+        expect(
+            detectAuthBindings({ auth: auth(oauth), binaryName: "acme", services: {}, environments: undefined })
+        ).toEqual([]);
+    });
 });
 
 // ---------------------------------------------------------------------------
