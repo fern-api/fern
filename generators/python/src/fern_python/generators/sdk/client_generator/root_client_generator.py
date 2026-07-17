@@ -1881,6 +1881,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         return "max_retries"
 
     def _get_server_variables(self) -> typing.List[ir_types.ServerVariable]:
+        # When server_url_variables is disabled, suppress both the generated
+        # server-URL-variable constructor kwargs and the runtime URL-template
+        # interpolation by reporting no server variables. This is the single
+        # narrowest gate: the constructor-parameter loop and
+        # _write_url_template_interpolation both key off this list.
+        if not self._context.custom_config.server_url_variables:
+            return []
+
         environments_config = self._environments_config
         if environments_config is None:
             return []

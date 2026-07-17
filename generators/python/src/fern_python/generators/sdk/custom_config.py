@@ -235,6 +235,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     # "recommended": Retries only on transient codes: 408, 409, 429, 502, 503, 504.
     retry_status_codes: Literal["legacy", "recommended"] = "legacy"
 
+    # If true (default), the generated client exposes server-URL-variable
+    # constructor kwargs (e.g. `region: typing.Optional[str]`) and performs
+    # runtime URL-template interpolation. Set to false to fall back to the
+    # pre-feature base-URL behavior: no server-URL-variable kwargs are emitted
+    # and no URL-template interpolation is performed.
+    server_url_variables: bool = True
+
     # Controls where OpenAPI/IR default values are applied in generated code.
     # Takes precedence over pydantic_config.use_provided_defaults when set.
     #   "none": no defaults applied anywhere
@@ -259,6 +266,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["default_max_retries"] = obj.pop("maxRetries")
             if "retryStatusCodes" in obj and "retry_status_codes" not in obj:
                 obj["retry_status_codes"] = obj.pop("retryStatusCodes")
+            if "serverUrlVariables" in obj and "server_url_variables" not in obj:
+                obj["server_url_variables"] = obj.pop("serverUrlVariables")
 
         obj = super().parse_obj(obj)
 

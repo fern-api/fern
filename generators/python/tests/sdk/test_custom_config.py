@@ -119,6 +119,30 @@ def test_timeout_infinity_literal() -> None:
     assert SDKCustomConfig.parse_obj({"timeout_in_seconds": "infinity"}).resolved_timeout == "infinity"
 
 
+def test_server_url_variables_default_true() -> None:
+    """server_url_variables defaults to True so existing output is unchanged."""
+    config = SDKCustomConfig.parse_obj({})
+    assert config.server_url_variables is True
+
+
+def test_server_url_variables_camel_case_alias() -> None:
+    """serverUrlVariables (camelCase) is accepted and mapped to server_url_variables."""
+    config = SDKCustomConfig.parse_obj({"serverUrlVariables": False})
+    assert config.server_url_variables is False
+
+
+def test_server_url_variables_snake_case() -> None:
+    """server_url_variables (snake_case) is also accepted directly."""
+    config = SDKCustomConfig.parse_obj({"server_url_variables": False})
+    assert config.server_url_variables is False
+
+
+def test_server_url_variables_camel_case_ignored_when_snake_case_present() -> None:
+    """When server_url_variables is already present, serverUrlVariables is not mapped (extra=forbid rejects it)."""
+    with pytest.raises(pydantic.ValidationError):
+        SDKCustomConfig.parse_obj({"serverUrlVariables": False, "server_url_variables": True})
+
+
 def test_parse_wrapped_aliases() -> None:
     v1 = {
         "pydantic_config": {
