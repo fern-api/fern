@@ -101,7 +101,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedExamples;
 
-var client = new SeedExamplesClient(new ClientOptions
+var client = new SeedExamplesClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedExamplesEnvironment.Production
 });
