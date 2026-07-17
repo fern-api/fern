@@ -3,7 +3,7 @@ import { noop } from "@fern-api/core-utils";
 import { replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
