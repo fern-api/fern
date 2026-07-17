@@ -123,4 +123,16 @@ describe("validateCustomConfig", () => {
     it("throws on empty userAgentSuffixFlag", () => {
         expect(() => validateCustomConfig({ userAgentSuffixFlag: "" })).toThrow(/is not a valid flag name/);
     });
+
+    it("throws on userAgentSuffixFlag that collides with a built-in flag", () => {
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "base-url" })).toThrow(/is a built-in flag name/);
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "format" })).toThrow(/is a built-in flag name/);
+        expect(() => validateCustomConfig({ userAgentSuffixFlag: "help" })).toThrow(/is a built-in flag name/);
+    });
+
+    it("still accepts the default suffix flag name (its own reserved slot)", () => {
+        expect(validateCustomConfig({ userAgentSuffixFlag: "user-agent-suffix" })).toEqual({
+            userAgentSuffixFlag: "user-agent-suffix"
+        });
+    });
 });

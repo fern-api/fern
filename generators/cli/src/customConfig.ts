@@ -60,6 +60,39 @@ export interface FernCliCustomConfig {
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
 
+/**
+ * Built-in global flag long names the generated CLI always registers. A
+ * `userAgentSuffixFlag` that matches one of these would register a second
+ * clap arg with the same `.long(...)` and panic on every invocation, so we
+ * reject it at the boundary.
+ *
+ * Mirrors `BUILTIN_FLAG_NAMES` in
+ * `generators/cli/sdk/src/openapi/commands.rs`, minus `user-agent-suffix` —
+ * that is the suffix flag's own default slot and must stay selectable.
+ * `help` is included because clap always auto-registers `--help`. Keep in
+ * sync if the SDK's reserved list changes.
+ */
+const RESERVED_SUFFIX_FLAG_NAMES: ReadonlySet<string> = new Set([
+    "params",
+    "output",
+    "json",
+    "format",
+    "dry-run",
+    "base-url",
+    "page-all",
+    "page-limit",
+    "page-delay",
+    "no-pager",
+    "no-extract",
+    "no-retry",
+    "no-stream",
+    "quiet",
+    "query",
+    "help",
+    "debug",
+    "schema"
+]);
+
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernCliCustomConfig {
     if (generatorConfig.customConfig == null) {
         return DEFAULT_FERN_CLI_CUSTOM_CONFIG;
@@ -121,6 +154,13 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
                 `Invalid customConfig.userAgentSuffixFlag: "${obj.userAgentSuffixFlag}" is not a valid flag name. ` +
                     'Provide the long flag name without the leading "--": it must start with a lowercase ' +
                     'letter and contain only [a-z0-9-] (e.g. "via" or "user-agent-suffix").'
+            );
+        }
+        if (RESERVED_SUFFIX_FLAG_NAMES.has(obj.userAgentSuffixFlag)) {
+            throw new Error(
+                `Invalid customConfig.userAgentSuffixFlag: "${obj.userAgentSuffixFlag}" is a built-in flag name ` +
+                    "and would collide with the CLI's own global flags. Choose a different name " +
+                    '(e.g. "via" or "app-info").'
             );
         }
         result.userAgentSuffixFlag = obj.userAgentSuffixFlag;
