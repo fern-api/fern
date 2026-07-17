@@ -1,3 +1,4 @@
+import type { Logger } from "@fern-api/logger";
 import {
     Availability,
     CommonPropertyWithExample,
@@ -30,6 +31,7 @@ export function convertDiscriminatedOneOf({
     wrapAsOptional,
     wrapAsNullable,
     discriminator,
+    oneOfSchemas,
     context,
     namespace,
     groupName,
@@ -47,6 +49,7 @@ export function convertDiscriminatedOneOf({
     wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
+    oneOfSchemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[] | undefined;
     context: SchemaParserContext;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -108,6 +111,13 @@ export function convertDiscriminatedOneOf({
             return [discriminantValue, subtypeReference];
         })
     );
+    warnAboutUnmappedOneOfMembers({
+        oneOfSchemas,
+        mapping: discriminator.mapping,
+        generatedName,
+        breadcrumbs,
+        context
+    });
     const convertedProperties = Object.entries(properties)
         .filter(([propertyName]) => {
             return propertyName !== discriminant;
@@ -164,6 +174,77 @@ export function convertDiscriminatedOneOf({
         groupName,
         source
     });
+}
+
+function getSchemaNameFromReference(ref: string): string {
+    const segments = ref.split("/");
+    return segments[segments.length - 1] ?? ref;
+}
+
+/**
+ * `convertDiscriminatedOneOf` runs more than once for the same union during parsing (e.g. an inline
+ * request-body union is converted separately for the request and non-request passes), so the same
+ * warning would otherwise be emitted several times. The parser spins up multiple context objects but
+ * shares a single logger, so we track the warnings already emitted per logger to avoid log spam.
+ */
+const alreadyWarnedUnmappedMembersByLogger = new WeakMap<Logger, Set<string>>();
+
+function warnOnce(context: SchemaParserContext, message: string): void {
+    let alreadyWarned = alreadyWarnedUnmappedMembersByLogger.get(context.logger);
+    if (alreadyWarned == null) {
+        alreadyWarned = new Set<string>();
+        alreadyWarnedUnmappedMembersByLogger.set(context.logger, alreadyWarned);
+    }
+    if (alreadyWarned.has(message)) {
+        return;
+    }
+    alreadyWarned.add(message);
+    context.logger.warn(message);
+}
+
+/**
+ * A discriminated union is built exclusively from `discriminator.mapping`. Any member listed in the
+ * spec's `oneOf`/`anyOf` that is not represented in the mapping is silently omitted from the generated
+ * union, producing an SDK whose wire contract does not match the spec. Emit a warning so this failure
+ * is loud instead of silent.
+ */
+function warnAboutUnmappedOneOfMembers({
+    oneOfSchemas,
+    mapping,
+    generatedName,
+    breadcrumbs,
+    context
+}: {
+    oneOfSchemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[] | undefined;
+    mapping: Record<string, string> | undefined;
+    generatedName: string;
+    breadcrumbs: string[];
+    context: SchemaParserContext;
+}): void {
+    if (oneOfSchemas == null || oneOfSchemas.length === 0) {
+        return;
+    }
+    const mappedSchemaNames = new Set(Object.values(mapping ?? {}).map(getSchemaNameFromReference));
+    const location = breadcrumbs.length > 0 ? `${generatedName} (${breadcrumbs.join(" > ")})` : generatedName;
+    for (const member of oneOfSchemas) {
+        if (isReferenceObject(member)) {
+            if (!mappedSchemaNames.has(getSchemaNameFromReference(member.$ref))) {
+                warnOnce(
+                    context,
+                    `Discriminated union "${location}" lists "${member.$ref}" in its oneOf/anyOf, but it is not present in ` +
+                        `the discriminator mapping. This variant will be omitted from the generated union, so payloads using it ` +
+                        `will fail to serialize or deserialize. Add it to the discriminator mapping to include it.`
+                );
+            }
+        } else if ((member.type as string) !== "null") {
+            warnOnce(
+                context,
+                `Discriminated union "${location}" contains an inline oneOf/anyOf member that is not referenced by the ` +
+                    `discriminator mapping. This variant will be omitted from the generated union, so payloads using it will fail ` +
+                    `to serialize or deserialize. Extract it into a named schema and add it to the discriminator mapping to include it.`
+            );
+        }
+    }
 }
 
 export function convertDiscriminatedOneOfWithVariants({

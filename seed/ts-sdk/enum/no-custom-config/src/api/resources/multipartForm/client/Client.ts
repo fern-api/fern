@@ -24,6 +24,9 @@ export class MultipartFormClient {
     /**
      * @param {SeedEnum.MultipartFormRequest} request
      * @param {MultipartFormClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedEnumError}
+     * @throws {@link errors.SeedEnumTimeoutError}
      */
     public multipartForm(
         request: SeedEnum.MultipartFormRequest,

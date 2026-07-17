@@ -28,6 +28,9 @@ export class SeedApiClient {
      * @param {unknown} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.createPlant({
      *         "name": "Venus Flytrap",
@@ -94,6 +97,9 @@ export class SeedApiClient {
      * @param {SeedApi.UpdatePlantRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.updatePlant({
      *         plantId: "plantId",
@@ -156,6 +162,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.CreatePlantWithSchemaRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.createPlantWithSchema({

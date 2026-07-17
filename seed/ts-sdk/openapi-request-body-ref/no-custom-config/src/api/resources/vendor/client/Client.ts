@@ -26,6 +26,9 @@ export class VendorClient {
      * @param {SeedApi.UpdateVendorBody} request
      * @param {VendorClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.vendor.updateVendor({
      *         vendor_id: "vendor_id",
@@ -83,6 +86,9 @@ export class VendorClient {
     /**
      * @param {SeedApi.CreateVendorRequest} request
      * @param {VendorClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.vendor.createVendor({

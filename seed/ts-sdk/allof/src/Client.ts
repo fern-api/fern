@@ -27,6 +27,9 @@ export class SeedApiClient {
      * @param {SeedApi.SearchRuleTypesRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.searchRuleTypes()
      */
@@ -85,6 +88,9 @@ export class SeedApiClient {
      * @param {SeedApi.RuleCreateRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.createRule({
      *         name: "name",
@@ -140,6 +146,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.listUsers()
      */
@@ -187,6 +196,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.getEntity()
      */
@@ -231,6 +243,9 @@ export class SeedApiClient {
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.getOrganization()
@@ -281,6 +296,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.PlantPost} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.createPlant({
@@ -341,6 +359,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.TreeRecord} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.createTree({

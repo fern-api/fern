@@ -129,5 +129,9 @@ const asIsTopoValue = {
     [AsIsFiles.CustomPager]: 31,
     [AsIsFiles.IdempotencyKey]: 32,
     [AsIsFiles.WebhookSignature]: 33,
-    [AsIsFiles.WebhookBodyHash]: 34
+    [AsIsFiles.WebhookBodyHash]: 34,
+    // Only constraint is that this loads after HttpBaseRequest (6), which its
+    // Request class extends. Ordered last (max value) so introducing it does not
+    // shift the position of any pre-existing require in the generated root file.
+    [AsIsFiles.UrlEncodedRequest]: 35
 };

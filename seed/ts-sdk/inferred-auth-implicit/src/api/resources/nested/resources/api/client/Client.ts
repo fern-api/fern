@@ -23,6 +23,9 @@ export class ApiClient {
     /**
      * @param {ApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedInferredAuthImplicitError}
+     * @throws {@link errors.SeedInferredAuthImplicitTimeoutError}
+     *
      * @example
      *     await client.nested.api.getSomething()
      */

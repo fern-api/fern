@@ -26,6 +26,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.getUsers()
      */
@@ -73,6 +76,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApi.GetUserRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.getUser({
@@ -128,6 +134,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApi.TokenRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.getToken({

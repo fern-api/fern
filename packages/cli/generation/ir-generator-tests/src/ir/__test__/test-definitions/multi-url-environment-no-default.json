@@ -845,12 +845,12 @@
                                             "safeName": "s3Key"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "s3_key",
-                                            "safeName": "s3_key"
+                                            "unsafeName": "s3key",
+                                            "safeName": "s3key"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "S3_KEY",
-                                            "safeName": "S3_KEY"
+                                            "unsafeName": "S3KEY",
+                                            "safeName": "S3KEY"
                                         },
                                         "pascalCase": {
                                             "unsafeName": "S3Key",
@@ -997,7 +997,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_ec2": {

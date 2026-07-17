@@ -16,6 +16,8 @@ export declare class NoAuthClient {
      * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({

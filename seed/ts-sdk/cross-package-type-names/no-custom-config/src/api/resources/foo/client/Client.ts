@@ -26,6 +26,9 @@ export class FooClient {
      * @param {SeedCrossPackageTypeNames.FindRequest} request
      * @param {FooClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedCrossPackageTypeNamesError}
+     * @throws {@link errors.SeedCrossPackageTypeNamesTimeoutError}
+     *
      * @example
      *     await client.foo.find({
      *         optionalString: "optionalString",

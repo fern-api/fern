@@ -26,6 +26,9 @@ export class ReferenceClient {
      * @param {SeedLiteral.SendRequest} request
      * @param {ReferenceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
+     *
      * @example
      *     await client.reference.send({
      *         prompt: "You are a helpful assistant",

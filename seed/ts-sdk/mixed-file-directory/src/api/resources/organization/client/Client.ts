@@ -28,6 +28,9 @@ export class OrganizationClient {
      * @param {SeedMixedFileDirectory.CreateOrganizationRequest} request
      * @param {OrganizationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMixedFileDirectoryError}
+     * @throws {@link errors.SeedMixedFileDirectoryTimeoutError}
+     *
      * @example
      *     await client.organization.create({
      *         name: "name"

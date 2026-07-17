@@ -25,14 +25,20 @@ _NON_LOWER_ALNUM_START = re.compile(r"^[^a-z0-9]")
 # semantics or v1's output diverges from the IR's pre-computed values (and from v2).
 _smart_casing_enabled = True
 
+# Mirrors `smart-casing-digit-word-boundary` in generators.yml (IR
+# casingsConfig.smartCasingDigitWordBoundary). When enabled, a segment that
+# starts a new word after a digit run keeps its snake_case word boundary.
+_smart_casing_digit_word_boundary_enabled = False
 
-def configure_smart_casing(enabled: bool) -> None:
+
+def configure_smart_casing(enabled: bool, digit_word_boundary: bool = False) -> None:
     """Set whether _smart_snake uses smartCasing semantics. Must be called before
     any name resolution (cache is cleared to invalidate any pre-flag results)."""
-    global _smart_casing_enabled
-    if _smart_casing_enabled == enabled:
+    global _smart_casing_enabled, _smart_casing_digit_word_boundary_enabled
+    if _smart_casing_enabled == enabled and _smart_casing_digit_word_boundary_enabled == digit_word_boundary:
         return
     _smart_casing_enabled = enabled
+    _smart_casing_digit_word_boundary_enabled = digit_word_boundary
     _resolve_string_name.cache_clear()
 
 
@@ -48,10 +54,12 @@ def _smart_snake(s: str) -> str:
     """Snake_case matching @fern-api/casings-generator's snakeCase output.
 
     When smartCasing is enabled (the default), digits adjacent to letters stay
-    attached so ``3d`` -> ``3d`` and ``base64`` -> ``base64``, while a segment
-    that starts a new word after a digit run (uppercase letter or an existing
-    separator) keeps its word boundary: ``ConversationsV2Configuration`` ->
-    ``conversations_v2_configuration``, ``applicationV1`` -> ``application_v1``.
+    attached so ``3d`` -> ``3d`` and ``base64`` -> ``base64``. When the
+    digit-word-boundary flag is also enabled, a segment that starts a new word
+    after a digit run (uppercase letter or an existing separator) keeps its
+    word boundary: ``ConversationsV2Configuration`` ->
+    ``conversations_v2_configuration``; otherwise the digit run stays fused to
+    the following word (``conversations_v2configuration``).
 
     When smartCasing is disabled (``smart-casing: false`` in generators.yml), every
     digit run is treated as a separate word, matching plain lodash ``snakeCase``:
@@ -68,7 +76,12 @@ def _smart_snake(s: str) -> str:
             if not cased:
                 continue
             previous = segments[index - 1] if index > 0 else None
-            starts_new_word = previous is not None and previous.isdigit() and _NON_LOWER_ALNUM_START.match(segment)
+            starts_new_word = (
+                _smart_casing_digit_word_boundary_enabled
+                and previous is not None
+                and previous.isdigit()
+                and _NON_LOWER_ALNUM_START.match(segment)
+            )
             result.append(f"_{cased}" if starts_new_word else cased)
         return "".join(result)
 

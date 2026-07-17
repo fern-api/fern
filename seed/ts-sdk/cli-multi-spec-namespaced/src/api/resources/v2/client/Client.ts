@@ -26,6 +26,9 @@ export class V2Client {
      * @param {SeedApi.v2.ListUsersRequest} request
      * @param {V2Client.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.v2.listUsers()
      */

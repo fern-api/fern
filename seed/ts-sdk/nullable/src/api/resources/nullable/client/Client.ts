@@ -26,6 +26,9 @@ export class NullableClient {
      * @param {SeedNullable.GetUsersRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableError}
+     * @throws {@link errors.SeedNullableTimeoutError}
+     *
      * @example
      *     await client.nullable.getUsers({
      *         usernames: "usernames",
@@ -92,6 +95,9 @@ export class NullableClient {
     /**
      * @param {SeedNullable.CreateUserRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableError}
+     * @throws {@link errors.SeedNullableTimeoutError}
      *
      * @example
      *     await client.nullable.createUser({
@@ -160,6 +166,9 @@ export class NullableClient {
     /**
      * @param {SeedNullable.DeleteUserRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableError}
+     * @throws {@link errors.SeedNullableTimeoutError}
      *
      * @example
      *     await client.nullable.deleteUser({

@@ -26,6 +26,9 @@ export class ServiceClient {
      * @param {SeedExamples.MovieId} movieId
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
+     *
      * @example
      *     await client.service.getMovie("movie-c06a4ad7")
      */
@@ -74,6 +77,9 @@ export class ServiceClient {
     /**
      * @param {SeedExamples.Movie} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
      *
      * @example
      *     await client.service.createMovie({
@@ -148,6 +154,9 @@ export class ServiceClient {
      * @param {SeedExamples.GetMetadataRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
+     *
      * @example
      *     await client.service.getMetadata({
      *         "X-API-Version": "0.0.1",
@@ -213,6 +222,9 @@ export class ServiceClient {
     /**
      * @param {SeedExamples.BigEntity} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
      *
      * @example
      *     await client.service.createBigEntity({
@@ -425,6 +437,9 @@ export class ServiceClient {
     /**
      * @param {SeedExamples.RefreshTokenRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
      *
      * @example
      *     await client.service.refreshToken(undefined)

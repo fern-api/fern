@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/shapes",
+                "method": "POST",
+                "identifier_override": "endpoint_.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-union-base-properties/fern\"\n\tfernclient \"github.com/go-union-base-properties/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Create(\n\tcontext.TODO(),\n\t\u0026fern.Shape{\n\t\tCircle: \u0026fern.Circle{\n\t\t\tID: \"shape-1\",\n\t\t\tCreatedAt: fern.String(\n\t\t\t\t\"2024-01-01T00:00:00Z\",\n\t\t\t),\n\t\t\tRadius: 1.5,\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

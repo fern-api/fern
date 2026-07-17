@@ -26,6 +26,9 @@ export class ServiceClient {
      * @param {string} id - The id to check
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
+     *
      * @example
      *     await client.health.service.check("id-2sdx82h")
      *
@@ -80,6 +83,9 @@ export class ServiceClient {
      * This endpoint checks the health of the service.
      *
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
      *
      * @example
      *     await client.health.service.ping()

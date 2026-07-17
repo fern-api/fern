@@ -291,12 +291,12 @@
               "safeName": "v1RealtimePublish"
             },
             "snakeCase": {
-              "unsafeName": "v1_realtime_publish",
-              "safeName": "v1_realtime_publish"
+              "unsafeName": "v1realtime_publish",
+              "safeName": "v1realtime_publish"
             },
             "screamingSnakeCase": {
-              "unsafeName": "V1_REALTIME_PUBLISH",
-              "safeName": "V1_REALTIME_PUBLISH"
+              "unsafeName": "V1REALTIME_PUBLISH",
+              "safeName": "V1REALTIME_PUBLISH"
             },
             "pascalCase": {
               "unsafeName": "V1RealtimePublish",
@@ -312,12 +312,12 @@
                   "safeName": "v1Realtime"
                 },
                 "snakeCase": {
-                  "unsafeName": "v1_realtime",
-                  "safeName": "v1_realtime"
+                  "unsafeName": "v1realtime",
+                  "safeName": "v1realtime"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "V1_REALTIME",
-                  "safeName": "V1_REALTIME"
+                  "unsafeName": "V1REALTIME",
+                  "safeName": "V1REALTIME"
                 },
                 "pascalCase": {
                   "unsafeName": "V1Realtime",
@@ -333,12 +333,12 @@
                 "safeName": "v1Realtime"
               },
               "snakeCase": {
-                "unsafeName": "v1_realtime",
-                "safeName": "v1_realtime"
+                "unsafeName": "v1realtime",
+                "safeName": "v1realtime"
               },
               "screamingSnakeCase": {
-                "unsafeName": "V1_REALTIME",
-                "safeName": "V1_REALTIME"
+                "unsafeName": "V1REALTIME",
+                "safeName": "V1REALTIME"
               },
               "pascalCase": {
                 "unsafeName": "V1Realtime",
@@ -392,12 +392,12 @@
               "safeName": "v1RealtimeSubscribe"
             },
             "snakeCase": {
-              "unsafeName": "v1_realtime_subscribe",
-              "safeName": "v1_realtime_subscribe"
+              "unsafeName": "v1realtime_subscribe",
+              "safeName": "v1realtime_subscribe"
             },
             "screamingSnakeCase": {
-              "unsafeName": "V1_REALTIME_SUBSCRIBE",
-              "safeName": "V1_REALTIME_SUBSCRIBE"
+              "unsafeName": "V1REALTIME_SUBSCRIBE",
+              "safeName": "V1REALTIME_SUBSCRIBE"
             },
             "pascalCase": {
               "unsafeName": "V1RealtimeSubscribe",
@@ -413,12 +413,12 @@
                   "safeName": "v1Realtime"
                 },
                 "snakeCase": {
-                  "unsafeName": "v1_realtime",
-                  "safeName": "v1_realtime"
+                  "unsafeName": "v1realtime",
+                  "safeName": "v1realtime"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "V1_REALTIME",
-                  "safeName": "V1_REALTIME"
+                  "unsafeName": "V1REALTIME",
+                  "safeName": "V1REALTIME"
                 },
                 "pascalCase": {
                   "unsafeName": "V1Realtime",
@@ -434,12 +434,12 @@
                 "safeName": "v1Realtime"
               },
               "snakeCase": {
-                "unsafeName": "v1_realtime",
-                "safeName": "v1_realtime"
+                "unsafeName": "v1realtime",
+                "safeName": "v1realtime"
               },
               "screamingSnakeCase": {
-                "unsafeName": "V1_REALTIME",
-                "safeName": "V1_REALTIME"
+                "unsafeName": "V1REALTIME",
+                "safeName": "V1REALTIME"
               },
               "pascalCase": {
                 "unsafeName": "V1Realtime",

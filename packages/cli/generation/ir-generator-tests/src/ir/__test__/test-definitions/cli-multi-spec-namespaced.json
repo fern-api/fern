@@ -1972,12 +1972,12 @@
                             "safeName": "userV2Profile"
                         },
                         "snakeCase": {
-                            "unsafeName": "user_v2_profile",
-                            "safeName": "user_v2_profile"
+                            "unsafeName": "user_v2profile",
+                            "safeName": "user_v2profile"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "USER_V2_PROFILE",
-                            "safeName": "USER_V2_PROFILE"
+                            "unsafeName": "USER_V2PROFILE",
+                            "safeName": "USER_V2PROFILE"
                         },
                         "pascalCase": {
                             "unsafeName": "UserV2Profile",
@@ -2626,7 +2626,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_v1": {
