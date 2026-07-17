@@ -15,6 +15,35 @@ interface PreviewDeployment {
     updatedAt: string;
 }
 
+interface DocsUrlItem {
+    domain: string;
+    basePath?: string;
+    organizationId: string;
+    updatedAt: string;
+}
+
+/**
+ * Maps FDR docs-url items to preview deployments, keeping only Fern-hosted
+ * domains for the current environment. Preview deployments are already filtered
+ * server-side (preview: true -> isPreview), so we intentionally do NOT constrain
+ * the preview ID portion here: a previous hex-only pattern silently dropped named
+ * IDs (--id <name>, e.g. mr-2). The only client-side check is the domain suffix,
+ * so custom domains are excluded.
+ */
+export function filterPreviewDeployments(
+    urls: readonly DocsUrlItem[],
+    domainSuffix: string = PREVIEW_DOMAIN_SUFFIX
+): PreviewDeployment[] {
+    const suffix = `.${domainSuffix.toLowerCase()}`;
+    return urls
+        .filter((item) => item.domain.toLowerCase().endsWith(suffix))
+        .map((item) => ({
+            url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+            organizationId: item.organizationId,
+            updatedAt: item.updatedAt
+        }));
+}
+
 export async function listDocsPreview({
     cliContext,
     limit,
@@ -68,17 +97,7 @@ export async function listDocsPreview({
             }
         }
 
-        // The server already restricts results to preview deployments (preview: true maps
-        // to the isPreview column in FDR). We only keep a domain-suffix check so custom
-        // domains are excluded; we intentionally do not constrain the preview ID portion,
-        // since a previous hex-only pattern here silently dropped named IDs (--id <name>).
-        const previewDeployments: PreviewDeployment[] = listResponse.urls
-            .filter((item) => item.domain.toLowerCase().endsWith(`.${PREVIEW_DOMAIN_SUFFIX}`))
-            .map((item) => ({
-                url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
-                organizationId: item.organizationId,
-                updatedAt: item.updatedAt
-            }));
+        const previewDeployments = filterPreviewDeployments(listResponse.urls);
 
         if (previewDeployments.length === 0) {
             context.logger.info("No preview deployments found.");
