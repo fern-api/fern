@@ -171,12 +171,14 @@ impl HttpConfig {
 
     /// Set the consumer-supplied `User-Agent` suffix (from the
     /// `--user-agent-suffix` flag). When present it takes precedence over
-    /// the `<NAME>_USER_AGENT_SUFFIX` env var. A blank value clears the
-    /// override so the env-var fallback still applies.
+    /// the `<NAME>_USER_AGENT_SUFFIX` env var. A blank *or* header-invalid
+    /// value clears the override so the env-var fallback still applies —
+    /// an unusable flag value never suppresses an otherwise-valid env
+    /// suffix (and never drops the CLI's own `User-Agent`).
     pub fn with_user_agent_suffix_override(mut self, suffix: Option<String>) -> Self {
         self.user_agent_suffix_override = suffix
             .map(|s| s.trim().to_string())
-            .filter(|s| !s.is_empty())
+            .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
             .map(Arc::from);
         self
     }
@@ -947,6 +949,22 @@ mod tests {
             .unwrap()
             .with_user_agent_suffix_override(Some("bad\nvalue".to_string()));
         assert_eq!(cfg.user_agent(), base);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_invalid_flag_override_falls_back_to_env() {
+        let mut env = EnvGuard::default();
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "from-env/1.0");
+        // A header-invalid flag value clears the override just like a blank
+        // one, so a valid env suffix is not suppressed by unusable flag input.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("bad\nvalue".to_string()));
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs-cli/{} from-env/1.0", env!("CARGO_PKG_VERSION")),
+        );
     }
 
     #[test]
