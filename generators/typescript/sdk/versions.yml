@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add a `serverUrlVariables` config flag (default `true`) to opt out of server URL
+        variable support. When set to `false`, the generated client no longer exposes the
+        server-URL-variable options on its constructor, and the templated base-URL
+        interpolation is omitted, falling back to the pre-feature base-URL behavior. When
+        unset or `true`, behavior is unchanged.
+      type: feat
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 3.82.2
   changelogEntry:
     - summary: |

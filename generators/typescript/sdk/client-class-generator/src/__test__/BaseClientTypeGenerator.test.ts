@@ -227,6 +227,7 @@ function createGenerator(opts?: {
     ir?: FernIr.IntermediateRepresentation;
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
+    serverUrlVariables?: boolean;
 }): BaseClientTypeGenerator {
     return new BaseClientTypeGenerator({
         generateIdempotentRequestOptions: opts?.generateIdempotentRequestOptions ?? false,
@@ -235,7 +236,8 @@ function createGenerator(opts?: {
         includePlatformHeaders: opts?.includePlatformHeaders ?? false,
         retainOriginalCasing: false,
         parameterNaming: "default",
-        caseConverter
+        caseConverter,
+        serverUrlVariables: opts?.serverUrlVariables ?? true
     });
 }
 
@@ -1507,8 +1509,8 @@ describe("BaseClientTypeGenerator", () => {
             return ir;
         }
 
-        function getNormalizeFunction(ir: FernIr.IntermediateRepresentation): string {
-            const gen = createGenerator({ ir });
+        function getNormalizeFunction(ir: FernIr.IntermediateRepresentation, serverUrlVariables = true): string {
+            const gen = createGenerator({ ir, serverUrlVariables });
             const context = createMockContext();
             gen.writeToFile(context);
             const normalizeFunction = context._captured.statements.find((s: string) =>
@@ -1547,6 +1549,23 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunction).toContain("options?.region != null");
             expect(normalizeFunction).toContain('const _region = options?.region ?? "us-east-1"');
             expect(normalizeFunction).toContain("baseUrl = `https://api.${_region}.example.com`");
+        });
+
+        it("suppresses interpolation for multiple base URLs when serverUrlVariables is false", () => {
+            const normalizeFunction = getNormalizeFunction(createMultipleBaseUrlsIR(), false);
+            // No server URL variable gating, local declarations, or templated URLs are emitted.
+            expect(normalizeFunction).not.toContain("options?.region != null");
+            expect(normalizeFunction).not.toContain("options?.serverUrlEnvironment != null");
+            expect(normalizeFunction).not.toContain("_region");
+            expect(normalizeFunction).not.toContain("_serverUrlEnvironment");
+            expect(normalizeFunction).not.toContain("${_region}");
+        });
+
+        it("suppresses interpolation for a single base URL when serverUrlVariables is false", () => {
+            const normalizeFunction = getNormalizeFunction(createSingleBaseUrlIR(), false);
+            expect(normalizeFunction).not.toContain("options?.region != null");
+            expect(normalizeFunction).not.toContain("_region");
+            expect(normalizeFunction).not.toContain("https://api.${_region}.example.com");
         });
     });
 });

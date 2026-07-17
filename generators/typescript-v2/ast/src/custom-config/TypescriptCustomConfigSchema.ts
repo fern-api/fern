@@ -93,6 +93,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
     alwaysSendAuth: z.optional(z.boolean()),
     generateReactQueryHooks: z.optional(z.boolean()),
+    // When false, opt out of server URL variable client options and the templated
+    // base-URL interpolation, falling back to the pre-feature base-URL behavior.
+    // Defaults to true.
+    serverUrlVariables: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

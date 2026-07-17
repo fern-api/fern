@@ -23,6 +23,7 @@ export declare namespace BaseClientContextImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
         caseConverter: CaseConverter;
+        serverUrlVariables: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -44,6 +45,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
     private readonly case: CaseConverter;
+    private readonly serverUrlVariables: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -69,7 +71,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         generateIdempotentRequestOptions,
         parameterNaming,
         baseClientTypeDeclarationReferencer,
-        caseConverter
+        caseConverter,
+        serverUrlVariables
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -79,6 +82,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
         this.case = caseConverter;
+        this.serverUrlVariables = serverUrlVariables;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -198,7 +202,11 @@ export class BaseClientContextImpl implements BaseClientContext {
             docs: ["Specify a custom URL to connect the client to."]
         });
 
-        for (const { variable, optionName } of getServerVariableOptions(this.intermediateRepresentation, this.case)) {
+        for (const { variable, optionName } of getServerVariableOptions(
+            this.intermediateRepresentation,
+            this.case,
+            this.serverUrlVariables
+        )) {
             const docs: string[] = [];
             if (variable.values != null && variable.values.length > 0) {
                 docs.push(`The ${optionName} to route requests to. Allowed values: ${variable.values.join(", ")}.`);

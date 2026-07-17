@@ -17,6 +17,7 @@ export declare namespace BaseClientTypeGenerator {
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
+        serverUrlVariables: boolean;
     }
 }
 
@@ -31,6 +32,7 @@ export class BaseClientTypeGenerator {
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly caseConverter: CaseConverter;
+    private readonly serverUrlVariables: boolean;
 
     constructor({
         generateIdempotentRequestOptions,
@@ -39,7 +41,8 @@ export class BaseClientTypeGenerator {
         includePlatformHeaders,
         retainOriginalCasing,
         parameterNaming,
-        caseConverter
+        caseConverter,
+        serverUrlVariables
     }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
@@ -48,6 +51,7 @@ export class BaseClientTypeGenerator {
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
         this.caseConverter = caseConverter;
+        this.serverUrlVariables = serverUrlVariables;
     }
 
     public writeToFile(context: FileContext): void {
@@ -280,7 +284,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
      */
     private getServerVariableInterpolation(): { section: string; returnFields: string } {
         const empty = { section: "", returnFields: "" };
-        const options = getServerVariableOptions(this.ir, this.caseConverter);
+        const options = getServerVariableOptions(this.ir, this.caseConverter, this.serverUrlVariables);
         if (options.length === 0) {
             return empty;
         }

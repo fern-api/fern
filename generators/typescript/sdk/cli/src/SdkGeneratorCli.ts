@@ -108,7 +108,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
-            generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
+            generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false,
+            serverUrlVariables: parsed?.serverUrlVariables ?? true
         };
 
         if (parsed?.serdeLayer != null && parsed?.noSerdeLayer != null) {
@@ -273,7 +274,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
                 maxRetries: customConfig.maxRetries,
                 alwaysSendAuth: customConfig.alwaysSendAuth,
-                generateReactQueryHooks: customConfig.generateReactQueryHooks
+                generateReactQueryHooks: customConfig.generateReactQueryHooks,
+                serverUrlVariables: customConfig.serverUrlVariables
             }
         });
         const typescriptProject = await sdkGenerator.generate();
