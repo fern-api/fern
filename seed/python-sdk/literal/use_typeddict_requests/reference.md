@@ -20,8 +20,6 @@ client = SeedLiteral(
 )
 
 client.headers.send(
-    endpoint_version="02-12-2024",
-    async_=True,
     query="What is the weather today",
 )
 
@@ -56,6 +54,69 @@ client.headers.send(
 <dd>
 
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send_literals_only</a>(...) -> SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedLiteral
+
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.headers.send_literals_only()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**endpoint_version:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -272,13 +333,9 @@ client = SeedLiteral(
 )
 
 client.query.send(
-    prompt="You are a helpful assistant",
     optional_prompt="You are a helpful assistant",
-    alias_prompt="You are a helpful assistant",
     alias_optional_prompt="You are a helpful assistant",
-    stream=False,
     optional_stream=False,
-    alias_stream=False,
     alias_optional_stream=False,
     query="What is the weather today",
 )

@@ -49,3 +49,17 @@ func (c *Client) Send(
 	}
 	return response.Body, nil
 }
+
+func (c *Client) SendLiteralsOnly(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*fern.SendResponse, error) {
+	response, err := c.WithRawResponse.SendLiteralsOnly(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

@@ -299,6 +299,10 @@ fixtures:
   go-oauth-token-optional:
     - outputFolder: no-custom-config
       customConfig: null
+  oauth-pkce:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   pagination-custom:
     - outputFolder: .
       customConfig:
@@ -353,6 +357,10 @@ fixtures:
     - outputFolder: .
       customConfig: null
   union-query-parameters:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  literal:
     - outputFolder: .
       customConfig:
         enableWireTests: true

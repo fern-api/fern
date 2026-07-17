@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Materialize optional and nullable literal query/header parameters in generated
+    snippets and wire tests so they are set on the request and serialized on the wire.
+    Previously a direct optional literal (e.g. PKCE's `code_challenge_method=S256`) was
+    treated as a no-op and left unset, so it was never sent even though the generated
+    WireMock stub asserted it, causing generated wire tests to fail immediately after
+    generation. Required literals remain hardcoded in the request implementation.
+  type: fix
