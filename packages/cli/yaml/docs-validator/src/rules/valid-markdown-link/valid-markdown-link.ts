@@ -1,12 +1,12 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { noop } from "@fern-api/core-utils";
 import { replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
-import { convertIrToApiDefinition, DocsDefinitionResolver } from "@fern-api/docs-resolver";
-import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { convertIrToApiDefinition } from "@fern-api/docs-resolver";
+import { APIV1Read, ApiDefinition } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createLogger } from "@fern-api/logger";
-import { CliError, createMockTaskContext, TaskContext } from "@fern-api/task-context";
+import { createMockTaskContext } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import { randomUUID } from "crypto";
@@ -14,145 +14,17 @@ import path from "path";
 import { Rule, RuleViolation } from "../../Rule.js";
 import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
 import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
-import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
+import { resolveDocsNavigation } from "./resolve-docs-navigation.js";
 
-/**
- * Build a task context for `DocsDefinitionResolver` during validation.
- *
- * We can't use the real CLI context because the resolver is chatty (progress
- * logs, warnings, etc.) and we don't want that noise in `fern check` output.
- * The previous implementation used a fully-noop context, which also swallowed
- * the message passed to `failAndThrow` — leaving callers with a bare
- * `TaskAbortSignal` and a silent exit code. This context keeps logs quiet but
- * surfaces `failAndThrow` messages as real `Error`s so that callers can report
- * them as validation violations.
- */
+// Quiet task context used for markdown snippet resolution (`replaceReferencedMarkdown`)
+// and API workspace conversion, so validation doesn't emit resolver progress noise.
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
-
-function createDocsResolverValidationContext(): TaskContext {
-    const base = createMockTaskContext({ logger: createLogger(noop) });
-    return {
-        ...base,
-        failAndThrow: (message?: string, error?: unknown, _options?: { code?: CliError.Code }) => {
-            const messageParts: string[] = [];
-            if (message != null) {
-                messageParts.push(message);
-            }
-            if (error instanceof Error) {
-                messageParts.push(error.message);
-            } else if (error != null) {
-                messageParts.push(JSON.stringify(error));
-            }
-            const combined = messageParts.length > 0 ? messageParts.join(": ") : "Docs validation failed";
-            throw new Error(combined);
-        },
-        failWithoutThrowing: (message?: string, error?: unknown, _options?: { code?: CliError.Code }) => {
-            const messageParts: string[] = [];
-            if (message != null) {
-                messageParts.push(message);
-            }
-            if (error instanceof Error) {
-                messageParts.push(error.message);
-            } else if (error != null) {
-                messageParts.push(JSON.stringify(error));
-            }
-            if (messageParts.length > 0) {
-                base.logger.error(messageParts.join(": "));
-            }
-        }
-    };
-}
-
-// The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
-// This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
-function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
-    return "type" in value && (value as { type: unknown }).type === "root";
-}
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
     create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
-        const instanceUrls = getInstanceUrls(workspace);
-
-        const url = instanceUrls[0] ?? "http://localhost";
-        const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost");
-
-        const docsDefinitionResolver = new DocsDefinitionResolver({
-            domain: url,
-            docsWorkspace: workspace,
-            ossWorkspaces,
-            apiWorkspaces,
-            taskContext: createDocsResolverValidationContext(),
-            editThisPage: undefined,
-            uploadFiles: undefined,
-            registerApi: undefined,
-            targetAudiences: undefined // not applicable for validation
-        });
-
-        const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
-
-        const configRoot = resolvedDocsDefinition.config.root;
-        if (!configRoot || !isV1RootNode(configRoot)) {
-            throw new CliError({ message: "Root node not found", code: CliError.Code.InternalError });
-        }
-
-        // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
-        // from the docs definition resolver, once there's a light way to retrieve it.
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
-
-        // all the page slugs in the docs:
-        const collector = FernNavigation.NodeCollector.collect(root);
-
-        const visitableSlugs = new Set<string>();
-        const absoluteFilePathsToSlugs = new Map<AbsoluteFilePath, string[]>();
-        const endpoints: FernNavigation.NavigationNodeApiLeaf[] = [];
-        collector.slugMap.forEach((node, slug) => {
-            // NOTE: even if the node is not a page, it can still be "visitable" because it will redirect to another page.
-            visitableSlugs.add(slug);
-
-            if (node == null || !FernNavigation.isPage(node)) {
-                return;
-            }
-
-            if (FernNavigation.isApiLeaf(node)) {
-                endpoints.push(node);
-            }
-
-            const pageId = FernNavigation.getPageId(node);
-            if (pageId == null) {
-                return;
-            }
-
-            const absoluteFilePath = join(workspace.absoluteFilePath, RelativeFilePath.of(pageId));
-            const slugs = absoluteFilePathsToSlugs.get(absoluteFilePath) ?? [];
-            slugs.push(slug);
-            absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
-        });
-
-        // Collect version and product slugs for context-aware absolute link resolution
-        const versionSlugs = collector.getVersionNodes().map((v) => v.slug);
-        const productSlugs = collector
-            .getProductNodes()
-            .filter(FernNavigation.isInternalProductNode)
-            .map((p) => p.slug);
-
-        const specialDocPages = [
-            "/llms-full.txt",
-            "/llms.txt",
-            "/openapi.json",
-            "/openapi.yaml",
-            "/openapi.yml",
-            "/asyncapi.json",
-            "/asyncapi.yaml",
-            "/asyncapi.yml"
-        ];
-
-        for (const specialPage of specialDocPages) {
-            const pageWithBasePath = baseUrl.basePath
-                ? `${removeLeadingSlash(baseUrl.basePath)}${specialPage}`
-                : removeLeadingSlash(specialPage);
-            visitableSlugs.add(pageWithBasePath);
-        }
+        const { instanceUrls, baseUrl, visitableSlugs, absoluteFilePathsToSlugs, versionSlugs, productSlugs } =
+            await resolveDocsNavigation({ workspace, apiWorkspaces, ossWorkspaces });
 
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {

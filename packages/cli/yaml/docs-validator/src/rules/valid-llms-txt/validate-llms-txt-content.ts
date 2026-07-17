@@ -1,5 +1,11 @@
 import { RuleViolation } from "../../Rule.js";
-import { extractMarkdownLinks } from "./extract-markdown-links.js";
+import { collectPathnamesToCheck } from "../valid-markdown-link/collect-pathnames.js";
+import {
+    removeLeadingSlash,
+    removeTrailingSlash,
+    stripAnchorsAndSearchParams
+} from "../valid-markdown-link/url-utils.js";
+import { withBasePathPrepended } from "../valid-markdown-link/with-base-path-prepended.js";
 
 export interface PublishedPage {
     pageId: string;
@@ -14,16 +20,19 @@ export interface LlmsTxtValidationInput {
     fileLabel: string;
     /** Rule name attached to each violation. */
     ruleName: string;
+    /** Instance/custom-domain URLs, used to tell off-site links from internal ones. */
+    instanceUrls: string[];
     /** Published, non-hidden pages that a complete llms.txt should link to. */
     publishedPages: PublishedPage[];
-    /** All navigable slugs (including basePath), used to detect broken links. */
-    visitableSlugs: Set<string>;
     /** The site basePath (e.g. `docs`), without leading/trailing slashes. */
     basePath: string | undefined;
-    /** Hosts (without scheme) that count as "internal" to this docs site. */
-    instanceHosts: string[];
-    /** Redirect source paths, normalized to slugs. */
-    redirectSources: string[];
+    /**
+     * Resolves whether a link target exists in the docs navigation. The rule wires
+     * this to `checkIfPathnameExists` — the same resolver used by
+     * `valid-markdown-links` — so redirects, basePath handling, and special doc
+     * pages are honored without re-implementing that logic here.
+     */
+    pathnameExists: (pathname: string) => Promise<boolean>;
 }
 
 // The maximum number of missing pages to enumerate in a single warning before
@@ -31,60 +40,33 @@ export interface LlmsTxtValidationInput {
 const MAX_MISSING_PAGES_LISTED = 10;
 
 /**
- * Normalize a link target or page slug to a canonical comparison key:
- * strips the protocol/host, query, and anchor, drops a trailing `.md`/`.mdx`
- * (Fern serves both `/page` and `/page.md`), and removes leading/trailing
- * slashes.
+ * Reduce a link target or page slug to a canonical comparison key: strip
+ * anchors/query, a trailing `.md`/`.mdx` (Fern serves both `/page` and
+ * `/page.md`), and leading/trailing slashes.
  */
-export function normalizeToSlug(target: string): string {
-    let pathname = target;
-    if (/^https?:\/\//.test(pathname)) {
-        try {
-            pathname = new URL(pathname).pathname;
-        } catch {
-            // fall through and treat the raw string as a pathname
-        }
-    }
-    pathname = pathname.split(/[?#]/)[0] ?? "";
-    pathname = pathname.replace(/\/+$/, "").replace(/^\/+/, "");
-    pathname = pathname.replace(/\.mdx?$/, "");
-    return pathname;
-}
-
-export function normalizeBasePath(basePath: string | undefined): string | undefined {
-    if (basePath == null) {
-        return undefined;
-    }
-    const normalized = basePath.replace(/^\/+/, "").replace(/\/+$/, "");
-    return normalized.length > 0 ? normalized : undefined;
-}
-
-function stripBasePath(slug: string, basePath: string | undefined): string {
-    if (basePath == null) {
-        return slug;
-    }
-    if (slug === basePath) {
-        return "";
-    }
-    if (slug.startsWith(`${basePath}/`)) {
-        return slug.slice(basePath.length + 1);
-    }
-    return slug;
+function toSlug(pathname: string): string {
+    const withoutExt = stripAnchorsAndSearchParams(pathname).replace(/\.mdx?$/, "");
+    return removeLeadingSlash(removeTrailingSlash(withoutExt));
 }
 
 /**
- * Build the set of slug forms a target may be compared against, accounting for
- * an optional basePath (authors write both `/about` and `/docs/about`).
+ * All slug forms a link/page may be compared under, accounting for the site
+ * basePath (authors write both `/about` and `/docs/about`).
  */
-function slugVariants(normalized: string, basePath: string | undefined): string[] {
-    const variants = new Set<string>([normalized]);
-    const stripped = stripBasePath(normalized, basePath);
-    variants.add(stripped);
-    if (basePath != null && normalized.length > 0 && stripBasePath(normalized, basePath) === normalized) {
-        // target was written without the basePath — also try with it prepended
-        variants.add(`${basePath}/${normalized}`);
+function coverageKeys(slug: string, basePath: string | undefined): string[] {
+    const keys = new Set<string>([slug]);
+    const prefixed = withBasePathPrepended(`/${slug}`, basePath);
+    if (prefixed != null) {
+        keys.add(removeLeadingSlash(prefixed));
     }
-    return [...variants];
+    if (basePath != null) {
+        if (slug === basePath) {
+            keys.add("");
+        } else if (slug.startsWith(`${basePath}/`)) {
+            keys.add(slug.slice(basePath.length + 1));
+        }
+    }
+    return [...keys];
 }
 
 /**
@@ -92,51 +74,43 @@ function slugVariants(normalized: string, basePath: string | undefined): string[
  * warnings for links that point to non-existent pages and for published pages
  * that the file fails to link.
  */
-export function validateLlmsTxtContent(input: LlmsTxtValidationInput): RuleViolation[] {
-    const { content, fileLabel, ruleName, publishedPages, visitableSlugs, instanceHosts, redirectSources } = input;
-    const basePath = normalizeBasePath(input.basePath);
+export async function validateLlmsTxtContent(input: LlmsTxtValidationInput): Promise<RuleViolation[]> {
+    const { content, fileLabel, ruleName, instanceUrls, publishedPages, basePath, pathnameExists } = input;
     const violations: RuleViolation[] = [];
 
-    const redirectSourceSet = new Set(redirectSources.map((s) => normalizeToSlug(s)));
-    const referencedSlugs = new Set<string>();
+    // Reuse the shared markdown link collector so llms.txt links are parsed the
+    // same way page links are: anchors, `mailto:`, and off-site links are
+    // dropped, and malformed URLs surface as their own violations.
+    const { pathnamesToCheck, violations: extractionViolations } = collectPathnamesToCheck(content, { instanceUrls });
+    violations.push(...extractionViolations.map((violation) => ({ ...violation, name: ruleName })));
 
-    for (const link of extractMarkdownLinks(content)) {
-        if (link.url.startsWith("#") || link.url.startsWith("mailto:")) {
+    const referencedKeys = new Set<string>();
+    const checkedSlugs = new Set<string>();
+    for (const { pathname } of pathnamesToCheck) {
+        const slug = toSlug(pathname);
+        // De-dupe repeated targets so each is checked and reported at most once.
+        if (checkedSlugs.has(slug)) {
             continue;
         }
+        checkedSlugs.add(slug);
 
-        // Skip external links that don't point at this docs site.
-        if (/^https?:\/\//.test(link.url)) {
-            let linkHost: string;
-            try {
-                linkHost = new URL(link.url).host;
-            } catch {
-                continue;
-            }
-            if (!instanceHosts.includes(linkHost)) {
-                continue;
-            }
-        }
-
-        const normalized = normalizeToSlug(link.url);
-        const variants = slugVariants(normalized, basePath);
-        variants.forEach((variant) => referencedSlugs.add(variant));
-
-        const exists = variants.some((variant) => visitableSlugs.has(variant) || redirectSourceSet.has(variant));
-        if (!exists) {
+        if (!(await pathnameExists(`/${slug}`))) {
             violations.push({
                 name: ruleName,
                 severity: "warning",
-                message: `${fileLabel}: link to "${link.url}" points to a page that does not exist in the docs navigation.`
+                message: `${fileLabel}: link to "${pathname}" points to a page that does not exist in the docs navigation.`
             });
+            continue;
         }
+
+        // Only validated links count toward coverage, so a broken link can't
+        // accidentally mark a real page as covered.
+        coverageKeys(slug, basePath).forEach((key) => referencedKeys.add(key));
     }
 
     const missingPages = publishedPages.filter(
         (page) =>
-            !page.slugs.some((slug) =>
-                slugVariants(normalizeToSlug(slug), basePath).some((v) => referencedSlugs.has(v))
-            )
+            !page.slugs.some((slug) => coverageKeys(toSlug(slug), basePath).some((key) => referencedKeys.has(key)))
     );
 
     if (missingPages.length > 0) {

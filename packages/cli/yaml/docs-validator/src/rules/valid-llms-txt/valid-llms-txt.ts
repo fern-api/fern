@@ -1,40 +1,14 @@
-import { noop } from "@fern-api/core-utils";
-import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { createLogger } from "@fern-api/logger";
-import { CliError, createMockTaskContext, TaskContext } from "@fern-api/task-context";
 
+import { existsSync } from "fs";
 import { readFile } from "fs/promises";
 import { Rule, RuleViolation } from "../../Rule.js";
-import { getInstanceUrls, toBaseUrl } from "../valid-markdown-link/url-utils.js";
+import { checkIfPathnameExists } from "../valid-markdown-link/check-if-pathname-exists.js";
+import { resolveDocsNavigation } from "../valid-markdown-link/resolve-docs-navigation.js";
 import { PublishedPage, validateLlmsTxtContent } from "./validate-llms-txt-content.js";
 
 const RULE_NAME = "valid-llms-txt";
-
-function createDocsResolverValidationContext(): TaskContext {
-    const base = createMockTaskContext({ logger: createLogger(noop) });
-    return {
-        ...base,
-        failAndThrow: (message?: string, error?: unknown) => {
-            const parts: string[] = [];
-            if (message != null) {
-                parts.push(message);
-            }
-            if (error instanceof Error) {
-                parts.push(error.message);
-            } else if (error != null) {
-                parts.push(JSON.stringify(error));
-            }
-            throw new Error(parts.length > 0 ? parts.join(": ") : "Docs validation failed");
-        },
-        failWithoutThrowing: () => undefined
-    };
-}
-
-function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
-    return "type" in value && (value as { type: unknown }).type === "root";
-}
 
 /**
  * Validates a custom root `llms.txt` (configured via `agents.llms-txt`) against
@@ -45,6 +19,10 @@ function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
  * These are emitted as warnings (not errors) so intentionally curated `llms.txt`
  * files don't break `fern check`, while still surfacing the silent drift that
  * hand-maintained files accumulate as pages move.
+ *
+ * Link parsing and existence checks are delegated to the shared helpers used by
+ * `valid-markdown-links` (`collectPathnamesToCheck`, `checkIfPathnameExists`,
+ * `resolveDocsNavigation`) rather than re-implemented here.
  */
 export const ValidLlmsTxtRule: Rule = {
     name: RULE_NAME,
@@ -57,42 +35,33 @@ export const ValidLlmsTxtRule: Rule = {
             return {};
         }
 
-        const instanceUrls = getInstanceUrls(workspace);
-        const url = instanceUrls[0] ?? "http://localhost";
-        const baseUrl = toBaseUrl(url);
+        const llmsTxtAbsolutePath = join(
+            dirname(workspace.absoluteFilepathToDocsConfig),
+            RelativeFilePath.of(rawLlmsTxtPath)
+        );
 
-        const resolver = new DocsDefinitionResolver({
-            domain: url,
-            docsWorkspace: workspace,
-            ossWorkspaces,
-            apiWorkspaces,
-            taskContext: createDocsResolverValidationContext(),
-            editThisPage: undefined,
-            uploadFiles: undefined,
-            registerApi: undefined,
-            targetAudiences: undefined
-        });
-
-        const resolvedDocsDefinition = await resolver.resolve();
-        const configRoot = resolvedDocsDefinition.config.root;
-        if (!configRoot || !isV1RootNode(configRoot)) {
-            throw new CliError({ message: "Root node not found", code: CliError.Code.InternalError });
+        // A missing file is reported by the filepaths-exist rule. Bail before
+        // resolving the whole navigation so we don't pay that cost just to
+        // return no violations.
+        if (!existsSync(llmsTxtAbsolutePath)) {
+            return {};
         }
 
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
-        const collector = FernNavigation.NodeCollector.collect(root);
+        const {
+            instanceUrls,
+            baseUrl,
+            visitableSlugs,
+            absoluteFilePathsToSlugs,
+            collector,
+            versionSlugs,
+            productSlugs
+        } = await resolveDocsNavigation({ workspace, apiWorkspaces, ossWorkspaces });
 
-        const visitableSlugs = new Set<string>();
         const pagesByPageId = new Map<string, PublishedPage>();
         collector.slugMap.forEach((node, slug) => {
-            visitableSlugs.add(slug);
-
-            if (node == null || !FernNavigation.isPage(node)) {
-                return;
-            }
             // Skip pages hidden from navigation — they're intentionally not
             // surfaced, so their absence from llms.txt isn't drift.
-            if (node.hidden) {
+            if (node == null || !FernNavigation.isPage(node) || node.hidden) {
                 return;
             }
             const pageId = FernNavigation.getPageId(node);
@@ -107,30 +76,31 @@ export const ValidLlmsTxtRule: Rule = {
             }
         });
 
-        const llmsTxtAbsolutePath = join(
-            dirname(workspace.absoluteFilepathToDocsConfig),
-            RelativeFilePath.of(rawLlmsTxtPath)
-        );
-
         return {
             file: async (): Promise<RuleViolation[]> => {
-                let content: string;
-                try {
-                    content = await readFile(llmsTxtAbsolutePath, "utf-8");
-                } catch {
-                    // A missing file is reported by the filepaths-exist rule.
-                    return [];
-                }
+                const content = await readFile(llmsTxtAbsolutePath, "utf-8");
 
                 return validateLlmsTxtContent({
                     content,
                     fileLabel: rawLlmsTxtPath,
                     ruleName: RULE_NAME,
+                    instanceUrls,
                     publishedPages: [...pagesByPageId.values()],
-                    visitableSlugs,
                     basePath: baseUrl.basePath,
-                    instanceHosts: instanceUrls.map((instanceUrl) => toBaseUrl(instanceUrl).domain),
-                    redirectSources: (workspace.config.redirects ?? []).map((redirect) => redirect.source)
+                    pathnameExists: async (pathname) => {
+                        const result = await checkIfPathnameExists({
+                            pathname,
+                            markdown: true,
+                            workspaceAbsoluteFilePath: workspace.absoluteFilePath,
+                            pageSlugs: visitableSlugs,
+                            absoluteFilePathsToSlugs,
+                            redirects: workspace.config.redirects,
+                            baseUrl,
+                            versionSlugs,
+                            productSlugs
+                        });
+                        return result === true;
+                    }
                 });
             }
         };
