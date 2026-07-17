@@ -552,7 +552,7 @@ export class WebhooksHelper {
             throw new Error("Missing required parameters for webhook signature verification");
         }
 
-        const payload = [notificationUrl].join("");
+        const payload = notificationUrl;
 
         const expectedBodyHash = webhookCrypto.computeHash({ payload: requestBody, algorithm: "sha256", encoding: "hex" });
         const transmittedBodyHash = webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256");

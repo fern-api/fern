@@ -19,7 +19,7 @@ export class SmsStatusWebhooksHelper {
             throw new Error("Missing required parameters for webhook signature verification");
         }
 
-        const payload = [notificationUrl].join("");
+        const payload = notificationUrl;
 
         const expectedBodyHash = await core.computeHash({ payload: requestBody, algorithm: "sha256", encoding: "hex" });
         const transmittedBodyHash = core.getWebhookQueryParameter(notificationUrl, "bodySHA256");

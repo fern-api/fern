@@ -371,11 +371,6 @@ export class WebhooksHelperGenerator {
 
         const bodyExpr = hasBodySort ? "bodyString" : "requestBody";
 
-        if (payloadFormat.components.length === 1 && payloadFormat.components[0] === "BODY") {
-            lines.push(`const payload = ${bodyExpr};`);
-            return;
-        }
-
         const componentExprs: string[] = [];
         for (const component of payloadFormat.components) {
             switch (component) {
@@ -394,6 +389,13 @@ export class WebhooksHelperGenerator {
                 default:
                     break;
             }
+        }
+
+        // Each component expression is already a string, so a single component can be
+        // assigned directly rather than round-tripping through an array join.
+        if (componentExprs.length === 1) {
+            lines.push(`const payload = ${componentExprs[0]};`);
+            return;
         }
 
         const delimiter = JSON.stringify(payloadFormat.delimiter);

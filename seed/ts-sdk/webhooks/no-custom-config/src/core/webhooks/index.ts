@@ -1,5 +1,5 @@
 export type { ComputeHashArgs, HashAlgorithm } from "./computeHash.js";
-export { computeHash } from "./computeHash.js";
+export { computeHash, HASH_ALGORITHM_TO_SUBTLE_NAME } from "./computeHash.js";
 export type { ComputeHmacSignatureArgs, HmacAlgorithm } from "./computeHmacSignature.js";
 export { computeHmacSignature } from "./computeHmacSignature.js";
 export type { FetchJwksArgs } from "./fetchJwks.js";

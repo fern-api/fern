@@ -1,25 +1,19 @@
 import { RUNTIME } from "../runtime/index.js";
 import type { SignatureEncoding } from "./types.js";
 
-export type HashAlgorithm = "sha256" | "sha1" | "sha384" | "sha512";
+export const HASH_ALGORITHM_TO_SUBTLE_NAME = {
+    sha1: "SHA-1",
+    sha256: "SHA-256",
+    sha384: "SHA-384",
+    sha512: "SHA-512",
+} as const;
+
+export type HashAlgorithm = keyof typeof HASH_ALGORITHM_TO_SUBTLE_NAME;
 
 export interface ComputeHashArgs {
     payload: string;
     algorithm: HashAlgorithm;
     encoding: SignatureEncoding;
-}
-
-function hashAlgorithmToSubtleName(algorithm: HashAlgorithm): string {
-    switch (algorithm) {
-        case "sha1":
-            return "SHA-1";
-        case "sha256":
-            return "SHA-256";
-        case "sha384":
-            return "SHA-384";
-        case "sha512":
-            return "SHA-512";
-    }
 }
 
 /**
@@ -37,7 +31,7 @@ export async function computeHash(args: ComputeHashArgs): Promise<string> {
 
     const subtle = globalThis.crypto.subtle;
     const enc = new TextEncoder();
-    const digest = await subtle.digest(hashAlgorithmToSubtleName(args.algorithm), enc.encode(args.payload));
+    const digest = await subtle.digest(HASH_ALGORITHM_TO_SUBTLE_NAME[args.algorithm], enc.encode(args.payload));
     const bytes = new Uint8Array(digest);
     if (args.encoding === "hex") {
         return Array.from(bytes)
