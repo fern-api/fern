@@ -339,7 +339,15 @@ var reservedRequestOptionNames = map[string]struct{}{
 // API's environments, paired with the client-option name each is exposed under.
 // Variables are de-duplicated by id (taken from the first environment that
 // declares them) and de-collided against reserved RequestOptions field names.
-func serverURLVariablesFromConfig(environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+//
+// When enabled is false (i.e. the serverUrlVariables generator config option is
+// disabled), this returns an empty slice so that no server-URL-variable client
+// options nor the construction-time base-URL template interpolation are emitted,
+// falling back to the pre-feature base-URL behavior.
+func serverURLVariablesFromConfig(enabled bool, environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+	if !enabled {
+		return nil
+	}
 	variables := collectServerURLVariables(environmentsConfig)
 	result := make([]*serverURLVariable, 0, len(variables))
 	for _, variable := range variables {
@@ -535,7 +543,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	}
 	// Generate a field for each server URL variable (e.g. region), used to
 	// interpolate the environment's URL template(s) at client construction.
-	for _, serverURLVariable := range serverURLVariablesFromConfig(environmentsConfig) {
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
 		f.P(serverURLVariable.optionName, " string")
 	}
 	f.P("}")
@@ -568,7 +576,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(environmentsConfig))
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig))
 	}
 
 	// Generate the ToHeader method.
@@ -723,7 +731,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(environmentsConfig)); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
 		return err
 	}
 
@@ -1212,7 +1220,7 @@ func (f *fileWriter) WriteRequestOptions(
 	// Generate a functional option for each server URL variable (e.g. region).
 	// Setting one rebuilds the base URL(s) from the environment's URL template(s)
 	// at client construction time.
-	for _, serverURLVariable := range serverURLVariablesFromConfig(environmentsConfig) {
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
 		originalName := serverURLVariable.variable.Id
 		if serverURLVariable.variable.Name != nil {
 			originalName = serverURLVariable.variable.Name.OriginalName
