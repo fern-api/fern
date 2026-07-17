@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { buildPreviewDomain, isPreviewUrl, PREVIEW_URL_PATTERN, sanitizePreviewId } from "../previewUrlUtils.js";
 
@@ -213,5 +213,32 @@ describe("buildPreviewDomain", () => {
         const id = "a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z";
         const result = buildPreviewDomain({ orgId: "acme", previewId: id });
         expect(result).not.toMatch(/-\.docs\.buildwithfern\.com$/);
+    });
+});
+
+describe("environment-aware domain suffix (dev builds)", () => {
+    const ORIGINAL = process.env.DOCS_DOMAIN_SUFFIX;
+
+    beforeEach(() => {
+        vi.resetModules();
+        process.env.DOCS_DOMAIN_SUFFIX = "docs.dev.buildwithfern.com";
+    });
+
+    afterEach(() => {
+        if (ORIGINAL == null) {
+            delete process.env.DOCS_DOMAIN_SUFFIX;
+        } else {
+            process.env.DOCS_DOMAIN_SUFFIX = ORIGINAL;
+        }
+        vi.resetModules();
+    });
+
+    it("accepts dev preview URLs and builds dev domains", async () => {
+        const utils = await import("../previewUrlUtils.js");
+        expect(utils.isPreviewUrl("acme-preview-mr-2.docs.dev.buildwithfern.com")).toBe(true);
+        expect(utils.isPreviewUrl("acme-preview-mr-2.docs.buildwithfern.com")).toBe(false);
+        expect(utils.buildPreviewDomain({ orgId: "acme", previewId: "mr-2" })).toBe(
+            "acme-preview-mr-2.docs.dev.buildwithfern.com"
+        );
     });
 });

@@ -1,11 +1,21 @@
 import { CliError } from "@fern-api/task-context";
 
 /**
- * Preview URLs follow the pattern: {org}-preview-{id}.docs.buildwithfern.com
+ * The docs domain suffix for the current environment. Production builds use
+ * docs.buildwithfern.com; dev builds inject docs.dev.buildwithfern.com. This
+ * MUST match the suffix the server registers previews under, otherwise the
+ * delete/build-domain paths address a domain that isn't registered.
  */
-export const PREVIEW_URL_PATTERN = /^[a-z0-9-]+-preview-[a-z0-9-]+\.docs\.buildwithfern\.com$/i;
+const DOMAIN_SUFFIX = process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com";
 
-const DOMAIN_SUFFIX = "docs.buildwithfern.com";
+function escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Preview URLs follow the pattern: {org}-preview-{id}.{DOMAIN_SUFFIX}
+ */
+export const PREVIEW_URL_PATTERN = new RegExp(`^[a-z0-9-]+-preview-[a-z0-9-]+\\.${escapeRegExp(DOMAIN_SUFFIX)}$`, "i");
 
 /**
  * Application-level cap used in two ways:
