@@ -424,6 +424,15 @@ fixtures:
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
+  server-url-templating-single-url:
+    - customConfig: null
+      outputFolder: .
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
   unions:
     - customConfig: null
       outputFolder: no-custom-config
