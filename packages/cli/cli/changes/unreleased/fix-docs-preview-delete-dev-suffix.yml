@@ -1,6 +1,0 @@
-- summary: |
-    Fix `fern docs preview delete` and preview URL validation hardcoding the
-    production `docs.buildwithfern.com` domain suffix. The suffix is now
-    environment-aware (dev builds use `docs.dev.buildwithfern.com`), so deleting
-    a preview created on the dev CLI no longer fails with "Domain not registered".
-  type: fix
