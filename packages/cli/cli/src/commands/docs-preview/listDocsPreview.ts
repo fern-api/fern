@@ -5,7 +5,9 @@ import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 
-const PREVIEW_DOMAIN_SUFFIX = "docs.buildwithfern.com";
+// Environment-aware: dev builds set this to docs.dev.buildwithfern.com so dev previews
+// are not filtered out. Falls back to the production suffix.
+const PREVIEW_DOMAIN_SUFFIX = process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com";
 
 interface PreviewDeployment {
     url: string;
