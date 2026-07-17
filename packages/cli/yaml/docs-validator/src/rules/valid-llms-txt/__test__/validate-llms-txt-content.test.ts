@@ -1,16 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { PublishedPage, validateLlmsTxtContent } from "../validate-llms-txt-content.js";
+import { validateLlmsTxtContent } from "../validate-llms-txt-content.js";
 
 const RULE_NAME = "valid-llms-txt";
 const BASE_PATH = "docs";
 const INSTANCE_URLS = ["plantstore.docs.buildwithfern.com/docs"];
-
-const publishedPages: PublishedPage[] = [
-    { pageId: "get-started.mdx", title: "Get started", slugs: ["docs/get-started"] },
-    { pageId: "plants/watering.mdx", title: "Watering your plant", slugs: ["docs/plants/watering"] },
-    { pageId: "plants/pruning.mdx", title: "Pruning", slugs: ["docs/plants/pruning"] }
-];
 
 const existingSlugs = new Set(["docs/get-started", "docs/plants/watering", "docs/plants/pruning"]);
 const redirectSources = new Set(["docs/old-guide"]);
@@ -37,15 +31,13 @@ function validate(
         fileLabel: "llms.txt",
         ruleName: RULE_NAME,
         instanceUrls: INSTANCE_URLS,
-        publishedPages,
-        basePath: BASE_PATH,
         pathnameExists: fakePathnameExists(),
         ...overrides
     });
 }
 
 describe("validateLlmsTxtContent", () => {
-    it("passes when every published page is linked and no links are broken", async () => {
+    it("passes when no links are broken", async () => {
         const content = [
             "# Plantstore",
             "",
@@ -67,32 +59,16 @@ describe("validateLlmsTxtContent", () => {
         expect(violations.every((v) => v.severity === "warning")).toBe(true);
     });
 
-    it("warns when published pages are missing from the file", async () => {
+    it("does not warn about published pages that the file omits", async () => {
+        // Curated llms.txt files intentionally link a subset of pages, so a
+        // missing published page is not a violation — only broken links are.
         const content = "# Plantstore\n\n> Docs\n\n- [Get started](/docs/get-started)";
-        const violations = await validate(content);
-        const coverageViolation = violations.find((v) => v.message.includes("not linked"));
-        expect(coverageViolation).toBeDefined();
-        expect(coverageViolation?.message).toContain("2 of 3 published pages");
-        expect(coverageViolation?.message).toContain("Watering your plant");
-    });
-
-    it("does not count a broken link toward coverage", async () => {
-        // The link normalizes to a real page's stripped slug, but it's broken —
-        // it must not mark that page as covered.
-        const content = "# Plantstore\n\n> Docs\n\n- [Watering](/plants/watering-typo)";
-        const violations = await validate(content, {
-            pathnameExists: async () => false
-        });
-        const coverageViolation = violations.find((v) => v.message.includes("not linked"));
-        expect(coverageViolation?.message).toContain("3 of 3 published pages");
+        expect(await validate(content)).toEqual([]);
     });
 
     it("treats links written without the basePath as valid", async () => {
         const content = "# Plantstore\n\n> Docs\n\n- [Get started](/get-started)";
-        const violations = await validate(content);
-        expect(violations.some((v) => v.message.includes("/get-started") && v.message.includes("does not exist"))).toBe(
-            false
-        );
+        expect(await validate(content)).toEqual([]);
     });
 
     it("ignores external links, anchors, and mailto", async () => {
@@ -102,8 +78,6 @@ describe("validateLlmsTxtContent", () => {
             "> Docs",
             "",
             "- [Get started](/docs/get-started)",
-            "- [Watering your plant](/docs/plants/watering)",
-            "- [Pruning](/docs/plants/pruning)",
             "- [GitHub](https://github.com/fern-api/fern)",
             "- [Email us](mailto:support@plantstore.com)",
             "- [Top](#top)"
@@ -112,9 +86,7 @@ describe("validateLlmsTxtContent", () => {
     });
 
     it("accepts redirect sources as valid link targets", async () => {
-        const violations = await validate("# Plantstore\n\n> Docs\n\n- [Old guide](/docs/old-guide)", {
-            publishedPages: []
-        });
+        const violations = await validate("# Plantstore\n\n> Docs\n\n- [Old guide](/docs/old-guide)");
         expect(violations).toEqual([]);
     });
 });

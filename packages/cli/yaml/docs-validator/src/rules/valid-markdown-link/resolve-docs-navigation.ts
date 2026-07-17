@@ -68,8 +68,6 @@ const SPECIAL_DOC_PAGES = [
 export interface ResolvedDocsNavigation {
     instanceUrls: string[];
     baseUrl: { domain: string; basePath?: string };
-    root: FernNavigation.RootNode;
-    collector: FernNavigation.NodeCollector;
     /** All navigable slugs (including basePath and special doc pages). */
     visitableSlugs: Set<string>;
     absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>;
@@ -159,8 +157,6 @@ export async function resolveDocsNavigation({
     return {
         instanceUrls,
         baseUrl,
-        root,
-        collector,
         visitableSlugs,
         absoluteFilePathsToSlugs,
         versionSlugs,

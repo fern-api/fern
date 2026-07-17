@@ -5,13 +5,6 @@ import {
     removeTrailingSlash,
     stripAnchorsAndSearchParams
 } from "../valid-markdown-link/url-utils.js";
-import { withBasePathPrepended } from "../valid-markdown-link/with-base-path-prepended.js";
-
-export interface PublishedPage {
-    pageId: string;
-    title: string;
-    slugs: string[];
-}
 
 export interface LlmsTxtValidationInput {
     /** Raw contents of the custom llms.txt file. */
@@ -22,10 +15,6 @@ export interface LlmsTxtValidationInput {
     ruleName: string;
     /** Instance/custom-domain URLs, used to tell off-site links from internal ones. */
     instanceUrls: string[];
-    /** Published, non-hidden pages that a complete llms.txt should link to. */
-    publishedPages: PublishedPage[];
-    /** The site basePath (e.g. `docs`), without leading/trailing slashes. */
-    basePath: string | undefined;
     /**
      * Resolves whether a link target exists in the docs navigation. The rule wires
      * this to `checkIfPathnameExists` — the same resolver used by
@@ -35,14 +24,10 @@ export interface LlmsTxtValidationInput {
     pathnameExists: (pathname: string) => Promise<boolean>;
 }
 
-// The maximum number of missing pages to enumerate in a single warning before
-// truncating with an ellipsis, so the message stays readable on large sites.
-const MAX_MISSING_PAGES_LISTED = 10;
-
 /**
- * Reduce a link target or page slug to a canonical comparison key: strip
- * anchors/query, a trailing `.md`/`.mdx` (Fern serves both `/page` and
- * `/page.md`), and leading/trailing slashes.
+ * Reduce a link target to a canonical comparison key: strip anchors/query, a
+ * trailing `.md`/`.mdx` (Fern serves both `/page` and `/page.md`), and
+ * leading/trailing slashes.
  */
 function toSlug(pathname: string): string {
     const withoutExt = stripAnchorsAndSearchParams(pathname).replace(/\.mdx?$/, "");
@@ -50,32 +35,13 @@ function toSlug(pathname: string): string {
 }
 
 /**
- * All slug forms a link/page may be compared under, accounting for the site
- * basePath (authors write both `/about` and `/docs/about`).
- */
-function coverageKeys(slug: string, basePath: string | undefined): string[] {
-    const keys = new Set<string>([slug]);
-    const prefixed = withBasePathPrepended(`/${slug}`, basePath);
-    if (prefixed != null) {
-        keys.add(removeLeadingSlash(prefixed));
-    }
-    if (basePath != null) {
-        if (slug === basePath) {
-            keys.add("");
-        } else if (slug.startsWith(`${basePath}/`)) {
-            keys.add(slug.slice(basePath.length + 1));
-        }
-    }
-    return [...keys];
-}
-
-/**
- * Validate a custom `llms.txt` against the resolved navigation, returning
- * warnings for links that point to non-existent pages and for published pages
- * that the file fails to link.
+ * Validate a custom `llms.txt` against the resolved navigation, warning for each
+ * link that points to a page that no longer exists (drift / 404s). Coverage
+ * (published pages missing from the file) is intentionally not checked — curated
+ * llms.txt files link a subset of pages on purpose, so that would be noise.
  */
 export async function validateLlmsTxtContent(input: LlmsTxtValidationInput): Promise<RuleViolation[]> {
-    const { content, fileLabel, ruleName, instanceUrls, publishedPages, basePath, pathnameExists } = input;
+    const { content, fileLabel, ruleName, instanceUrls, pathnameExists } = input;
     const violations: RuleViolation[] = [];
 
     // Reuse the shared markdown link collector so llms.txt links are parsed the
@@ -84,49 +50,33 @@ export async function validateLlmsTxtContent(input: LlmsTxtValidationInput): Pro
     const { pathnamesToCheck, violations: extractionViolations } = collectPathnamesToCheck(content, { instanceUrls });
     violations.push(...extractionViolations.map((violation) => ({ ...violation, name: ruleName })));
 
-    const referencedKeys = new Set<string>();
-    const checkedSlugs = new Set<string>();
+    // De-dupe repeated targets so each is checked and reported at most once,
+    // keeping the first pathname seen for the violation message.
+    const slugToPathname = new Map<string, string>();
     for (const { pathname } of pathnamesToCheck) {
         const slug = toSlug(pathname);
-        // De-dupe repeated targets so each is checked and reported at most once.
-        if (checkedSlugs.has(slug)) {
-            continue;
+        if (!slugToPathname.has(slug)) {
+            slugToPathname.set(slug, pathname);
         }
-        checkedSlugs.add(slug);
+    }
 
-        if (!(await pathnameExists(`/${slug}`))) {
+    // Batch the existence checks (each can hit the filesystem) instead of
+    // awaiting them serially, matching how `valid-markdown-links` resolves links.
+    const checkedSlugs = await Promise.all(
+        [...slugToPathname.entries()].map(async ([slug, pathname]) => ({
+            pathname,
+            exists: await pathnameExists(`/${slug}`)
+        }))
+    );
+
+    for (const { pathname, exists } of checkedSlugs) {
+        if (!exists) {
             violations.push({
                 name: ruleName,
                 severity: "warning",
                 message: `${fileLabel}: link to "${pathname}" points to a page that does not exist in the docs navigation.`
             });
-            continue;
         }
-
-        // Only validated links count toward coverage, so a broken link can't
-        // accidentally mark a real page as covered.
-        coverageKeys(slug, basePath).forEach((key) => referencedKeys.add(key));
-    }
-
-    const missingPages = publishedPages.filter(
-        (page) =>
-            !page.slugs.some((slug) => coverageKeys(toSlug(slug), basePath).some((key) => referencedKeys.has(key)))
-    );
-
-    if (missingPages.length > 0) {
-        const listed = missingPages
-            .slice(0, MAX_MISSING_PAGES_LISTED)
-            .map((page) => `"${page.title}" (/${page.slugs[0] ?? ""})`)
-            .join(", ");
-        const suffix =
-            missingPages.length > MAX_MISSING_PAGES_LISTED
-                ? `, and ${missingPages.length - MAX_MISSING_PAGES_LISTED} more`
-                : "";
-        violations.push({
-            name: ruleName,
-            severity: "warning",
-            message: `${fileLabel}: ${missingPages.length} of ${publishedPages.length} published pages are not linked (they may have drifted as pages moved): ${listed}${suffix}.`
-        });
     }
 
     return violations;
