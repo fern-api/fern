@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.75.4
+  changelogEntry:
+    - summary: |
+        `fern check` now compiles each docs page's MDX and reports syntax errors such as
+        unclosed components (e.g. a `<Card>` without a closing tag). Previously the
+        MDX-validation rule was defined but not registered, so malformed MDX passed
+        validation and only broke at render/build time. Reported at warning severity to
+        avoid breaking existing runs on repos with latent MDX issues.
+      type: fix
+  createdAt: "2026-07-17"
+  irVersion: 67
 - version: 5.75.3
   changelogEntry:
     - summary: |
