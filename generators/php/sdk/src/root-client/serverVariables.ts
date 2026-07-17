@@ -53,12 +53,20 @@ export function getMultipleBaseUrlsTemplatedEnvironment(
  * Returns the server URL variables (e.g. region) declared on the API's environments,
  * paired with the client-option name each is exposed under. Variables are de-duplicated
  * by id and de-collided against existing and generated client option names.
+ *
+ * When `enabled` is false, returns an empty list so that no server-URL-variable client
+ * options are emitted and no URL-template interpolation is generated (pre-feature base-URL
+ * behavior).
  */
 export function getServerVariableOptions(
     environmentsConfig: FernIr.EnvironmentsConfig | undefined,
     caseConverter: CaseConverter,
-    existingOptionNames: Iterable<string> = []
+    existingOptionNames: Iterable<string> = [],
+    enabled = true
 ): ServerVariableOption[] {
+    if (!enabled) {
+        return [];
+    }
     const usedOptionNames = new Set([...RESERVED_OPTION_NAMES, ...existingOptionNames]);
     return collectServerVariables(environmentsConfig).map((variable) => {
         const camel = caseConverter.camelSafe(getOriginalName(variable.name));

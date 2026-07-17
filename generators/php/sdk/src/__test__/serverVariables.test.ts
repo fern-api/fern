@@ -72,6 +72,15 @@ describe("getServerVariableOptions", () => {
         expect(options.map((option) => option.optionName)).toEqual(["region", "serverUrlEnvironment"]);
     });
 
+    it("returns server variables when the feature is explicitly enabled (default behavior unchanged)", () => {
+        const options = getServerVariableOptions(multipleBaseUrlsConfig(), caseConverter, [], true);
+        expect(options.map((option) => option.optionName)).toEqual(["region", "serverUrlEnvironment"]);
+    });
+
+    it("returns nothing when the server URL variables feature is disabled", () => {
+        expect(getServerVariableOptions(multipleBaseUrlsConfig(), caseConverter, [], false)).toEqual([]);
+    });
+
     it("de-collides server variables from existing options and each other", () => {
         const config = multipleBaseUrlsConfig();
         const environments = config.environments;
