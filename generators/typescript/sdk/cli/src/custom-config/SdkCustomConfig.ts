@@ -90,4 +90,5 @@ export interface SdkCustomConfig {
     alwaysSendAuth: boolean;
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
+    serverUrlVariables: boolean;
 }

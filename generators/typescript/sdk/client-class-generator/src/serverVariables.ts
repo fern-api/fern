@@ -32,11 +32,20 @@ export interface ServerVariableOption {
  * Returns the server URL variables (e.g. region) declared on the API's environments,
  * paired with the client-option name each is exposed under. Variables are de-duplicated
  * by id and de-collided against existing BaseClientOptions property names.
+ *
+ * When `serverUrlVariables` is `false`, server URL variables are opted out of entirely:
+ * an empty list is returned so that neither the client-option properties nor the
+ * construction-time URL-template interpolation are emitted, falling back to the
+ * pre-feature base-URL behavior. Defaults to `true` (feature enabled) when unset.
  */
 export function getServerVariableOptions(
     ir: FernIr.IntermediateRepresentation,
-    caseConverter: CaseConverter
+    caseConverter: CaseConverter,
+    serverUrlVariables = true
 ): ServerVariableOption[] {
+    if (!serverUrlVariables) {
+        return [];
+    }
     return collectServerVariables(ir).map((variable) => {
         const camel = caseConverter.camelSafe(getOriginalName(variable.name));
         const optionName = RESERVED_OPTION_NAMES.has(camel)

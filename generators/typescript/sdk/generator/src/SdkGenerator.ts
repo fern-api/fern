@@ -177,6 +177,7 @@ export declare namespace SdkGenerator {
         maxRetries: number | undefined;
         alwaysSendAuth: boolean;
         generateReactQueryHooks: boolean;
+        serverUrlVariables: boolean;
     }
 }
 
@@ -438,7 +439,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
-            caseConverter
+            caseConverter,
+            serverUrlVariables: config.serverUrlVariables
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -559,7 +561,8 @@ export class SdkGenerator {
             includePlatformHeaders: config.includePlatformHeaders,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
-            caseConverter: this.case
+            caseConverter: this.case,
+            serverUrlVariables: config.serverUrlVariables
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
