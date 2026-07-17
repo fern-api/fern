@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.21.0
+  changelogEntry:
+    - summary: |
+        Add a `serverUrlVariables` custom config flag (boolean, defaults to true) that
+        controls generation of server-URL-variable support. When true (the default),
+        behavior is unchanged: the generated client exposes server-URL-variable
+        constructor kwargs and performs runtime URL-template interpolation. When set to
+        false, the generator falls back to the pre-feature base-URL behavior, emitting
+        neither the server-URL-variable kwargs nor the URL-template interpolation.
+      type: feat
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 5.20.0
   changelogEntry:
     - summary: |

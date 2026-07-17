@@ -1,4 +1,5 @@
 import textwrap
+import types
 
 from fern_python.codegen import AST
 from fern_python.generators.sdk.client_generator.root_client_generator import (
@@ -52,6 +53,43 @@ def _create_test_builder(oauth_token_override: bool = False) -> RootClientGenera
         ],
         oauth_token_override=oauth_token_override,
     )
+
+
+def _make_server_variables_generator_stub(
+    server_url_variables: bool,
+) -> types.SimpleNamespace:
+    """Build a lightweight stub with the attributes _get_server_variables reads.
+
+    The single-base-url environments config carries one server variable so we can
+    assert whether it is surfaced or suppressed based on the config flag.
+    """
+    server_variable = types.SimpleNamespace(id="region", default="us-east-1")
+    env = types.SimpleNamespace(url_variables=[server_variable])
+    env_union = types.SimpleNamespace(type="singleBaseUrl", environments=[env])
+    environments_config = types.SimpleNamespace(
+        environments=types.SimpleNamespace(get_as_union=lambda: env_union),
+    )
+    return types.SimpleNamespace(
+        _context=types.SimpleNamespace(
+            custom_config=types.SimpleNamespace(server_url_variables=server_url_variables),
+        ),
+        _environments_config=environments_config,
+    )
+
+
+def test_get_server_variables_default_surfaces_variables() -> None:
+    """With server_url_variables enabled (default), server variables are surfaced."""
+    stub = _make_server_variables_generator_stub(server_url_variables=True)
+    variables = RootClientGenerator._get_server_variables(stub)  # type: ignore[arg-type]
+    assert [var.id for var in variables] == ["region"]
+
+
+def test_get_server_variables_disabled_suppresses_variables() -> None:
+    """With server_url_variables disabled, no server variables are surfaced, so
+    neither the constructor kwargs nor the URL-template interpolation are emitted."""
+    stub = _make_server_variables_generator_stub(server_url_variables=False)
+    variables = RootClientGenerator._get_server_variables(stub)  # type: ignore[arg-type]
+    assert variables == []
 
 
 def test_generated_root_client_builder() -> None:
