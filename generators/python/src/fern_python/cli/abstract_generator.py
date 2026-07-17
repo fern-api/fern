@@ -39,6 +39,8 @@ class AbstractGenerator(ABC):
         # Configure smart-casing from the IR's casingsConfig (driven by the customer's
         # `smart-casing` flag in generators.yml). Must run before any name resolution
         # so _smart_snake matches the IR server's pre-computed snake_case values.
+        # The digit/word boundary opt-in (`smart-casing-digit-word-boundary`) is not wired up
+        # yet: the pinned IR package (67.11.0) does not carry `smartCasingDigitWordBoundary`.
         smart_casing = ir.casings_config.smart_casing if ir.casings_config is not None else True
         configure_smart_casing(smart_casing)
 

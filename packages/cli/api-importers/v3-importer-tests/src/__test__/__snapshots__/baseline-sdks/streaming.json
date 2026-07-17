@@ -1133,12 +1133,12 @@
               "safeName": "userV3StreamResponse"
             },
             "snakeCase": {
-              "unsafeName": "user_v3_stream_response",
-              "safeName": "user_v3_stream_response"
+              "unsafeName": "user_v3stream_response",
+              "safeName": "user_v3stream_response"
             },
             "screamingSnakeCase": {
-              "unsafeName": "USER_V3_STREAM_RESPONSE",
-              "safeName": "USER_V3_STREAM_RESPONSE"
+              "unsafeName": "USER_V3STREAM_RESPONSE",
+              "safeName": "USER_V3STREAM_RESPONSE"
             },
             "pascalCase": {
               "unsafeName": "UserV3StreamResponse",
@@ -1257,12 +1257,12 @@
               "safeName": "userV3Response"
             },
             "snakeCase": {
-              "unsafeName": "user_v3_response",
-              "safeName": "user_v3_response"
+              "unsafeName": "user_v3response",
+              "safeName": "user_v3response"
             },
             "screamingSnakeCase": {
-              "unsafeName": "USER_V3_RESPONSE",
-              "safeName": "USER_V3_RESPONSE"
+              "unsafeName": "USER_V3RESPONSE",
+              "safeName": "USER_V3RESPONSE"
             },
             "pascalCase": {
               "unsafeName": "UserV3Response",
@@ -2005,12 +2005,12 @@
               "safeName": "userV2Stream"
             },
             "snakeCase": {
-              "unsafeName": "user_v2_stream",
-              "safeName": "user_v2_stream"
+              "unsafeName": "user_v2stream",
+              "safeName": "user_v2stream"
             },
             "screamingSnakeCase": {
-              "unsafeName": "USER_V2_STREAM",
-              "safeName": "USER_V2_STREAM"
+              "unsafeName": "USER_V2STREAM",
+              "safeName": "USER_V2STREAM"
             },
             "pascalCase": {
               "unsafeName": "UserV2Stream",
@@ -2035,12 +2035,12 @@
                 "safeName": "userV2StreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "user_v2_stream_request",
-                "safeName": "user_v2_stream_request"
+                "unsafeName": "user_v2stream_request",
+                "safeName": "user_v2stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_V2_STREAM_REQUEST",
-                "safeName": "USER_V2_STREAM_REQUEST"
+                "unsafeName": "USER_V2STREAM_REQUEST",
+                "safeName": "USER_V2STREAM_REQUEST"
               },
               "pascalCase": {
                 "unsafeName": "UserV2StreamRequest",
@@ -2172,12 +2172,12 @@
                 "safeName": "userV2Request"
               },
               "snakeCase": {
-                "unsafeName": "user_v2_request",
-                "safeName": "user_v2_request"
+                "unsafeName": "user_v2request",
+                "safeName": "user_v2request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_V2_REQUEST",
-                "safeName": "USER_V2_REQUEST"
+                "unsafeName": "USER_V2REQUEST",
+                "safeName": "USER_V2REQUEST"
               },
               "pascalCase": {
                 "unsafeName": "UserV2Request",
@@ -2279,12 +2279,12 @@
               "safeName": "userV3Stream"
             },
             "snakeCase": {
-              "unsafeName": "user_v3_stream",
-              "safeName": "user_v3_stream"
+              "unsafeName": "user_v3stream",
+              "safeName": "user_v3stream"
             },
             "screamingSnakeCase": {
-              "unsafeName": "USER_V3_STREAM",
-              "safeName": "USER_V3_STREAM"
+              "unsafeName": "USER_V3STREAM",
+              "safeName": "USER_V3STREAM"
             },
             "pascalCase": {
               "unsafeName": "UserV3Stream",
@@ -2309,12 +2309,12 @@
                 "safeName": "userV3StreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "user_v3_stream_request",
-                "safeName": "user_v3_stream_request"
+                "unsafeName": "user_v3stream_request",
+                "safeName": "user_v3stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_V3_STREAM_REQUEST",
-                "safeName": "USER_V3_STREAM_REQUEST"
+                "unsafeName": "USER_V3STREAM_REQUEST",
+                "safeName": "USER_V3STREAM_REQUEST"
               },
               "pascalCase": {
                 "unsafeName": "UserV3StreamRequest",
@@ -2446,12 +2446,12 @@
                 "safeName": "userV3Request"
               },
               "snakeCase": {
-                "unsafeName": "user_v3_request",
-                "safeName": "user_v3_request"
+                "unsafeName": "user_v3request",
+                "safeName": "user_v3request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_V3_REQUEST",
-                "safeName": "USER_V3_REQUEST"
+                "unsafeName": "USER_V3REQUEST",
+                "safeName": "USER_V3REQUEST"
               },
               "pascalCase": {
                 "unsafeName": "UserV3Request",

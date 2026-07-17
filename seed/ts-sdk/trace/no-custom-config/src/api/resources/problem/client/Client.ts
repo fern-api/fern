@@ -29,6 +29,9 @@ export class ProblemClient {
      * @param {SeedTrace.CreateProblemRequest} request
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.problem.createProblem({
      *         problemName: "problemName",
@@ -162,6 +165,9 @@ export class ProblemClient {
      * @param {SeedTrace.ProblemId} problemId
      * @param {SeedTrace.CreateProblemRequest} request
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.problem.updateProblem("problemId", {
@@ -303,6 +309,9 @@ export class ProblemClient {
      * @param {SeedTrace.ProblemId} problemId
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.problem.deleteProblem("problemId")
      */
@@ -365,6 +374,9 @@ export class ProblemClient {
      *
      * @param {SeedTrace.GetDefaultStarterFilesRequest} request
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.problem.getDefaultStarterFiles({

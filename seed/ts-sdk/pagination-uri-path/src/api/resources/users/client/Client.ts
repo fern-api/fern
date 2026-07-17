@@ -24,6 +24,9 @@ export class UsersClient {
     /**
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationUriPathError}
+     * @throws {@link errors.SeedPaginationUriPathTimeoutError}
+     *
      * @example
      *     await client.users.listWithUriPagination()
      */
@@ -84,6 +87,9 @@ export class UsersClient {
 
     /**
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationUriPathError}
+     * @throws {@link errors.SeedPaginationUriPathTimeoutError}
      *
      * @example
      *     await client.users.listWithPathPagination()

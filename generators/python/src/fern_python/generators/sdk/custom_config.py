@@ -56,6 +56,25 @@ class WireTestsConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class TcpKeepaliveConfig(pydantic.BaseModel):
+    """Configuration for platform-guarded TCP keepalive on the default HTTP transport.
+
+    When enabled, the generated default httpx transport emits periodic TCP
+    keepalive probes so long, non-streaming requests survive idle-connection
+    reaping by a firewall/load balancer/NAT. Off by default to keep generated
+    output unchanged; a user-supplied httpx client or custom transport always
+    takes precedence over the keepalive default.
+    """
+
+    enabled: bool = False
+    idle_seconds: int = 60
+    interval_seconds: int = 30
+    count: int = 5
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -178,6 +197,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     # httpx.Client/AsyncClient. Intended for SDK developers to supply custom
     # transports via custom code (e.g., factory/classmethod wrappers).
     custom_transport: bool = False
+
+    # Opt-in platform-guarded TCP keepalive on the generated default HTTP
+    # transport. Disabled by default so existing generated output is unchanged.
+    # When enabled, the SDK's default httpx transport emits TCP keepalive probes
+    # so long, non-streaming requests survive idle-connection reaping. A
+    # user-supplied httpx_client or custom_transport http_client always wins.
+    tcp_keepalive: TcpKeepaliveConfig = TcpKeepaliveConfig()
 
     # Controls how offset pagination increments between pages.
     # "item-index" (default): offset increments by the number of items returned.

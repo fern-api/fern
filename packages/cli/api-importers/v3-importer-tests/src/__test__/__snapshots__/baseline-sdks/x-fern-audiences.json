@@ -290,12 +290,12 @@
               "safeName": "postV1Users"
             },
             "snakeCase": {
-              "unsafeName": "post_v1_users",
-              "safeName": "post_v1_users"
+              "unsafeName": "post_v1users",
+              "safeName": "post_v1users"
             },
             "screamingSnakeCase": {
-              "unsafeName": "POST_V1_USERS",
-              "safeName": "POST_V1_USERS"
+              "unsafeName": "POST_V1USERS",
+              "safeName": "POST_V1USERS"
             },
             "pascalCase": {
               "unsafeName": "PostV1Users",
@@ -320,12 +320,12 @@
                 "safeName": "postV1UsersRequest"
               },
               "snakeCase": {
-                "unsafeName": "post_v1_users_request",
-                "safeName": "post_v1_users_request"
+                "unsafeName": "post_v1users_request",
+                "safeName": "post_v1users_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "POST_V1_USERS_REQUEST",
-                "safeName": "POST_V1_USERS_REQUEST"
+                "unsafeName": "POST_V1USERS_REQUEST",
+                "safeName": "POST_V1USERS_REQUEST"
               },
               "pascalCase": {
                 "unsafeName": "PostV1UsersRequest",

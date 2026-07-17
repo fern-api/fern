@@ -26,6 +26,9 @@ export class OptionalClient {
      * @param {Record<string, unknown>} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedObjectsWithImportsError}
+     * @throws {@link errors.SeedObjectsWithImportsTimeoutError}
+     *
      * @example
      *     await client.optional.sendOptionalBody({
      *         "string": {
@@ -81,6 +84,9 @@ export class OptionalClient {
     /**
      * @param {SeedObjectsWithImports.SendOptionalBodyRequest} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedObjectsWithImportsError}
+     * @throws {@link errors.SeedObjectsWithImportsTimeoutError}
      *
      * @example
      *     await client.optional.sendOptionalTypedBody({
@@ -140,6 +146,9 @@ export class OptionalClient {
      * @param {string} id
      * @param {SeedObjectsWithImports.DeployParams | null} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedObjectsWithImportsError}
+     * @throws {@link errors.SeedObjectsWithImportsTimeoutError}
      *
      * @example
      *     await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", "id", {

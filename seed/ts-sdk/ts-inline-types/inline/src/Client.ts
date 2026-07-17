@@ -26,6 +26,9 @@ export class SeedObjectClient {
      * @param {SeedObject.PostRootRequest} request
      * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedObjectError}
+     * @throws {@link errors.SeedObjectTimeoutError}
+     *
      * @example
      *     await client.getRoot({
      *         bar: {
@@ -82,6 +85,9 @@ export class SeedObjectClient {
     /**
      * @param {SeedObject.GetDiscriminatedUnionRequest} request
      * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedObjectError}
+     * @throws {@link errors.SeedObjectTimeoutError}
      *
      * @example
      *     await client.getDiscriminatedUnion({
@@ -149,6 +155,9 @@ export class SeedObjectClient {
     /**
      * @param {SeedObject.GetUndiscriminatedUnionRequest} request
      * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedObjectError}
+     * @throws {@link errors.SeedObjectTimeoutError}
      *
      * @example
      *     await client.getUndiscriminatedUnion({

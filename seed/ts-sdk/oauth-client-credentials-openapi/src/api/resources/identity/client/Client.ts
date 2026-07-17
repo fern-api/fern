@@ -26,6 +26,9 @@ export class IdentityClient {
      * @param {SeedApi.GetTokenIdentityRequest} request
      * @param {IdentityClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.identity.getToken({
      *         username: "username",

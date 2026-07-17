@@ -26,6 +26,9 @@ export class AuthClient {
      * @param {SeedInferredAuthImplicit.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedInferredAuthImplicitError}
+     * @throws {@link errors.SeedInferredAuthImplicitTimeoutError}
+     *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
      *         client_id: "client_id",
@@ -86,6 +89,9 @@ export class AuthClient {
     /**
      * @param {SeedInferredAuthImplicit.RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedInferredAuthImplicitError}
+     * @throws {@link errors.SeedInferredAuthImplicitTimeoutError}
      *
      * @example
      *     await client.auth.refreshToken({

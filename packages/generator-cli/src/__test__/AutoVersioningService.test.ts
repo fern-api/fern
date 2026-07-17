@@ -721,6 +721,45 @@ describe("AutoVersioningService", () => {
 
         expect(cleaned).not.toContain("0.0.0-fern-placeholder");
         expect(cleaned).not.toContain("/0.0.0-fern-placeholder");
+        // The old-version deletions must be removed too — otherwise they reach the AI as
+        // orphan deletions and are misread as the headers being removed.
+        expect(cleaned).not.toContain('-                    "User-Agent": "/0.0.1",');
+        expect(cleaned).not.toContain('-                    "X-Fern-SDK-Version": "0.0.1",');
+    });
+
+    it("testCleanDiffForAI_userAgentBumpNotReportedAsRemoval", () => {
+        // Regression: git groups all deletions before all additions in a hunk, so when
+        // X-Fern-SDK-Version and User-Agent bump together the adjacency-only pairing left
+        // the User-Agent deletion behind. The AI then wrote a changelog claiming the
+        // User-Agent header was removed.
+        const diff =
+            "diff --git a/src/BaseClient.ts b/src/BaseClient.ts\n" +
+            "index 1111111..2222222 100644\n" +
+            "--- a/src/BaseClient.ts\n" +
+            "+++ b/src/BaseClient.ts\n" +
+            "@@ -52,6 +52,6 @@ export class BaseClient {\n" +
+            '                 "X-Fern-Language": "JavaScript",\n' +
+            '                 "X-Fern-SDK-Name": "@anduril/lattice-sdk",\n' +
+            '-                "X-Fern-SDK-Version": "4.18.0",\n' +
+            '-                "User-Agent": "@anduril/lattice-sdk/4.18.0",\n' +
+            '+                "X-Fern-SDK-Version": "0.0.0-fern-placeholder",\n' +
+            '+                "User-Agent": "@anduril/lattice-sdk/0.0.0-fern-placeholder",\n' +
+            '                 "X-Fern-Runtime": core.RUNTIME.type,\n';
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "0.0.0-fern-placeholder"
+        );
+
+        const survivingChanges = cleaned
+            .split("\n")
+            .filter(
+                (line) =>
+                    (line.startsWith("-") || line.startsWith("+")) && !line.startsWith("---") && !line.startsWith("+++")
+            );
+        expect(survivingChanges).toHaveLength(0);
+        expect(cleaned).not.toContain("User-Agent");
+        expect(cleaned).not.toContain("X-Fern-SDK-Version");
     });
 
     it("testReplaceMagicVersion_simpleFile", async () => {
