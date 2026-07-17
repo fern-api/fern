@@ -816,7 +816,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      */
     private writeServerVariableInterpolation(writer: Writer): void {
         const config = this.context.ir.environments;
-        const options = getServerVariableOptions(config, this.case);
+        const options = getServerVariableOptions(config, this.case, this.settings.serverUrlVariables);
         if (options.length === 0 || config == null) {
             return;
         }
