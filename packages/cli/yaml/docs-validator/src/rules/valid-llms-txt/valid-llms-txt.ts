@@ -3,8 +3,8 @@ import { resolveFilepath } from "@fern-api/configuration-loader";
 import { existsSync } from "fs";
 import { readFile } from "fs/promises";
 import { Rule, RuleViolation } from "../../Rule.js";
+import { resolveDocsNavigation } from "../../utils/resolve-docs-navigation.js";
 import { checkIfPathnameExists } from "../valid-markdown-link/check-if-pathname-exists.js";
-import { resolveDocsNavigation } from "../valid-markdown-link/resolve-docs-navigation.js";
 import { validateLlmsTxtContent } from "./validate-llms-txt-content.js";
 
 const RULE_NAME = "valid-llms-txt";

@@ -7,7 +7,7 @@ import { createLogger } from "@fern-api/logger";
 import { CliError, createMockTaskContext, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
-import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
+import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "../rules/valid-markdown-link/url-utils.js";
 
 /**
  * Build a task context for `DocsDefinitionResolver` during validation.

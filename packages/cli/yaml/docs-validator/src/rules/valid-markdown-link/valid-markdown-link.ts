@@ -12,9 +12,9 @@ import chalk from "chalk";
 import { randomUUID } from "crypto";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule.js";
+import { resolveDocsNavigation } from "../../utils/resolve-docs-navigation.js";
 import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
 import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
-import { resolveDocsNavigation } from "./resolve-docs-navigation.js";
 
 // Quiet task context used for markdown snippet resolution (`replaceReferencedMarkdown`)
 // and API workspace conversion, so validation doesn't emit resolver progress noise.
