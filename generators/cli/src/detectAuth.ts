@@ -403,8 +403,12 @@ function renderOAuthEndpoint(args: {
 
 export function renderRequestProperty(property: OAuthRequestPropertyBinding): string {
     if (property.location === "query") {
+        const name = property.path[property.path.length - 1];
+        if (name == null) {
+            throw new Error("OAuth2 query request property is missing a name");
+        }
         const builder = property.allowMultiple ? "query_multiple" : "query";
-        return `OAuth2RequestProperty::${builder}(${rustString(property.path[property.path.length - 1] ?? "")}, ${property.value})`;
+        return `OAuth2RequestProperty::${builder}(${rustString(name)}, ${property.value})`;
     }
     return `OAuth2RequestProperty::body(${renderRustStringArray(property.path)}, ${property.value})`;
 }

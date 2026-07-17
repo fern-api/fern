@@ -1,5 +1,6 @@
 use serde_json::Value;
 
+use crate::auth::oauth_common::read_oauth_env;
 use crate::error::CliError;
 
 #[derive(Debug, Clone)]
@@ -65,7 +66,7 @@ impl OAuth2RequestValue {
                 parse_json,
                 required,
             } => {
-                let Some(value) = read_env(name, *required)? else {
+                let Some(value) = read_oauth_env(name, *required, "token request")? else {
                     return Ok(None);
                 };
                 if *parse_json {
@@ -237,27 +238,6 @@ impl OAuth2Endpoint {
             .iter()
             .filter_map(|property| property.value.required_env_var())
     }
-}
-
-fn read_env(name: &str, required: bool) -> Result<Option<String>, CliError> {
-    let value = match std::env::var(name) {
-        Ok(value) => value,
-        Err(std::env::VarError::NotPresent) if !required => return Ok(None),
-        Err(_) => {
-            return Err(CliError::Auth(format!(
-                "Missing environment variable {name} (OAuth2 token request)"
-            )));
-        }
-    };
-    if value.trim().is_empty() {
-        if !required {
-            return Ok(None);
-        }
-        return Err(CliError::Auth(format!(
-            "Environment variable {name} (OAuth2 token request) must be non-empty"
-        )));
-    }
-    Ok(Some(value))
 }
 
 fn join_url(base_url: &str, path: &str) -> String {

@@ -28,8 +28,8 @@ use serde_json::{Map, Value};
 
 use crate::auth::oauth2_contract::{OAuth2BodyEncoding, OAuth2Endpoint, OAuth2RequestLocation};
 use crate::auth::oauth_common::{
-    atomic_write, config_dir, now_epoch, parse_oauth_error_message, token_http_client,
-    truncate_body, TokenBundle, TokenSuccessBody, EXPIRY_BUFFER_SECS,
+    atomic_write, config_dir, now_epoch, parse_oauth_error_message, read_oauth_env,
+    token_http_client, truncate_body, TokenBundle, TokenSuccessBody, EXPIRY_BUFFER_SECS,
 };
 use crate::auth::provider::{AuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
@@ -314,17 +314,11 @@ async fn parse_token_response(response: reqwest::Response) -> Result<TokenRespon
 }
 
 fn read_env(var: &str, label: &str) -> Result<String, CliError> {
-    let val = std::env::var(var).map_err(|_| {
+    read_oauth_env(var, true, label)?.ok_or_else(|| {
         CliError::Auth(format!(
-            "Missing environment variable {var} (OAuth2 {label})"
-        ))
-    })?;
-    if val.is_empty() {
-        return Err(CliError::Auth(format!(
             "Environment variable {var} (OAuth2 {label}) must be non-empty"
-        )));
-    }
-    Ok(val)
+        ))
+    })
 }
 
 #[derive(Debug, Clone)]
