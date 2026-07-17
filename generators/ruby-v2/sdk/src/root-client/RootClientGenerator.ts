@@ -1110,6 +1110,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
+        // Gate the whole feature (both the initializer options and the URL-template
+        // interpolation) on `serverUrlVariables`, which defaults to true. When it is
+        // explicitly false, return no options: the initializer loop emits no server-URL
+        // variable parameters and `getServerVariableInterpolationStatement` short-circuits
+        // on the empty list, restoring the pre-feature base-URL behavior.
+        if (this.context.customConfig.serverUrlVariables === false) {
+            return [];
+        }
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = RESERVED_OPTION_NAMES.has(snake) ? `server_url_${snake}` : snake;

@@ -36,6 +36,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Opt-in: emit the X-Fern-Runtime, X-Fern-Runtime-Version, and X-Fern-Platform
     // observability headers. Disabled by default so existing output is unchanged.
     includePlatformHeaders: z.boolean().optional(),
+    // Expose server URL variables (declared on the API's environments) as client
+    // initializer options and interpolate them into the base URL. Enabled by default;
+    // set to false to fall back to the pre-feature base-URL behavior (no server-URL-variable
+    // options and no URL-template interpolation).
+    serverUrlVariables: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
