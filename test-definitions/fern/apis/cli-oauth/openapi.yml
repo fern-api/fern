@@ -15,7 +15,7 @@ paths:
       parameters:
         - name: audience
           in: query
-          required: true
+          required: false
           schema:
             type: string
             enum:

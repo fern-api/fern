@@ -698,8 +698,11 @@
                             }
                         },
                         "typeReference": {
-                            "type": "named",
-                            "value": "type_auth:GetTokenAuthRequestAudience"
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_auth:GetTokenAuthRequestAudience"
+                            }
                         },
                         "propertyAccess": null,
                         "variable": null
