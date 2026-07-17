@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
-
-import { RootClientGenerator } from "../RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RootClientGenerator } from "../RootClientGenerator.js";
 
 /**
  * Builds a minimal mock context exposing only the fields that
