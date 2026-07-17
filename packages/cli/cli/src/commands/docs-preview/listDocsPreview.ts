@@ -5,6 +5,8 @@ import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 
+const PREVIEW_DOMAIN_SUFFIX = "docs.buildwithfern.com";
+
 interface PreviewDeployment {
     url: string;
     organizationId: string;
@@ -65,13 +67,16 @@ export async function listDocsPreview({
         }
 
         // The server already restricts results to preview deployments (preview: true maps
-        // to the isPreview column in FDR), so no client-side domain filtering is needed.
-        // A previous hex-only pattern here silently dropped named preview IDs (--id <name>).
-        const previewDeployments: PreviewDeployment[] = listResponse.urls.map((item) => ({
-            url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
-            organizationId: item.organizationId,
-            updatedAt: item.updatedAt
-        }));
+        // to the isPreview column in FDR). We only keep a domain-suffix check so custom
+        // domains are excluded; we intentionally do not constrain the preview ID portion,
+        // since a previous hex-only pattern here silently dropped named IDs (--id <name>).
+        const previewDeployments: PreviewDeployment[] = listResponse.urls
+            .filter((item) => item.domain.toLowerCase().endsWith(`.${PREVIEW_DOMAIN_SUFFIX}`))
+            .map((item) => ({
+                url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+                organizationId: item.organizationId,
+                updatedAt: item.updatedAt
+            }));
 
         if (previewDeployments.length === 0) {
             context.logger.info("No preview deployments found.");
