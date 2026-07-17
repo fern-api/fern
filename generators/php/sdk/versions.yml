@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.13.3
+  changelogEntry:
+    - summary: |
+        Emit a standalone `LICENSE` file at the repo root when a custom license is
+        configured (`license: { custom: ./LICENSE }` in the generator's `github` block).
+        Previously the PHP generator only set the `license` field in `composer.json` and
+        never wrote the license file itself, so GitHub license detection and compliance
+        scanners reported no license. This brings the PHP generator to parity with the
+        TypeScript, Python, Java, and Go generators.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 2.13.2
   changelogEntry:
     - summary: |
