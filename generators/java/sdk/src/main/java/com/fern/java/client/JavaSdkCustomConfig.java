@@ -136,6 +136,17 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return "legacy";
     }
 
+    /**
+     * If true (the default), emit server-URL-variable builder methods (e.g. {@code .region(...)}) on the client builder
+     * and interpolate those variables into the environment URL templates. When false, these builder methods and the
+     * URL-template interpolation are suppressed, falling back to the pre-feature base-URL behavior.
+     */
+    @Value.Default
+    @JsonProperty("serverUrlVariables")
+    default Boolean serverUrlVariables() {
+        return true;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

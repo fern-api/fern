@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.0
+  changelogEntry:
+    - summary: |
+        Add a `serverUrlVariables` option (boolean, default `true`) to `generators.yml`. When enabled (the
+        default), behavior is unchanged: the client builder exposes server-URL-variable methods and the
+        environment URL templates are interpolated with those variables. When disabled, both the builder
+        methods and the URL-template interpolation are suppressed, falling back to the base-URL behavior.
+      type: feat
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 4.14.4
   changelogEntry:
     - summary: |
