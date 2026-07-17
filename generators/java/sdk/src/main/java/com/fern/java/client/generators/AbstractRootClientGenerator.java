@@ -1171,6 +1171,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             Set.of("environment", "url", "timeout", "maxRetries", "httpClient");
 
     private List<ServerVariable> getServerVariables() {
+        if (!clientGeneratorContext.getCustomConfig().serverUrlVariables()) {
+            return new ArrayList<>();
+        }
+
         Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
         if (!envConfig.isPresent()) {
             return new ArrayList<>();
