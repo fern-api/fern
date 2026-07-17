@@ -212,7 +212,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const serverVariableOptions = getServerVariableOptions(
             this.context.ir.environments,
             this.case,
-            constructorParameters.all.map((parameter) => parameter.name)
+            constructorParameters.all.map((parameter) => parameter.name),
+            this.context.customConfig.serverUrlVariables
         );
 
         const parameters: php.Parameter[] = [];
