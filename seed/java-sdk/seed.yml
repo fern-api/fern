@@ -393,6 +393,18 @@ fixtures:
       outputMode: local_files
       outputFolder: source-root
       skipScripts: true
+  server-url-templating:
+    - outputFolder: .
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
+  server-url-templating-single-url:
+    - outputFolder: .
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
 scripts:
   docker:
     - image: fernapi/java-seed
