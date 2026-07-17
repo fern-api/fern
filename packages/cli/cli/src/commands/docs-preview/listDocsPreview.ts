@@ -5,10 +5,6 @@ import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 
-// Environment-aware: dev builds set this to docs.dev.buildwithfern.com so dev previews
-// are not filtered out. Falls back to the production suffix.
-const PREVIEW_DOMAIN_SUFFIX = process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com";
-
 interface PreviewDeployment {
     url: string;
     organizationId: string;
@@ -23,25 +19,19 @@ interface DocsUrlItem {
 }
 
 /**
- * Maps FDR docs-url items to preview deployments, keeping only Fern-hosted
- * domains for the current environment. Preview deployments are already filtered
- * server-side (preview: true -> isPreview), so we intentionally do NOT constrain
- * the preview ID portion here: a previous hex-only pattern silently dropped named
- * IDs (--id <name>, e.g. mr-2). The only client-side check is the domain suffix,
- * so custom domains are excluded.
+ * Maps FDR docs-url items to preview deployments. Preview deployments are
+ * filtered entirely server-side (preview: true -> the isPreview column in FDR),
+ * so there is intentionally NO client-side URL filtering: the domain suffix is
+ * shared with production sites and so can't distinguish previews, and any
+ * URL-shape filter here would risk silently hiding valid previews the server
+ * returned (as a prior hex-only pattern did to named --id previews).
  */
-export function filterPreviewDeployments(
-    urls: readonly DocsUrlItem[],
-    domainSuffix: string = PREVIEW_DOMAIN_SUFFIX
-): PreviewDeployment[] {
-    const suffix = `.${domainSuffix.toLowerCase()}`;
-    return urls
-        .filter((item) => item.domain.toLowerCase().endsWith(suffix))
-        .map((item) => ({
-            url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
-            organizationId: item.organizationId,
-            updatedAt: item.updatedAt
-        }));
+export function toPreviewDeployments(urls: readonly DocsUrlItem[]): PreviewDeployment[] {
+    return urls.map((item) => ({
+        url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+        organizationId: item.organizationId,
+        updatedAt: item.updatedAt
+    }));
 }
 
 export async function listDocsPreview({
@@ -97,7 +87,7 @@ export async function listDocsPreview({
             }
         }
 
-        const previewDeployments = filterPreviewDeployments(listResponse.urls);
+        const previewDeployments = toPreviewDeployments(listResponse.urls);
 
         if (previewDeployments.length === 0) {
             context.logger.info("No preview deployments found.");
