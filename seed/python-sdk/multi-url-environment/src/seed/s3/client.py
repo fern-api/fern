@@ -25,11 +25,11 @@ class S3Client:
         """
         return self._raw_client
 
-    def get_presigned_url(self, *, s3_key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def get_presigned_url(self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        s3_key : str
+        s3key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -46,10 +46,10 @@ class S3Client:
             token="YOUR_TOKEN",
         )
         client.s3.get_presigned_url(
-            s3_key="s3Key",
+            s3key="s3Key",
         )
         """
-        _response = self._raw_client.get_presigned_url(s3_key=s3_key, request_options=request_options)
+        _response = self._raw_client.get_presigned_url(s3key=s3key, request_options=request_options)
         return _response.data
 
 
@@ -68,11 +68,11 @@ class AsyncS3Client:
         """
         return self._raw_client
 
-    async def get_presigned_url(self, *, s3_key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    async def get_presigned_url(self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        s3_key : str
+        s3key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -94,11 +94,11 @@ class AsyncS3Client:
 
         async def main() -> None:
             await client.s3.get_presigned_url(
-                s3_key="s3Key",
+                s3key="s3Key",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_presigned_url(s3_key=s3_key, request_options=request_options)
+        _response = await self._raw_client.get_presigned_url(s3key=s3key, request_options=request_options)
         return _response.data

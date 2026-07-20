@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">create_oauth2_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">create_oauth2token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,7 @@ client = SeedPythonOauthTokenOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.create_oauth2_token(
+client.auth.create_oauth2token(
     client_id="my_oauth_app_123",
     client_secret="sk_live_abcdef123456789",
     grant_type="client_credentials",
