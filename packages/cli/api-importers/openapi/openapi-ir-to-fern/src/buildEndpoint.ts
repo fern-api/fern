@@ -60,7 +60,6 @@ export function buildEndpoint({
             fileContainingReference: declarationFile,
             namespace: maybeEndpointNamespace
         });
-        names.add(pathParameter.name);
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};

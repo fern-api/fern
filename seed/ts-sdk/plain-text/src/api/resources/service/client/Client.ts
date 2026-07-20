@@ -23,6 +23,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPlainTextError}
+     * @throws {@link errors.SeedPlainTextTimeoutError}
+     *
      * @example
      *     await client.service.getText()
      */
@@ -66,6 +69,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPlainTextError}
+     * @throws {@link errors.SeedPlainTextTimeoutError}
+     *
      * @example
      *     await client.service.getCsv()
      */
@@ -108,6 +114,9 @@ export class ServiceClient {
 
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPlainTextError}
+     * @throws {@link errors.SeedPlainTextTimeoutError}
      *
      * @example
      *     await client.service.getXml()

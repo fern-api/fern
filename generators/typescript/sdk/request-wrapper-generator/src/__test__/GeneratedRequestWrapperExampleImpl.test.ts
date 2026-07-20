@@ -95,14 +95,7 @@ function createMockContext(opts?: {
         getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValueOrString) => ({
             propertyName: caseConverter.camelUnsafe(name)
         }),
-        getCollidingPathParameterPropertyNames: () => new Set<string>(opts?.collidingPathParameterPropertyNames ?? []),
-        getInlinedPathParameterPropertyNameFromName: (name: FernIr.NameOrString) => {
-            const propertyName = caseConverter.camelUnsafe(name);
-            if ((opts?.collidingPathParameterPropertyNames ?? []).includes(propertyName)) {
-                return { propertyName: `${propertyName}PathParam` };
-            }
-            return { propertyName };
-        }
+        getCollidingPathParameterPropertyNames: () => new Set<string>(opts?.collidingPathParameterPropertyNames ?? [])
     };
 
     return {
@@ -1007,7 +1000,7 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
             expect(text).toContain("content");
         });
 
-        it("renames path params that collide with a body property to avoid duplicate keys", () => {
+        it("omits path params that collide with a body property to avoid duplicate keys", () => {
             const impl = createImpl({
                 example: createExampleEndpointCall({
                     endpointPathParameters: [
@@ -1037,7 +1030,6 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
             const text = getTextOfTsNode(result);
 
             expect(text.match(/idType:/g)?.length ?? 0).toBe(1);
-            expect(text.match(/idTypePathParam:/g)?.length ?? 0).toBe(1);
         });
     });
 

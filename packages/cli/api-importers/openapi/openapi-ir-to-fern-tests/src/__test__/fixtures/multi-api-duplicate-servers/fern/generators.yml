@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../messages-api.yml
+      namespace: messages
+    - openapi: ../conversations-api.yml
+      namespace: conversations
+    - openapi: ../oauth-api.yml
+      namespace: oauth
+  settings:
+    group-multi-api-environments: true

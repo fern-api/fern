@@ -53,6 +53,25 @@ class NullableClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->nullable->getUsers(
+     *     new GetUsersRequest([
+     *         'usernames' => [
+     *             'usernames',
+     *         ],
+     *         'avatar' => 'avatar',
+     *         'activated' => [
+     *             true,
+     *         ],
+     *         'tags' => [
+     *             'tags',
+     *         ],
+     *         'extra' => true,
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -116,6 +135,30 @@ class NullableClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->nullable->createUser(
+     *     new CreateUserRequest([
+     *         'username' => 'username',
+     *         'tags' => [
+     *             'tags',
+     *             'tags',
+     *         ],
+     *         'metadata' => new Metadata([
+     *             'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'avatar' => 'avatar',
+     *             'activated' => true,
+     *             'status' => Status::active(),
+     *             'values' => [
+     *                 'values' => 'values',
+     *             ],
+     *         ]),
+     *         'avatar' => 'avatar',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -163,6 +206,15 @@ class NullableClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->nullable->deleteUser(
+     *     new DeleteUserRequest([
+     *         'username' => 'xy',
+     *     ]),
+     * );
+     * ```
+     *
      * @param DeleteUserRequest $request
      * @param ?array{
      *   baseUrl?: string,

@@ -34,6 +34,13 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.User.GetUser(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "user_id",
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	tenantID string,
@@ -52,6 +59,20 @@ func (c *Client) GetUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.User{
+//	    Name: "name",
+//	    Tags: []string{
+//	        "tags",
+//	        "tags",
+//	    },
+//	}
+//	client.User.CreateUser(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	tenantID string,
@@ -70,6 +91,23 @@ func (c *Client) CreateUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.UpdateUserRequest{
+//	    Body: &fern.User{
+//	        Name: "name",
+//	        Tags: []string{
+//	            "tags",
+//	            "tags",
+//	        },
+//	    },
+//	}
+//	client.User.UpdateUser(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "user_id",
+//	    request,
+//	)
 func (c *Client) UpdateUser(
 	ctx context.Context,
 	tenantID string,
@@ -90,6 +128,19 @@ func (c *Client) UpdateUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.SearchUsersRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.User.SearchUsers(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "user_id",
+//	    request,
+//	)
 func (c *Client) SearchUsers(
 	ctx context.Context,
 	tenantID string,
@@ -111,6 +162,15 @@ func (c *Client) SearchUsers(
 }
 
 // Test endpoint with path parameter that has a text prefix (v{version})
+//
+// Example:
+//
+//	client.User.GetUserMetadata(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "user_id",
+//	    1,
+//	)
 func (c *Client) GetUserMetadata(
 	ctx context.Context,
 	tenantID string,
@@ -132,6 +192,16 @@ func (c *Client) GetUserMetadata(
 }
 
 // Test endpoint with path parameters listed in different order than found in path
+//
+// Example:
+//
+//	client.User.GetUserSpecifics(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    "user_id",
+//	    1,
+//	    "thought",
+//	)
 func (c *Client) GetUserSpecifics(
 	ctx context.Context,
 	tenantID string,

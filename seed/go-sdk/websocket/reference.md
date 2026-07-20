@@ -14,9 +14,8 @@
 
 ```go
 client.Status.GetStatus(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

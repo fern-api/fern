@@ -25,6 +25,9 @@ export class StatusClient {
     /**
      * @param {StatusClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedWebsocketError}
+     * @throws {@link errors.SeedWebsocketTimeoutError}
+     *
      * @example
      *     await client.status.getStatus()
      */

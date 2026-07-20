@@ -85,9 +85,14 @@ types:
       globalParameters:
         type: optional<list<globalParameters.GlobalParameterId>>
         docs: |
-          When a global parameter has `apply: explicit`, only endpoints
-          listed here receive the injection. Populated from the per-operation
-          `x-fern-global-parameter` extension.
+          The resolved set of global parameters that apply to this endpoint,
+          computed at IR-generation time. It combines explicit opt-ins (from the
+          per-operation `x-fern-global-parameter` extension) with `apply: auto`
+          parameters that match the endpoint. For body-location parameters,
+          membership is gated on the endpoint's request-body schema containing
+          the dotted target path. Generators should treat this as the
+          authoritative applicability set (a membership check) rather than
+          re-deriving applicability from `apply` modes.
       apiPlayground:
         type: optional<boolean>
         docs: Whether this endpoint is shown in the API playground

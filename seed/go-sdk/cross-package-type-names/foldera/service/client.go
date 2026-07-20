@@ -34,6 +34,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.FolderA.Service.GetDirectThread(
+//	    context.TODO(),
+//	)
 func (c *Client) GetDirectThread(
 	ctx context.Context,
 	opts ...option.RequestOption,

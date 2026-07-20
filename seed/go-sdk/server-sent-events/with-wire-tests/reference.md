@@ -14,13 +14,12 @@
 
 ```go
 request := &sse.StreamCompletionRequest{
-        Query: "foo",
-    }
-client.Completions.Stream(
-        context.TODO(),
-        request,
-    )
+    Query: "foo",
 }
+client.Completions.Stream(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -61,13 +60,12 @@ client.Completions.Stream(
 
 ```go
 request := &sse.StreamCompletionRequestWithoutTerminator{
-        Query: "query",
-    }
-client.Completions.StreamWithoutTerminator(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
 }
+client.Completions.StreamWithoutTerminator(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

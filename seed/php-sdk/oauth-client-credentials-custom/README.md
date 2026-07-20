@@ -52,6 +52,10 @@ $client->auth->getTokenWithClientCredentials(
         'audience' => 'https://api.example.com',
         'grantType' => 'client_credentials',
         'scope' => 'scope',
+        'permissions' => [
+            'permissions',
+            'permissions',
+        ],
     ]),
 );
 

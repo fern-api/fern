@@ -52,6 +52,16 @@ class DummyClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->dummy->generateStream(
+     *     new GenerateStreamRequest([
+     *         'stream' => true,
+     *         'numEvents' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param GenerateStreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -93,6 +103,16 @@ class DummyClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->dummy->generate(
+     *     new Generateequest([
+     *         'stream' => false,
+     *         'numEvents' => 5,
+     *     ]),
+     * );
+     * ```
+     *
      * @param Generateequest $request
      * @param ?array{
      *   baseUrl?: string,

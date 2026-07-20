@@ -21,6 +21,11 @@ client.auth().getTokenWithClientCredentials(
         .scp("scp")
         .entityId("entity_id")
         .scope("scope")
+        .permissions(
+            Optional.of(
+                Arrays.asList("permissions", "permissions")
+            )
+        )
         .build()
 );
 ```
@@ -86,6 +91,14 @@ client.auth().getTokenWithClientCredentials(
 <dd>
 
 **scope:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `Optional<List<String>>` 
     
 </dd>
 </dl>

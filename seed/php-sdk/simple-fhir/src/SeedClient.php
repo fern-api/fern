@@ -62,6 +62,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getAccount(
+     *     'account_id',
+     * );
+     * ```
+     *
      * @param string $accountId
      * @param ?array{
      *   baseUrl?: string,

@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Discriminated Union with Nested OneOf
+  version: 1.0.0
+paths:
+  /ast:
+    post:
+      operationId: createAst
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ASTNode"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ASTNode"
+components:
+  schemas:
+    ASTNode:
+      type: object
+      properties:
+        type:
+          type: string
+      required:
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          llm: "#/components/schemas/ASTLLMNode"
+          text: "#/components/schemas/ASTTextNode"
+          null_literal: "#/components/schemas/ASTNullNode"
+      oneOf:
+        - $ref: "#/components/schemas/ASTLLMNode"
+        - $ref: "#/components/schemas/ASTTextNode"
+        - $ref: "#/components/schemas/ASTNullNode"
+
+    ASTLLMNode:
+      description: |
+        A node representing an LLM call. This is a oneOf of two object shapes
+        sharing the same discriminant value, to test that the importer merges
+        them into a single object rather than wrapping in a "value" property.
+      oneOf:
+        - $ref: "#/components/schemas/ASTLLMNodeWithSchema"
+        - $ref: "#/components/schemas/ASTLLMNodeWithPrompt"
+
+    ASTLLMNodeWithSchema:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - llm
+        model:
+          type: string
+        value_schema:
+          type: object
+          additionalProperties: true
+      required:
+        - type
+        - model
+        - value_schema
+
+    ASTLLMNodeWithPrompt:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - llm
+        model:
+          type: string
+        prompt:
+          type: string
+      required:
+        - type
+        - model
+        - prompt
+
+    ASTTextNode:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - text
+        content:
+          type: string
+      required:
+        - type
+        - content
+
+    ASTNullNode:
+      type: object
+      properties:
+        type:
+          type: string
+          const: "null_literal"
+      required:
+        - type

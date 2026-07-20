@@ -13,16 +13,15 @@
 
 ```go
 request := &fern.CreateRequest{
-        Decimal: 2.2,
-        Even: 100,
-        Name: "fern",
-        Shape: fern.ShapeSquare,
-    }
-client.Create(
-        context.TODO(),
-        request,
-    )
+    Decimal: 2.2,
+    Even: 100,
+    Name: "fern",
+    Shape: fern.ShapeSquare,
 }
+client.Create(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -87,15 +86,14 @@ client.Create(
 
 ```go
 request := &fern.GetRequest{
-        Decimal: 2.2,
-        Even: 100,
-        Name: "fern",
-    }
-client.Get(
-        context.TODO(),
-        request,
-    )
+    Decimal: 2.2,
+    Even: 100,
+    Name: "fern",
 }
+client.Get(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

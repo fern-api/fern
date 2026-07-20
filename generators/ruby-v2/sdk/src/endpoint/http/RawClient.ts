@@ -22,7 +22,7 @@ export declare namespace RawClient {
         baseUrlName?: string;
     }
 
-    export type RequestBodyType = "json" | "bytes" | "multipartform";
+    export type RequestBodyType = "json" | "urlencoded" | "bytes" | "multipartform";
 }
 
 export class RawClient {
@@ -52,10 +52,13 @@ export class RawClient {
     }: RawClient.CreateHttpRequestWrapperArgs): ruby.CodeBlock | undefined {
         switch (requestType) {
             case "json":
+            case "urlencoded":
                 return ruby.codeblock((writer) => {
-                    writer.writeLine(
-                        `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
-                    );
+                    const requestClassReference =
+                        requestType === "urlencoded"
+                            ? this.context.getReferenceToInternalUrlEncodedRequest()
+                            : this.context.getReferenceToInternalJSONRequest();
+                    writer.writeLine(`${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${requestClassReference}.new(`);
                     writer.indent();
                     this.writeBaseUrlDeclaration(writer, baseUrlName);
                     writer.writeLine(",");
@@ -115,6 +118,12 @@ export class RawClient {
             writer.write(`path: `);
             this.writePathString({ writer, endpoint, pathParameterReferences });
             writer.writeLine(",");
+            if (headerBagReference != null) {
+                writer.writeLine(`headers: ${headerBagReference},`);
+            }
+            if (queryBagReference != null) {
+                writer.writeLine(`query: ${queryBagReference},`);
+            }
             writer.writeLine(`request_options: request_options`);
             writer.dedent();
             writer.write(`)`);

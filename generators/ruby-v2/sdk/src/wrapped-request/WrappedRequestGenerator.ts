@@ -4,7 +4,6 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { generateFields } from "@fern-api/ruby-model";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getInlinedPathParameterNames } from "../endpoint/utils/pathParameterNaming.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -38,24 +37,15 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         });
 
         for (const pathParameter of this.endpoint.allPathParameters) {
-            const { attributeName, wireName, isRenamed } = getInlinedPathParameterNames({
-                pathParameter,
-                endpoint: this.endpoint,
-                caseConverter: this.case
-            });
             properties.push({
                 ...pathParameter,
-                name: isRenamed
-                    ? {
-                          name: attributeName,
-                          wireValue: wireName
-                      }
-                    : {
-                          name: pathParameter.name,
-                          wireValue: getOriginalName(pathParameter.name)
-                      },
+                name: {
+                    name: pathParameter.name,
+                    wireValue: getOriginalName(pathParameter.name)
+                },
                 propertyAccess: undefined,
-                availability: undefined
+                availability: undefined,
+                defaultValue: undefined
             });
         }
 
@@ -85,6 +75,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                     valueType: reference.requestBodyType,
                     propertyAccess: undefined,
                     availability: undefined,
+                    defaultValue: undefined,
                     v2Examples: reference.v2Examples,
                     docs: reference.docs
                 });

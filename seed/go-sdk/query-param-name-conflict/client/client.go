@@ -35,6 +35,13 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.BulkUpdateTasksRequest{}
+//	client.BulkUpdateTasks(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) BulkUpdateTasks(
 	ctx context.Context,
 	request *fern.BulkUpdateTasksRequest,

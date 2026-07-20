@@ -13,7 +13,8 @@ module Seed
         headers: {
           "User-Agent" => "fern_bearer-token-environment-variable/0.0.1",
           "X-Fern-Language" => "Ruby",
-          Authorization: "Bearer #{token}"
+          Authorization: "Bearer #{token}",
+          "X-API-Version" => "1.0.0"
         },
         max_retries: max_retries
       )

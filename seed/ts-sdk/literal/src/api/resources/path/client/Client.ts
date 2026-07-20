@@ -25,6 +25,9 @@ export class PathClient {
      * @param {"123"} id
      * @param {PathClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
+     *
      * @example
      *     await client.path.send("123")
      */

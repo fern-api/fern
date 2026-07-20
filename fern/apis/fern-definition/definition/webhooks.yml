@@ -68,6 +68,12 @@ types:
         docs: |
           Defaults to body-only (components: [body], delimiter: "").
       timestamp: optional<WebhookTimestampSchema>
+      body-hash-binding:
+        type: optional<WebhookBodyHashBindingSchema>
+        docs: |
+          When set, the raw body is not signed directly; instead a hash of the body is
+          transmitted separately (e.g. Twilio's "bodySHA256" query parameter for JSON
+          bodies) and verification also recomputes and compares the body hash.
 
   AsymmetricSignatureSchema:
     properties:
@@ -148,6 +154,32 @@ types:
         value: notification-url
       - name: messageId
         value: message-id
+
+  WebhookBodyHashBindingSchema:
+    properties:
+      algorithm: WebhookBodyHashAlgorithmSchema
+      encoding:
+        type: optional<WebhookSignatureEncodingSchema>
+        docs: Defaults to base64.
+      location: WebhookBodyHashLocationSchema
+
+  WebhookBodyHashAlgorithmSchema:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookBodyHashLocationSchema:
+    discriminant: type
+    union:
+      query-parameter: WebhookBodyHashQueryParameterLocationSchema
+
+  WebhookBodyHashQueryParameterLocationSchema:
+    properties:
+      name:
+        type: string
+        docs: The query-parameter name that carries the body hash (e.g. "bodySHA256").
 
   AsymmetricAlgorithmSchema:
     enum:

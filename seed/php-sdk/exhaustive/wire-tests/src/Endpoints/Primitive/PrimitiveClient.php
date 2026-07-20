@@ -51,6 +51,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnString(
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -98,6 +105,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnInt(
+     *     1,
+     * );
+     * ```
+     *
      * @param int $request
      * @param ?array{
      *   baseUrl?: string,
@@ -145,6 +159,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnLong(
+     *     1000000,
+     * );
+     * ```
+     *
      * @param int $request
      * @param ?array{
      *   baseUrl?: string,
@@ -192,6 +213,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnDouble(
+     *     1.1,
+     * );
+     * ```
+     *
      * @param float $request
      * @param ?array{
      *   baseUrl?: string,
@@ -239,6 +267,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnBool(
+     *     true,
+     * );
+     * ```
+     *
      * @param bool $request
      * @param ?array{
      *   baseUrl?: string,
@@ -286,6 +321,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnDatetime(
+     *     new DateTime('2024-01-15T09:30:00Z'),
+     * );
+     * ```
+     *
      * @param DateTime $request
      * @param ?array{
      *   baseUrl?: string,
@@ -333,6 +375,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnDate(
+     *     new DateTime('2023-01-15'),
+     * );
+     * ```
+     *
      * @param DateTime $request
      * @param ?array{
      *   baseUrl?: string,
@@ -380,6 +429,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnUuid(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,
@@ -427,6 +483,13 @@ class PrimitiveClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->primitive->getAndReturnBase64(
+     *     'SGVsbG8gd29ybGQh',
+     * );
+     * ```
+     *
      * @param string $request
      * @param ?array{
      *   baseUrl?: string,

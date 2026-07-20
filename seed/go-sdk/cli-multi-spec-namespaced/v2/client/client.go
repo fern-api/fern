@@ -34,6 +34,13 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &v2.ListUsersRequest{}
+//	client.V2.ListUsers(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListUsers(
 	ctx context.Context,
 	request *v2.ListUsersRequest,

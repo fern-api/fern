@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/shapes",
+                "method": "POST",
+                "identifier_override": "endpoint_.create"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpUnionBaseProperties;\n\nvar client = new SeedCsharpUnionBasePropertiesClient();\nawait client.CreateAsync(\n    new Shape(new Shape.Circle(new Circle { Radius = 1.5 }))\n    {\n        Id = \"shape-1\",\n        CreatedAt = \"2024-01-01T00:00:00Z\",\n    }\n);\n"
+            }
+        }
+    ]
+}

@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedLiteralUserAgentClient } from "@fern/literal-user-agent";
 
-const client = new SeedLiteralUserAgentClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedLiteralUserAgentClient({ baseUrl: "YOUR_BASE_URL" });
 await client.ping();
 ```
 

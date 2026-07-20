@@ -669,6 +669,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": true,
+    "idempotencyKeyGeneration": null,
     "isAuthMandatory": false,
     "platformHeaders": {
       "language": "X-Fern-Language",

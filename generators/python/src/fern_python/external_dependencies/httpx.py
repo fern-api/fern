@@ -42,6 +42,16 @@ class HttpX:
         import_=AST.ReferenceImport(module=HTTPX_MODULE),
     )
 
+    HTTP_TRANSPORT = AST.ClassReference(
+        qualified_name_excluding_import=("HTTPTransport",),
+        import_=AST.ReferenceImport(module=HTTPX_MODULE),
+    )
+
+    ASYNC_HTTP_TRANSPORT = AST.ClassReference(
+        qualified_name_excluding_import=("AsyncHTTPTransport",),
+        import_=AST.ReferenceImport(module=HTTPX_MODULE),
+    )
+
     @staticmethod
     def query_params() -> AST.Expression:
         return AST.Expression(

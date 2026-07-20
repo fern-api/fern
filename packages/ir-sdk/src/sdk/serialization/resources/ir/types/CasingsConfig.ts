@@ -10,6 +10,7 @@ export const CasingsConfig: core.serialization.ObjectSchema<serializers.CasingsC
         generationLanguage: SupportedSdkLanguage.optional(),
         keywords: core.serialization.list(core.serialization.string()).optional(),
         smartCasing: core.serialization.boolean(),
+        smartCasingDigitWordBoundary: core.serialization.boolean().optional(),
     });
 
 export declare namespace CasingsConfig {
@@ -17,5 +18,6 @@ export declare namespace CasingsConfig {
         generationLanguage?: SupportedSdkLanguage.Raw | null;
         keywords?: string[] | null;
         smartCasing: boolean;
+        smartCasingDigitWordBoundary?: boolean | null;
     }
 }

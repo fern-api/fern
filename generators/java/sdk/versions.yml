@@ -1,4 +1,169 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.14.4
+  changelogEntry:
+    - summary: |
+        Make the smart-casing digit/word boundary behavior opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml`. By default, snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-4.13.4 output. When enabled, the word boundary after the digit run is
+        preserved (`conversations_v2_configuration`).
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.3
+  changelogEntry:
+    - summary: |
+        Endpoints without a request wrapper (no request object, or a request that is
+        just a body) now send service- and endpoint-level headers whose types are
+        literals (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers
+        were silently dropped because there was no request object to carry them.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.2
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` when constructing an OAuth-only client under multi-scheme
+        (`any`) auth combining OAuth client-credentials with an API-key header. Building via
+        `withCredentials(...)` (no `apiKey(...)`) previously baked a `null` API-key header into
+        `ClientOptions`, which crashed okhttp `Headers.of` on the first HTTP call (the token
+        fetch). The generated `setAuthentication` now guards the API-key header add on a non-null
+        value, and `ClientOptions.Builder.addHeader(String, String)` defensively skips null values.
+        Supplying both credentials and an API key still sends both the `Authorization: Bearer`
+        and the API-key header, and an API-key-only client still validates the key at build time.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.1
+  changelogEntry:
+    - summary: |
+        OAuth client credentials token requests now send `grant_type: "client_credentials"`
+        when the token endpoint declares a non-literal `grant_type` request property. The
+        property is synthesized in the token request and is no longer surfaced as a
+        builder option.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 4.14.0
+  changelogEntry:
+    - summary: |
+        Idempotency-key auto-generation is now driven by the IR (`SdkConfig.idempotencyKeyGeneration`)
+        instead of a per-generator config flag. When enabled, the SDK adds the configured idempotency
+        header on the configured HTTP methods unless the caller already supplied one. The header name
+        and eligible methods come from the IR, and generated output is unchanged when the feature is off.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 4.13.4
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Names like `ConversationsV2Configuration` now produce the snake_case
+        `conversations_v2_configuration` instead of `conversations_v2configuration`,
+        matching the camelCase and pascalCase variants.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 4.13.3
+  changelogEntry:
+    - summary: |
+        Upgrade the Java SDK generator to consume IR v67. The generated SDK output is unchanged.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 4.13.2
+  changelogEntry:
+    - summary: |
+        Fix the OAuth `OAuthTokenSupplier` generator to derive each get-token request
+        property's Java type from its IR `TypeReference` (via `PoetTypeNameMapper`)
+        instead of hardcoding `String`. Previously a non-string token-request property
+        (e.g. `permissions: Optional<List<String>>`) generated a `String` field and a
+        `.permissions(String)` builder call that did not match the request builder's
+        typed setter, breaking compilation of the entire SDK. The generated custom
+        property fields, constructor parameters, client-builder setters, and request
+        builder calls now use the property's real type.
+
+        To preserve backward compatibility, any get-token custom property whose real
+        type is `Optional<X>` also gets an unwrapped setter overload accepting `X`
+        directly (mirroring the request model's convenience setters), so existing
+        callers such as `.scope("value")` continue to compile unchanged.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 4.13.1
+  changelogEntry:
+    - summary: |
+        Make the generated `User-Agent` comply with the RFC 7230 token grammar. The
+        Maven coordinate in the product token now uses a dot instead of a colon, since
+        a colon is not a valid token character (e.g. `com.fern:imdb/0.0.1` becomes
+        `com.fern.imdb/0.0.1`); this applies to both the plain header value and the
+        structured value emitted when `includePlatformHeaders` is enabled. For the
+        structured value, the architecture label is also normalized so the 64-bit x86
+        aliases (`x64`, `amd64`, `x86_64`) all report as the canonical `x86_64`.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.13.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK clients,
+        of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+        (e.g. `com.fern:sdk/0.0.1 (linux; amd64) Java/17.0.13`). The os
+        (`System.getProperty("os.name")`, lowercased), arch (`System.getProperty("os.arch")`),
+        and runtime version (`System.getProperty("java.version")`) are resolved at runtime;
+        any segment that cannot be determined is omitted rather than emitted as `null`.
+        This is gated behind a new `includePlatformHeaders` config option and is disabled by
+        default, so existing generated output is unchanged. When enabled, the header is still
+        subject to `omit-fern-headers`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip and deflate encoded response bodies via a new
+        `ResponseDecompressionInterceptor` added to the generated `OkHttpClient`.
+        OkHttp only performs transparent gzip decompression when it adds the
+        `Accept-Encoding` header itself, so responses to requests with a
+        spec-defined `Accept-Encoding: gzip` header were previously returned as
+        raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 4.12.0
+  changelogEntry:
+    - summary: |
+        Add client builder options to customize the retry backoff schedule, alongside the existing
+        `maxRetries` option: `initialRetryDelayMillis` (default 1000), `maxRetryDelayMillis`
+        (default 60000), and `retryJitterFactor` (default 0.2). The options are available on both
+        the root client builder and `ClientOptions.Builder`.
+
+        ```java
+        Client client = Client.builder()
+            .maxRetries(3)
+            .initialRetryDelayMillis(500)
+            .maxRetryDelayMillis(30000)
+            .retryJitterFactor(0.1)
+            .build();
+        ```
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 4.11.2
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated OAuth and inferred-auth token
+        caches. `OAuthTokenSupplier` and `InferredAuthTokenSupplier` now use
+        double-checked locking with `volatile` cache fields, so the token/header
+        cache (a singleton shared across all request threads) is refreshed exactly
+        once under concurrent load (single-flight) and cached values are safely
+        published across threads. The cache-hit path stays lock-free.
+        `OAuthAuthProvider`'s existing double-checked locking is corrected by
+        marking its `accessToken`/`expiresAt` fields `volatile`. No public API
+        changes; generated code remains Java 8 compatible.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 66
 - version: 4.11.1
   changelogEntry:
     - summary: |

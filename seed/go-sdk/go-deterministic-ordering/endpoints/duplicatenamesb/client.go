@@ -36,6 +36,17 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Create endpoint for service B
+//
+// Example:
+//
+//	request := &fern.CreateRequestB{
+//	    Description: "description",
+//	    Count: 1,
+//	}
+//	client.Endpoints.DuplicateNamesB.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.CreateRequestB,
@@ -53,6 +64,19 @@ func (c *Client) Create(
 }
 
 // Get endpoint for service B
+//
+// Example:
+//
+//	request := &fern.GetRequestB{
+//	    ID: "id",
+//	    Expand: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Endpoints.DuplicateNamesB.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *fern.GetRequestB,
@@ -70,6 +94,21 @@ func (c *Client) Get(
 }
 
 // List endpoint for service B
+//
+// Example:
+//
+//	request := &fern.ListRequestB{
+//	    Cursor: fern.String(
+//	        "cursor",
+//	    ),
+//	    Size: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Endpoints.DuplicateNamesB.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *fern.ListRequestB,

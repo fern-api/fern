@@ -52,6 +52,11 @@ class V2Client
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->v1->listUsers();
+     * ```
+     *
      * @param ListUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,

@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAliasClient } from "@fern/alias";
 
-const client = new SeedAliasClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedAliasClient({ baseUrl: "YOUR_BASE_URL" });
 await client.get("typeId");
 ```
 

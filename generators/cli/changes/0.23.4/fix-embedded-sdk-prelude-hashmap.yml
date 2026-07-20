@@ -1,0 +1,11 @@
+- summary: |
+    Re-export `std::collections::{HashMap, HashSet}` from the embedded SDK
+    crate's `prelude`. The Rust SDK generator emits `use crate::prelude::*;`
+    in files that reference `HashMap`/`HashSet` by bare name — most notably
+    `error.rs`, whose error-body fields can resolve to
+    `Vec<HashMap<String, serde_json::Value>>`. The CLI generator previously
+    overwrote the standalone SDK prelude with only the types-crate re-export,
+    dropping the std re-export, so the generated `<binary>-sdk` crate failed
+    to compile with `cannot find type HashMap in this scope`. The embedded
+    prelude now mirrors the standalone SDK prelude for std collections.
+  type: fix

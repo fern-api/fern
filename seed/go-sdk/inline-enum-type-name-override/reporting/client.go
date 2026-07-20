@@ -34,6 +34,13 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.LoadRequest{}
+//	client.Reporting.Load(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Load(
 	ctx context.Context,
 	request *fern.LoadRequest,

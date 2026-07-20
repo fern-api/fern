@@ -35,6 +35,16 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.GenerateRequest{
+//	    Stream: false,
+//	    NumEvents: 5,
+//	}
+//	client.Dummy.Generate(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Generate(
 	ctx context.Context,
 	request *fern.GenerateRequest,

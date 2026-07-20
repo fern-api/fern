@@ -10,6 +10,7 @@ paths:
         - name: id
           in: path
           required: true
+          x-fern-parameter-name: pathId
           schema:
             type: string
       requestBody:
@@ -32,6 +33,7 @@ paths:
         - name: id
           in: path
           required: true
+          x-fern-parameter-name: pathId
           schema:
             type: string
       operationId: postWithNonNullableNamedRequestBodyType

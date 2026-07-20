@@ -18,6 +18,22 @@ impl HeadersClient {
         request: &SendLiteralsInHeadersRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
+        let options = {
+            let mut o = options.unwrap_or_default();
+            o.additional_headers
+                .entry("X-API-Version".to_string())
+                .or_insert_with(|| "02-02-2024".to_string());
+            o.additional_headers
+                .entry("X-API-Enable-Audit-Logging".to_string())
+                .or_insert_with(|| "true".to_string());
+            o.additional_headers
+                .entry("X-Endpoint-Version".to_string())
+                .or_insert_with(|| "02-12-2024".to_string());
+            o.additional_headers
+                .entry("X-Async".to_string())
+                .or_insert_with(|| "true".to_string());
+            Some(o)
+        };
         self.http_client
             .execute_request(
                 Method::POST,
@@ -26,6 +42,31 @@ impl HeadersClient {
                 None,
                 options,
             )
+            .await
+    }
+
+    pub async fn send_literals_only(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<SendResponse, ApiError> {
+        let options = {
+            let mut o = options.unwrap_or_default();
+            o.additional_headers
+                .entry("X-API-Version".to_string())
+                .or_insert_with(|| "02-02-2024".to_string());
+            o.additional_headers
+                .entry("X-API-Enable-Audit-Logging".to_string())
+                .or_insert_with(|| "true".to_string());
+            o.additional_headers
+                .entry("X-Endpoint-Version".to_string())
+                .or_insert_with(|| "02-12-2024".to_string());
+            o.additional_headers
+                .entry("X-Async".to_string())
+                .or_insert_with(|| "true".to_string());
+            Some(o)
+        };
+        self.http_client
+            .execute_request(Method::POST, "headers/literals-only", None, None, options)
             .await
     }
 }

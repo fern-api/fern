@@ -1,0 +1,115 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+        "endpoint_.setApprovedBill": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "setApprovedBill",
+                    "camelCase": {
+                        "unsafeName": "setApprovedBill",
+                        "safeName": "setApprovedBill"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "set_approved_bill",
+                        "safeName": "set_approved_bill"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SET_APPROVED_BILL",
+                        "safeName": "SET_APPROVED_BILL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SetApprovedBill",
+                        "safeName": "SetApprovedBill"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/Bill/approval/{idBill}/{approved}"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "idBill",
+                                "camelCase": {
+                                    "unsafeName": "idBill",
+                                    "safeName": "idBill"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id_bill",
+                                    "safeName": "id_bill"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID_BILL",
+                                    "safeName": "ID_BILL"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "IDBill",
+                                    "safeName": "IDBill"
+                                }
+                            },
+                            "wireValue": "idBill"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "approved",
+                                "camelCase": {
+                                    "unsafeName": "approved",
+                                    "safeName": "approved"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "approved",
+                                    "safeName": "approved"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "APPROVED",
+                                    "safeName": "APPROVED"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Approved",
+                                    "safeName": "Approved"
+                                }
+                            },
+                            "wireValue": "approved"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedVariablesClient } from "@fern/variables";
 
-const client = new SeedVariablesClient({ environment: "YOUR_BASE_URL", rootVariable: "YOUR_ROOT_VARIABLE" });
+const client = new SeedVariablesClient({ baseUrl: "YOUR_BASE_URL", rootVariable: "YOUR_ROOT_VARIABLE" });
 await client.service.post();
 ```
 

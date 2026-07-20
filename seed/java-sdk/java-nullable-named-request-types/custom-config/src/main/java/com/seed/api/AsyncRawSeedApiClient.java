@@ -35,16 +35,16 @@ public class AsyncRawSeedApiClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request) {
-        return postWithNullableNamedRequestBodyType(id, request, null);
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request) {
+        return postWithNullableNamedRequestBodyType(pathId, request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNullableNamedRequestBodyType(
-            String id, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
+            String pathId, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNullableNamedRequestBodyType")
-                .addPathSegment(id);
+                .addPathSegment(pathId);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -108,28 +108,28 @@ public class AsyncRawSeedApiClient {
         return future;
     }
 
-    public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(String id) {
+    public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(String pathId) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build());
+                pathId, NonNullableObject.builder().build());
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, RequestOptions requestOptions) {
+            String pathId, RequestOptions requestOptions) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build(), requestOptions);
+                pathId, NonNullableObject.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request) {
-        return postWithNonNullableNamedRequestBodyType(id, request, null);
+            String pathId, NonNullableObject request) {
+        return postWithNonNullableNamedRequestBodyType(pathId, request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String pathId, NonNullableObject request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNonNullableNamedRequestBodyType")
-                .addPathSegment(id);
+                .addPathSegment(pathId);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

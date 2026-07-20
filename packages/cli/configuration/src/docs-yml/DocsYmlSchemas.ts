@@ -246,7 +246,8 @@ export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),
-    datasources: z.array(AIChatDatasource).optional()
+    datasources: z.array(AIChatDatasource).optional(),
+    "mask-pii": z.boolean().optional()
 });
 
 // ===== Font schemas =====
@@ -539,7 +540,8 @@ export const JsFileConfig = z.union([z.string(), JsFileConfigSettings]);
 
 export const JsRemoteConfig = z.object({
     url: z.string(),
-    strategy: JsScriptStrategy.optional()
+    strategy: JsScriptStrategy.optional(),
+    "disable-sri": z.boolean().optional()
 });
 
 export const JsConfigOptions = z.union([JsRemoteConfig, JsFileConfig]);

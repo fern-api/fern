@@ -188,6 +188,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.MultipartFormRequest,
                 // AsIsFiles.NdJsonContent,
                 // AsIsFiles.NdJsonRequest,
+                AsIsFiles.DefaultHttpClientFactory,
                 AsIsFiles.QueryStringBuilder,
                 AsIsFiles.QueryStringConverter,
                 AsIsFiles.RawClient,
@@ -199,6 +200,9 @@ export class SdkGeneratorContext extends GeneratorContext {
 
         if (this.hasFormUrlEncodedEndpoints()) {
             files.push(AsIsFiles.FormRequest);
+        }
+        if (this.isIdempotencyKeyAutoGenerationEnabled()) {
+            files.push(AsIsFiles.IdempotencyHeaderExtensions);
         }
 
         if (this.settings.includeExceptionHandler) {
@@ -240,6 +244,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.QueryStringBuilderTests,
             AsIsFiles.Test.QueryStringConverterTests,
             AsIsFiles.Test.WithRawResponseTests,
+            AsIsFiles.Test.RawClientTests.GzipResponseTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
@@ -346,12 +351,13 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getOauth(): FernIr.OAuthScheme | undefined {
-        if (
-            this.ir.auth.schemes[0] != null &&
-            this.ir.auth.schemes[0].type === "oauth" &&
-            this.config.generateOauthClients
-        ) {
-            return this.ir.auth.schemes[0];
+        if (!this.config.generateOauthClients) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return scheme;
+            }
         }
         return undefined;
     }

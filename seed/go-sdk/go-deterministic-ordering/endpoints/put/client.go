@@ -35,6 +35,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.PutRequest{
+//	    ID: "id",
+//	}
+//	client.Endpoints.Put.Add(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Add(
 	ctx context.Context,
 	request *fern.PutRequest,
