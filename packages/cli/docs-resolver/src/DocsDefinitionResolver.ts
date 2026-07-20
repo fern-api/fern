@@ -1759,10 +1759,10 @@ export class DocsDefinitionResolver {
         parentAvailability?: docsYml.RawSchemas.Availability;
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const apiWorkspace = this.getFernWorkspaceForApiSection(item);
 
         let ir: IntermediateRepresentation | undefined = undefined;
         let workspace: FernWorkspace | undefined = undefined;
+        let apiWorkspace: AbstractAPIWorkspace<unknown> | undefined = undefined;
         let openapiWorkspace: OSSWorkspace | undefined = undefined;
         let openapiError: unknown = undefined;
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
@@ -1816,6 +1816,7 @@ export class DocsDefinitionResolver {
             if (this.apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
+            apiWorkspace = this.getFernWorkspaceForApiSection(item);
             workspace = await apiWorkspace.toFernWorkspace(
                 { context: this.taskContext },
                 {
@@ -1847,6 +1848,7 @@ export class DocsDefinitionResolver {
             // for dynamic snippet generation and AI example enhancement, which require
             // access to generators.yml configuration and source file paths.
             try {
+                apiWorkspace = this.getFernWorkspaceForApiSection(item);
                 workspace = await apiWorkspace.toFernWorkspace(
                     { context: this.taskContext },
                     {
@@ -1863,6 +1865,8 @@ export class DocsDefinitionResolver {
                     `Could not load workspace: ${error}. Dynamic snippets and AI examples may not be available.`
                 );
             }
+        } else {
+            apiWorkspace = openapiWorkspace;
         }
 
         // Apply environment variable substitution to the IR if enabled in docs.yml settings
@@ -1898,7 +1902,7 @@ export class DocsDefinitionResolver {
         // otherwise fall back to the workspace's folder name for FDR registration.
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
         const apiNameForRegistration =
-            item.apiName ?? workspace?.workspaceName ?? apiWorkspace.workspaceName ?? openapiWorkspace?.workspaceName;
+            item.apiName ?? workspace?.workspaceName ?? apiWorkspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
         // Use a temporary API definition ID for building the navigation tree.
         // The real ID will be assigned after markdownFilesToPathName is available,
@@ -1931,7 +1935,7 @@ export class DocsDefinitionResolver {
             parentAvailability ?? item.availability,
             openApiTags,
             graphqlData.namespacesByOperationId,
-            workspace == null ? apiWorkspace.changelog?.files.map((file) => file.absoluteFilepath) : undefined
+            workspace == null ? apiWorkspace?.changelog?.files.map((file) => file.absoluteFilepath) : undefined
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages

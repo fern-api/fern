@@ -7,7 +7,7 @@ import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
 
 const FIXTURE_DIR = resolve(AbsoluteFilePath.of(__dirname), "fixtures/openapi-latest/fern");
 
-async function resolveDocs(includeApiWorkspaceInRegistration: boolean) {
+async function resolveDocs(includeApiWorkspaceInRegistration: boolean, duplicateApiWorkspace = false) {
     const context = createMockTaskContext();
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: FIXTURE_DIR,
@@ -33,7 +33,7 @@ async function resolveDocs(includeApiWorkspaceInRegistration: boolean) {
         domain: "example.docs.buildwithfern.com",
         docsWorkspace,
         ossWorkspaces: [result.workspace],
-        apiWorkspaces: [result.workspace],
+        apiWorkspaces: duplicateApiWorkspace ? [result.workspace, result.workspace] : [result.workspace],
         taskContext: context,
         registerApi,
         includeApiWorkspaceInRegistration
@@ -56,5 +56,12 @@ describe("API workspace registration", () => {
         expect(withoutWorkspace.toFernWorkspace).not.toHaveBeenCalled();
         expect(withoutWorkspace.registerApi.mock.calls[0]?.[0].workspace).toBeUndefined();
         expect(withoutWorkspace.definition).toEqual(withWorkspace.definition);
+    });
+
+    it("does not require a uniquely resolved Fern workspace when the OpenAPI workspace is available", async () => {
+        const result = await resolveDocs(false, true);
+
+        expect(result.toFernWorkspace).not.toHaveBeenCalled();
+        expect(result.definition).toBeDefined();
     });
 });
