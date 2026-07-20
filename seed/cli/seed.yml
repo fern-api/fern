@@ -104,6 +104,11 @@ fixtures:
     - customConfig:
         binaryName: acme-versioned
       outputFolder: no-custom-config
+  cli-oauth:
+    - customConfig:
+        binaryName: oauth-test
+        customCommands: false
+      outputFolder: client-credentials
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures

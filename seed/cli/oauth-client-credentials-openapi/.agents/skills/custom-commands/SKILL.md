@@ -87,6 +87,15 @@ let result = super::sdk::block_on(
 use oauth_client_credentials_openapi_sdk::api::*;
 ```
 
+### 4. Authentication
+
+Custom commands automatically inherit the CLI's authentication.
+The following auth schemes are configured:
+
+- **CustomAuth** (oauth-client-credentials): env `OAUTH_CLIENT_CREDENTIALS_OPENAPI_CLIENT_ID`, `OAUTH_CLIENT_CREDENTIALS_OPENAPI_CLIENT_SECRET`
+
+No manual auth wiring is needed in custom command handlers.
+
 ## Regeneration Safety
 
 | File | Regenerated? | Notes |

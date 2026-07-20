@@ -21,10 +21,18 @@ thing: the literal bytes baked into `main.rs` via `include_str!`. We do
 **not** walk `info.title` or `components.securitySchemes` — those are
 either redundant with or strictly less rich than the IR.
 
+OAuth **client-credentials** is driven entirely from the IR's `oauth`
+auth scheme (`configuration.clientCredentials`), matching the SDK
+generators. The generator lowers the token and refresh endpoint contracts,
+including methods, request locations and paths, custom values, response
+paths, scopes, token application, and environment URLs, into structured
+runtime descriptors. Interactive flows (PKCE, device-code) are not modeled
+by the IR and are not emitted.
+
 We deserialize through `@fern-fern/ir-sdk`'s `IrSerialization`, so
 downstream code consumes typed `FernIr.IntermediateRepresentation` /
-`FernIr.AuthScheme` values directly (with `_visit` for exhaustive
-dispatch). No hand-rolled IR types live in this generator.
+`FernIr.AuthScheme` values directly (with `visitDiscriminatedUnion` for
+exhaustive dispatch). No hand-rolled IR types live in this generator.
 
 ## Architecture
 
@@ -86,8 +94,8 @@ the path the patched Cargo.toml references).
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName` and `customCommands` (unified flag controlling types/SDK/glue generation). |
-| [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, and two-field basic go to root (typed builders like `BasicAuth`) so `auth status` enumerates them; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`. |
+| [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` via `visitDiscriminatedUnion` and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, OAuth, and two-field basic go to root; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
 | [`./sdk/`](./sdk/) | Hand-authored Rust SDK — the bulk of the CLI's runtime behavior. Edit this when you need to extend what `CliApp` can do. |
@@ -114,7 +122,7 @@ The derived name flows through:
 ## Auth detection
 
 Each scheme in the IR's `auth.schemes` is visited via
-`FernIr.AuthScheme._visit` and produces a binding **only if the SDK's
+`visitDiscriminatedUnion` and produces a binding **only if the SDK's
 `provider_for_binding` supports it**:
 
 | IR variant | Emitted call | Env var source |
@@ -123,7 +131,8 @@ Each scheme in the IR's `auth.schemes` is visited via
 | `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
 | `basic` (both halves bound) | `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))` at root, so `auth status` enumerates it [FER-11474] | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}` |
 | `basic` (`usernameOmit`/`passwordOmit`) | `.auth_provider("<key>", BasicAuthProvider::…)` — stays binding-level; no root path for `BasicAuthProvider` | the bound half's env var; omitted half is a literal `""` |
-| `oauth`, `inferred`, `_other` | Skipped — the SDK has no runtime provider yet | — |
+| `oauth` (`clientCredentials`) | `.auth(OAuth2Auth::new("<key>").client_id_env(...).client_secret_env(...).token_endpoint(OAuth2Endpoint::new(...))...)` at root, with structured token/refresh request and response mappings | `scheme.clientId/clientSecretEnvVar` plus deterministic env vars for custom request properties; optional properties are omitted when unset |
+| `oauth` (other config), `inferred`, `_other` | Skipped — no IR-modeled runtime provider | — |
 
 Env-var names come from the IR first because that's where the user's
 `generators.yml`-declared values end up after Fern resolves them. The
