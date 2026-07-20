@@ -20,6 +20,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.property_based_error.throw_error
+      #
       # @return [String]
       def throw_error(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(

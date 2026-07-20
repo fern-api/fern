@@ -21,6 +21,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :limit
       #
+      # @example
+      #   client.user.list(limit: 1)
+      #
       # @return [Array[Seed::User::Types::User]]
       def list(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

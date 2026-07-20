@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.union.get(request: "string")
+      #
       # @return [Seed::Union::Types::MyUnion]
       def get(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -50,6 +53,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.union.get_metadata
+      #
       # @return [Hash[Seed::Union::Types::Key, String]]
       def get_metadata(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -79,6 +85,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.union.update_metadata(request: {
+      #     string: {
+      #       key: "value"
+      #     }
+      #   })
       #
       # @return [Boolean]
       def update_metadata(request_options: {}, **params)
@@ -110,6 +123,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.union.call(union: {
+      #     string: {
+      #       key: "value"
+      #     }
+      #   })
+      #
       # @return [Boolean]
       def call(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -139,6 +159,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.union.duplicate_types_union(request: "string")
       #
       # @return [Seed::Union::Types::UnionWithDuplicateTypes]
       def duplicate_types_union(request_options: {}, **params)
@@ -172,6 +195,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.union.nested_unions(request: "string")
+      #
       # @return [String]
       def nested_unions(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -201,6 +227,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.union.nested_object_unions(request: "string")
       #
       # @return [String]
       def nested_object_unions(request_options: {}, **params)
@@ -232,6 +261,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.union.aliased_object_union(request: {
+      #     only_in_a: "onlyInA",
+      #     shared_number: 1
+      #   })
+      #
       # @return [String]
       def aliased_object_union(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -261,6 +296,16 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.union.get_with_base_properties(
+      #     name: "name",
+      #     value: {
+      #       value: {
+      #         key: "value"
+      #       }
+      #     }
+      #   )
       #
       # @return [Seed::Union::Types::UnionWithBaseProperties]
       def get_with_base_properties(request_options: {}, **params)
@@ -293,6 +338,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.union.test_camel_case_properties(payment_method: {
+      #     method_: "card",
+      #     card_number: "1234567890123456"
+      #   })
       #
       # @return [String]
       def test_camel_case_properties(request_options: {}, **params)

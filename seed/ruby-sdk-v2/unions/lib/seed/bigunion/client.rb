@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
       #
+      # @example
+      #   client.bigunion.get(id: "id")
+      #
       # @return [Seed::Bigunion::Types::BigUnion]
       def get(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -50,6 +53,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.bigunion.update
+      #
       # @return [Boolean]
       def update(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -79,6 +85,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.bigunion.update_many(request: [])
       #
       # @return [Hash[String, Boolean]]
       def update_many(request_options: {}, **params)

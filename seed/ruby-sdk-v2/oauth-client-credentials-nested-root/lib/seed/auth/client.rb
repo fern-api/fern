@@ -18,6 +18,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.auth.get_token(
+      #     client_id: "client_id",
+      #     client_secret: "client_secret",
+      #     audience: "https://api.example.com",
+      #     grant_type: "client_credentials",
+      #     scope: "scope"
+      #   )
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

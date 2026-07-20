@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.catalog.create_catalog_image
+      #
       # @return [Seed::Types::CatalogImage]
       def create_catalog_image(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -60,6 +63,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :image_id
+      #
+      # @example
+      #   client.catalog.get_catalog_image(image_id: "image_id")
       #
       # @return [Seed::Types::CatalogImage]
       def get_catalog_image(request_options: {}, **params)

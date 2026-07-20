@@ -22,6 +22,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.files.upload(
+      #     name: "name",
+      #     parent_id: "parent_id"
+      #   )
+      #
       # @return [String]
       def upload(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

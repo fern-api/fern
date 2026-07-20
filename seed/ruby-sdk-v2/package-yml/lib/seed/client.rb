@@ -11,6 +11,13 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :id
     #
+    # @example
+    #   client.echo(
+    #     id: "id-ksfd9c1",
+    #     name: "Hello world!",
+    #     size: 20
+    #   )
+    #
     # @return [String]
     def echo(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)

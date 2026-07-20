@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.completions.stream(query: "foo")
+      #
       # @return [untyped]
       def stream(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -47,6 +50,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.completions.stream_events(query: "query")
       #
       # @return [untyped]
       def stream_events(request_options: {}, **params)
@@ -78,6 +84,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.completions.stream_events_discriminant_in_data(query: "query")
+      #
       # @return [untyped]
       def stream_events_discriminant_in_data(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -107,6 +116,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.completions.stream_events_context_protocol(query: "query")
       #
       # @return [untyped]
       def stream_events_context_protocol(request_options: {}, **params)
