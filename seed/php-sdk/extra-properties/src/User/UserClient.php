@@ -50,6 +50,17 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->createUser(
+     *     new CreateUserRequest([
+     *         'type' => 'CreateUserRequest',
+     *         'version' => 'v1',
+     *         'name' => 'Alice',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,

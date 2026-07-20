@@ -47,6 +47,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->endpoint();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

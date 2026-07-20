@@ -51,6 +51,11 @@ class ServiceClient
     /**
      * GET request with a version header
      *
+     * Example:
+     * ```php
+     * $client->service->getWithApiVersion();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

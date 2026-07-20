@@ -55,6 +55,16 @@ class PaginationClient
     /**
      * List items with cursor pagination
      *
+     * Example:
+     * ```php
+     * $client->endpoints->pagination->listItems(
+     *     new ListItemsRequest([
+     *         'cursor' => 'cursor',
+     *         'limit' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListItemsRequest $request
      * @param ?array{
      *   baseUrl?: string,

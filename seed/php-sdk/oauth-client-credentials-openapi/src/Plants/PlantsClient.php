@@ -50,6 +50,11 @@ class PlantsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->plants->list();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -95,6 +100,13 @@ class PlantsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->plants->get(
+     *     'plantId',
+     * );
+     * ```
+     *
      * @param string $plantId
      * @param ?array{
      *   baseUrl?: string,

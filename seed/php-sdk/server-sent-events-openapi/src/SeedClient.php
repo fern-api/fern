@@ -87,6 +87,13 @@ class SeedClient
     /**
      * Uses discriminator with mapping, x-fern-discriminator-context set to protocol. Because the discriminant is at the protocol level, the data field can be any type or absent entirely. Demonstrates heartbeat (no data), string literal, number literal, and object data payloads.
      *
+     * Example:
+     * ```php
+     * $client->streamProtocolNoCollision(
+     *     new StreamRequest([]),
+     * );
+     * ```
+     *
      * @param StreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -129,6 +136,13 @@ class SeedClient
 
     /**
      * Same as endpoint 1, but the object data payload contains its own "event" property, which collides with the SSE envelope's "event" discriminator field. Tests whether generators correctly separate the protocol-level discriminant from the data-level field when context=protocol is specified.
+     *
+     * Example:
+     * ```php
+     * $client->streamProtocolCollision(
+     *     new StreamRequest([]),
+     * );
+     * ```
      *
      * @param StreamRequest $request
      * @param ?array{
@@ -173,6 +187,13 @@ class SeedClient
     /**
      * x-fern-discriminator-context is explicitly set to "data" (the default value). Each variant uses allOf to extend a payload schema and adds the "event" discriminant property at the same level. There is no "data" wrapper. The discriminant and payload fields coexist in a single flat object. This matches the real-world pattern used by customers with context=data.
      *
+     * Example:
+     * ```php
+     * $client->streamDataContext(
+     *     new StreamRequest([]),
+     * );
+     * ```
+     *
      * @param StreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -215,6 +236,13 @@ class SeedClient
 
     /**
      * The x-fern-discriminator-context extension is omitted entirely. Tests whether Fern correctly infers the default behavior (context=data) when the extension is absent. Same flat allOf pattern as endpoint 3.
+     *
+     * Example:
+     * ```php
+     * $client->streamNoContext(
+     *     new StreamRequest([]),
+     * );
+     * ```
      *
      * @param StreamRequest $request
      * @param ?array{
@@ -259,6 +287,13 @@ class SeedClient
     /**
      * Mismatched combination: context=protocol with the flat allOf schema pattern that is normally used with context=data. Shows what happens when the discriminant is declared as protocol-level but the schema uses allOf to flatten the event field alongside payload fields instead of wrapping them in a data field.
      *
+     * Example:
+     * ```php
+     * $client->streamProtocolWithFlatSchema(
+     *     new StreamRequest([]),
+     * );
+     * ```
+     *
      * @param StreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -301,6 +336,13 @@ class SeedClient
 
     /**
      * Mismatched combination: context=data with the envelope+data schema pattern that is normally used with context=protocol. Shows what happens when the discriminant is declared as data-level but the schema separates the event field and data field into an envelope structure.
+     *
+     * Example:
+     * ```php
+     * $client->streamDataContextWithEnvelopeSchema(
+     *     new StreamRequest([]),
+     * );
+     * ```
      *
      * @param StreamRequest $request
      * @param ?array{
@@ -345,6 +387,13 @@ class SeedClient
     /**
      * Follows the pattern from the OAS 3.2 specification's own SSE example. The itemSchema extends a base Event schema via $ref and uses inline oneOf variants with const on the event field to distinguish event types. Data fields use contentSchema/contentMediaType for structured payloads. No discriminator object is used. Event type resolution relies on const matching.
      *
+     * Example:
+     * ```php
+     * $client->streamOasSpecNative(
+     *     new StreamRequest([]),
+     * );
+     * ```
+     *
      * @param StreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -388,6 +437,16 @@ class SeedClient
     /**
      * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
      *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingConditionStream(
+     *     new StreamXFernStreamingConditionStreamRequest([
+     *         'query' => 'query',
+     *         'stream' => true,
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamXFernStreamingConditionStreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -430,6 +489,16 @@ class SeedClient
 
     /**
      * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+     *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingConditionStream(
+     *     new StreamXFernStreamingConditionStreamRequest([
+     *         'query' => 'query',
+     *         'stream' => false,
+     *     ]),
+     * );
+     * ```
      *
      * @param StreamXFernStreamingConditionRequest $request
      * @param ?array{
@@ -480,6 +549,17 @@ class SeedClient
     /**
      * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
      *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingSharedSchemaStream(
+     *     new StreamXFernStreamingSharedSchemaStreamRequest([
+     *         'prompt' => 'prompt',
+     *         'model' => 'model',
+     *         'stream' => true,
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamXFernStreamingSharedSchemaStreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -522,6 +602,17 @@ class SeedClient
 
     /**
      * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+     *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingSharedSchemaStream(
+     *     new StreamXFernStreamingSharedSchemaStreamRequest([
+     *         'prompt' => 'prompt',
+     *         'model' => 'model',
+     *         'stream' => false,
+     *     ]),
+     * );
+     * ```
      *
      * @param StreamXFernStreamingSharedSchemaRequest $request
      * @param ?array{
@@ -572,6 +663,16 @@ class SeedClient
     /**
      * A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
      *
+     * Example:
+     * ```php
+     * $client->validateCompletion(
+     *     new SharedCompletionRequest([
+     *         'prompt' => 'prompt',
+     *         'model' => 'model',
+     *     ]),
+     * );
+     * ```
+     *
      * @param SharedCompletionRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -621,6 +722,17 @@ class SeedClient
     /**
      * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
      *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingUnionStream(
+     *     StreamXFernStreamingUnionStreamRequest::message(true, new UnionStreamMessageVariant([
+     *         'streamResponse' => true,
+     *         'prompt' => 'prompt',
+     *         'message' => 'message',
+     *     ])),
+     * );
+     * ```
+     *
      * @param StreamXFernStreamingUnionStreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -663,6 +775,17 @@ class SeedClient
 
     /**
      * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+     *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingUnionStream(
+     *     StreamXFernStreamingUnionStreamRequest::message(false, new UnionStreamMessageVariant([
+     *         'streamResponse' => false,
+     *         'prompt' => 'prompt',
+     *         'message' => 'message',
+     *     ])),
+     * );
+     * ```
      *
      * @param StreamXFernStreamingUnionRequest $request
      * @param ?array{
@@ -713,6 +836,15 @@ class SeedClient
     /**
      * References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
      *
+     * Example:
+     * ```php
+     * $client->validateUnionRequest(
+     *     new UnionStreamRequestBase([
+     *         'prompt' => 'prompt',
+     *     ]),
+     * );
+     * ```
+     *
      * @param UnionStreamRequestBase $request
      * @param ?array{
      *   baseUrl?: string,
@@ -762,6 +894,16 @@ class SeedClient
     /**
      * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
      *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingNullableConditionStream(
+     *     new StreamXFernStreamingNullableConditionStreamRequest([
+     *         'query' => 'query',
+     *         'stream' => true,
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamXFernStreamingNullableConditionStreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -804,6 +946,16 @@ class SeedClient
 
     /**
      * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+     *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingNullableConditionStream(
+     *     new StreamXFernStreamingNullableConditionStreamRequest([
+     *         'query' => 'query',
+     *         'stream' => false,
+     *     ]),
+     * );
+     * ```
      *
      * @param StreamXFernStreamingNullableConditionRequest $request
      * @param ?array{
@@ -853,6 +1005,13 @@ class SeedClient
 
     /**
      * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+     *
+     * Example:
+     * ```php
+     * $client->streamXFernStreamingSseOnly(
+     *     new StreamRequest([]),
+     * );
+     * ```
      *
      * @param StreamRequest $request
      * @param ?array{
