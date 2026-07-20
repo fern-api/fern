@@ -1,0 +1,70 @@
+<?php
+
+namespace Seed;
+
+use Seed\Service\ServiceClient;
+use Psr\Http\Client\ClientInterface;
+use Seed\Core\Client\RawClient;
+
+class SeedClient
+{
+    /**
+     * @var ServiceClient $service
+     */
+    public ServiceClient $service;
+
+    /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
+     */
+    private array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
+
+    /**
+     * @param ?string $version
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
+     */
+    public function __construct(
+        ?string $version = null,
+        ?array $options = null,
+    ) {
+        $version ??= getenv('MY_API_VERSION') ?: null;
+        $defaultHeaders = [
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
+        ];
+        if ($version != null) {
+            $defaultHeaders['X-API-Version'] = $version;
+        }
+
+        $this->options = $options ?? [];
+
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
+
+        $this->service = new ServiceClient($this->client, $this->options);
+    }
+}

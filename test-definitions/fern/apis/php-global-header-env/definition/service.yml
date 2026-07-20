@@ -1,0 +1,9 @@
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getWithApiVersion:
+      docs: GET request with a version header
+      path: /apiVersion
+      method: GET
+      response: string
