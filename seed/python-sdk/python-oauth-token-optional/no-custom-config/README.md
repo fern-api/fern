@@ -43,7 +43,7 @@ client = SeedPythonOauthTokenOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.create_oauth2_token(
+client.auth.create_oauth2token(
     client_id="my_oauth_app_123",
     client_secret="sk_live_abcdef123456789",
     grant_type="client_credentials",
@@ -67,7 +67,7 @@ client = AsyncSeedPythonOauthTokenOptional(
 
 
 async def main() -> None:
-    await client.auth.create_oauth2_token(
+    await client.auth.create_oauth2token(
         client_id="my_oauth_app_123",
         client_secret="sk_live_abcdef123456789",
         grant_type="client_credentials",
@@ -86,7 +86,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.auth.create_oauth2_token(...)
+    client.auth.create_oauth2token(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -124,7 +124,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import SeedPythonOauthTokenOptional
 
 client = SeedPythonOauthTokenOptional(...)
-response = client.auth.with_raw_response.create_oauth2_token(...)
+response = client.auth.with_raw_response.create_oauth2token(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -155,7 +155,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.create_oauth2_token(..., request_options={
+client.auth.create_oauth2token(..., request_options={
     "max_retries": 1
 })
 ```
@@ -170,7 +170,7 @@ from seed import SeedPythonOauthTokenOptional
 client = SeedPythonOauthTokenOptional(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.auth.create_oauth2_token(..., request_options={
+client.auth.create_oauth2token(..., request_options={
     "timeout": 1
 })
 ```

@@ -20,7 +20,7 @@ Exchange client credentials for an access token
 
 | Flag | Type | Required | Description |
 |------|------|----------|-------------|
-| `--audience` | `pets` | Yes |  |
+| `--audience` | `pets` | No |  |
 | `--json` | `JSON` | Yes | Request body as JSON (or use individual body-field flags) |
 
 #### `oauth-test auth refresh-token`

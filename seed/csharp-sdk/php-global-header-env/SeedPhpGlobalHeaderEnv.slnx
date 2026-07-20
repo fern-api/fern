@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedPhpGlobalHeaderEnv.Test/SeedPhpGlobalHeaderEnv.Test.csproj" />
+  <Project Path="src/SeedPhpGlobalHeaderEnv/SeedPhpGlobalHeaderEnv.csproj" />
+</Solution>

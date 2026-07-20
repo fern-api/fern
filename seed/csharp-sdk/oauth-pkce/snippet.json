@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/oauth/authorize",
+                "method": "GET",
+                "identifier_override": "endpoint_oauth.authorize"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedOauthPkce;\n\nvar client = new SeedOauthPkceClient();\nawait client.Oauth.AuthorizeAsync(\n    new AuthorizeRequest\n    {\n        ResponseType = \"code\",\n        ClientId = \"client_abc123\",\n        RedirectUri = \"https://example.com/callback\",\n        CodeChallenge = \"E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM\",\n        CodeChallengeMethod = \"S256\",\n        Scope = \"read write\",\n        State = \"xyz\",\n    }\n);\n"
+            }
+        }
+    ]
+}

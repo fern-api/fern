@@ -1,0 +1,3 @@
+rootProject.name = 'oauth-pkce'
+
+include 'sample-app'

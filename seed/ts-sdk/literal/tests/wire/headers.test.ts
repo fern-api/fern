@@ -26,4 +26,24 @@ describe("HeadersClient", () => {
         });
         expect(response).toEqual(rawResponseBody);
     });
+
+    test("sendLiteralsOnly", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedLiteralClient({ maxRetries: 0, environment: server.baseUrl });
+
+        const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
+
+        server
+            .mockEndpoint()
+            .post("/headers/literals-only")
+            .header("X-Endpoint-Version", "02-12-2024")
+            .header("X-Async", "true")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.headers.sendLiteralsOnly();
+        expect(response).toEqual(rawResponseBody);
+    });
 });
