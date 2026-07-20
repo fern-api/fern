@@ -11,6 +11,19 @@ public final class EventsClient: Sendable {
 
     /// List all user events.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import MixedFileDirectory
+    ///
+    /// private func main() async throws {
+    ///     let client = MixedFileDirectoryClient()
+    ///
+    ///     _ = try await client.user.events.listEvents(limit: 1)
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter limit: The maximum number of results to return.
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listEvents(limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> [Event] {
