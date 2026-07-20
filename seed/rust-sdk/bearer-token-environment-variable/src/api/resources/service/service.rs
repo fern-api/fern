@@ -41,6 +41,13 @@ impl ServiceClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
+        let options = {
+            let mut o = options.unwrap_or_default();
+            o.additional_headers
+                .entry("X-API-Version".to_string())
+                .or_insert_with(|| "1.0.0".to_string());
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "apiKey", None, None, options)
             .await
