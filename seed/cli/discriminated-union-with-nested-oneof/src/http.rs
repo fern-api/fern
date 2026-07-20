@@ -1,8 +1,9 @@
 //! HTTP client construction and TLS-error diagnostics.
 //!
 //! [`HttpConfig`] holds the inputs that go into building a [`reqwest::Client`]
-//! for a CLI: the binary name (used to scope env vars) and any compile-time
-//! trust roots a binary author baked in via `CliApp::extra_root_cert`.
+//! for a CLI: the binary name (used to scope env vars and to compose the
+//! `User-Agent`) and any compile-time trust roots a binary author baked in
+//! via `CliApp::extra_root_cert`.
 //!
 //! [`HttpConfig::build_client`] honors a small set of environment variables
 //! so users can adapt TLS / proxy behavior without rebuilding the CLI.
@@ -16,6 +17,7 @@
 //! | `<NAME>_PROXY`                    | HTTP(S) proxy URL — replaces `HTTPS_PROXY`/`HTTP_PROXY` for this CLI. Pair with `<NAME>_NO_PROXY` for a scoped bypass list, or rely on the global `NO_PROXY` (used as a fallback when `<NAME>_NO_PROXY` is unset). |
 //! | `<NAME>_TIMEOUT_SECS`             | Total request timeout in seconds (default: no timeout). |
 //! | `<NAME>_CONNECT_TIMEOUT_SECS`     | Connection-establishment timeout in seconds.        |
+//! | `<NAME>_USER_AGENT_SUFFIX`        | Product token appended to the `User-Agent` (e.g. `partner-app/3.1`) so a tool built on top of the CLI can tag its traffic without replacing the CLI's identity. |
 //!
 //! Aliases: `<NAME>_EXTRA_CA_CERTS` (= `_CA_BUNDLE`),
 //! `<NAME>_INSECURE_SKIP_VERIFY` (= `_INSECURE`).
@@ -67,6 +69,11 @@ pub struct HttpConfig {
     /// than reqwest-typed certs. Each `Vec<u8>` is the raw bytes supplied
     /// to [`HttpConfig::with_extra_root_cert`].
     extra_root_certs_pem: Vec<Vec<u8>>,
+    /// Consumer-supplied `User-Agent` suffix resolved from the
+    /// `--user-agent-suffix` flag. Takes precedence over the
+    /// `<NAME>_USER_AGENT_SUFFIX` env var when set. `None` means fall back
+    /// to the env var (or no suffix).
+    user_agent_suffix_override: Option<Arc<str>>,
 }
 
 /// Transport-neutral view of the resolved HTTP/TLS configuration.
@@ -131,6 +138,7 @@ impl HttpConfig {
             prefix,
             extra_root_certs: Vec::new(),
             extra_root_certs_pem: Vec::new(),
+            user_agent_suffix_override: None,
         })
     }
 
@@ -161,6 +169,20 @@ impl HttpConfig {
         self
     }
 
+    /// Set the consumer-supplied `User-Agent` suffix (from the
+    /// `--user-agent-suffix` flag). When present it takes precedence over
+    /// the `<NAME>_USER_AGENT_SUFFIX` env var. A blank *or* header-invalid
+    /// value clears the override so the env-var fallback still applies —
+    /// an unusable flag value never suppresses an otherwise-valid env
+    /// suffix (and never drops the CLI's own `User-Agent`).
+    pub fn with_user_agent_suffix_override(mut self, suffix: Option<String>) -> Self {
+        self.user_agent_suffix_override = suffix
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
+            .map(Arc::from);
+        self
+    }
+
     /// CLI binary name (e.g. `"bigcommerce"`).
     pub fn name(&self) -> &str {
         &self.name
@@ -171,6 +193,68 @@ impl HttpConfig {
     /// so the transform stays consistent across the codebase.
     pub fn env_prefix(&self) -> &str {
         &self.prefix
+    }
+
+    /// Compose the `User-Agent` header value this CLI's HTTP client sends:
+    /// `{product}/{version}` (e.g. `elevenlabs-cli/1.4.0`), optionally followed
+    /// by a consumer-supplied suffix (e.g. `elevenlabs-cli/1.4.0 partner-app/3.1`).
+    ///
+    /// The product token is derived from the binary name so each generated
+    /// CLI's traffic is distinguishable on the API backend (rather than the
+    /// shared `fern-cli-sdk` crate). It is normalized to end with `-cli` (see
+    /// [`HttpConfig::user_agent_product`]) so the token unambiguously denotes
+    /// CLI traffic. The version is the crate version stamped in at generation
+    /// time (`CARGO_PKG_VERSION`), which for a generated CLI is the release
+    /// version from `fern generate`.
+    ///
+    /// A tool built on top of this CLI can append its own product token
+    /// either with the `--user-agent-suffix` flag or by setting
+    /// `<NAME>_USER_AGENT_SUFFIX` (see [`HttpConfig::user_agent_suffix`]); the
+    /// suffix is added after the CLI's own identity rather than replacing it,
+    /// so both are visible to the backend.
+    pub fn user_agent(&self) -> String {
+        let base = format!(
+            "{}/{}",
+            Self::user_agent_product(&self.name),
+            env!("CARGO_PKG_VERSION")
+        );
+        match self.user_agent_suffix() {
+            Some(suffix) => format!("{base} {suffix}"),
+            None => base,
+        }
+    }
+
+    /// Derive the `User-Agent` product token from the binary name, ensuring it
+    /// ends with `-cli` so the token clearly identifies CLI traffic. A binary
+    /// named `elevenlabs` yields `elevenlabs-cli`; one already named
+    /// `elevenlabs-cli` is left unchanged (the suffix is not doubled).
+    fn user_agent_product(name: &str) -> String {
+        if name.ends_with("-cli") {
+            name.to_string()
+        } else {
+            format!("{name}-cli")
+        }
+    }
+
+    /// Read the optional consumer-supplied `User-Agent` suffix. The
+    /// configured suffix flag (surfaced via
+    /// [`HttpConfig::with_user_agent_suffix_override`]) takes precedence; if
+    /// unset, falls back to the scoped env var. Both the flag and the env var
+    /// default to `--user-agent-suffix` / `<NAME>_USER_AGENT_SUFFIX` but can
+    /// be renamed at generation time (see [`crate::user_agent`]). This lets a
+    /// tool built on top of the CLI voluntarily tag its traffic (e.g.
+    /// `partner-app/3.1`) without replacing the CLI's own identity.
+    ///
+    /// The value is trimmed and only accepted if it is non-empty and valid
+    /// HTTP header content; otherwise it is ignored so a malformed suffix can
+    /// never drop the CLI's own `User-Agent`.
+    fn user_agent_suffix(&self) -> Option<String> {
+        let raw = match &self.user_agent_suffix_override {
+            Some(s) => Some(s.to_string()),
+            None => first_env([scoped(&self.prefix, &crate::user_agent::suffix_env_segment())]),
+        };
+        raw.map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty() && HeaderValue::from_str(s).is_ok())
     }
 
     /// Resolve the transport-neutral view of this config: compile-time
@@ -250,7 +334,7 @@ impl HttpConfig {
         let prefix = &self.prefix;
 
         let mut builder = reqwest::Client::builder();
-        let user_agent = format!("{}/{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+        let user_agent = self.user_agent();
         if let Ok(header_value) = HeaderValue::from_str(&user_agent) {
             let mut headers = HeaderMap::new();
             headers.insert(USER_AGENT, header_value);
@@ -766,6 +850,121 @@ mod tests {
         let cfg = HttpConfig::new("openapi-fixture").unwrap();
         assert_eq!(cfg.env_prefix(), "OPENAPI_FIXTURE");
         assert_eq!(cfg.name(), "openapi-fixture");
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_uses_binary_name_and_crate_version() {
+        let mut env = EnvGuard::default();
+        env.unset("ELEVENLABS_USER_AGENT_SUFFIX");
+        let cfg = HttpConfig::new("elevenlabs").unwrap();
+        let ua = cfg.user_agent();
+        // The product token is normalized to end with `-cli`.
+        assert_eq!(ua, format!("elevenlabs-cli/{}", env!("CARGO_PKG_VERSION")));
+        // Must not fall back to the shared crate name.
+        assert!(!ua.starts_with("fern-cli-sdk/"));
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_does_not_double_cli_suffix() {
+        let mut env = EnvGuard::default();
+        env.unset("ELEVENLABS_CLI_USER_AGENT_SUFFIX");
+        // A binary name that already ends with `-cli` is used verbatim.
+        let cfg = HttpConfig::new("elevenlabs-cli").unwrap();
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs-cli/{}", env!("CARGO_PKG_VERSION")),
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_appends_consumer_suffix_from_env() {
+        let mut env = EnvGuard::default();
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "partner-app/3.1");
+        let cfg = HttpConfig::new("elevenlabs").unwrap();
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs-cli/{} partner-app/3.1", env!("CARGO_PKG_VERSION")),
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_ignores_blank_or_invalid_suffix() {
+        let mut env = EnvGuard::default();
+        let base = format!("elevenlabs-cli/{}", env!("CARGO_PKG_VERSION"));
+
+        // Whitespace-only suffix is dropped.
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "   ");
+        assert_eq!(HttpConfig::new("elevenlabs").unwrap().user_agent(), base);
+
+        // A suffix with control characters is not a valid header value and is
+        // ignored rather than dropping the CLI's own User-Agent.
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "bad\nvalue");
+        assert_eq!(HttpConfig::new("elevenlabs").unwrap().user_agent(), base);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_flag_override_takes_precedence_over_env() {
+        let mut env = EnvGuard::default();
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "from-env/1.0");
+        // The `--user-agent-suffix` flag override wins over the env var.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("from-flag/2.0".to_string()));
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs-cli/{} from-flag/2.0", env!("CARGO_PKG_VERSION")),
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_blank_flag_override_falls_back_to_env() {
+        let mut env = EnvGuard::default();
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "from-env/1.0");
+        // A blank/whitespace flag value clears the override, so the env-var
+        // fallback still applies.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("   ".to_string()));
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs-cli/{} from-env/1.0", env!("CARGO_PKG_VERSION")),
+        );
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_flag_override_ignores_invalid_value() {
+        let mut env = EnvGuard::default();
+        env.unset("ELEVENLABS_USER_AGENT_SUFFIX");
+        let base = format!("elevenlabs-cli/{}", env!("CARGO_PKG_VERSION"));
+        // An override that is not valid header content is dropped rather than
+        // corrupting the CLI's own User-Agent.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("bad\nvalue".to_string()));
+        assert_eq!(cfg.user_agent(), base);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn user_agent_invalid_flag_override_falls_back_to_env() {
+        let mut env = EnvGuard::default();
+        env.set("ELEVENLABS_USER_AGENT_SUFFIX", "from-env/1.0");
+        // A header-invalid flag value clears the override just like a blank
+        // one, so a valid env suffix is not suppressed by unusable flag input.
+        let cfg = HttpConfig::new("elevenlabs")
+            .unwrap()
+            .with_user_agent_suffix_override(Some("bad\nvalue".to_string()));
+        assert_eq!(
+            cfg.user_agent(),
+            format!("elevenlabs-cli/{} from-env/1.0", env!("CARGO_PKG_VERSION")),
+        );
     }
 
     #[test]
