@@ -30,4 +30,27 @@ public final class HeadersClient: Sendable {
             responseType: SendResponse.self
         )
     }
+
+    /// ```swift
+    /// import Foundation
+    /// import Literal
+    ///
+    /// private func main() async throws {
+    ///     let client = LiteralClient()
+    ///
+    ///     _ = try await client.headers.sendLiteralsOnly()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func sendLiteralsOnly(requestOptions: RequestOptions? = nil) async throws -> SendResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/headers/literals-only",
+            requestOptions: requestOptions,
+            responseType: SendResponse.self
+        )
+    }
 }

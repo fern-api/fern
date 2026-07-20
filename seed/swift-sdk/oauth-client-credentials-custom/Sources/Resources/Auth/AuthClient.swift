@@ -21,7 +21,11 @@ public final class AuthClient: Sendable {
     ///         entityId: "entity_id",
     ///         audience: .httpsApiExampleCom,
     ///         grantType: .clientCredentials,
-    ///         scope: "scope"
+    ///         scope: "scope",
+    ///         permissions: [
+    ///             "permissions",
+    ///             "permissions"
+    ///         ]
     ///     ))
     /// }
     ///
