@@ -14,33 +14,32 @@
 
 ```go
 request := &fern.GetUsersRequest{
-        Usernames: []*string{
-            fern.String(
-                "usernames",
-            ),
-        },
-        Avatar: fern.String(
-            "avatar",
+    Usernames: []*string{
+        fern.String(
+            "usernames",
         ),
-        Activated: []*bool{
-            fern.Bool(
-                true,
-            ),
-        },
-        Tags: []*string{
-            fern.String(
-                "tags",
-            ),
-        },
-        Extra: fern.Bool(
+    },
+    Avatar: fern.String(
+        "avatar",
+    ),
+    Activated: []*bool{
+        fern.Bool(
             true,
         ),
-    }
-client.Nullable.GetUsers(
-        context.TODO(),
-        request,
-    )
+    },
+    Tags: []*string{
+        fern.String(
+            "tags",
+        ),
+    },
+    Extra: fern.Bool(
+        true,
+    ),
 }
+client.Nullable.GetUsers(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -113,42 +112,41 @@ client.Nullable.GetUsers(
 
 ```go
 request := &fern.CreateUserRequest{
-        Username: "username",
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-        Metadata: &fern.Metadata{
-            CreatedAt: fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-            UpdatedAt: fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-            Avatar: fern.String(
-                "avatar",
-            ),
-            Activated: fern.Bool(
-                true,
-            ),
-            Status: &fern.Status{
-                Active: "active",
-            },
-            Values: map[string]*string{
-                "values": fern.String(
-                    "values",
-                ),
-            },
-        },
+    Username: "username",
+    Tags: []string{
+        "tags",
+        "tags",
+    },
+    Metadata: &fern.Metadata{
+        CreatedAt: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        UpdatedAt: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
         Avatar: fern.String(
             "avatar",
         ),
-    }
-client.Nullable.CreateUser(
-        context.TODO(),
-        request,
-    )
+        Activated: fern.Bool(
+            true,
+        ),
+        Status: &fern.Status{
+            Active: "active",
+        },
+        Values: map[string]*string{
+            "values": fern.String(
+                "values",
+            ),
+        },
+    },
+    Avatar: fern.String(
+        "avatar",
+    ),
 }
+client.Nullable.CreateUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -213,15 +211,14 @@ client.Nullable.CreateUser(
 
 ```go
 request := &fern.DeleteUserRequest{
-        Username: fern.String(
-            "xy",
-        ),
-    }
-client.Nullable.DeleteUser(
-        context.TODO(),
-        request,
-    )
+    Username: fern.String(
+        "xy",
+    ),
 }
+client.Nullable.DeleteUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetPresignedURLRequest{
+//	    S3Key: "s3Key",
+//	}
+//	client.S3.GetPresignedURL(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetPresignedURL(
 	ctx context.Context,
 	request *fern.GetPresignedURLRequest,

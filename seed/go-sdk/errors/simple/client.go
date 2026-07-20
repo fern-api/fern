@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.FooRequest{
+//	    Bar: "bar",
+//	}
+//	client.Simple.FooWithoutEndpointError(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) FooWithoutEndpointError(
 	ctx context.Context,
 	request *fern.FooRequest,
@@ -50,6 +59,15 @@ func (c *Client) FooWithoutEndpointError(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.FooRequest{
+//	    Bar: "bar",
+//	}
+//	client.Simple.Foo(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Foo(
 	ctx context.Context,
 	request *fern.FooRequest,
@@ -66,6 +84,15 @@ func (c *Client) Foo(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.FooRequest{
+//	    Bar: "hello",
+//	}
+//	client.Simple.FooWithExamples(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) FooWithExamples(
 	ctx context.Context,
 	request *fern.FooRequest,

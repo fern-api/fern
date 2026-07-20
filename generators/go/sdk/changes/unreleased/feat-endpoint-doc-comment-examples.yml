@@ -1,0 +1,4 @@
+- summary: |
+    Client endpoint methods now include a usage example in their godoc comment,
+    so IDEs surface a code snippet on hover.
+  type: feat

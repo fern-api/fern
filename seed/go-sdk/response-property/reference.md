@@ -14,10 +14,9 @@
 
 ```go
 client.Service.GetMovie(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -57,11 +56,10 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.GetMovie(
-        context.TODO(),
-        request,
-    )
-}
+client.Service.GetMovieDocs(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -101,11 +99,10 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.GetMovie(
-        context.TODO(),
-        request,
-    )
-}
+client.Service.GetMovieName(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -145,11 +142,10 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.GetMovie(
-        context.TODO(),
-        request,
-    )
-}
+client.Service.GetMovieMetadata(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -189,11 +185,10 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.GetMovie(
-        context.TODO(),
-        request,
-    )
-}
+client.Service.GetOptionalMovie(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -233,11 +228,10 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.GetMovie(
-        context.TODO(),
-        request,
-    )
-}
+client.Service.GetOptionalMovieDocs(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -277,11 +271,10 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.GetMovie(
-        context.TODO(),
-        request,
-    )
-}
+client.Service.GetOptionalMovieName(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

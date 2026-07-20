@@ -13,15 +13,14 @@
 
 ```go
 request := &fern.Inlined{
-        Name: "name",
-        Docs: "docs",
-        Unique: "unique",
-    }
-client.ExtendedInlineRequestBody(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
+    Docs: "docs",
+    Unique: "unique",
 }
+client.ExtendedInlineRequestBody(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Endpoints.HTTPMethods.TestGet(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) TestGet(
 	ctx context.Context,
 	id string,
@@ -50,6 +56,15 @@ func (c *Client) TestGet(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithRequiredField{
+//	    FieldString: "string",
+//	}
+//	client.Endpoints.HTTPMethods.TestPost(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) TestPost(
 	ctx context.Context,
 	request *types.ObjectWithRequiredField,
@@ -66,6 +81,16 @@ func (c *Client) TestPost(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithRequiredField{
+//	    FieldString: "string",
+//	}
+//	client.Endpoints.HTTPMethods.TestPut(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) TestPut(
 	ctx context.Context,
 	id string,
@@ -84,6 +109,61 @@ func (c *Client) TestPut(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithOptionalField{
+//	    FieldString: fern.String(
+//	        "string",
+//	    ),
+//	    Integer: fern.Int(
+//	        1,
+//	    ),
+//	    Long: fern.Int64(
+//	        int64(1000000),
+//	    ),
+//	    Double: fern.Float64(
+//	        1.1,
+//	    ),
+//	    Bool: fern.Bool(
+//	        true,
+//	    ),
+//	    Datetime: fern.Time(
+//	        fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	    ),
+//	    Date: fern.Time(
+//	        fern.MustParseDate(
+//	            "2023-01-15",
+//	        ),
+//	    ),
+//	    UUID: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	    Base64: fern.Bytes(
+//	        []byte("SGVsbG8gd29ybGQh"),
+//	    ),
+//	    List: []string{
+//	        "list",
+//	        "list",
+//	    },
+//	    Set: []string{
+//	        "set",
+//	    },
+//	    Map: map[int]string{
+//	        1: "map",
+//	    },
+//	    Bigint: fern.String(
+//	        "1000000",
+//	    ),
+//	}
+//	client.Endpoints.HTTPMethods.TestPatch(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) TestPatch(
 	ctx context.Context,
 	id string,
@@ -102,6 +182,12 @@ func (c *Client) TestPatch(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Endpoints.HTTPMethods.TestDelete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) TestDelete(
 	ctx context.Context,
 	id string,

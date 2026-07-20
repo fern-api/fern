@@ -37,6 +37,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Returns lightweight versions of all problems
+//
+// Example:
+//
+//	client.V2.Problem.GetLightweightProblems(
+//	    context.TODO(),
+//	)
 func (c *Client) GetLightweightProblems(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -52,6 +58,12 @@ func (c *Client) GetLightweightProblems(
 }
 
 // Returns latest versions of all problems
+//
+// Example:
+//
+//	client.V2.Problem.GetProblems(
+//	    context.TODO(),
+//	)
 func (c *Client) GetProblems(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -67,6 +79,13 @@ func (c *Client) GetProblems(
 }
 
 // Returns latest version of a problem
+//
+// Example:
+//
+//	client.V2.Problem.GetLatestProblem(
+//	    context.TODO(),
+//	    "problemId",
+//	)
 func (c *Client) GetLatestProblem(
 	ctx context.Context,
 	problemID common.ProblemID,
@@ -84,6 +103,14 @@ func (c *Client) GetLatestProblem(
 }
 
 // Returns requested version of a problem
+//
+// Example:
+//
+//	client.V2.Problem.GetProblemVersion(
+//	    context.TODO(),
+//	    "problemId",
+//	    1,
+//	)
 func (c *Client) GetProblemVersion(
 	ctx context.Context,
 	problemID common.ProblemID,

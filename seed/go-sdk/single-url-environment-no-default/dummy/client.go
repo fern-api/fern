@@ -33,6 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Dummy.GetDummy(
+//	    context.TODO(),
+//	)
 func (c *Client) GetDummy(
 	ctx context.Context,
 	opts ...option.RequestOption,

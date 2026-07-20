@@ -34,6 +34,23 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.FindRequest{
+//	    OptionalString: fern.String(
+//	        "optionalString",
+//	    ),
+//	    PublicProperty: fern.String(
+//	        "publicProperty",
+//	    ),
+//	    PrivateProperty: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Foo.Find(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Find(
 	ctx context.Context,
 	request *fern.FindRequest,

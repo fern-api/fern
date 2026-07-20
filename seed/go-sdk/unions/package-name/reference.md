@@ -14,10 +14,9 @@
 
 ```go
 client.Bigunion.Get(
-        context.TODO(),
-        "id",
-    )
-}
+    context.TODO(),
+    "id",
+)
 ```
 </dd>
 </dl>
@@ -58,24 +57,23 @@ client.Bigunion.Get(
 
 ```go
 request := &unions.BigUnion{
-        NormalSweet: &unions.NormalSweet{
-            Value: "value",
-        },
-        ID: "id",
-        CreatedAt: unions.MustParseDateTime(
+    NormalSweet: &unions.NormalSweet{
+        Value: "value",
+    },
+    ID: "id",
+    CreatedAt: unions.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
+    ),
+    ArchivedAt: unions.Time(
+        unions.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
-        ArchivedAt: unions.Time(
-            unions.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
-    }
-client.Bigunion.Update(
-        context.TODO(),
-        request,
-    )
+    ),
 }
+client.Bigunion.Update(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -116,40 +114,39 @@ client.Bigunion.Update(
 
 ```go
 request := []*unions.BigUnion{
-        &unions.BigUnion{
-            NormalSweet: &unions.NormalSweet{
-                Value: "value",
-            },
-            ID: "id",
-            CreatedAt: unions.MustParseDateTime(
+    &unions.BigUnion{
+        NormalSweet: &unions.NormalSweet{
+            Value: "value",
+        },
+        ID: "id",
+        CreatedAt: unions.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        ArchivedAt: unions.Time(
+            unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
-            ArchivedAt: unions.Time(
-                unions.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
+        ),
+    },
+    &unions.BigUnion{
+        NormalSweet: &unions.NormalSweet{
+            Value: "value",
         },
-        &unions.BigUnion{
-            NormalSweet: &unions.NormalSweet{
-                Value: "value",
-            },
-            ID: "id",
-            CreatedAt: unions.MustParseDateTime(
+        ID: "id",
+        CreatedAt: unions.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        ArchivedAt: unions.Time(
+            unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
-            ArchivedAt: unions.Time(
-                unions.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-        },
-    }
-client.Bigunion.UpdateMany(
-        context.TODO(),
-        request,
-    )
+        ),
+    },
 }
+client.Bigunion.UpdateMany(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -191,10 +188,9 @@ client.Bigunion.UpdateMany(
 
 ```go
 client.Union.Get(
-        context.TODO(),
-        "id",
-    )
-}
+    context.TODO(),
+    "id",
+)
 ```
 </dd>
 </dl>
@@ -235,16 +231,15 @@ client.Union.Get(
 
 ```go
 request := &unions.Shape{
-        Circle: &unions.Circle{
-            Radius: 1.1,
-        },
-        ID: "id",
-    }
-client.Union.Update(
-        context.TODO(),
-        request,
-    )
+    Circle: &unions.Circle{
+        Radius: 1.1,
+    },
+    ID: "id",
 }
+client.Union.Update(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

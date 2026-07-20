@@ -35,6 +35,18 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.TestSubmissionStatus{
+//	    Stopped: "stopped",
+//	}
+//	client.Admin.UpdateTestSubmissionStatus(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    request,
+//	)
 func (c *Client) UpdateTestSubmissionStatus(
 	ctx context.Context,
 	submissionID fern.SubmissionID,
@@ -53,6 +65,21 @@ func (c *Client) UpdateTestSubmissionStatus(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.TestSubmissionUpdate{
+//	    UpdateTime: fern.MustParseDateTime(
+//	        "2024-01-15T09:30:00Z",
+//	    ),
+//	    UpdateInfo: &fern.TestSubmissionUpdateInfo{},
+//	}
+//	client.Admin.SendTestSubmissionUpdate(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    request,
+//	)
 func (c *Client) SendTestSubmissionUpdate(
 	ctx context.Context,
 	submissionID fern.SubmissionID,
@@ -71,6 +98,18 @@ func (c *Client) SendTestSubmissionUpdate(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.WorkspaceSubmissionStatus{
+//	    Stopped: "stopped",
+//	}
+//	client.Admin.UpdateWorkspaceSubmissionStatus(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    request,
+//	)
 func (c *Client) UpdateWorkspaceSubmissionStatus(
 	ctx context.Context,
 	submissionID fern.SubmissionID,
@@ -89,6 +128,21 @@ func (c *Client) UpdateWorkspaceSubmissionStatus(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.WorkspaceSubmissionUpdate{
+//	    UpdateTime: fern.MustParseDateTime(
+//	        "2024-01-15T09:30:00Z",
+//	    ),
+//	    UpdateInfo: &fern.WorkspaceSubmissionUpdateInfo{},
+//	}
+//	client.Admin.SendWorkspaceSubmissionUpdate(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    request,
+//	)
 func (c *Client) SendWorkspaceSubmissionUpdate(
 	ctx context.Context,
 	submissionID fern.SubmissionID,
@@ -107,6 +161,96 @@ func (c *Client) SendWorkspaceSubmissionUpdate(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.StoreTracedTestCaseRequest{
+//	    Result: &fern.TestCaseResultWithStdout{
+//	        Result: &fern.TestCaseResult{
+//	            ExpectedResult: &common.VariableValue{},
+//	            ActualResult: &fern.ActualResult{
+//	                Value: &common.VariableValue{},
+//	            },
+//	            Passed: true,
+//	        },
+//	        Stdout: "stdout",
+//	    },
+//	    TraceResponses: []*fern.TraceResponse{
+//	        &fern.TraceResponse{
+//	            SubmissionID: uuid.MustParse(
+//	                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	            ),
+//	            LineNumber: 1,
+//	            ReturnValue: &fern.DebugVariableValue{},
+//	            ExpressionLocation: &fern.ExpressionLocation{
+//	                Start: 1,
+//	                Offset: 1,
+//	            },
+//	            Stack: &fern.StackInformation{
+//	                NumStackFrames: 1,
+//	                TopStackFrame: &fern.StackFrame{
+//	                    MethodName: "methodName",
+//	                    LineNumber: 1,
+//	                    Scopes: []*fern.Scope{
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	            Stdout: fern.String(
+//	                "stdout",
+//	            ),
+//	        },
+//	        &fern.TraceResponse{
+//	            SubmissionID: uuid.MustParse(
+//	                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	            ),
+//	            LineNumber: 1,
+//	            ReturnValue: &fern.DebugVariableValue{},
+//	            ExpressionLocation: &fern.ExpressionLocation{
+//	                Start: 1,
+//	                Offset: 1,
+//	            },
+//	            Stack: &fern.StackInformation{
+//	                NumStackFrames: 1,
+//	                TopStackFrame: &fern.StackFrame{
+//	                    MethodName: "methodName",
+//	                    LineNumber: 1,
+//	                    Scopes: []*fern.Scope{
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	            Stdout: fern.String(
+//	                "stdout",
+//	            ),
+//	        },
+//	    },
+//	}
+//	client.Admin.StoreTracedTestCase(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    "testCaseId",
+//	    request,
+//	)
 func (c *Client) StoreTracedTestCase(
 	ctx context.Context,
 	submissionID fern.SubmissionID,
@@ -127,6 +271,92 @@ func (c *Client) StoreTracedTestCase(
 	return nil
 }
 
+// Example:
+//
+//	request := []*fern.TraceResponseV2{
+//	    &fern.TraceResponseV2{
+//	        SubmissionID: uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	        LineNumber: 1,
+//	        File: &fern.TracedFile{
+//	            Filename: "filename",
+//	            Directory: "directory",
+//	        },
+//	        ReturnValue: &fern.DebugVariableValue{},
+//	        ExpressionLocation: &fern.ExpressionLocation{
+//	            Start: 1,
+//	            Offset: 1,
+//	        },
+//	        Stack: &fern.StackInformation{
+//	            NumStackFrames: 1,
+//	            TopStackFrame: &fern.StackFrame{
+//	                MethodName: "methodName",
+//	                LineNumber: 1,
+//	                Scopes: []*fern.Scope{
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	        },
+//	        Stdout: fern.String(
+//	            "stdout",
+//	        ),
+//	    },
+//	    &fern.TraceResponseV2{
+//	        SubmissionID: uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	        LineNumber: 1,
+//	        File: &fern.TracedFile{
+//	            Filename: "filename",
+//	            Directory: "directory",
+//	        },
+//	        ReturnValue: &fern.DebugVariableValue{},
+//	        ExpressionLocation: &fern.ExpressionLocation{
+//	            Start: 1,
+//	            Offset: 1,
+//	        },
+//	        Stack: &fern.StackInformation{
+//	            NumStackFrames: 1,
+//	            TopStackFrame: &fern.StackFrame{
+//	                MethodName: "methodName",
+//	                LineNumber: 1,
+//	                Scopes: []*fern.Scope{
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	        },
+//	        Stdout: fern.String(
+//	            "stdout",
+//	        ),
+//	    },
+//	}
+//	client.Admin.StoreTracedTestCaseV2(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    "testCaseId",
+//	    request,
+//	)
 func (c *Client) StoreTracedTestCaseV2(
 	ctx context.Context,
 	submissionID fern.SubmissionID,
@@ -147,6 +377,100 @@ func (c *Client) StoreTracedTestCaseV2(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.StoreTracedWorkspaceRequest{
+//	    WorkspaceRunDetails: &fern.WorkspaceRunDetails{
+//	        ExceptionV2: &fern.ExceptionV2{
+//	            Generic: &fern.ExceptionInfo{
+//	                ExceptionType: "exceptionType",
+//	                ExceptionMessage: "exceptionMessage",
+//	                ExceptionStacktrace: "exceptionStacktrace",
+//	            },
+//	        },
+//	        Exception: &fern.ExceptionInfo{
+//	            ExceptionType: "exceptionType",
+//	            ExceptionMessage: "exceptionMessage",
+//	            ExceptionStacktrace: "exceptionStacktrace",
+//	        },
+//	        Stdout: "stdout",
+//	    },
+//	    TraceResponses: []*fern.TraceResponse{
+//	        &fern.TraceResponse{
+//	            SubmissionID: uuid.MustParse(
+//	                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	            ),
+//	            LineNumber: 1,
+//	            ReturnValue: &fern.DebugVariableValue{},
+//	            ExpressionLocation: &fern.ExpressionLocation{
+//	                Start: 1,
+//	                Offset: 1,
+//	            },
+//	            Stack: &fern.StackInformation{
+//	                NumStackFrames: 1,
+//	                TopStackFrame: &fern.StackFrame{
+//	                    MethodName: "methodName",
+//	                    LineNumber: 1,
+//	                    Scopes: []*fern.Scope{
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	            Stdout: fern.String(
+//	                "stdout",
+//	            ),
+//	        },
+//	        &fern.TraceResponse{
+//	            SubmissionID: uuid.MustParse(
+//	                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	            ),
+//	            LineNumber: 1,
+//	            ReturnValue: &fern.DebugVariableValue{},
+//	            ExpressionLocation: &fern.ExpressionLocation{
+//	                Start: 1,
+//	                Offset: 1,
+//	            },
+//	            Stack: &fern.StackInformation{
+//	                NumStackFrames: 1,
+//	                TopStackFrame: &fern.StackFrame{
+//	                    MethodName: "methodName",
+//	                    LineNumber: 1,
+//	                    Scopes: []*fern.Scope{
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                        &fern.Scope{
+//	                            Variables: map[string]*fern.DebugVariableValue{
+//	                                "variables": &fern.DebugVariableValue{},
+//	                            },
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	            Stdout: fern.String(
+//	                "stdout",
+//	            ),
+//	        },
+//	    },
+//	}
+//	client.Admin.StoreTracedWorkspace(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    request,
+//	)
 func (c *Client) StoreTracedWorkspace(
 	ctx context.Context,
 	submissionID fern.SubmissionID,
@@ -165,6 +489,91 @@ func (c *Client) StoreTracedWorkspace(
 	return nil
 }
 
+// Example:
+//
+//	request := []*fern.TraceResponseV2{
+//	    &fern.TraceResponseV2{
+//	        SubmissionID: uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	        LineNumber: 1,
+//	        File: &fern.TracedFile{
+//	            Filename: "filename",
+//	            Directory: "directory",
+//	        },
+//	        ReturnValue: &fern.DebugVariableValue{},
+//	        ExpressionLocation: &fern.ExpressionLocation{
+//	            Start: 1,
+//	            Offset: 1,
+//	        },
+//	        Stack: &fern.StackInformation{
+//	            NumStackFrames: 1,
+//	            TopStackFrame: &fern.StackFrame{
+//	                MethodName: "methodName",
+//	                LineNumber: 1,
+//	                Scopes: []*fern.Scope{
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	        },
+//	        Stdout: fern.String(
+//	            "stdout",
+//	        ),
+//	    },
+//	    &fern.TraceResponseV2{
+//	        SubmissionID: uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	        LineNumber: 1,
+//	        File: &fern.TracedFile{
+//	            Filename: "filename",
+//	            Directory: "directory",
+//	        },
+//	        ReturnValue: &fern.DebugVariableValue{},
+//	        ExpressionLocation: &fern.ExpressionLocation{
+//	            Start: 1,
+//	            Offset: 1,
+//	        },
+//	        Stack: &fern.StackInformation{
+//	            NumStackFrames: 1,
+//	            TopStackFrame: &fern.StackFrame{
+//	                MethodName: "methodName",
+//	                LineNumber: 1,
+//	                Scopes: []*fern.Scope{
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                    &fern.Scope{
+//	                        Variables: map[string]*fern.DebugVariableValue{
+//	                            "variables": &fern.DebugVariableValue{},
+//	                        },
+//	                    },
+//	                },
+//	            },
+//	        },
+//	        Stdout: fern.String(
+//	            "stdout",
+//	        ),
+//	    },
+//	}
+//	client.Admin.StoreTracedWorkspaceV2(
+//	    context.TODO(),
+//	    uuid.MustParse(
+//	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	    ),
+//	    request,
+//	)
 func (c *Client) StoreTracedWorkspaceV2(
 	ctx context.Context,
 	submissionID fern.SubmissionID,

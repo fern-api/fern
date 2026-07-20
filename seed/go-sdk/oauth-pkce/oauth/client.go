@@ -37,6 +37,27 @@ func NewClient(options *core.RequestOptions) *Client {
 // Authorization-code grant with PKCE. `response_type` is a required literal that is
 // hardcoded by the generated method; `code_challenge_method` is an optional literal
 // that must still be sent on the wire when provided.
+//
+// Example:
+//
+//	request := &fern.AuthorizeRequest{
+//	    ClientID: "client_abc123",
+//	    RedirectURI: "https://example.com/callback",
+//	    CodeChallenge: "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
+//	    CodeChallengeMethod: fern.String(
+//	        "S256",
+//	    ),
+//	    Scope: fern.String(
+//	        "read write",
+//	    ),
+//	    State: fern.String(
+//	        "xyz",
+//	    ),
+//	}
+//	client.Oauth.Authorize(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Authorize(
 	ctx context.Context,
 	request *fern.AuthorizeRequest,

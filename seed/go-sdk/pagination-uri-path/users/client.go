@@ -34,6 +34,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Users.ListWithURIPagination(
+//	    context.TODO(),
+//	)
 func (c *Client) ListWithURIPagination(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -48,6 +53,11 @@ func (c *Client) ListWithURIPagination(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Users.ListWithPathPagination(
+//	    context.TODO(),
+//	)
 func (c *Client) ListWithPathPagination(
 	ctx context.Context,
 	opts ...option.RequestOption,

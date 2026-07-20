@@ -28,9 +28,8 @@ GET request with a version header
 
 ```go
 client.Service.GetWithAPIVersion(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

@@ -36,6 +36,13 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.UploadDocumentRequest{}
+//	client.UploadJSONDocument(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UploadJSONDocument(
 	ctx context.Context,
 	request *fern.UploadDocumentRequest,

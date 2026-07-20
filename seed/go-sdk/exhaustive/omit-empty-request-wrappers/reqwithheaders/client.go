@@ -34,6 +34,17 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.ReqWithHeaders{
+//	    XTestServiceHeader: "X-TEST-SERVICE-HEADER",
+//	    XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+//	    Body: "string",
+//	}
+//	client.ReqWithHeaders.GetWithCustomHeader(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetWithCustomHeader(
 	ctx context.Context,
 	request *fern.ReqWithHeaders,

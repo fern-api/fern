@@ -34,6 +34,60 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &types.ObjectWithOptionalField{
+//	    FieldString: fern.String(
+//	        "string",
+//	    ),
+//	    Integer: fern.Int(
+//	        1,
+//	    ),
+//	    Long: fern.Int64(
+//	        int64(1000000),
+//	    ),
+//	    Double: fern.Float64(
+//	        1.1,
+//	    ),
+//	    Bool: fern.Bool(
+//	        true,
+//	    ),
+//	    Datetime: fern.Time(
+//	        fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	    ),
+//	    Date: fern.Time(
+//	        fern.MustParseDate(
+//	            "2023-01-15",
+//	        ),
+//	    ),
+//	    UUID: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	    Base64: fern.Bytes(
+//	        []byte("SGVsbG8gd29ybGQh"),
+//	    ),
+//	    List: []string{
+//	        "list",
+//	        "list",
+//	    },
+//	    Set: []string{
+//	        "set",
+//	    },
+//	    Map: map[int]string{
+//	        1: "map",
+//	    },
+//	    Bigint: fern.String(
+//	        "1000000",
+//	    ),
+//	}
+//	client.Endpoints.ContentType.PostJSONPatchContentType(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) PostJSONPatchContentType(
 	ctx context.Context,
 	request *types.ObjectWithOptionalField,
@@ -50,6 +104,60 @@ func (c *Client) PostJSONPatchContentType(
 	return nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithOptionalField{
+//	    FieldString: fern.String(
+//	        "string",
+//	    ),
+//	    Integer: fern.Int(
+//	        1,
+//	    ),
+//	    Long: fern.Int64(
+//	        int64(1000000),
+//	    ),
+//	    Double: fern.Float64(
+//	        1.1,
+//	    ),
+//	    Bool: fern.Bool(
+//	        true,
+//	    ),
+//	    Datetime: fern.Time(
+//	        fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	    ),
+//	    Date: fern.Time(
+//	        fern.MustParseDate(
+//	            "2023-01-15",
+//	        ),
+//	    ),
+//	    UUID: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	    Base64: fern.Bytes(
+//	        []byte("SGVsbG8gd29ybGQh"),
+//	    ),
+//	    List: []string{
+//	        "list",
+//	        "list",
+//	    },
+//	    Set: []string{
+//	        "set",
+//	    },
+//	    Map: map[int]string{
+//	        1: "map",
+//	    },
+//	    Bigint: fern.String(
+//	        "1000000",
+//	    ),
+//	}
+//	client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) PostJSONPatchContentWithCharsetType(
 	ctx context.Context,
 	request *types.ObjectWithOptionalField,

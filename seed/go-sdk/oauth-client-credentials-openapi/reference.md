@@ -14,14 +14,13 @@
 
 ```go
 request := &fern.GetTokenIdentityRequest{
-        Username: "username",
-        Password: "password",
-    }
-client.Identity.GetToken(
-        context.TODO(),
-        request,
-    )
+    Username: "username",
+    Password: "password",
 }
+client.Identity.GetToken(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -71,9 +70,8 @@ client.Identity.GetToken(
 
 ```go
 client.Plants.List(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -99,13 +97,12 @@ client.Plants.List(
 
 ```go
 request := &fern.GetPlantsRequest{
-        PlantID: "plantId",
-    }
-client.Plants.Get(
-        context.TODO(),
-        request,
-    )
+    PlantID: "plantId",
 }
+client.Plants.Get(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
