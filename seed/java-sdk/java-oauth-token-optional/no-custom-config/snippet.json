@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "dd7d2f63",
+            "id": {
+                "method": "POST",
+                "path": "/v2/token",
+                "identifier_override": "endpoint_auth.CreateOauth2Token"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOauthTokenOptional.SeedJavaOauthTokenOptionalClient;\nimport com.seed.javaOauthTokenOptional.resources.auth.requests.CreateOauth2TokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOauthTokenOptionalClient client = SeedJavaOauthTokenOptionalClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().createOauth2Token(\n            CreateOauth2TokenRequest\n                .builder()\n                .clientId(\"my_oauth_app_123\")\n                .clientSecret(\"sk_live_abcdef123456789\")\n                .grantType(\"client_credentials\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOauthTokenOptional.SeedJavaOauthTokenOptionalClient;\nimport com.seed.javaOauthTokenOptional.resources.auth.requests.CreateOauth2TokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOauthTokenOptionalClient client = SeedJavaOauthTokenOptionalClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().createOauth2Token(\n            CreateOauth2TokenRequest\n                .builder()\n                .clientId(\"my_oauth_app_123\")\n                .clientSecret(\"sk_live_abcdef123456789\")\n                .grantType(\"client_credentials\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

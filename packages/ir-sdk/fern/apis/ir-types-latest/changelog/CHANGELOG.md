@@ -5,6 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.14.0] - 2026-07-15
+
+- Add `CasingsConfig.smartCasingDigitWordBoundary` (`optional<boolean>`): when smart casing
+  is enabled, opts snake_case into preserving the word boundary after a digit run
+  (`ConversationsV2Configuration` → `conversations_v2_configuration`). Defaults to false,
+  preserving the previous behavior (`conversations_v2configuration`). Driven by the
+  `smart-casing-digit-word-boundary` flag in `generators.yml`.
+
+## [v67.13.0] - 2026-07-15
+
+- Add `HmacSignatureVerification.bodyHashBinding` (optional `WebhookBodyHashBinding`)
+  for webhook schemes that do not include the raw body in the signed payload directly,
+  but instead transmit a hash of the body separately (for example, Twilio's `bodySHA256`
+  query parameter for JSON bodies). When present, signature verification must also
+  recompute the encoded hash of the raw body and compare it to the transmitted value.
+  - `WebhookBodyHashBinding` carries `algorithm` (`WebhookBodyHashAlgorithm`: `SHA256`,
+    `SHA1`, `SHA384`, `SHA512`), `encoding` (`WebhookSignatureEncoding`), and `location`
+    (`WebhookBodyHashLocation`). The hash algorithm/encoding are independent of the outer
+    HMAC's.
+  - `WebhookBodyHashLocation` is a union; the `queryParameter` variant
+    (`WebhookBodyHashQueryParameterLocation` with a `name`) describes a hash carried as a
+    query parameter on the notification URL.
+
+## [v67.12.0] - 2026-07-13
+
+- Add discriminated-union base-property dedupe facts, computed once during IR
+  generation so every generator reads one source of truth instead of re-deriving
+  the decision.
+  - `UnionTypeDeclaration.inheritedBaseProperties` (`optional<list<NameAndWireValue>>`):
+    base properties that *every* `samePropertiesAsObject` variant redeclares with a
+    structurally-equal type (resolving `extends` and alias chains). For
+    envelope-dropping generators (e.g. Go).
+  - `ObjectTypeDeclaration.deferredUnionBaseProperties`
+    (`optional<list<NameAndWireValue>>`): for an object used *exclusively* as a union
+    variant, the properties every owning union also declares as a base property with a
+    structurally-equal type. For leaf-dropping generators (e.g. C#).
+  - Mirrored on the dynamic IR: `DiscriminatedUnionType.inheritedBaseProperties` and
+    `ObjectType.deferredUnionBaseProperties` for snippet generators.
+  These facts are computed regardless of any generator flag; the opt-in gating stays
+  in each generator.
+
+## [v67.11.0] - 2026-07-08
+
+- Add `SdkConfig.idempotencyKeyGeneration` (optional `IdempotencyKeyGeneration`).
+  When present, generators auto-generate an idempotency key header on retry-unsafe
+  (POST/PUT) requests unless the caller supplies one; absent disables the feature
+  (the default). It is configured once via the `auto-generate-idempotency-key`
+  generator config key and read identically by every generator, so the behavior is
+  consistent across languages instead of being re-derived per generator. Carries
+  `headerName` (defaults to `Idempotency-Key`) and `methods` (the eligible HTTP
+  methods, defaulting to `POST` and `PUT`), so the method-gating is centralized in
+  the IR rather than hard-coded per generator.
+
+## [v67.10.2] - 2026-07-07
+
+- Docs: Clarify `HttpEndpoint.globalParameters` semantics — it is now the fully
+  resolved set of global parameters that apply to the endpoint, computed at
+  IR-generation time (explicit opt-ins ∪ matching `apply: auto` parameters, with
+  body-location parameters gated on the request-body schema containing the dotted
+  target path). Generators should consume it as a membership check rather than
+  re-deriving applicability from `apply` modes.
+
 ## [v67.10.1] - 2026-07-02
 
 - Docs: Clarify `GlobalParameter.name` semantics — `wireValue` is the canonical

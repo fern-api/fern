@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedPropertyAccessClient } from "@fern/property-access";
 
-const client = new SeedPropertyAccessClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedPropertyAccessClient({ baseUrl: "YOUR_BASE_URL" });
 await client.createUser({
     id: "id",
     email: "email",

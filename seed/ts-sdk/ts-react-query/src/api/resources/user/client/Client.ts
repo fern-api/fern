@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedApi from "../../../index.js";
@@ -25,6 +26,9 @@ export class UserClient {
      * List all users
      *
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.list()
@@ -70,6 +74,9 @@ export class UserClient {
      *
      * @param {string} userId
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.get("userId")
@@ -119,6 +126,9 @@ export class UserClient {
      * @param {SeedApi.CreateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.user.create({
      *         name: "name",
@@ -148,7 +158,7 @@ export class UserClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -176,6 +186,9 @@ export class UserClient {
      * @param {string} userId
      * @param {SeedApi.UpdateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.update("userId", {
@@ -208,7 +221,7 @@ export class UserClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -236,6 +249,9 @@ export class UserClient {
      * @param {string} userId
      * @param {SeedApi.UpdateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.patch("userId", {
@@ -268,7 +284,7 @@ export class UserClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -295,6 +311,9 @@ export class UserClient {
      *
      * @param {string} userId
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.user.delete("userId")

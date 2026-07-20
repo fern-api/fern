@@ -137,7 +137,7 @@ client = SeedVariables(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.service.post(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

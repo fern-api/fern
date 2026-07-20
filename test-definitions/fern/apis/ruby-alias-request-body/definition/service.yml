@@ -1,0 +1,49 @@
+types:
+  StoreRequest:
+    properties:
+      displayName:
+        type: string
+        name: display_name
+    examples:
+      - name: One
+        value:
+          displayName: sandbox
+
+  # Alias of an object — request bodies referencing this alias must be
+  # serialized through the aliased class so wire names are applied.
+  ServiceRequest:
+    type: StoreRequest
+    examples:
+      - name: One
+        value:
+          displayName: sandbox
+
+  StoreResponse:
+    properties:
+      id: string
+      displayName:
+        type: string
+        name: display_name
+    examples:
+      - name: One
+        value:
+          id: store-df89sdg1
+          displayName: sandbox
+
+service:
+  auth: false
+  base-path: /ruby-alias-request-body
+  endpoints:
+    createStore:
+      path: /stores
+      method: POST
+      request:
+        body: ServiceRequest
+      response: StoreResponse
+      examples:
+        - request:
+            displayName: sandbox
+          response:
+            body:
+              id: store-df89sdg1
+              displayName: sandbox

@@ -89,6 +89,14 @@ export async function convertGeneratorsConfiguration({
     warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration);
 
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
+    // API-level idempotency-key default (`api.settings.auto-generate-idempotency-key`): applied to
+    // every generator in this API unless the generator overrides it in its own `config`. Resolved
+    // into the IR downstream.
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+    const globalIdempotencyKeyGeneration =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["auto-generate-idempotency-key"]
+            : undefined;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -107,6 +115,7 @@ export async function convertGeneratorsConfiguration({
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               maybeRootAutomation: rawGeneratorsConfiguration.automation,
+                              globalIdempotencyKeyGeneration,
                               readme,
                               context
                           })
@@ -596,6 +605,7 @@ async function convertGroup({
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
     maybeRootAutomation,
+    globalIdempotencyKeyGeneration,
     readme,
     context
 }: {
@@ -605,6 +615,7 @@ async function convertGroup({
     maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
+    globalIdempotencyKeyGeneration: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -624,6 +635,7 @@ async function convertGroup({
                     maybeGroupLevelReviewers: group.reviewers,
                     maybeRootAutomation,
                     maybeGroupAutomation: group.automation,
+                    globalIdempotencyKeyGeneration,
                     readme,
                     context
                 })
@@ -669,6 +681,7 @@ async function convertGenerator({
     maybeTopLevelReviewers,
     maybeRootAutomation,
     maybeGroupAutomation,
+    globalIdempotencyKeyGeneration,
     readme,
     context
 }: {
@@ -680,12 +693,18 @@ async function convertGenerator({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
+    globalIdempotencyKeyGeneration: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
     const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
+    const perGeneratorIdempotencyKeyGeneration =
+        typeof generator.config === "object" && generator.config !== null
+            ? (generator.config as { "auto-generate-idempotency-key"?: unknown })["auto-generate-idempotency-key"]
+            : undefined;
     return {
         raw: generator,
+        idempotencyKeyGenerationConfig: perGeneratorIdempotencyKeyGeneration ?? globalIdempotencyKeyGeneration,
         automation: generatorsYml.resolveAutomationConfig({
             rootAutomation: maybeRootAutomation,
             groupAutomation: maybeGroupAutomation,
@@ -705,6 +724,7 @@ async function convertGenerator({
         }),
         keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? true,
+        smartCasingDigitWordBoundary: generator["smart-casing-digit-word-boundary"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"

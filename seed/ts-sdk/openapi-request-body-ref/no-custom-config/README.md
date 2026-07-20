@@ -43,7 +43,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/openapi-request-body-ref";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.vendor.createVendor({
     name: "name"
 });
@@ -90,7 +90,7 @@ You can upload files using the client:
 import { createReadStream } from "fs";
 import { SeedApiClient } from "@fern/openapi-request-body-ref";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.catalog.createCatalogImage({
     request: {
         catalog_object_id: "catalog_object_id"

@@ -2,6 +2,7 @@ package internal
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"errors"
@@ -108,6 +109,11 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 	// Close the response body after we're done.
 	defer func() { _ = resp.Body.Close() }()
 
+	body, err := decompressedResponseBody(resp)
+	if err != nil {
+		return nil, err
+	}
+
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
@@ -115,15 +121,15 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, decodeError(resp, params.ErrorDecoder)
+		return nil, decodeError(resp, body, params.ErrorDecoder)
 	}
 
 	// Mutate the response parameter in-place.
 	if params.Response != nil {
 		if writer, ok := params.Response.(io.Writer); ok {
-			_, err = io.Copy(writer, resp.Body)
+			_, err = io.Copy(writer, body)
 		} else {
-			err = json.NewDecoder(resp.Body).Decode(params.Response)
+			err = json.NewDecoder(body).Decode(params.Response)
 		}
 		if err != nil {
 			if err == io.EOF {
@@ -263,19 +269,43 @@ func newFormURLEncodedRequestBody(request interface{}, bodyProperties map[string
 	return strings.NewReader(values.Encode()), nil
 }
 
-// decodeError decodes the error from the given HTTP response. Note that
-// it's the caller's responsibility to close the response body.
-func decodeError(response *http.Response, errorDecoder ErrorDecoder) error {
+// decompressedResponseBody returns a reader for the response body, wrapped
+// with a gzip reader when the server responds with a gzip-encoded body that
+// the underlying HTTP client did not transparently decompress (e.g. when an
+// Accept-Encoding header is set explicitly on the request). The response is
+// not modified; closing resp.Body remains the caller's responsibility.
+func decompressedResponseBody(resp *http.Response) (io.Reader, error) {
+	if resp.Uncompressed || resp.Body == nil || resp.Body == http.NoBody {
+		return resp.Body, nil
+	}
+	if !strings.EqualFold(resp.Header.Get("Content-Encoding"), "gzip") {
+		return resp.Body, nil
+	}
+	gzipReader, err := gzip.NewReader(resp.Body)
+	if err != nil {
+		if err == io.EOF {
+			// The response body is empty, so there is nothing to decompress.
+			return http.NoBody, nil
+		}
+		return nil, err
+	}
+	return gzipReader, nil
+}
+
+// decodeError decodes the error from the given HTTP response, reading the
+// error content from the given body. Note that it's the caller's
+// responsibility to close the response body.
+func decodeError(response *http.Response, body io.Reader, errorDecoder ErrorDecoder) error {
 	if errorDecoder != nil {
 		// This endpoint has custom errors, so we'll
 		// attempt to unmarshal the error into a structured
 		// type based on the status code.
-		return errorDecoder(response.StatusCode, response.Header, response.Body)
+		return errorDecoder(response.StatusCode, response.Header, body)
 	}
 	// This endpoint doesn't have any custom error
 	// types, so we just read the body as-is, and
 	// put it into a normal error.
-	bytes, err := io.ReadAll(response.Body)
+	bytes, err := io.ReadAll(body)
 	if err != nil && err != io.EOF {
 		return err
 	}

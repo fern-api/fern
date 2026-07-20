@@ -58,7 +58,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedTrace;
 
-var client = new SeedTraceClient(new ClientOptions
+var client = new SeedTraceClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedTraceEnvironment.Prod
 });

@@ -4751,6 +4751,17 @@
             }
           ],
           "description": "Additional content sources that Ask Fern should index and search."
+        },
+        "mask-pii": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When enabled, personally identifiable information (PII) in user messages is masked before\nbeing sent to Ask Fern. Disabled by default."
         }
       },
       "additionalProperties": false
@@ -6562,6 +6573,17 @@
               "type": "null"
             }
           ]
+        },
+        "disable-sri": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, skip computing a Subresource Integrity (SRI) hash for this\nremote script. The script is rendered without an `integrity` attribute.\nUseful for scripts whose contents change (e.g. rolling CDN builds) that\nwould otherwise fail integrity verification."
         }
       },
       "required": [

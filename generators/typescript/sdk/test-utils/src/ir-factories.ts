@@ -301,6 +301,7 @@ export function createHttpEndpoint(opts?: {
         displayName: undefined,
         method: "POST",
         headers: opts?.headers ?? [],
+        globalParameters: undefined,
         responseHeaders: undefined,
         baseUrl: undefined,
         v2BaseUrls: undefined,

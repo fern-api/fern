@@ -33,6 +33,9 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Apply IR-defined default values to query parameters and headers in request wrappers
     useDefaultRequestParameterValues: z.boolean().optional(),
     omitFernHeaders: z.boolean().optional(),
+    // Opt-in: emit the X-Fern-Runtime, X-Fern-Runtime-Version, and X-Fern-Platform
+    // observability headers. Disabled by default so existing output is unchanged.
+    includePlatformHeaders: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)

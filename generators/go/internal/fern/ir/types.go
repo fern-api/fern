@@ -8358,10 +8358,13 @@ var (
 type UnionTypeDeclaration struct {
 	Discriminant *common.NameAndWireValue `json:"discriminant" url:"discriminant"`
 	// A list of other types to inherit from
-	Extends              []*DeclaredTypeName `json:"extends" url:"extends"`
-	Types                []*SingleUnionType  `json:"types" url:"types"`
-	BaseProperties       []*ObjectProperty   `json:"baseProperties" url:"baseProperties"`
-	DiscriminatorContext *string             `json:"discriminatorContext,omitempty" url:"discriminatorContext,omitempty"`
+	Extends        []*DeclaredTypeName `json:"extends" url:"extends"`
+	Types          []*SingleUnionType  `json:"types" url:"types"`
+	BaseProperties []*ObjectProperty   `json:"baseProperties" url:"baseProperties"`
+	// Base properties that every `samePropertiesAsObject` variant of this union redeclares with a
+	// structurally-equal type. Computed by the IR generator; consumers must not recompute it.
+	InheritedBaseProperties []*common.NameAndWireValue `json:"inheritedBaseProperties,omitempty" url:"inheritedBaseProperties,omitempty"`
+	DiscriminatorContext    *string                    `json:"discriminatorContext,omitempty" url:"discriminatorContext,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8395,6 +8398,13 @@ func (u *UnionTypeDeclaration) GetBaseProperties() []*ObjectProperty {
 		return nil
 	}
 	return u.BaseProperties
+}
+
+func (u *UnionTypeDeclaration) GetInheritedBaseProperties() []*common.NameAndWireValue {
+	if u == nil {
+		return nil
+	}
+	return u.InheritedBaseProperties
 }
 
 func (u *UnionTypeDeclaration) GetExtraProperties() map[string]interface{} {

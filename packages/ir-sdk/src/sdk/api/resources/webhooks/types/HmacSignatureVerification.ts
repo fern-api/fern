@@ -15,4 +15,12 @@ export interface HmacSignatureVerification {
     signaturePrefix: string | undefined;
     payloadFormat: FernIr.WebhookPayloadFormat;
     timestamp: FernIr.WebhookTimestampConfig | undefined;
+    /**
+     * When present, the raw request body is not included in the signed payload
+     * directly; instead a hash of the body is transmitted separately (for example,
+     * in a query parameter of the notification URL) and the signature is computed
+     * over that. Verification must additionally recompute the encoded hash of the
+     * raw body and compare it to the transmitted value.
+     */
+    bodyHashBinding: FernIr.WebhookBodyHashBinding | undefined;
 }

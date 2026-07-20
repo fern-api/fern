@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Compute discriminated-union base-property dedupe facts once during IR generation and expose them
+    on both the regular and dynamic IR: `UnionTypeDeclaration.inheritedBaseProperties` (base properties
+    every `samePropertiesAsObject` variant redeclares with a structurally-equal type) and
+    `ObjectTypeDeclaration.deferredUnionBaseProperties` (properties an object used exclusively as a union
+    variant defers to the union envelope). Generators now read one source of truth instead of
+    re-deriving the decision independently. The facts are computed regardless of any generator flag.
+  type: internal

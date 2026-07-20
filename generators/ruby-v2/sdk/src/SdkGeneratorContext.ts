@@ -10,6 +10,7 @@ import { RubyGeneratorAgent } from "./RubyGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { hasUrlEncodedRequestBody } from "./utils/requestBody.js";
 
 const ROOT_TYPES_FOLDER = "types";
 
@@ -61,7 +62,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return this.caseConverter.snakeSafe(typeDeclaration.name.name) + ".rb";
+        return this.buildTypeFileName(typeDeclaration.name.name);
     }
 
     public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
@@ -274,6 +275,22 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
+    public getReferenceToInternalUrlEncodedRequest(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Request",
+            modules: [this.getRootModuleName(), "Internal", "UrlEncoded"]
+        });
+    }
+
+    /**
+     * Returns true if any endpoint sends a request body as
+     * `application/x-www-form-urlencoded`. Used to decide whether the
+     * URL-encoded request as-is file needs to be emitted.
+     */
+    public hasUrlEncodedRequestBodies(): boolean {
+        return hasUrlEncodedRequestBody(this.ir);
+    }
+
     public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
@@ -328,6 +345,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.ErrorsConstraint,
             AsIsFiles.ErrorsType,
 
+            // Idempotency
+            ...(this.ir.sdkConfig.idempotencyKeyGeneration != null ? [AsIsFiles.IdempotencyKey] : []),
+
             // Iterators
             AsIsFiles.ItemIterator,
             AsIsFiles.CursorItemIterator,
@@ -343,6 +363,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // JSON
             AsIsFiles.JsonRequest,
             AsIsFiles.JsonSerializable,
+
+            // URL-encoded forms — only emitted when an endpoint actually uses a
+            // form-urlencoded body, so the root require and its as-is file stay in
+            // lockstep and never ship a dangling require.
+            ...(this.hasUrlEncodedRequestBodies() ? [AsIsFiles.UrlEncodedRequest] : []),
 
             // Multipart
             AsIsFiles.MultipartEncoder,
@@ -384,6 +409,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getInferredAuth(): FernIr.InferredAuthScheme | undefined {
         for (const scheme of this.ir.auth.schemes) {
             if (scheme.type === "inferred") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    public getOAuthAuth(): FernIr.OAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
                 return scheme;
             }
         }

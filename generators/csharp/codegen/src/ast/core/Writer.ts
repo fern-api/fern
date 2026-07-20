@@ -41,6 +41,11 @@ export class Writer extends AbstractWriter {
     /* Whether or not to skip adding global:: qualifier to System namespaces */
     public readonly skipGlobalQualifier: boolean;
 
+    /* Fully qualified names of the enclosing types currently being written, outermost first.
+       Used to detect nested-type namespace shadows that are only visible within a type's body
+       (see NameRegistry.hasNestedTypeShadowInScope). */
+    public readonly typeScopeStack: string[] = [];
+
     constructor({
         namespace,
         allNamespaceSegments,
@@ -68,6 +73,16 @@ export class Writer extends AbstractWriter {
         } else {
             this.references[reference.namespace] = [reference];
         }
+    }
+
+    /* Records that we are now writing inside the body of the given type. Paired with
+       popTypeScope() and called by Class.write around a type body. */
+    public pushTypeScope(fullyQualifiedName: string): void {
+        this.typeScopeStack.push(fullyQualifiedName);
+    }
+
+    public popTypeScope(): void {
+        this.typeScopeStack.pop();
     }
 
     public addNamespace(namespace: string): void {

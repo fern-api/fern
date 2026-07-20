@@ -1,0 +1,5 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.49. Self-hosted push/PR commits created with a
+    personal access token (`ghp_`/`github_pat_`) are now attributed to `fern-api[bot]`
+    as author and committer instead of the PAT owner.
+  type: fix

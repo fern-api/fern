@@ -216,6 +216,7 @@
       },
       "shape": {
         "baseProperties": [],
+        "inheritedBaseProperties": [],
         "discriminant": "role",
         "extends": [],
         "types": [

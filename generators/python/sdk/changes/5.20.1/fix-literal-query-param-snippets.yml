@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Stop passing required literal query parameters as keyword arguments in generated
+    snippets and wire tests. Required literals (e.g. `response_type="code"`) are
+    hardcoded inside the generated method and omitted from its signature, so passing
+    them raised `TypeError: got an unexpected keyword argument`. Optional literal
+    query parameters remain in the signature and are still included.
+  type: fix

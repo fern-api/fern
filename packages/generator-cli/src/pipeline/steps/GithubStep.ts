@@ -1,12 +1,13 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { ClonedRepository, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
-import { access, writeFile } from "fs/promises";
+import { access, readFile, writeFile } from "fs/promises";
 import { join } from "path";
+import { changelogContainsVersion, prependChangelogBlock } from "../../autoversion/index";
 import { createReplayBranch } from "../github/createReplayBranch";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
-import { pushSignedCommit } from "../github/pushSignedCommit";
+import { pushSignedCommit, resolveCommitAuthor } from "../github/pushSignedCommit";
 import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type {
@@ -162,12 +163,22 @@ export class GithubStep extends BaseStep {
             }
         }
 
+        const createdChangelog = await this.ensureChangelogFile(resolved);
+
         if (!skipCommit) {
             await this.ensureFernignore();
 
             this.logger.debug("Committing changes...");
             await repository.commitAllChanges(resolved.commitMessage);
             this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+        } else if (createdChangelog) {
+            // Replay already produced the generation commit (skipCommit) but it did not include
+            // changelog.md. Stage and commit only the reconstructed changelog so the
+            // "See full changelog" link resolves at the pushed head SHA — without re-committing
+            // generation output (which the skipCommit invariant forbids).
+            this.logger.debug("Committing reconstructed changelog.md on top of the replay commit...");
+            await repository.add("changelog.md");
+            await repository.commit(resolved.commitMessage);
         }
 
         // When skipIfNoDiff is enabled, detect no-diff before pushing.
@@ -199,7 +210,7 @@ export class GithubStep extends BaseStep {
                 repo,
                 branch: prBranch,
                 force: isUpdatingExistingPR,
-                author: this.config.author,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
                 logger: this.logger
             });
             const pushedBranch = await repository.getCurrentBranch();
@@ -221,9 +232,22 @@ export class GithubStep extends BaseStep {
         }
 
         const headSha = await repository.getHeadSha();
-        const changelogUrl = resolved.changelogEntry
-            ? `https://${remote}/${owner}/${repo}/blob/${headSha}/changelog.md`
-            : undefined;
+        // Only emit the "See full changelog" link when changelog.md is actually tracked in the
+        // committed tree at the pushed head SHA — otherwise the link 404s.
+        const changelogCommitted = (await repository.listTrackedFiles()).includes("changelog.md");
+        const changelogUrl = resolveChangelogUrl({
+            changelogEntry: resolved.changelogEntry,
+            changelogCommitted,
+            remote,
+            owner,
+            repo,
+            headSha
+        });
+        if (resolved.changelogEntry && !changelogCommitted) {
+            this.logger.warn(
+                'changelog.md is not present in the committed tree; omitting the "See full changelog" link.'
+            );
+        }
         const { prTitle, prBody } = parseCommitMessageForPR(
             resolved.commitMessage,
             resolved.changelogEntry,
@@ -314,6 +338,7 @@ export class GithubStep extends BaseStep {
             await repository.checkout(this.config.branch);
         }
 
+        await this.ensureChangelogFile(resolved);
         await this.ensureFernignore();
 
         this.logger.debug("Committing changes...");
@@ -345,7 +370,7 @@ export class GithubStep extends BaseStep {
                 branch: baseBranch,
                 force: false,
                 rebaseOnConflict: true,
-                author: this.config.author,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
                 logger: this.logger
             });
 
@@ -368,6 +393,7 @@ export class GithubStep extends BaseStep {
             await repository.checkout(this.config.branch);
         }
 
+        await this.ensureChangelogFile(resolved);
         await this.ensureFernignore();
 
         this.logger.debug("Committing changes...");
@@ -399,7 +425,7 @@ export class GithubStep extends BaseStep {
                 branch: baseBranch,
                 force: false,
                 rebaseOnConflict: true,
-                author: this.config.author,
+                author: resolveCommitAuthor(this.config.token, this.config.author),
                 logger: this.logger
             });
 
@@ -456,6 +482,48 @@ export class GithubStep extends BaseStep {
             this.logger.debug("Creating .fernignore file...");
             await writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
         }
+    }
+
+    /**
+     * Guarantees `changelog.md` records this run whenever there is a changelog entry or a
+     * resolved version, so the file lands in the committed tree that GithubStep pushes and the
+     * "See full changelog" link resolves. AutoVersionStep normally writes this file via
+     * `prependChangelogEntry`; this covers the paths where that write never reached the
+     * directory GithubStep commits (e.g. non-replay self-hosted generation) and explicitly
+     * versioned runs (`--version X.Y.Z`), which record a version-only entry with an empty
+     * description. Existing entries are always preserved — the new block is prepended.
+     *
+     * Returns `true` when it created or modified the file, `false` when the version's entry was
+     * already recorded (e.g. by AutoVersionStep) or there is nothing to write.
+     */
+    private async ensureChangelogFile(resolved: ResolvedPrFields): Promise<boolean> {
+        const entry = resolved.changelogEntry?.trim() ?? "";
+        const version = resolved.newVersion ?? resolved.previousVersion;
+        // A version-only entry (empty description) is only recorded for runs that produced a
+        // new version (e.g. an explicit `--version X.Y.Z`).
+        if (entry.length === 0 && resolved.newVersion == null) {
+            return false;
+        }
+        const changelogPath = join(this.outputDir, "changelog.md");
+        let existing: string | undefined;
+        try {
+            existing = await readFile(changelogPath, "utf-8");
+        } catch {
+            existing = undefined;
+        }
+        if (existing != null) {
+            if (version == null || changelogContainsVersion(existing, version)) {
+                // Already written (e.g. by AutoVersionStep) — don't duplicate the entry.
+                return false;
+            }
+        }
+        await writeFile(
+            changelogPath,
+            prependChangelogBlock({ existingContent: existing ?? "", version, entry }),
+            "utf-8"
+        );
+        this.logger.debug(`Wrote changelog.md${version != null ? ` for ${version}` : ""}.`);
+        return true;
     }
 
     private deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {
@@ -638,4 +706,42 @@ export function resolveBranchAction({
         return "checkout-remote";
     }
     return "create-from-head";
+}
+
+/**
+ * Builds the contents of a fresh `changelog.md` from a changelog entry, mirroring the format
+ * produced by AutoVersionStep's `prependChangelogEntry`. Used as a safety net so the file always
+ * exists in the committed tree that GithubStep pushes.
+ */
+export function buildChangelogFileContents(entry: string, version: string | undefined): string {
+    const trimmed = entry.trim();
+    const now = new Date().toISOString().slice(0, 10);
+    const header = version != null ? `## [${version}] - ${now}\n` : `## ${now}\n`;
+    return `# Changelog\n\n${header}${trimmed}\n\n`;
+}
+
+/**
+ * Resolves the "See full changelog" link. Returns `undefined` (so the link is omitted) unless
+ * there is a changelog entry AND `changelog.md` is actually tracked in the committed tree at the
+ * pushed head SHA — otherwise the link would 404.
+ */
+export function resolveChangelogUrl({
+    changelogEntry,
+    changelogCommitted,
+    remote,
+    owner,
+    repo,
+    headSha
+}: {
+    changelogEntry: string | undefined;
+    changelogCommitted: boolean;
+    remote: string;
+    owner: string;
+    repo: string;
+    headSha: string;
+}): string | undefined {
+    if (changelogEntry == null || changelogEntry.trim().length === 0 || !changelogCommitted) {
+        return undefined;
+    }
+    return `https://${remote}/${owner}/${repo}/blob/${headSha}/changelog.md`;
 }

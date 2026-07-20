@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedUnions from "../../../index.js";
@@ -24,6 +25,9 @@ export class UnionClient {
     /**
      * @param {string} id
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
      *
      * @example
      *     await client.union.get("id")
@@ -71,6 +75,9 @@ export class UnionClient {
      * @param {SeedUnions.Shape} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.update({
      *         type: "circle",
@@ -100,7 +107,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

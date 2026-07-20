@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedNullableOptional from "../../../index.js";
@@ -26,6 +27,9 @@ export class NullableOptionalClient {
      *
      * @param {string} userId
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.getUser("userId")
@@ -78,6 +82,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.CreateUserRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.createUser({
      *         username: "username",
@@ -117,7 +124,7 @@ export class NullableOptionalClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -145,6 +152,9 @@ export class NullableOptionalClient {
      * @param {string} userId
      * @param {SeedNullableOptional.UpdateUserRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.updateUser("userId", {
@@ -187,7 +197,7 @@ export class NullableOptionalClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -214,6 +224,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.ListUsersRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.listUsers({
@@ -282,6 +295,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.SearchUsersRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.searchUsers({
      *         query: "query",
@@ -348,6 +364,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.ComplexProfile} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.createComplexProfile({
@@ -466,7 +485,7 @@ export class NullableOptionalClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -493,6 +512,9 @@ export class NullableOptionalClient {
      *
      * @param {string} profileId
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.getComplexProfile("profileId")
@@ -551,6 +573,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.UpdateComplexProfileRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.updateComplexProfile("profileId", {
      *         nullableRole: "ADMIN",
@@ -607,7 +632,7 @@ export class NullableOptionalClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -639,6 +664,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.DeserializationTestRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.testDeserialization({
@@ -716,7 +744,7 @@ export class NullableOptionalClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -746,6 +774,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.FilterByRoleRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.filterByRole({
@@ -812,6 +843,9 @@ export class NullableOptionalClient {
      * @param {string} userId
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.getNotificationSettings("userId")
      */
@@ -872,6 +906,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.UpdateTagsRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.updateTags("userId", {
      *         tags: ["tags", "tags"],
@@ -904,7 +941,7 @@ export class NullableOptionalClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -931,6 +968,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.SearchRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.getSearchResults({
@@ -964,7 +1004,7 @@ export class NullableOptionalClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -1,0 +1,4 @@
+- summary: |
+    Bump `@fern-api/generator-cli` to 0.9.44 so every local-only commit is signed
+    when pushing to GitHub, not just HEAD.
+  type: chore

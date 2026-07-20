@@ -1846,6 +1846,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -1892,6 +1895,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -3068,6 +3074,9 @@
                         "afterInteractive",
                         "lazyOnload"
                       ]
+                    },
+                    "disable-sri": {
+                      "type": "boolean"
                     }
                   },
                   "required": [
@@ -3121,6 +3130,9 @@
                           "afterInteractive",
                           "lazyOnload"
                         ]
+                      },
+                      "disable-sri": {
+                        "type": "boolean"
                       }
                     },
                     "required": [

@@ -832,7 +832,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:Address": {
             "type": "object",
@@ -1125,7 +1126,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:CreateUserRequest": {
             "type": "object",
@@ -1328,7 +1330,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:UpdateUserRequest": {
             "type": "object",
@@ -1537,7 +1540,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:UserRole": {
             "type": "enum",
@@ -1941,6 +1945,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "email": {
                     "type": "samePropertiesAsObject",
@@ -2187,7 +2192,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:SmsNotification": {
             "type": "object",
@@ -2351,7 +2357,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:PushNotification": {
             "type": "object",
@@ -2545,7 +2552,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:SearchResult": {
             "type": "discriminatedUnion",
@@ -2635,6 +2643,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "user": {
                     "type": "samePropertiesAsObject",
@@ -2914,7 +2923,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:Document": {
             "type": "object",
@@ -3144,7 +3154,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:ComplexProfile": {
             "type": "object",
@@ -3886,7 +3897,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:DeserializationTestRequest": {
             "type": "object",
@@ -4363,7 +4375,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:DeserializationTestResponse": {
             "type": "object",
@@ -4554,7 +4567,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_nullable-optional:UserResponse": {
             "type": "object",
@@ -4847,7 +4861,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
