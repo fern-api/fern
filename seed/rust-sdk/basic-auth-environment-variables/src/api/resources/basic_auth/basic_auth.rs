@@ -21,6 +21,23 @@ impl BasicAuthClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_basic_auth_environment_variables::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         username: Some("YOUR_USERNAME".to_string()),
+    ///         password: Some("YOUR_PASSWORD".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = BasicAuthEnvironmentVariablesClient::new(config).expect("Failed to build client");
+    ///     client.basic_auth.get_with_basic_auth(None).await;
+    /// }
+    /// ```
     pub async fn get_with_basic_auth(
         &self,
         options: Option<RequestOptions>,
@@ -39,6 +56,26 @@ impl BasicAuthClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_basic_auth_environment_variables::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         username: Some("YOUR_USERNAME".to_string()),
+    ///         password: Some("YOUR_PASSWORD".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = BasicAuthEnvironmentVariablesClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .basic_auth
+    ///         .post_with_basic_auth(&serde_json::json!({"key":"value"}), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn post_with_basic_auth(
         &self,
         request: &serde_json::Value,

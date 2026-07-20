@@ -21,6 +21,22 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_header_token::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         api_key: Some("YOUR_API_KEY".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = HeaderTokenClient::new(config).expect("Failed to build client");
+    ///     client.service.get_with_bearer_token(None).await;
+    /// }
+    /// ```
     pub async fn get_with_bearer_token(
         &self,
         options: Option<RequestOptions>,

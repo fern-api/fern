@@ -21,6 +21,21 @@ impl PropertyBasedErrorClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_error_property::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ErrorPropertyClient::new(config).expect("Failed to build client");
+    ///     client.property_based_error.throw_error(None).await;
+    /// }
+    /// ```
     pub async fn throw_error(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client
             .execute_request(Method::GET, "property-based-error", None, None, options)
