@@ -23,6 +23,9 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedFileDownloadError}
+     * @throws {@link errors.SeedFileDownloadTimeoutError}
+     *
      * @example
      *     await client.service.simple()
      */
@@ -62,6 +65,10 @@ export class ServiceClient {
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/snippet");
     }
 
+    /**
+     * @throws {@link errors.SeedFileDownloadError}
+     * @throws {@link errors.SeedFileDownloadTimeoutError}
+     */
     public downloadFile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }

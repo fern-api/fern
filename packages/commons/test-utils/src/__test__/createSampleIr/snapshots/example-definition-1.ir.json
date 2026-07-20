@@ -15,6 +15,7 @@
     "generationLanguage": undefined,
     "keywords": undefined,
     "smartCasing": true,
+    "smartCasingDigitWordBoundary": undefined,
   },
   "constants": {
     "errorInstanceIdKey": "errorInstanceId",
@@ -94,6 +95,7 @@
             },
           },
         },
+        "deferredUnionBaseProperties": undefined,
         "extends": undefined,
         "properties": [
           {
@@ -356,6 +358,7 @@
             },
           },
         },
+        "deferredUnionBaseProperties": undefined,
         "extends": undefined,
         "properties": [
           {
@@ -675,6 +678,7 @@
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
+    "idempotencyKeyGeneration": undefined,
     "isAuthMandatory": false,
     "platformHeaders": {
       "language": "X-Fern-Language",
@@ -750,6 +754,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,
@@ -943,6 +948,7 @@
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
+        "deferredUnionBaseProperties": undefined,
         "extendedProperties": [],
         "extends": [],
         "extraProperties": false,

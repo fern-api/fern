@@ -201,6 +201,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
 			g.config.OmitFernHeaders,
+			g.config.IncludePlatformHeaders,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -335,6 +336,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
 			g.config.OmitFernHeaders,
+			g.config.IncludePlatformHeaders,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -364,6 +366,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
 			g.config.OmitFernHeaders,
+			g.config.IncludePlatformHeaders,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -417,6 +420,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
 			g.config.OmitFernHeaders,
+			g.config.IncludePlatformHeaders,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -458,6 +462,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
+				g.config.IncludePlatformHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -490,6 +495,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
 			g.config.OmitFernHeaders,
+			g.config.IncludePlatformHeaders,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -528,6 +534,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
+				g.config.IncludePlatformHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -557,6 +564,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
+				g.config.IncludePlatformHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -589,6 +597,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
+				g.config.IncludePlatformHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -620,6 +629,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
 			g.config.OmitFernHeaders,
+			g.config.IncludePlatformHeaders,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -676,6 +686,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
+				g.config.IncludePlatformHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
 				ir.Types,
@@ -837,6 +848,7 @@ func (g *Generator) generateRootService(
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
 		g.config.OmitFernHeaders,
+		g.config.IncludePlatformHeaders,
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -891,6 +903,7 @@ func (g *Generator) generateService(
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
 		g.config.OmitFernHeaders,
+		g.config.IncludePlatformHeaders,
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -948,6 +961,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
 		g.config.OmitFernHeaders,
+		g.config.IncludePlatformHeaders,
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -1000,6 +1014,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
 		g.config.OmitFernHeaders,
+		g.config.IncludePlatformHeaders,
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
 		ir.Types,
@@ -1177,14 +1192,16 @@ func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 	// Name.UnmarshalJSON (called during Unmarshal) uses the correct settings.
 	var irHeader struct {
 		CasingsConfig *struct {
-			SmartCasing        bool     `json:"smartCasing"`
-			GenerationLanguage string   `json:"generationLanguage"`
-			Keywords           []string `json:"keywords"`
+			SmartCasing                  bool     `json:"smartCasing"`
+			SmartCasingDigitWordBoundary bool     `json:"smartCasingDigitWordBoundary"`
+			GenerationLanguage           string   `json:"generationLanguage"`
+			Keywords                     []string `json:"keywords"`
 		} `json:"casingsConfig"`
 	}
 	if err := json.Unmarshal(bytes, &irHeader); err == nil && irHeader.CasingsConfig != nil {
 		common.ConfigureCasing(
 			irHeader.CasingsConfig.SmartCasing,
+			irHeader.CasingsConfig.SmartCasingDigitWordBoundary,
 			irHeader.CasingsConfig.GenerationLanguage,
 			irHeader.CasingsConfig.Keywords,
 		)
@@ -1363,6 +1380,7 @@ func newClientTestFile(
 		filename,
 		packageName,
 		baseImportPath,
+		false,
 		false,
 		false,
 		false,

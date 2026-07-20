@@ -1,0 +1,6 @@
+- summary: |
+    Fix discriminated union variants that reference a nested oneOf/anyOf being
+    wrapped in a spurious "value" property. The OpenAPI importer now merges
+    the nested oneOf variants into a single object with optional fields,
+    preserving the correct wire format.
+  type: fix

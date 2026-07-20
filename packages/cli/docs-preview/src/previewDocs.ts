@@ -153,6 +153,11 @@ export interface PreviewDocsResult {
      */
     docsWorkspacePath: AbsoluteFilePath;
     /**
+     * Map of absolute file paths to their fully qualified slug pathnames,
+     * used to resolve relative .md/.mdx links in translated pages.
+     */
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>;
+    /**
      * Per-locale translated API definitions, keyed by locale then by the base
      * `apiDefinitionId` (shared with the default-locale definition) so they can be
      * spliced into a per-locale docs definition's `apis` without touching the nav tree.
@@ -326,6 +331,7 @@ export async function getPreviewDocsDefinition({
                 translationNavigationOverlays: previousPreviewResult.translationNavigationOverlays,
                 collectedFileIds: previousPreviewResult.collectedFileIds,
                 docsWorkspacePath: previousPreviewResult.docsWorkspacePath,
+                markdownFilesToPathName: previousPreviewResult.markdownFilesToPathName,
                 translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions
             };
         }
@@ -418,6 +424,7 @@ export async function getPreviewDocsDefinition({
     const translationPages = resolver.getTranslationPages();
     const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
     const collectedFileIds = resolver.getCollectedFileIds();
+    const markdownFilesToPathName = resolver.getMarkdownFilesToPathName();
 
     const translatedApiSpecs = resolver.getTranslatedApiSpecs();
     let translatedApiDefinitions: Record<string, Record<string, APIV1Read.ApiDefinition>> | undefined;
@@ -451,6 +458,7 @@ export async function getPreviewDocsDefinition({
         translationNavigationOverlays,
         collectedFileIds,
         docsWorkspacePath: docsWorkspace.absoluteFilePath,
+        markdownFilesToPathName,
         translatedApiDefinitions
     };
 }

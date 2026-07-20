@@ -26,6 +26,9 @@ export class ServiceClient {
      * @param {string} resourceParam
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiWideBasePathError}
+     * @throws {@link errors.SeedApiWideBasePathTimeoutError}
+     *
      * @example
      *     await client.service.post("serviceParam", 1, "resourceParam")
      */

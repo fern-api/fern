@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedWebsocketClient } from \"@fern/websocket\";\n\nconst client = new SeedWebsocketClient({ environment: \"YOUR_BASE_URL\" });\nawait client.status.getStatus();\n"
+                "client": "import { SeedWebsocketClient } from \"@fern/websocket\";\n\nconst client = new SeedWebsocketClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.status.getStatus();\n"
             }
         }
     ],

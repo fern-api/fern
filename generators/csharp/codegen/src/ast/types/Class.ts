@@ -225,6 +225,9 @@ export class Class extends DefinedType {
 
         writer.writeNewLineIfLastLineNot();
         writer.pushScope();
+        // Track the enclosing-type scope so references written inside the body can detect a
+        // nested type that shadows the root namespace segment (CS0426) and qualify only here.
+        writer.pushTypeScope(this.reference.fullyQualifiedName);
 
         this.writeConsts(writer);
         this.writeFieldFields(writer);
@@ -236,6 +239,7 @@ export class Class extends DefinedType {
         this.writeNestedClasses(writer);
         this.writeNestedInterfaces(writer);
 
+        writer.popTypeScope();
         writer.popScope();
     }
 

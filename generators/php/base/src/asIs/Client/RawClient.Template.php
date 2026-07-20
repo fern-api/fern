@@ -159,6 +159,16 @@ class RawClient
                 $request->headers,
                 $options['headers'] ?? [],
             ),
+            UrlEncodedApiRequest::class => array_merge(
+                [
+                    "Content-Type" => "application/x-www-form-urlencoded",
+                    "Accept" => "*/*",
+                ],
+                $this->headers,
+                $authHeaders,
+                $request->headers,
+                $options['headers'] ?? [],
+            ),
             MultipartApiRequest::class => array_merge(
                 $this->headers,
                 $authHeaders,
@@ -190,6 +200,23 @@ class RawClient
                     ),
                 )
             );
+        }
+
+        if ($request instanceof UrlEncodedApiRequest) {
+            if ($request->body === null) {
+                return null;
+            }
+            $body = $this->buildJsonBody($request->body, $options);
+            if ($body instanceof JsonSerializable) {
+                $body = $body->jsonSerialize();
+            }
+            if (is_object($body)) {
+                $body = (array)$body;
+            }
+            if (!is_array($body)) {
+                throw new InvalidArgumentException('URL-encoded request bodies must serialize to an array.');
+            }
+            return $this->streamFactory->createStream(http_build_query($body));
         }
 
         if ($request instanceof MultipartApiRequest) {

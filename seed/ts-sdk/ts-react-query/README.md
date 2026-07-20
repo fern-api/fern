@@ -115,7 +115,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/ts-react-query";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.user.create({
     name: "name",
     email: "email"

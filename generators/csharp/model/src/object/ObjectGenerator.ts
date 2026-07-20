@@ -11,7 +11,7 @@ type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
 type TypeReference = FernIr.TypeReference;
 
-import { generateFields } from "../generateFields.js";
+import { generateFields, getGeneratedPropertyName } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
 
@@ -30,6 +30,21 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         this.exampleGenerator = new ExampleGenerator(context);
     }
 
+    /**
+     * The object's own and extended properties, minus any base properties suppressed because this
+     * object is a discriminated-union variant whose union already declares them (see
+     * {@link ModelGeneratorContext.getBasePropertyWireNamesToOmitForType}). Suppressing them here
+     * keeps required fields from being demanded on both the union envelope and the variant leaf.
+     */
+    private getPropertiesToGenerate(): ObjectProperty[] {
+        const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
+        const wireNamesToOmit = this.context.getBasePropertyWireNamesToOmitForType(this.typeDeclaration.name.typeId);
+        if (wireNamesToOmit.size === 0) {
+            return properties;
+        }
+        return properties.filter((property) => !wireNamesToOmit.has(getWireValue(property.name)));
+    }
+
     public doGenerate(): CSharpFile {
         const interfaces = [this.System.Text.Json.Serialization.IJsonOnDeserialized];
         if (this.objectDeclaration.extraProperties) {
@@ -44,7 +59,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             interfaceReferences: interfaces,
             annotations: [this.System.Serializable]
         });
-        const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
+        const properties = this.getPropertiesToGenerate();
         generateFields(class_, {
             properties,
             className: this.classReference.name,
@@ -173,16 +188,17 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         exampleObject: ExampleObjectType;
         parseDatetimes: boolean;
     }): ast.CodeBlock {
+        // Base properties owned by the enclosing union are suppressed on this variant leaf, so the
+        // initializer must not try to set them either (they live on the union envelope instead).
+        const wireNamesToOmit = this.context.getBasePropertyWireNamesToOmitForType(this.typeDeclaration.name.typeId);
+        const propertiesToGenerate = this.getPropertiesToGenerate();
+
         // When generateLiterals is enabled, collect wire values of literal properties so we
         // can skip them in the object initializer. Their default `= new()` already sets the
         // correct value and assigning a plain string would cause a CS0029 compilation error.
         const literalPropertyWireValues = new Set<string>();
         if (this.generation.settings.generateLiterals) {
-            const allProps = [
-                ...this.objectDeclaration.properties,
-                ...(this.objectDeclaration.extendedProperties ?? [])
-            ];
-            for (const prop of allProps) {
+            for (const prop of propertiesToGenerate) {
                 if (this.context.isLiteralValue(prop.valueType)) {
                     literalPropertyWireValues.add(getWireValue(prop.name));
                 }
@@ -191,6 +207,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
 
         const args = exampleObject.properties
             .filter((exampleProperty) => !literalPropertyWireValues.has(getWireValue(exampleProperty.name)))
+            .filter((exampleProperty) => !wireNamesToOmit.has(getWireValue(exampleProperty.name)))
             .map((exampleProperty) => {
                 const propertyName = this.getPropertyName({
                     className: this.classReference.name,
@@ -208,10 +225,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         // Include default values for required properties missing from the example
         // so the generated object initializer compiles without CS9035 errors.
         const providedWireValues = new Set(exampleObject.properties.map((p) => getWireValue(p.name)));
-        const allProperties = [
-            ...this.objectDeclaration.properties,
-            ...(this.objectDeclaration.extendedProperties ?? [])
-        ];
+        const allProperties = propertiesToGenerate;
         for (const property of allProperties) {
             if (providedWireValues.has(getWireValue(property.name))) {
                 continue;
@@ -372,7 +386,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         visited.add(typeId);
 
         const classRef = this.context.csharpTypeMapper.convertToClassReference(typeDeclaration);
-        const allProperties = [...objectShape.properties, ...(objectShape.extendedProperties ?? [])];
+        const wireNamesToOmit = this.context.getBasePropertyWireNamesToOmitForType(typeId);
+        const allProperties = [...objectShape.properties, ...(objectShape.extendedProperties ?? [])].filter(
+            (property) => !wireNamesToOmit.has(getWireValue(property.name))
+        );
         const args: { name: string; assignment: ast.CodeBlock }[] = [];
         for (const property of allProperties) {
             if (this.isRequiredProperty(property.valueType)) {
@@ -406,11 +423,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         className: string;
         objectProperty: NameAndWireValueOrString;
     }): string {
-        const propertyName = this.case.pascalSafe(objectProperty);
-        if (propertyName === className) {
-            return `${propertyName}_`;
-        }
-        return propertyName;
+        return getGeneratedPropertyName({ caseConverter: this.case, className, name: objectProperty });
     }
 
     private shouldAddProtobufMappers(typeDeclaration: TypeDeclaration): boolean {

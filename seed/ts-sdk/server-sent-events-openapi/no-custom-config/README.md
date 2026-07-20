@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApi, SeedApiClient } from "@fern/server-sent-events-openapi";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.streamProtocolNoCollision({});
 for await (const item of response) {
     console.log(item);
@@ -90,7 +90,7 @@ The SDK uses async iterators, so you can consume the responses using a `for awai
 ```typescript
 import { SeedApi, SeedApiClient } from "@fern/server-sent-events-openapi";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 const response = await client.streamProtocolNoCollision({});
 for await (const item of response) {
     console.log(item);

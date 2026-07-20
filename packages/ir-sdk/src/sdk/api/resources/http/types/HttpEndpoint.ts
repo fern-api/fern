@@ -42,9 +42,14 @@ export interface HttpEndpoint extends FernIr.Declaration {
     audiences: FernIr.AudienceReference[] | undefined;
     retries: FernIr.RetriesConfiguration | undefined;
     /**
-     * When a global parameter has `apply: explicit`, only endpoints
-     * listed here receive the injection. Populated from the per-operation
-     * `x-fern-global-parameter` extension.
+     * The resolved set of global parameters that apply to this endpoint,
+     * computed at IR-generation time. It combines explicit opt-ins (from the
+     * per-operation `x-fern-global-parameter` extension) with `apply: auto`
+     * parameters that match the endpoint. For body-location parameters,
+     * membership is gated on the endpoint's request-body schema containing
+     * the dotted target path. Generators should treat this as the
+     * authoritative applicability set (a membership check) rather than
+     * re-deriving applicability from `apply` modes.
      */
     globalParameters: FernIr.GlobalParameterId[] | undefined;
     /** Whether this endpoint is shown in the API playground */

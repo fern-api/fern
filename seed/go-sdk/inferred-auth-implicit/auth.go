@@ -19,7 +19,7 @@ var (
 type GetTokenRequest struct {
 	XAPIKey      string  `json:"-" url:"-"`
 	ClientID     string  `json:"client_id" url:"-"`
-	ClientSecret string  `json:"client_secret" url:"-"`
+	ClientSecret *string `json:"client_secret,omitempty" url:"-"`
 	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
@@ -59,7 +59,7 @@ func (g *GetTokenRequest) SetClientID(clientID string) {
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
+func (g *GetTokenRequest) SetClientSecret(clientSecret *string) {
 	g.ClientSecret = clientSecret
 	g.require(getTokenRequestFieldClientSecret)
 }

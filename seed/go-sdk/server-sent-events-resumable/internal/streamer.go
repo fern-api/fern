@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/url"
 
@@ -134,6 +135,21 @@ func (s *Streamer[T]) streamOnce(
 		return nil, nil, err
 	}
 
+	body, err := decompressedResponseBody(resp)
+	if err != nil {
+		defer func() { _ = resp.Body.Close() }()
+		return nil, nil, err
+	}
+	if body != io.Reader(resp.Body) {
+		// The response is handed off to the stream, which reads and closes
+		// resp.Body, so the decompressing reader must replace it while
+		// preserving the original body's Close.
+		resp.Body = struct {
+			io.Reader
+			io.Closer
+		}{body, resp.Body}
+	}
+
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
@@ -143,7 +159,7 @@ func (s *Streamer[T]) streamOnce(
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		defer func() { _ = resp.Body.Close() }()
-		return nil, nil, decodeError(resp, params.ErrorDecoder)
+		return nil, nil, decodeError(resp, resp.Body, params.ErrorDecoder)
 	}
 
 	var opts []core.StreamOption

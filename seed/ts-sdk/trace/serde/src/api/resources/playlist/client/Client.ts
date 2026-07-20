@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -29,6 +30,9 @@ export class PlaylistClient {
      * @param {number} serviceParam
      * @param {SeedTrace.CreatePlaylistRequest} request
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.createPlaylist(1, {
@@ -83,10 +87,13 @@ export class PlaylistClient {
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",
-            body: serializers.PlaylistCreateRequest.jsonOrThrow(_body, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.PlaylistCreateRequest.jsonOrThrow(_body, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -128,6 +135,9 @@ export class PlaylistClient {
      * @param {number} serviceParam
      * @param {SeedTrace.GetPlaylistsRequest} request
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.getPlaylists(1, {
@@ -226,6 +236,8 @@ export class PlaylistClient {
      *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      * @throws {@link SeedTrace.UnauthorizedError}
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.getPlaylist(1, "playlistId")
@@ -320,6 +332,8 @@ export class PlaylistClient {
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.updatePlaylist(1, "playlistId", {
@@ -365,10 +379,13 @@ export class PlaylistClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -424,6 +441,9 @@ export class PlaylistClient {
      * @param {number} serviceParam
      * @param {SeedTrace.PlaylistId} playlist_id
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.deletePlaylist(1, "playlist_id")

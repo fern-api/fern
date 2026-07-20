@@ -2,6 +2,7 @@ import {
     detectCiProvider,
     detectInvocationSource,
     FernWorkspace,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getUserAgentTemplateFromGeneratorConfig,
@@ -225,6 +226,7 @@ export class GenerationRunner {
             generationLanguage: generatorInvocation.language,
             keywords: generatorInvocation.keywords,
             smartCasing: generatorInvocation.smartCasing,
+            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples: true,
                 disabled: generatorInvocation.disableExamples,
@@ -234,6 +236,7 @@ export class GenerationRunner {
             version: outputVersionOverride,
             packageName: generatorsYml.getPackageName({ generatorInvocation }),
             userAgentTemplate: getUserAgentTemplateFromGeneratorConfig(generatorInvocation),
+            idempotencyKeyGeneration: getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation),
             organization,
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),

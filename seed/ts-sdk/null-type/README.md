@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/null-type";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.conversations.outboundCall({
     to_phone_number: "to_phone_number"
 });

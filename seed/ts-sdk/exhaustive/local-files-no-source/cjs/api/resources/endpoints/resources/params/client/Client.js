@@ -47,6 +47,7 @@ exports.ParamsClient = void 0;
 const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
+const requestBody_js_1 = require("../../../../../../core/requestBody.js");
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 const SeedExhaustive = __importStar(require("../../../../../index.js"));
@@ -59,6 +60,9 @@ class ParamsClient {
      *
      * @param {string} param
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithPath("param")
@@ -100,6 +104,9 @@ class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithInlinePath({
@@ -144,6 +151,9 @@ class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithQuery({
@@ -197,6 +207,9 @@ class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
@@ -252,6 +265,9 @@ class ParamsClient {
      * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.getWithPathAndQuery("param", {
      *         query: "query"
@@ -302,6 +318,9 @@ class ParamsClient {
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithInlinePathAndQuery({
@@ -356,6 +375,9 @@ class ParamsClient {
      * @param {string} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
@@ -374,7 +396,7 @@ class ParamsClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: request,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(request, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -400,6 +422,9 @@ class ParamsClient {
      * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.modifyWithInlinePath({
      *         param: "param",
@@ -422,7 +447,7 @@ class ParamsClient {
                 contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
-                body: _body,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(_body, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -448,6 +473,9 @@ class ParamsClient {
      * @param {core.file.Uploadable} uploadable
      * @param {string} param
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     import { createReadStream } from "fs";
@@ -498,6 +526,9 @@ class ParamsClient {
      * @param {SeedExhaustive.endpoints.CreateWithBodyAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.createWithBodyAndQuery({
      *         _fields: "_fields",
@@ -529,7 +560,7 @@ class ParamsClient {
                     .mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams)
                     .build(),
                 requestType: "json",
-                body: _body,
+                body: (0, requestBody_js_1.mergeAdditionalBodyParameters)(_body, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalBodyParameters),
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
@@ -558,6 +589,9 @@ class ParamsClient {
      * @param {core.file.Uploadable} uploadable
      * @param {SeedExhaustive.endpoints.UploadBytesWithQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      */
     uploadBytesWithQuery(uploadable, request, requestOptions) {
         return core.HttpResponsePromise.fromPromise(this.__uploadBytesWithQuery(uploadable, request, requestOptions));
@@ -611,6 +645,9 @@ class ParamsClient {
      * @param {boolean} param
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.params.getWithBooleanPath(true)
      */
@@ -653,6 +690,8 @@ class ParamsClient {
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.params.getWithPathAndErrors("param")

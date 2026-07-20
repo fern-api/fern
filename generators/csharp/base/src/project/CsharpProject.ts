@@ -1014,7 +1014,11 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
             Object.keys(this.generation.settings.extraDependencies).map((n) => n.toLowerCase())
         );
         const result: string[] = [];
-        for (const pkg of NET8_INBOX_PACKAGES) {
+        const inboxPackages = [...NET8_INBOX_PACKAGES];
+        if (this.generation.settings.includePlatformHeaders) {
+            inboxPackages.push(PLATFORM_HEADERS_INBOX_PACKAGE);
+        }
+        for (const pkg of inboxPackages) {
             if (!extraDepNames.has(pkg.name.toLowerCase())) {
                 result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
             }
@@ -1178,3 +1182,14 @@ const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
 const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
     { name: "System.Text.Json", version: "9.0.9" }
 ];
+
+/**
+ * Provides System.Runtime.InteropServices.RuntimeInformation on legacy TFMs
+ * (net462/netstandard2.0); in-box on net8.0+. Only emitted when the
+ * `include-platform-headers` config is enabled, since that is the only feature
+ * that references RuntimeInformation (for the structured User-Agent header).
+ */
+const PLATFORM_HEADERS_INBOX_PACKAGE = {
+    name: "System.Runtime.InteropServices.RuntimeInformation",
+    version: "4.3.0"
+} as const;

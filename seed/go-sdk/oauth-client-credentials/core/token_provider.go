@@ -26,7 +26,7 @@ type TokenProvider struct {
 	// defaultExpirySeconds controls behavior when the token response doesn't include
 	// an expiry value. If 0, the token is treated as never expiring. If > 0, the token
 	// is assigned this default expiry (e.g. 3600 for inferred auth).
-	defaultExpirySeconds int
+	defaultExpirySeconds int64
 
 	// fetchMu ensures only one goroutine fetches a new token at a time
 	fetchMu sync.Mutex
@@ -39,18 +39,22 @@ type TokenProvider struct {
 // value to apply a default expiry (e.g. 3600 for inferred auth).
 func NewTokenProvider(defaultExpirySeconds int) *TokenProvider {
 	return &TokenProvider{
-		defaultExpirySeconds: defaultExpirySeconds,
+		defaultExpirySeconds: int64(defaultExpirySeconds),
 	}
 }
 
 // SetToken sets the cached access token and its expiration time.
 // The expiresIn parameter is the number of seconds until the token expires.
 func (t *TokenProvider) SetToken(accessToken string, expiresIn int) {
+	t.setToken(accessToken, int64(expiresIn))
+}
+
+func (t *TokenProvider) setToken(accessToken string, expiresIn int64) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 	t.accessToken = accessToken
 	if expiresIn > 0 {
-		bufferSeconds := tokenExpirationBufferMinutes * 60
+		bufferSeconds := int64(tokenExpirationBufferMinutes * 60)
 		effectiveExpiresIn := expiresIn - bufferSeconds
 		if effectiveExpiresIn < 0 {
 			effectiveExpiresIn = 0
@@ -86,7 +90,7 @@ func (t *TokenProvider) GetToken() string {
 // GetOrFetch returns a valid token, fetching a new one if necessary.
 // The fetchFunc is called at most once even if multiple goroutines call GetOrFetch
 // concurrently when the token is expired. It should return (accessToken, expiresInSeconds, error).
-func (t *TokenProvider) GetOrFetch(fetchFunc func() (string, int, error)) (string, error) {
+func (t *TokenProvider) GetOrFetch(fetchFunc func() (string, int64, error)) (string, error) {
 	// Fast path: check if we have a valid token
 	if token := t.GetToken(); token != "" {
 		return token, nil
@@ -107,7 +111,7 @@ func (t *TokenProvider) GetOrFetch(fetchFunc func() (string, int, error)) (strin
 		return "", err
 	}
 
-	t.SetToken(accessToken, expiresIn)
+	t.setToken(accessToken, expiresIn)
 	return accessToken, nil
 }
 

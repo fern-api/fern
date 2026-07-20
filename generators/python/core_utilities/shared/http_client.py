@@ -1,6 +1,7 @@
 import asyncio
 import email.utils
 import re
+import socket
 import time
 import typing
 from contextlib import asynccontextmanager, contextmanager
@@ -19,6 +20,39 @@ from httpx._types import RequestFiles
 INITIAL_RETRY_DELAY_SECONDS = 1.0
 MAX_RETRY_DELAY_SECONDS = 60.0
 JITTER_FACTOR = 0.2  # 20% random jitter
+
+
+def get_keepalive_socket_options(
+    idle: int = 60,
+    intvl: int = 30,
+    cnt: int = 5,
+) -> typing.List[typing.Tuple[int, int, int]]:
+    """
+    Build TCP keepalive socket options for the current platform.
+
+    Keepalive probes keep otherwise-idle connections alive so that long,
+    non-streaming requests survive idle-connection reaping by a firewall,
+    load balancer, or NAT. The available socket constants are OS-dependent,
+    so each option is guarded and only emitted when the platform defines it:
+
+    - ``SO_KEEPALIVE`` is portable (Linux/macOS/Windows).
+    - The idle-before-first-probe knob is ``TCP_KEEPIDLE`` on Linux and modern
+      Windows, but ``TCP_KEEPALIVE`` on macOS.
+    - ``TCP_KEEPINTVL`` / ``TCP_KEEPCNT`` exist on Linux/macOS/modern Windows.
+
+    Passing these tuples to ``httpx.HTTPTransport(socket_options=...)`` /
+    ``httpx.AsyncHTTPTransport(socket_options=...)`` applies them to every
+    connection the transport opens.
+    """
+    opts: typing.List[typing.Tuple[int, int, int]] = [(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)]
+    idle_const = getattr(socket, "TCP_KEEPIDLE", None) or getattr(socket, "TCP_KEEPALIVE", None)
+    if idle_const:
+        opts.append((socket.IPPROTO_TCP, idle_const, idle))
+    if hasattr(socket, "TCP_KEEPINTVL"):
+        opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, intvl))
+    if hasattr(socket, "TCP_KEEPCNT"):
+        opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPCNT, cnt))
+    return opts
 
 
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
@@ -311,7 +345,9 @@ class HttpClient:
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
@@ -472,7 +508,9 @@ class HttpClient:
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
@@ -602,7 +640,9 @@ class AsyncHttpClient:
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
@@ -766,7 +806,9 @@ class AsyncHttpClient:
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         _timeout = (
-            request_options.get("timeout_in_seconds")
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )

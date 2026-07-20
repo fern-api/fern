@@ -42,6 +42,23 @@ test.describe("Smoke test: all pages load", () => {
     }
 });
 
+test.describe("Custom component with third-party import", () => {
+    test("GET /welcome should render a custom component that imports a third-party library", async ({ page }) => {
+        const response = await page.goto("/welcome", {
+            waitUntil: "domcontentloaded",
+            timeout: 30_000
+        });
+
+        expect(response?.status()).toBe(200);
+
+        // The PlantInventory component imports `pluralize` from npm, which the
+        // CLI bundles into the uploaded component source.
+        const inventory = page.getByTestId("plant-inventory");
+        await expect(inventory).toBeVisible({ timeout: 15_000 });
+        await expect(inventory).toHaveText("We currently have 3 plants in stock.");
+    });
+});
+
 test.describe("Image rendering validation", () => {
     test("GET /welcome should render images that actually load", async ({ page }) => {
         const response = await page.goto("/welcome", {

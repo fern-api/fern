@@ -31,6 +31,7 @@ function makeGenerator(
         absolutePathToLocalSnippets: undefined,
         keywords: undefined,
         smartCasing: false,
+        smartCasingDigitWordBoundary: false,
         disableExamples: false,
         language: undefined,
         publishMetadata: undefined,

@@ -176,7 +176,8 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                         properties: convertedFields,
                         extends: [],
                         extendedProperties: [],
-                        extraProperties: false
+                        extraProperties: false,
+                        deferredUnionBaseProperties: undefined
                     }),
                     referencedTypes: allReferencedTypes,
                     typeName: this.message.name,

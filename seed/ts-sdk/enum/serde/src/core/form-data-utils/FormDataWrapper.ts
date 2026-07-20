@@ -24,6 +24,11 @@ export class FormDataWrapper {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
+        if (value == null) {
+            throw new Error(
+                `File upload for "${key}" received ${value === null ? "null" : "undefined"}. The generated code should not call appendFile with null/undefined — check that optional file fields are guarded before this call.`,
+            );
+        }
         const { data, filename, contentType } = await toMultipartDataPart(value);
         const blob = await convertToBlob(data, contentType);
         if (filename) {

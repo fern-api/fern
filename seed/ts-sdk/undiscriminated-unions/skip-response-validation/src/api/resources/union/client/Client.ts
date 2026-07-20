@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
@@ -24,6 +25,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.MyUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.get("string")
@@ -49,7 +53,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -73,6 +77,9 @@ export class UnionClient {
 
     /**
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.getMetadata()
@@ -121,6 +128,9 @@ export class UnionClient {
      * @param {SeedUndiscriminatedUnions.MetadataUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.updateMetadata({
      *         "string": {
@@ -151,7 +161,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -176,6 +186,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.Request} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.call({
@@ -209,7 +222,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -234,6 +247,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.UnionWithDuplicateTypes} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.duplicateTypesUnion("string")
@@ -261,7 +277,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -290,6 +306,9 @@ export class UnionClient {
      * @param {SeedUndiscriminatedUnions.NestedUnionRoot} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.nestedUnions("string")
      */
@@ -316,7 +335,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -341,6 +360,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.OuterNestedUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.nestedObjectUnions("string")
@@ -368,7 +390,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -393,6 +415,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.AliasedObjectUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.aliasedObjectUnion({
@@ -423,7 +448,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -448,6 +473,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.UnionWithBaseProperties} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.getWithBaseProperties({
@@ -482,7 +510,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -510,6 +538,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.PaymentRequest} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.testCamelCaseProperties({
@@ -542,7 +573,7 @@ export class UnionClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

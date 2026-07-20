@@ -1,4 +1,127 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.13.4
+  changelogEntry:
+    - summary: |
+        Global API headers configured with an `env` fallback (e.g. `X-Twilio-Version` with
+        `env: TWILIO_VERSION`) now fall back to the environment variable in the root client
+        constructor when the parameter is not passed explicitly. Optional headers never throw
+        when both the parameter and the environment variable are missing.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.13.3
+  changelogEntry:
+    - summary: |
+        Emit a standalone `LICENSE` file at the repo root when a custom license is
+        configured (`license: { custom: ./LICENSE }` in the generator's `github` block).
+        Previously the PHP generator only set the `license` field in `composer.json` and
+        never wrote the license file itself, so GitHub license detection and compliance
+        scanners reported no license. This brings the PHP generator to parity with the
+        TypeScript, Python, Java, and Go generators.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.13.2
+  changelogEntry:
+    - summary: |
+        Send request bodies declared with the `application/x-www-form-urlencoded` content type
+        (e.g. OAuth token endpoints) as form-urlencoded instead of JSON. A new
+        `UrlEncodedApiRequest` core type encodes the body with `http_build_query` and sets the
+        `Content-Type: application/x-www-form-urlencoded` header.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 2.13.1
+  changelogEntry:
+    - summary: |
+        Wire OAuth client-credentials authentication into the root client when the OAuth
+        scheme is not the first scheme in the API's auth configuration (e.g.
+        `auth: any` with basic auth listed before OAuth). Previously the OAuth token
+        provider was only generated when OAuth was the first auth scheme, so the root
+        client silently fell back to the other schemes and never used the OAuth
+        credentials. When both an OAuth and an inferred auth scheme are present, the
+        provider-based scheme that appears first in the auth configuration is used.
+      type: fix
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the
+        token endpoint's `grant_type` property is a non-literal string. Previously the
+        property was omitted (when optional) or surfaced as a required constructor
+        parameter (when required), so token endpoints that require `grant_type`
+        rejected the request.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 2.13.0
+  changelogEntry:
+    - summary: |
+        Auto-generation of the idempotency key header is now driven by the IR
+        (`sdkConfig.idempotencyKeyGeneration`) instead of a generator config flag. When
+        enabled, retry-unsafe requests (the IR-configured eligible methods, POST/PUT by
+        default) attach the configured header (default `Idempotency-Key`) with a freshly
+        generated UUIDv4 unless the caller supplies one. The header name and eligible
+        methods come from the IR so behavior is consistent across generators.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 2.12.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string parameters on
+        the client constructor and interpolated into the base URL(s) at construction time,
+        falling back to each variable's default when not provided. Conflicting constructor
+        option names are de-collided with a `serverUrl` prefix and numeric suffix when needed
+        (e.g. a variable named `environment` is exposed as `serverUrlEnvironment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 2.11.2
+  changelogEntry:
+    - summary: |
+        Upgrade the PHP SDK generator to consume IR v67.
+      type: chore
+  createdAt: "2026-07-13"
+  irVersion: 67
+- version: 2.11.1
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `includePlatformHeaders` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 2.11.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients, gated behind a new `includePlatformHeaders` config option (default
+        off, so existing generated output is unchanged). When enabled, the client
+        reports its SDK name/version plus the operating system, architecture, and PHP
+        runtime version in the Twilio-style shape
+        `{sdkName}/{sdkVersion} ({os}; {arch}) PHP/{runtimeVersion}`
+        (e.g. `my-sdk/1.0.0 (linux; x86_64) PHP/8.2.0`). The platform values are
+        resolved at runtime via `PHP_OS`, `php_uname('m')`, and `PHP_VERSION`. Unknown
+        segments are omitted gracefully (the `(os; arch)` group is dropped when both are
+        empty, a single known value is included on its own, and the version suffix is
+        dropped when unavailable), and the discrete `X-Fern-Platform` / `X-Fern-Runtime`
+        headers are consolidated into the `User-Agent`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 2.10.16
+  changelogEntry:
+    - summary: |
+        Make each scheme's credentials optional under `any`-composed auth. Previously,
+        with a multi-scheme `auth: any: [...]` config the generated client treated OAuth
+        (and other) credentials as unconditionally required at construction, so a caller
+        who only wanted API-key auth could not instantiate the client. Credentials now
+        fall back to environment variables without throwing, and the OAuth/inferred token
+        provider and auth headers are only set up when that scheme's credentials are present.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
 - version: 2.10.15
   changelogEntry:
     - summary: |

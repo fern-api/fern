@@ -38,7 +38,8 @@ module Seed
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "X-Fern-Language" => "Ruby"
+          "X-Fern-Language" => "Ruby",
+          "user-agent" => "my-sdk"
         },
         max_retries: max_retries
       )

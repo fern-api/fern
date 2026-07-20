@@ -21,6 +21,10 @@ request := &fern.GetTokenRequest{
         Scope: fern.String(
             "scope",
         ),
+        Permissions: []string{
+            "permissions",
+            "permissions",
+        },
     }
 client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
@@ -90,6 +94,14 @@ client.Auth.GetTokenWithClientCredentials(
 <dd>
 
 **scope:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `[]string` 
     
 </dd>
 </dl>

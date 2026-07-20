@@ -6,6 +6,17 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
+          "MessageStatusEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "messageSid": "string",
+              "status": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "OrderEvent": {
             "docs": undefined,
             "inline": undefined,
@@ -81,6 +92,12 @@
       reason: optional<string>
     source:
       openapi: ../openapi.yml
+  MessageStatusEvent:
+    properties:
+      messageSid: string
+      status: string
+    source:
+      openapi: ../openapi.yml
 ",
     },
     "webhooks.yml": {
@@ -90,6 +107,47 @@
           "root": "__package__.yml",
         },
         "webhooks": {
+          "messageStatus": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "messageSid": "messageSid",
+                  "status": "status",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.MessageStatusEvent",
+            "signature": {
+              "algorithm": "sha1",
+              "body-hash-binding": {
+                "algorithm": "sha256",
+                "encoding": "hex",
+                "location": {
+                  "name": "bodySHA256",
+                  "type": "query-parameter",
+                },
+              },
+              "encoding": "base64",
+              "header": "x-twilio-signature",
+              "payload-format": {
+                "body-sort": undefined,
+                "components": [
+                  "notification-url",
+                  "body",
+                ],
+                "delimiter": undefined,
+              },
+              "signature-prefix": undefined,
+              "timestamp": undefined,
+              "type": "hmac",
+            },
+          },
           "orderPlaced": {
             "audiences": [],
             "display-name": undefined,
@@ -107,6 +165,7 @@
             "payload": "root.OrderEvent",
             "signature": {
               "algorithm": "sha256",
+              "body-hash-binding": undefined,
               "encoding": "hex",
               "header": "x-webhook-signature",
               "payload-format": {
@@ -204,6 +263,7 @@
             "payload": "root.UserEvent",
             "signature": {
               "algorithm": "sha256",
+              "body-hash-binding": undefined,
               "encoding": "hex",
               "header": "x-webhook-signature",
               "payload-format": {
@@ -311,6 +371,30 @@ webhooks:
       - payload:
           refundId: refundId
           amount: 1.1
+  messageStatus:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: root.MessageStatusEvent
+    signature:
+      type: hmac
+      header: x-twilio-signature
+      algorithm: sha1
+      encoding: base64
+      payload-format:
+        components:
+          - notification-url
+          - body
+      body-hash-binding:
+        algorithm: sha256
+        encoding: hex
+        location:
+          type: query-parameter
+          name: bodySHA256
+    examples:
+      - payload:
+          messageSid: messageSid
+          status: status
 ",
     },
   },

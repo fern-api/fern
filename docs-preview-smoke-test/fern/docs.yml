@@ -17,6 +17,10 @@ navigation:
   - api: REST API
     api-name: rest-api
 
+experimental:
+  mdx-components:
+    - ./components
+
 colors:
   accentPrimary:
     dark: "#81C784"

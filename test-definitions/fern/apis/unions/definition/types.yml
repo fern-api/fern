@@ -312,6 +312,14 @@ types:
       key: string
       columnValues: map<string, optional<string>>
 
+  # Regression test: optional map value types (e.g. optional additionalProperties) must
+  # retain `| undefined` on the value (`Record<K, V | undefined>`), while `unknown` values
+  # must not get a redundant `| undefined` (`Record<K, unknown>`).
+  TypeWithOptionalReferenceMap:
+    properties:
+      references: map<string, optional<Foo>>
+      metadata: map<string, unknown>
+
   # Test cases for unions with identical underlying types
   UnionWithSameStringTypes:
     union:
