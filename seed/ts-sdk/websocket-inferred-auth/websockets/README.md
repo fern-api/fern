@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedWebsocketAuthClient } from "@fern/websocket-inferred-auth";
 
-const client = new SeedWebsocketAuthClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedWebsocketAuthClient({ baseUrl: "YOUR_BASE_URL" });
 await client.auth.getTokenWithClientCredentials({
     "X-Api-Key": "X-Api-Key",
     client_id: "client_id",

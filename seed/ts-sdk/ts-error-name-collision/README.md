@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedErrors } from "@fern/ts-error-name-collision";
 
-const client = new SeedErrors({ environment: "YOUR_BASE_URL" });
+const client = new SeedErrors({ baseUrl: "YOUR_BASE_URL" });
 await client.simple.fooWithoutEndpointError({
     bar: "bar"
 });

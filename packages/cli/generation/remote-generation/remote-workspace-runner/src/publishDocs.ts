@@ -276,7 +276,7 @@ export async function publishDocs({
 
     const deployMode = getDocsDeployMode();
     if (deployMode !== "legacy") {
-        context.logger.info(`Docs deploy mode: ${deployMode}`);
+        context.logger.debug(`Docs deploy mode: ${deployMode}`);
     }
 
     if (excludeApis) {
@@ -860,7 +860,7 @@ export async function publishDocs({
             if (docsRegistrationId == null) {
                 return;
             }
-            context.logger.info("Publishing docs to FDR...");
+            context.logger.debug("Publishing docs to FDR...");
             const publishStart = performance.now();
             await fdr.docs.v2.write.finishDocsRegister({
                 docsRegistrationId,
@@ -894,7 +894,7 @@ export async function publishDocs({
                 if (deployMode === "ledger") {
                     urlToOutput = previewResult.previewUrl;
                 }
-                context.logger.info(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
+                context.logger.debug(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
             } else {
                 const ledgerResult = await publishDocsViaLedger({
                     docsDefinition,
@@ -916,7 +916,7 @@ export async function publishDocs({
                     editThisPage,
                     resolver
                 });
-                context.logger.info(
+                context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
                 );
             }
@@ -1004,6 +1004,7 @@ export async function publishDocs({
                         // 5. Preserve editThisPageUrl/editThisPageLaunch from the base page
                         const collectedFileIds = resolver.getCollectedFileIds();
                         const docsWorkspacePath = resolver.getDocsWorkspacePath();
+                        const markdownFilesToPathName = resolver.getMarkdownFilesToPathName();
 
                         // Create a locale-aware file loader that prefers translated snippets
                         // (e.g., translations/zh/snippets/foo.mdx) over base snippets.
@@ -1072,7 +1073,7 @@ export async function publishDocs({
                                     processedMarkdown = replaceImagePathsAndUrls(
                                         processedMarkdown,
                                         collectedFileIds,
-                                        {}, // markdownFilesToPathName not needed for translations
+                                        markdownFilesToPathName,
                                         {
                                             absolutePathToMarkdownFile,
                                             absolutePathToFernFolder: docsWorkspacePath
@@ -1921,6 +1922,7 @@ async function generateLanguageSpecificDynamicIRs({
                         generationLanguage: generatorInvocation.language,
                         keywords: undefined,
                         smartCasing: generatorInvocation.smartCasing,
+                        smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
                         exampleGeneration: {
                             disabled: true,
                             skipAutogenerationIfManualExamplesExist: true,
@@ -1941,6 +1943,7 @@ async function generateLanguageSpecificDynamicIRs({
                         ir: irForDynamicSnippets,
                         disableExamples: true,
                         smartCasing: generatorInvocation.smartCasing,
+                        smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
                         generationLanguage: generatorInvocation.language,
                         generatorConfig: dynamicGeneratorConfig
                     });

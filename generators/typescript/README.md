@@ -197,13 +197,27 @@ const acme = new AcmeClient({
 });
 ```
 
-#### ✨ `defaultTimeoutInSeconds`
+#### ✨ `defaultTimeout`
 
-**Type:** number
+**Type:** number | `"infinity"`
+
+**Default:** 60000
+
+The default timeout for network requests, in **milliseconds** (idiomatic for JavaScript/TypeScript,
+e.g. `setTimeout` and `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the timeout. In the
+generated client, this can be overridden at the request level.
+
+#### `defaultTimeoutInSeconds`
+
+> [!WARNING]
+> Deprecated. Use [`defaultTimeout`](#-defaulttimeout) (milliseconds) instead.
+
+**Type:** number | `"infinity"`
 
 **Default:** 60
 
-The default timeout for network requests. In the generated client, this can be overridden at the request level.
+The default timeout for network requests, in seconds. When set, it is converted to milliseconds
+(× 1000). `defaultTimeout` takes precedence when both are provided.
 
 #### ✨ `skipResponseValidation`
 

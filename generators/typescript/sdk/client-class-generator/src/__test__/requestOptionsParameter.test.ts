@@ -63,7 +63,7 @@ describe("requestOptionsParameter", () => {
 
         it("generates timeout with default 60 seconds", () => {
             const result = getTimeoutExpression({
-                defaultTimeoutInSeconds: undefined,
+                defaultTimeout: undefined,
                 timeoutInSecondsReference,
                 referenceToOptions
             });
@@ -72,9 +72,9 @@ describe("requestOptionsParameter", () => {
             expect(text).toMatchSnapshot();
         });
 
-        it("generates timeout with custom default seconds", () => {
+        it("generates timeout with custom default milliseconds", () => {
             const result = getTimeoutExpression({
-                defaultTimeoutInSeconds: 30,
+                defaultTimeout: 30000,
                 timeoutInSecondsReference,
                 referenceToOptions
             });
@@ -85,7 +85,7 @@ describe("requestOptionsParameter", () => {
 
         it("generates timeout with infinity default", () => {
             const result = getTimeoutExpression({
-                defaultTimeoutInSeconds: "infinity",
+                defaultTimeout: "infinity",
                 timeoutInSecondsReference,
                 referenceToOptions
             });

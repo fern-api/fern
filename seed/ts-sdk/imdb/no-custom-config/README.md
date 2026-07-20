@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/imdb";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
     title: "title",
     rating: 1.1

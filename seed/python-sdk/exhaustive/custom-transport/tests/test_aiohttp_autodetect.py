@@ -114,3 +114,15 @@ class TestDefaultClientsWithAiohttp(unittest.TestCase):
         self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
         self.assertEqual(client.timeout.read, SDK_DEFAULT_TIMEOUT)
         self.assertTrue(client.follow_redirects)
+
+
+class TestMakeDefaultAsyncClientThreadsTransport(unittest.TestCase):
+    """A transport supplied to _make_default_async_client is threaded to httpx.AsyncClient."""
+
+    def test_supplied_transport_is_used(self) -> None:
+        with mock.patch.dict(sys.modules, {"httpx_aiohttp": None}):
+            from seed.client import _make_default_async_client
+
+            supplied = httpx.AsyncHTTPTransport()
+            client = _make_default_async_client(timeout=60, follow_redirects=True, transport=supplied)
+            self.assertIs(client._transport, supplied)

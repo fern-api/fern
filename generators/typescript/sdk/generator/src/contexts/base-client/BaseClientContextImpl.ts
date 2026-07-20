@@ -3,7 +3,7 @@ import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { BaseClientContext, FileContext } from "@fern-typescript/contexts";
-import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
+import { endpointUtils, getServerVariableOptions } from "@fern-typescript/sdk-client-class-generator";
 import {
     type InterfaceDeclarationStructure,
     type OptionalKind,
@@ -197,6 +197,23 @@ export class BaseClientContextImpl implements BaseClientContext {
             hasQuestionToken: true,
             docs: ["Specify a custom URL to connect the client to."]
         });
+
+        for (const { variable, optionName } of getServerVariableOptions(this.intermediateRepresentation, this.case)) {
+            const docs: string[] = [];
+            if (variable.values != null && variable.values.length > 0) {
+                docs.push(`The ${optionName} to route requests to. Allowed values: ${variable.values.join(", ")}.`);
+            }
+            if (variable.default != null) {
+                docs.push(`Defaults to "${variable.default}".`);
+            }
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(optionName),
+                type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)),
+                hasQuestionToken: true,
+                docs: docs.length > 0 ? [docs.join(" ")] : undefined
+            });
+        }
 
         for (const variable of this.intermediateRepresentation.variables) {
             const variableType = context.type.getReferenceToType(variable.type);
@@ -393,6 +410,12 @@ export class BaseClientContextImpl implements BaseClientContext {
                     type: "Record<string, unknown>",
                     hasQuestionToken: true,
                     docs: ["Additional query string parameters to include in the request."]
+                },
+                {
+                    name: endpointUtils.REQUEST_OPTIONS_ADDITIONAL_BODY_PARAMETERS_PROPERTY_NAME,
+                    type: "Record<string, unknown>",
+                    hasQuestionToken: true,
+                    docs: ["A dictionary containing additional parameters to spread into the request's body."]
                 },
                 {
                     name: "headers",

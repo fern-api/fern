@@ -456,6 +456,27 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build());
 
         clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                        "initialRetryDelayMillis")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                        "maxRetryDelayMillis")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Double.class)),
+                        "retryJitterFactor")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
                         ParameterizedTypeName.get(
                                 ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class)),
                         "customHeaders")
@@ -596,6 +617,35 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addParameter(int.class, "maxRetries")
                 .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                 .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("initialRetryDelayMillis")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the initial delay (in milliseconds) used for exponential backoff between retries. "
+                        + "Defaults to 1000 milliseconds.")
+                .addParameter(long.class, "initialRetryDelayMillis")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.initialRetryDelayMillis = $T.of(initialRetryDelayMillis)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("maxRetryDelayMillis")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the maximum delay (in milliseconds) between retries. "
+                        + "Defaults to 60000 milliseconds.")
+                .addParameter(long.class, "maxRetryDelayMillis")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.maxRetryDelayMillis = $T.of(maxRetryDelayMillis)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("retryJitterFactor")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.")
+                .addParameter(double.class, "retryJitterFactor")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.retryJitterFactor = $T.of(retryJitterFactor)", Optional.class)
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
@@ -989,6 +1039,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         + "@param builder The ClientOptions.Builder to configure")
                 .beginControlFlow("if (this.maxRetries.isPresent())")
                 .addStatement("builder.maxRetries(this.maxRetries.get())")
+                .endControlFlow()
+                .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
+                .addStatement("builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
+                .endControlFlow()
+                .beginControlFlow("if (this.maxRetryDelayMillis.isPresent())")
+                .addStatement("builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get())")
+                .endControlFlow()
+                .beginControlFlow("if (this.retryJitterFactor.isPresent())")
+                .addStatement("builder.retryJitterFactor(this.retryJitterFactor.get())")
                 .endControlFlow()
                 .build();
         clientBuilder.addMethod(setRetriesMethod);
@@ -1674,7 +1733,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 // Collect custom properties info for OAuth token supplier
                 OAuthAccessTokenRequestProperties requestProperties =
                         clientCredentials.getTokenEndpoint().getRequestProperties();
-                List<String> customPropertyNames = new ArrayList<>();
+                List<OAuthCustomProperty> customPropertyNames = new ArrayList<>();
                 // The scopes request property (if mapped) is a required property on the token request and
                 // must be passed through to the OAuth token supplier, ordered before the remaining custom
                 // properties so the generated staged builder receives them in declaration order.
@@ -1688,7 +1747,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .getName())
                             .getCamelCase()
                             .getSafeName();
-                    customPropertyNames.add(scopesPropName);
+                    customPropertyNames.add(new OAuthCustomProperty(
+                            scopesPropName,
+                            getRequestPropertyTypeName(
+                                    requestProperties.getScopes().get())));
                 }
                 if (requestProperties.getCustomProperties().isPresent()) {
                     for (RequestProperty customProp :
@@ -1697,13 +1759,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         if (isLiteralProperty(customProp)) {
                             continue;
                         }
+                        // grant_type is synthesized as "client_credentials" by the OAuth
+                        // token supplier, so it is never surfaced as a builder option.
+                        if (OAuthTokenSupplierGenerator.isGrantTypeProperty(customProp)) {
+                            continue;
+                        }
                         String propName = NameUtils.toName(customProp
                                         .getProperty()
                                         .visit(new RequestPropertyToNameVisitor())
                                         .getName())
                                 .getCamelCase()
                                 .getSafeName();
-                        customPropertyNames.add(propName);
+                        customPropertyNames.add(
+                                new OAuthCustomProperty(propName, getRequestPropertyTypeName(customProp)));
                     }
                 }
 
@@ -1717,7 +1785,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 for (var header : httpEndpoint.getHeaders()) {
                     String headerName =
                             NameUtils.getName(header.getName()).getCamelCase().getSafeName();
-                    customPropertyNames.add(headerName);
+                    TypeName headerType = clientGeneratorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(false, header.getValueType());
+                    customPropertyNames.add(new OAuthCustomProperty(headerName, headerType));
                 }
 
                 Subpackage subpackage = clientGeneratorContext
@@ -1771,8 +1842,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
 
                     // Create setters for custom properties
-                    for (String propName : customPropertyNames) {
-                        createSetter(propName, Optional.empty(), Optional.empty());
+                    for (OAuthCustomProperty customProp : customPropertyNames) {
+                        createSetter(customProp.name, Optional.empty(), Optional.empty(), Optional.of(customProp.type));
                     }
 
                     if (generatorContext.isEndpointSecurity()) {
@@ -1840,8 +1911,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         // Build OAuthTokenSupplier constructor call with custom properties
                         CodeBlock.Builder oauthConstructorArgs =
                                 CodeBlock.builder().add("this.clientId, this.clientSecret");
-                        for (String customPropName : customPropertyNames) {
-                            oauthConstructorArgs.add(", this.$L", customPropName);
+                        for (OAuthCustomProperty customProp : customPropertyNames) {
+                            oauthConstructorArgs.add(", this.$L", customProp.name);
                         }
                         oauthConstructorArgs.add(", authClient");
 
@@ -1862,7 +1933,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     OAuthClientCredentials clientCredentials,
                     String tokenOverridePropertyName,
                     String tokenPrefix,
-                    List<String> customPropertyNames,
+                    List<OAuthCustomProperty> customPropertyNames,
                     ClassName authClientClassName,
                     ClassName oauthTokenSupplierClassName) {
 
@@ -1912,20 +1983,48 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .build());
 
                 // Add custom property fields to credentials auth
-                for (String propName : customPropertyNames) {
-                    credentialsAuthBuilder.addField(FieldSpec.builder(String.class, propName)
-                            .addModifiers(Modifier.PRIVATE)
-                            .initializer("null")
-                            .build());
+                for (OAuthCustomProperty customProp : customPropertyNames) {
+                    FieldSpec.Builder customPropField =
+                            FieldSpec.builder(customProp.type, customProp.name).addModifiers(Modifier.PRIVATE);
+                    // Optional fields default to Optional.empty() (never a null Optional reference), matching the
+                    // request model's builder defaults and keeping the "Optional fields are never null" invariant.
+                    if (isOptionalTypeName(customProp.type)) {
+                        customPropField.initializer("$T.empty()", Optional.class);
+                    } else {
+                        customPropField.initializer("null");
+                    }
+                    credentialsAuthBuilder.addField(customPropField.build());
 
                     // Add setter for custom property
-                    credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(propName)
+                    credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(customProp.name)
                             .addModifiers(Modifier.PUBLIC)
-                            .addParameter(String.class, propName)
+                            .addParameter(customProp.type, customProp.name)
                             .returns(credentialsAuthClassName)
-                            .addStatement("this.$L = $L", propName, propName)
+                            .addStatement("this.$L = $L", customProp.name, customProp.name)
                             .addStatement("return this")
                             .build());
+
+                    // For an Optional<X> property, also expose an unwrapped setter accepting X directly, so
+                    // existing callers (e.g. .scope("value")) keep compiling. Mirrors the convenience overloads
+                    // the request model generates for optional fields.
+                    if (customProp.type instanceof ParameterizedTypeName) {
+                        ParameterizedTypeName parameterizedPropType = (ParameterizedTypeName) customProp.type;
+                        if (parameterizedPropType.rawType.equals(ClassName.get(Optional.class))
+                                && parameterizedPropType.typeArguments.size() == 1) {
+                            TypeName unwrappedType = parameterizedPropType.typeArguments.get(0);
+                            credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(customProp.name)
+                                    .addModifiers(Modifier.PUBLIC)
+                                    .addParameter(unwrappedType, customProp.name)
+                                    .returns(credentialsAuthClassName)
+                                    .addStatement(
+                                            "this.$L = $T.ofNullable($L)",
+                                            customProp.name,
+                                            Optional.class,
+                                            customProp.name)
+                                    .addStatement("return this")
+                                    .build());
+                        }
+                    }
                 }
 
                 // Constructor
@@ -1950,8 +2049,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
                 // Build OAuthTokenSupplier constructor call with custom properties
                 CodeBlock.Builder oauthConstructorArgs = CodeBlock.builder().add("this.clientId, this.clientSecret");
-                for (String customPropName : customPropertyNames) {
-                    oauthConstructorArgs.add(", this.$L", customPropName);
+                for (OAuthCustomProperty customProp : customPropertyNames) {
+                    oauthConstructorArgs.add(", this.$L", customProp.name);
                 }
                 oauthConstructorArgs.add(", authClient");
 
@@ -2038,6 +2137,27 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .initializer("$T.empty()", Optional.class)
                         .build());
 
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                                "initialRetryDelayMillis")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
+                                "maxRetryDelayMillis")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Double.class)),
+                                "retryJitterFactor")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
                 builderStageBuilder.addField(FieldSpec.builder(OkHttpClient.class, "httpClient")
                         .addModifiers(Modifier.PRIVATE)
                         .build());
@@ -2110,6 +2230,40 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return this")
                         .build());
 
+                // Add initialRetryDelayMillis() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("initialRetryDelayMillis")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Sets the initial delay (in milliseconds) used for exponential backoff between retries. "
+                                        + "Defaults to 1000 milliseconds.")
+                        .addParameter(long.class, "initialRetryDelayMillis")
+                        .returns(builderStageClassName)
+                        .addStatement("this.initialRetryDelayMillis = $T.of(initialRetryDelayMillis)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add maxRetryDelayMillis() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("maxRetryDelayMillis")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Sets the maximum delay (in milliseconds) between retries. "
+                                + "Defaults to 60000 milliseconds.")
+                        .addParameter(long.class, "maxRetryDelayMillis")
+                        .returns(builderStageClassName)
+                        .addStatement("this.maxRetryDelayMillis = $T.of(maxRetryDelayMillis)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add retryJitterFactor() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("retryJitterFactor")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc("Sets the jitter factor (between 0 and 1) applied to retry delays. "
+                                + "Defaults to 0.2.")
+                        .addParameter(double.class, "retryJitterFactor")
+                        .returns(builderStageClassName)
+                        .addStatement("this.retryJitterFactor = $T.of(retryJitterFactor)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
                 // Add httpClient() method
                 builderStageBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
                         .addModifiers(Modifier.PUBLIC)
@@ -2171,6 +2325,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
                         .endControlFlow()
+                        .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
+                        .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxRetryDelayMillis.isPresent())")
+                        .addStatement("auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.retryJitterFactor.isPresent())")
+                        .addStatement("auth.retryJitterFactor(this.retryJitterFactor.get())")
+                        .endControlFlow()
                         .beginControlFlow("if (this.httpClient != null)")
                         .addStatement("auth.httpClient(this.httpClient)")
                         .endControlFlow()
@@ -2210,6 +2373,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
+                        .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxRetryDelayMillis.isPresent())")
+                        .addStatement("auth.maxRetryDelayMillis(this.maxRetryDelayMillis.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.retryJitterFactor.isPresent())")
+                        .addStatement("auth.retryJitterFactor(this.retryJitterFactor.get())")
                         .endControlFlow()
                         .beginControlFlow("if (this.httpClient != null)")
                         .addStatement("auth.httpClient(this.httpClient)")
@@ -2269,6 +2441,39 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     return valueType.getContainer().get().isLiteral();
                 }
                 return false;
+            }
+
+            private TypeName getRequestPropertyTypeName(RequestProperty requestProperty) {
+                TypeReference valueType = requestProperty
+                        .getProperty()
+                        .visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                            @Override
+                            public TypeReference visitQuery(QueryParameter query) {
+                                return query.getValueType();
+                            }
+
+                            @Override
+                            public TypeReference visitBody(ObjectProperty body) {
+                                return body.getValueType();
+                            }
+
+                            @Override
+                            public TypeReference _visitUnknown(Object unknownType) {
+                                return null;
+                            }
+                        });
+                return clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
+            }
+        }
+
+        /** A get-token request property carried through to the OAuth token supplier, with its resolved Java type. */
+        private final class OAuthCustomProperty {
+            private final String name;
+            private final TypeName type;
+
+            private OAuthCustomProperty(String name, TypeName type) {
+                this.name = name;
+                this.type = type;
             }
         }
 
@@ -2332,10 +2537,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 return null;
             }
 
-            Boolean shouldWrapInConditional = header.getValueType().isContainer()
-                    && header.getValueType().getContainer().get().isOptional();
+            // A literal header credential is initialized to a constant and is never null, so it does not need a
+            // guard. Any other header credential is stored in a field that may be null: optional containers default
+            // to null and required string credentials default to null (or System.getenv, which may return null).
+            // Even a required credential can be left unset when the enclosing builder is constructible without it
+            // (e.g. the OAuth `_CredentialsAuth` / multi-scheme `any` path, which never sets the api-key header).
+            // Guarding the add on non-null keeps a `requestToken: null` header from being baked into ClientOptions
+            // and NPE-ing okhttp Headers.of; the single-scheme api-key-only builder still validates non-null in
+            // build(), so this runtime guard is harmless there.
+            boolean isLiteral = header.getValueType().isContainer()
+                    && header.getValueType().getContainer().get().isLiteral();
+            Boolean shouldWrapInConditional = !isLiteral;
             MethodSpec.Builder maybeConditionalAdditionFlow = targetMethod;
-            // If the header is optional, wrap the add in a presence check so it does not get added unless it's non-null
+            // Wrap the add in a presence check so the header is not added unless the credential value is non-null.
             if (shouldWrapInConditional) {
                 maybeConditionalAdditionFlow = targetMethod.beginControlFlow("if (this.$L != null)", fieldName);
             }
@@ -2357,15 +2571,29 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             return null;
         }
 
+        private boolean isOptionalTypeName(TypeName typeName) {
+            return typeName instanceof ParameterizedTypeName
+                    && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+        }
+
         private void createSetter(
                 String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
+            createSetter(fieldName, environmentVariable, literal, Optional.empty());
+        }
+
+        private void createSetter(
+                String fieldName,
+                Optional<EnvironmentVariable> environmentVariable,
+                Optional<Literal> literal,
+                Optional<TypeName> customType) {
             // Skip if already created to prevent duplicate fields/methods
             if (createdFields.contains(fieldName)) {
                 return;
             }
             createdFields.add(fieldName);
 
-            FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName).addModifiers(Modifier.PRIVATE);
+            TypeName fieldType = customType.orElse(ClassName.get(String.class));
+            FieldSpec.Builder field = FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
             if (environmentVariable.isPresent()) {
                 field.initializer("System.getenv($S)", environmentVariable.get().get());
             } else if (literal.isPresent()) {
@@ -2388,6 +2616,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         return null;
                     }
                 });
+            } else if (isOptionalTypeName(fieldType)) {
+                // Optional fields default to Optional.empty() (never a null Optional reference), matching the
+                // request model's builder defaults and keeping the "Optional fields are never null" invariant.
+                field.initializer("$T.empty()", Optional.class);
             } else {
                 field.initializer("null");
             }
@@ -2395,7 +2627,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, fieldName)
+                    .addParameter(fieldType, fieldName)
                     .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                     .addJavadoc("Sets $L", fieldName)
                     .addStatement("this.$L = $L", fieldName, fieldName)
@@ -2406,6 +2638,30 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         environmentVariable.get().get());
             }
             clientBuilder.addMethod(setter.build());
+
+            // For an Optional<X> property, also expose an unwrapped setter accepting X directly, so
+            // existing callers (e.g. .scope("value")) keep compiling. Mirrors the convenience overloads
+            // the request model generates for optional fields.
+            if (fieldType instanceof ParameterizedTypeName) {
+                ParameterizedTypeName parameterizedFieldType = (ParameterizedTypeName) fieldType;
+                if (parameterizedFieldType.rawType.equals(ClassName.get(Optional.class))
+                        && parameterizedFieldType.typeArguments.size() == 1) {
+                    TypeName unwrappedType = parameterizedFieldType.typeArguments.get(0);
+                    MethodSpec.Builder unwrappedSetter = MethodSpec.methodBuilder(fieldName)
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(unwrappedType, fieldName)
+                            .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                            .addJavadoc("Sets $L", fieldName)
+                            .addStatement("this.$L = $T.ofNullable($L)", fieldName, Optional.class, fieldName)
+                            .addStatement(isExtensible ? "return self()" : "return this");
+                    if (environmentVariable.isPresent()) {
+                        unwrappedSetter.addJavadoc(
+                                ".\nDefaults to the $L environment variable.",
+                                environmentVariable.get().get());
+                    }
+                    clientBuilder.addMethod(unwrappedSetter.build());
+                }
+            }
         }
 
         private void createTokenOverrideSetter(String fieldName) {

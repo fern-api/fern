@@ -145,7 +145,7 @@ client = SeedObjectsWithImports(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.optional.send_optional_body(..., request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

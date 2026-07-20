@@ -56,6 +56,25 @@ class WireTestsConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class TcpKeepaliveConfig(pydantic.BaseModel):
+    """Configuration for platform-guarded TCP keepalive on the default HTTP transport.
+
+    When enabled, the generated default httpx transport emits periodic TCP
+    keepalive probes so long, non-streaming requests survive idle-connection
+    reaping by a firewall/load balancer/NAT. Off by default to keep generated
+    output unchanged; a user-supplied httpx client or custom transport always
+    takes precedence over the keepalive default.
+    """
+
+    enabled: bool = False
+    idle_seconds: int = 60
+    interval_seconds: int = 30
+    count: int = 5
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -66,6 +85,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     use_api_name_in_package: bool = False
     package_name: Optional[str] = None
     package_path: Optional[str] = None
+    # Request timeout, in seconds. Prefer `timeout`; `timeout_in_seconds` is a
+    # deprecated alias kept for backwards compatibility. Both mean seconds.
+    timeout: Optional[Union[Literal["infinity"], int]] = None
+    # deprecated, use `timeout` instead (same value, seconds)
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
     # Deprecated: prefer `output_directory`. `flat_layout` toggles only the `src/`
     # prefix and never skips project scaffolding; `output_directory: source-root`
@@ -175,6 +198,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     # transports via custom code (e.g., factory/classmethod wrappers).
     custom_transport: bool = False
 
+    # Opt-in platform-guarded TCP keepalive on the generated default HTTP
+    # transport. Disabled by default so existing generated output is unchanged.
+    # When enabled, the SDK's default httpx transport emits TCP keepalive probes
+    # so long, non-streaming requests survive idle-connection reaping. A
+    # user-supplied httpx_client or custom_transport http_client always wins.
+    tcp_keepalive: TcpKeepaliveConfig = TcpKeepaliveConfig()
+
     # Controls how offset pagination increments between pages.
     # "item-index" (default): offset increments by the number of items returned.
     # "page-index": offset increments by 1 each page.
@@ -188,6 +218,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # If true, omits Fern platform headers (X-Fern-Language, SDK name/version,
     # X-Fern-Runtime, X-Fern-Platform, User-Agent) from generated SDK requests.
     omit_fern_headers: bool = False
+
+    # If true, emits a structured `User-Agent` header of the form
+    # `{sdkName}/{version} ({os}; {arch}) Python/{pythonVersion}` that consolidates
+    # platform + runtime information. Disabled by default so existing output is
+    # unchanged. Subject to `omit_fern_headers`.
+    include_platform_headers: bool = False
 
     # The default number of retries for failed requests in the generated SDK.
     # Set to 0 to disable retries by default (useful for non-idempotent APIs).
@@ -236,6 +272,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":
         self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
         return self
+
+    @property
+    def resolved_timeout(self) -> Union[Literal["infinity"], int]:
+        """Resolve the request timeout (in seconds), preferring `timeout` and
+        falling back to the deprecated `timeout_in_seconds` alias. Both keys mean
+        seconds, so no unit conversion is applied."""
+        return self.timeout if self.timeout is not None else self.timeout_in_seconds
 
     def get_resolved_defaults_mode(self) -> str:
         """Resolve the effective defaults mode from use_request_defaults (takes precedence)

@@ -216,6 +216,36 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return this.getIdempotencyHeaders().length > 0;
     }
 
+    /**
+     * Returns true when the IR requests idempotency-key auto-generation and the endpoint's HTTP
+     * method is one of the eligible methods carried in the IR. Whether the feature is enabled, which
+     * methods are eligible, and the wire header name are all resolved once by the CLI and carried in
+     * `sdkConfig.idempotencyKeyGeneration` so every generator applies it identically instead of
+     * re-deriving it from its own config. Callers use this to decide whether to emit a fallback
+     * idempotency-key header set to a freshly generated UUID.
+     */
+    public shouldAutoGenerateIdempotencyKey(endpoint: HttpEndpoint): boolean {
+        const idempotencyKeyGeneration = this.ir.sdkConfig.idempotencyKeyGeneration;
+        return idempotencyKeyGeneration != null && idempotencyKeyGeneration.methods.includes(endpoint.method);
+    }
+
+    /**
+     * Returns true when the IR requests idempotency-key auto-generation for the SDK (regardless of a
+     * particular endpoint's method). Used to decide whether to emit the shared
+     * `AddIdempotencyHeader` helper.
+     */
+    public isIdempotencyKeyAutoGenerationEnabled(): boolean {
+        return this.ir.sdkConfig.idempotencyKeyGeneration != null;
+    }
+
+    /**
+     * The wire header name used for the auto-generated idempotency key, sourced from the IR. Defaults
+     * to `Idempotency-Key` when the IR does not supply one.
+     */
+    public getIdempotencyKeyGenerationHeaderName(): string {
+        return this.ir.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key";
+    }
+
     public hasBaseUrl(): boolean {
         return this.ir.environments?.environments.type !== "multipleBaseUrls";
     }
@@ -1109,6 +1139,32 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         this.buildInlineTypeMaps();
         // buildInlineTypeMaps always initializes the maps, so this is safe after the call
         return this._inlineTypeChildrenMap ?? new Map();
+    }
+
+    /**
+     * Returns the set of property wire names to suppress when generating the object type for the
+     * given typeId, because it is a discriminated-union variant whose owning union(s) already declare
+     * those fields as base properties.
+     *
+     * The decision is read directly from the IR fact `ObjectTypeDeclaration.deferredUnionBaseProperties`,
+     * which the IR generator computes once with structural type equality and an exclusive-variant guard
+     * (an object referenced anywhere other than as a union variant carries no deferred set). This
+     * generator does not re-derive it — so a same-named-but-differently-typed field is never dropped,
+     * and an object used standalone is never stripped.
+     *
+     * Empty when the opt-in `dedupeUnionBaseProperties` flag is off, or for any type that is not an
+     * exclusively-variant object with deferred properties. Removing the duplicated leaf fields is a
+     * breaking change to the generated surface, so existing users keep them until they opt in.
+     */
+    public getBasePropertyWireNamesToOmitForType(typeId: TypeId): Set<string> {
+        if (!this.settings.dedupeUnionBaseProperties) {
+            return new Set();
+        }
+        const typeDeclaration = this.ir.types[typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "object") {
+            return new Set();
+        }
+        return new Set((typeDeclaration.shape.deferredUnionBaseProperties ?? []).map((property) => property.wireValue));
     }
 
     /**

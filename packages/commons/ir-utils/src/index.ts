@@ -13,6 +13,10 @@ export { filterIntermediateRepresentationForAudiences } from "./filtered-ir/filt
 export { getPropertiesByAudience } from "./filtered-ir/getPropertiesByAudience.js";
 export { IrGraph } from "./filtered-ir/IrGraph.js";
 export { type AudienceId } from "./filtered-ir/ids.js";
+export {
+    type ResolveGlobalParameterApplicabilityOptions,
+    resolveGlobalParameterApplicability
+} from "./global-parameters/resolveGlobalParameterApplicability.js";
 export { hashJSON } from "./hashJSON.js";
 export { IntermediateRepresentationChangeDetector } from "./IntermediateRepresentationChangeDetector.js";
 export { mergeIntermediateRepresentation } from "./mergeIntermediateRepresentation.js";

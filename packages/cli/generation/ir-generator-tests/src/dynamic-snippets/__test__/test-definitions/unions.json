@@ -89,6 +89,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "normalSweet": {
                     "type": "samePropertiesAsObject",
@@ -3700,7 +3701,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:ThankfulFactor": {
             "type": "object",
@@ -3801,7 +3803,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:JumboEnd": {
             "type": "object",
@@ -3902,7 +3905,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:HastyPain": {
             "type": "object",
@@ -4003,7 +4007,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:MistySnow": {
             "type": "object",
@@ -4104,7 +4109,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:DistinctFailure": {
             "type": "object",
@@ -4205,7 +4211,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:PracticalPrinciple": {
             "type": "object",
@@ -4306,7 +4313,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:LimpingStep": {
             "type": "object",
@@ -4407,7 +4415,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:VibrantExcitement": {
             "type": "object",
@@ -4508,7 +4517,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:ActiveDiamond": {
             "type": "object",
@@ -4609,7 +4619,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:PopularLimit": {
             "type": "object",
@@ -4710,7 +4721,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:FalseMirror": {
             "type": "object",
@@ -4811,7 +4823,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:PrimaryBlock": {
             "type": "object",
@@ -4912,7 +4925,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:RotatingRatio": {
             "type": "object",
@@ -5013,7 +5027,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:ColorfulCover": {
             "type": "object",
@@ -5114,7 +5129,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:DisloyalValue": {
             "type": "object",
@@ -5215,7 +5231,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:GruesomeCoach": {
             "type": "object",
@@ -5316,7 +5333,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:TotalWork": {
             "type": "object",
@@ -5417,7 +5435,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:HarmoniousPlay": {
             "type": "object",
@@ -5518,7 +5537,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:UniqueStress": {
             "type": "object",
@@ -5619,7 +5639,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:UnwillingSmoke": {
             "type": "object",
@@ -5720,7 +5741,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:FrozenSleep": {
             "type": "object",
@@ -5821,7 +5843,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:DiligentDeal": {
             "type": "object",
@@ -5922,7 +5945,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:AttractiveScript": {
             "type": "object",
@@ -6023,7 +6047,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:HoarseMouse": {
             "type": "object",
@@ -6124,7 +6149,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:CircularCard": {
             "type": "object",
@@ -6225,7 +6251,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:PotableBad": {
             "type": "object",
@@ -6326,7 +6353,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:TriangularRepair": {
             "type": "object",
@@ -6427,7 +6455,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_bigunion:GaseousRoad": {
             "type": "object",
@@ -6528,7 +6557,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Union": {
             "type": "discriminatedUnion",
@@ -6618,6 +6648,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "singleProperty",
@@ -6769,6 +6800,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "singleProperty",
@@ -6926,6 +6958,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "singleProperty",
@@ -7083,6 +7116,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "singleProperty",
@@ -7234,6 +7268,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "integer": {
                     "type": "singleProperty",
@@ -7385,6 +7420,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "integer1": {
                     "type": "singleProperty",
@@ -7596,6 +7632,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "samePropertiesAsObject",
@@ -7741,6 +7778,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "samePropertiesAsObject",
@@ -7885,6 +7923,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "samePropertiesAsObject",
@@ -8055,6 +8094,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "fern": {
                     "type": "singleProperty",
@@ -8213,6 +8253,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "integer": {
                     "type": "singleProperty",
@@ -8484,6 +8525,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "value": {
                     "type": "singleProperty",
@@ -8665,6 +8707,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "date": {
                     "type": "singleProperty",
@@ -8822,6 +8865,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "samePropertiesAsObject",
@@ -8940,6 +8984,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo1": {
                     "type": "samePropertiesAsObject",
@@ -9085,6 +9130,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "foo": {
                     "type": "samePropertiesAsObject",
@@ -9230,6 +9276,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "firstItemType": {
                     "type": "samePropertiesAsObject",
@@ -9422,7 +9469,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:SecondItemType": {
             "type": "object",
@@ -9559,7 +9607,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Foo": {
             "type": "object",
@@ -9660,7 +9709,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:FooExtended": {
             "type": "object",
@@ -9793,7 +9843,8 @@
             "extends": [
                 "type_types:Foo"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:Bar": {
             "type": "object",
@@ -9894,7 +9945,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:TypeWithOptionalMap": {
             "type": "object",
@@ -10035,7 +10087,156 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_types:TypeWithOptionalReferenceMap": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "TypeWithOptionalReferenceMap",
+                    "camelCase": {
+                        "unsafeName": "typeWithOptionalReferenceMap",
+                        "safeName": "typeWithOptionalReferenceMap"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type_with_optional_reference_map",
+                        "safeName": "type_with_optional_reference_map"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE_WITH_OPTIONAL_REFERENCE_MAP",
+                        "safeName": "TYPE_WITH_OPTIONAL_REFERENCE_MAP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TypeWithOptionalReferenceMap",
+                        "safeName": "TypeWithOptionalReferenceMap"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "references",
+                        "name": {
+                            "originalName": "references",
+                            "camelCase": {
+                                "unsafeName": "references",
+                                "safeName": "references"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "references",
+                                "safeName": "references"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REFERENCES",
+                                "safeName": "REFERENCES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "References",
+                                "safeName": "References"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_types:Foo"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "metadata",
+                        "name": {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "unknown"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_types:UnionWithSameStringTypes": {
             "type": "discriminatedUnion",
@@ -10125,6 +10326,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "customFormat": {
                     "type": "singleProperty",
@@ -10306,6 +10508,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "positiveInt": {
                     "type": "singleProperty",
@@ -10498,7 +10701,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:WithName": {
             "type": "object",
@@ -10599,7 +10803,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:Shape": {
             "type": "discriminatedUnion",
@@ -10689,6 +10894,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "circle": {
                     "type": "samePropertiesAsObject",
@@ -10967,7 +11173,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_union:Square": {
             "type": "object",
@@ -11068,7 +11275,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],

@@ -564,6 +564,106 @@ func (t *TypeWithOptionalMap) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+var (
+	typeWithOptionalReferenceMapFieldReferences = big.NewInt(1 << 0)
+	typeWithOptionalReferenceMapFieldMetadata   = big.NewInt(1 << 1)
+)
+
+type TypeWithOptionalReferenceMap struct {
+	References map[string]*Foo `json:"references,omitempty" url:"references,omitempty"`
+	Metadata   map[string]any  `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TypeWithOptionalReferenceMap) GetReferences() map[string]*Foo {
+	if t == nil {
+		return nil
+	}
+	return t.References
+}
+
+func (t *TypeWithOptionalReferenceMap) GetMetadata() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.Metadata
+}
+
+func (t *TypeWithOptionalReferenceMap) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalReferenceMap) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetReferences sets the References field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TypeWithOptionalReferenceMap) SetReferences(references map[string]*Foo) {
+	t.References = references
+	t.require(typeWithOptionalReferenceMapFieldReferences)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TypeWithOptionalReferenceMap) SetMetadata(metadata map[string]any) {
+	t.Metadata = metadata
+	t.require(typeWithOptionalReferenceMapFieldMetadata)
+}
+
+func (t *TypeWithOptionalReferenceMap) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithOptionalReferenceMap
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalReferenceMap(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TypeWithOptionalReferenceMap) MarshalJSON() ([]byte, error) {
+	type embed TypeWithOptionalReferenceMap
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TypeWithOptionalReferenceMap) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
 // This is a simple union.
 type Union struct {
 	Type string

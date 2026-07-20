@@ -1137,6 +1137,21 @@ components:
       required:
         - key
         - columnValues
+    TypeWithOptionalReferenceMap:
+      title: TypeWithOptionalReferenceMap
+      type: object
+      properties:
+        references:
+          type: object
+          additionalProperties:
+            anyOf:
+              - $ref: '#/components/schemas/Foo'
+              - type: 'null'
+        metadata:
+          type: object
+      required:
+        - references
+        - metadata
     UnionWithSameStringTypes:
       title: UnionWithSameStringTypes
       oneOf:

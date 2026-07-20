@@ -23,6 +23,9 @@ export class ApiClient {
     /**
      * @param {ApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedOauthClientCredentialsEnvironmentVariablesError}
+     * @throws {@link errors.SeedOauthClientCredentialsEnvironmentVariablesTimeoutError}
+     *
      * @example
      *     await client.nestedNoAuth.api.getSomething()
      */

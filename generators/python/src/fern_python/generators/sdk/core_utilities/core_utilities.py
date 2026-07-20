@@ -29,6 +29,7 @@ class CoreUtilities:
         has_custom_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
+        generates_idempotency_key: bool = False,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -38,6 +39,7 @@ class CoreUtilities:
         self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
         self._has_standard_paginated_endpoints = has_standard_paginated_endpoints
         self._has_custom_paginated_endpoints = has_custom_paginated_endpoints
+        self._generates_idempotency_key = generates_idempotency_key
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
@@ -127,6 +129,17 @@ class CoreUtilities:
             ),
             exports={"RequestOptions"} if not self._exclude_types_from_init_exports else set(),
         )
+
+        if self._generates_idempotency_key:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="idempotency.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="idempotency"),
+                ),
+                exports={"generate_idempotency_key"} if not self._exclude_types_from_init_exports else set(),
+            )
 
         self._copy_file_to_project(
             project=project,
@@ -615,6 +628,24 @@ class CoreUtilities:
                 ),
                 args=[headers],
             )
+        )
+
+    def get_reference_to_keepalive_socket_options(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "http_client"),
+                named_import="get_keepalive_socket_options",
+            ),
+        )
+
+    def get_reference_to_generate_idempotency_key(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "idempotency"),
+                named_import="generate_idempotency_key",
+            ),
         )
 
     def jsonable_encoder(self, obj: AST.Expression) -> AST.Expression:

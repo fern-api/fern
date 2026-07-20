@@ -38,8 +38,10 @@ export const AsIsFiles = {
     NdJsonContent: "NdJsonContent.Template.cs",
     NdJsonRequest: "NdJsonRequest.Template.cs",
     HeadersBuilder: "HeadersBuilder.Template.cs",
+    IdempotencyHeaderExtensions: "IdempotencyHeaderExtensions.Template.cs",
     QueryStringBuilder: "QueryStringBuilder.Template.cs",
     QueryStringConverter: "QueryStringConverter.Template.cs",
+    DefaultHttpClientFactory: "DefaultHttpClientFactory.Template.cs",
     RawClient: "RawClient.Template.cs",
     SseReconnectHelper: "SseReconnectHelper.Template.cs",
     RawResponse: "RawResponse.Template.cs",
@@ -88,6 +90,7 @@ export const AsIsFiles = {
         TestCustomProps: "test/Test.Custom.props.Template",
         WithRawResponseTests: "test/WithRawResponseTests.Template.cs",
         RawClientTests: {
+            GzipResponseTests: "test/RawClientTests/GzipResponseTests.Template.cs",
             MultipartFormTests: "test/RawClientTests/MultipartFormTests.Template.cs",
             RetriesTests: "test/RawClientTests/RetriesTests.Template.cs",
             QueryParameterTests: "test/RawClientTests/QueryParameterTests.Template.cs",

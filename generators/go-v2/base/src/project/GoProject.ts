@@ -162,7 +162,9 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             getPackageName: () => "core",
             getImportPath: (dirname) => this.getImportPath(dirname),
             templateVariables: {
-                CustomPagerName: this.context.customConfig.customPagerName ?? "CustomPager"
+                CustomPagerName: this.context.customConfig.customPagerName ?? "CustomPager",
+                IdempotencyKeyHeaderName:
+                    this.context.ir.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key"
             }
         });
     }

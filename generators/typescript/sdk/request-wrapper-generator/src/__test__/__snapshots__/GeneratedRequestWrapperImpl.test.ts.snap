@@ -117,24 +117,6 @@ exports[`GeneratedRequestWrapperImpl > withQueryParameter > wraps in !== undefin
 }"
 `;
 
-exports[`GeneratedRequestWrapperImpl > writeToFile > disambiguates renamed path parameter when the suffixed name collides with a query parameter 1`] = `
-"export interface TestRequest {
-    idTypePathParam_: string;
-    idTypePathParam: string;
-    idType: string;
-}
-"
-`;
-
-exports[`GeneratedRequestWrapperImpl > writeToFile > disambiguates renamed path parameter when the suffixed name is also taken 1`] = `
-"export interface TestRequest {
-    idTypePathParam_: string;
-    idType: string;
-    idTypePathParam: string;
-}
-"
-`;
-
 exports[`GeneratedRequestWrapperImpl > writeToFile > does not include path parameters when shouldInlinePathParameters is false 1`] = `
 "export interface TestRequest {
 }
@@ -276,16 +258,6 @@ exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with re
 "export interface TestRequest {
     plantId: string;
     name: string;
-}
-"
-`;
-
-exports[`GeneratedRequestWrapperImpl > writeToFile > renames inlined path parameters that collide with body properties 1`] = `
-"export interface TestRequest {
-    idTypePathParam: string;
-    idType: string;
-    oldValue: string;
-    newValue: string;
 }
 "
 `;

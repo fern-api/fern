@@ -10,8 +10,9 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
 from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
 )
+from fern_python.generators.sdk.names import get_token_constructor_parameter_name
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
-from fern_python.utils import resolve_name
+from fern_python.utils import resolve_name_preserving_underscores
 from fern_python.utils.snake_case import snake_case
 
 import fern.generator_exec as generator_exec
@@ -161,7 +162,7 @@ class ReadmeSnippetBuilder:
 
 # Override timeout for a specific method
 client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}request_options={{
-    "timeout_in_seconds": 1
+    "timeout": 1
 }})
 """
                     )
@@ -463,7 +464,7 @@ for page in pager.iter_pages():
         snippet = f"""
 # Connect to the websocket ({"Async" if is_async else "Sync"})
 {initial_import}{client_instantiation_str}
-{"async " if is_async else ""}with client.{resolve_name(subpackage.name).snake_case.safe_name}.{connect_method_name}({"..." if websocket_channel.query_parameters else ""}) as socket:
+{"async " if is_async else ""}with client.{resolve_name_preserving_underscores(subpackage.name).snake_case.safe_name}.{connect_method_name}({"..." if websocket_channel.query_parameters else ""}) as socket:
     # Iterate over the messages as they arrive
     {"async for message in socket" if is_async else "for message in socket"}
         print(message)
@@ -513,9 +514,21 @@ for page in pager.iter_pages():
             print(f"Failed to generage async client snippets with exception {e}")
             return []
 
+    def _get_bearer_token_param_name(self) -> str:
+        """Resolve the bearer token constructor parameter name from the IR auth schemes."""
+        for scheme in self._ir.auth.schemes:
+            scheme_union = scheme.get_as_union()
+            if scheme_union.type == "bearer":
+                return get_token_constructor_parameter_name(scheme_union)
+            if scheme_union.type == "oauth":
+                # OAuth wraps a bearer scheme; use the default name
+                return "token"
+        return "token"
+
     def _build_oauth_token_override_snippets(self) -> List[str]:
         """Build snippets demonstrating OAuth token override authentication options."""
         try:
+            token_param_name = self._get_bearer_token_param_name()
 
             def _client_writer_token(writer: AST.NodeWriter) -> None:
                 writer.write_line("# Option 1: Direct bearer token (bypass OAuth flow)")
@@ -524,7 +537,7 @@ for page in pager.iter_pages():
                     AST.ClassInstantiation(
                         class_=self._root_client.sync_client.class_reference,
                         args=[AST.Expression("...")],
-                        kwargs=[("token", AST.Expression('"my-pre-generated-bearer-token"'))],
+                        kwargs=[(token_param_name, AST.Expression('"my-pre-generated-bearer-token"'))],
                     ),
                     should_write_as_snippet=False,
                 )

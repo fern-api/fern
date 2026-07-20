@@ -20,7 +20,11 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
               "entity_id": "entity_id",
               "audience": "https://api.example.com",
               "grant_type": "client_credentials",
-              "scope": "scope"
+              "scope": "scope",
+              "permissions": [
+                "permissions",
+                "permissions"
+              ]
             }
             """;
 
@@ -57,6 +61,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 Audience = "https://api.example.com",
                 GrantType = "client_credentials",
                 Scope = "scope",
+                Permissions = new List<string>() { "permissions", "permissions" },
             }
         );
         JsonAssert.AreEqual(response, mockResponse);

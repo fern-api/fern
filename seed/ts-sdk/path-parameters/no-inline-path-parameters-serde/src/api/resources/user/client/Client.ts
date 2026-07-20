@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
@@ -26,6 +27,9 @@ export class UserClient {
      * @param {string} user_id
      * @param {SeedPathParameters.GetUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.getUser("user_id")
@@ -87,6 +91,9 @@ export class UserClient {
      * @param {SeedPathParameters.User} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.user.createUser({
      *         name: "name",
@@ -116,7 +123,10 @@ export class UserClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.User.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            body: mergeAdditionalBodyParameters(
+                serializers.User.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -152,6 +162,9 @@ export class UserClient {
      * @param {SeedPathParameters.UpdateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.user.updateUser("user_id", {
      *         body: {
@@ -186,7 +199,10 @@ export class UserClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.User.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            body: mergeAdditionalBodyParameters(
+                serializers.User.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -221,6 +237,9 @@ export class UserClient {
      * @param {string} user_id
      * @param {SeedPathParameters.SearchUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.searchUsers("user_id", {
@@ -301,6 +320,9 @@ export class UserClient {
      * @param {SeedPathParameters.GetUserMetadataRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.user.getUserMetadata("user_id", 1)
      */
@@ -372,6 +394,9 @@ export class UserClient {
      * @param {string} thought
      * @param {SeedPathParameters.GetUserSpecificsRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.getUserSpecifics("user_id", 1, "thought")

@@ -21,7 +21,7 @@ service:
         body:
           properties:
             client_id: string
-            client_secret: string
+            client_secret: nullable<string>
             audience: literal<"https://api.example.com">
             grant_type: literal<"client_credentials">
             scope: optional<string>

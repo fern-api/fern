@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Improve OpenAPI example generation performance for schemas with shared `allOf`
+    ancestors while preserving inherited properties and constraints.
+  type: fix

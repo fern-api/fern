@@ -1,0 +1,8 @@
+- summary: |
+    Decompress gzip and deflate encoded response bodies via a new
+    `ResponseDecompressionInterceptor` added to the generated `OkHttpClient`.
+    OkHttp only performs transparent gzip decompression when it adds the
+    `Accept-Encoding` header itself, so responses to requests with a
+    spec-defined `Accept-Encoding: gzip` header were previously returned as
+    raw gzip bytes.
+  type: fix

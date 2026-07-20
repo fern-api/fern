@@ -23,6 +23,9 @@ export class SimpleClient {
     /**
      * @param {SimpleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedInferredAuthImplicitError}
+     * @throws {@link errors.SeedInferredAuthImplicitTimeoutError}
+     *
      * @example
      *     await client.simple.getSomething()
      */

@@ -107,6 +107,7 @@ function createMinimalEndpoint(opts?: { errors?: FernIr.ResponseError[] }): Fern
         displayName: undefined,
         method: "POST",
         headers: [],
+        globalParameters: undefined,
         responseHeaders: undefined,
         baseUrl: undefined,
         v2BaseUrls: undefined,

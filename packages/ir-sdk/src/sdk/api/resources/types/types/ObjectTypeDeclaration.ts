@@ -10,4 +10,13 @@ export interface ObjectTypeDeclaration {
     extendedProperties: FernIr.ObjectProperty[] | undefined;
     /** Whether to allow extra properties on the object. */
     extraProperties: boolean;
+    /**
+     * Populated only when this object is used exclusively as a `samePropertiesAsObject`
+     * variant of one or more discriminated unions. Lists the wire values this object declares
+     * that every owning union also declares as a base property with a structurally-equal type,
+     * i.e. the fields a leaf-dropping generator may omit from this object and defer to the union
+     * envelope. Absent/empty for any object referenced outside a union variant. Computed by the
+     * IR generator; consumers must not recompute it.
+     */
+    deferredUnionBaseProperties: FernIr.NameAndWireValue[] | undefined;
 }

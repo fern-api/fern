@@ -17,7 +17,7 @@ chrono = { version = "0.4", features = ["serde"] }
 futures = "0.3"
 num-bigint = { version = "0.4", features = ["serde"] }
 ordered-float = { version = "4.5", features = ["serde"] }
-reqwest = { version = "0.12", features = ["json", "stream"], default-features = false }
+reqwest = { version = "0.12", features = ["json", "stream", "gzip"], default-features = false }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "1.0"

@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedErrorsClient } from "@fern/errors";
 
-const client = new SeedErrorsClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedErrorsClient({ baseUrl: "YOUR_BASE_URL" });
 await client.simple.fooWithoutEndpointError({
     bar: "bar"
 });

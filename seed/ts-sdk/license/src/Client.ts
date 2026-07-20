@@ -23,6 +23,9 @@ export class SeedLicenseClient {
     /**
      * @param {SeedLicenseClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedLicenseError}
+     * @throws {@link errors.SeedLicenseTimeoutError}
+     *
      * @example
      *     await client.get()
      */

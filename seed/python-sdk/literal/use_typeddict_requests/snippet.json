@@ -17,6 +17,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/headers/literals-only",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.sendLiteralsOnly"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.headers.send_literals_only()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.headers.send_literals_only()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/inlined",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined.send"

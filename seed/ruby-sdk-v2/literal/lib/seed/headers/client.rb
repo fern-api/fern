@@ -38,12 +38,48 @@ module Seed
         headers["X-Endpoint-Version"] = params[:endpoint_version] if params[:endpoint_version]
         headers["X-Async"] = params[:async] if params[:async]
 
+        headers["X-Endpoint-Version"] = "02-12-2024" unless headers.key?("X-Endpoint-Version")
+        headers["X-Async"] = "true" unless headers.key?("X-Async")
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "headers",
           headers: headers,
           body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Seed::Types::SendResponse.load(response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # @param request_options [Hash]
+      # @param _params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :endpoint_version
+      # @option params [Boolean] :async
+      #
+      # @return [Seed::Types::SendResponse]
+      def send_literals_only(request_options: {}, **_params)
+        headers = { "X-Endpoint-Version" => "02-12-2024", "X-Async" => "true" }
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "headers/literals-only",
+          headers: headers,
           request_options: request_options
         )
         begin

@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
@@ -24,6 +25,9 @@ export class UsersClient {
     /**
      * @param {SeedPagination.ListUsersCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
      *
      * @example
      *     await client.users.listWithCursorPagination({
@@ -108,6 +112,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersMixedTypeCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithMixedTypeCursorPagination({
      *         cursor: "cursor"
@@ -181,6 +188,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersBodyCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithBodyCursorPagination({
      *         pagination: {
@@ -211,7 +221,7 @@ export class UsersClient {
                     contentType: "application/json",
                     queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
                     requestType: "json",
-                    body: request,
+                    body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -259,6 +269,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithTopLevelBodyCursorPagination({
      *         cursor: "initial_cursor",
@@ -288,7 +301,7 @@ export class UsersClient {
                     contentType: "application/json",
                     queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
                     requestType: "json",
-                    body: request,
+                    body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -333,6 +346,9 @@ export class UsersClient {
     /**
      * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
      *
      * @example
      *     await client.users.listWithOffsetPagination({
@@ -414,6 +430,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersDoubleOffsetPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithDoubleOffsetPagination({
      *         page: 1.1,
@@ -494,6 +513,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersBodyOffsetPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithBodyOffsetPagination({
      *         pagination: {
@@ -524,7 +546,7 @@ export class UsersClient {
                     contentType: "application/json",
                     queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
                     requestType: "json",
-                    body: request,
+                    body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -564,6 +586,9 @@ export class UsersClient {
     /**
      * @param {SeedPagination.ListUsersOffsetStepPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
      *
      * @example
      *     await client.users.listWithOffsetStepPagination({
@@ -644,6 +669,9 @@ export class UsersClient {
     /**
      * @param {SeedPagination.ListWithOffsetPaginationHasNextPageRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
      *
      * @example
      *     await client.users.listWithOffsetPaginationHasNextPage({
@@ -733,6 +761,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersExtendedRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithExtendedResults({
      *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -806,6 +837,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersExtendedRequestForOptionalData} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithExtendedResultsAndOptionalData({
      *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -878,6 +912,9 @@ export class UsersClient {
     /**
      * @param {SeedPagination.ListUsernamesRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
      *
      * @example
      *     await client.users.listUsernames({
@@ -953,6 +990,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsernamesWithOptionalResponseRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listUsernamesWithOptionalResponse({
      *         starting_after: "starting_after"
@@ -1026,6 +1066,9 @@ export class UsersClient {
     /**
      * @param {SeedPagination.ListWithGlobalConfigRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
      *
      * @example
      *     await client.users.listWithGlobalConfig({
@@ -1101,6 +1144,9 @@ export class UsersClient {
      * @param {SeedPagination.ListUsersOptionalDataRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.users.listWithOptionalData({
      *         page: 1
@@ -1174,6 +1220,9 @@ export class UsersClient {
     /**
      * @param {SeedPagination.ListUsersAliasedDataRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
      *
      * @example
      *     await client.users.listWithAliasedData({

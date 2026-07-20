@@ -19,7 +19,7 @@ module Seed
     # @return [Seed::Types::PostSubmitResponse]
     def submit_form_data(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      request = Seed::Internal::UrlEncoded::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "submit",
@@ -57,7 +57,7 @@ module Seed
     # @return [Seed::Types::TokenResponse]
     def get_token(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      request = Seed::Internal::UrlEncoded::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "token",
