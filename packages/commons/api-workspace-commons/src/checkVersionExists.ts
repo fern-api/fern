@@ -16,6 +16,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
  * 2. `output.coordinate`      — Maven (Java)
  * 3. `config.package_name`    — fallback (some generators)
  * 4. `config.module.path`     — Go SDK generator
+ * 5. `config.packageName`     — PHP SDK generator (camelCase config key)
  *
  * @internal Exported for testing and reuse in generation paths
  */
@@ -47,6 +48,12 @@ export function getPackageNameFromGeneratorConfig(
         const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
         if (modulePath != null) {
             return modulePath;
+        }
+
+        // php-sdk generator uses the camelCase packageName config key
+        const camelCasePackageName = (generatorInvocation.raw.config as { packageName?: string }).packageName;
+        if (camelCasePackageName != null) {
+            return camelCasePackageName;
         }
     }
     return undefined;
