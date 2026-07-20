@@ -97,6 +97,14 @@ types:
           When set, the prefix is stripped before comparing signatures.
       payloadFormat: WebhookPayloadFormat
       timestamp: optional<WebhookTimestampConfig>
+      bodyHashBinding:
+        type: optional<WebhookBodyHashBinding>
+        docs: |
+          When present, the raw request body is not included in the signed payload
+          directly; instead a hash of the body is transmitted separately (for example,
+          in a query parameter of the notification URL) and the signature is computed
+          over that. Verification must additionally recompute the encoded hash of the
+          raw body and compare it to the transmitted value.
 
   HmacAlgorithm:
     docs: The HMAC algorithm used to compute the webhook signature.
@@ -220,3 +228,41 @@ types:
         docs: The notification/callback URL.
       - value: MESSAGE_ID
         docs: A provider-assigned message identifier.
+
+  WebhookBodyHashBinding:
+    docs: |
+      Binds the request body to the signature via a separately transmitted hash of the
+      raw body, rather than including the body directly in the signed payload. Required by
+      providers (such as Twilio for JSON bodies) that place a hash of the raw body in the
+      notification URL as a query parameter and sign the resulting URL. Verifying the
+      signature then requires (1) recomputing the encoded hash of the raw body and
+      comparing it to the transmitted value, and (2) verifying the HMAC over the payload
+      as usual. Both checks must pass. The hash algorithm and encoding are independent of
+      the outer HMAC's algorithm and encoding.
+    properties:
+      algorithm: WebhookBodyHashAlgorithm
+      encoding: WebhookSignatureEncoding
+      location: WebhookBodyHashLocation
+
+  WebhookBodyHashAlgorithm:
+    docs: The digest algorithm used to hash the raw request body.
+    enum:
+      - SHA256
+      - SHA1
+      - SHA384
+      - SHA512
+
+  WebhookBodyHashLocation:
+    docs: Where the provider transmits the body hash so the consumer can verify it.
+    union:
+      queryParameter:
+        type: WebhookBodyHashQueryParameterLocation
+        docs: |
+          The hash is carried as a query parameter on the notification URL
+          (for example, Twilio's "bodySHA256" parameter).
+
+  WebhookBodyHashQueryParameterLocation:
+    properties:
+      name:
+        type: string
+        docs: The query-parameter name that carries the body hash (e.g. "bodySHA256").

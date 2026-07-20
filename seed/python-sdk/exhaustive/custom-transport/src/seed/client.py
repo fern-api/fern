@@ -145,6 +145,7 @@ class SeedExhaustive:
 def _make_default_async_client(
     timeout: typing.Optional[float],
     follow_redirects: typing.Optional[bool],
+    transport: typing.Optional[httpx.AsyncBaseTransport] = None,
 ) -> httpx.AsyncClient:
     try:
         import httpx_aiohttp  # type: ignore[import-not-found]
@@ -156,8 +157,8 @@ def _make_default_async_client(
         return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)
 
     if follow_redirects is not None:
-        return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)
-    return httpx.AsyncClient(timeout=timeout)
+        return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport)
+    return httpx.AsyncClient(timeout=timeout, transport=transport)
 
 
 class AsyncSeedExhaustive:
@@ -235,7 +236,9 @@ class AsyncSeedExhaustive:
             async_token=async_token,
             httpx_client=httpx_client
             if httpx_client is not None
-            else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
+            else _make_default_async_client(
+                timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=http_client
+            ),
             timeout=_defaulted_timeout,
             max_retries=_defaulted_max_retries,
             stream_reconnection_enabled=stream_reconnection_enabled,

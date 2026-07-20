@@ -27,11 +27,13 @@ export const BasePythonCustomConfigSchema = z.object({
     pyproject_toml: z.string().optional(),
     should_generate_websocket_clients: z.boolean().optional(),
     skip_formatting: z.boolean().optional(),
-    timeout_in_seconds: z.union([z.literal("infinity"), z.number()]).optional(),
+    timeout: z.union([z.literal("infinity"), z.number()]).optional(),
     use_request_defaults: z.enum(["none", "parameters", "all"]).optional(),
 
     // Deprecated.
     client_class_name: z.string().optional(),
+    /** @deprecated Prefer `timeout`. Both are in seconds; this is only an alias with no unit change. */
+    timeout_in_seconds: z.union([z.literal("infinity"), z.number()]).optional(),
     client_filename: z.string().optional(),
     /** @deprecated Prefer `output_directory`. `flat_layout` only toggles the `src/` prefix and never skips project scaffolding. */
     flat_layout: z.boolean().optional(),
@@ -42,3 +44,14 @@ export const BasePythonCustomConfigSchema = z.object({
 });
 
 export type BasePythonCustomConfigSchema = z.infer<typeof BasePythonCustomConfigSchema>;
+
+/**
+ * Resolves the request timeout from the custom config, preferring the `timeout` key
+ * and falling back to the deprecated `timeout_in_seconds` alias. Both keys are in
+ * seconds, so no unit conversion is applied.
+ */
+export function resolveTimeout(
+    config: Pick<BasePythonCustomConfigSchema, "timeout" | "timeout_in_seconds">
+): number | "infinity" | undefined {
+    return config.timeout ?? config.timeout_in_seconds;
+}

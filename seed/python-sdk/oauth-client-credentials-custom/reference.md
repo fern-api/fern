@@ -27,6 +27,10 @@ client.auth.get_token_with_client_credentials(
     scp="scp",
     entity_id="entity_id",
     scope="scope",
+    permissions=[
+        "permissions",
+        "permissions"
+    ],
 )
 
 ```
@@ -92,6 +96,14 @@ client.auth.get_token_with_client_credentials(
 <dd>
 
 **scope:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `typing.Optional[typing.List[str]]` 
     
 </dd>
 </dl>

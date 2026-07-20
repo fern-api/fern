@@ -125,7 +125,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inlined:SomeAliasedLiteral": {
             "type": "alias",
@@ -300,7 +301,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inlined:ANestedLiteral": {
             "type": "object",
@@ -404,7 +406,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_inlined:DiscriminatedLiteral": {
             "type": "discriminatedUnion",
@@ -494,6 +497,7 @@
                     }
                 }
             },
+            "inheritedBaseProperties": [],
             "types": {
                 "customName": {
                     "type": "singleProperty",
@@ -1167,7 +1171,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_reference:ContainerObject": {
             "type": "object",
@@ -1271,7 +1276,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_reference:NestedObjectWithLiterals": {
             "type": "object",
@@ -1438,7 +1444,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_reference:SomeLiteral": {
             "type": "alias",
@@ -1829,6 +1836,86 @@
                     "includePathParameters": false,
                     "onlyPathParameters": false
                 }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_headers.sendLiteralsOnly": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "sendLiteralsOnly",
+                    "camelCase": {
+                        "unsafeName": "sendLiteralsOnly",
+                        "safeName": "sendLiteralsOnly"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "send_literals_only",
+                        "safeName": "send_literals_only"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEND_LITERALS_ONLY",
+                        "safeName": "SEND_LITERALS_ONLY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SendLiteralsOnly",
+                        "safeName": "SendLiteralsOnly"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "headers",
+                            "camelCase": {
+                                "unsafeName": "headers",
+                                "safeName": "headers"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "headers",
+                                "safeName": "headers"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEADERS",
+                                "safeName": "HEADERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Headers",
+                                "safeName": "Headers"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "headers",
+                        "camelCase": {
+                            "unsafeName": "headers",
+                            "safeName": "headers"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "headers",
+                            "safeName": "headers"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "HEADERS",
+                            "safeName": "HEADERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Headers",
+                            "safeName": "Headers"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/headers/literals-only"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
             },
             "response": {
                 "type": "json"

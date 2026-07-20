@@ -191,6 +191,7 @@ public partial class AuthClient : IAuthClient
     ///         Audience = "https://api.example.com",
     ///         GrantType = "client_credentials",
     ///         Scope = "scope",
+    ///         Permissions = new List&lt;string&gt;() { "permissions", "permissions" },
     ///     }
     /// );
     /// </code></example>

@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedLicenseClient } from "@fern/license";
 
-const client = new SeedLicenseClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedLicenseClient({ baseUrl: "YOUR_BASE_URL" });
 await client.get();
 ```
 

@@ -7,4 +7,9 @@ public partial interface IHeadersClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    WithRawResponseTask<SendResponse> SendLiteralsOnlyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

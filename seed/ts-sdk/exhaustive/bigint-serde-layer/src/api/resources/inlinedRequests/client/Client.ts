@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
@@ -29,6 +30,8 @@ export class InlinedRequestsClient {
      * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
@@ -76,10 +79,13 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.PostWithObjectBody.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.PostWithObjectBody.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -130,6 +136,9 @@ export class InlinedRequestsClient {
      * @param {SeedExhaustive.PostWithArrayBodyAndHeaders} request
      * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.inlinedRequests.postWithArrayBodyAndHeaders({
      *         xCustomHeader: "X-Custom-Header",
@@ -164,10 +173,13 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.inlinedRequests.postWithArrayBodyAndHeaders.Request.jsonOrThrow(_body, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: mergeAdditionalBodyParameters(
+                serializers.inlinedRequests.postWithArrayBodyAndHeaders.Request.jsonOrThrow(_body, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

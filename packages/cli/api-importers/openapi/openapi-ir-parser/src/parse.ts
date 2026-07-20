@@ -353,6 +353,27 @@ function detectMultipleBaseUrls(servers1: AnyServerInput[], servers2: AnyServerI
     return allMatch && allDifferent;
 }
 
+/**
+ * Removes duplicate single servers that share the same environment name and URL.
+ * Without deduplication, merging many specs with identical servers accumulates
+ * duplicates, which prevents detectMultipleBaseUrls from matching server lists
+ * on subsequent merges.
+ */
+function dedupeServers(servers: AnyServerInput[]): AnyServerInput[] {
+    const seen = new Set<string>();
+    return servers.filter((server) => {
+        if (server.type === "grouped") {
+            return true;
+        }
+        const key = `${getEnvironmentName(server)}\u0000${server.url}`;
+        if (seen.has(key)) {
+            return false;
+        }
+        seen.add(key);
+        return true;
+    });
+}
+
 function getPreferredUrlForNameExtraction(server: SingleServerInput): string {
     return server.defaultUrl ?? server.url;
 }
@@ -610,7 +631,8 @@ function merge(
         };
     }
 
-    // When not grouping, just concatenate without modification
+    // When not grouping, concatenate while deduplicating identical servers so
+    // that repeated servers across specs don't block grouping on later merges
     return {
         apiVersion: ir1.apiVersion ?? ir2.apiVersion,
         specVersion: ir1.specVersion ?? ir2.specVersion,
@@ -618,7 +640,7 @@ function merge(
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
         basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters,
-        servers: [...ir1.servers, ...ir2.servers],
+        servers: dedupeServers([...ir1.servers, ...ir2.servers] as AnyServerInput[]) as Server[],
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {
             tagsById: {

@@ -1,0 +1,5 @@
+- summary: |
+    Fix smart-casing snake_case names dropping the word boundary after a number.
+    Sub-client accessors and methods like `ConversationsV2Configuration` now generate
+    `conversations_v2_configuration` instead of `conversations_v2configuration`.
+  type: fix

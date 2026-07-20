@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Decompress gzip-encoded response bodies when the `Accept-Encoding` header is set
+    explicitly on the request. Go's `net/http` only performs transparent gzip
+    decompression when it adds the `Accept-Encoding` header itself, so responses to
+    requests with a spec-defined `Accept-Encoding: gzip` header were previously
+    returned as raw gzip bytes.
+  type: fix

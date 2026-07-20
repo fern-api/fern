@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">get_organization</a>(tenant_id, organization_id) -> Seed::Organizations::Types::Organization</code></summary>
+<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">get_organization</a>(tenant_id:, organization_id:) -> Seed::Organizations::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ client.organizations.get_organization(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">get_organization_user</a>(tenant_id, organization_id, user_id) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">get_organization_user</a>(tenant_id:, organization_id:, user_id:) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ client.organizations.get_organization_user(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">search_organizations</a>(tenant_id, organization_id) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">search_organizations</a>(tenant_id:, organization_id:) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
 <dl>
 <dd>
 
@@ -196,7 +196,7 @@ client.organizations.search_organizations(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(tenant_id, user_id) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(tenant_id:, user_id:) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -255,7 +255,7 @@ client.user.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(tenant_id, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(tenant_id:, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -315,7 +315,7 @@ client.user.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">update_user</a>(tenant_id, user_id, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">update_user</a>(tenant_id:, user_id:, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -384,7 +384,7 @@ client.user.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">search_users</a>(tenant_id, user_id) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">search_users</a>(tenant_id:, user_id:) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -452,7 +452,7 @@ client.user.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user_metadata</a>(tenant_id, user_id, version) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user_metadata</a>(tenant_id:, user_id:, version:) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -534,7 +534,7 @@ client.user.get_user_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user_specifics</a>(tenant_id, user_id, version, thought) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user_specifics</a>(tenant_id:, user_id:, version:, thought:) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 

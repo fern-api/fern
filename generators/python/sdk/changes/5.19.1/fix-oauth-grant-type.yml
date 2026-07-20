@@ -1,0 +1,6 @@
+- summary: |
+    OAuth client credentials token requests now send `grant_type: "client_credentials"`
+    when the token endpoint declares a non-literal `grant_type` request property. The
+    property is synthesized in the token request and is no longer surfaced as a
+    user-supplied option.
+  type: fix

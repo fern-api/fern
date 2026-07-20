@@ -30,6 +30,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     customPagerName: z.string().optional(),
     offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     omitFernHeaders: z.boolean().optional(),
+    includePlatformHeaders: z.boolean().optional(),
     maxRetries: z.number().int().min(0).optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });

@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExtraPropertiesClient } from "@fern/extra-properties";
 
-const client = new SeedExtraPropertiesClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedExtraPropertiesClient({ baseUrl: "YOUR_BASE_URL" });
 await client.user.createUser({
     name: "Alice",
     age: 30,

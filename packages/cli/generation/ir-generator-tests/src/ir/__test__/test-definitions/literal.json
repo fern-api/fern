@@ -148,7 +148,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -257,7 +258,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_inlined:ANestedLiteral"
@@ -314,7 +316,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -347,6 +350,7 @@
                 "discriminant": "type",
                 "extends": [],
                 "baseProperties": [],
+                "inheritedBaseProperties": [],
                 "types": [
                     {
                         "discriminantValue": "customName",
@@ -843,7 +847,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_reference:SomeLiteral",
@@ -913,7 +918,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [
                 "type_reference:NestedObjectWithLiterals"
@@ -1013,7 +1019,8 @@
                     }
                 ],
                 "extra-properties": false,
-                "extendedProperties": []
+                "extendedProperties": [],
+                "deferredUnionBaseProperties": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -1524,6 +1531,459 @@
                                         "query": "query"
                                     }
                                 },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "message",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "SendResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:SendResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "message"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "message"
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "status",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "SendResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:SendResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "integer",
+                                                                        "integer": 1
+                                                                    }
+                                                                },
+                                                                "jsonExample": 1
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "success",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "SendResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:SendResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "literal",
+                                                                        "literal": {
+                                                                            "type": "boolean",
+                                                                            "boolean": true
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": true
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                },
+                                                "typeName": {
+                                                    "name": "SendResponse",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_:SendResponse"
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "message": "message",
+                                                "status": 1,
+                                                "success": true
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "globalParameters": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_headers.sendLiteralsOnly",
+                    "name": "sendLiteralsOnly",
+                    "displayName": null,
+                    "subtitle": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/headers/literals-only",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "headers/literals-only",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [
+                        {
+                            "name": {
+                                "wireValue": "X-Endpoint-Version",
+                                "name": "endpointVersion"
+                            },
+                            "valueType": {
+                                "_type": "container",
+                                "container": {
+                                    "_type": "literal",
+                                    "literal": {
+                                        "type": "string",
+                                        "string": "02-12-2024"
+                                    }
+                                }
+                            },
+                            "env": null,
+                            "clientDefault": null,
+                            "defaultValue": null,
+                            "v2Examples": {
+                                "userSpecifiedExamples": {},
+                                "autogeneratedExamples": {}
+                            },
+                            "availability": null,
+                            "docs": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "X-Async",
+                                "name": "async"
+                            },
+                            "valueType": {
+                                "_type": "container",
+                                "container": {
+                                    "_type": "literal",
+                                    "literal": {
+                                        "type": "boolean",
+                                        "boolean": true
+                                    }
+                                }
+                            },
+                            "env": null,
+                            "clientDefault": null,
+                            "defaultValue": null,
+                            "v2Examples": {
+                                "userSpecifiedExamples": {},
+                                "autogeneratedExamples": {}
+                            },
+                            "availability": null,
+                            "docs": null
+                        }
+                    ],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": "SendResponse",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:SendResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "3ebef11e",
+                                "name": null,
+                                "url": "/headers/literals-only",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [
+                                    {
+                                        "name": {
+                                            "wireValue": "X-Endpoint-Version",
+                                            "name": "endpointVersion"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "literal",
+                                                    "literal": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "02-12-2024"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "02-12-2024"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "wireValue": "X-Async",
+                                            "name": "async"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "literal",
+                                                    "literal": {
+                                                        "type": "boolean",
+                                                        "boolean": true
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        }
+                                    }
+                                ],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:SendResponse",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": "SendResponse",
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "message",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "The weather is sunny"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "The weather is sunny"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:SendResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "SendResponse",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "status",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "integer",
+                                                                        "integer": 200
+                                                                    }
+                                                                },
+                                                                "jsonExample": 200
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:SendResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "SendResponse",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "success",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "literal",
+                                                                        "literal": {
+                                                                            "type": "boolean",
+                                                                            "boolean": true
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": true
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:SendResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "SendResponse",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "message": "The weather is sunny",
+                                                "status": 200,
+                                                "success": true
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "c0fd8469",
+                                "url": "/headers/literals-only",
+                                "name": null,
+                                "endpointHeaders": [
+                                    {
+                                        "name": {
+                                            "wireValue": "X-Endpoint-Version",
+                                            "name": "endpointVersion"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "literal",
+                                                    "literal": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "02-12-2024"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "02-12-2024"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "wireValue": "X-Async",
+                                            "name": "async"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "literal",
+                                                    "literal": {
+                                                        "type": "boolean",
+                                                        "boolean": true
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        }
+                                    }
+                                ],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
                                 "response": {
                                     "type": "ok",
                                     "value": {
@@ -5963,7 +6423,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inlined:SomeAliasedLiteral": {
                 "type": "alias",
@@ -6138,7 +6599,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inlined:ANestedLiteral": {
                 "type": "object",
@@ -6242,7 +6704,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_inlined:DiscriminatedLiteral": {
                 "type": "discriminatedUnion",
@@ -6332,6 +6795,7 @@
                         }
                     }
                 },
+                "inheritedBaseProperties": [],
                 "types": {
                     "customName": {
                         "type": "singleProperty",
@@ -7005,7 +7469,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_reference:ContainerObject": {
                 "type": "object",
@@ -7109,7 +7574,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_reference:NestedObjectWithLiterals": {
                 "type": "object",
@@ -7276,7 +7742,8 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": false
+                "additionalProperties": false,
+                "deferredUnionBaseProperties": null
             },
             "type_reference:SomeLiteral": {
                 "type": "alias",
@@ -7667,6 +8134,86 @@
                         "includePathParameters": false,
                         "onlyPathParameters": false
                     }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_headers.sendLiteralsOnly": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "sendLiteralsOnly",
+                        "camelCase": {
+                            "unsafeName": "sendLiteralsOnly",
+                            "safeName": "sendLiteralsOnly"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "send_literals_only",
+                            "safeName": "send_literals_only"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SEND_LITERALS_ONLY",
+                            "safeName": "SEND_LITERALS_ONLY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SendLiteralsOnly",
+                            "safeName": "SendLiteralsOnly"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "headers",
+                                "camelCase": {
+                                    "unsafeName": "headers",
+                                    "safeName": "headers"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "headers",
+                                    "safeName": "headers"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "HEADERS",
+                                    "safeName": "HEADERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Headers",
+                                    "safeName": "Headers"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "headers",
+                            "camelCase": {
+                                "unsafeName": "headers",
+                                "safeName": "headers"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "headers",
+                                "safeName": "headers"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEADERS",
+                                "safeName": "HEADERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Headers",
+                                "safeName": "Headers"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/headers/literals-only"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
                 },
                 "response": {
                     "type": "json"
@@ -8743,7 +9290,8 @@
     "casingsConfig": {
         "generationLanguage": null,
         "keywords": null,
-        "smartCasing": true
+        "smartCasing": true,
+        "smartCasingDigitWordBoundary": null
     },
     "subpackages": {
         "subpackage_headers": {
@@ -8896,6 +9444,7 @@
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
+        "idempotencyKeyGeneration": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

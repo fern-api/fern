@@ -22,7 +22,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         endpoint: FernIr.HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeout: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
@@ -40,7 +40,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
-    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly defaultTimeout: number | "infinity" | undefined;
     private readonly request: GeneratedEndpointRequest;
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -53,7 +53,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         response,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
-        defaultTimeoutInSeconds,
+        defaultTimeout,
         request,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -64,7 +64,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
-        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.defaultTimeout = defaultTimeout;
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -770,7 +770,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const timeoutExpression = getTimeoutExpression({
-            defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+            defaultTimeout: this.defaultTimeout,
             timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                 this.generatedSdkClientClass
             ),
@@ -911,7 +911,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             url: urlOverride ?? this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
-                defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+                defaultTimeout: this.defaultTimeout,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                     this.generatedSdkClientClass
                 ),

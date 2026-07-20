@@ -63,6 +63,57 @@ client.Headers.Send(
 </dl>
 </details>
 
+<details><summary><code>client.Headers.SendLiteralsOnly() -> *fern.SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Headers.SendLiteralsOnly(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**endpointVersion:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.Inlined.Send(request) -> *fern.SendResponse</code></summary>
 <dl>
@@ -78,6 +129,9 @@ client.Headers.Send(
 
 ```go
 request := &fern.SendLiteralsInlinedRequest{
+        Context: fern.String(
+            "You're super wise",
+        ),
         Query: "What is the weather today",
         Temperature: fern.Float64(
             10.1,
@@ -239,11 +293,17 @@ client.Path.Send(
 
 ```go
 request := &fern.SendLiteralsInQueryRequest{
+        OptionalPrompt: fern.String(
+            "You are a helpful assistant",
+        ),
         AliasPrompt: fern.AliasToPrompt(
             "You are a helpful assistant",
         ),
         AliasOptionalPrompt: fern.String(
             "You are a helpful assistant",
+        ),
+        OptionalStream: fern.Bool(
+            false,
         ),
         AliasStream: fern.AliasToStream(
             false,

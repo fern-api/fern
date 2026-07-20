@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
@@ -45,13 +46,16 @@ export class DummyClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: {
-                ...serializers.GenerateStreamRequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-                stream: true,
-            },
+            body: mergeAdditionalBodyParameters(
+                {
+                    ...serializers.GenerateStreamRequest.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                    stream: true,
+                },
+                requestOptions?.additionalBodyParameters,
+            ),
             responseType: "streaming",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -97,6 +101,9 @@ export class DummyClient {
      * @param {SeedStreaming.Generateequest} request
      * @param {DummyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedStreamingError}
+     * @throws {@link errors.SeedStreamingTimeoutError}
+     *
      * @example
      *     await client.dummy.generate({
      *         numEvents: 5
@@ -125,13 +132,16 @@ export class DummyClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: {
-                ...serializers.Generateequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-                stream: false,
-            },
+            body: mergeAdditionalBodyParameters(
+                {
+                    ...serializers.Generateequest.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                    stream: false,
+                },
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

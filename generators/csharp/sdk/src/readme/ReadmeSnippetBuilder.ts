@@ -476,7 +476,7 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
             this.writeCode(`
 using ${this.namespaces.root};
 
-var client = new ${this.Types.RootClient.name}(new ${this.Types.ClientOptions.name}
+var client = new ${this.Types.RootClient.name}(clientOptions: new ${this.Types.ClientOptions.name}
 {
     ${envField} = ${environmentsClassName}.${defaultEnvName}
 });

@@ -131,7 +131,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         },
         "type_:ResponseBody": {
             "type": "object",
@@ -197,7 +198,8 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": false
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
         }
     },
     "headers": [],
@@ -232,7 +234,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/postWithNullableNamedRequestBodyType/{id}"
+                "path": "/postWithNullableNamedRequestBodyType/{pathId}"
             },
             "request": {
                 "type": "inlined",
@@ -266,25 +268,25 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "id",
+                                "originalName": "pathId",
                                 "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "pathID",
+                                    "safeName": "pathID"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "path_id",
+                                    "safeName": "path_id"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "PATH_ID",
+                                    "safeName": "PATH_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "PathID",
+                                    "safeName": "PathID"
                                 }
                             },
-                            "wireValue": "id"
+                            "wireValue": "pathId"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -368,7 +370,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/postWithNonNullableNamedRequestBodyType/{id}"
+                "path": "/postWithNonNullableNamedRequestBodyType/{pathId}"
             },
             "request": {
                 "type": "inlined",
@@ -402,25 +404,25 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "id",
+                                "originalName": "pathId",
                                 "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "pathID",
+                                    "safeName": "pathID"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "path_id",
+                                    "safeName": "path_id"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "PATH_ID",
+                                    "safeName": "PATH_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "PathID",
+                                    "safeName": "PathID"
                                 }
                             },
-                            "wireValue": "id"
+                            "wireValue": "pathId"
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -439,22 +441,22 @@
                             "name": {
                                 "wireValue": "id",
                                 "name": {
-                                    "originalName": "nonNullableObjectId",
+                                    "originalName": "id",
                                     "camelCase": {
-                                        "unsafeName": "nonNullableObjectID",
-                                        "safeName": "nonNullableObjectID"
+                                        "unsafeName": "id",
+                                        "safeName": "id"
                                     },
                                     "snakeCase": {
-                                        "unsafeName": "non_nullable_object_id",
-                                        "safeName": "non_nullable_object_id"
+                                        "unsafeName": "id",
+                                        "safeName": "id"
                                     },
                                     "screamingSnakeCase": {
-                                        "unsafeName": "NON_NULLABLE_OBJECT_ID",
-                                        "safeName": "NON_NULLABLE_OBJECT_ID"
+                                        "unsafeName": "ID",
+                                        "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "NonNullableObjectID",
-                                        "safeName": "NonNullableObjectID"
+                                        "unsafeName": "ID",
+                                        "safeName": "ID"
                                     }
                                 }
                             },

@@ -5,6 +5,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { mergeAdditionalBodyParameters } from "./core/requestBody.js";
 import * as environments from "./environments.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
@@ -25,6 +26,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApi.SearchRuleTypesRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.searchRuleTypes()
@@ -84,6 +88,9 @@ export class SeedApiClient {
      * @param {SeedApi.RuleCreateRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.createRule({
      *         name: "name",
@@ -114,7 +121,7 @@ export class SeedApiClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -138,6 +145,9 @@ export class SeedApiClient {
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.listUsers()
@@ -186,6 +196,9 @@ export class SeedApiClient {
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.getEntity()
      */
@@ -230,6 +243,9 @@ export class SeedApiClient {
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.getOrganization()
@@ -281,6 +297,9 @@ export class SeedApiClient {
      * @param {SeedApi.PlantPost} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.createPlant({
      *         species: "species",
@@ -313,7 +332,7 @@ export class SeedApiClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -340,6 +359,9 @@ export class SeedApiClient {
      *
      * @param {SeedApi.TreeRecord} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.createTree({
@@ -370,7 +392,7 @@ export class SeedApiClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

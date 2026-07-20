@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedCsharpOauthTokenOptional.Test/SeedCsharpOauthTokenOptional.Test.csproj" />
+  <Project Path="src/SeedCsharpOauthTokenOptional/SeedCsharpOauthTokenOptional.csproj" />
+</Solution>

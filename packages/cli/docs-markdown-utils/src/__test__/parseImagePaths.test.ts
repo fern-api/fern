@@ -745,6 +745,33 @@ describe("replaceImagePaths", () => {
             "
         `);
     });
+
+    it("should preserve anchors when replacing markdown link hrefs", () => {
+        const page = "[link text](../other/page.mdx#some-heading)";
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain("[link text](/other/page#some-heading)");
+    });
+
+    it("should preserve anchors when replacing JSX href attributes", () => {
+        const page = '<a href="../other/page.mdx#section">link</a>';
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain('href="/other/page#section"');
+    });
+
+    it("should resolve markdown link without anchor", () => {
+        const page = "[link text](../other/page.mdx)";
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result).toContain("[link text](/other/page)");
+    });
 });
 
 describe("cross-platform image path round-trip", () => {
@@ -1049,6 +1076,39 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
         expect(replaced).toContain("[text](/other/page)");
     });
 
+    it("should resolve relative .md links in translated content when markdownFilesToPathName is provided", () => {
+        // Regression test: translated pages previously passed {} for markdownFilesToPathName,
+        // so relative .md links like ../reference/support-matrix.md were not resolved to slugs.
+        // The on-disk directory "reference/" maps to nav slug "resources/" in this scenario.
+        const page =
+            "Check the [support matrix](../reference/support-matrix.md) for details and also the [quickstart](./quickstart.mdx) guide.";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/reference/support-matrix.md": "/dynamo/dev/resources/support-matrix",
+            "/Volume/git/fern/my/docs/reference/support-matrix.mdx": "/dynamo/dev/resources/support-matrix",
+            "/Volume/git/fern/my/docs/folder/quickstart.mdx": "/dynamo/dev/getting-started/quickstart"
+        };
+        const replaced = replaceImagePathsAndUrls(
+            parseResult.markdown,
+            new Map(),
+            markdownFilesToPathName,
+            PATHS,
+            CONTEXT
+        );
+        expect(replaced).toContain("[support matrix](/dynamo/dev/resources/support-matrix)");
+        expect(replaced).toContain("[quickstart](/dynamo/dev/getting-started/quickstart)");
+    });
+
+    it("should not resolve relative .md links when markdownFilesToPathName is empty (previous bug)", () => {
+        // When markdownFilesToPathName is {}, relative .md links pass through unresolved.
+        // This demonstrates the bug that existed for translated content.
+        const page = "Check the [support matrix](../reference/support-matrix.md) for details.";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, new Map(), {}, PATHS, CONTEXT);
+        // With empty map, the link is NOT resolved — the .md extension remains
+        expect(replaced).toContain("[support matrix](../reference/support-matrix.md)");
+    });
+
     it("should replace absolute image paths with file IDs using streaming parser", () => {
         const page =
             "This is a test page with an absolute image ![image](/static/image.png) and lots more content to exceed the 100 bytes threshold for the streaming parser to run while replacing paths.";
@@ -1190,5 +1250,195 @@ describe("consistency between AST and streaming parsers", () => {
             expect(result.markdown).not.toContain('port: "08080"');
             expect(result.markdown).not.toContain('code: "0123"');
         });
+    });
+});
+
+describe("parseImagePaths early exit optimization", () => {
+    it("should process frontmatter images even when body has no image indicators", () => {
+        const page = [
+            "---",
+            "image: path/to/frontmatter-image.png",
+            "---",
+            "This body has no images, no src=, and no icon= attributes at all."
+        ].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/frontmatter-image.png"]);
+    });
+
+    it("should process og:image in frontmatter when body has no image indicators", () => {
+        const page = ["---", "og:image: assets/og-banner.png", "---", "Plain text body with no images."].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/assets/og-banner.png"]);
+    });
+
+    it("should return empty filepaths and preserve body when no images anywhere", () => {
+        const page = ["---", "title: No Images", "---", "This page has no images in frontmatter or body."].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown).toContain("This page has no images in frontmatter or body.");
+    });
+
+    it("should not early-exit when body contains src= attribute", () => {
+        const page = ["---", "title: Has Image", "---", '<img src="path/to/image.png" />'].join("\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+    });
+});
+
+describe("streaming scanner curly-brace src handling", () => {
+    it("should replace src={'path'} with file ID", () => {
+        const page = "<img src={'path/to/image.png'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-single-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-single-id");
+    });
+
+    it('should replace src={"path"} with file ID', () => {
+        const page = '<img src={"path/to/image.png"} />';
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-double-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-double-id");
+    });
+
+    it("should handle src={'path'} with whitespace inside braces", () => {
+        const page = "<img src={ 'path/to/image.png' } />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-space-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-space-id");
+    });
+
+    it("should preserve anchor in src={'path#anchor'}", () => {
+        const page = "<img src={'path/to/image.png#section'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "curly-anchor-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-anchor-id#section");
+    });
+
+    it("should handle icon={'path'} for local icon references", () => {
+        const page = "<Component icon={'path/to/icon.svg'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/icon.svg"), "curly-icon-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:curly-icon-id");
+    });
+
+    it("should produce same result as plain quotes for simple string literals", () => {
+        const plainPage = '<img src="path/to/image.png" />';
+        const curlyPage = "<img src={'path/to/image.png'} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "compare-id"]
+        ]);
+        const plainResult = replaceImagePathsAndUrls(plainPage, fileIds, {}, PATHS, CONTEXT);
+        const curlyResult = replaceImagePathsAndUrls(curlyPage, fileIds, {}, PATHS, CONTEXT);
+        expect(plainResult).toContain("file:compare-id");
+        expect(curlyResult).toContain("file:compare-id");
+    });
+});
+
+describe("AST fallback for complex JSX expressions", () => {
+    it("should leave src={variable} unchanged", () => {
+        const page = "<img src={pathToImage} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "should-not-appear"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("src={pathToImage}");
+        expect(result).not.toContain("file:");
+    });
+
+    it("should leave src={fn('path')} unchanged when fn wraps the literal", () => {
+        const page = "<img src={getUrl('path/to/image.png')} />";
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "fn-wrap-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        // The function call prevents extractSingleLiteral from returning a value,
+        // so the AST fallback correctly skips this attribute
+        expect(result).toContain("src={getUrl(");
+    });
+
+    it("should leave concatenated expressions unchanged", () => {
+        const page = "<img src={base + '/image.png'} />";
+        const fileIds = new Map([[AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/image.png"), "concat-id"]]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("src={base + '/image.png'}");
+        expect(result).not.toContain("file:concat-id");
+    });
+
+    it("should handle spread attributes without crashing", () => {
+        const page = '<Component {...{src: "path/to/image.png"}} />';
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "spread-id"]
+        ]);
+        // Should not throw — the spread triggers AST fallback which handles it via estree walking
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toBeDefined();
+    });
+});
+
+describe("overlap prevention: mixed simple and complex expressions", () => {
+    it("should replace simple src={'path'} without duplicating edits when complex expression is on same page", () => {
+        const page = ["<img src={'path/to/simple.png'} />", "<Component src={getUrl('other.png')} />"].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/simple.png"), "simple-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:simple-id");
+        // The simple path should be replaced exactly once
+        const matches = result.match(/file:simple-id/g);
+        expect(matches).toHaveLength(1);
+    });
+
+    it("should handle plain quotes and curly expressions on same page without corruption", () => {
+        const page = [
+            '<img src="path/to/plain.png" />',
+            "<img src={'path/to/curly.png'} />",
+            "<img src={dynamicPath} />"
+        ].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/plain.png"), "plain-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/curly.png"), "curly-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:plain-id");
+        expect(result).toContain("file:curly-id");
+        expect(result).toContain("src={dynamicPath}");
+    });
+
+    it("should handle markdown images alongside JSX expressions without corruption", () => {
+        const page = [
+            "![alt](path/to/md-image.png)",
+            "<img src={variable} />",
+            '<img src="path/to/html-image.png" />'
+        ].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/md-image.png"), "md-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/html-image.png"), "html-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("![alt](file:md-id)");
+        expect(result).toContain('src="file:html-id"');
+        expect(result).toContain("src={variable}");
+    });
+
+    it("should not produce overlapping edits when spread and simple attributes coexist", () => {
+        const page = ["<img src={'path/to/image.png'} />", '<Component {...{href: "/other/page"}} />'].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "no-overlap-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("file:no-overlap-id");
+        // Verify the output is well-formed (no corrupted text from overlapping edits)
+        expect(result).toContain("<Component");
+        expect(result).toContain("/>");
     });
 });

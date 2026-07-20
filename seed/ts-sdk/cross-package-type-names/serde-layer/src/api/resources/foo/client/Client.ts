@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
@@ -25,6 +26,9 @@ export class FooClient {
     /**
      * @param {SeedCrossPackageTypeNames.FindRequest} request
      * @param {FooClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedCrossPackageTypeNamesError}
+     * @throws {@link errors.SeedCrossPackageTypeNamesTimeoutError}
      *
      * @example
      *     await client.foo.find({
@@ -62,7 +66,10 @@ export class FooClient {
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",
-            body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            body: mergeAdditionalBodyParameters(
+                serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+                requestOptions?.additionalBodyParameters,
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

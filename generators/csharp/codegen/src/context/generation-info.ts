@@ -196,6 +196,8 @@ export class Generation {
         shouldGeneratedDiscriminatedUnions: () => this.customConfig["use-discriminated-unions"] ?? true,
         /** When true, generates undiscriminated unions with runtime type detection. Default: false. */
         shouldGenerateUndiscriminatedUnions: () => this.customConfig["use-undiscriminated-unions"] ?? false,
+        /** When true, a discriminated union's base properties are suppressed on `samePropertiesAsObject` variant leaves that duplicate them (per the IR's deferredUnionBaseProperties fact), so common fields are owned solely by the union envelope. Default: false (base properties are duplicated on the envelope and each leaf). */
+        dedupeUnionBaseProperties: () => this.customConfig["dedupe-union-base-properties"] ?? false,
         /** Custom name for the exported public client class. Default: "" (uses clientClassName or computed name). */
         exportedClientClassName: () => this.customConfig["exported-client-class-name"] ?? "",
         /** Custom name for the internal client class. Default: "" (auto-generated from organization/workspace). */
@@ -235,6 +237,8 @@ export class Generation {
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
         /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
         omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
+        /** When true, emits the platform observability headers (X-Fern-Runtime, X-Fern-Runtime-Version, X-Fern-Platform). Default: false. Still subject to omitFernHeaders. */
+        includePlatformHeaders: () => this.customConfig["include-platform-headers"] ?? false,
         /** When true, falls back to `<NuGetPackageId>/<version>` for the `User-Agent` header when the IR doesn't supply one. Default: false. */
         userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
@@ -249,8 +253,22 @@ export class Generation {
         maxRetries: () => this.customConfig.maxRetries,
         /** Controls which HTTP status codes trigger automatic retries. Default: "legacy". */
         retryStatusCodes: () => this.customConfig.retryStatusCodes ?? "legacy",
-        /** Override the default request timeout (in seconds) for the generated SDK client. `"infinity"` disables the default timeout. Default: 30. */
-        defaultTimeoutInSeconds: () => this.customConfig["default-timeout-in-seconds"],
+        /**
+         * Override the default request timeout (in milliseconds) for the generated SDK client. `"infinity"` disables
+         * the default timeout. Resolves the new `default-timeout-in-milliseconds` key when set, otherwise falls back
+         * to the deprecated `default-timeout-in-seconds` (converted to milliseconds). Default: 30000.
+         */
+        defaultTimeoutInMilliseconds: (): number | "infinity" | undefined => {
+            const milliseconds = this.customConfig["default-timeout-in-milliseconds"];
+            if (milliseconds != null) {
+                return milliseconds;
+            }
+            const seconds = this.customConfig["default-timeout-in-seconds"];
+            if (seconds == null) {
+                return undefined;
+            }
+            return seconds === "infinity" ? "infinity" : seconds * 1000;
+        },
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.
@@ -599,6 +617,12 @@ export class Generation {
                 multipartMethodName: "AddFileParameterPart",
                 multipartMethodNameForCollection: "AddFileParameterParts",
                 isReferenceType: true
+            }),
+        /** Factory for the default HttpClient with automatic response decompression */
+        DefaultHttpClientFactory: () =>
+            this.csharp.classReference({
+                namespace: this.namespaces.core,
+                origin: this.model.staticExplicit("DefaultHttpClientFactory")
             }),
         /** HTTP header management utilities */
         Headers: () =>

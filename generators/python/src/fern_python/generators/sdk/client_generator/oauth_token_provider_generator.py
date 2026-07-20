@@ -4,11 +4,13 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, resolve_name
 
 import fern.ir.resources as ir_types
 
 DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
+GRANT_TYPE_WIRE_VALUE = "grant_type"
+CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials"
 
 
 class OAuthTokenProviderGenerator:
@@ -437,6 +439,7 @@ class OAuthTokenProviderGenerator:
                         self._get_write_response_property_setter(
                             response_property=refresh_token_property,
                             member_name=self._get_refresh_token_member_name(),
+                            raise_if_none=False,
                         ),
                     ),
                 )
@@ -469,6 +472,7 @@ class OAuthTokenProviderGenerator:
         self,
         response_property: ir_types.ResponseProperty,
         member_name: str,
+        raise_if_none: bool = True,
     ) -> AST.CodeWriterFunction:
         def _write_response_property_setter(writer: AST.NodeWriter) -> None:
             property_path = response_property.property_path
@@ -479,7 +483,7 @@ class OAuthTokenProviderGenerator:
             property_type = response_property.property.value_type
             property_is_optional = self._context.resolved_schema_is_optional_or_unknown(property_type)
 
-            if property_is_optional:
+            if property_is_optional and raise_if_none:
                 # For optional access tokens, raise an exception if None
                 writer.write_line(f"if {property_value} is None:")
                 with writer.indent():
@@ -578,10 +582,40 @@ class OAuthTokenProviderGenerator:
                 )
                 if self._is_literal_type(prop_type) or self._is_optional_type(prop_type):
                     continue
+                if self._is_grant_type_property(custom_prop):
+                    continue
                 param_name = self._get_request_property_parameter_name(custom_prop)
                 result.append((param_name, f"_{param_name}"))
 
         return result
+
+    def _is_grant_type_property(self, request_property: ir_types.RequestProperty) -> bool:
+        """
+        The client-credentials grant type is synthesized in the token request
+        rather than surfaced as a constructor parameter.
+        """
+        name = request_property.property.visit(
+            query=lambda q: get_name_from_wire_value(q.name),
+            body=lambda b: get_name_from_wire_value(b.name),
+        )
+        return get_original_name(name) == GRANT_TYPE_WIRE_VALUE
+
+    def _get_grant_type_property(
+        self, client_credentials: ir_types.OAuthClientCredentials
+    ) -> Optional[ir_types.RequestProperty]:
+        token_request_properties = client_credentials.token_endpoint.request_properties
+        if token_request_properties.custom_properties is None:
+            return None
+        for custom_prop in token_request_properties.custom_properties:
+            prop_type = custom_prop.property.visit(
+                query=lambda q: q.value_type,
+                body=lambda b: b.value_type,
+            )
+            if self._is_literal_type(prop_type):
+                continue
+            if self._is_grant_type_property(custom_prop):
+                return custom_prop
+        return None
 
     def _get_refresh_function_invocation(
         self, client_credentials: ir_types.OAuthClientCredentials
@@ -608,6 +642,18 @@ class OAuthTokenProviderGenerator:
                     (
                         param_name,
                         AST.Expression(f"self.{member_name}"),
+                    )
+                )
+            # A non-literal grant_type property is always sent with the
+            # "client_credentials" value: the client credentials flow requires
+            # grant_type=client_credentials (RFC 6749 §4.4.2), and nothing else
+            # supplies it when the spec models it as a plain string.
+            grant_type_property = self._get_grant_type_property(client_credentials)
+            if grant_type_property is not None:
+                kwargs.append(
+                    (
+                        self._get_request_property_parameter_name(grant_type_property),
+                        AST.Expression(f'"{CLIENT_CREDENTIALS_GRANT_TYPE}"'),
                     )
                 )
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(

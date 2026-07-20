@@ -2,7 +2,8 @@ import {
     AbstractGeneratorContext,
     CaseConverter,
     FernGeneratorExec,
-    GeneratorNotificationService
+    GeneratorNotificationService,
+    getOriginalName
 } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { snakeCase } from "lodash-es";
@@ -72,6 +73,21 @@ export abstract class AbstractPythonGeneratorContext<
 
     public getSnakeCaseSafeName(name: FernIr.NameOrString): string {
         return this.caseConverter.snakeSafe(name);
+    }
+
+    /**
+     * Module/subpackage directory name, preserving any leading/trailing underscores from
+     * the original name that the casing functions would otherwise strip. This keeps README
+     * and reference accessors and module paths consistent with the generated module
+     * directories (e.g. a group named `_agents` yields `client._agents`). It is scoped to
+     * namespace/module names and intentionally not applied to property or method names.
+     */
+    public getModuleName(name: FernIr.NameOrString): string {
+        const originalName = getOriginalName(name);
+        const leading = originalName.match(/^(_+)/)?.[1] ?? "";
+        const core = originalName.slice(leading.length);
+        const trailing = core.match(/(_+)$/)?.[1] ?? "";
+        return `${leading}${this.caseConverter.snakeSafe(name)}${trailing}`;
     }
 
     public getModulePathForId(typeId: string): string[] {

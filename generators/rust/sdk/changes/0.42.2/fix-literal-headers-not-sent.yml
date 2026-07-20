@@ -1,0 +1,6 @@
+- summary: |
+    Endpoints now send API-, service- and endpoint-level headers whose types are literals
+    (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers were silently
+    dropped. Caller-supplied values via `RequestOptions::additional_header` still take
+    precedence over the literal defaults.
+  type: fix

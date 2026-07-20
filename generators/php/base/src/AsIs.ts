@@ -10,6 +10,7 @@ export enum AsIsFiles {
     BaseApiRequest = "Client/BaseApiRequest.Template.php",
     HttpMethod = "Client/HttpMethod.Template.php",
     RawClient = "Client/RawClient.Template.php",
+    IdempotencyKey = "Client/IdempotencyKey.Template.php",
     RetryDecoratingClient = "Client/RetryDecoratingClient.Template.php",
     HttpClientBuilder = "Client/HttpClientBuilder.Template.php",
     RawClientTest = "Client/RawClientTest.Template.php",
@@ -20,6 +21,7 @@ export enum AsIsFiles {
     SseStream = "Client/SseStream.Template.php",
     SseEvent = "Client/SseEvent.Template.php",
     JsonStream = "Client/JsonStream.Template.php",
+    UrlEncodedApiRequest = "Client/UrlEncodedApiRequest.Template.php",
     TextStream = "Client/TextStream.Template.php",
 
     // Core/Json files.
