@@ -51,8 +51,8 @@ export function getPackageNameFromGeneratorConfig(
         }
 
         // php-sdk generator uses the camelCase packageName config key
-        const camelCasePackageName = (generatorInvocation.raw.config as { packageName?: string }).packageName;
-        if (camelCasePackageName != null) {
+        const camelCasePackageName = (generatorInvocation.raw.config as { packageName?: unknown }).packageName;
+        if (typeof camelCasePackageName === "string") {
             return camelCasePackageName;
         }
     }
