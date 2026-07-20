@@ -15,6 +15,9 @@ func do() {
         ),
     )
     request := &fern.SendLiteralsInQueryRequest{
+        OptionalPrompt: fern.String(
+            "You are a helpful assistant",
+        ),
         AliasPrompt: fern.AliasToPrompt(
             "You are a helpful assistant",
         ),
@@ -22,6 +25,9 @@ func do() {
             "You are a helpful assistant",
         ),
         Query: "query",
+        OptionalStream: fern.Bool(
+            false,
+        ),
         AliasStream: fern.AliasToStream(
             false,
         ),

@@ -37,6 +37,9 @@ func NewClient(options *core.RequestOptions) *Client {
 // Example:
 //
 //	request := &fern.SendLiteralsInlinedRequest{
+//	    Context: fern.String(
+//	        "You're super wise",
+//	    ),
 //	    Query: "What is the weather today",
 //	    Temperature: fern.Float64(
 //	        10.1,

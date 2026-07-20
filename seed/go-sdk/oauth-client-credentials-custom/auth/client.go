@@ -44,6 +44,10 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Scope: fern.String(
 //	        "scope",
 //	    ),
+//	    Permissions: []string{
+//	        "permissions",
+//	        "permissions",
+//	    },
 //	}
 //	client.Auth.GetTokenWithClientCredentials(
 //	    context.TODO(),

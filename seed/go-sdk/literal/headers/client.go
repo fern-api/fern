@@ -59,6 +59,11 @@ func (c *Client) Send(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Headers.SendLiteralsOnly(
+//	    context.TODO(),
+//	)
 func (c *Client) SendLiteralsOnly(
 	ctx context.Context,
 	opts ...option.RequestOption,
