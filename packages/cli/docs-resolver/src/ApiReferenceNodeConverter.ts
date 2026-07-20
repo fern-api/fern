@@ -92,7 +92,8 @@ export class ApiReferenceNodeConverter {
         private hideChildren?: boolean,
         private parentAvailability?: docsYml.RawSchemas.Availability,
         private openApiTags?: Record<string, { id: string; description: string | undefined }>,
-        graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>
+        graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>,
+        private apiChangelogFilepaths?: AbsoluteFilePath[]
     ) {
         this.#tagDescriptionContent = new Map();
         this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
@@ -146,7 +147,7 @@ export class ApiReferenceNodeConverter {
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
             this.markdownFilesToTags,
-            this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
+            this.apiChangelogFilepaths ?? this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();

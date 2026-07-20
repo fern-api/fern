@@ -37,6 +37,7 @@ import os from "os";
 import path from "path";
 import { type Duplex } from "stream";
 import { WebSocket, WebSocketServer } from "ws";
+import { BackgroundValidationScheduler } from "./BackgroundValidationScheduler.js";
 import { type BunServer, createBunServer } from "./createBunServer.js";
 import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
@@ -1030,6 +1031,30 @@ export async function runAppPreviewServer({
     // detect stale cache entries without an HTTP round-trip.
     const genFilePath = path.join(os.tmpdir(), `fern-docs-dev-gen-${backendPort}`);
     const generationManager = new GenerationFileManager(genFilePath);
+    const validationScheduler = new BackgroundValidationScheduler<Project>(async (projectToValidate) => {
+        const validationStartTime = Date.now();
+        try {
+            await validateProject(projectToValidate);
+            const validationTime = Date.now() - validationStartTime;
+            void debugLogger.logCliValidation(validationTime, true);
+        } catch (err) {
+            const validationTime = Date.now() - validationStartTime;
+            void debugLogger.logCliValidation(validationTime, false);
+            context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
+            if (err instanceof Error && err.stack) {
+                context.logger.debug(`Validation error stack: ${err.stack}`);
+            }
+        }
+    });
+    let pendingValidationProject: Project | undefined;
+
+    const schedulePendingValidation = (): void => {
+        if (pendingValidationProject == null) {
+            return;
+        }
+        validationScheduler.schedule(pendingValidationProject);
+        pendingValidationProject = undefined;
+    };
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
@@ -1054,26 +1079,7 @@ export async function runAppPreviewServer({
 
                 // Rebuild dependency map after reloading project
                 await snippetTracker.buildDependencyMap(project);
-            }
-
-            if (!contentOnlyEdit) {
-                // Start validation in background - don't block the reload
-                const validationStartTime = Date.now();
-                void validateProject(project)
-                    .then(() => {
-                        const validationTime = Date.now() - validationStartTime;
-                        void debugLogger.logCliValidation(validationTime, true);
-                    })
-                    .catch((err) => {
-                        const validationTime = Date.now() - validationStartTime;
-                        void debugLogger.logCliValidation(validationTime, false);
-                        context.logger.error(
-                            `Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`
-                        );
-                        if (err instanceof Error && err.stack) {
-                            context.logger.debug(`Validation error stack: ${err.stack}`);
-                        }
-                    });
+                pendingValidationProject = project;
             }
 
             const docsGenStartTime = Date.now();
@@ -1480,6 +1486,7 @@ export async function runAppPreviewServer({
                             type: "finishReload"
                         });
                     }
+                    schedulePendingValidation();
                 } catch (err) {
                     context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
                     await generationManager.increment();
@@ -1488,6 +1495,7 @@ export async function runAppPreviewServer({
                         version: 1,
                         type: "finishReload"
                     });
+                    schedulePendingValidation();
                 } finally {
                     editedAbsoluteFilepaths.length = 0;
                     isReloading = false;
@@ -1576,6 +1584,7 @@ export async function runAppPreviewServer({
 
     // Server is ready after startNextJsServer completes
     context.logger.info(`Docs preview server ready on http://localhost:${actualPort}`);
+    schedulePendingValidation();
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
