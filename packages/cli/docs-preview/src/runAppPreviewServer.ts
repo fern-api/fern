@@ -229,6 +229,8 @@ class SnippetDependencyTracker {
     private snippetToPages = new Map<string, Set<string>>();
     // Map: page file path -> Set of snippet files it references
     private pageToSnippets = new Map<string, Set<string>>();
+    // Whether a full scan has populated the maps at least once.
+    private hasBuiltInitialMap = false;
 
     constructor(private context: TaskContext) {}
 
@@ -299,26 +301,96 @@ class SnippetDependencyTracker {
                         docsWorkspace.absoluteFilePath
                     );
 
-                    // Update page -> snippets mapping
+                    // Update page -> snippets (forward) mapping
                     this.pageToSnippets.set(markdownFile, referencedFiles);
-
-                    // Update snippet -> pages mapping
-                    for (const referencedFile of referencedFiles) {
-                        if (!this.snippetToPages.has(referencedFile)) {
-                            this.snippetToPages.set(referencedFile, new Set());
-                        }
-                        this.snippetToPages.get(referencedFile)?.add(markdownFile);
-                    }
                 } catch (error) {
                     this.context.logger.debug(`Failed to read markdown file ${markdownFile}: ${error}`);
                 }
             }
+
+            // Derive the snippet -> pages (reverse) mapping from the forward mapping.
+            this.rebuildReverseMap();
+            this.hasBuiltInitialMap = true;
 
             this.context.logger.debug(
                 `Built dependency map: ${this.snippetToPages.size} snippets, ${this.pageToSnippets.size} pages`
             );
         } catch (error) {
             this.context.logger.debug(`Failed to build dependency map: ${error}`);
+        }
+    }
+
+    /**
+     * Incrementally updates the dependency maps for a set of changed markdown files,
+     * avoiding a full re-scan of every page in the workspace.
+     *
+     * Only content-only (`.md`/`.mdx`) reloads take this path. For each changed file we
+     * re-read it and recompute its outgoing references (the page -> snippets forward
+     * edge); deleted files are dropped. We then rebuild the snippet -> pages reverse
+     * map from the forward map in memory (no disk I/O), so the reverse map is always
+     * fully consistent with the forward map and can never accumulate stale edges.
+     *
+     * Reloads never overlap (the watcher handler serializes them behind `isReloading`),
+     * so these mutations are not subject to concurrent access. Falls back to a full
+     * scan if an initial map has not been built yet.
+     */
+    async updateDependencyMapForFiles(changedFiles: AbsoluteFilePath[], project: Project): Promise<void> {
+        const docsWorkspace = project.docsWorkspaces;
+        if (!docsWorkspace) {
+            return;
+        }
+
+        if (!this.hasBuiltInitialMap) {
+            await this.buildDependencyMap(project);
+            return;
+        }
+
+        for (const changedFile of changedFiles) {
+            const lower = changedFile.toLowerCase();
+            if (!lower.endsWith(".md") && !lower.endsWith(".mdx")) {
+                // Non-markdown files are never keys in the forward map. Changing a
+                // referenced snippet's *content* does not alter the dependency graph
+                // (the reverse edge keyed by the snippet path is unaffected), so there
+                // is nothing to update here.
+                continue;
+            }
+
+            if (!(await doesPathExist(changedFile))) {
+                // Deleted page: drop its forward edge. The reverse map is rebuilt below.
+                this.pageToSnippets.delete(changedFile);
+                continue;
+            }
+
+            try {
+                const content = await readFile(changedFile, "utf-8");
+                const referencedFiles = this.extractReferences(content, changedFile, docsWorkspace.absoluteFilePath);
+                this.pageToSnippets.set(changedFile, referencedFiles);
+            } catch (error) {
+                this.context.logger.debug(`Failed to read markdown file ${changedFile}: ${error}`);
+                // Drop a stale forward edge for a now-unreadable file so the reverse map
+                // does not retain references that may no longer be accurate.
+                this.pageToSnippets.delete(changedFile);
+            }
+        }
+
+        this.rebuildReverseMap();
+    }
+
+    /**
+     * Rebuilds the snippet -> pages (reverse) map from the page -> snippets (forward)
+     * map. A pure in-memory transformation, so it can never leave stale reverse edges.
+     */
+    private rebuildReverseMap(): void {
+        this.snippetToPages.clear();
+        for (const [page, references] of this.pageToSnippets) {
+            for (const reference of references) {
+                let pages = this.snippetToPages.get(reference);
+                if (pages == null) {
+                    pages = new Set();
+                    this.snippetToPages.set(reference, pages);
+                }
+                pages.add(page);
+            }
         }
     }
 
@@ -966,13 +1038,25 @@ export async function runAppPreviewServer({
         // Log CLI reload start
         void debugLogger.logCliReloadStart();
 
+        const contentOnlyEdit = isContentOnlyEdit(editedAbsoluteFilepaths);
+
         try {
-            project = await reloadProject();
+            if (contentOnlyEdit) {
+                // Content-only (.md/.mdx) edits never touch docs.yml, navigation YAML,
+                // or API specs, and page markdown is always re-read from disk during
+                // resolution — so reuse the already-loaded project and skip re-parsing
+                // every API/OpenAPI workspace, which dominates reload time on large
+                // projects. Only the changed pages' dependency edges need updating.
+                context.logger.debug("Content-only edit; reusing loaded project (skipping full reload).");
+                await snippetTracker.updateDependencyMapForFiles(editedAbsoluteFilepaths ?? [], project);
+            } else {
+                project = await reloadProject();
 
-            // Rebuild dependency map after reloading project
-            await snippetTracker.buildDependencyMap(project);
+                // Rebuild dependency map after reloading project
+                await snippetTracker.buildDependencyMap(project);
+            }
 
-            if (!isContentOnlyEdit(editedAbsoluteFilepaths)) {
+            if (!contentOnlyEdit) {
                 // Start validation in background - don't block the reload
                 const validationStartTime = Date.now();
                 void validateProject(project)
