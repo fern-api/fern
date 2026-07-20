@@ -1,6 +1,7 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { BROKEN_LINK_RULE_NAMES } from "@fern-api/docs-validator";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
@@ -51,7 +52,7 @@ export async function validateWorkspaces({
         // Collect docs violations first (using runTaskForWorkspace to preserve [docs]: prefix for fatal errors)
         const docsWorkspace = project.docsWorkspaces;
         if (docsWorkspace != null) {
-            const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
+            const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : [...BROKEN_LINK_RULE_NAMES];
             const ossWorkspaces = await filterOssWorkspaces(project);
 
             let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;

@@ -2,7 +2,7 @@ import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } 
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { Rules } from "@fern-api/docs-validator";
+import { BROKEN_LINK_RULE_NAMES } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { basename } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -239,7 +239,7 @@ export async function generateDocsWorkspace({
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
     const excludeRules: string[] = [];
     if (!brokenLinks && !strictBrokenLinks) {
-        excludeRules.push(Rules.ValidMarkdownLinks.name);
+        excludeRules.push(...BROKEN_LINK_RULE_NAMES);
     }
     return excludeRules;
 }

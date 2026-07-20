@@ -1,6 +1,6 @@
 import { logViolations } from "@fern-api/api-workspace-validator";
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import { validateDocsWorkspace } from "@fern-api/docs-validator";
+import { BROKEN_LINK_RULE_NAMES, validateDocsWorkspace } from "@fern-api/docs-validator";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -47,7 +47,9 @@ export async function collectDocsWorkspaceViolations({
 
     let hasErrors = violations.some((v) => v.severity === "fatal" || v.severity === "error");
     if (errorOnBrokenLinks) {
-        hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
+        hasErrors =
+            hasErrors ||
+            violations.some((violation) => violation.name != null && BROKEN_LINK_RULE_NAMES.includes(violation.name));
     }
 
     return {
@@ -105,7 +107,9 @@ export async function validateDocsWorkspaceWithoutExiting({
     });
 
     if (errorOnBrokenLinks) {
-        hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
+        hasErrors =
+            hasErrors ||
+            violations.some((violation) => violation.name != null && BROKEN_LINK_RULE_NAMES.includes(violation.name));
     }
 
     return { hasErrors };

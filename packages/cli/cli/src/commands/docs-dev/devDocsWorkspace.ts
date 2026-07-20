@@ -1,5 +1,6 @@
 import { runAppPreviewServer, runPreviewServer } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { BROKEN_LINK_RULE_NAMES } from "@fern-api/docs-validator";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 
@@ -53,7 +54,7 @@ export async function previewDocsWorkspace({
                     if (docsWorkspace == null) {
                         return;
                     }
-                    const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
+                    const excludeRules = brokenLinks ? [] : [...BROKEN_LINK_RULE_NAMES];
                     const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
                     const useV3Parser = openapiParserV3 == null || openapiParserV3;
                     if (useV3Parser) {
@@ -101,7 +102,7 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
-                const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
+                const excludeRules = brokenLinks ? [] : [...BROKEN_LINK_RULE_NAMES];
                 const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
                 const useV3Parser = openapiParserV3 == null || openapiParserV3;
                 if (useV3Parser) {

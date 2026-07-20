@@ -1,8 +1,10 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add a `valid-llms-txt` check to `fern check` that validates a custom root
-    llms.txt (configured via `agents.llms-txt`) against the resolved navigation.
-    It warns when a link points to a page that no longer exists, surfacing the
-    silent drift that hand-maintained llms.txt files accumulate as pages move.
+    Add a `valid-llms-txt` check that validates a custom root llms.txt
+    (configured via `agents.llms-txt`) against the resolved navigation. It warns
+    when a link points to a page that no longer exists, surfacing the silent
+    drift that hand-maintained llms.txt files accumulate as pages move. Like
+    `valid-markdown-links`, it runs only when broken-link checking is enabled —
+    via `fern check --broken-links` or `check.rules.broken-links` in docs.yml.
   type: feat
