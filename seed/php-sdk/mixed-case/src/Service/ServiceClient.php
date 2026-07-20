@@ -52,6 +52,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->getResource(
+     *     'rsc-xyz',
+     * );
+     * ```
+     *
      * @param string $resourceId
      * @param ?array{
      *   baseUrl?: string,
@@ -98,6 +105,16 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->listResources(
+     *     new ListResourcesRequest([
+     *         'pageLimit' => 10,
+     *         'beforeDate' => new DateTime('2023-01-01'),
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListResourcesRequest $request
      * @param ?array{
      *   baseUrl?: string,

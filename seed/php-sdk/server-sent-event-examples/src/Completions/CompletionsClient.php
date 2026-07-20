@@ -56,6 +56,15 @@ class CompletionsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->completions->stream(
+     *     new StreamCompletionRequest([
+     *         'query' => 'foo',
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamCompletionRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -97,6 +106,15 @@ class CompletionsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->completions->streamEvents(
+     *     new StreamEventsRequest([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamEventsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -138,6 +156,15 @@ class CompletionsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->completions->streamEventsDiscriminantInData(
+     *     new StreamEventsDiscriminantInDataRequest([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamEventsDiscriminantInDataRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -179,6 +206,15 @@ class CompletionsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->completions->streamEventsContextProtocol(
+     *     new StreamEventsContextProtocolRequest([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamEventsContextProtocolRequest $request
      * @param ?array{
      *   baseUrl?: string,

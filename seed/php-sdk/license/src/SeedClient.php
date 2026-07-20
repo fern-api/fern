@@ -60,6 +60,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->get();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

@@ -85,6 +85,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUsers();
+     * ```
+     *
      * @param ?array{
      *   maxRetries?: int,
      *   timeout?: float,
@@ -129,6 +134,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   maxRetries?: int,
@@ -174,6 +186,16 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getToken(
+     *     new TokenRequest([
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *     ]),
+     * );
+     * ```
+     *
      * @param TokenRequest $request
      * @param ?array{
      *   maxRetries?: int,

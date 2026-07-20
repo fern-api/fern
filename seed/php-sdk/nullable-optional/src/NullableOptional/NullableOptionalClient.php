@@ -65,6 +65,13 @@ class NullableOptionalClient
     /**
      * Get a user by ID
      *
+     * Example:
+     * ```php
+     * $client->nullableOptional->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,
@@ -112,6 +119,26 @@ class NullableOptionalClient
 
     /**
      * Create a new user
+     *
+     * Example:
+     * ```php
+     * $client->nullableOptional->createUser(
+     *     new CreateUserRequest([
+     *         'username' => 'username',
+     *         'email' => 'email',
+     *         'phone' => 'phone',
+     *         'address' => new Address([
+     *             'street' => 'street',
+     *             'city' => 'city',
+     *             'state' => 'state',
+     *             'zipCode' => 'zipCode',
+     *             'country' => 'country',
+     *             'buildingId' => 'buildingId',
+     *             'tenantId' => 'tenantId',
+     *         ]),
+     *     ]),
+     * );
+     * ```
      *
      * @param CreateUserRequest $request
      * @param ?array{
@@ -162,6 +189,27 @@ class NullableOptionalClient
     /**
      * Update a user (partial update)
      *
+     * Example:
+     * ```php
+     * $client->nullableOptional->updateUser(
+     *     'userId',
+     *     new UpdateUserRequest([
+     *         'username' => 'username',
+     *         'email' => 'email',
+     *         'phone' => 'phone',
+     *         'address' => new Address([
+     *             'street' => 'street',
+     *             'city' => 'city',
+     *             'state' => 'state',
+     *             'zipCode' => 'zipCode',
+     *             'country' => 'country',
+     *             'buildingId' => 'buildingId',
+     *             'tenantId' => 'tenantId',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $userId
      * @param UpdateUserRequest $request
      * @param ?array{
@@ -211,6 +259,18 @@ class NullableOptionalClient
 
     /**
      * List all users
+     *
+     * Example:
+     * ```php
+     * $client->nullableOptional->listUsers(
+     *     new ListUsersRequest([
+     *         'limit' => 1,
+     *         'offset' => 1,
+     *         'includeDeleted' => true,
+     *         'sortBy' => 'sortBy',
+     *     ]),
+     * );
+     * ```
      *
      * @param ListUsersRequest $request
      * @param ?array{
@@ -274,6 +334,18 @@ class NullableOptionalClient
     /**
      * Search users
      *
+     * Example:
+     * ```php
+     * $client->nullableOptional->searchUsers(
+     *     new SearchUsersRequest([
+     *         'query' => 'query',
+     *         'department' => 'department',
+     *         'role' => 'role',
+     *         'isActive' => true,
+     *     ]),
+     * );
+     * ```
+     *
      * @param SearchUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -332,6 +404,112 @@ class NullableOptionalClient
     /**
      * Create a complex profile to test nullable enums and unions
      *
+     * Example:
+     * ```php
+     * $client->nullableOptional->createComplexProfile(
+     *     new ComplexProfile([
+     *         'id' => 'id',
+     *         'nullableRole' => UserRole::Admin->value,
+     *         'optionalRole' => UserRole::Admin->value,
+     *         'optionalNullableRole' => UserRole::Admin->value,
+     *         'nullableStatus' => UserStatus::Active->value,
+     *         'optionalStatus' => UserStatus::Active->value,
+     *         'optionalNullableStatus' => UserStatus::Active->value,
+     *         'nullableNotification' => NotificationMethod::email(new EmailNotification([
+     *             'emailAddress' => 'emailAddress',
+     *             'subject' => 'subject',
+     *             'htmlContent' => 'htmlContent',
+     *         ])),
+     *         'optionalNotification' => NotificationMethod::email(new EmailNotification([
+     *             'emailAddress' => 'emailAddress',
+     *             'subject' => 'subject',
+     *             'htmlContent' => 'htmlContent',
+     *         ])),
+     *         'optionalNullableNotification' => NotificationMethod::email(new EmailNotification([
+     *             'emailAddress' => 'emailAddress',
+     *             'subject' => 'subject',
+     *             'htmlContent' => 'htmlContent',
+     *         ])),
+     *         'nullableSearchResult' => SearchResult::user(new UserResponse([
+     *             'id' => 'id',
+     *             'username' => 'username',
+     *             'email' => 'email',
+     *             'phone' => 'phone',
+     *             'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'address' => new Address([
+     *                 'street' => 'street',
+     *                 'city' => 'city',
+     *                 'state' => 'state',
+     *                 'zipCode' => 'zipCode',
+     *                 'country' => 'country',
+     *                 'buildingId' => 'buildingId',
+     *                 'tenantId' => 'tenantId',
+     *             ]),
+     *         ])),
+     *         'optionalSearchResult' => SearchResult::user(new UserResponse([
+     *             'id' => 'id',
+     *             'username' => 'username',
+     *             'email' => 'email',
+     *             'phone' => 'phone',
+     *             'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'address' => new Address([
+     *                 'street' => 'street',
+     *                 'city' => 'city',
+     *                 'state' => 'state',
+     *                 'zipCode' => 'zipCode',
+     *                 'country' => 'country',
+     *                 'buildingId' => 'buildingId',
+     *                 'tenantId' => 'tenantId',
+     *             ]),
+     *         ])),
+     *         'nullableArray' => [
+     *             'nullableArray',
+     *             'nullableArray',
+     *         ],
+     *         'optionalArray' => [
+     *             'optionalArray',
+     *             'optionalArray',
+     *         ],
+     *         'optionalNullableArray' => [
+     *             'optionalNullableArray',
+     *             'optionalNullableArray',
+     *         ],
+     *         'nullableListOfNullables' => [
+     *             'nullableListOfNullables',
+     *             'nullableListOfNullables',
+     *         ],
+     *         'nullableMapOfNullables' => [
+     *             'nullableMapOfNullables' => new Address([
+     *                 'street' => 'street',
+     *                 'city' => 'city',
+     *                 'state' => 'state',
+     *                 'zipCode' => 'zipCode',
+     *                 'country' => 'country',
+     *                 'buildingId' => 'buildingId',
+     *                 'tenantId' => 'tenantId',
+     *             ]),
+     *         ],
+     *         'nullableListOfUnions' => [
+     *             NotificationMethod::email(new EmailNotification([
+     *                 'emailAddress' => 'emailAddress',
+     *                 'subject' => 'subject',
+     *                 'htmlContent' => 'htmlContent',
+     *             ])),
+     *             NotificationMethod::email(new EmailNotification([
+     *                 'emailAddress' => 'emailAddress',
+     *                 'subject' => 'subject',
+     *                 'htmlContent' => 'htmlContent',
+     *             ])),
+     *         ],
+     *         'optionalMapOfEnums' => [
+     *             'optionalMapOfEnums' => UserRole::Admin->value,
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param ComplexProfile $request
      * @param ?array{
      *   baseUrl?: string,
@@ -381,6 +559,13 @@ class NullableOptionalClient
     /**
      * Get a complex profile by ID
      *
+     * Example:
+     * ```php
+     * $client->nullableOptional->getComplexProfile(
+     *     'profileId',
+     * );
+     * ```
+     *
      * @param string $profileId
      * @param ?array{
      *   baseUrl?: string,
@@ -428,6 +613,43 @@ class NullableOptionalClient
 
     /**
      * Update complex profile to test nullable field updates
+     *
+     * Example:
+     * ```php
+     * $client->nullableOptional->updateComplexProfile(
+     *     'profileId',
+     *     new UpdateComplexProfileRequest([
+     *         'nullableRole' => UserRole::Admin->value,
+     *         'nullableStatus' => UserStatus::Active->value,
+     *         'nullableNotification' => NotificationMethod::email(new EmailNotification([
+     *             'emailAddress' => 'emailAddress',
+     *             'subject' => 'subject',
+     *             'htmlContent' => 'htmlContent',
+     *         ])),
+     *         'nullableSearchResult' => SearchResult::user(new UserResponse([
+     *             'id' => 'id',
+     *             'username' => 'username',
+     *             'email' => 'email',
+     *             'phone' => 'phone',
+     *             'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'address' => new Address([
+     *                 'street' => 'street',
+     *                 'city' => 'city',
+     *                 'state' => 'state',
+     *                 'zipCode' => 'zipCode',
+     *                 'country' => 'country',
+     *                 'buildingId' => 'buildingId',
+     *                 'tenantId' => 'tenantId',
+     *             ]),
+     *         ])),
+     *         'nullableArray' => [
+     *             'nullableArray',
+     *             'nullableArray',
+     *         ],
+     *     ]),
+     * );
+     * ```
      *
      * @param string $profileId
      * @param UpdateComplexProfileRequest $request
@@ -479,6 +701,64 @@ class NullableOptionalClient
     /**
      * Test endpoint for validating null deserialization
      *
+     * Example:
+     * ```php
+     * $client->nullableOptional->testDeserialization(
+     *     new DeserializationTestRequest([
+     *         'requiredString' => 'requiredString',
+     *         'nullableString' => 'nullableString',
+     *         'optionalString' => 'optionalString',
+     *         'optionalNullableString' => 'optionalNullableString',
+     *         'nullableEnum' => UserRole::Admin->value,
+     *         'optionalEnum' => UserStatus::Active->value,
+     *         'nullableUnion' => NotificationMethod::email(new EmailNotification([
+     *             'emailAddress' => 'emailAddress',
+     *             'subject' => 'subject',
+     *             'htmlContent' => 'htmlContent',
+     *         ])),
+     *         'optionalUnion' => SearchResult::user(new UserResponse([
+     *             'id' => 'id',
+     *             'username' => 'username',
+     *             'email' => 'email',
+     *             'phone' => 'phone',
+     *             'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'address' => new Address([
+     *                 'street' => 'street',
+     *                 'city' => 'city',
+     *                 'state' => 'state',
+     *                 'zipCode' => 'zipCode',
+     *                 'country' => 'country',
+     *                 'buildingId' => 'buildingId',
+     *                 'tenantId' => 'tenantId',
+     *             ]),
+     *         ])),
+     *         'nullableList' => [
+     *             'nullableList',
+     *             'nullableList',
+     *         ],
+     *         'nullableMap' => [
+     *             'nullableMap' => 1,
+     *         ],
+     *         'nullableObject' => new Address([
+     *             'street' => 'street',
+     *             'city' => 'city',
+     *             'state' => 'state',
+     *             'zipCode' => 'zipCode',
+     *             'country' => 'country',
+     *             'buildingId' => 'buildingId',
+     *             'tenantId' => 'tenantId',
+     *         ]),
+     *         'optionalObject' => new Organization([
+     *             'id' => 'id',
+     *             'name' => 'name',
+     *             'domain' => 'domain',
+     *             'employeeCount' => 1,
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param DeserializationTestRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -527,6 +807,17 @@ class NullableOptionalClient
 
     /**
      * Filter users by role with nullable enum
+     *
+     * Example:
+     * ```php
+     * $client->nullableOptional->filterByRole(
+     *     new FilterByRoleRequest([
+     *         'role' => UserRole::Admin->value,
+     *         'status' => UserStatus::Active->value,
+     *         'secondaryRole' => UserRole::Admin->value,
+     *     ]),
+     * );
+     * ```
      *
      * @param FilterByRoleRequest $request
      * @param ?array{
@@ -585,6 +876,13 @@ class NullableOptionalClient
     /**
      * Get notification settings which may be null
      *
+     * Example:
+     * ```php
+     * $client->nullableOptional->getNotificationSettings(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,
@@ -632,6 +930,27 @@ class NullableOptionalClient
 
     /**
      * Update tags to test array handling
+     *
+     * Example:
+     * ```php
+     * $client->nullableOptional->updateTags(
+     *     'userId',
+     *     new UpdateTagsRequest([
+     *         'tags' => [
+     *             'tags',
+     *             'tags',
+     *         ],
+     *         'categories' => [
+     *             'categories',
+     *             'categories',
+     *         ],
+     *         'labels' => [
+     *             'labels',
+     *             'labels',
+     *         ],
+     *     ]),
+     * );
+     * ```
      *
      * @param string $userId
      * @param UpdateTagsRequest $request
@@ -682,6 +1001,22 @@ class NullableOptionalClient
 
     /**
      * Get search results with nullable unions
+     *
+     * Example:
+     * ```php
+     * $client->nullableOptional->getSearchResults(
+     *     new SearchRequest([
+     *         'query' => 'query',
+     *         'filters' => [
+     *             'filters' => 'filters',
+     *         ],
+     *         'includeTypes' => [
+     *             'includeTypes',
+     *             'includeTypes',
+     *         ],
+     *     ]),
+     * );
+     * ```
      *
      * @param SearchRequest $request
      * @param ?array{
