@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.26.0
+  changelogEntry:
+    - summary: |
+        Generate OAuth client-credentials authentication from the full Fern IR
+        contract, including custom token and refresh requests, response mappings,
+        scopes, token headers and prefixes, environment URLs, expiry-aware caching,
+        and refresh fallback.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
 - version: 0.25.0
   changelogEntry:
     - summary: |
