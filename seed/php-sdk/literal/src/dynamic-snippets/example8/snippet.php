@@ -3,9 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Reference\Types\SendRequest;
-use Seed\Reference\Types\ContainerObject;
-use Seed\Reference\Types\NestedObjectWithLiterals;
+use Seed\Query\Requests\SendLiteralsInQueryRequest;
 
 $client = new SeedClient(
     version: '02-02-2024',
@@ -14,21 +12,16 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->reference->send(
-    new SendRequest([
+$client->query->send(
+    new SendLiteralsInQueryRequest([
         'prompt' => 'You are a helpful assistant',
-        'query' => 'What is the weather today',
+        'optionalPrompt' => 'You are a helpful assistant',
+        'aliasPrompt' => 'You are a helpful assistant',
+        'aliasOptionalPrompt' => 'You are a helpful assistant',
         'stream' => false,
-        'context' => "You're super wise",
-        'containerObject' => new ContainerObject([
-            'nestedObjects' => [
-                new NestedObjectWithLiterals([
-                    'literal1' => 'literal1',
-                    'literal2' => 'literal2',
-                    'strProp' => 'strProp',
-                ]),
-            ],
-        ]),
-        'ending' => '$ending',
+        'optionalStream' => false,
+        'aliasStream' => false,
+        'aliasOptionalStream' => false,
+        'query' => 'What is the weather today',
     ]),
 );
