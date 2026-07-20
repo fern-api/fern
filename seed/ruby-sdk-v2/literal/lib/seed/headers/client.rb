@@ -72,6 +72,14 @@ module Seed
       # @option params [String] :endpoint_version
       # @option params [Boolean] :async
       #
+      # @example
+      #   client.headers.send_literals_only(request_options: {
+      #     additional_headers: {
+      #       "X-Endpoint-Version" => "02-12-2024",
+      #       "X-Async" => "true"
+      #     }
+      #   })
+      #
       # @return [Seed::Types::SendResponse]
       def send_literals_only(request_options: {}, **_params)
         headers = { "X-Endpoint-Version" => "02-12-2024", "X-Async" => "true" }

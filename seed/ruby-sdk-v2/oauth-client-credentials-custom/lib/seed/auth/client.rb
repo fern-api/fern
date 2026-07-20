@@ -26,7 +26,8 @@ module Seed
       #     entity_id: "entity_id",
       #     audience: "https://api.example.com",
       #     grant_type: "client_credentials",
-      #     scope: "scope"
+      #     scope: "scope",
+      #     permissions: %w[permissions permissions]
       #   )
       #
       # @return [Seed::Auth::Types::TokenResponse]
