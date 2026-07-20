@@ -60,6 +60,15 @@ class EventsClient
     /**
      * List all user events.
      *
+     * Example:
+     * ```php
+     * $client->user->events->listEvents(
+     *     new ListUserEventsRequest([
+     *         'limit' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListUserEventsRequest $request
      * @param ?array{
      *   baseUrl?: string,

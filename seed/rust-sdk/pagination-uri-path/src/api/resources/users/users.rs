@@ -13,6 +13,21 @@ impl UsersClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination_uri_path::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationUriPathClient::new(config).expect("Failed to build client");
+    ///     client.users.list_with_uri_pagination(None).await;
+    /// }
+    /// ```
     pub async fn list_with_uri_pagination(
         &self,
         options: Option<RequestOptions>,
@@ -22,6 +37,21 @@ impl UsersClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination_uri_path::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationUriPathClient::new(config).expect("Failed to build client");
+    ///     client.users.list_with_path_pagination(None).await;
+    /// }
+    /// ```
     pub async fn list_with_path_pagination(
         &self,
         options: Option<RequestOptions>,

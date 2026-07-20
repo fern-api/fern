@@ -13,22 +13,21 @@
 
 ```go
 request := &fern.User{
-        ID: "id",
-        Email: "email",
-        Password: "password",
-        Profile: &fern.UserProfile{
-            Name: "name",
-            Verification: &fern.UserProfileVerification{
-                Verified: "verified",
-            },
-            Ssn: "ssn",
+    ID: "id",
+    Email: "email",
+    Password: "password",
+    Profile: &fern.UserProfile{
+        Name: "name",
+        Verification: &fern.UserProfileVerification{
+            Verified: "verified",
         },
-    }
-client.CreateUser(
-        context.TODO(),
-        request,
-    )
+        Ssn: "ssn",
+    },
 }
+client.CreateUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

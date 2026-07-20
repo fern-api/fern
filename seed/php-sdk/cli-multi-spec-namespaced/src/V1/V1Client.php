@@ -51,6 +51,11 @@ class V1Client
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->v1->listUsers();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

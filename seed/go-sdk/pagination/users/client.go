@@ -38,6 +38,24 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.ListUsersCursorPaginationRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    PerPage: fern.Int(
+//	        1,
+//	    ),
+//	    Order: fern.OrderAsc.Ptr(),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListWithCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithCursorPagination(
 	ctx context.Context,
 	request *fern.ListUsersCursorPaginationRequest,
@@ -97,6 +115,17 @@ func (c *Client) ListWithCursorPagination(
 	return pager.GetPage(ctx, request.StartingAfter)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersMixedTypeCursorPaginationRequest{
+//	    Cursor: fern.String(
+//	        "cursor",
+//	    ),
+//	}
+//	client.Users.ListWithMixedTypeCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithMixedTypeCursorPagination(
 	ctx context.Context,
 	request *fern.ListUsersMixedTypeCursorPaginationRequest,
@@ -156,6 +185,19 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersBodyCursorPaginationRequest{
+//	    Pagination: &fern.WithCursor{
+//	        Cursor: fern.String(
+//	            "cursor",
+//	        ),
+//	    },
+//	}
+//	client.Users.ListWithBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithBodyCursorPagination(
 	ctx context.Context,
 	request *fern.ListUsersBodyCursorPaginationRequest,
@@ -175,6 +217,21 @@ func (c *Client) ListWithBodyCursorPagination(
 // Pagination endpoint with a top-level cursor field in the request body.
 // This tests that the mock server correctly ignores cursor mismatches
 // when getNextPage() is called with a different cursor value.
+//
+// Example:
+//
+//	request := &fern.ListUsersTopLevelBodyCursorPaginationRequest{
+//	    Cursor: fern.String(
+//	        "initial_cursor",
+//	    ),
+//	    Filter: fern.String(
+//	        "active",
+//	    ),
+//	}
+//	client.Users.ListWithTopLevelBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithTopLevelBodyCursorPagination(
 	ctx context.Context,
 	request *fern.ListUsersTopLevelBodyCursorPaginationRequest,
@@ -191,6 +248,24 @@ func (c *Client) ListWithTopLevelBodyCursorPagination(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.ListUsersOffsetPaginationRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    PerPage: fern.Int(
+//	        1,
+//	    ),
+//	    Order: fern.OrderAsc.Ptr(),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListWithOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithOffsetPagination(
 	ctx context.Context,
 	request *fern.ListUsersOffsetPaginationRequest,
@@ -256,6 +331,24 @@ func (c *Client) ListWithOffsetPagination(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersDoubleOffsetPaginationRequest{
+//	    Page: fern.Float64(
+//	        1.1,
+//	    ),
+//	    PerPage: fern.Float64(
+//	        1.1,
+//	    ),
+//	    Order: fern.OrderAsc.Ptr(),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListWithDoubleOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithDoubleOffsetPagination(
 	ctx context.Context,
 	request *fern.ListUsersDoubleOffsetPaginationRequest,
@@ -321,6 +414,19 @@ func (c *Client) ListWithDoubleOffsetPagination(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersBodyOffsetPaginationRequest{
+//	    Pagination: &fern.WithPage{
+//	        Page: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.Users.ListWithBodyOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithBodyOffsetPagination(
 	ctx context.Context,
 	request *fern.ListUsersBodyOffsetPaginationRequest,
@@ -337,6 +443,21 @@ func (c *Client) ListWithBodyOffsetPagination(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.ListUsersOffsetStepPaginationRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	    Order: fern.OrderAsc.Ptr(),
+//	}
+//	client.Users.ListWithOffsetStepPagination(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithOffsetStepPagination(
 	ctx context.Context,
 	request *fern.ListUsersOffsetStepPaginationRequest,
@@ -402,6 +523,21 @@ func (c *Client) ListWithOffsetStepPagination(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &fern.ListWithOffsetPaginationHasNextPageRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    Limit: fern.Int(
+//	        3,
+//	    ),
+//	    Order: fern.OrderAsc.Ptr(),
+//	}
+//	client.Users.ListWithOffsetPaginationHasNextPage(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithOffsetPaginationHasNextPage(
 	ctx context.Context,
 	request *fern.ListWithOffsetPaginationHasNextPageRequest,
@@ -467,6 +603,19 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersExtendedRequest{
+//	    Cursor: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	}
+//	client.Users.ListWithExtendedResults(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithExtendedResults(
 	ctx context.Context,
 	request *fern.ListUsersExtendedRequest,
@@ -526,6 +675,19 @@ func (c *Client) ListWithExtendedResults(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersExtendedRequestForOptionalData{
+//	    Cursor: fern.UUID(
+//	        uuid.MustParse(
+//	            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	        ),
+//	    ),
+//	}
+//	client.Users.ListWithExtendedResultsAndOptionalData(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithExtendedResultsAndOptionalData(
 	ctx context.Context,
 	request *fern.ListUsersExtendedRequestForOptionalData,
@@ -585,6 +747,17 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+// Example:
+//
+//	request := &fern.ListUsernamesRequest{
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListUsernames(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListUsernames(
 	ctx context.Context,
 	request *fern.ListUsernamesRequest,
@@ -647,6 +820,17 @@ func (c *Client) ListUsernames(
 	return pager.GetPage(ctx, request.StartingAfter)
 }
 
+// Example:
+//
+//	request := &fern.ListUsernamesWithOptionalResponseRequest{
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListUsernamesWithOptionalResponse(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListUsernamesWithOptionalResponse(
 	ctx context.Context,
 	request *fern.ListUsernamesWithOptionalResponseRequest,
@@ -709,6 +893,17 @@ func (c *Client) ListUsernamesWithOptionalResponse(
 	return pager.GetPage(ctx, request.StartingAfter)
 }
 
+// Example:
+//
+//	request := &fern.ListWithGlobalConfigRequest{
+//	    Offset: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Users.ListWithGlobalConfig(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithGlobalConfig(
 	ctx context.Context,
 	request *fern.ListWithGlobalConfigRequest,
@@ -774,6 +969,17 @@ func (c *Client) ListWithGlobalConfig(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersOptionalDataRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Users.ListWithOptionalData(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithOptionalData(
 	ctx context.Context,
 	request *fern.ListUsersOptionalDataRequest,
@@ -839,6 +1045,23 @@ func (c *Client) ListWithOptionalData(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &fern.ListUsersAliasedDataRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    PerPage: fern.Int(
+//	        1,
+//	    ),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListWithAliasedData(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithAliasedData(
 	ctx context.Context,
 	request *fern.ListUsersAliasedDataRequest,

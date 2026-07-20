@@ -60,6 +60,13 @@ class ParamsClient
     /**
      * GET with path param
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPath(
+     *     'param',
+     * );
+     * ```
+     *
      * @param string $param
      * @param ?array{
      *   baseUrl?: string,
@@ -107,6 +114,13 @@ class ParamsClient
 
     /**
      * GET with path param
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPath(
+     *     'param',
+     * );
+     * ```
      *
      * @param string $param
      * @param ?array{
@@ -156,6 +170,16 @@ class ParamsClient
     /**
      * GET with query param
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithQuery(
+     *     new GetWithQuery([
+     *         'query' => 'query',
+     *         'number' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetWithQuery $request
      * @param ?array{
      *   baseUrl?: string,
@@ -200,6 +224,16 @@ class ParamsClient
 
     /**
      * GET with multiple of same query param
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithQuery(
+     *     new GetWithQuery([
+     *         'query' => 'query',
+     *         'number' => 1,
+     *     ]),
+     * );
+     * ```
      *
      * @param GetWithMultipleQuery $request
      * @param ?array{
@@ -246,6 +280,16 @@ class ParamsClient
     /**
      * GET with path and query params
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPathAndQuery(
+     *     'param',
+     *     new GetWithPathAndQuery([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $param
      * @param GetWithPathAndQuery $request
      * @param ?array{
@@ -291,6 +335,16 @@ class ParamsClient
     /**
      * GET with path and query params
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPathAndQuery(
+     *     'param',
+     *     new GetWithPathAndQuery([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $param
      * @param GetWithInlinePathAndQuery $request
      * @param ?array{
@@ -335,6 +389,14 @@ class ParamsClient
 
     /**
      * PUT to update with path param
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->modifyWithPath(
+     *     'param',
+     *     'string',
+     * );
+     * ```
      *
      * @param string $param
      * @param string $request
@@ -386,6 +448,14 @@ class ParamsClient
     /**
      * PUT to update with path param
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->modifyWithPath(
+     *     'param',
+     *     'string',
+     * );
+     * ```
+     *
      * @param string $param
      * @param ModifyResourceAtInlinedPath $request
      * @param ?array{
@@ -436,6 +506,13 @@ class ParamsClient
     /**
      * POST bytes with path param returning object
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->uploadWithPath(
+     *     'upload-path',
+     * );
+     * ```
+     *
      * @param string $param
      * @param ?array{
      *   baseUrl?: string,
@@ -483,6 +560,18 @@ class ParamsClient
 
     /**
      * POST with referenced body + query params
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->createWithBodyAndQuery(
+     *     new CreateWithBodyAndQuery([
+     *         'fields' => '_fields',
+     *         'body' => new ObjectWithRequiredField([
+     *             'string' => 'string',
+     *         ]),
+     *     ]),
+     * );
+     * ```
      *
      * @param CreateWithBodyAndQuery $request
      * @param ?array{
@@ -591,6 +680,13 @@ class ParamsClient
     /**
      * GET with boolean path param
      *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithBooleanPath(
+     *     true,
+     * );
+     * ```
+     *
      * @param bool $param
      * @param ?array{
      *   baseUrl?: string,
@@ -638,6 +734,13 @@ class ParamsClient
 
     /**
      * GET with path param that can throw errors
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->params->getWithPath(
+     *     'param',
+     * );
+     * ```
      *
      * @param string $param
      * @param ?array{

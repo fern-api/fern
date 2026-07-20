@@ -34,6 +34,20 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.PatchProxyRequest{
+//	    Application: fern.String(
+//	        "application",
+//	    ),
+//	    RequireAuth: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Service.Patch(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Patch(
 	ctx context.Context,
 	request *fern.PatchProxyRequest,
@@ -54,6 +68,51 @@ func (c *Client) Patch(
 // This endpoint demonstrates the distinction between:
 // - optional<T> fields (can be present or absent, but not null)
 // - optional<nullable<T>> fields (can be present, absent, or null)
+//
+// Example:
+//
+//	request := &fern.PatchComplexRequest{
+//	    Name: fern.String(
+//	        "name",
+//	    ),
+//	    Age: fern.Int(
+//	        1,
+//	    ),
+//	    Active: fern.Bool(
+//	        true,
+//	    ),
+//	    Metadata: map[string]any{
+//	        "metadata": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	    Tags: []string{
+//	        "tags",
+//	        "tags",
+//	    },
+//	    Email: fern.String(
+//	        "email",
+//	    ),
+//	    Nickname: fern.String(
+//	        "nickname",
+//	    ),
+//	    Bio: fern.String(
+//	        "bio",
+//	    ),
+//	    ProfileImageURL: fern.String(
+//	        "profileImageUrl",
+//	    ),
+//	    Settings: map[string]any{
+//	        "settings": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	}
+//	client.Service.PatchComplex(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) PatchComplex(
 	ctx context.Context,
 	id string,
@@ -74,6 +133,25 @@ func (c *Client) PatchComplex(
 
 // Named request with mixed optional/nullable fields and merge-patch content type.
 // This should trigger the NPE issue when optional fields aren't initialized.
+//
+// Example:
+//
+//	request := &fern.NamedMixedPatchRequest{
+//	    AppID: fern.String(
+//	        "appId",
+//	    ),
+//	    Instructions: fern.String(
+//	        "instructions",
+//	    ),
+//	    Active: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Service.NamedPatchWithMixed(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) NamedPatchWithMixed(
 	ctx context.Context,
 	id string,
@@ -96,6 +174,28 @@ func (c *Client) NamedPatchWithMixed(
 // This endpoint should:
 // 1. Not NPE when fields are not provided (tests initialization)
 // 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+//
+// Example:
+//
+//	request := &fern.OptionalMergePatchRequest{
+//	    RequiredField: "requiredField",
+//	    OptionalString: fern.String(
+//	        "optionalString",
+//	    ),
+//	    OptionalInteger: fern.Int(
+//	        1,
+//	    ),
+//	    OptionalBoolean: fern.Bool(
+//	        true,
+//	    ),
+//	    NullableString: fern.String(
+//	        "nullableString",
+//	    ),
+//	}
+//	client.Service.OptionalMergePatchTest(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) OptionalMergePatchTest(
 	ctx context.Context,
 	request *fern.OptionalMergePatchRequest,
@@ -113,6 +213,22 @@ func (c *Client) OptionalMergePatchTest(
 }
 
 // Regular PATCH endpoint without merge-patch semantics
+//
+// Example:
+//
+//	request := &fern.RegularPatchRequest{
+//	    Field1: fern.String(
+//	        "field1",
+//	    ),
+//	    Field2: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Service.RegularPatch(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) RegularPatch(
 	ctx context.Context,
 	id string,

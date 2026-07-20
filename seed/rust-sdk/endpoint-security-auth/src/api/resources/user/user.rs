@@ -13,6 +13,21 @@ impl UserClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_endpoint_security_auth::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    ///     client.user.get_with_bearer(None).await;
+    /// }
+    /// ```
     pub async fn get_with_bearer(
         &self,
         options: Option<RequestOptions>,
@@ -22,6 +37,21 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_endpoint_security_auth::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    ///     client.user.get_with_bearer(None).await;
+    /// }
+    /// ```
     pub async fn get_with_api_key(
         &self,
         options: Option<RequestOptions>,
@@ -31,6 +61,21 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_endpoint_security_auth::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    ///     client.user.get_with_bearer(None).await;
+    /// }
+    /// ```
     pub async fn get_with_o_auth(
         &self,
         options: Option<RequestOptions>,
@@ -40,6 +85,21 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_endpoint_security_auth::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    ///     client.user.get_with_bearer(None).await;
+    /// }
+    /// ```
     pub async fn get_with_basic(
         &self,
         options: Option<RequestOptions>,
@@ -49,6 +109,21 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_endpoint_security_auth::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    ///     client.user.get_with_bearer(None).await;
+    /// }
+    /// ```
     pub async fn get_with_inferred_auth(
         &self,
         options: Option<RequestOptions>,
@@ -58,6 +133,21 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_endpoint_security_auth::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    ///     client.user.get_with_bearer(None).await;
+    /// }
+    /// ```
     pub async fn get_with_any_auth(
         &self,
         options: Option<RequestOptions>,
@@ -67,6 +157,21 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_endpoint_security_auth::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    ///     client.user.get_with_bearer(None).await;
+    /// }
+    /// ```
     pub async fn get_with_all_auth(
         &self,
         options: Option<RequestOptions>,

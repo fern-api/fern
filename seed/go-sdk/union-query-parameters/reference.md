@@ -29,18 +29,17 @@ scalar enum value or a list of enum values.
 
 ```go
 request := &fern.SubscribeEventsRequest{
-        EventType: &fern.EventTypeParam{
-            EventTypeEnum: fern.EventTypeEnumGroupCreated,
-        },
-        Tags: &fern.StringOrListParam{
-            String: "tags",
-        },
-    }
-client.Events.Subscribe(
-        context.TODO(),
-        request,
-    )
+    EventType: &fern.EventTypeParam{
+        EventTypeEnum: fern.EventTypeEnumGroupCreated,
+    },
+    Tags: &fern.StringOrListParam{
+        String: "tags",
+    },
 }
+client.Events.Subscribe(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

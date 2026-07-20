@@ -50,6 +50,17 @@ func (c *Client) Post(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.JustFileRequest{
+//	    File: strings.NewReader(
+//	        "",
+//	    ),
+//	}
+//	client.Service.JustFile(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) JustFile(
 	ctx context.Context,
 	request *fern.JustFileRequest,
@@ -146,6 +157,17 @@ func (c *Client) WithFormEncodedContainers(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.OptionalArgsRequest{
+//	    ImageFile: strings.NewReader(
+//	        "",
+//	    ),
+//	}
+//	client.Service.OptionalArgs(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) OptionalArgs(
 	ctx context.Context,
 	request *fern.OptionalArgsRequest,
@@ -194,6 +216,20 @@ func (c *Client) WithJSONProperty(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.WithRefBodyRequest{
+//	    ImageFile: strings.NewReader(
+//	        "",
+//	    ),
+//	    Request: &fern.MyObject{
+//	        Foo: "bar",
+//	    },
+//	}
+//	client.Service.WithRefBody(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) WithRefBody(
 	ctx context.Context,
 	request *fern.WithRefBodyRequest,
@@ -210,6 +246,11 @@ func (c *Client) WithRefBody(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.Simple(
+//	    context.TODO(),
+//	)
 func (c *Client) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,

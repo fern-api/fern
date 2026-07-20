@@ -50,6 +50,11 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithUriPagination();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -95,6 +100,11 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithPathPagination();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

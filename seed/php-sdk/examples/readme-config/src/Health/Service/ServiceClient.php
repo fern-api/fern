@@ -51,6 +51,13 @@ class ServiceClient
     /**
      * This endpoint checks the health of a resource.
      *
+     * Example:
+     * ```php
+     * $client->health->service->check(
+     *     'id-2sdx82h',
+     * );
+     * ```
+     *
      * @param string $id The id to check
      * @param ?array{
      *   baseUrl?: string,
@@ -91,6 +98,11 @@ class ServiceClient
 
     /**
      * This endpoint checks the health of the service.
+     *
+     * Example:
+     * ```php
+     * $client->health->service->ping();
+     * ```
      *
      * @param ?array{
      *   baseUrl?: string,

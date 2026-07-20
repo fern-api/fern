@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.union.get_and_return_union
+        #
         # @return [Seed::Types::Union::Types::Animal]
         def get_and_return_union(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)

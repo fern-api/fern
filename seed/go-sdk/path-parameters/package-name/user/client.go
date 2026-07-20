@@ -34,6 +34,16 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &path.GetUsersRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	}
+//	client.User.GetUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	request *path.GetUsersRequest,
@@ -50,6 +60,20 @@ func (c *Client) GetUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &path.User{
+//	    Name: "name",
+//	    Tags: []string{
+//	        "tags",
+//	        "tags",
+//	    },
+//	}
+//	client.User.CreateUser(
+//	    context.TODO(),
+//	    "tenant_id",
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	tenantID string,
@@ -68,6 +92,23 @@ func (c *Client) CreateUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &path.UpdateUserRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Body: &path.User{
+//	        Name: "name",
+//	        Tags: []string{
+//	            "tags",
+//	            "tags",
+//	        },
+//	    },
+//	}
+//	client.User.UpdateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateUser(
 	ctx context.Context,
 	request *path.UpdateUserRequest,
@@ -84,6 +125,19 @@ func (c *Client) UpdateUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &path.SearchUsersRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Limit: path.Int(
+//	        1,
+//	    ),
+//	}
+//	client.User.SearchUsers(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SearchUsers(
 	ctx context.Context,
 	request *path.SearchUsersRequest,
@@ -101,6 +155,18 @@ func (c *Client) SearchUsers(
 }
 
 // Test endpoint with path parameter that has a text prefix (v{version})
+//
+// Example:
+//
+//	request := &path.GetUserMetadataRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Version: 1,
+//	}
+//	client.User.GetUserMetadata(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUserMetadata(
 	ctx context.Context,
 	request *path.GetUserMetadataRequest,
@@ -118,6 +184,19 @@ func (c *Client) GetUserMetadata(
 }
 
 // Test endpoint with path parameters listed in different order than found in path
+//
+// Example:
+//
+//	request := &path.GetUserSpecificsRequest{
+//	    TenantID: "tenant_id",
+//	    UserID: "user_id",
+//	    Version: 1,
+//	    Thought: "thought",
+//	}
+//	client.User.GetUserSpecifics(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUserSpecifics(
 	ctx context.Context,
 	request *path.GetUserSpecificsRequest,

@@ -12,6 +12,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.get_test
+    #
     # @return [Seed::Types::RootObject]
     def get_test(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -43,6 +46,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.create_test
     #
     # @return [Seed::Types::RootObject]
     def create_test(request_options: {}, **params)

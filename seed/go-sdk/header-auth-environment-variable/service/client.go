@@ -38,6 +38,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with custom api key
+//
+// Example:
+//
+//	client.Service.GetWithBearerToken(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithBearerToken(
 	ctx context.Context,
 	opts ...option.RequestOption,

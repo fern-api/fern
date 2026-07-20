@@ -54,6 +54,11 @@ class ProblemClient
     /**
      * Returns lightweight versions of all problems
      *
+     * Example:
+     * ```php
+     * $client->v2->problem->getLightweightProblems();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -100,6 +105,11 @@ class ProblemClient
 
     /**
      * Returns latest versions of all problems
+     *
+     * Example:
+     * ```php
+     * $client->v2->problem->getProblems();
+     * ```
      *
      * @param ?array{
      *   baseUrl?: string,
@@ -148,6 +158,13 @@ class ProblemClient
     /**
      * Returns latest version of a problem
      *
+     * Example:
+     * ```php
+     * $client->v2->problem->getLatestProblem(
+     *     'problemId',
+     * );
+     * ```
+     *
      * @param string $problemId
      * @param ?array{
      *   baseUrl?: string,
@@ -195,6 +212,14 @@ class ProblemClient
 
     /**
      * Returns requested version of a problem
+     *
+     * Example:
+     * ```php
+     * $client->v2->problem->getProblemVersion(
+     *     'problemId',
+     *     1,
+     * );
+     * ```
      *
      * @param string $problemId
      * @param int $problemVersion

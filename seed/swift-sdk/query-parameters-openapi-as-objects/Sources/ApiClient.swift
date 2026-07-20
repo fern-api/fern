@@ -53,6 +53,102 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.search(
+    ///         limit: 1,
+    ///         id: "id",
+    ///         date: CalendarDate("2023-01-15")!,
+    ///         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+    ///         bytes: "bytes",
+    ///         user: User(
+    ///             name: "name",
+    ///             tags: [
+    ///                 "tags",
+    ///                 "tags"
+    ///             ]
+    ///         ),
+    ///         userList: [
+    ///             User(
+    ///                 name: "name",
+    ///                 tags: [
+    ///                     "tags",
+    ///                     "tags"
+    ///                 ]
+    ///             )
+    ///         ],
+    ///         optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+    ///         keyValue: [
+    ///             "keyValue": "keyValue"
+    ///         ],
+    ///         optionalString: "optionalString",
+    ///         nestedUser: NestedUser(
+    ///             name: "name",
+    ///             user: User(
+    ///                 name: "name",
+    ///                 tags: [
+    ///                     "tags",
+    ///                     "tags"
+    ///                 ]
+    ///             )
+    ///         ),
+    ///         optionalUser: User(
+    ///             name: "name",
+    ///             tags: [
+    ///                 "tags",
+    ///                 "tags"
+    ///             ]
+    ///         ),
+    ///         excludeUser: [
+    ///             User(
+    ///                 name: "name",
+    ///                 tags: [
+    ///                     "tags",
+    ///                     "tags"
+    ///                 ]
+    ///             )
+    ///         ],
+    ///         filter: [
+    ///             "filter"
+    ///         ],
+    ///         tags: [
+    ///             "tags"
+    ///         ],
+    ///         optionalTags: [
+    ///             "optionalTags"
+    ///         ],
+    ///         neighbor: SearchRequestNeighbor.user(
+    ///             User(
+    ///                 name: "name",
+    ///                 tags: [
+    ///                     "tags",
+    ///                     "tags"
+    ///                 ]
+    ///             )
+    ///         ),
+    ///         neighborRequired: SearchRequestNeighborRequired.user(
+    ///             User(
+    ///                 name: "name",
+    ///                 tags: [
+    ///                     "tags",
+    ///                     "tags"
+    ///                 ]
+    ///             )
+    ///         )
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter tags: List of tags. Serialized as a comma-separated list.
+    /// - Parameter optionalTags: Optional list of tags. Serialized as a comma-separated list.
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func search(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User]? = nil, optionalDeadline: Date? = nil, keyValue: [String: String]? = nil, optionalString: String? = nil, nestedUser: NestedUser? = nil, optionalUser: User? = nil, excludeUser: [User]? = nil, filter: [String]? = nil, tags: [String]? = nil, optionalTags: [String]? = nil, neighbor: SearchRequestNeighbor? = nil, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
         return try await httpClient.performRequest(
             method: .get,

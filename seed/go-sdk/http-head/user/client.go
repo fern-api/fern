@@ -34,6 +34,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.User.Head(
+//	    context.TODO(),
+//	)
 func (c *Client) Head(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -48,6 +53,15 @@ func (c *Client) Head(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.ListUsersRequest{
+//	    Limit: 1,
+//	}
+//	client.User.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *fern.ListUsersRequest,

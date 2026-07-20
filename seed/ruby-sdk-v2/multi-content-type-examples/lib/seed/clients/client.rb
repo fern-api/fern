@@ -18,6 +18,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.clients.create(client: {
+      #     name: "Acme Corp",
+      #     email: "contact@acme.com"
+      #   })
+      #
       # @return [Seed::Types::ClientResponse]
       def create(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

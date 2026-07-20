@@ -52,6 +52,15 @@ class OrganizationClient
     /**
      * Create a new organization.
      *
+     * Example:
+     * ```php
+     * $client->organization->create(
+     *     new CreateOrganizationRequest([
+     *         'name' => 'name',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateOrganizationRequest $request
      * @param ?array{
      *   baseUrl?: string,

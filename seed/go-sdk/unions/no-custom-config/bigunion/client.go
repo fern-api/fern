@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Bigunion.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,
@@ -50,6 +56,26 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.BigUnion{
+//	    NormalSweet: &fern.NormalSweet{
+//	        Value: "value",
+//	    },
+//	    ID: "id",
+//	    CreatedAt: fern.MustParseDateTime(
+//	        "2024-01-15T09:30:00Z",
+//	    ),
+//	    ArchivedAt: fern.Time(
+//	        fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	    ),
+//	}
+//	client.Bigunion.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *fern.BigUnion,
@@ -66,6 +92,42 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := []*fern.BigUnion{
+//	    &fern.BigUnion{
+//	        NormalSweet: &fern.NormalSweet{
+//	            Value: "value",
+//	        },
+//	        ID: "id",
+//	        CreatedAt: fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	        ArchivedAt: fern.Time(
+//	            fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	        ),
+//	    },
+//	    &fern.BigUnion{
+//	        NormalSweet: &fern.NormalSweet{
+//	            Value: "value",
+//	        },
+//	        ID: "id",
+//	        CreatedAt: fern.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	        ArchivedAt: fern.Time(
+//	            fern.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	        ),
+//	    },
+//	}
+//	client.Bigunion.UpdateMany(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateMany(
 	ctx context.Context,
 	request []*fern.BigUnion,

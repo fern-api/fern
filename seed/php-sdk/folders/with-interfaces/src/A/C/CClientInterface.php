@@ -5,6 +5,11 @@ namespace Seed\A\C;
 interface CClientInterface
 {
     /**
+     * Example:
+     * ```php
+     * $client->foo();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

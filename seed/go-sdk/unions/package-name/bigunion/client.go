@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Bigunion.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,
@@ -50,6 +56,26 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &unions.BigUnion{
+//	    NormalSweet: &unions.NormalSweet{
+//	        Value: "value",
+//	    },
+//	    ID: "id",
+//	    CreatedAt: unions.MustParseDateTime(
+//	        "2024-01-15T09:30:00Z",
+//	    ),
+//	    ArchivedAt: unions.Time(
+//	        unions.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	    ),
+//	}
+//	client.Bigunion.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *unions.BigUnion,
@@ -66,6 +92,42 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := []*unions.BigUnion{
+//	    &unions.BigUnion{
+//	        NormalSweet: &unions.NormalSweet{
+//	            Value: "value",
+//	        },
+//	        ID: "id",
+//	        CreatedAt: unions.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	        ArchivedAt: unions.Time(
+//	            unions.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	        ),
+//	    },
+//	    &unions.BigUnion{
+//	        NormalSweet: &unions.NormalSweet{
+//	            Value: "value",
+//	        },
+//	        ID: "id",
+//	        CreatedAt: unions.MustParseDateTime(
+//	            "2024-01-15T09:30:00Z",
+//	        ),
+//	        ArchivedAt: unions.Time(
+//	            unions.MustParseDateTime(
+//	                "2024-01-15T09:30:00Z",
+//	            ),
+//	        ),
+//	    },
+//	}
+//	client.Bigunion.UpdateMany(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateMany(
 	ctx context.Context,
 	request []*unions.BigUnion,

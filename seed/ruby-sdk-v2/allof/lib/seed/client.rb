@@ -11,6 +11,9 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String, nil] :query
     #
+    # @example
+    #   client.search_rule_types
+    #
     # @return [Seed::Types::RuleTypeSearchResponse]
     def search_rule_types(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -46,6 +49,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.create_rule(
+    #     name: "name",
+    #     execution_context: "prod"
+    #   )
+    #
     # @return [Seed::Types::RuleResponse]
     def create_rule(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -78,6 +87,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.list_users
+    #
     # @return [Seed::Types::UserSearchResponse]
     def list_users(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -108,6 +120,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.get_entity
+    #
     # @return [Seed::Types::CombinedEntity]
     def get_entity(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -137,6 +152,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.get_organization
     #
     # @return [Seed::Types::Organization]
     def get_organization(request_options: {}, **_params)
@@ -170,6 +188,14 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.create_plant(
+    #     species: "species",
+    #     family: "family",
+    #     genus: "genus",
+    #     sun_exposure: "full"
+    #   )
     #
     # @return [Seed::Types::PlantStrict]
     def create_plant(request_options: {}, **params)
@@ -205,6 +231,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.create_tree(id: "id")
     #
     # @return [Seed::Types::TreeRecord]
     def create_tree(request_options: {}, **params)

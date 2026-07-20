@@ -14,13 +14,12 @@
 
 ```go
 request := &sse.StreamCompletionRequest{
-        Query: "foo",
-    }
-client.Completions.Stream(
-        context.TODO(),
-        request,
-    )
+    Query: "foo",
 }
+client.Completions.Stream(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -61,13 +60,12 @@ client.Completions.Stream(
 
 ```go
 request := &sse.StreamEventsRequest{
-        Query: "query",
-    }
-client.Completions.StreamEvents(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
 }
+client.Completions.StreamEvents(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -108,13 +106,12 @@ client.Completions.StreamEvents(
 
 ```go
 request := &sse.StreamEventsDiscriminantInDataRequest{
-        Query: "query",
-    }
-client.Completions.StreamEventsDiscriminantInData(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
 }
+client.Completions.StreamEventsDiscriminantInData(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -155,13 +152,12 @@ client.Completions.StreamEventsDiscriminantInData(
 
 ```go
 request := &sse.StreamEventsContextProtocolRequest{
-        Query: "query",
-    }
-client.Completions.StreamEventsContextProtocol(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
 }
+client.Completions.StreamEventsContextProtocol(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

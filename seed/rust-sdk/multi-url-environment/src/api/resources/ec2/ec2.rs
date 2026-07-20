@@ -13,6 +13,29 @@ impl Ec2Client {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_multi_url_environment::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .ec2
+    ///         .boot_instance(
+    ///             &BootInstanceRequest {
+    ///                 size: "size".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn boot_instance(
         &self,
         request: &BootInstanceRequest,

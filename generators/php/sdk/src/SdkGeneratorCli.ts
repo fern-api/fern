@@ -58,6 +58,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        await context.snippetGenerator.populateSnippetsCache();
         generateModels(context);
         generateTraits(context);
         this.generateRootClient(context);
@@ -85,7 +86,6 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             }
 
             try {
-                await context.snippetGenerator.populateSnippetsCache();
                 await this.generateReference({ context });
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);

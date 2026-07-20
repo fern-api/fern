@@ -35,6 +35,19 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Upload a file to the database
+//
+// Example:
+//
+//	request := &fern.UploadFileRequest{
+//	    File: strings.NewReader(
+//	        "",
+//	    ),
+//	    Name: "name",
+//	}
+//	client.FileUploadExample.UploadFile(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UploadFile(
 	ctx context.Context,
 	request *fern.UploadFileRequest,

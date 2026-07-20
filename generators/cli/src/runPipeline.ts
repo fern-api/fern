@@ -98,7 +98,8 @@ export async function runPipeline(args: {
         globalParamBindings,
         specsDir,
         customCommands,
-        rootGroup: customConfig.rootGroup
+        rootGroup: customConfig.rootGroup,
+        userAgentSuffixFlag: customConfig.userAgentSuffixFlag
     });
     await writeGitignore(outputDir);
     await emitReadme({

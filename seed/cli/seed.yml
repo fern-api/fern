@@ -140,6 +140,7 @@ allowedFailures:
   - client-side-params
   - content-type
   - cross-package-type-names
+  - csharp-global-header-env
   - dollar-string-examples
   - empty-clients
   - endpoint-security-auth
@@ -185,6 +186,7 @@ allowedFailures:
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
+  - oauth-pkce
   - object
   - objects-with-imports
   - openapi-request-body-ref
@@ -194,6 +196,7 @@ allowedFailures:
   - pagination-custom
   - pagination-uri-path
   - path-parameters
+  - php-global-header-env
   - plain-text
   - property-access
   - public-object

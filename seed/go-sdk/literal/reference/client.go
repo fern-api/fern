@@ -34,6 +34,25 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendRequest{
+//	    Query: "What is the weather today",
+//	    Context: fern.SomeLiteral(
+//	        "You're super wise",
+//	    ),
+//	    ContainerObject: &fern.ContainerObject{
+//	        NestedObjects: []*fern.NestedObjectWithLiterals{
+//	            &fern.NestedObjectWithLiterals{
+//	                StrProp: "strProp",
+//	            },
+//	        },
+//	    },
+//	}
+//	client.Reference.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendRequest,

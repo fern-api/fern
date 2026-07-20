@@ -14,13 +14,12 @@
 
 ```go
 request := &fern.SearchProductsRequest{
-        RegionID: "regionId",
-    }
-client.Products.Search(
-        context.TODO(),
-        request,
-    )
+    RegionID: "regionId",
 }
+client.Products.Search(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -77,14 +76,13 @@ client.Products.Search(
 
 ```go
 request := &fern.GetProductsRequest{
-        RegionID: "regionId",
-        ProductID: "productId",
-    }
-client.Products.Get(
-        context.TODO(),
-        request,
-    )
+    RegionID: "regionId",
+    ProductID: "productId",
 }
+client.Products.Get(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

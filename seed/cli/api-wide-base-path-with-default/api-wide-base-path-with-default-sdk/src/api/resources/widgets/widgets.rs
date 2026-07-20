@@ -13,6 +13,30 @@ impl WidgetsClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use api_wide_base_path_with_default_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiWideBasePathWithDefaultClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .widgets
+    ///         .create(
+    ///             &"v1beta".to_string(),
+    ///             &Widget {
+    ///                 name: "name".to_string(),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create(
         &self,
         api_version: &str,

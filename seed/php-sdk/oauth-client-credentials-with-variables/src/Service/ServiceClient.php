@@ -47,6 +47,13 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->post(
+     *     '<endpointParam>',
+     * );
+     * ```
+     *
      * @param string $endpointParam
      * @param ?array{
      *   baseUrl?: string,

@@ -22,6 +22,9 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [Integer, nil] :limit
         #
+        # @example
+        #   client.user.events.list_events(limit: 1)
+        #
         # @return [Array[Seed::User::Events::Types::Event]]
         def list_events(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)

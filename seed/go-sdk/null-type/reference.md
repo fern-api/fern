@@ -28,13 +28,12 @@ Place an outbound call or validate call setup with dry_run.
 
 ```go
 request := &fern.OutboundCallConversationsRequest{
-        ToPhoneNumber: "to_phone_number",
-    }
-client.Conversations.OutboundCall(
-        context.TODO(),
-        request,
-    )
+    ToPhoneNumber: "to_phone_number",
 }
+client.Conversations.OutboundCall(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -98,13 +97,12 @@ Gets a user by ID. The deleted_at field uses type null.
 
 ```go
 request := &fern.GetUsersRequest{
-        ID: "id",
-    }
-client.Users.Get(
-        context.TODO(),
-        request,
-    )
+    ID: "id",
 }
+client.Users.Get(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

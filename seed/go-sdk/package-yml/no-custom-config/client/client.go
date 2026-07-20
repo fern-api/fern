@@ -38,6 +38,17 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.EchoRequest{
+//	    Name: "Hello world!",
+//	    Size: 20,
+//	}
+//	client.Echo(
+//	    context.TODO(),
+//	    "id-ksfd9c1",
+//	    request,
+//	)
 func (c *Client) Echo(
 	ctx context.Context,
 	id string,
