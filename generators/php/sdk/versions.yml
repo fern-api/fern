@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.14.0
+  changelogEntry:
+    - summary: |
+        Include a usage code example in each endpoint method's PHPDoc block, so IDEs
+        (PhpStorm, Intelephense) surface an example on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
 - version: 2.13.4
   changelogEntry:
     - summary: |
