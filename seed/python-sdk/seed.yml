@@ -330,6 +330,10 @@ fixtures:
         custom_transport: true
       outputFolder: custom-transport
     - customConfig:
+        tcp_keepalive:
+          enabled: true
+      outputFolder: tcp-keepalive
+    - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
     - customConfig:
@@ -366,6 +370,9 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use_typeddict_requests
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
   literal-user-agent:
     - customConfig: null
       outputFolder: no-custom-config
@@ -417,6 +424,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  python-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
@@ -463,6 +473,10 @@ fixtures:
   python-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config
+  oauth-pkce:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
   python-mypy-exclude:
     - customConfig: null
       outputFolder: no-custom-config

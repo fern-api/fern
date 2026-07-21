@@ -26,6 +26,9 @@ export class PrimitiveClient {
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.primitive.getAndReturnString("string")
      */
@@ -83,6 +86,9 @@ export class PrimitiveClient {
     /**
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
@@ -142,6 +148,9 @@ export class PrimitiveClient {
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
      */
@@ -199,6 +208,9 @@ export class PrimitiveClient {
     /**
      * @param {number} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
@@ -258,6 +270,9 @@ export class PrimitiveClient {
      * @param {boolean} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.primitive.getAndReturnBool(true)
      */
@@ -315,6 +330,9 @@ export class PrimitiveClient {
     /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
@@ -374,6 +392,9 @@ export class PrimitiveClient {
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
@@ -432,6 +453,9 @@ export class PrimitiveClient {
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
@@ -489,6 +513,9 @@ export class PrimitiveClient {
     /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")

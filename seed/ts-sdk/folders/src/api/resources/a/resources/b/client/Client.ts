@@ -23,6 +23,9 @@ export class BClient {
     /**
      * @param {BClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.a.b.foo()
      */

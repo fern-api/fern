@@ -26,6 +26,9 @@ export class AuthClient {
      * @param {SeedTsOauthTokenOptional.CreateOauth2TokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTsOauthTokenOptionalError}
+     * @throws {@link errors.SeedTsOauthTokenOptionalTimeoutError}
+     *
      * @example
      *     await client.auth.createOauth2Token({
      *         client_id: "my_oauth_app_123",

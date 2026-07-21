@@ -49,6 +49,13 @@ class PathClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->path->send(
+     *     '123',
+     * );
+     * ```
+     *
      * @param '123' $id
      * @param ?array{
      *   baseUrl?: string,

@@ -1,4 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.18.0
+  changelogEntry:
+    - summary: |
+        Endpoint methods now include a usage example in their YARD doc comment via the
+        `@example` tag, so IDEs surface a code snippet on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 1.17.8
+  changelogEntry:
+    - summary: |
+        Only emit the internal URL-encoded request module (and its root `require_relative`)
+        when an endpoint actually sends an `application/x-www-form-urlencoded` body.
+        Previously the `require_relative ".../internal/url_encoded/request"` line was emitted
+        unconditionally; SDKs generated with a build that shipped the require but not the
+        as-is file (e.g. an API with no form-urlencoded endpoints) failed to load with a
+        `LoadError`. The require and its file are now driven by the same usage check, so they
+        can never ship apart.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 1.17.7
+  changelogEntry:
+    - summary: |
+        Revert the smart-casing digit/word boundary behavior introduced in 1.15.5. snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-1.15.5 output. The behavior will become opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml` once the generator
+        consumes the IR version that carries the setting.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
 - version: 1.17.6
   changelogEntry:
     - summary: |

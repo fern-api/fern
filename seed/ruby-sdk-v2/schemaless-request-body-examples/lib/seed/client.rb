@@ -12,6 +12,18 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.create_plant(request: {
+    #     name: "Venus Flytrap",
+    #     species: "Dionaea muscipula",
+    #     care: {
+    #       light: "full sun",
+    #       water: "distilled only",
+    #       humidity: "high"
+    #     },
+    #     tags: %w[carnivorous tropical]
+    #   })
+    #
     # @return [Seed::Types::CreatePlantResponse]
     def create_plant(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -46,6 +58,17 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :plant_id
+    #
+    # @example
+    #   client.update_plant(
+    #     plant_id: "plantId",
+    #     body: {
+    #       name: "Updated Venus Flytrap",
+    #       care: {
+    #         light: "partial shade"
+    #       }
+    #     }
+    #   )
     #
     # @return [Seed::Types::UpdatePlantResponse]
     def update_plant(request_options: {}, **params)
@@ -83,6 +106,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.create_plant_with_schema(
+    #     name: "Sundew",
+    #     species: "Drosera capensis"
+    #   )
     #
     # @return [Seed::Types::CreatePlantWithSchemaResponse]
     def create_plant_with_schema(request_options: {}, **params)

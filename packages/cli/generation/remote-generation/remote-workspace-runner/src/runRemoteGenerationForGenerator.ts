@@ -178,6 +178,7 @@ export async function runRemoteGenerationForGenerator({
         generationLanguage: generatorInvocation.language,
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
+        smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
         exampleGeneration: {
             disabled: generatorInvocation.disableExamples,
             skipAutogenerationIfManualExamplesExist: true,
@@ -307,6 +308,7 @@ export async function runRemoteGenerationForGenerator({
                 packageName,
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
+                smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
                 dynamicGeneratorConfig,
                 context: interactiveTaskContext
             });
@@ -427,6 +429,7 @@ export async function runRemoteGenerationForGenerator({
                 packageName,
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
+                smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
                 dynamicGeneratorConfig,
                 context: interactiveTaskContext
             });
@@ -511,6 +514,7 @@ async function uploadDynamicIRForSdkGeneration({
     packageName,
     ir,
     smartCasing,
+    smartCasingDigitWordBoundary,
     dynamicGeneratorConfig,
     context
 }: {
@@ -521,6 +525,7 @@ async function uploadDynamicIRForSdkGeneration({
     packageName: string;
     ir: IntermediateRepresentation;
     smartCasing: boolean | undefined;
+    smartCasingDigitWordBoundary: boolean | undefined;
     dynamicGeneratorConfig: dynamic.GeneratorConfig | undefined;
     context: InteractiveTaskContext;
 }): Promise<void> {
@@ -552,6 +557,7 @@ async function uploadDynamicIRForSdkGeneration({
         ir,
         disableExamples: true,
         smartCasing,
+        smartCasingDigitWordBoundary,
         generationLanguage: language,
         generatorConfig: dynamicGeneratorConfig
     });

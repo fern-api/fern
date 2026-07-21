@@ -29,6 +29,9 @@ export class EventsClient {
      * @param {SeedUnionQueryParameters.SubscribeEventsRequest} request
      * @param {EventsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUnionQueryParametersError}
+     * @throws {@link errors.SeedUnionQueryParametersTimeoutError}
+     *
      * @example
      *     await client.events.subscribe({
      *         event_type: "group.created",

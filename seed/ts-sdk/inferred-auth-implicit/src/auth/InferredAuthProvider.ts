@@ -77,7 +77,7 @@ export namespace InferredAuthProvider {
     export interface AuthOptions {
         xApiKey: core.Supplier<string>;
         clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
+        clientSecret: core.Supplier<string | null>;
         scope?: core.Supplier<string>;
     }
 

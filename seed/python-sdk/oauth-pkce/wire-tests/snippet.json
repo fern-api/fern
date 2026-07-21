@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/oauth/authorize",
+                "method": "GET",
+                "identifier_override": "endpoint_oauth.authorize"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedOauthPkce\n\nclient = SeedOauthPkce(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.oauth.authorize(\n    client_id=\"client_abc123\",\n    redirect_uri=\"https://example.com/callback\",\n    code_challenge=\"E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM\",\n    scope=\"read write\",\n    state=\"xyz\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthPkce\n\nclient = AsyncSeedOauthPkce(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.oauth.authorize(\n        client_id=\"client_abc123\",\n        redirect_uri=\"https://example.com/callback\",\n        code_challenge=\"E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM\",\n        scope=\"read write\",\n        state=\"xyz\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

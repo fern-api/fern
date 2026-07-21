@@ -1,6 +1,7 @@
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
@@ -58,13 +59,6 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        if (
-            (this.endpoint.requestBody?.type === "inlinedRequestBody" ||
-                this.endpoint.requestBody?.type === "reference") &&
-            this.endpoint.requestBody.contentType === "application/x-www-form-urlencoded"
-        ) {
-            return "urlencoded";
-        }
-        return "json";
+        return isUrlEncodedRequestBody(this.endpoint.requestBody) ? "urlencoded" : "json";
     }
 }

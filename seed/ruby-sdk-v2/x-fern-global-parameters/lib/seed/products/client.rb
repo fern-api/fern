@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :region_id
       #
+      # @example
+      #   client.products.search(region_id: "regionId")
+      #
       # @return [Seed::Products::Types::SearchProductsResponse]
       def search(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -56,6 +59,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :region_id
       # @option params [String] :product_id
+      #
+      # @example
+      #   client.products.get(
+      #     region_id: "regionId",
+      #     product_id: "productId"
+      #   )
       #
       # @return [Seed::Types::Product]
       def get(request_options: {}, **params)

@@ -36,6 +36,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Returns sessionId and execution server URL for session. Spins up server.
+//
+// Example:
+//
+//	client.Submission.CreateExecutionSession(
+//	    context.TODO(),
+//	    common.LanguageJava.Ptr(),
+//	)
 func (c *Client) CreateExecutionSession(
 	ctx context.Context,
 	language *common.Language,
@@ -53,6 +60,13 @@ func (c *Client) CreateExecutionSession(
 }
 
 // Returns execution server URL for session. Returns empty if session isn't registered.
+//
+// Example:
+//
+//	client.Submission.GetExecutionSession(
+//	    context.TODO(),
+//	    "sessionId",
+//	)
 func (c *Client) GetExecutionSession(
 	ctx context.Context,
 	sessionID string,
@@ -70,6 +84,13 @@ func (c *Client) GetExecutionSession(
 }
 
 // Stops execution session.
+//
+// Example:
+//
+//	client.Submission.StopExecutionSession(
+//	    context.TODO(),
+//	    "sessionId",
+//	)
 func (c *Client) StopExecutionSession(
 	ctx context.Context,
 	sessionID string,
@@ -86,6 +107,11 @@ func (c *Client) StopExecutionSession(
 	return nil
 }
 
+// Example:
+//
+//	client.Submission.GetExecutionSessionsState(
+//	    context.TODO(),
+//	)
 func (c *Client) GetExecutionSessionsState(
 	ctx context.Context,
 	opts ...option.RequestOption,

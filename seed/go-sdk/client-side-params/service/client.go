@@ -35,6 +35,26 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List resources with pagination
+//
+// Example:
+//
+//	request := &fern.ListResourcesRequest{
+//	    Page: 1,
+//	    PerPage: 1,
+//	    Sort: "created_at",
+//	    Order: "desc",
+//	    IncludeTotals: true,
+//	    Fields: fern.String(
+//	        "fields",
+//	    ),
+//	    Search: fern.String(
+//	        "search",
+//	    ),
+//	}
+//	client.Service.ListResources(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListResources(
 	ctx context.Context,
 	request *fern.ListResourcesRequest,
@@ -52,6 +72,18 @@ func (c *Client) ListResources(
 }
 
 // Get a single resource
+//
+// Example:
+//
+//	request := &fern.GetResourceRequest{
+//	    IncludeMetadata: true,
+//	    Format: "json",
+//	}
+//	client.Service.GetResource(
+//	    context.TODO(),
+//	    "resourceId",
+//	    request,
+//	)
 func (c *Client) GetResource(
 	ctx context.Context,
 	resourceID string,
@@ -71,6 +103,25 @@ func (c *Client) GetResource(
 }
 
 // Search resources with complex parameters
+//
+// Example:
+//
+//	request := &fern.SearchResourcesRequest{
+//	    Limit: 1,
+//	    Offset: 1,
+//	    Query: fern.String(
+//	        "query",
+//	    ),
+//	    Filters: map[string]any{
+//	        "filters": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	}
+//	client.Service.SearchResources(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SearchResources(
 	ctx context.Context,
 	request *fern.SearchResourcesRequest,
@@ -88,6 +139,39 @@ func (c *Client) SearchResources(
 }
 
 // List or search for users
+//
+// Example:
+//
+//	request := &fern.ListUsersRequest{
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    PerPage: fern.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: fern.Bool(
+//	        true,
+//	    ),
+//	    Sort: fern.String(
+//	        "sort",
+//	    ),
+//	    Connection: fern.String(
+//	        "connection",
+//	    ),
+//	    Q: fern.String(
+//	        "q",
+//	    ),
+//	    SearchEngine: fern.String(
+//	        "search_engine",
+//	    ),
+//	    Fields: fern.String(
+//	        "fields",
+//	    ),
+//	}
+//	client.Service.ListUsers(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListUsers(
 	ctx context.Context,
 	request *fern.ListUsersRequest,
@@ -105,6 +189,22 @@ func (c *Client) ListUsers(
 }
 
 // Get a user by ID
+//
+// Example:
+//
+//	request := &fern.GetUserRequest{
+//	    Fields: fern.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Service.GetUserByID(
+//	    context.TODO(),
+//	    "userId",
+//	    request,
+//	)
 func (c *Client) GetUserByID(
 	ctx context.Context,
 	userID string,
@@ -124,6 +224,42 @@ func (c *Client) GetUserByID(
 }
 
 // Create a new user
+//
+// Example:
+//
+//	request := &fern.CreateUserRequest{
+//	    Email: "email",
+//	    EmailVerified: fern.Bool(
+//	        true,
+//	    ),
+//	    Username: fern.String(
+//	        "username",
+//	    ),
+//	    Password: fern.String(
+//	        "password",
+//	    ),
+//	    PhoneNumber: fern.String(
+//	        "phone_number",
+//	    ),
+//	    PhoneVerified: fern.Bool(
+//	        true,
+//	    ),
+//	    UserMetadata: map[string]any{
+//	        "user_metadata": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	    AppMetadata: map[string]any{
+//	        "app_metadata": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	    Connection: "connection",
+//	}
+//	client.Service.CreateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.CreateUserRequest,
@@ -141,6 +277,47 @@ func (c *Client) CreateUser(
 }
 
 // Update a user
+//
+// Example:
+//
+//	request := &fern.UpdateUserRequest{
+//	    Email: fern.String(
+//	        "email",
+//	    ),
+//	    EmailVerified: fern.Bool(
+//	        true,
+//	    ),
+//	    Username: fern.String(
+//	        "username",
+//	    ),
+//	    PhoneNumber: fern.String(
+//	        "phone_number",
+//	    ),
+//	    PhoneVerified: fern.Bool(
+//	        true,
+//	    ),
+//	    UserMetadata: map[string]any{
+//	        "user_metadata": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	    AppMetadata: map[string]any{
+//	        "app_metadata": map[string]any{
+//	            "key": "value",
+//	        },
+//	    },
+//	    Password: fern.String(
+//	        "password",
+//	    ),
+//	    Blocked: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Service.UpdateUser(
+//	    context.TODO(),
+//	    "userId",
+//	    request,
+//	)
 func (c *Client) UpdateUser(
 	ctx context.Context,
 	userID string,
@@ -160,6 +337,13 @@ func (c *Client) UpdateUser(
 }
 
 // Delete a user
+//
+// Example:
+//
+//	client.Service.DeleteUser(
+//	    context.TODO(),
+//	    "userId",
+//	)
 func (c *Client) DeleteUser(
 	ctx context.Context,
 	userID string,
@@ -177,6 +361,24 @@ func (c *Client) DeleteUser(
 }
 
 // List all connections
+//
+// Example:
+//
+//	request := &fern.ListConnectionsRequest{
+//	    Strategy: fern.String(
+//	        "strategy",
+//	    ),
+//	    Name: fern.String(
+//	        "name",
+//	    ),
+//	    Fields: fern.String(
+//	        "fields",
+//	    ),
+//	}
+//	client.Service.ListConnections(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListConnections(
 	ctx context.Context,
 	request *fern.ListConnectionsRequest,
@@ -194,6 +396,19 @@ func (c *Client) ListConnections(
 }
 
 // Get a connection by ID
+//
+// Example:
+//
+//	request := &fern.GetConnectionRequest{
+//	    Fields: fern.String(
+//	        "fields",
+//	    ),
+//	}
+//	client.Service.GetConnection(
+//	    context.TODO(),
+//	    "connectionId",
+//	    request,
+//	)
 func (c *Client) GetConnection(
 	ctx context.Context,
 	connectionID string,
@@ -213,6 +428,40 @@ func (c *Client) GetConnection(
 }
 
 // List all clients/applications
+//
+// Example:
+//
+//	request := &fern.ListClientsRequest{
+//	    Fields: fern.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: fern.Bool(
+//	        true,
+//	    ),
+//	    Page: fern.Int(
+//	        1,
+//	    ),
+//	    PerPage: fern.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: fern.Bool(
+//	        true,
+//	    ),
+//	    IsGlobal: fern.Bool(
+//	        true,
+//	    ),
+//	    IsFirstParty: fern.Bool(
+//	        true,
+//	    ),
+//	    AppType: []string{
+//	        "app_type",
+//	        "app_type",
+//	    },
+//	}
+//	client.Service.ListClients(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListClients(
 	ctx context.Context,
 	request *fern.ListClientsRequest,
@@ -230,6 +479,22 @@ func (c *Client) ListClients(
 }
 
 // Get a client by ID
+//
+// Example:
+//
+//	request := &fern.GetClientRequest{
+//	    Fields: fern.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: fern.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Service.GetClient(
+//	    context.TODO(),
+//	    "clientId",
+//	    request,
+//	)
 func (c *Client) GetClient(
 	ctx context.Context,
 	clientID string,

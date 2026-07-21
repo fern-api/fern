@@ -7,6 +7,7 @@ import {
     WebhookBodyHashAlgorithm,
     WebhookBodyHashBinding,
     WebhookBodyHashLocation,
+    WebhookNotificationUrlNormalization,
     WebhookPayloadBodySort,
     WebhookPayloadComponent,
     WebhookPayloadFormat,
@@ -286,7 +287,8 @@ function convertSignatureVerification(
                 "signature-prefix": signatureVerification.signaturePrefix,
                 "payload-format": convertPayloadFormat(signatureVerification.payloadFormat),
                 timestamp: convertTimestamp(signatureVerification.timestamp),
-                "body-hash-binding": convertBodyHashBinding(signatureVerification.bodyHashBinding)
+                "body-hash-binding": convertBodyHashBinding(signatureVerification.bodyHashBinding),
+                "url-normalization": convertUrlNormalization(signatureVerification.notificationUrlNormalization)
             };
         case "asymmetric":
             return {
@@ -385,6 +387,18 @@ function convertBodyHashBinding(
         algorithm: convertBodyHashAlgorithm(binding.algorithm),
         encoding: binding.encoding != null ? convertSignatureEncoding(binding.encoding) : undefined,
         location: convertBodyHashLocation(binding.location)
+    };
+}
+
+function convertUrlNormalization(
+    normalization: WebhookNotificationUrlNormalization | undefined
+): RawSchemas.WebhookUrlNormalizationSchema | undefined {
+    if (normalization == null) {
+        return undefined;
+    }
+    return {
+        "port-variants": normalization.portVariants,
+        "legacy-query-encoding": normalization.legacyQueryEncoding
     };
 }
 

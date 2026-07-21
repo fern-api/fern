@@ -23,6 +23,12 @@ module Seed
       # @option params [String, nil] :tags
       # @option params [Boolean, nil] :extra
       #
+      # @example
+      #   client.nullable.get_users(
+      #     avatar: "avatar",
+      #     extra: true
+      #   )
+      #
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -60,6 +66,23 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.nullable.create_user(
+      #     username: "username",
+      #     tags: %w[tags tags],
+      #     metadata: {
+      #       created_at: "2024-01-15T09:30:00Z",
+      #       updated_at: "2024-01-15T09:30:00Z",
+      #       avatar: "avatar",
+      #       activated: true,
+      #       status: {},
+      #       values: {
+      #         values: "values"
+      #       }
+      #     },
+      #     avatar: "avatar"
+      #   )
+      #
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -91,6 +114,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.nullable.delete_user(username: "xy")
       #
       # @return [Boolean]
       def delete_user(request_options: {}, **params)

@@ -58,6 +58,13 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->get(
+     *     'string',
+     * );
+     * ```
+     *
      * @param (
      *    string
      *   |array<string>
@@ -117,6 +124,11 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->getMetadata();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -165,6 +177,17 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->updateMetadata(
+     *     [
+     *         'string' => [
+     *             'key' => "value",
+     *         ],
+     *     ],
+     * );
+     * ```
+     *
      * @param (
      *    array<string, mixed>
      *   |NamedMetadata
@@ -216,6 +239,19 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->call(
+     *     new Request([
+     *         'union' => [
+     *             'string' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param Request $request
      * @param ?array{
      *   baseUrl?: string,
@@ -263,6 +299,13 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->duplicateTypesUnion(
+     *     'string',
+     * );
+     * ```
+     *
      * @param (
      *    string
      *   |array<string>
@@ -318,6 +361,13 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->nestedUnions(
+     *     'string',
+     * );
+     * ```
+     *
      * @param (
      *    string
      *   |array<string>
@@ -370,6 +420,13 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->nestedObjectUnions(
+     *     'string',
+     * );
+     * ```
+     *
      * @param (
      *    string
      *   |WrapperObject
@@ -420,6 +477,16 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->aliasedObjectUnion(
+     *     new LeafObjectA([
+     *         'onlyInA' => 'onlyInA',
+     *         'sharedNumber' => 1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param (
      *    LeafObjectA
      *   |LeafObjectB
@@ -470,6 +537,20 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->getWithBaseProperties(
+     *     new NamedMetadata([
+     *         'name' => 'name',
+     *         'value' => [
+     *             'value' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param (
      *    NamedMetadata
      *   |array<string, mixed>
@@ -525,6 +606,18 @@ class UnionClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->union->testCamelCaseProperties(
+     *     new PaymentRequest([
+     *         'paymentMethod' => new TokenizeCard([
+     *             'method' => 'card',
+     *             'cardNumber' => '1234567890123456',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param PaymentRequest $request
      * @param ?array{
      *   baseUrl?: string,

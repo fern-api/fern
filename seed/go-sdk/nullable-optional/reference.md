@@ -28,10 +28,9 @@ Get a user by ID
 
 ```go
 client.NullableOptional.GetUser(
-        context.TODO(),
-        "userId",
-    )
-}
+    context.TODO(),
+    "userId",
+)
 ```
 </dd>
 </dl>
@@ -86,38 +85,37 @@ Create a new user
 
 ```go
 request := &fern.CreateUserRequest{
-        Username: "username",
-        Email: fern.String(
-            "email",
+    Username: "username",
+    Email: fern.String(
+        "email",
+    ),
+    Phone: fern.String(
+        "phone",
+    ),
+    Address: &fern.Address{
+        Street: "street",
+        City: fern.String(
+            "city",
         ),
-        Phone: fern.String(
-            "phone",
+        State: fern.String(
+            "state",
         ),
-        Address: &fern.Address{
-            Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
-            ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
-    }
-client.NullableOptional.CreateUser(
-        context.TODO(),
-        request,
-    )
+        ZipCode: "zipCode",
+        Country: fern.String(
+            "country",
+        ),
+        BuildingID: fern.String(
+            "buildingId",
+        ),
+        TenantID: fern.String(
+            "tenantId",
+        ),
+    },
 }
+client.NullableOptional.CreateUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -172,41 +170,40 @@ Update a user (partial update)
 
 ```go
 request := &fern.UpdateUserRequest{
-        Username: fern.String(
-            "username",
+    Username: fern.String(
+        "username",
+    ),
+    Email: fern.String(
+        "email",
+    ),
+    Phone: fern.String(
+        "phone",
+    ),
+    Address: &fern.Address{
+        Street: "street",
+        City: fern.String(
+            "city",
         ),
-        Email: fern.String(
-            "email",
+        State: fern.String(
+            "state",
         ),
-        Phone: fern.String(
-            "phone",
+        ZipCode: "zipCode",
+        Country: fern.String(
+            "country",
         ),
-        Address: &fern.Address{
-            Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
-            ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
-    }
-client.NullableOptional.UpdateUser(
-        context.TODO(),
-        "userId",
-        request,
-    )
+        BuildingID: fern.String(
+            "buildingId",
+        ),
+        TenantID: fern.String(
+            "tenantId",
+        ),
+    },
 }
+client.NullableOptional.UpdateUser(
+    context.TODO(),
+    "userId",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -269,24 +266,23 @@ List all users
 
 ```go
 request := &fern.ListUsersRequest{
-        Limit: fern.Int(
-            1,
-        ),
-        Offset: fern.Int(
-            1,
-        ),
-        IncludeDeleted: fern.Bool(
-            true,
-        ),
-        SortBy: fern.String(
-            "sortBy",
-        ),
-    }
-client.NullableOptional.ListUsers(
-        context.TODO(),
-        request,
-    )
+    Limit: fern.Int(
+        1,
+    ),
+    Offset: fern.Int(
+        1,
+    ),
+    IncludeDeleted: fern.Bool(
+        true,
+    ),
+    SortBy: fern.String(
+        "sortBy",
+    ),
 }
+client.NullableOptional.ListUsers(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -365,22 +361,21 @@ Search users
 
 ```go
 request := &fern.SearchUsersRequest{
-        Query: "query",
-        Department: fern.String(
-            "department",
-        ),
-        Role: fern.String(
-            "role",
-        ),
-        IsActive: fern.Bool(
-            true,
-        ),
-    }
-client.NullableOptional.SearchUsers(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
+    Department: fern.String(
+        "department",
+    ),
+    Role: fern.String(
+        "role",
+    ),
+    IsActive: fern.Bool(
+        true,
+    ),
 }
+client.NullableOptional.SearchUsers(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -459,140 +454,59 @@ Create a complex profile to test nullable enums and unions
 
 ```go
 request := &fern.ComplexProfile{
-        ID: "id",
-        NullableRole: fern.UserRoleAdmin.Ptr(),
-        OptionalRole: fern.UserRoleAdmin.Ptr(),
-        OptionalNullableRole: fern.UserRoleAdmin.Ptr(),
-        NullableStatus: fern.UserStatusActive.Ptr(),
-        OptionalStatus: fern.UserStatusActive.Ptr(),
-        OptionalNullableStatus: fern.UserStatusActive.Ptr(),
-        NullableNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
-        },
-        OptionalNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
-        },
-        OptionalNullableNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
-        },
-        NullableSearchResult: &fern.SearchResult{
-            User: &fern.UserResponse{
-                ID: "id",
-                Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
-                CreatedAt: fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
-            },
-        },
-        OptionalSearchResult: &fern.SearchResult{
-            User: &fern.UserResponse{
-                ID: "id",
-                Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
-                CreatedAt: fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
-            },
-        },
-        NullableArray: []string{
-            "nullableArray",
-            "nullableArray",
-        },
-        OptionalArray: []string{
-            "optionalArray",
-            "optionalArray",
-        },
-        OptionalNullableArray: []string{
-            "optionalNullableArray",
-            "optionalNullableArray",
-        },
-        NullableListOfNullables: []*string{
-            fern.String(
-                "nullableListOfNullables",
-            ),
-            fern.String(
-                "nullableListOfNullables",
+    ID: "id",
+    NullableRole: fern.UserRoleAdmin.Ptr(),
+    OptionalRole: fern.UserRoleAdmin.Ptr(),
+    OptionalNullableRole: fern.UserRoleAdmin.Ptr(),
+    NullableStatus: fern.UserStatusActive.Ptr(),
+    OptionalStatus: fern.UserStatusActive.Ptr(),
+    OptionalNullableStatus: fern.UserStatusActive.Ptr(),
+    NullableNotification: &fern.NotificationMethod{
+        Email: &fern.EmailNotification{
+            EmailAddress: "emailAddress",
+            Subject: "subject",
+            HTMLContent: fern.String(
+                "htmlContent",
             ),
         },
-        NullableMapOfNullables: map[string]*fern.Address{
-            "nullableMapOfNullables": &fern.Address{
+    },
+    OptionalNotification: &fern.NotificationMethod{
+        Email: &fern.EmailNotification{
+            EmailAddress: "emailAddress",
+            Subject: "subject",
+            HTMLContent: fern.String(
+                "htmlContent",
+            ),
+        },
+    },
+    OptionalNullableNotification: &fern.NotificationMethod{
+        Email: &fern.EmailNotification{
+            EmailAddress: "emailAddress",
+            Subject: "subject",
+            HTMLContent: fern.String(
+                "htmlContent",
+            ),
+        },
+    },
+    NullableSearchResult: &fern.SearchResult{
+        User: &fern.UserResponse{
+            ID: "id",
+            Username: "username",
+            Email: fern.String(
+                "email",
+            ),
+            Phone: fern.String(
+                "phone",
+            ),
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            UpdatedAt: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Address: &fern.Address{
                 Street: "street",
                 City: fern.String(
                     "city",
@@ -612,35 +526,115 @@ request := &fern.ComplexProfile{
                 ),
             },
         },
-        NullableListOfUnions: []*fern.NotificationMethod{
-            &fern.NotificationMethod{
-                Email: &fern.EmailNotification{
-                    EmailAddress: "emailAddress",
-                    Subject: "subject",
-                    HTMLContent: fern.String(
-                        "htmlContent",
-                    ),
-                },
-            },
-            &fern.NotificationMethod{
-                Email: &fern.EmailNotification{
-                    EmailAddress: "emailAddress",
-                    Subject: "subject",
-                    HTMLContent: fern.String(
-                        "htmlContent",
-                    ),
-                },
+    },
+    OptionalSearchResult: &fern.SearchResult{
+        User: &fern.UserResponse{
+            ID: "id",
+            Username: "username",
+            Email: fern.String(
+                "email",
+            ),
+            Phone: fern.String(
+                "phone",
+            ),
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            UpdatedAt: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Address: &fern.Address{
+                Street: "street",
+                City: fern.String(
+                    "city",
+                ),
+                State: fern.String(
+                    "state",
+                ),
+                ZipCode: "zipCode",
+                Country: fern.String(
+                    "country",
+                ),
+                BuildingID: fern.String(
+                    "buildingId",
+                ),
+                TenantID: fern.String(
+                    "tenantId",
+                ),
             },
         },
-        OptionalMapOfEnums: map[string]fern.UserRole{
-            "optionalMapOfEnums": fern.UserRoleAdmin,
+    },
+    NullableArray: []string{
+        "nullableArray",
+        "nullableArray",
+    },
+    OptionalArray: []string{
+        "optionalArray",
+        "optionalArray",
+    },
+    OptionalNullableArray: []string{
+        "optionalNullableArray",
+        "optionalNullableArray",
+    },
+    NullableListOfNullables: []*string{
+        fern.String(
+            "nullableListOfNullables",
+        ),
+        fern.String(
+            "nullableListOfNullables",
+        ),
+    },
+    NullableMapOfNullables: map[string]*fern.Address{
+        "nullableMapOfNullables": &fern.Address{
+            Street: "street",
+            City: fern.String(
+                "city",
+            ),
+            State: fern.String(
+                "state",
+            ),
+            ZipCode: "zipCode",
+            Country: fern.String(
+                "country",
+            ),
+            BuildingID: fern.String(
+                "buildingId",
+            ),
+            TenantID: fern.String(
+                "tenantId",
+            ),
         },
-    }
-client.NullableOptional.CreateComplexProfile(
-        context.TODO(),
-        request,
-    )
+    },
+    NullableListOfUnions: []*fern.NotificationMethod{
+        &fern.NotificationMethod{
+            Email: &fern.EmailNotification{
+                EmailAddress: "emailAddress",
+                Subject: "subject",
+                HTMLContent: fern.String(
+                    "htmlContent",
+                ),
+            },
+        },
+        &fern.NotificationMethod{
+            Email: &fern.EmailNotification{
+                EmailAddress: "emailAddress",
+                Subject: "subject",
+                HTMLContent: fern.String(
+                    "htmlContent",
+                ),
+            },
+        },
+    },
+    OptionalMapOfEnums: map[string]fern.UserRole{
+        "optionalMapOfEnums": fern.UserRoleAdmin,
+    },
 }
+client.NullableOptional.CreateComplexProfile(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -695,10 +689,9 @@ Get a complex profile by ID
 
 ```go
 client.NullableOptional.GetComplexProfile(
-        context.TODO(),
-        "profileId",
-    )
-}
+    context.TODO(),
+    "profileId",
+)
 ```
 </dd>
 </dl>
@@ -753,67 +746,66 @@ Update complex profile to test nullable field updates
 
 ```go
 request := &fern.UpdateComplexProfileRequest{
-        NullableRole: fern.UserRoleAdmin.Ptr(),
-        NullableStatus: fern.UserStatusActive.Ptr(),
-        NullableNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
+    NullableRole: fern.UserRoleAdmin.Ptr(),
+    NullableStatus: fern.UserStatusActive.Ptr(),
+    NullableNotification: &fern.NotificationMethod{
+        Email: &fern.EmailNotification{
+            EmailAddress: "emailAddress",
+            Subject: "subject",
+            HTMLContent: fern.String(
+                "htmlContent",
+            ),
         },
-        NullableSearchResult: &fern.SearchResult{
-            User: &fern.UserResponse{
-                ID: "id",
-                Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
-                CreatedAt: fern.MustParseDateTime(
+    },
+    NullableSearchResult: &fern.SearchResult{
+        User: &fern.UserResponse{
+            ID: "id",
+            Username: "username",
+            Email: fern.String(
+                "email",
+            ),
+            Phone: fern.String(
+                "phone",
+            ),
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            UpdatedAt: fern.Time(
+                fern.MustParseDateTime(
                     "2024-01-15T09:30:00Z",
                 ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
+            ),
+            Address: &fern.Address{
+                Street: "street",
+                City: fern.String(
+                    "city",
                 ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
+                State: fern.String(
+                    "state",
+                ),
+                ZipCode: "zipCode",
+                Country: fern.String(
+                    "country",
+                ),
+                BuildingID: fern.String(
+                    "buildingId",
+                ),
+                TenantID: fern.String(
+                    "tenantId",
+                ),
             },
         },
-        NullableArray: []string{
-            "nullableArray",
-            "nullableArray",
-        },
-    }
-client.NullableOptional.UpdateComplexProfile(
-        context.TODO(),
-        "profileId",
-        request,
-    )
+    },
+    NullableArray: []string{
+        "nullableArray",
+        "nullableArray",
+    },
 }
+client.NullableOptional.UpdateComplexProfile(
+    context.TODO(),
+    "profileId",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -908,108 +900,107 @@ Test endpoint for validating null deserialization
 
 ```go
 request := &fern.DeserializationTestRequest{
-        RequiredString: "requiredString",
-        NullableString: fern.String(
-            "nullableString",
-        ),
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        OptionalNullableString: fern.String(
-            "optionalNullableString",
-        ),
-        NullableEnum: fern.UserRoleAdmin.Ptr(),
-        OptionalEnum: fern.UserStatusActive.Ptr(),
-        NullableUnion: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
+    RequiredString: "requiredString",
+    NullableString: fern.String(
+        "nullableString",
+    ),
+    OptionalString: fern.String(
+        "optionalString",
+    ),
+    OptionalNullableString: fern.String(
+        "optionalNullableString",
+    ),
+    NullableEnum: fern.UserRoleAdmin.Ptr(),
+    OptionalEnum: fern.UserStatusActive.Ptr(),
+    NullableUnion: &fern.NotificationMethod{
+        Email: &fern.EmailNotification{
+            EmailAddress: "emailAddress",
+            Subject: "subject",
+            HTMLContent: fern.String(
+                "htmlContent",
+            ),
         },
-        OptionalUnion: &fern.SearchResult{
-            User: &fern.UserResponse{
-                ID: "id",
-                Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
-                CreatedAt: fern.MustParseDateTime(
+    },
+    OptionalUnion: &fern.SearchResult{
+        User: &fern.UserResponse{
+            ID: "id",
+            Username: "username",
+            Email: fern.String(
+                "email",
+            ),
+            Phone: fern.String(
+                "phone",
+            ),
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            UpdatedAt: fern.Time(
+                fern.MustParseDateTime(
                     "2024-01-15T09:30:00Z",
                 ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
+            ),
+            Address: &fern.Address{
+                Street: "street",
+                City: fern.String(
+                    "city",
                 ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
+                State: fern.String(
+                    "state",
+                ),
+                ZipCode: "zipCode",
+                Country: fern.String(
+                    "country",
+                ),
+                BuildingID: fern.String(
+                    "buildingId",
+                ),
+                TenantID: fern.String(
+                    "tenantId",
+                ),
             },
         },
-        NullableList: []string{
-            "nullableList",
-            "nullableList",
-        },
-        NullableMap: map[string]int{
-            "nullableMap": 1,
-        },
-        NullableObject: &fern.Address{
-            Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
-            ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
-        OptionalObject: &fern.Organization{
-            ID: "id",
-            Name: "name",
-            Domain: fern.String(
-                "domain",
-            ),
-            EmployeeCount: fern.Int(
-                1,
-            ),
-        },
-    }
-client.NullableOptional.TestDeserialization(
-        context.TODO(),
-        request,
-    )
+    },
+    NullableList: []string{
+        "nullableList",
+        "nullableList",
+    },
+    NullableMap: map[string]int{
+        "nullableMap": 1,
+    },
+    NullableObject: &fern.Address{
+        Street: "street",
+        City: fern.String(
+            "city",
+        ),
+        State: fern.String(
+            "state",
+        ),
+        ZipCode: "zipCode",
+        Country: fern.String(
+            "country",
+        ),
+        BuildingID: fern.String(
+            "buildingId",
+        ),
+        TenantID: fern.String(
+            "tenantId",
+        ),
+    },
+    OptionalObject: &fern.Organization{
+        ID: "id",
+        Name: "name",
+        Domain: fern.String(
+            "domain",
+        ),
+        EmployeeCount: fern.Int(
+            1,
+        ),
+    },
 }
+client.NullableOptional.TestDeserialization(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1064,15 +1055,14 @@ Filter users by role with nullable enum
 
 ```go
 request := &fern.FilterByRoleRequest{
-        Role: fern.UserRoleAdmin.Ptr(),
-        Status: fern.UserStatusActive.Ptr(),
-        SecondaryRole: fern.UserRoleAdmin.Ptr(),
-    }
-client.NullableOptional.FilterByRole(
-        context.TODO(),
-        request,
-    )
+    Role: fern.UserRoleAdmin.Ptr(),
+    Status: fern.UserStatusActive.Ptr(),
+    SecondaryRole: fern.UserRoleAdmin.Ptr(),
 }
+client.NullableOptional.FilterByRole(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1143,10 +1133,9 @@ Get notification settings which may be null
 
 ```go
 client.NullableOptional.GetNotificationSettings(
-        context.TODO(),
-        "userId",
-    )
-}
+    context.TODO(),
+    "userId",
+)
 ```
 </dd>
 </dl>
@@ -1201,25 +1190,24 @@ Update tags to test array handling
 
 ```go
 request := &fern.UpdateTagsRequest{
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-        Categories: []string{
-            "categories",
-            "categories",
-        },
-        Labels: []string{
-            "labels",
-            "labels",
-        },
-    }
-client.NullableOptional.UpdateTags(
-        context.TODO(),
-        "userId",
-        request,
-    )
+    Tags: []string{
+        "tags",
+        "tags",
+    },
+    Categories: []string{
+        "categories",
+        "categories",
+    },
+    Labels: []string{
+        "labels",
+        "labels",
+    },
 }
+client.NullableOptional.UpdateTags(
+    context.TODO(),
+    "userId",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1298,22 +1286,21 @@ Get search results with nullable unions
 
 ```go
 request := &fern.SearchRequest{
-        Query: "query",
-        Filters: map[string]*string{
-            "filters": fern.String(
-                "filters",
-            ),
-        },
-        IncludeTypes: []string{
-            "includeTypes",
-            "includeTypes",
-        },
-    }
-client.NullableOptional.GetSearchResults(
-        context.TODO(),
-        request,
-    )
+    Query: "query",
+    Filters: map[string]*string{
+        "filters": fern.String(
+            "filters",
+        ),
+    },
+    IncludeTypes: []string{
+        "includeTypes",
+        "includeTypes",
+    },
 }
+client.NullableOptional.GetSearchResults(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

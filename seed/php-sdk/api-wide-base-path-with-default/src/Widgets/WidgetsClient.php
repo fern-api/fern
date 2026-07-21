@@ -49,6 +49,16 @@ class WidgetsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->widgets->create(
+     *     'v1beta',
+     *     new Widget([
+     *         'name' => 'name',
+     *     ]),
+     * );
+     * ```
+     *
      * @param Widget $request
      * @param string $apiVersion
      * @param ?array{

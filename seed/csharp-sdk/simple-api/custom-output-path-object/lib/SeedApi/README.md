@@ -54,7 +54,7 @@ This SDK allows you to configure different environments for API requests.
 ```csharp
 using SeedSimpleApi;
 
-var client = new SeedSimpleApiClient(new ClientOptions
+var client = new SeedSimpleApiClient(clientOptions: new ClientOptions
 {
     BaseUrl = SeedSimpleApiEnvironment.Production
 });

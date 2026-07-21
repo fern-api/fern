@@ -885,6 +885,14 @@ describe("getPackageNameFromGeneratorConfig", () => {
         expect(getPackageNameFromGeneratorConfig(invocation)).toBe("github.com/acme/go-sdk");
     });
 
+    it("returns packageName from config for PHP (camelCase key)", () => {
+        const invocation = {
+            raw: { config: { packageName: "twilio-core" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("twilio-core");
+    });
+
     it("prefers output.package-name over config.package_name", () => {
         const invocation = {
             raw: {

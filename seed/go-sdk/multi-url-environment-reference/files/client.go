@@ -34,6 +34,16 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.FilesUploadRequest{
+//	    Name: "name",
+//	    ParentID: "parent_id",
+//	}
+//	client.Files.Upload(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Upload(
 	ctx context.Context,
 	request *fern.FilesUploadRequest,

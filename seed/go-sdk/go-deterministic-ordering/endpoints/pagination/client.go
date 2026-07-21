@@ -38,6 +38,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List items with cursor pagination
+//
+// Example:
+//
+//	request := &fern.ListItemsRequest{
+//	    Cursor: fern.String(
+//	        "cursor",
+//	    ),
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Endpoints.Pagination.ListItems(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListItems(
 	ctx context.Context,
 	request *fern.ListItemsRequest,

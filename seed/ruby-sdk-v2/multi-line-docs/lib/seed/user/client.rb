@@ -22,6 +22,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
+      # @example
+      #   client.user.get_user(user_id: "userId")
+      #
       # @return [untyped]
       def get_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -53,6 +56,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.user.create_user(
+      #     name: "name",
+      #     age: 1
+      #   )
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)

@@ -26,6 +26,9 @@ export class UserClient {
      * @param {SeedExtraProperties.CreateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExtraPropertiesError}
+     * @throws {@link errors.SeedExtraPropertiesTimeoutError}
+     *
      * @example
      *     await client.user.createUser({
      *         name: "Alice",

@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.get_union
+    #
     # @return [Seed::Types::UnionResponse]
     def get_union(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -39,6 +42,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.list_unions
     #
     # @return [Seed::Types::UnionListResponse]
     def list_unions(request_options: {}, **_params)

@@ -82,7 +82,7 @@ client = SeedMultiUrlEnvironment(
 )
 
 client.s3.get_presigned_url(
-    s3_key="s3Key",
+    s3key="s3Key",
 )
 
 ```
@@ -99,7 +99,7 @@ client.s3.get_presigned_url(
 <dl>
 <dd>
 
-**s3_key:** `str` 
+**s3key:** `str` 
     
 </dd>
 </dl>

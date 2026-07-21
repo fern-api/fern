@@ -29,6 +29,8 @@ export class InlinedRequestsClient {
      * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
@@ -114,6 +116,9 @@ export class InlinedRequestsClient {
      *
      * @param {SeedExhaustive.PostWithArrayBodyAndHeaders} request
      * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.inlinedRequests.postWithArrayBodyAndHeaders({

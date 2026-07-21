@@ -27,6 +27,9 @@ export class InlinedRequestClient {
      * @param {SeedEnum.SendEnumInlinedRequest} request
      * @param {InlinedRequestClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedEnumError}
+     * @throws {@link errors.SeedEnumTimeoutError}
+     *
      * @example
      *     await client.inlinedRequest.send({
      *         operand: ">",

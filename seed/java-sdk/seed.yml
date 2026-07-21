@@ -206,6 +206,9 @@ fixtures:
         enable-wire-tests: true
         offset-semantics: "item-index"
       outputFolder: item-index-semantics
+  java-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   pagination-custom:
     - customConfig:
         custom-pager-name: "FernCustomPaginator"
@@ -405,3 +408,6 @@ scripts:
 allowedFailures:
   # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
+  # CLI-specific OAuth fixture: declares scheme-level scopes, which the Java
+  # generator explicitly rejects ("Scopes not supported"). Exercised by the CLI generator.
+  - cli-oauth

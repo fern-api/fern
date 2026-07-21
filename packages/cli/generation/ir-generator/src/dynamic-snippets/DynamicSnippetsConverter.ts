@@ -61,6 +61,7 @@ export declare namespace DynamicSnippetsConverter {
         ir: IntermediateRepresentation;
         generationLanguage?: generatorsYml.GenerationLanguage;
         smartCasing?: boolean;
+        smartCasingDigitWordBoundary?: boolean;
         generatorConfig?: dynamic.GeneratorConfig;
     }
 }
@@ -81,11 +82,15 @@ export class DynamicSnippetsConverter {
         this.casingsGenerator = constructCasingsGenerator({
             generationLanguage: args.generationLanguage,
             smartCasing: args.smartCasing ?? args.ir.casingsConfig?.smartCasing ?? true,
+            smartCasingDigitWordBoundary:
+                args.smartCasingDigitWordBoundary ?? args.ir.casingsConfig?.smartCasingDigitWordBoundary ?? false,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.fullCasingsGenerator = constructFullCasingsGenerator({
             generationLanguage: args.generationLanguage,
             smartCasing: args.smartCasing ?? args.ir.casingsConfig?.smartCasing ?? true,
+            smartCasingDigitWordBoundary:
+                args.smartCasingDigitWordBoundary ?? args.ir.casingsConfig?.smartCasingDigitWordBoundary ?? false,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.auth = this.convertAuth(this.ir.auth);

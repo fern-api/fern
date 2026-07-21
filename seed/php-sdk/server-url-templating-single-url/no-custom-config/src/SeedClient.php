@@ -73,6 +73,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUsers();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -118,6 +123,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,

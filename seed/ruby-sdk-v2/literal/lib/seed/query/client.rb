@@ -27,6 +27,19 @@ module Seed
       # @option params [Seed::Query::Types::AliasToStream] :alias_stream
       # @option params [Boolean, nil] :alias_optional_stream
       #
+      # @example
+      #   client.query.send_(
+      #     prompt: "You are a helpful assistant",
+      #     optional_prompt: "You are a helpful assistant",
+      #     alias_prompt: "You are a helpful assistant",
+      #     alias_optional_prompt: "You are a helpful assistant",
+      #     query: "What is the weather today",
+      #     stream: false,
+      #     optional_stream: false,
+      #     alias_stream: false,
+      #     alias_optional_stream: false
+      #   )
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

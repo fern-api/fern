@@ -32,7 +32,7 @@ class OAuthTokenProvider:
             return self._refresh()
 
     def _refresh(self) -> str:
-        token_response = self._auth_client.create_oauth2_token(
+        token_response = self._auth_client.create_oauth2token(
             client_id=self._client_id, client_secret=self._client_secret, grant_type="client_credentials"
         )
         if token_response.access_token is None:
@@ -70,7 +70,7 @@ class AsyncOAuthTokenProvider:
             return await self._refresh()
 
     async def _refresh(self) -> str:
-        token_response = await self._auth_client.create_oauth2_token(
+        token_response = await self._auth_client.create_oauth2token(
             client_id=self._client_id, client_secret=self._client_secret, grant_type="client_credentials"
         )
         if token_response.access_token is None:

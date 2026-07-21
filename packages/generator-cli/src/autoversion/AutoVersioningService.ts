@@ -659,63 +659,47 @@ export class AutoVersioningService {
 
     /**
      * Removes paired - and + lines where the only difference is the magic version.
+     *
+     * Matching is done across the whole section rather than only between adjacent lines.
+     * Unified diffs group every deletion before every addition within a hunk, so when
+     * several version-bearing lines change together (e.g. `X-Fern-SDK-Version` and
+     * `User-Agent` on consecutive lines) an adjacency-only pass leaves the interleaved
+     * deletions behind. Once the magic-version additions are stripped, those orphaned
+     * deletions reach the AI analyzer as apparent removals — which is why a routine
+     * version bump was reported as the `User-Agent` header being dropped. Pairing each
+     * version-change deletion with any unused version-change addition in the section and
+     * dropping both keeps the diff balanced regardless of layout.
      */
     private removeVersionChangePairs(lines: string[], mappedMagicVersion: string): string[] {
-        const result: string[] = [];
-        let lineIndex = 0;
+        const removed = new Set<number>();
 
-        while (lineIndex < lines.length) {
-            const currentLine = lines[lineIndex];
-            if (!currentLine) {
-                lineIndex++;
+        for (let deletionIndex = 0; deletionIndex < lines.length; deletionIndex++) {
+            const deletionLine = lines[deletionIndex];
+            if (deletionLine == null || removed.has(deletionIndex) || !this.isDeletionLine(deletionLine)) {
                 continue;
             }
 
-            if (this.isDeletionLine(currentLine)) {
-                const pairIndex = this.findMatchingAdditionLine(lines, lineIndex, mappedMagicVersion);
-                if (pairIndex !== -1) {
-                    result.push(...lines.slice(lineIndex + 1, pairIndex));
-                    lineIndex = pairIndex + 1;
-                } else {
-                    result.push(currentLine);
-                    lineIndex++;
+            for (let additionIndex = 0; additionIndex < lines.length; additionIndex++) {
+                if (additionIndex === deletionIndex || removed.has(additionIndex)) {
+                    continue;
                 }
-            } else {
-                result.push(currentLine);
-                lineIndex++;
+                const additionLine = lines[additionIndex];
+                if (additionLine == null || !this.isAdditionLine(additionLine)) {
+                    continue;
+                }
+                if (this.isVersionChangePair(deletionLine, additionLine, mappedMagicVersion)) {
+                    removed.add(deletionIndex);
+                    removed.add(additionIndex);
+                    break;
+                }
             }
         }
 
-        return result;
+        return lines.filter((_, index) => !removed.has(index));
     }
 
     private isDeletionLine(line: string): boolean {
         return line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
-    }
-
-    private findMatchingAdditionLine(lines: string[], startIndex: number, mappedMagicVersion: string): number {
-        const startLine = lines[startIndex];
-        if (!startLine) {
-            return -1;
-        }
-
-        for (let nextIndex = startIndex + 1; nextIndex < lines.length; nextIndex++) {
-            const nextLine = lines[nextIndex];
-            if (!nextLine) {
-                continue;
-            }
-
-            if (this.shouldStopSearching(nextLine)) {
-                break;
-            }
-
-            if (this.isAdditionLine(nextLine)) {
-                if (this.isVersionChangePair(startLine, nextLine, mappedMagicVersion)) {
-                    return nextIndex;
-                }
-            }
-        }
-        return -1;
     }
 
     private isAdditionLine(line: string): boolean {

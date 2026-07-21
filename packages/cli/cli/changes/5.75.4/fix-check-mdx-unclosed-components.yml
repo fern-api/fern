@@ -1,0 +1,7 @@
+- summary: |
+    `fern check` now compiles each docs page's MDX and reports syntax errors such as
+    unclosed components (e.g. a `<Card>` without a closing tag). Previously the
+    MDX-validation rule was defined but not registered, so malformed MDX passed
+    validation and only broke at render/build time. Reported at warning severity to
+    avoid breaking existing runs on repos with latent MDX issues.
+  type: fix

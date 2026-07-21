@@ -30,6 +30,9 @@ export class PlaylistClient {
      * @param {SeedTrace.CreatePlaylistRequest} request
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.playlist.createPlaylist(1, {
      *         datetime: "2024-01-15T09:30:00Z",
@@ -116,6 +119,9 @@ export class PlaylistClient {
      * @param {number} serviceParam
      * @param {SeedTrace.GetPlaylistsRequest} request
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.getPlaylists(1, {
@@ -205,6 +211,8 @@ export class PlaylistClient {
      *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      * @throws {@link SeedTrace.UnauthorizedError}
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.getPlaylist(1, "playlistId")
@@ -284,6 +292,8 @@ export class PlaylistClient {
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.updatePlaylist(1, "playlistId", {
@@ -370,6 +380,9 @@ export class PlaylistClient {
      * @param {number} serviceParam
      * @param {SeedTrace.PlaylistId} playlist_id
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.playlist.deletePlaylist(1, "playlist_id")

@@ -105,6 +105,13 @@ types:
           in a query parameter of the notification URL) and the signature is computed
           over that. Verification must additionally recompute the encoded hash of the
           raw body and compare it to the transmitted value.
+      notificationUrlNormalization:
+        type: optional<WebhookNotificationUrlNormalization>
+        docs: |
+          When present, the signature is verified against multiple normalized forms of the
+          notification URL, succeeding if ANY candidate's signature matches (each compared in
+          constant time). Required by providers (such as Twilio) whose backend is inconsistent
+          about whether the signed URL carried a port and how its query string was encoded.
 
   HmacAlgorithm:
     docs: The HMAC algorithm used to compute the webhook signature.
@@ -216,6 +223,24 @@ types:
     docs: The sort order to apply to POST body parameters before signing.
     enum:
       - ALPHABETICAL
+
+  WebhookNotificationUrlNormalization:
+    docs: |
+      Describes which normalized forms of the notification URL to try when verifying the
+      signature. The verifier computes a candidate signature for each form and succeeds if
+      any of them matches.
+    properties:
+      portVariants:
+        type: boolean
+        docs: |
+          Try the URL both with the scheme's standard port added (:443 for https, :80 for
+          http) if absent, and with the port removed. All Twilio libraries do this.
+      legacyQueryEncoding:
+        type: boolean
+        docs: |
+          Additionally try each port variant with the query string re-encoded using legacy
+          form-encoding, reversing percent-encoding differences introduced by WHATWG URL
+          parsing. Twilio's Node library does this; the others do not.
 
   WebhookPayloadComponent:
     docs: A component included in the signed payload.

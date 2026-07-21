@@ -1,0 +1,828 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:AstNodeLlm": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AstNodeLlm",
+                    "camelCase": {
+                        "unsafeName": "astNodeLlm",
+                        "safeName": "astNodeLlm"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ast_node_llm",
+                        "safeName": "ast_node_llm"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "AST_NODE_LLM",
+                        "safeName": "AST_NODE_LLM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstNodeLlm",
+                        "safeName": "AstNodeLlm"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "model",
+                        "name": {
+                            "originalName": "model",
+                            "camelCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MODEL",
+                                "safeName": "MODEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Model",
+                                "safeName": "Model"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "value_schema",
+                        "name": {
+                            "originalName": "value_schema",
+                            "camelCase": {
+                                "unsafeName": "valueSchema",
+                                "safeName": "valueSchema"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "value_schema",
+                                "safeName": "value_schema"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "VALUE_SCHEMA",
+                                "safeName": "VALUE_SCHEMA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ValueSchema",
+                                "safeName": "ValueSchema"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "map",
+                            "key": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "value": {
+                                "type": "unknown"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "prompt",
+                        "name": {
+                            "originalName": "prompt",
+                            "camelCase": {
+                                "unsafeName": "prompt",
+                                "safeName": "prompt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "prompt",
+                                "safeName": "prompt"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PROMPT",
+                                "safeName": "PROMPT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Prompt",
+                                "safeName": "Prompt"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:AstNode": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "AstNode",
+                    "camelCase": {
+                        "unsafeName": "astNode",
+                        "safeName": "astNode"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ast_node",
+                        "safeName": "ast_node"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "AST_NODE",
+                        "safeName": "AST_NODE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstNode",
+                        "safeName": "AstNode"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "discriminant": {
+                "wireValue": "type",
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                }
+            },
+            "inheritedBaseProperties": [],
+            "types": {
+                "llm": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:AstNodeLlm",
+                    "discriminantValue": {
+                        "wireValue": "llm",
+                        "name": {
+                            "originalName": "llm",
+                            "camelCase": {
+                                "unsafeName": "llm",
+                                "safeName": "llm"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "llm",
+                                "safeName": "llm"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LLM",
+                                "safeName": "LLM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Llm",
+                                "safeName": "Llm"
+                            }
+                        }
+                    },
+                    "properties": []
+                },
+                "text": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:AstTextNode",
+                    "discriminantValue": {
+                        "wireValue": "text",
+                        "name": {
+                            "originalName": "text",
+                            "camelCase": {
+                                "unsafeName": "text",
+                                "safeName": "text"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "text",
+                                "safeName": "text"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEXT",
+                                "safeName": "TEXT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Text",
+                                "safeName": "Text"
+                            }
+                        }
+                    },
+                    "properties": []
+                },
+                "null_literal": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:AstNullNode",
+                    "discriminantValue": {
+                        "wireValue": "null_literal",
+                        "name": {
+                            "originalName": "null_literal",
+                            "camelCase": {
+                                "unsafeName": "nullLiteral",
+                                "safeName": "nullLiteral"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "null_literal",
+                                "safeName": "null_literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NULL_LITERAL",
+                                "safeName": "NULL_LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NullLiteral",
+                                "safeName": "NullLiteral"
+                            }
+                        }
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:AstllmNode": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "AstllmNode",
+                    "camelCase": {
+                        "unsafeName": "astllmNode",
+                        "safeName": "astllmNode"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "astllm_node",
+                        "safeName": "astllm_node"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASTLLM_NODE",
+                        "safeName": "ASTLLM_NODE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstllmNode",
+                        "safeName": "AstllmNode"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_:AstllmNodeWithSchema"
+                },
+                {
+                    "type": "named",
+                    "value": "type_:AstllmNodeWithPrompt"
+                }
+            ]
+        },
+        "type_:AstllmNodeWithSchemaType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "AstllmNodeWithSchemaType",
+                    "camelCase": {
+                        "unsafeName": "astllmNodeWithSchemaType",
+                        "safeName": "astllmNodeWithSchemaType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "astllm_node_with_schema_type",
+                        "safeName": "astllm_node_with_schema_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASTLLM_NODE_WITH_SCHEMA_TYPE",
+                        "safeName": "ASTLLM_NODE_WITH_SCHEMA_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstllmNodeWithSchemaType",
+                        "safeName": "AstllmNodeWithSchemaType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "llm",
+                    "name": {
+                        "originalName": "llm",
+                        "camelCase": {
+                            "unsafeName": "llm",
+                            "safeName": "llm"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "llm",
+                            "safeName": "llm"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LLM",
+                            "safeName": "LLM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Llm",
+                            "safeName": "Llm"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:AstllmNodeWithSchema": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AstllmNodeWithSchema",
+                    "camelCase": {
+                        "unsafeName": "astllmNodeWithSchema",
+                        "safeName": "astllmNodeWithSchema"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "astllm_node_with_schema",
+                        "safeName": "astllm_node_with_schema"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASTLLM_NODE_WITH_SCHEMA",
+                        "safeName": "ASTLLM_NODE_WITH_SCHEMA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstllmNodeWithSchema",
+                        "safeName": "AstllmNodeWithSchema"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "type",
+                        "name": {
+                            "originalName": "type",
+                            "camelCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPE",
+                                "safeName": "TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Type",
+                                "safeName": "Type"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:AstllmNodeWithSchemaType"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "model",
+                        "name": {
+                            "originalName": "model",
+                            "camelCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MODEL",
+                                "safeName": "MODEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Model",
+                                "safeName": "Model"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "value_schema",
+                        "name": {
+                            "originalName": "value_schema",
+                            "camelCase": {
+                                "unsafeName": "valueSchema",
+                                "safeName": "valueSchema"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "value_schema",
+                                "safeName": "value_schema"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "VALUE_SCHEMA",
+                                "safeName": "VALUE_SCHEMA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ValueSchema",
+                                "safeName": "ValueSchema"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "unknown"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:AstllmNodeWithPromptType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "AstllmNodeWithPromptType",
+                    "camelCase": {
+                        "unsafeName": "astllmNodeWithPromptType",
+                        "safeName": "astllmNodeWithPromptType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "astllm_node_with_prompt_type",
+                        "safeName": "astllm_node_with_prompt_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASTLLM_NODE_WITH_PROMPT_TYPE",
+                        "safeName": "ASTLLM_NODE_WITH_PROMPT_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstllmNodeWithPromptType",
+                        "safeName": "AstllmNodeWithPromptType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "llm",
+                    "name": {
+                        "originalName": "llm",
+                        "camelCase": {
+                            "unsafeName": "llm",
+                            "safeName": "llm"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "llm",
+                            "safeName": "llm"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LLM",
+                            "safeName": "LLM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Llm",
+                            "safeName": "Llm"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:AstllmNodeWithPrompt": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AstllmNodeWithPrompt",
+                    "camelCase": {
+                        "unsafeName": "astllmNodeWithPrompt",
+                        "safeName": "astllmNodeWithPrompt"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "astllm_node_with_prompt",
+                        "safeName": "astllm_node_with_prompt"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ASTLLM_NODE_WITH_PROMPT",
+                        "safeName": "ASTLLM_NODE_WITH_PROMPT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstllmNodeWithPrompt",
+                        "safeName": "AstllmNodeWithPrompt"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "type",
+                        "name": {
+                            "originalName": "type",
+                            "camelCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPE",
+                                "safeName": "TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Type",
+                                "safeName": "Type"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:AstllmNodeWithPromptType"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "model",
+                        "name": {
+                            "originalName": "model",
+                            "camelCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MODEL",
+                                "safeName": "MODEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Model",
+                                "safeName": "Model"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "prompt",
+                        "name": {
+                            "originalName": "prompt",
+                            "camelCase": {
+                                "unsafeName": "prompt",
+                                "safeName": "prompt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "prompt",
+                                "safeName": "prompt"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PROMPT",
+                                "safeName": "PROMPT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Prompt",
+                                "safeName": "Prompt"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:AstTextNode": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AstTextNode",
+                    "camelCase": {
+                        "unsafeName": "astTextNode",
+                        "safeName": "astTextNode"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ast_text_node",
+                        "safeName": "ast_text_node"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "AST_TEXT_NODE",
+                        "safeName": "AST_TEXT_NODE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstTextNode",
+                        "safeName": "AstTextNode"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "content",
+                        "name": {
+                            "originalName": "content",
+                            "camelCase": {
+                                "unsafeName": "content",
+                                "safeName": "content"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "content",
+                                "safeName": "content"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CONTENT",
+                                "safeName": "CONTENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Content",
+                                "safeName": "Content"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:AstNullNode": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "AstNullNode",
+                    "camelCase": {
+                        "unsafeName": "astNullNode",
+                        "safeName": "astNullNode"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ast_null_node",
+                        "safeName": "ast_null_node"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "AST_NULL_NODE",
+                        "safeName": "AST_NULL_NODE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AstNullNode",
+                        "safeName": "AstNullNode"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.createAst": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createAst",
+                    "camelCase": {
+                        "unsafeName": "createAst",
+                        "safeName": "createAst"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_ast",
+                        "safeName": "create_ast"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_AST",
+                        "safeName": "CREATE_AST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateAst",
+                        "safeName": "CreateAst"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/ast"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:AstNode"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}

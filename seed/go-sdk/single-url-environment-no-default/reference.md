@@ -14,9 +14,8 @@
 
 ```go
 client.Dummy.GetDummy(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

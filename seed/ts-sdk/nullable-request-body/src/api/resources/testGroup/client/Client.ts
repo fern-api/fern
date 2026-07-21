@@ -29,6 +29,8 @@ export class TestGroupClient {
      * @param {TestGroupClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedApi.UnprocessableEntityError}
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.testGroup.testMethodName({

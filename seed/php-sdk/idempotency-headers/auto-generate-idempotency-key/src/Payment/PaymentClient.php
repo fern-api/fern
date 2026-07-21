@@ -51,6 +51,16 @@ class PaymentClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->payment->create(
+     *     new CreatePaymentRequest([
+     *         'amount' => 1,
+     *         'currency' => Currency::Usd->value,
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreatePaymentRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -101,6 +111,13 @@ class PaymentClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->payment->delete(
+     *     'paymentId',
+     * );
+     * ```
+     *
      * @param string $paymentId
      * @param ?array{
      *   baseUrl?: string,

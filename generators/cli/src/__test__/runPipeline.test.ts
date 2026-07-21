@@ -103,7 +103,9 @@ describe("runPipeline", () => {
     const ir = (overrides: Partial<IrSummary> = {}): IrSummary => ({
         apiDisplayName: overrides.apiDisplayName,
         auth: overrides.auth ?? { schemes: [] },
-        globalParameters: overrides.globalParameters ?? []
+        globalParameters: overrides.globalParameters ?? [],
+        services: overrides.services ?? {},
+        environments: overrides.environments
     });
 
     const localFilesConfig: ResolvedOutputConfig = {

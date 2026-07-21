@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.82.3
+  changelogEntry:
+    - summary: |
+        Fix server URL variable interpolation to render the selected environment's URL
+        template instead of always using the first environment's template. When a client
+        is constructed with both an `environment` and server URL variable values (e.g.
+        `region`), the base URL is now built from the selected environment's template(s);
+        for multi-host environments every host's template is formatted. An explicitly
+        provided `baseUrl` or custom environment value is no longer overridden.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 3.82.2
+  changelogEntry:
+    - summary: |
+        Generated endpoint JSDoc now documents all thrown error paths: in addition to
+        the errors declared in the API definition, each method's `@throws` annotations
+        include the base API error class (thrown for any undeclared HTTP error status
+        code) and the timeout error class (thrown when the request times out).
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 3.82.1
   changelogEntry:
     - summary: |
