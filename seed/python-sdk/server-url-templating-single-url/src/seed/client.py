@@ -90,8 +90,10 @@ class SeedApi:
             _environment_url_templates = {
                 SeedApiEnvironment.REGIONAL_API_SERVER: "https://api.{region}.{environment}.example.com/v1",
             }
-            _url_template = _environment_url_templates.get(environment)
-            if base_url is None and _url_template is not None:
+            _url_template = _environment_url_templates.get(
+                environment, "https://api.{region}.{environment}.example.com/v1"
+            )
+            if base_url is None:
                 base_url = _url_template.format(region=_region, environment=_server_url_environment)
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
@@ -266,8 +268,10 @@ class AsyncSeedApi:
             _environment_url_templates = {
                 SeedApiEnvironment.REGIONAL_API_SERVER: "https://api.{region}.{environment}.example.com/v1",
             }
-            _url_template = _environment_url_templates.get(environment)
-            if base_url is None and _url_template is not None:
+            _url_template = _environment_url_templates.get(
+                environment, "https://api.{region}.{environment}.example.com/v1"
+            )
+            if base_url is None:
                 base_url = _url_template.format(region=_region, environment=_server_url_environment)
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),

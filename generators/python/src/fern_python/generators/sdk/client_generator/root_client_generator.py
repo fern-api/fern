@@ -1950,8 +1950,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             class_var_name = resolve_name(single_env.name).screaming_snake_case.safe_name
                             writer.write_line(f'{env_class_name}.{class_var_name}: "{single_env.url_template}",')
                     writer.write_line("}")
-                    writer.write_line(f"_url_template = _environment_url_templates.get({env_param})")
-                    writer.write_line("if base_url is None and _url_template is not None:")
+                    first_template = templated_environments[0].url_template
+                    writer.write_line("_url_template = _environment_url_templates.get(")
+                    with writer.indent():
+                        writer.write_line(f'{env_param}, "{first_template}"')
+                    writer.write_line(")")
+                    writer.write_line("if base_url is None:")
                     with writer.indent():
                         writer.write_line(f"base_url = _url_template.format({format_kwargs})")
             elif env_union.type == "multipleBaseUrls":
