@@ -35,7 +35,7 @@ func (WebhooksHelper) VerifySignature(
 
 	timestampValue, err := strconv.ParseInt(timestampHeader, 10, 64)
 	if err != nil {
-		return false, errors.New("Invalid timestamp format: expected unix seconds")
+		return false, nil
 	}
 	timestampMs := timestampValue * 1000
 

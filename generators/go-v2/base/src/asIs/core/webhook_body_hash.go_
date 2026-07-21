@@ -55,3 +55,90 @@ func GetWebhookQueryParameter(rawURL string, name string) (string, bool) {
 	}
 	return query.Get(name), true
 }
+
+// NotificationUrlCandidates builds the list of normalized notification-URL forms to
+// verify a webhook signature against. Some providers (e.g. Twilio) are inconsistent
+// about whether the URL they signed carried a port and how its query string was
+// encoded, so a signature is accepted if it matches the computation over ANY of these
+// candidates.
+//
+// Mirrors twilio's addPort / removePort / buildUrlWithStandardPort /
+// withLegacyQuerystring. Always includes at least the caller-supplied URL and never
+// panics: an unparseable URL yields []string{url}.
+func NotificationUrlCandidates(rawURL string, portVariants bool, legacyQueryEncoding bool) []string {
+	parsed, err := url.Parse(rawURL)
+	if err != nil {
+		return []string{rawURL}
+	}
+
+	var portForms []string
+	if portVariants {
+		portForms = []string{removePort(parsed), addPort(parsed)}
+	} else {
+		portForms = []string{rawURL}
+	}
+
+	// Preserve insertion order while collapsing forms that coincide (e.g. a URL that
+	// already carries a standard port, or a query-less URL under legacy encoding).
+	seen := make(map[string]struct{})
+	candidates := make([]string, 0, len(portForms)*2+1)
+	appendCandidate := func(candidate string) {
+		if _, exists := seen[candidate]; exists {
+			return
+		}
+		seen[candidate] = struct{}{}
+		candidates = append(candidates, candidate)
+	}
+
+	appendCandidate(rawURL)
+	for _, form := range portForms {
+		appendCandidate(form)
+	}
+	if legacyQueryEncoding {
+		for _, form := range portForms {
+			appendCandidate(withLegacyQuerystring(form))
+		}
+	}
+	return candidates
+}
+
+func addPort(parsed *url.URL) string {
+	if parsed.Port() != "" {
+		return parsed.String()
+	}
+	return buildURLWithStandardPort(parsed)
+}
+
+func removePort(parsed *url.URL) string {
+	copied := *parsed
+	copied.Host = copied.Hostname()
+	return copied.String()
+}
+
+func buildURLWithStandardPort(parsed *url.URL) string {
+	port := "80"
+	if parsed.Scheme == "https" {
+		port = "443"
+	}
+	copied := *parsed
+	copied.Host = copied.Hostname() + ":" + port
+	return copied.String()
+}
+
+func withLegacyQuerystring(rawURL string) string {
+	parsed, err := url.Parse(rawURL)
+	if err != nil {
+		return rawURL
+	}
+	if parsed.RawQuery == "" {
+		return rawURL
+	}
+	values, err := url.ParseQuery(parsed.RawQuery)
+	if err != nil {
+		return rawURL
+	}
+	// url.Values.Encode reproduces legacy form-encoding (sorted keys, "+" for spaces).
+	copied := *parsed
+	copied.RawQuery = values.Encode()
+	return copied.String()
+}

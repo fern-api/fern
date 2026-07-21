@@ -22,7 +22,13 @@ func TestSmsStatusWebhooksHelperBodyHashBinding(t *testing.T) {
 	notificationURL := fmt.Sprintf("https://example.com/webhook?z=last&%s=%s&a=first%%20value", url.QueryEscape(queryParameterName), url.QueryEscape(expectedBodyHash))
 
 	sign := func(t *testing.T, requestBody string, notificationURL string, signatureKey string) string {
-		payload := strings.Join([]string{notificationURL}, "")
+		_, hasBodyHash := core.GetWebhookQueryParameter(notificationURL, "bodySHA256")
+		var payload string
+		if hasBodyHash {
+			payload = notificationURL
+		} else {
+			payload = strings.Join([]string{notificationURL, requestBody}, "")
+		}
 		signature, err := core.ComputeHmacSignature(payload, signatureKey, "sha1", "base64")
 		if err != nil {
 			t.Fatal(err)

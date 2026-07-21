@@ -95,6 +95,7 @@ export class WebhooksHelperGenerator {
 
     private computeVerificationKey(config: FernIr.HmacSignatureVerification): string {
         const timestamp = config.timestamp;
+        const normalization = config.notificationUrlNormalization;
         return JSON.stringify({
             algorithm: config.algorithm,
             encoding: config.encoding,
@@ -112,6 +113,13 @@ export class WebhooksHelperGenerator {
                           algorithm: config.bodyHashBinding.algorithm,
                           encoding: config.bodyHashBinding.encoding,
                           queryParameterName: this.getBodyHashQueryParameterName(config.bodyHashBinding.location)
+                      },
+            notificationUrlNormalization:
+                normalization == null
+                    ? null
+                    : {
+                          portVariants: normalization.portVariants,
+                          legacyQueryEncoding: normalization.legacyQueryEncoding
                       },
             timestamp:
                 timestamp == null
@@ -208,7 +216,9 @@ class HmacHelperWriter {
     }
 
     private buildParameters(): string[] {
-        const bodyType = this.config.bodyHashBinding != null ? "string" : this.hasBodySort ? "interface{}" : "string";
+        // When bodySort is set, the request body accepts either a raw string or a
+        // map[string][]string-shaped multimap, so it is widened to interface{}.
+        const bodyType = this.hasBodySort ? "interface{}" : "string";
         const parameters: string[] = [`requestBody ${bodyType}`, "signatureHeader string", "signatureKey string"];
         for (const component of this.components) {
             if (component === "NOTIFICATION_URL") {
@@ -225,6 +235,8 @@ class HmacHelperWriter {
     }
 
     private writeBody(writer: go.Writer, coreAlias: string, errorsAlias: string): void {
+        // Input validation. A verification helper fails closed with `false` rather than
+        // raising on missing inputs.
         const bodyNilCheck = this.hasBodySort ? "requestBody == nil" : 'requestBody == ""';
         writer.writeLine(`\tif ${bodyNilCheck} || signatureHeader == "" || signatureKey == "" {`);
         writer.writeLine(
@@ -239,12 +251,27 @@ class HmacHelperWriter {
 
         const signatureExpr = this.writeSignatureExtraction(writer);
 
-        writer.newLine();
-        this.writePayloadConstruction(writer);
+        // Notification-URL normalization: some providers (e.g. Twilio) are inconsistent
+        // about the signed URL's port and query encoding, so verify against several
+        // normalized URL forms and accept on the first constant-time match.
+        if (this.config.notificationUrlNormalization != null) {
+            this.writeNormalizedVerification(
+                writer,
+                coreAlias,
+                signatureExpr,
+                this.config.notificationUrlNormalization
+            );
+            return;
+        }
 
+        writer.newLine();
         if (this.config.bodyHashBinding != null) {
-            writer.newLine();
-            this.writeBodyHashVerification(writer, coreAlias, this.config.bodyHashBinding);
+            // Body-hash binding (e.g. Twilio): the same endpoint accepts both classic
+            // form-encoded and JSON requests, so branch at runtime on whether the
+            // body-hash query parameter is present in the notification URL.
+            this.writeBodyHashBranchedPayloadConstruction(writer, coreAlias, this.config.bodyHashBinding);
+        } else {
+            this.writePayloadConstruction(writer, "notificationUrl");
         }
 
         writer.newLine();
@@ -261,7 +288,13 @@ class HmacHelperWriter {
         writer.writeLine(`\treturn ${coreAlias}.TimingSafeEqual(${signatureExpr}, expected), nil`);
     }
 
-    private writeBodyHashVerification(
+    /**
+     * Emits the runtime branch for a body-hash binding. The same endpoint can receive
+     * either a JSON request (body-hash query parameter present) or a classic
+     * form-encoded request (absent), so the signed payload is assembled differently at
+     * runtime and only the JSON path performs the separate body-hash comparison.
+     */
+    private writeBodyHashBranchedPayloadConstruction(
         writer: go.Writer,
         coreAlias: string,
         binding: FernIr.WebhookBodyHashBinding
@@ -271,18 +304,121 @@ class HmacHelperWriter {
         const queryParameterName = this.getBodyHashQueryParameterName(binding.location);
 
         writer.writeLine(
-            `\texpectedBodyHash, err := ${coreAlias}.ComputeHash(requestBody, "${algorithm}", "${encoding}")`
+            `\ttransmittedBodyHash, hasBodyHash := ${coreAlias}.GetWebhookQueryParameter(notificationUrl, ${JSON.stringify(queryParameterName)})`
         );
-        writer.writeLine("\tif err != nil {");
-        writer.writeLine("\t\treturn false, err");
-        writer.writeLine("\t}");
-        writer.newLine();
+        writer.writeLine("\tvar payload string");
+        writer.writeLine("\tif hasBodyHash {");
+        // JSON path: the URL alone is the signed payload; the raw body is transmitted as
+        // a separately-recomputed hash and compared in constant time. Both must pass.
+        const rawBodyExpr = this.rawBodyExpression(writer);
         writer.writeLine(
-            `\ttransmittedBodyHash, ok := ${coreAlias}.GetWebhookQueryParameter(notificationUrl, ${JSON.stringify(queryParameterName)})`
+            `\t\texpectedBodyHash, err := ${coreAlias}.ComputeHash(${rawBodyExpr}, "${algorithm}", "${encoding}")`
         );
-        writer.writeLine(`\tif !ok || !${coreAlias}.TimingSafeEqual(expectedBodyHash, transmittedBodyHash) {`);
-        writer.writeLine("\t\treturn false, nil");
+        writer.writeLine("\t\tif err != nil {");
+        writer.writeLine("\t\t\treturn false, err");
+        writer.writeLine("\t\t}");
+        writer.writeLine(`\t\tif !${coreAlias}.TimingSafeEqual(expectedBodyHash, transmittedBodyHash) {`);
+        writer.writeLine("\t\t\treturn false, nil");
+        writer.writeLine("\t\t}");
+        writer.writeLine("\t\tpayload = notificationUrl");
+        // Classic form path: URL + sorted/deduped form params, no body-hash check.
+        writer.writeLine("\t} else {");
+        const formPayloadExpr = this.writeFormBodyString(writer, "\t\t");
+        writer.writeLine(`\t\tpayload = ${this.buildPayloadExpression(writer, formPayloadExpr, "notificationUrl")}`);
         writer.writeLine("\t}");
+    }
+
+    /**
+     * Emits HMAC verification against several normalized notification-URL forms,
+     * accepting on the first constant-time match. The body-hash check (when configured)
+     * runs once above the loop because it does not depend on URL normalization; only the
+     * HMAC over the URL is recomputed per candidate.
+     */
+    private writeNormalizedVerification(
+        writer: go.Writer,
+        coreAlias: string,
+        signatureExpr: string,
+        normalization: FernIr.WebhookNotificationUrlNormalization
+    ): void {
+        const binding = this.config.bodyHashBinding;
+        const algorithm = this.mapAlgorithm(this.config.algorithm);
+        const encoding = this.mapEncoding(this.config.encoding);
+
+        writer.newLine();
+
+        // Body-hash check (once, independent of URL normalization). Only the JSON request
+        // carries the transmitted hash; when present it must match hash(rawBody).
+        if (binding != null) {
+            const bodyHashAlgorithm = this.mapBodyHashAlgorithm(binding.algorithm);
+            const bodyHashEncoding = this.mapEncoding(binding.encoding);
+            const queryParameterName = this.getBodyHashQueryParameterName(binding.location);
+            writer.writeLine(
+                `\ttransmittedBodyHash, hasBodyHash := ${coreAlias}.GetWebhookQueryParameter(notificationUrl, ${JSON.stringify(queryParameterName)})`
+            );
+            writer.writeLine("\tif hasBodyHash {");
+            const rawBodyExpr = this.rawBodyExpression(writer);
+            writer.writeLine(
+                `\t\texpectedBodyHash, err := ${coreAlias}.ComputeHash(${rawBodyExpr}, "${bodyHashAlgorithm}", "${bodyHashEncoding}")`
+            );
+            writer.writeLine("\t\tif err != nil {");
+            writer.writeLine("\t\t\treturn false, err");
+            writer.writeLine("\t\t}");
+            writer.writeLine(`\t\tif !${coreAlias}.TimingSafeEqual(expectedBodyHash, transmittedBodyHash) {`);
+            writer.writeLine("\t\t\treturn false, nil");
+            writer.writeLine("\t\t}");
+            writer.writeLine("\t}");
+        }
+
+        // The form-path body string is URL-independent, so compute it once before the loop.
+        const formBodyExpr = this.writeFormBodyString(writer, "\t");
+
+        const portVariants = normalization.portVariants ? "true" : "false";
+        const legacyQueryEncoding = normalization.legacyQueryEncoding ? "true" : "false";
+        writer.writeLine(
+            `\tcandidates := ${coreAlias}.NotificationUrlCandidates(notificationUrl, ${portVariants}, ${legacyQueryEncoding})`
+        );
+        writer.writeLine("\tfor _, candidateUrl := range candidates {");
+
+        const formPayloadExpr = this.buildPayloadExpression(writer, formBodyExpr, "candidateUrl");
+        if (binding != null) {
+            // JSON request signs the URL only; classic form request signs URL + params.
+            writer.writeLine("\t\tvar payload string");
+            writer.writeLine("\t\tif hasBodyHash {");
+            writer.writeLine("\t\t\tpayload = candidateUrl");
+            writer.writeLine("\t\t} else {");
+            writer.writeLine(`\t\t\tpayload = ${formPayloadExpr}`);
+            writer.writeLine("\t\t}");
+        } else {
+            writer.writeLine(`\t\tpayload := ${formPayloadExpr}`);
+        }
+        writer.writeLine(
+            `\t\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${algorithm}", "${encoding}")`
+        );
+        writer.writeLine("\t\tif err != nil {");
+        writer.writeLine("\t\t\treturn false, err");
+        writer.writeLine("\t\t}");
+        writer.writeLine(`\t\tif ${coreAlias}.TimingSafeEqual(${signatureExpr}, expected) {`);
+        writer.writeLine("\t\t\treturn true, nil");
+        writer.writeLine("\t\t}");
+        writer.writeLine("\t}");
+        writer.writeLine("\treturn false, nil");
+    }
+
+    /**
+     * Narrows the (possibly widened) requestBody parameter to the raw string used for
+     * the body-hash computation. The JSON path only receives a raw string body, so when
+     * bodySort has widened the parameter to interface{} the string is extracted with a
+     * type assertion that fails closed.
+     */
+    private rawBodyExpression(writer: go.Writer): string {
+        if (!this.hasBodySort) {
+            return "requestBody";
+        }
+        writer.writeLine("\t\trawBody, ok := requestBody.(string)");
+        writer.writeLine("\t\tif !ok {");
+        writer.writeLine("\t\t\treturn false, nil");
+        writer.writeLine("\t\t}");
+        return "rawBody";
     }
 
     private writeTimestampValidation(
@@ -293,6 +429,7 @@ class HmacHelperWriter {
         const headerName = getWireValue(timestamp.headerName);
         const tolerance = timestamp.tolerance ?? DEFAULT_TIMESTAMP_TOLERANCE_SECONDS;
 
+        // A missing or malformed timestamp header fails closed with `false` rather than raising.
         writer.writeLine('\tif timestampHeader == "" {');
         writer.writeLine(
             `\t\treturn false, ${errorsAlias}.New("Missing timestamp header '${headerName}' for webhook signature verification")`
@@ -305,9 +442,7 @@ class HmacHelperWriter {
                 const strconvAlias = writer.addImport("strconv");
                 writer.writeLine(`\ttimestampValue, err := ${strconvAlias}.ParseInt(timestampHeader, 10, 64)`);
                 writer.writeLine("\tif err != nil {");
-                writer.writeLine(
-                    `\t\treturn false, ${errorsAlias}.New("Invalid timestamp format: expected unix seconds")`
-                );
+                writer.writeLine("\t\treturn false, nil");
                 writer.writeLine("\t}");
                 writer.writeLine("\ttimestampMs := timestampValue * 1000");
                 break;
@@ -316,9 +451,7 @@ class HmacHelperWriter {
                 const strconvAlias = writer.addImport("strconv");
                 writer.writeLine(`\ttimestampValue, err := ${strconvAlias}.ParseInt(timestampHeader, 10, 64)`);
                 writer.writeLine("\tif err != nil {");
-                writer.writeLine(
-                    `\t\treturn false, ${errorsAlias}.New("Invalid timestamp format: expected unix milliseconds")`
-                );
+                writer.writeLine("\t\treturn false, nil");
                 writer.writeLine("\t}");
                 writer.writeLine("\ttimestampMs := timestampValue");
                 break;
@@ -327,9 +460,7 @@ class HmacHelperWriter {
                 const timeAlias = writer.addImport("time");
                 writer.writeLine(`\tparsedTimestamp, err := ${timeAlias}.Parse(${timeAlias}.RFC3339, timestampHeader)`);
                 writer.writeLine("\tif err != nil {");
-                writer.writeLine(
-                    `\t\treturn false, ${errorsAlias}.New("Invalid timestamp format: expected ISO 8601 date string")`
-                );
+                writer.writeLine("\t\treturn false, nil");
                 writer.writeLine("\t}");
                 writer.writeLine("\ttimestampMs := parsedTimestamp.UnixMilli()");
                 break;
@@ -362,39 +493,83 @@ class HmacHelperWriter {
         return "signatureHeader";
     }
 
-    private writePayloadConstruction(writer: go.Writer): void {
-        let bodyExpr = "requestBody";
-        if (this.hasBodySort) {
-            const stringsAlias = writer.addImport("strings");
-            const sortAlias = writer.addImport("sort");
-            const fmtAlias = writer.addImport("fmt");
-            writer.writeLine("\tvar bodyString string");
-            writer.writeLine("\tswitch body := requestBody.(type) {");
-            writer.writeLine("\tcase string:");
-            writer.writeLine("\t\tbodyString = body");
-            writer.writeLine("\tcase map[string]string:");
-            writer.writeLine("\t\tkeys := make([]string, 0, len(body))");
-            writer.writeLine("\t\tfor key := range body {");
-            writer.writeLine("\t\t\tkeys = append(keys, key)");
-            writer.writeLine("\t\t}");
-            writer.writeLine(`\t\t${sortAlias}.Strings(keys)`);
-            writer.writeLine(`\t\tvar builder ${stringsAlias}.Builder`);
-            writer.writeLine("\t\tfor _, key := range keys {");
-            writer.writeLine("\t\t\tbuilder.WriteString(key)");
-            writer.writeLine("\t\t\tbuilder.WriteString(body[key])");
-            writer.writeLine("\t\t}");
-            writer.writeLine("\t\tbodyString = builder.String()");
-            writer.writeLine("\tdefault:");
-            writer.writeLine(`\t\treturn false, ${fmtAlias}.Errorf("unsupported request body type: %T", requestBody)`);
-            writer.writeLine("\t}");
-            bodyExpr = "bodyString";
-        }
+    /**
+     * Emits the non-body-hash, non-normalized payload construction: `payload := <expr>`.
+     */
+    private writePayloadConstruction(writer: go.Writer, urlExpr: string): void {
+        const formBodyExpr = this.writeFormBodyString(writer, "\t");
+        writer.writeLine(`\tpayload := ${this.buildPayloadExpression(writer, formBodyExpr, urlExpr)}`);
+    }
 
-        if (this.components.length === 1 && this.components[0] === "BODY") {
-            writer.writeLine(`\tpayload := ${bodyExpr}`);
-            return;
+    /**
+     * Emits the block that flattens a form-parameter multimap into the signed body
+     * string when bodySort is configured, mirroring Twilio's toFormUrlEncodedParam:
+     * keys are sorted, and for each key the values are deduped and sorted, concatenating
+     * `key + value` for every value with no delimiter between params. A raw string body
+     * is passed through unchanged. Returns the identifier holding the flattened string
+     * (or "requestBody" when bodySort is not configured).
+     */
+    private writeFormBodyString(writer: go.Writer, indent: string): string {
+        if (!this.hasBodySort) {
+            return "requestBody";
         }
+        const stringsAlias = writer.addImport("strings");
+        const sortAlias = writer.addImport("sort");
+        const fmtAlias = writer.addImport("fmt");
+        writer.writeLine(`${indent}var bodyString string`);
+        writer.writeLine(`${indent}switch body := requestBody.(type) {`);
+        writer.writeLine(`${indent}case string:`);
+        writer.writeLine(`${indent}\tbodyString = body`);
+        writer.writeLine(`${indent}case map[string][]string:`);
+        writer.writeLine(`${indent}\tkeys := make([]string, 0, len(body))`);
+        writer.writeLine(`${indent}\tfor key := range body {`);
+        writer.writeLine(`${indent}\t\tkeys = append(keys, key)`);
+        writer.writeLine(`${indent}\t}`);
+        writer.writeLine(`${indent}\t${sortAlias}.Strings(keys)`);
+        writer.writeLine(`${indent}\tvar builder ${stringsAlias}.Builder`);
+        writer.writeLine(`${indent}\tfor _, key := range keys {`);
+        writer.writeLine(`${indent}\t\tseen := make(map[string]struct{}, len(body[key]))`);
+        writer.writeLine(`${indent}\t\tuniqueValues := make([]string, 0, len(body[key]))`);
+        writer.writeLine(`${indent}\t\tfor _, value := range body[key] {`);
+        writer.writeLine(`${indent}\t\t\tif _, exists := seen[value]; exists {`);
+        writer.writeLine(`${indent}\t\t\t\tcontinue`);
+        writer.writeLine(`${indent}\t\t\t}`);
+        writer.writeLine(`${indent}\t\t\tseen[value] = struct{}{}`);
+        writer.writeLine(`${indent}\t\t\tuniqueValues = append(uniqueValues, value)`);
+        writer.writeLine(`${indent}\t\t}`);
+        writer.writeLine(`${indent}\t\t${sortAlias}.Strings(uniqueValues)`);
+        writer.writeLine(`${indent}\t\tfor _, value := range uniqueValues {`);
+        writer.writeLine(`${indent}\t\t\tbuilder.WriteString(key)`);
+        writer.writeLine(`${indent}\t\t\tbuilder.WriteString(value)`);
+        writer.writeLine(`${indent}\t\t}`);
+        writer.writeLine(`${indent}\t}`);
+        writer.writeLine(`${indent}\tbodyString = builder.String()`);
+        writer.writeLine(`${indent}case map[string]string:`);
+        writer.writeLine(`${indent}\tkeys := make([]string, 0, len(body))`);
+        writer.writeLine(`${indent}\tfor key := range body {`);
+        writer.writeLine(`${indent}\t\tkeys = append(keys, key)`);
+        writer.writeLine(`${indent}\t}`);
+        writer.writeLine(`${indent}\t${sortAlias}.Strings(keys)`);
+        writer.writeLine(`${indent}\tvar builder ${stringsAlias}.Builder`);
+        writer.writeLine(`${indent}\tfor _, key := range keys {`);
+        writer.writeLine(`${indent}\t\tbuilder.WriteString(key)`);
+        writer.writeLine(`${indent}\t\tbuilder.WriteString(body[key])`);
+        writer.writeLine(`${indent}\t}`);
+        writer.writeLine(`${indent}\tbodyString = builder.String()`);
+        writer.writeLine(`${indent}default:`);
+        writer.writeLine(
+            `${indent}\treturn false, ${fmtAlias}.Errorf("unsupported request body type: %T", requestBody)`
+        );
+        writer.writeLine(`${indent}}`);
+        return "bodyString";
+    }
 
+    /**
+     * Builds the RHS expression for `payload` from the configured components. `bodyExpr`
+     * is the identifier for the BODY component and `urlExpr` for the NOTIFICATION_URL
+     * component (the candidate loop substitutes "candidateUrl").
+     */
+    private buildPayloadExpression(writer: go.Writer, bodyExpr: string, urlExpr: string): string {
         const componentExprs: string[] = [];
         for (const component of this.components) {
             switch (component) {
@@ -405,7 +580,7 @@ class HmacHelperWriter {
                     componentExprs.push("timestampHeader");
                     break;
                 case "NOTIFICATION_URL":
-                    componentExprs.push("notificationUrl");
+                    componentExprs.push(urlExpr);
                     break;
                 case "MESSAGE_ID":
                     componentExprs.push("messageId");
@@ -415,9 +590,14 @@ class HmacHelperWriter {
             }
         }
 
+        // A single component is already a string and can be used directly.
+        if (componentExprs.length === 1 && componentExprs[0] != null) {
+            return componentExprs[0];
+        }
+
         const stringsAlias = writer.addImport("strings");
         const delimiter = JSON.stringify(this.config.payloadFormat.delimiter);
-        writer.writeLine(`\tpayload := ${stringsAlias}.Join([]string{${componentExprs.join(", ")}}, ${delimiter})`);
+        return `${stringsAlias}.Join([]string{${componentExprs.join(", ")}}, ${delimiter})`;
     }
 
     private buildDocComment(): string[] {
@@ -435,13 +615,20 @@ class HmacHelperWriter {
         }
         if (this.hasBodySort) {
             lines.push(
-                "// The requestBody parameter accepts either a raw string or a map[string]string of POST body parameters.",
-                "// When a map is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
+                "// The requestBody parameter accepts either a raw string or a map[string][]string of POST body parameters.",
+                "// When a map is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing."
             );
         }
         if (this.config.bodyHashBinding != null) {
             lines.push(
+                "// This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.",
+                "// For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.",
                 "// Pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
+            );
+        }
+        if (this.config.notificationUrlNormalization != null) {
+            lines.push(
+                "// The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches."
             );
         }
         return lines;
@@ -504,6 +691,7 @@ class BodyHashHelperTestWriter {
     private readonly config: FernIr.HmacSignatureVerification;
     private readonly bodyHashBinding: FernIr.WebhookBodyHashBinding;
     private readonly components: FernIr.WebhookPayloadComponent[];
+    private readonly hasBodySort: boolean;
 
     public constructor({
         context,
@@ -523,6 +711,7 @@ class BodyHashHelperTestWriter {
         this.config = config;
         this.bodyHashBinding = bodyHashBinding;
         this.components = config.payloadFormat.components;
+        this.hasBodySort = config.payloadFormat.bodySort != null;
     }
 
     public write(): go.CodeBlock {
@@ -554,7 +743,7 @@ class BodyHashHelperTestWriter {
             writer.writeLine(
                 `\tsign := func(t *${testingAlias}.T, requestBody string, notificationURL string, signatureKey string) string {`
             );
-            this.writePayloadConstruction(writer, stringsAlias);
+            this.writeSignPayloadConstruction(writer, stringsAlias, coreAlias);
             writer.writeLine(
                 `\t\tsignature, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${this.mapHmacAlgorithm(this.config.algorithm)}", "${this.mapEncoding(this.config.encoding)}")`
             );
@@ -651,7 +840,17 @@ class BodyHashHelperTestWriter {
         }
     }
 
-    private writePayloadConstruction(writer: go.Writer, stringsAlias: string): void {
+    /**
+     * The signing helper reproduces the payload the provider signed: the JSON path signs
+     * the notification URL alone (a body-hash query parameter is present), while the
+     * classic form path signs the URL + body. The generated verifier branches on the
+     * same runtime condition, so the test signs whatever the verifier will re-derive.
+     */
+    private writeSignPayloadConstruction(writer: go.Writer, stringsAlias: string, coreAlias: string): void {
+        const queryParameterName = this.getBodyHashQueryParameterName(this.bodyHashBinding.location);
+        writer.writeLine(
+            `\t\t_, hasBodyHash := ${coreAlias}.GetWebhookQueryParameter(notificationURL, ${JSON.stringify(queryParameterName)})`
+        );
         const componentExprs: string[] = [];
         for (const component of this.components) {
             switch (component) {
@@ -671,9 +870,16 @@ class BodyHashHelperTestWriter {
                     assertNever(component);
             }
         }
-        writer.writeLine(
-            `\t\tpayload := ${stringsAlias}.Join([]string{${componentExprs.join(", ")}}, ${JSON.stringify(this.config.payloadFormat.delimiter)})`
-        );
+        const formPayload =
+            componentExprs.length === 1
+                ? componentExprs[0]
+                : `${stringsAlias}.Join([]string{${componentExprs.join(", ")}}, ${JSON.stringify(this.config.payloadFormat.delimiter)})`;
+        writer.writeLine("\t\tvar payload string");
+        writer.writeLine("\t\tif hasBodyHash {");
+        writer.writeLine("\t\t\tpayload = notificationURL");
+        writer.writeLine("\t\t} else {");
+        writer.writeLine(`\t\t\tpayload = ${formPayload}`);
+        writer.writeLine("\t\t}");
     }
 
     private buildVerifyArguments(): string[] {

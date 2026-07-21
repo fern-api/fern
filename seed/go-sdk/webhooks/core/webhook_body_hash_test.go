@@ -2,7 +2,11 @@
 
 package core
 
-import "testing"
+import (
+	"sort"
+	"strings"
+	"testing"
+)
 
 func TestComputeHash(t *testing.T) {
 	tests := []struct {
@@ -89,4 +93,149 @@ func TestGetWebhookQueryParameterFailsClosed(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestNotificationUrlCandidates(t *testing.T) {
+	tests := []struct {
+		name                string
+		rawURL              string
+		portVariants        bool
+		legacyQueryEncoding bool
+		expected            []string
+	}{
+		{
+			name:                "as-is only when normalization disabled",
+			rawURL:              "https://example.com/webhook?a=1",
+			portVariants:        false,
+			legacyQueryEncoding: false,
+			expected:            []string{"https://example.com/webhook?a=1"},
+		},
+		{
+			name:                "adds standard port and no-port forms",
+			rawURL:              "https://example.com/webhook?a=1",
+			portVariants:        true,
+			legacyQueryEncoding: false,
+			expected: []string{
+				"https://example.com/webhook?a=1",
+				"https://example.com:443/webhook?a=1",
+			},
+		},
+		{
+			name:                "http uses port 80",
+			rawURL:              "http://example.com/webhook",
+			portVariants:        true,
+			legacyQueryEncoding: false,
+			expected: []string{
+				"http://example.com/webhook",
+				"http://example.com:80/webhook",
+			},
+		},
+		{
+			name:                "removes non-standard port",
+			rawURL:              "https://example.com:8443/webhook?a=1",
+			portVariants:        true,
+			legacyQueryEncoding: false,
+			expected: []string{
+				"https://example.com:8443/webhook?a=1",
+				"https://example.com/webhook?a=1",
+			},
+		},
+		{
+			name:                "legacy query re-encoding on each port form",
+			rawURL:              "https://example.com/webhook?z=last&a=first%20value",
+			portVariants:        true,
+			legacyQueryEncoding: true,
+			expected: []string{
+				"https://example.com/webhook?z=last&a=first%20value",
+				"https://example.com:443/webhook?z=last&a=first%20value",
+				"https://example.com/webhook?a=first+value&z=last",
+				"https://example.com:443/webhook?a=first+value&z=last",
+			},
+		},
+		{
+			name:                "unparseable URL yields the input verbatim",
+			rawURL:              "http://[::1:bad",
+			portVariants:        true,
+			legacyQueryEncoding: true,
+			expected:            []string{"http://[::1:bad"},
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			actual := NotificationUrlCandidates(test.rawURL, test.portVariants, test.legacyQueryEncoding)
+			if len(actual) != len(test.expected) {
+				t.Fatalf("expected %d candidates %q, got %d %q", len(test.expected), test.expected, len(actual), actual)
+			}
+			for i := range test.expected {
+				if actual[i] != test.expected[i] {
+					t.Fatalf("candidate %d: expected %q, got %q", i, test.expected[i], actual[i])
+				}
+			}
+		})
+	}
+}
+
+func TestNotificationUrlCandidatesPreservesCallerUrl(t *testing.T) {
+	rawURL := "https://example.com/webhook?z=last&bodySHA256=abc%2B123%3D&a=first%20value"
+	candidates := NotificationUrlCandidates(rawURL, true, true)
+	if len(candidates) == 0 || candidates[0] != rawURL {
+		t.Fatalf("expected first candidate to be the verbatim caller URL, got %q", candidates)
+	}
+}
+
+// TestComputeHmacSignatureTwilioVector checks ComputeHmacSignature against the canonical
+// Twilio example from Twilio's request-validation documentation: HMAC-SHA1 over the
+// notification URL concatenated with the alphabetically-sorted POST parameters, base64
+// encoded. This proves byte-level compatibility with a real Twilio signature.
+func TestComputeHmacSignatureTwilioVector(t *testing.T) {
+	url := "https://mycompany.com/myapp.php?foo=1&bar=2"
+	// Sorted, deduped form parameters concatenated as key+value with no separator.
+	params := map[string][]string{
+		"CallSid": {"CA1234567890ABCDE"},
+		"Caller":  {"+14158675309"},
+		"Digits":  {"1234"},
+		"From":    {"+14158675309"},
+		"To":      {"+18005551212"},
+	}
+	body := buildTwilioFormBody(params)
+	signature, err := ComputeHmacSignature(url+body, "12345", "sha1", "base64")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const expected = "RSOYDt4T1cUTdK1PDd93/VVr8B8="
+	if signature != expected {
+		t.Fatalf("expected Twilio signature %q, got %q", expected, signature)
+	}
+	if !TimingSafeEqual(signature, expected) {
+		t.Fatal("expected TimingSafeEqual to accept the Twilio signature")
+	}
+}
+
+// buildTwilioFormBody mirrors the sorted/deduped key+value concatenation the generated
+// webhook helper performs for a multi-value form body.
+func buildTwilioFormBody(params map[string][]string) string {
+	keys := make([]string, 0, len(params))
+	for key := range params {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	var builder strings.Builder
+	for _, key := range keys {
+		seen := make(map[string]struct{}, len(params[key]))
+		uniqueValues := make([]string, 0, len(params[key]))
+		for _, value := range params[key] {
+			if _, exists := seen[value]; exists {
+				continue
+			}
+			seen[value] = struct{}{}
+			uniqueValues = append(uniqueValues, value)
+		}
+		sort.Strings(uniqueValues)
+		for _, value := range uniqueValues {
+			builder.WriteString(key)
+			builder.WriteString(value)
+		}
+	}
+	return builder.String()
 }
