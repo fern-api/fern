@@ -193,7 +193,6 @@ describe("WebhooksHelperGenerator", () => {
             const text = context.sourceFile.getFullText();
             expect(text).toContain("TIMESTAMP_TOLERANCE_SECONDS");
             expect(text).toContain("timestampValue * 1000");
-            expect(text).toContain("unix seconds");
             expect(text).toMatchSnapshot();
         });
 
@@ -219,7 +218,6 @@ describe("WebhooksHelperGenerator", () => {
             const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
-            expect(text).toContain("unix milliseconds");
             expect(text).toContain("const timestampMs = timestampValue;");
             expect(text).toMatchSnapshot();
         });
@@ -246,7 +244,6 @@ describe("WebhooksHelperGenerator", () => {
             const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
-            expect(text).toContain("ISO 8601");
             expect(text).toContain("new Date(timestampHeader).getTime()");
             expect(text).toMatchSnapshot();
         });
@@ -384,9 +381,10 @@ describe("WebhooksHelperGenerator", () => {
             const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
-            expect(text).toContain("string | Record<string, string>");
+            expect(text).toContain("string | Record<string, string | string[]>");
             expect(text).toContain('typeof requestBody === "string"');
-            expect(text).toContain("Object.keys(requestBody).sort()");
+            expect(text).toContain("Object.keys(requestBody)");
+            expect(text).toContain("Array.from(new Set(values))");
             expect(text).toContain("const payload = bodyString;");
             expect(text).toMatchSnapshot();
         });
@@ -409,10 +407,11 @@ describe("WebhooksHelperGenerator", () => {
             const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
-            expect(text).toContain("string | Record<string, string>");
+            expect(text).toContain("string | Record<string, string | string[]>");
             expect(text).toContain("notificationUrl: string");
             expect(text).toContain('typeof requestBody === "string"');
-            expect(text).toContain("Object.keys(requestBody).sort()");
+            expect(text).toContain("Object.keys(requestBody)");
+            expect(text).toContain("Array.from(new Set(values))");
             expect(text).toContain('[notificationUrl, bodyString].join("")');
             expect(text).toMatchSnapshot();
         });
@@ -435,8 +434,8 @@ describe("WebhooksHelperGenerator", () => {
             const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
-            expect(text).toContain("Record<string, string> of POST body parameters");
-            expect(text).toContain("sorted alphabetically by key");
+            expect(text).toContain("Record<string, string | string[]> of POST body parameters");
+            expect(text).toContain("keys are sorted and each key's values are deduped and sorted");
         });
     });
 
@@ -646,9 +645,10 @@ describe("WebhooksHelperGenerator", () => {
             const context = createMockFileContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
-            expect(text).toContain("string | Record<string, string>");
+            expect(text).toContain("string | Record<string, string | string[]>");
             expect(text).toContain('typeof requestBody === "string"');
-            expect(text).toContain("Object.keys(requestBody).sort()");
+            expect(text).toContain("Object.keys(requestBody)");
+            expect(text).toContain("Array.from(new Set(values))");
             expect(text).toMatchSnapshot();
         });
     });
@@ -765,8 +765,11 @@ describe("WebhooksHelperGenerator", () => {
             // extracts the transmitted hash from the notification URL verbatim
             expect(text).toContain("transmittedBodyHash");
             expect(text).toContain('webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256")');
-            // fails closed when the parameter is missing or mismatched, before HMAC
-            expect(text).toContain("transmittedBodyHash == null");
+            // branches at runtime on the presence of the body-hash query parameter
+            expect(text).toContain("if (transmittedBodyHash != null)");
+            // JSON path signs the notification URL only
+            expect(text).toContain("payload = notificationUrl;");
+            // fails closed on a body-hash mismatch, before HMAC
             expect(text).toContain("return false;");
             // outer HMAC (SHA1/base64 over the URL) is still emitted
             expect(text).toContain("webhookCrypto.computeHmacSignature");
@@ -805,6 +808,162 @@ describe("WebhooksHelperGenerator", () => {
             const text = context.sourceFile.getFullText();
             expect(text).not.toContain("transmittedBodyHash");
             expect(text).not.toContain("computeHash");
+        });
+    });
+
+    // ────────────────────────────────────────────────────────────────────────
+    // Multi-value form parameters (dedup + independent value sort)
+    // ────────────────────────────────────────────────────────────────────────
+
+    describe("multi-value form parameters", () => {
+        it("emits sorted(unique(keys)) with per-key sorted(unique(values)) assembly", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL", "BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            // request body accepts repeated params
+            expect(text).toContain("string | Record<string, string | string[]>");
+            // keys are sorted; each value coerced to an array, deduped, sorted, then key+value
+            expect(text).toContain("Object.keys(requestBody)");
+            expect(text).toContain("const value = requestBody[key];");
+            expect(text).toContain("const values = Array.isArray(value) ? value : [value];");
+            expect(text).toContain("Array.from(new Set(values))");
+            expect(text).toContain(".map((v) => key + v)");
+            expect(text).toContain('[notificationUrl, bodyString].join("")');
+            expect(text).toMatchSnapshot();
+        });
+
+        it("still passes a raw string body through unchanged", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain('typeof requestBody === "string"');
+            expect(text).toContain("? requestBody");
+        });
+    });
+
+    // ────────────────────────────────────────────────────────────────────────
+    // Runtime body-hash branch (classic form vs JSON request)
+    // ────────────────────────────────────────────────────────────────────────
+
+    describe("runtime body-hash branch", () => {
+        function twilioDualPathVerification(): FernIr.WebhookSignatureVerification {
+            return FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: {
+                    algorithm: "SHA256",
+                    encoding: "HEX",
+                    location: FernIr.WebhookBodyHashLocation.queryParameter({ name: "bodySHA256" })
+                },
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Twilio-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL", "BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+        }
+
+        it("branches on the body-hash query parameter: JSON signs the URL only, form signs URL + params", () => {
+            const generator = new WebhooksHelperGenerator(twilioDualPathVerification());
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+
+            // runtime branch on presence of the transmitted hash
+            expect(text).toContain('webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256")');
+            expect(text).toContain("if (transmittedBodyHash != null)");
+            expect(text).toContain("let payload: string;");
+            // JSON path: hash the raw body (narrowed to string) and sign the URL only
+            expect(text).toContain("requestBody as string");
+            expect(text).toContain("payload = notificationUrl;");
+            // form path: URL + sorted/deduped params
+            expect(text).toContain("Array.from(new Set(values))");
+            expect(text).toContain('payload = [notificationUrl, bodyString].join("")');
+            expect(text).toMatchSnapshot();
+        });
+    });
+
+    // ────────────────────────────────────────────────────────────────────────
+    // No-throw: a verification helper returns false rather than raising
+    // ────────────────────────────────────────────────────────────────────────
+
+    describe("no-throw behavior", () => {
+        it("returns false (never throws) on missing inputs or an invalid timestamp header", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
+                algorithm: "SHA256",
+                encoding: "HEX",
+                signatureHeaderName: createWireValue("X-Signature"),
+                signaturePrefix: undefined,
+                timestamp: {
+                    headerName: createWireValue("X-Timestamp"),
+                    format: "UNIX_SECONDS",
+                    tolerance: 300
+                },
+                payloadFormat: {
+                    components: ["BODY"],
+                    delimiter: ".",
+                    bodySort: undefined
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            // the HMAC verification path never throws
+            expect(text).not.toContain("throw new Error");
+            // null-arg guard and timestamp guards fail closed
+            expect(text).toContain("if (requestBody == null || signatureHeader == null || signatureKey == null)");
+            expect(text).toContain("return false;");
+        });
+
+        it("does not throw in the asymmetric null-arg guard", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.asymmetric({
+                algorithm: "RSA_SHA256",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                keySource: FernIr.AsymmetricKeySource.static({}),
+                payloadFormat: undefined
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).not.toContain("throw new Error");
+            expect(text).toContain("return false;");
         });
     });
 });

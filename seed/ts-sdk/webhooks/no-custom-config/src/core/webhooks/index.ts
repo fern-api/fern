@@ -5,6 +5,8 @@ export { computeHmacSignature } from "./computeHmacSignature.js";
 export type { FetchJwksArgs } from "./fetchJwks.js";
 export { fetchJwks } from "./fetchJwks.js";
 export { getWebhookQueryParameter } from "./getWebhookQueryParameter.js";
+export type { NotificationUrlCandidatesOptions } from "./notificationUrlCandidates.js";
+export { notificationUrlCandidates } from "./notificationUrlCandidates.js";
 export { timingSafeEqual } from "./timingSafeEqual.js";
 export type { SignatureEncoding } from "./types.js";
 export type { AsymmetricAlgorithm, VerifyAsymmetricSignatureArgs } from "./verifyAsymmetricSignature.js";

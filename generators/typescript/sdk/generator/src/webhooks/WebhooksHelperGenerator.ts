@@ -78,7 +78,8 @@ export class WebhooksHelperGenerator {
     }
 
     private buildHmacParameters(config: FernIr.HmacSignatureVerification): Array<{ name: string; type: string }> {
-        const requestBodyType = config.payloadFormat.bodySort != null ? "string | Record<string, string>" : "string";
+        const requestBodyType =
+            config.payloadFormat.bodySort != null ? "string | Record<string, string | string[]>" : "string";
         const params: Array<{ name: string; type: string }> = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" },
@@ -96,7 +97,7 @@ export class WebhooksHelperGenerator {
     ): Array<{ name: string; type: string }> {
         const payloadFormat = config.payloadFormat;
         const hasBodySort = payloadFormat?.bodySort != null;
-        const requestBodyType = hasBodySort ? "string | Record<string, string>" : "string";
+        const requestBodyType = hasBodySort ? "string | Record<string, string | string[]>" : "string";
         const params: Array<{ name: string; type: string }> = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" }
@@ -147,10 +148,11 @@ export class WebhooksHelperGenerator {
         const fileConstants: string[] = [];
         const lines: string[] = [];
 
-        // Input validation
+        // Input validation. A verification helper returns a boolean and never throws,
+        // so missing inputs fail closed with `false` rather than raising.
         lines.push(
             "if (requestBody == null || signatureHeader == null || signatureKey == null) {",
-            '    throw new Error("Missing required parameters for webhook signature verification");',
+            "    return false;",
             "}"
         );
 
@@ -163,16 +165,19 @@ export class WebhooksHelperGenerator {
         // Signature extraction
         const sigIdentifier = this.addSignatureExtraction(fileConstants, lines, config.signaturePrefix);
 
-        // Payload construction
+        // Payload construction.
         lines.push("");
-        this.addPayloadConstruction(lines, config.payloadFormat);
-
-        // Body-hash binding: the raw body is not in the signed payload; a hash of it is
-        // transmitted separately (e.g. Twilio's bodySHA256 query param). Recompute and compare
-        // before verifying the HMAC. Both checks must pass.
         if (config.bodyHashBinding != null) {
-            lines.push("");
-            this.addBodyHashVerification(context, lines, config.bodyHashBinding);
+            // Body-hash binding (e.g. Twilio): the same endpoint accepts both classic
+            // form-encoded and JSON requests, so branch at runtime on whether the body-hash
+            // query parameter is present in the notification URL.
+            //   - present (JSON): the signed payload is the URL only; additionally recompute
+            //     hash(rawBody) and constant-time compare it to the transmitted value.
+            //   - absent (classic form): the signed payload is the URL + sorted/deduped form
+            //     params, with no body-hash check.
+            this.addBodyHashBranchedPayloadConstruction(context, lines, config, config.bodyHashBinding);
+        } else {
+            this.addPayloadConstruction(lines, config.payloadFormat);
         }
 
         // HMAC computation
@@ -216,11 +221,7 @@ export class WebhooksHelperGenerator {
             requiredParams.push("publicKey");
         }
         const nullChecks = requiredParams.map((p) => `${p} == null`).join(" || ");
-        lines.push(
-            `if (${nullChecks}) {`,
-            '    throw new Error("Missing required parameters for webhook signature verification");',
-            "}"
-        );
+        lines.push(`if (${nullChecks}) {`, "    return false;", "}");
 
         // Timestamp validation
         if (config.timestamp != null) {
@@ -305,15 +306,12 @@ export class WebhooksHelperGenerator {
         timestamp: FernIr.WebhookTimestampConfig
     ): void {
         const toleranceSeconds = timestamp.tolerance ?? 300;
-        const headerName = getWireValue(timestamp.headerName);
 
         fileConstants.push(`const TIMESTAMP_TOLERANCE_SECONDS = ${toleranceSeconds};`);
 
-        lines.push(
-            'if (timestampHeader == null || timestampHeader === "") {',
-            `    throw new Error("Missing timestamp header '${headerName}' for webhook signature verification");`,
-            "}"
-        );
+        // A missing or malformed timestamp header fails closed with `false` (the helper
+        // never throws) rather than raising.
+        lines.push('if (timestampHeader == null || timestampHeader === "") {', "    return false;", "}");
 
         switch (timestamp.format) {
             case "UNIX_SECONDS":
@@ -321,7 +319,7 @@ export class WebhooksHelperGenerator {
                     "",
                     "const timestampValue = parseInt(timestampHeader, 10);",
                     "if (Number.isNaN(timestampValue)) {",
-                    '    throw new Error("Invalid timestamp format: expected unix seconds");',
+                    "    return false;",
                     "}",
                     "const timestampMs = timestampValue * 1000;"
                 );
@@ -331,7 +329,7 @@ export class WebhooksHelperGenerator {
                     "",
                     "const timestampValue = parseInt(timestampHeader, 10);",
                     "if (Number.isNaN(timestampValue)) {",
-                    '    throw new Error("Invalid timestamp format: expected unix milliseconds");',
+                    "    return false;",
                     "}",
                     "const timestampMs = timestampValue;"
                 );
@@ -341,7 +339,7 @@ export class WebhooksHelperGenerator {
                     "",
                     "const timestampMs = new Date(timestampHeader).getTime();",
                     "if (Number.isNaN(timestampMs)) {",
-                    '    throw new Error("Invalid timestamp format: expected ISO 8601 date string");',
+                    "    return false;",
                     "}"
                 );
                 break;
@@ -362,15 +360,41 @@ export class WebhooksHelperGenerator {
         const hasBodySort = payloadFormat.bodySort != null;
 
         if (hasBodySort) {
-            lines.push(
-                'const bodyString = typeof requestBody === "string"',
-                "    ? requestBody",
-                '    : Object.keys(requestBody).sort().map(key => key + requestBody[key]).join("");'
-            );
+            lines.push(...this.buildBodyStringAssignment(""));
         }
 
         const bodyExpr = hasBodySort ? "bodyString" : "requestBody";
+        lines.push(`const payload = ${this.buildPayloadExpression(payloadFormat, bodyExpr)};`);
+    }
 
+    /**
+     * Emits the `const bodyString = ...` assignment that flattens a form-parameter map
+     * into a signed string. Mirrors Twilio's `toFormUrlEncodedParam`: keys are sorted
+     * (object keys are inherently unique), and for each key the values are deduped and
+     * sorted, concatenating `key + value` for every value with no delimiter between
+     * params. A raw string body is passed through unchanged. `indent` prefixes every
+     * line so the block can be nested inside a branch.
+     */
+    private buildBodyStringAssignment(indent: string): string[] {
+        return [
+            `${indent}const bodyString = typeof requestBody === "string"`,
+            `${indent}    ? requestBody`,
+            `${indent}    : Object.keys(requestBody)`,
+            `${indent}        .sort()`,
+            `${indent}        .map((key) => {`,
+            `${indent}            const value = requestBody[key];`,
+            `${indent}            const values = Array.isArray(value) ? value : [value];`,
+            `${indent}            return Array.from(new Set(values))`,
+            `${indent}                .sort()`,
+            `${indent}                .map((v) => key + v)`,
+            `${indent}                .join("");`,
+            `${indent}        })`,
+            `${indent}        .join("");`
+        ];
+    }
+
+    /** Builds the RHS expression for `payload` from the configured components. */
+    private buildPayloadExpression(payloadFormat: FernIr.WebhookPayloadFormat, bodyExpr: string): string {
         const componentExprs: string[] = [];
         for (const component of payloadFormat.components) {
             switch (component) {
@@ -392,51 +416,74 @@ export class WebhooksHelperGenerator {
         }
 
         // Each component expression is already a string, so a single component can be
-        // assigned directly rather than round-tripping through an array join.
-        if (componentExprs.length === 1) {
-            lines.push(`const payload = ${componentExprs[0]};`);
-            return;
+        // used directly rather than round-tripping through an array join.
+        if (componentExprs.length === 1 && componentExprs[0] != null) {
+            return componentExprs[0];
         }
 
         const delimiter = JSON.stringify(payloadFormat.delimiter);
-        lines.push(`const payload = [${componentExprs.join(", ")}].join(${delimiter});`);
+        return `[${componentExprs.join(", ")}].join(${delimiter})`;
     }
 
-    private addBodyHashVerification(
+    /**
+     * Emits the runtime branch for a body-hash binding. The same endpoint can receive
+     * either a JSON request (body-hash query parameter present) or a classic
+     * form-encoded request (absent), so the signed payload is assembled differently at
+     * runtime and only the JSON path performs the separate body-hash comparison.
+     */
+    private addBodyHashBranchedPayloadConstruction(
         context: FileContext,
         lines: string[],
+        config: FernIr.HmacSignatureVerification,
         binding: FernIr.WebhookBodyHashBinding
     ): void {
-        const algorithm = this.mapBodyHashAlgorithm(binding.algorithm);
-        const encoding = this.mapEncoding(binding.encoding);
-
-        const argsExpr = ts.factory.createObjectLiteralExpression(
-            [
-                ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("requestBody")),
-                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
-                ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
-            ],
-            false
-        );
-        const hashCall = context.coreUtilities.webhookCrypto.computeHash._invoke(argsExpr);
-        lines.push(`const expectedBodyHash = ${getTextOfTsNode(hashCall)};`);
-
         const paramName = this.getBodyHashQueryParameterName(binding.location);
         const extractCall = context.coreUtilities.webhookCrypto.getWebhookQueryParameter._invoke(
             ts.factory.createIdentifier("notificationUrl"),
             ts.factory.createStringLiteral(paramName)
         );
         lines.push(`const transmittedBodyHash = ${getTextOfTsNode(extractCall)};`);
+        lines.push("let payload: string;");
+        lines.push("if (transmittedBodyHash != null) {");
 
+        // JSON path: the URL alone is the signed payload; the raw body is transmitted as a
+        // separately-recomputed hash and compared in constant time. Both must pass.
+        const hasBodySort = config.payloadFormat.bodySort != null;
+        const bodyHashAlgorithm = this.mapBodyHashAlgorithm(binding.algorithm);
+        const bodyHashEncoding = this.mapEncoding(binding.encoding);
+        // When bodySort widens requestBody to a union, narrow it to `string` for the hash
+        // (the JSON path only receives a raw string body).
+        const rawBodyExpr: ts.Expression = hasBodySort
+            ? ts.factory.createAsExpression(
+                  ts.factory.createIdentifier("requestBody"),
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+              )
+            : ts.factory.createIdentifier("requestBody");
+        const hashArgs = ts.factory.createObjectLiteralExpression(
+            [
+                ts.factory.createPropertyAssignment("payload", rawBodyExpr),
+                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(bodyHashAlgorithm)),
+                ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(bodyHashEncoding))
+            ],
+            false
+        );
+        const hashCall = context.coreUtilities.webhookCrypto.computeHash._invoke(hashArgs);
+        lines.push(`    const expectedBodyHash = ${getTextOfTsNode(hashCall)};`);
         const compareCall = context.coreUtilities.webhookCrypto.timingSafeEqual._invoke(
             ts.factory.createIdentifier("expectedBodyHash"),
             ts.factory.createIdentifier("transmittedBodyHash")
         );
-        lines.push(
-            `if (transmittedBodyHash == null || !(${getTextOfTsNode(compareCall)})) {`,
-            "    return false;",
-            "}"
-        );
+        lines.push(`    if (!(${getTextOfTsNode(compareCall)})) {`, "        return false;", "    }");
+        lines.push("    payload = notificationUrl;");
+
+        // Classic form path: URL + sorted/deduped form params, no body-hash check.
+        lines.push("} else {");
+        if (hasBodySort) {
+            lines.push(...this.buildBodyStringAssignment("    "));
+        }
+        const bodyExpr = hasBodySort ? "bodyString" : "requestBody";
+        lines.push(`    payload = ${this.buildPayloadExpression(config.payloadFormat, bodyExpr)};`);
+        lines.push("}");
     }
 
     private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
@@ -523,13 +570,15 @@ export class WebhooksHelperGenerator {
         }
         if (config.payloadFormat.bodySort != null) {
             lines.push(
-                "The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.",
-                "When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
+                "The requestBody parameter accepts either a raw string or a Record<string, string | string[]> of POST body parameters.",
+                "When a Record is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing."
             );
         }
         if (config.bodyHashBinding != null) {
             lines.push(
-                "The raw request body is verified against a hash transmitted separately (not signed directly): pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
+                "This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.",
+                "For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.",
+                "Pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
             );
         }
         return lines.join("\n");
@@ -556,8 +605,8 @@ export class WebhooksHelperGenerator {
         }
         if (config.payloadFormat?.bodySort != null) {
             lines.push(
-                "The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.",
-                "When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
+                "The requestBody parameter accepts either a raw string or a Record<string, string | string[]> of POST body parameters.",
+                "When a Record is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing."
             );
         }
         return lines.join("\n");

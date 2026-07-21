@@ -9,3 +9,5 @@ export type { VerifyAsymmetricSignatureArgs, AsymmetricAlgorithm } from "./verif
 export { timingSafeEqual } from "./timingSafeEqual";
 export { fetchJwks } from "./fetchJwks";
 export type { FetchJwksArgs } from "./fetchJwks";
+export { notificationUrlCandidates } from "./notificationUrlCandidates";
+export type { NotificationUrlCandidatesOptions } from "./notificationUrlCandidates";

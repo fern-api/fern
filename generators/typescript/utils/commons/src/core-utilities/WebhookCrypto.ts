@@ -12,6 +12,9 @@ export interface WebhookCrypto {
     getWebhookQueryParameter: {
         _invoke: (url: ts.Expression, name: ts.Expression) => ts.Expression;
     };
+    notificationUrlCandidates: {
+        _invoke: (url: ts.Expression, options: ts.Expression) => ts.Expression;
+    };
     verifyAsymmetricSignature: {
         _invoke: (args: ts.Expression) => ts.Expression;
     };
@@ -63,6 +66,19 @@ export class WebhookCryptoImpl extends CoreUtility implements WebhookCrypto {
                     return ts.factory.createCallExpression(getWebhookQueryParameter.getExpression(), undefined, [
                         url,
                         name
+                    ]);
+                }
+        )
+    };
+
+    public readonly notificationUrlCandidates = {
+        _invoke: this.withExportedName(
+            "notificationUrlCandidates",
+            (notificationUrlCandidates) =>
+                (url: ts.Expression, options: ts.Expression): ts.Expression => {
+                    return ts.factory.createCallExpression(notificationUrlCandidates.getExpression(), undefined, [
+                        url,
+                        options
                     ]);
                 }
         )
