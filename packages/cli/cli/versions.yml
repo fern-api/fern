@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.75.7
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.52. Under `--version AUTO`, the AI-authored
+        `changelog.md` no longer reports routine version bumps (e.g. the `User-Agent` /
+        `X-Fern-SDK-Version` headers) as changed or removed, and the Go `/vN` module suffix
+        is retained in the `X-Fern-SDK-Name` header value and README install/import samples.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 5.75.6
   changelogEntry:
     - summary: |
