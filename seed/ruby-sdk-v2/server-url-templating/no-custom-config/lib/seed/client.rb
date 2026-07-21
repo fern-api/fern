@@ -123,14 +123,11 @@ module Seed
             auth: "https://auth.#{region_value}.example.com"
           }
         }
-        if environment.nil?
-          environment = {
-            base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
-            auth: "https://auth.#{region_value}.example.com"
-          }
-        else
-          environment = environment_url_templates.fetch(environment, environment)
-        end
+        environment = environment_url_templates.fetch(environment, environment)
+        environment ||= {
+          base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
+          auth: "https://auth.#{region_value}.example.com"
+        }
       end
 
       @base_url = base_url

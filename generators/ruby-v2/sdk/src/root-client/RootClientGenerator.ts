@@ -1290,16 +1290,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     });
                     writer.dedent();
                     writer.writeLine(`}`);
-                    writer.writeLine(`if environment.nil?`);
-                    writer.indent();
-                    writer.write(`environment = `);
-                    writeEntries(writer, entriesForEnvironment(firstTemplatedEnvironment), "");
-                    writer.dedent();
-                    writer.writeLine(`else`);
-                    writer.indent();
                     writer.writeLine(`environment = environment_url_templates.fetch(environment, environment)`);
-                    writer.dedent();
-                    writer.writeLine(`end`);
+                    writer.write(`environment ||= `);
+                    writeEntries(writer, entriesForEnvironment(firstTemplatedEnvironment), "");
                     writer.dedent();
                     writer.writeLine(`end`);
                 });

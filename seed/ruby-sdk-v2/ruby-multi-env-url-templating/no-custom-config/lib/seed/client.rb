@@ -25,14 +25,11 @@ module Seed
             oauth: "https://oauth.dev.#{region_value}.acme.com"
           }
         }
-        if environment.nil?
-          environment = {
-            acme: "https://api.#{region_value}.acme.com",
-            oauth: "https://oauth.#{region_value}.acme.com"
-          }
-        else
-          environment = environment_url_templates.fetch(environment, environment)
-        end
+        environment = environment_url_templates.fetch(environment, environment)
+        environment ||= {
+          acme: "https://api.#{region_value}.acme.com",
+          oauth: "https://oauth.#{region_value}.acme.com"
+        }
       end
 
       @base_url = base_url
