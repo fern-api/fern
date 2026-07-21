@@ -177,6 +177,12 @@ function convertUrlNormalization(
         );
         return undefined;
     }
+    if (!portVariants && !legacyQueryEncoding) {
+        logger.warn(
+            'Ignoring webhook url-normalization: enable at least one of "port-variants" or "legacy-query-encoding".'
+        );
+        return undefined;
+    }
     return {
         portVariants: portVariants ?? false,
         legacyQueryEncoding: legacyQueryEncoding ?? false
