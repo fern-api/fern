@@ -28,14 +28,13 @@ Add a movie to the database using the movies/* /... path.
 
 ```go
 request := &inhereplease.CreateMovieRequest{
-        Title: "title",
-        Rating: 1.1,
-    }
-client.Imdb.CreateMovie(
-        context.TODO(),
-        request,
-    )
+    Title: "title",
+    Rating: 1.1,
 }
+client.Imdb.CreateMovie(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -84,13 +83,12 @@ client.Imdb.CreateMovie(
 
 ```go
 request := &inhereplease.GetMovieImdbRequest{
-        MovieID: "movieId",
-    }
-client.Imdb.GetMovie(
-        context.TODO(),
-        request,
-    )
+    MovieID: "movieId",
 }
+client.Imdb.GetMovie(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

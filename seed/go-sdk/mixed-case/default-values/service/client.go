@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Service.GetResource(
+//	    context.TODO(),
+//	    "rsc-xyz",
+//	)
 func (c *Client) GetResource(
 	ctx context.Context,
 	resourceID string,
@@ -50,6 +56,18 @@ func (c *Client) GetResource(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.ListResourcesRequest{
+//	    PageLimit: 10,
+//	    BeforeDate: fern.MustParseDate(
+//	        "2023-01-01",
+//	    ),
+//	}
+//	client.Service.ListResources(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListResources(
 	ctx context.Context,
 	request *fern.ListResourcesRequest,

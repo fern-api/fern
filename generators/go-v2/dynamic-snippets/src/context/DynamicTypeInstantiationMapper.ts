@@ -84,6 +84,11 @@ export class DynamicTypeInstantiationMapper {
                         return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
                     }
                 }
+                // A nullable literal is materialized (e.g. fern.String("S256")) so it is set on
+                // the request field and serialized on the wire, rather than being a no-op.
+                if (inner.type === "literal") {
+                    return this.convertLiteralToOptionalPrimitive(inner.value);
+                }
                 // Default behavior for all other nullables
                 return go.TypeInstantiation.optional(
                     this.convert({ typeReference: inner, value: args.value, as: args.as })
@@ -123,6 +128,11 @@ export class DynamicTypeInstantiationMapper {
                     if (named?.type === "alias" && named.typeReference.type === "literal") {
                         return this.convertLiteralToOptionalPrimitive(named.typeReference.value);
                     }
+                }
+                // An optional literal is materialized (e.g. fern.String("S256")) so it is set on
+                // the request field and serialized on the wire, rather than being a no-op.
+                if (inner.type === "literal") {
+                    return this.convertLiteralToOptionalPrimitive(inner.value);
                 }
                 // Default behavior for all other optionals
                 return go.TypeInstantiation.optional(

@@ -51,6 +51,14 @@ class SyspropClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->sysprop->setNumWarmInstances(
+     *     Language::Java->value,
+     *     1,
+     * );
+     * ```
+     *
      * @param value-of<Language> $language
      * @param int $numWarmInstances
      * @param ?array{
@@ -91,6 +99,11 @@ class SyspropClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->sysprop->getNumWarmInstances();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

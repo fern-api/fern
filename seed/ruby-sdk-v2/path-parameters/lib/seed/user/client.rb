@@ -20,6 +20,12 @@ module Seed
       # @option params [String] :tenant_id
       # @option params [String] :user_id
       #
+      # @example
+      #   client.user.get_user(
+      #     tenant_id: "tenant_id",
+      #     user_id: "user_id"
+      #   )
+      #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -51,6 +57,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :tenant_id
+      #
+      # @example
+      #   client.user.create_user(
+      #     tenant_id: "tenant_id",
+      #     name: "name",
+      #     tags: %w[tags tags]
+      #   )
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
@@ -85,6 +98,14 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :tenant_id
       # @option params [String] :user_id
+      #
+      # @example
+      #   client.user.update_user(
+      #     tenant_id: "tenant_id",
+      #     user_id: "user_id",
+      #     name: "name",
+      #     tags: %w[tags tags]
+      #   )
       #
       # @return [Seed::User::Types::User]
       def update_user(request_options: {}, **params)
@@ -124,6 +145,13 @@ module Seed
       # @option params [String] :user_id
       # @option params [Integer, nil] :limit
       #
+      # @example
+      #   client.user.search_users(
+      #     tenant_id: "tenant_id",
+      #     user_id: "user_id",
+      #     limit: 1
+      #   )
+      #
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -162,6 +190,13 @@ module Seed
       # @option params [String] :user_id
       # @option params [Integer] :version
       #
+      # @example
+      #   client.user.get_user_metadata(
+      #     tenant_id: "tenant_id",
+      #     user_id: "user_id",
+      #     version: 1
+      #   )
+      #
       # @return [Seed::User::Types::User]
       def get_user_metadata(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -198,6 +233,14 @@ module Seed
       # @option params [String] :user_id
       # @option params [Integer] :version
       # @option params [String] :thought
+      #
+      # @example
+      #   client.user.get_user_specifics(
+      #     tenant_id: "tenant_id",
+      #     user_id: "user_id",
+      #     version: 1,
+      #     thought: "thought"
+      #   )
       #
       # @return [Seed::User::Types::User]
       def get_user_specifics(request_options: {}, **params)

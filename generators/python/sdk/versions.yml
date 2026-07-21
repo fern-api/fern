@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.20.2
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an `environment` and server URL
+        variables (e.g. `region`), the generated client now renders the selected
+        environment's URL template instead of always using the default (first)
+        environment's template. For example, `Client(environment=Environment.STAGING,
+        region="ie1")` now resolves to the Staging template
+        (`https://api.stage.ie1.example.com`) rather than the Production one.
+        An explicitly provided `base_url` is no longer overridden by URL variables.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 5.20.1
+  changelogEntry:
+    - summary: |
+        Stop passing required literal query parameters as keyword arguments in generated
+        snippets and wire tests. Required literals (e.g. `response_type="code"`) are
+        hardcoded inside the generated method and omitted from its signature, so passing
+        them raised `TypeError: got an unexpected keyword argument`. Optional literal
+        query parameters remain in the signature and are still included.
+      type: fix
+  createdAt: "2026-07-17"
+  irVersion: 67
 - version: 5.20.0
   changelogEntry:
     - summary: |

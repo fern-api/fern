@@ -50,6 +50,11 @@ class RetriesClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->retries->getUsers();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

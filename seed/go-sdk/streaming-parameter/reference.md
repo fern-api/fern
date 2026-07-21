@@ -14,14 +14,13 @@
 
 ```go
 request := &fern.GenerateRequest{
-        Stream: false,
-        NumEvents: 5,
-    }
-client.Dummy.Generate(
-        context.TODO(),
-        request,
-    )
+    Stream: false,
+    NumEvents: 5,
 }
+client.Dummy.Generate(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

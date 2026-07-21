@@ -20,6 +20,29 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.inlined_requests.post_with_object_bodyand_response(
+      #     string: "string",
+      #     integer: 1,
+      #     nested_object: {
+      #       string: "string",
+      #       integer: 1,
+      #       long: 1000000,
+      #       double: 1.1,
+      #       bool: true,
+      #       datetime: "2024-01-15T09:30:00Z",
+      #       date: "2023-01-15",
+      #       uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       base64: "SGVsbG8gd29ybGQh",
+      #       list: %w[list list],
+      #       set: Set.new(["set"]),
+      #       map: {
+      #         1 => "map"
+      #       },
+      #       bigint: "1000000"
+      #     }
+      #   )
+      #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def post_with_object_bodyand_response(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -54,6 +77,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String, nil] :x_custom_header
+      #
+      # @example
+      #   client.inlined_requests.post_with_array_body_and_headers(
+      #     x_custom_header: "X-Custom-Header",
+      #     body: %w[string string]
+      #   )
       #
       # @return [String]
       def post_with_array_body_and_headers(request_options: {}, **params)

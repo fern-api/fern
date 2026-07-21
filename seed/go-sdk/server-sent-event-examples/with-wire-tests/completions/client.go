@@ -35,6 +35,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &sse.StreamCompletionRequest{
+//	    Query: "foo",
+//	}
+//	client.Completions.Stream(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Stream(
 	ctx context.Context,
 	request *sse.StreamCompletionRequest,
@@ -74,6 +83,15 @@ func (c *Client) Stream(
 	)
 }
 
+// Example:
+//
+//	request := &sse.StreamEventsRequest{
+//	    Query: "query",
+//	}
+//	client.Completions.StreamEvents(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamEvents(
 	ctx context.Context,
 	request *sse.StreamEventsRequest,
@@ -113,6 +131,15 @@ func (c *Client) StreamEvents(
 	)
 }
 
+// Example:
+//
+//	request := &sse.StreamEventsDiscriminantInDataRequest{
+//	    Query: "query",
+//	}
+//	client.Completions.StreamEventsDiscriminantInData(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamEventsDiscriminantInData(
 	ctx context.Context,
 	request *sse.StreamEventsDiscriminantInDataRequest,
@@ -153,6 +180,15 @@ func (c *Client) StreamEventsDiscriminantInData(
 	)
 }
 
+// Example:
+//
+//	request := &sse.StreamEventsContextProtocolRequest{
+//	    Query: "query",
+//	}
+//	client.Completions.StreamEventsContextProtocol(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) StreamEventsContextProtocol(
 	ctx context.Context,
 	request *sse.StreamEventsContextProtocolRequest,

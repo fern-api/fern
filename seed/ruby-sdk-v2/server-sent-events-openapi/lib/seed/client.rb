@@ -14,6 +14,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_protocol_no_collision
+    #
     # @return [untyped]
     def stream_protocol_no_collision(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -47,6 +50,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_protocol_collision
     #
     # @return [untyped]
     def stream_protocol_collision(request_options: {}, **params)
@@ -83,6 +89,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_data_context
+    #
     # @return [untyped]
     def stream_data_context(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -115,6 +124,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_no_context
     #
     # @return [untyped]
     def stream_no_context(request_options: {}, **params)
@@ -150,6 +162,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_protocol_with_flat_schema
+    #
     # @return [untyped]
     def stream_protocol_with_flat_schema(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -183,6 +198,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_data_context_with_envelope_schema
     #
     # @return [untyped]
     def stream_data_context_with_envelope_schema(request_options: {}, **params)
@@ -219,6 +237,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_oas_spec_native
+    #
     # @return [untyped]
     def stream_oas_spec_native(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -253,6 +274,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_condition_stream(
+    #     query: "query",
+    #     stream: true
+    #   )
+    #
     # @return [untyped]
     def stream_x_fern_streaming_condition_stream(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -286,6 +313,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_condition_stream(
+    #     query: "query",
+    #     stream: false
+    #   )
     #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_condition(request_options: {}, **params)
@@ -323,6 +356,13 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_shared_schema_stream(
+    #     prompt: "prompt",
+    #     model: "model",
+    #     stream: true
+    #   )
+    #
     # @return [untyped]
     def stream_x_fern_streaming_shared_schema_stream(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -356,6 +396,13 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_shared_schema_stream(
+    #     prompt: "prompt",
+    #     model: "model",
+    #     stream: false
+    #   )
     #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_shared_schema(request_options: {}, **params)
@@ -391,6 +438,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.validate_completion(
+    #     prompt: "prompt",
+    #     model: "model"
+    #   )
     #
     # @return [Seed::Types::CompletionFullResponse]
     def validate_completion(request_options: {}, **params)
@@ -428,6 +481,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_union_stream
+    #
     # @return [untyped]
     def stream_x_fern_streaming_union_stream(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -461,6 +517,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_union_stream
     #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_union(request_options: {}, **params)
@@ -497,6 +556,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.validate_union_request(prompt: "prompt")
     #
     # @return [Seed::Types::ValidateUnionRequestResponse]
     def validate_union_request(request_options: {}, **params)
@@ -535,6 +597,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_nullable_condition_stream(
+    #     query: "query",
+    #     stream: true
+    #   )
+    #
     # @return [untyped]
     def stream_x_fern_streaming_nullable_condition_stream(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -570,6 +638,12 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.stream_x_fern_streaming_nullable_condition_stream(
+    #     query: "query",
+    #     stream: false
+    #   )
+    #
     # @return [Seed::Types::CompletionFullResponse]
     def stream_x_fern_streaming_nullable_condition(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -604,6 +678,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_x_fern_streaming_sse_only
     #
     # @return [untyped]
     def stream_x_fern_streaming_sse_only(request_options: {}, **params)

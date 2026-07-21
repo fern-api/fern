@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.User.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,

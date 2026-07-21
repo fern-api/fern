@@ -60,4 +60,56 @@ import Literal
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func sendLiteralsOnly1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "message": "The weather is sunny",
+                  "status": 200,
+                  "success": true
+                }
+                """#.utf8
+            )
+        )
+        let client = LiteralClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = SendResponse(
+            message: "The weather is sunny",
+            status: 200,
+            success: true
+        )
+        let response = try await client.headers.sendLiteralsOnly(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
+
+    @Test func sendLiteralsOnly2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "message": "message",
+                  "status": 1,
+                  "success": true
+                }
+                """#.utf8
+            )
+        )
+        let client = LiteralClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = SendResponse(
+            message: "message",
+            status: 1,
+            success: true
+        )
+        let response = try await client.headers.sendLiteralsOnly(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
 }

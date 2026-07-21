@@ -14,13 +14,12 @@
 
 ```go
 request := &fern.SendLiteralsInHeadersRequest{
-        Query: "What is the weather today",
-    }
-client.Headers.Send(
-        context.TODO(),
-        request,
-    )
+    Query: "What is the weather today",
 }
+client.Headers.Send(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -63,6 +62,56 @@ client.Headers.Send(
 </dl>
 </details>
 
+<details><summary><code>client.Headers.SendLiteralsOnly() -> *fern.SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Headers.SendLiteralsOnly(
+    context.TODO(),
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**endpointVersion:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.Inlined.Send(request) -> *fern.SendResponse</code></summary>
 <dl>
@@ -78,25 +127,27 @@ client.Headers.Send(
 
 ```go
 request := &fern.SendLiteralsInlinedRequest{
-        Query: "What is the weather today",
-        Temperature: fern.Float64(
-            10.1,
-        ),
-        AliasedContext: fern.SomeAliasedLiteral(
-            "You're super wise",
-        ),
-        MaybeContext: fern.String(
-            "You're super wise",
-        ),
-        ObjectWithLiteral: &fern.ATopLevelLiteral{
-            NestedLiteral: &fern.ANestedLiteral{},
-        },
-    }
-client.Inlined.Send(
-        context.TODO(),
-        request,
-    )
+    Context: fern.String(
+        "You're super wise",
+    ),
+    Query: "What is the weather today",
+    Temperature: fern.Float64(
+        10.1,
+    ),
+    AliasedContext: fern.SomeAliasedLiteral(
+        "You're super wise",
+    ),
+    MaybeContext: fern.String(
+        "You're super wise",
+    ),
+    ObjectWithLiteral: &fern.ATopLevelLiteral{
+        NestedLiteral: &fern.ANestedLiteral{},
+    },
 }
+client.Inlined.Send(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -194,10 +245,9 @@ client.Inlined.Send(
 
 ```go
 client.Path.Send(
-        context.TODO(),
-        "123",
-    )
-}
+    context.TODO(),
+    "123",
+)
 ```
 </dd>
 </dl>
@@ -239,25 +289,30 @@ client.Path.Send(
 
 ```go
 request := &fern.SendLiteralsInQueryRequest{
-        AliasPrompt: fern.AliasToPrompt(
-            "You are a helpful assistant",
-        ),
-        AliasOptionalPrompt: fern.String(
-            "You are a helpful assistant",
-        ),
-        AliasStream: fern.AliasToStream(
-            false,
-        ),
-        AliasOptionalStream: fern.Bool(
-            false,
-        ),
-        Query: "What is the weather today",
-    }
-client.Query.Send(
-        context.TODO(),
-        request,
-    )
+    OptionalPrompt: fern.String(
+        "You are a helpful assistant",
+    ),
+    AliasPrompt: fern.AliasToPrompt(
+        "You are a helpful assistant",
+    ),
+    AliasOptionalPrompt: fern.String(
+        "You are a helpful assistant",
+    ),
+    OptionalStream: fern.Bool(
+        false,
+    ),
+    AliasStream: fern.AliasToStream(
+        false,
+    ),
+    AliasOptionalStream: fern.Bool(
+        false,
+    ),
+    Query: "What is the weather today",
 }
+client.Query.Send(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -363,23 +418,22 @@ client.Query.Send(
 
 ```go
 request := &fern.SendRequest{
-        Query: "What is the weather today",
-        Context: fern.SomeLiteral(
-            "You're super wise",
-        ),
-        ContainerObject: &fern.ContainerObject{
-            NestedObjects: []*fern.NestedObjectWithLiterals{
-                &fern.NestedObjectWithLiterals{
-                    StrProp: "strProp",
-                },
+    Query: "What is the weather today",
+    Context: fern.SomeLiteral(
+        "You're super wise",
+    ),
+    ContainerObject: &fern.ContainerObject{
+        NestedObjects: []*fern.NestedObjectWithLiterals{
+            &fern.NestedObjectWithLiterals{
+                StrProp: "strProp",
             },
         },
-    }
-client.Reference.Send(
-        context.TODO(),
-        request,
-    )
+    },
 }
+client.Reference.Send(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

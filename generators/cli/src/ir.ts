@@ -19,6 +19,17 @@ export interface IrSummary {
     apiDisplayName: string | undefined;
     auth: { schemes: FernIr.AuthScheme[] };
     globalParameters: FernIr.GlobalParameter[];
+    /**
+     * The IR's services, keyed by service id. Used to resolve an OAuth
+     * client-credentials scheme's `tokenEndpoint.endpointReference` to a
+     * concrete request path when wiring the token URL.
+     */
+    services: Record<string, FernIr.HttpService>;
+    /**
+     * The IR's environment configuration, if the API declares one. Used
+     * to resolve the base URL the OAuth token endpoint path is joined to.
+     */
+    environments: FernIr.EnvironmentsConfig | undefined;
 }
 
 /**
@@ -58,6 +69,8 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
     return {
         apiDisplayName: ir.apiDisplayName,
         auth: { schemes: ir.auth.schemes },
-        globalParameters: ir.globalParameters ?? []
+        globalParameters: ir.globalParameters ?? [],
+        services: ir.services,
+        environments: ir.environments
     };
 }

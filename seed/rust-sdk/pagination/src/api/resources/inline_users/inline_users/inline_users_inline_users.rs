@@ -13,6 +13,34 @@ impl InlineUsersClient2 {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_cursor_pagination(
+    ///             &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+    ///                 page: Some(1),
+    ///                 per_page: Some(1),
+    ///                 order: Some(Order::Asc),
+    ///                 starting_after: Some("starting_after".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_cursor_pagination(
         &self,
         request: &InlineUsersInlineUsersListWithCursorPaginationQueryRequest,
@@ -34,6 +62,31 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_mixed_type_cursor_pagination(
+    ///             &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+    ///                 cursor: Some("cursor".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_mixed_type_cursor_pagination(
         &self,
         request: &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest,
@@ -52,6 +105,30 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_mixed_type_cursor_pagination(
+    ///             &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_body_cursor_pagination(
         &self,
         request: &ListUsersBodyCursorPaginationRequest,
@@ -68,6 +145,34 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_cursor_pagination(
+    ///             &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+    ///                 page: Some(1),
+    ///                 per_page: Some(1),
+    ///                 order: Some(Order::Asc),
+    ///                 starting_after: Some("starting_after".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_offset_pagination(
         &self,
         request: &InlineUsersInlineUsersListWithOffsetPaginationQueryRequest,
@@ -89,6 +194,34 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_double_offset_pagination(
+    ///             &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
+    ///                 page: Some(1.1),
+    ///                 per_page: Some(1.1),
+    ///                 order: Some(Order::Asc),
+    ///                 starting_after: Some("starting_after".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_double_offset_pagination(
         &self,
         request: &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest,
@@ -110,6 +243,30 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_mixed_type_cursor_pagination(
+    ///             &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_body_offset_pagination(
         &self,
         request: &ListUsersBodyOffsetPaginationRequest,
@@ -126,6 +283,33 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_offset_step_pagination(
+    ///             &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
+    ///                 page: Some(1),
+    ///                 limit: Some(1),
+    ///                 order: Some(Order::Asc),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_offset_step_pagination(
         &self,
         request: &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest,
@@ -146,6 +330,33 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_offset_step_pagination(
+    ///             &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
+    ///                 page: Some(1),
+    ///                 limit: Some(1),
+    ///                 order: Some(Order::Asc),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_offset_pagination_has_next_page(
         &self,
         request: &InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest,
@@ -166,6 +377,31 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_extended_results(
+    ///             &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
+    ///                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_extended_results(
         &self,
         request: &InlineUsersInlineUsersListWithExtendedResultsQueryRequest,
@@ -184,6 +420,31 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_extended_results(
+    ///             &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
+    ///                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_extended_results_and_optional_data(
         &self,
         request: &InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest,
@@ -202,6 +463,31 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_cursor_pagination(
+    ///             &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+    ///                 starting_after: Some("starting_after".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_usernames(
         &self,
         request: &InlineUsersInlineUsersListUsernamesQueryRequest,
@@ -220,6 +506,31 @@ impl InlineUsersClient2 {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_pagination::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = PaginationClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inline_users
+    ///         .inline_users
+    ///         .list_with_global_config(
+    ///             &InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
+    ///                 offset: Some(1),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_with_global_config(
         &self,
         request: &InlineUsersInlineUsersListWithGlobalConfigQueryRequest,

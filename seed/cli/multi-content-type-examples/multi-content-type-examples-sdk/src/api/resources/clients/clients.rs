@@ -13,6 +13,33 @@ impl ClientsClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use multi_content_type_examples_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MultiContentTypeExamplesClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .clients
+    ///         .create(
+    ///             &ClientRequest {
+    ///                 client: Some(Client {
+    ///                     name: "Acme Corp".to_string(),
+    ///                     email: "contact@acme.com".to_string(),
+    ///                     ..Default::default()
+    ///                 }),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create(
         &self,
         request: &ClientRequest,

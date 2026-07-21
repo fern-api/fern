@@ -13,13 +13,12 @@
 
 ```go
 request := &fern.TestGetRequest{
-        Region: "region",
-    }
-client.TestGet(
-        context.TODO(),
-        request,
-    )
+    Region: "region",
 }
+client.TestGet(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

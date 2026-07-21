@@ -13,6 +13,21 @@ impl V2Client {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.v1.list_users(None).await;
+    /// }
+    /// ```
     pub async fn list_users(
         &self,
         request: &ListUsersQueryRequest,

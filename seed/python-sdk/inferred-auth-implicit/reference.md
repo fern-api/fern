@@ -60,14 +60,6 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**client_secret:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **audience:** `typing.Literal` 
     
 </dd>
@@ -77,6 +69,14 @@ client.auth.get_token_with_client_credentials(
 <dd>
 
 **grant_type:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `typing.Optional[str]` 
     
 </dd>
 </dl>

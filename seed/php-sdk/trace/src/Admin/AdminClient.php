@@ -56,6 +56,14 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->updateTestSubmissionStatus(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     TestSubmissionStatus::stopped(),
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param TestSubmissionStatus $request
      * @param ?array{
@@ -97,6 +105,17 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->sendTestSubmissionUpdate(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     new TestSubmissionUpdate([
+     *         'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
+     *         'updateInfo' => TestSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param TestSubmissionUpdate $request
      * @param ?array{
@@ -138,6 +157,14 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->updateWorkspaceSubmissionStatus(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     WorkspaceSubmissionStatus::stopped(),
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param WorkspaceSubmissionStatus $request
      * @param ?array{
@@ -179,6 +206,17 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->sendWorkspaceSubmissionUpdate(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     new WorkspaceSubmissionUpdate([
+     *         'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
+     *         'updateInfo' => WorkspaceSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param WorkspaceSubmissionUpdate $request
      * @param ?array{
@@ -220,6 +258,84 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->storeTracedTestCase(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     'testCaseId',
+     *     new StoreTracedTestCaseRequest([
+     *         'result' => new TestCaseResultWithStdout([
+     *             'result' => new TestCaseResult([
+     *                 'expectedResult' => VariableValue::integerValue(1),
+     *                 'actualResult' => ActualResult::value(VariableValue::integerValue(1)),
+     *                 'passed' => true,
+     *             ]),
+     *             'stdout' => 'stdout',
+     *         ]),
+     *         'traceResponses' => [
+     *             new TraceResponse([
+     *                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *                 'lineNumber' => 1,
+     *                 'returnValue' => DebugVariableValue::integerValue(1),
+     *                 'expressionLocation' => new ExpressionLocation([
+     *                     'start' => 1,
+     *                     'offset' => 1,
+     *                 ]),
+     *                 'stack' => new StackInformation([
+     *                     'numStackFrames' => 1,
+     *                     'topStackFrame' => new StackFrame([
+     *                         'methodName' => 'methodName',
+     *                         'lineNumber' => 1,
+     *                         'scopes' => [
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                         ],
+     *                     ]),
+     *                 ]),
+     *                 'stdout' => 'stdout',
+     *             ]),
+     *             new TraceResponse([
+     *                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *                 'lineNumber' => 1,
+     *                 'returnValue' => DebugVariableValue::integerValue(1),
+     *                 'expressionLocation' => new ExpressionLocation([
+     *                     'start' => 1,
+     *                     'offset' => 1,
+     *                 ]),
+     *                 'stack' => new StackInformation([
+     *                     'numStackFrames' => 1,
+     *                     'topStackFrame' => new StackFrame([
+     *                         'methodName' => 'methodName',
+     *                         'lineNumber' => 1,
+     *                         'scopes' => [
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                         ],
+     *                     ]),
+     *                 ]),
+     *                 'stdout' => 'stdout',
+     *             ]),
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param string $testCaseId
      * @param StoreTracedTestCaseRequest $request
@@ -262,6 +378,82 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->storeTracedTestCaseV2(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     'testCaseId',
+     *     [
+     *         new TraceResponseV2([
+     *             'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *             'lineNumber' => 1,
+     *             'file' => new TracedFile([
+     *                 'filename' => 'filename',
+     *                 'directory' => 'directory',
+     *             ]),
+     *             'returnValue' => DebugVariableValue::integerValue(1),
+     *             'expressionLocation' => new ExpressionLocation([
+     *                 'start' => 1,
+     *                 'offset' => 1,
+     *             ]),
+     *             'stack' => new StackInformation([
+     *                 'numStackFrames' => 1,
+     *                 'topStackFrame' => new StackFrame([
+     *                     'methodName' => 'methodName',
+     *                     'lineNumber' => 1,
+     *                     'scopes' => [
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                     ],
+     *                 ]),
+     *             ]),
+     *             'stdout' => 'stdout',
+     *         ]),
+     *         new TraceResponseV2([
+     *             'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *             'lineNumber' => 1,
+     *             'file' => new TracedFile([
+     *                 'filename' => 'filename',
+     *                 'directory' => 'directory',
+     *             ]),
+     *             'returnValue' => DebugVariableValue::integerValue(1),
+     *             'expressionLocation' => new ExpressionLocation([
+     *                 'start' => 1,
+     *                 'offset' => 1,
+     *             ]),
+     *             'stack' => new StackInformation([
+     *                 'numStackFrames' => 1,
+     *                 'topStackFrame' => new StackFrame([
+     *                     'methodName' => 'methodName',
+     *                     'lineNumber' => 1,
+     *                     'scopes' => [
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                     ],
+     *                 ]),
+     *             ]),
+     *             'stdout' => 'stdout',
+     *         ]),
+     *     ],
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param string $testCaseId
      * @param array<TraceResponseV2> $request
@@ -304,6 +496,88 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->storeTracedWorkspace(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     new StoreTracedWorkspaceRequest([
+     *         'workspaceRunDetails' => new WorkspaceRunDetails([
+     *             'exceptionV2' => ExceptionV2::generic(new ExceptionInfo([
+     *                 'exceptionType' => 'exceptionType',
+     *                 'exceptionMessage' => 'exceptionMessage',
+     *                 'exceptionStacktrace' => 'exceptionStacktrace',
+     *             ])),
+     *             'exception' => new ExceptionInfo([
+     *                 'exceptionType' => 'exceptionType',
+     *                 'exceptionMessage' => 'exceptionMessage',
+     *                 'exceptionStacktrace' => 'exceptionStacktrace',
+     *             ]),
+     *             'stdout' => 'stdout',
+     *         ]),
+     *         'traceResponses' => [
+     *             new TraceResponse([
+     *                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *                 'lineNumber' => 1,
+     *                 'returnValue' => DebugVariableValue::integerValue(1),
+     *                 'expressionLocation' => new ExpressionLocation([
+     *                     'start' => 1,
+     *                     'offset' => 1,
+     *                 ]),
+     *                 'stack' => new StackInformation([
+     *                     'numStackFrames' => 1,
+     *                     'topStackFrame' => new StackFrame([
+     *                         'methodName' => 'methodName',
+     *                         'lineNumber' => 1,
+     *                         'scopes' => [
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                         ],
+     *                     ]),
+     *                 ]),
+     *                 'stdout' => 'stdout',
+     *             ]),
+     *             new TraceResponse([
+     *                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *                 'lineNumber' => 1,
+     *                 'returnValue' => DebugVariableValue::integerValue(1),
+     *                 'expressionLocation' => new ExpressionLocation([
+     *                     'start' => 1,
+     *                     'offset' => 1,
+     *                 ]),
+     *                 'stack' => new StackInformation([
+     *                     'numStackFrames' => 1,
+     *                     'topStackFrame' => new StackFrame([
+     *                         'methodName' => 'methodName',
+     *                         'lineNumber' => 1,
+     *                         'scopes' => [
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                             new Scope([
+     *                                 'variables' => [
+     *                                     'variables' => DebugVariableValue::integerValue(1),
+     *                                 ],
+     *                             ]),
+     *                         ],
+     *                     ]),
+     *                 ]),
+     *                 'stdout' => 'stdout',
+     *             ]),
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param StoreTracedWorkspaceRequest $request
      * @param ?array{
@@ -345,6 +619,81 @@ class AdminClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->admin->storeTracedWorkspaceV2(
+     *     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *     [
+     *         new TraceResponseV2([
+     *             'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *             'lineNumber' => 1,
+     *             'file' => new TracedFile([
+     *                 'filename' => 'filename',
+     *                 'directory' => 'directory',
+     *             ]),
+     *             'returnValue' => DebugVariableValue::integerValue(1),
+     *             'expressionLocation' => new ExpressionLocation([
+     *                 'start' => 1,
+     *                 'offset' => 1,
+     *             ]),
+     *             'stack' => new StackInformation([
+     *                 'numStackFrames' => 1,
+     *                 'topStackFrame' => new StackFrame([
+     *                     'methodName' => 'methodName',
+     *                     'lineNumber' => 1,
+     *                     'scopes' => [
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                     ],
+     *                 ]),
+     *             ]),
+     *             'stdout' => 'stdout',
+     *         ]),
+     *         new TraceResponseV2([
+     *             'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *             'lineNumber' => 1,
+     *             'file' => new TracedFile([
+     *                 'filename' => 'filename',
+     *                 'directory' => 'directory',
+     *             ]),
+     *             'returnValue' => DebugVariableValue::integerValue(1),
+     *             'expressionLocation' => new ExpressionLocation([
+     *                 'start' => 1,
+     *                 'offset' => 1,
+     *             ]),
+     *             'stack' => new StackInformation([
+     *                 'numStackFrames' => 1,
+     *                 'topStackFrame' => new StackFrame([
+     *                     'methodName' => 'methodName',
+     *                     'lineNumber' => 1,
+     *                     'scopes' => [
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                         new Scope([
+     *                             'variables' => [
+     *                                 'variables' => DebugVariableValue::integerValue(1),
+     *                             ],
+     *                         ]),
+     *                     ],
+     *                 ]),
+     *             ]),
+     *             'stdout' => 'stdout',
+     *         ]),
+     *     ],
+     * );
+     * ```
+     *
      * @param string $submissionId
      * @param array<TraceResponseV2> $request
      * @param ?array{

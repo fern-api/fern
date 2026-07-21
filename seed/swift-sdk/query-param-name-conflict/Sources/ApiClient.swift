@@ -53,6 +53,21 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.bulkUpdateTasks(request: .init())
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter fields: Comma-separated list of fields to include in the response.
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func bulkUpdateTasks(filterAssignedTo: Nullable<String>? = nil, filterIsComplete: Nullable<String>? = nil, filterDate: Nullable<String>? = nil, fields: String? = nil, request: Requests.BulkUpdateTasksRequest, requestOptions: RequestOptions? = nil) async throws -> BulkUpdateTasksResponse {
         return try await httpClient.performRequest(
             method: .put,

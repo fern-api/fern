@@ -1,0 +1,4 @@
+- summary: |
+    Endpoint methods now include a usage example in their YARD doc comment via the
+    `@example` tag, so IDEs surface a code snippet on hover.
+  type: feat

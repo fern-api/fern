@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.TestRequest{
+//	    For: "for",
+//	}
+//	client.Package.Test(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Test(
 	ctx context.Context,
 	request *fern.TestRequest,

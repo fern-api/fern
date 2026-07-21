@@ -18,14 +18,14 @@ internal partial class InferredAuthTokenProvider
 
     private string _clientId;
 
-    private string _clientSecret;
+    private string? _clientSecret;
 
     private string? _scope;
 
     internal InferredAuthTokenProvider(
         string xApiKey,
         string clientId,
-        string clientSecret,
+        string? clientSecret,
         string? scope,
         AuthClient client
     )

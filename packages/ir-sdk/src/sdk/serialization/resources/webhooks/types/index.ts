@@ -16,6 +16,7 @@ export * from "./WebhookBodyHashQueryParameterLocation.js";
 export * from "./WebhookGroup.js";
 export * from "./WebhookHttpMethod.js";
 export * from "./WebhookName.js";
+export * from "./WebhookNotificationUrlNormalization.js";
 export * from "./WebhookPayload.js";
 export * from "./WebhookPayloadBodySort.js";
 export * from "./WebhookPayloadComponent.js";

@@ -13,9 +13,8 @@
 
 ```go
 client.GetUsers(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -41,13 +40,12 @@ client.GetUsers(
 
 ```go
 request := &fern.GetUserRequest{
-        UserID: "userId",
-    }
-client.GetUser(
-        context.TODO(),
-        request,
-    )
+    UserID: "userId",
 }
+client.GetUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -88,14 +86,13 @@ client.GetUser(
 
 ```go
 request := &fern.TokenRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-    }
-client.GetToken(
-        context.TODO(),
-        request,
-    )
+    ClientID: "client_id",
+    ClientSecret: "client_secret",
 }
+client.GetToken(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

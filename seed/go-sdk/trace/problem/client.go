@@ -36,6 +36,80 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Creates a problem
+//
+// Example:
+//
+//	request := &fern.CreateProblemRequest{
+//	    ProblemName: "problemName",
+//	    ProblemDescription: &common.ProblemDescription{
+//	        Boards: []*common.ProblemDescriptionBoard{
+//	            &common.ProblemDescriptionBoard{},
+//	            &common.ProblemDescriptionBoard{},
+//	        },
+//	    },
+//	    Files: map[common.Language]*fern.ProblemFiles{
+//	        common.LanguageJava: &fern.ProblemFiles{
+//	            SolutionFile: &fern.FileInfo{
+//	                Filename: "filename",
+//	                Contents: "contents",
+//	            },
+//	            ReadOnlyFiles: []*fern.FileInfo{
+//	                &fern.FileInfo{
+//	                    Filename: "filename",
+//	                    Contents: "contents",
+//	                },
+//	                &fern.FileInfo{
+//	                    Filename: "filename",
+//	                    Contents: "contents",
+//	                },
+//	            },
+//	        },
+//	    },
+//	    InputParams: []*fern.VariableTypeAndName{
+//	        &fern.VariableTypeAndName{
+//	            VariableType: &common.VariableType{
+//	                IntegerType: "integerType",
+//	            },
+//	            Name: "name",
+//	        },
+//	        &fern.VariableTypeAndName{
+//	            VariableType: &common.VariableType{
+//	                IntegerType: "integerType",
+//	            },
+//	            Name: "name",
+//	        },
+//	    },
+//	    OutputType: &common.VariableType{
+//	        IntegerType: "integerType",
+//	    },
+//	    Testcases: []*fern.TestCaseWithExpectedResult{
+//	        &fern.TestCaseWithExpectedResult{
+//	            TestCase: &fern.TestCase{
+//	                ID: "id",
+//	                Params: []*common.VariableValue{
+//	                    &common.VariableValue{},
+//	                    &common.VariableValue{},
+//	                },
+//	            },
+//	            ExpectedResult: &common.VariableValue{},
+//	        },
+//	        &fern.TestCaseWithExpectedResult{
+//	            TestCase: &fern.TestCase{
+//	                ID: "id",
+//	                Params: []*common.VariableValue{
+//	                    &common.VariableValue{},
+//	                    &common.VariableValue{},
+//	                },
+//	            },
+//	            ExpectedResult: &common.VariableValue{},
+//	        },
+//	    },
+//	    MethodName: "methodName",
+//	}
+//	client.Problem.CreateProblem(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateProblem(
 	ctx context.Context,
 	request *fern.CreateProblemRequest,
@@ -53,6 +127,81 @@ func (c *Client) CreateProblem(
 }
 
 // Updates a problem
+//
+// Example:
+//
+//	request := &fern.CreateProblemRequest{
+//	    ProblemName: "problemName",
+//	    ProblemDescription: &common.ProblemDescription{
+//	        Boards: []*common.ProblemDescriptionBoard{
+//	            &common.ProblemDescriptionBoard{},
+//	            &common.ProblemDescriptionBoard{},
+//	        },
+//	    },
+//	    Files: map[common.Language]*fern.ProblemFiles{
+//	        common.LanguageJava: &fern.ProblemFiles{
+//	            SolutionFile: &fern.FileInfo{
+//	                Filename: "filename",
+//	                Contents: "contents",
+//	            },
+//	            ReadOnlyFiles: []*fern.FileInfo{
+//	                &fern.FileInfo{
+//	                    Filename: "filename",
+//	                    Contents: "contents",
+//	                },
+//	                &fern.FileInfo{
+//	                    Filename: "filename",
+//	                    Contents: "contents",
+//	                },
+//	            },
+//	        },
+//	    },
+//	    InputParams: []*fern.VariableTypeAndName{
+//	        &fern.VariableTypeAndName{
+//	            VariableType: &common.VariableType{
+//	                IntegerType: "integerType",
+//	            },
+//	            Name: "name",
+//	        },
+//	        &fern.VariableTypeAndName{
+//	            VariableType: &common.VariableType{
+//	                IntegerType: "integerType",
+//	            },
+//	            Name: "name",
+//	        },
+//	    },
+//	    OutputType: &common.VariableType{
+//	        IntegerType: "integerType",
+//	    },
+//	    Testcases: []*fern.TestCaseWithExpectedResult{
+//	        &fern.TestCaseWithExpectedResult{
+//	            TestCase: &fern.TestCase{
+//	                ID: "id",
+//	                Params: []*common.VariableValue{
+//	                    &common.VariableValue{},
+//	                    &common.VariableValue{},
+//	                },
+//	            },
+//	            ExpectedResult: &common.VariableValue{},
+//	        },
+//	        &fern.TestCaseWithExpectedResult{
+//	            TestCase: &fern.TestCase{
+//	                ID: "id",
+//	                Params: []*common.VariableValue{
+//	                    &common.VariableValue{},
+//	                    &common.VariableValue{},
+//	                },
+//	            },
+//	            ExpectedResult: &common.VariableValue{},
+//	        },
+//	    },
+//	    MethodName: "methodName",
+//	}
+//	client.Problem.UpdateProblem(
+//	    context.TODO(),
+//	    "problemId",
+//	    request,
+//	)
 func (c *Client) UpdateProblem(
 	ctx context.Context,
 	problemID common.ProblemID,
@@ -72,6 +221,13 @@ func (c *Client) UpdateProblem(
 }
 
 // Soft deletes a problem
+//
+// Example:
+//
+//	client.Problem.DeleteProblem(
+//	    context.TODO(),
+//	    "problemId",
+//	)
 func (c *Client) DeleteProblem(
 	ctx context.Context,
 	problemID common.ProblemID,
@@ -89,6 +245,33 @@ func (c *Client) DeleteProblem(
 }
 
 // Returns default starter files for problem
+//
+// Example:
+//
+//	request := &fern.GetDefaultStarterFilesRequest{
+//	    InputParams: []*fern.VariableTypeAndName{
+//	        &fern.VariableTypeAndName{
+//	            VariableType: &common.VariableType{
+//	                IntegerType: "integerType",
+//	            },
+//	            Name: "name",
+//	        },
+//	        &fern.VariableTypeAndName{
+//	            VariableType: &common.VariableType{
+//	                IntegerType: "integerType",
+//	            },
+//	            Name: "name",
+//	        },
+//	    },
+//	    OutputType: &common.VariableType{
+//	        IntegerType: "integerType",
+//	    },
+//	    MethodName: "methodName",
+//	}
+//	client.Problem.GetDefaultStarterFiles(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetDefaultStarterFiles(
 	ctx context.Context,
 	request *fern.GetDefaultStarterFilesRequest,

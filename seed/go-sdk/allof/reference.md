@@ -14,10 +14,9 @@
 ```go
 request := &fern.SearchRuleTypesRequest{}
 client.SearchRuleTypes(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -58,14 +57,13 @@ client.SearchRuleTypes(
 
 ```go
 request := &fern.RuleCreateRequest{
-        Name: "name",
-        ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
-    }
-client.CreateRule(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
+    ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
 }
+client.CreateRule(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -114,9 +112,8 @@ client.CreateRule(
 
 ```go
 client.ListUsers(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -142,9 +139,8 @@ client.ListUsers(
 
 ```go
 client.GetEntity(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -170,9 +166,8 @@ client.GetEntity(
 
 ```go
 client.GetOrganization(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -212,16 +207,15 @@ Tests three-level allOf chain where a parent schema itself uses allOf with $ref 
 
 ```go
 request := &fern.PlantPost{
-        Species: "species",
-        Family: "family",
-        Genus: "genus",
-        SunExposure: fern.PlantPostSunExposureFull,
-    }
-client.CreatePlant(
-        context.TODO(),
-        request,
-    )
+    Species: "species",
+    Family: "family",
+    Genus: "genus",
+    SunExposure: fern.PlantPostSunExposureFull,
 }
+client.CreatePlant(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -292,13 +286,12 @@ Tests that when a parent's allOf contains multiple $ref entries, all of them are
 
 ```go
 request := &fern.TreeRecord{
-        ID: "id",
-    }
-client.CreateTree(
-        context.TODO(),
-        request,
-    )
+    ID: "id",
 }
+client.CreateTree(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

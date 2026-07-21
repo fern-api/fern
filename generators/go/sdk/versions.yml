@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.50.0
+- version: 1.50.1
   changelogEntry:
     - summary: |
         Add a `serverUrlVariables` generator config option (default true) that lets consumers opt out of
@@ -7,7 +7,27 @@
         generator no longer emits the per-variable client options nor the construction-time base-URL
         template interpolation, falling back to the pre-feature base-URL behavior.
       type: feat
-  createdAt: "2026-07-16"
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 1.50.0
+  changelogEntry:
+    - summary: |
+        Client endpoint methods now include a usage example in their godoc comment,
+        so IDEs surface a code snippet on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 1.49.7
+  changelogEntry:
+    - summary: |
+        Materialize optional and nullable literal query/header parameters in generated
+        snippets and wire tests so they are set on the request and serialized on the wire.
+        Previously a direct optional literal (e.g. PKCE's `code_challenge_method=S256`) was
+        treated as a no-op and left unset, so it was never sent even though the generated
+        WireMock stub asserted it, causing generated wire tests to fail immediately after
+        generation. Required literals remain hardcoded in the request implementation.
+      type: fix
+  createdAt: "2026-07-17"
   irVersion: 67
 - version: 1.49.6
   changelogEntry:

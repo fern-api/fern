@@ -19,6 +19,20 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :index
       #
+      # @example
+      #   client.complex.search(
+      #     index: "index",
+      #     pagination: {
+      #       per_page: 1,
+      #       starting_after: "starting_after"
+      #     },
+      #     query: {
+      #       field: "field",
+      #       operator: "=",
+      #       value: "value"
+      #     }
+      #   )
+      #
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

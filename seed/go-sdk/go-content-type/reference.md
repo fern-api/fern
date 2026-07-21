@@ -28,14 +28,13 @@ Add a movie to the database
 
 ```go
 request := &fern.CreateMovieRequest{
-        Title: "title",
-        Rating: 1.1,
-    }
-client.Imdb.CreateMovie(
-        context.TODO(),
-        request,
-    )
+    Title: "title",
+    Rating: 1.1,
 }
+client.Imdb.CreateMovie(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

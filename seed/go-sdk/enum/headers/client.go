@@ -34,6 +34,19 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendEnumAsHeaderRequest{
+//	    Operand: fern.OperandGreaterThan,
+//	    MaybeOperand: fern.OperandGreaterThan.Ptr(),
+//	    OperandOrColor: &fern.ColorOrOperand{
+//	        Color: fern.ColorRed,
+//	    },
+//	}
+//	client.Headers.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendEnumAsHeaderRequest,
