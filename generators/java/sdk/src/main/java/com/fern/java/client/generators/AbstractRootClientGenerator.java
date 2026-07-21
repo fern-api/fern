@@ -882,62 +882,122 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 Environments envs = envConfig.get().getEnvironments();
                 if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
                     envs.getSingleBaseUrl().ifPresent(singleBaseUrl -> {
-                        if (!singleBaseUrl.getEnvironments().isEmpty()) {
-                            SingleBaseUrlEnvironment firstEnv =
-                                    singleBaseUrl.getEnvironments().get(0);
-                            String urlTemplate = firstEnv.getUrlTemplate()
-                                    .orElse(firstEnv.getUrl().get());
+                        List<SingleBaseUrlEnvironment> templatedEnvironments = new ArrayList<>();
+                        for (SingleBaseUrlEnvironment singleEnv : singleBaseUrl.getEnvironments()) {
+                            if (singleEnv.getUrlTemplate().isPresent()) {
+                                templatedEnvironments.add(singleEnv);
+                            }
+                        }
+                        if (!templatedEnvironments.isEmpty()) {
+                            setEnvironmentMethodBuilder.addStatement("$T _urlTemplate = null", String.class);
+                            setEnvironmentMethodBuilder.beginControlFlow("if (this.$N == null)", environmentField);
+                            setEnvironmentMethodBuilder.addStatement(
+                                    "_urlTemplate = $S",
+                                    templatedEnvironments
+                                            .get(0)
+                                            .getUrlTemplate()
+                                            .get());
+                            for (SingleBaseUrlEnvironment singleEnv : templatedEnvironments) {
+                                String constant = NameUtils.toName(singleEnv.getName())
+                                        .getScreamingSnakeCase()
+                                        .getSafeName();
+                                setEnvironmentMethodBuilder.nextControlFlow(
+                                        "else if (this.$N.equals($T.$L))",
+                                        environmentField,
+                                        generatedEnvironmentsClass.getClassName(),
+                                        constant);
+                                setEnvironmentMethodBuilder.addStatement(
+                                        "_urlTemplate = $S",
+                                        singleEnv.getUrlTemplate().get());
+                            }
+                            setEnvironmentMethodBuilder.endControlFlow();
 
-                            CodeBlock.Builder replaceChain = CodeBlock.builder().add("$S", urlTemplate);
+                            CodeBlock.Builder replaceChain = CodeBlock.builder().add("_urlTemplate");
                             for (ServerVariable sv : serverVariables) {
                                 replaceChain.add(
                                         ".replace($S, _$L)", "{" + sv.getId() + "}", getServerVariableParamName(sv));
                             }
+                            setEnvironmentMethodBuilder.beginControlFlow("if (_urlTemplate != null)");
                             setEnvironmentMethodBuilder.addStatement(
                                     "this.$N = $T.custom($L)",
                                     environmentField,
                                     generatedEnvironmentsClass.getClassName(),
                                     replaceChain.build());
+                            setEnvironmentMethodBuilder.endControlFlow();
                         }
                     });
                 } else if (generatedEnvironmentsClass.info() instanceof MultiUrlEnvironmentsClass) {
                     envs.getMultipleBaseUrls().ifPresent(multiBase -> {
-                        if (!multiBase.getEnvironments().isEmpty()) {
-                            MultipleBaseUrlsEnvironment firstEnv =
-                                    multiBase.getEnvironments().get(0);
-
-                            CodeBlock.Builder envCode = CodeBlock.builder();
-                            envCode.add(
-                                    "this.$N = $T.custom()",
-                                    environmentField,
-                                    generatedEnvironmentsClass.getClassName());
-
-                            for (EnvironmentBaseUrlWithId baseUrl : multiBase.getBaseUrls()) {
-                                String urlName = NameUtils.toName(baseUrl.getName())
-                                        .getCamelCase()
-                                        .getSafeName();
-                                String template;
-                                if (firstEnv.getUrlTemplates().isPresent()
-                                        && firstEnv.getUrlTemplates().get().containsKey(baseUrl.getId())) {
-                                    template = firstEnv.getUrlTemplates().get().get(baseUrl.getId());
-                                } else {
-                                    template = firstEnv.getUrls()
-                                            .get(baseUrl.getId())
-                                            .get();
-                                }
-
-                                CodeBlock.Builder replaceChain =
-                                        CodeBlock.builder().add("$S", template);
-                                for (ServerVariable sv : serverVariables) {
-                                    replaceChain.add(
-                                            ".replace($S, _$L)",
-                                            "{" + sv.getId() + "}",
-                                            getServerVariableParamName(sv));
-                                }
-                                envCode.add("\n.$L($L)", urlName, replaceChain.build());
+                        List<MultipleBaseUrlsEnvironment> templatedEnvironments = new ArrayList<>();
+                        for (MultipleBaseUrlsEnvironment multiEnv : multiBase.getEnvironments()) {
+                            if (multiEnv.getUrlTemplates().isPresent()) {
+                                templatedEnvironments.add(multiEnv);
                             }
-                            envCode.add("\n.build()");
-                            setEnvironmentMethodBuilder.addStatement("$L", envCode.build());
+                        }
+                        if (!templatedEnvironments.isEmpty()) {
+                            String firstConstant = NameUtils.toName(
+                                            templatedEnvironments.get(0).getName())
+                                    .getScreamingSnakeCase()
+                                    .getSafeName();
+                            setEnvironmentMethodBuilder.addStatement(
+                                    "$T _selectedEnvironment = this.$N != null ? this.$N : $T.$L",
+                                    generatedEnvironmentsClass.getClassName(),
+                                    environmentField,
+                                    environmentField,
+                                    generatedEnvironmentsClass.getClassName(),
+                                    firstConstant);
+                            boolean firstBranch = true;
+                            for (MultipleBaseUrlsEnvironment multiEnv : templatedEnvironments) {
+                                String constant = NameUtils.toName(multiEnv.getName())
+                                        .getScreamingSnakeCase()
+                                        .getSafeName();
+                                if (firstBranch) {
+                                    setEnvironmentMethodBuilder.beginControlFlow(
+                                            "if (_selectedEnvironment.equals($T.$L))",
+                                            generatedEnvironmentsClass.getClassName(),
+                                            constant);
+                                    firstBranch = false;
+                                } else {
+                                    setEnvironmentMethodBuilder.nextControlFlow(
+                                            "else if (_selectedEnvironment.equals($T.$L))",
+                                            generatedEnvironmentsClass.getClassName(),
+                                            constant);
+                                }
+
+                                CodeBlock.Builder envCode = CodeBlock.builder();
+                                envCode.add(
+                                        "this.$N = $T.custom()",
+                                        environmentField,
+                                        generatedEnvironmentsClass.getClassName());
+
+                                for (EnvironmentBaseUrlWithId baseUrl : multiBase.getBaseUrls()) {
+                                    String urlName = NameUtils.toName(baseUrl.getName())
+                                            .getCamelCase()
+                                            .getSafeName();
+                                    String template;
+                                    if (multiEnv.getUrlTemplates().get().containsKey(baseUrl.getId())) {
+                                        template =
+                                                multiEnv.getUrlTemplates().get().get(baseUrl.getId());
+                                    } else {
+                                        template = multiEnv.getUrls()
+                                                .get(baseUrl.getId())
+                                                .get();
+                                    }
+
+                                    CodeBlock.Builder replaceChain =
+                                            CodeBlock.builder().add("$S", template);
+                                    for (ServerVariable sv : serverVariables) {
+                                        replaceChain.add(
+                                                ".replace($S, _$L)",
+                                                "{" + sv.getId() + "}",
+                                                getServerVariableParamName(sv));
+                                    }
+                                    envCode.add("\n.$L($L)", urlName, replaceChain.build());
+                                }
+                                envCode.add("\n.build()");
+                                setEnvironmentMethodBuilder.addStatement("$L", envCode.build());
+                            }
+                            setEnvironmentMethodBuilder.endControlFlow();
                         }
                     });
                 }

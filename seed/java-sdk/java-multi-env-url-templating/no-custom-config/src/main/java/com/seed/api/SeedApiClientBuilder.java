@@ -24,15 +24,13 @@ public class SeedApiClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private Environment environment = Environment.REGIONAL_API_SERVER;
+    private Environment environment = Environment.PRODUCTION;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
 
     private String region;
-
-    private String serverUrlEnvironment;
 
     public SeedApiClientBuilder environment(Environment environment) {
         this.environment = environment;
@@ -113,11 +111,6 @@ public class SeedApiClientBuilder {
         return this;
     }
 
-    public SeedApiClientBuilder serverUrlEnvironment(String serverUrlEnvironment) {
-        this.serverUrlEnvironment = serverUrlEnvironment;
-        return this;
-    }
-
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
@@ -139,19 +132,23 @@ public class SeedApiClientBuilder {
      * @param builder The ClientOptions.Builder to configure
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
-        if (this.region != null || this.serverUrlEnvironment != null) {
-            String _region = this.region != null ? this.region : "us-east-1";
-            String _serverUrlEnvironment = this.serverUrlEnvironment != null ? this.serverUrlEnvironment : "prod";
-            Environment _selectedEnvironment =
-                    this.environment != null ? this.environment : Environment.REGIONAL_API_SERVER;
-            if (_selectedEnvironment.equals(Environment.REGIONAL_API_SERVER)) {
+        if (this.region != null) {
+            String _region = this.region != null ? this.region : "us1";
+            Environment _selectedEnvironment = this.environment != null ? this.environment : Environment.PRODUCTION;
+            if (_selectedEnvironment.equals(Environment.PRODUCTION)) {
                 this.environment = Environment.custom()
-                        .base("https://api.{region}.{environment}.example.com/v1"
-                                .replace("{region}", _region)
-                                .replace("{environment}", _serverUrlEnvironment))
-                        .auth("https://auth.{region}.example.com"
-                                .replace("{region}", _region)
-                                .replace("{environment}", _serverUrlEnvironment))
+                        .acme("https://api.{region}.acme.com".replace("{region}", _region))
+                        .oauth("https://oauth.{region}.acme.com".replace("{region}", _region))
+                        .build();
+            } else if (_selectedEnvironment.equals(Environment.STAGING)) {
+                this.environment = Environment.custom()
+                        .acme("https://api.stage.{region}.acme.com".replace("{region}", _region))
+                        .oauth("https://oauth.stage.{region}.acme.com".replace("{region}", _region))
+                        .build();
+            } else if (_selectedEnvironment.equals(Environment.DEVELOPMENT)) {
+                this.environment = Environment.custom()
+                        .acme("https://api.dev.{region}.acme.com".replace("{region}", _region))
+                        .oauth("https://oauth.dev.{region}.acme.com".replace("{region}", _region))
                         .build();
             }
         }
