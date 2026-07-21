@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.76.0
+  changelogEntry:
+    - summary: |
+        Support webhook signature verification against multiple normalized notification URL
+        forms via `url-normalization` (port variants and legacy query encoding) on HMAC webhook
+        signatures, in both Fern Definition and OpenAPI (`x-fern-webhook-signature`).
+      type: feat
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 5.75.9
   changelogEntry:
     - summary: |
