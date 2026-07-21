@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
@@ -99,10 +100,10 @@ function createMockContext(): any {
 
 function createFileProperty(
     name: string,
-    opts?: { isOptional?: boolean; type?: "file" | "fileArray" }
+    opts?: { isOptional?: boolean; type?: "file" | "fileArray"; wireValue?: string }
 ): FernIr.FileUploadRequestProperty {
     const base = {
-        key: createNameAndWireValue(name),
+        key: createNameAndWireValue(name, opts?.wireValue),
         isOptional: opts?.isOptional ?? false,
         contentType: undefined,
         docs: undefined
@@ -127,6 +128,15 @@ function createBodyProperty(
 // biome-ignore lint/suspicious/noExplicitAny: test mock
 function createMockRequestParameter(): any {
     return {
+        getReferenceToFileProperty: (property: FernIr.FileProperty) => {
+            const propertyName = getWireValue(property.key);
+            return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(propertyName)
+                ? ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("request"), propertyName)
+                : ts.factory.createElementAccessExpression(
+                      ts.factory.createIdentifier("request"),
+                      ts.factory.createStringLiteral(propertyName)
+                  );
+        },
         getReferenceToBodyProperty: (property: FernIr.InlinedRequestBodyProperty) =>
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier("request"),
@@ -153,6 +163,61 @@ describe("appendPropertyToFormData", () => {
                 omitUndefined: false
             });
             expect(getTextOfTsNode(stmt)).toMatchSnapshot();
+        });
+
+        it("uses property access for an inlined file with a valid identifier", () => {
+            const property = createFileProperty("avatar");
+            const context = createMockContext();
+            context.inlineFileProperties = true;
+            const stmt = appendPropertyToFormData({
+                property,
+                context,
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            expect(getTextOfTsNode(stmt)).toBe('_body.appendFile("avatar", request.avatar);');
+        });
+
+        it("uses element access for an inlined file with a non-identifier name", () => {
+            const property = createFileProperty("fileName", { wireValue: "file-name" });
+            const context = createMockContext();
+            context.inlineFileProperties = true;
+            context.retainOriginalCasing = true;
+            const stmt = appendPropertyToFormData({
+                property,
+                context,
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            expect(getTextOfTsNode(stmt)).toBe('_body.appendFile("file-name", request["file-name"]);');
+        });
+
+        it("uses element access for optional inline file arrays", () => {
+            const property = createFileProperty("file-name", { isOptional: true, type: "fileArray" });
+            const context = createMockContext();
+            context.inlineFileProperties = true;
+            context.retainOriginalCasing = true;
+            const stmt = appendPropertyToFormData({
+                property,
+                context,
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            const text = getTextOfTsNode(stmt);
+            expect(text).toContain('if (request["file-name"] != null)');
+            expect(text).toContain('for (const _file of request["file-name"])');
         });
 
         it("generates for-of loop for fileArray", () => {

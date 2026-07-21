@@ -295,6 +295,11 @@ function createMockGeneratedRequestWrapper() {
             propertyName: caseConverter.camelUnsafe(h.name),
             safeName: caseConverter.camelUnsafe(h.name)
         }),
+        getPropertyNameOfFileParameter: (property: FernIr.FileProperty) => ({
+            propertyName: caseConverter.camelSafe(property.key),
+            safeName: caseConverter.camelSafe(property.key),
+            originalParameter: property
+        }),
         getInlinedRequestBodyPropertyKey: (p: FernIr.InlinedRequestBodyProperty) => ({
             propertyName: caseConverter.camelUnsafe(p.name),
             safeName: caseConverter.camelUnsafe(p.name)
@@ -344,10 +349,10 @@ function createFileUploadRequestBody(opts?: {
 
 function createFileProperty(
     name: string,
-    opts?: { isOptional?: boolean; type?: "file" | "fileArray" }
+    opts?: { isOptional?: boolean; type?: "file" | "fileArray"; wireValue?: string }
 ): FernIr.FileUploadRequestProperty {
     const base = {
-        key: createNameAndWireValue(name),
+        key: createNameAndWireValue(name, opts?.wireValue),
         isOptional: opts?.isOptional ?? false,
         contentType: undefined,
         docs: undefined
@@ -758,6 +763,35 @@ describe("GeneratedDefaultEndpointRequest", () => {
     });
 
     describe("getBuildRequestStatements", () => {
+        it("uses the generated property name and wire form-data key for inline files", () => {
+            const fileProperty = createFileProperty("fileName", { wireValue: "file-name" });
+            const fileBody = createFileUploadRequestBody({ properties: [fileProperty] });
+            const request = new GeneratedFileUploadEndpointRequest({
+                ir: createMinimalIR(),
+                packageId: { isRoot: true },
+                service: createHttpService(),
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                }),
+                requestBody: fileBody,
+                generatedSdkClientClass: createMockSdkClientClass(),
+                retainOriginalCasing: true,
+                inlineFileProperties: true,
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false,
+                formDataSupport: "Node18",
+                parameterNaming: "wireValue",
+                caseConverter
+            });
+            const context = createEndpointRequestMockContext();
+            context.inlineFileProperties = true;
+            context.retainOriginalCasing = true;
+            const serialized = serializeStatements(request.getBuildRequestStatements(context));
+            expect(serialized).toContain('_body.appendFile("file-name", request.fileName);');
+        });
+
         it("generates header initialization for endpoint with no request body", () => {
             const request = new GeneratedDefaultEndpointRequest({
                 ir: createMinimalIR(),

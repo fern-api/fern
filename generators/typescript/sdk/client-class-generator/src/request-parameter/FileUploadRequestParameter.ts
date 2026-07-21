@@ -110,13 +110,17 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         );
     }
 
+    public getReferenceToFileProperty(property: FernIr.FileProperty, context: FileContext): ts.Expression {
+        return this.getReferenceToProperty(
+            this.getGeneratedRequestWrapper(context).getPropertyNameOfFileParameter(property).propertyName
+        );
+    }
+
     private getGeneratedRequestWrapper(context: FileContext): GeneratedRequestWrapper {
         return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
     }
 
     private getReferenceToProperty(propertyName: string): ts.Expression {
-        // Check if property name is a valid JavaScript identifier
-        // Valid identifiers: start with letter, _, or $, followed by letters, numbers, _, or $
         const isValidIdentifier = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(propertyName);
 
         if (isValidIdentifier) {
@@ -124,12 +128,10 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
                 ts.factory.createIdentifier(this.getRequestParameterName()),
                 propertyName
             );
-        } else {
-            // Use bracket notation for property names with hyphens or other invalid characters
-            return ts.factory.createElementAccessExpression(
-                ts.factory.createIdentifier(this.getRequestParameterName()),
-                ts.factory.createStringLiteral(propertyName)
-            );
         }
+        return ts.factory.createElementAccessExpression(
+            ts.factory.createIdentifier(this.getRequestParameterName()),
+            ts.factory.createStringLiteral(propertyName)
+        );
     }
 }
