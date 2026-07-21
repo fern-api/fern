@@ -1,0 +1,45 @@
+{
+  "binaryName": "plant-store",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/plant-store/openapi0.json",
+      "namespace": null
+    }
+  ],
+  "authEnvVars": [
+    "PLANT_STORE_CLIENT_ID",
+    "PLANT_STORE_CLIENT_SECRET"
+  ],
+  "authMock": {
+    "method": "POST",
+    "path": "/identity/token",
+    "responseBody": "{\"access_token\":\"test-access-token\",\"expires_in\":3600}"
+  },
+  "cases": [
+    {
+      "id": "list",
+      "method": "GET",
+      "path": "/plants",
+      "params": {},
+      "body": null,
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"species\": \"species\"\n  }\n]"
+      }
+    },
+    {
+      "id": "get",
+      "method": "GET",
+      "path": "/plants/{plantId}",
+      "params": {
+        "plantId": "plantId"
+      },
+      "body": null,
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"species\": \"species\"\n}"
+      }
+    }
+  ]
+}
