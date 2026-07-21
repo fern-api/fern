@@ -44,6 +44,11 @@ interface WebhookBodyHashLocationExtensionSchema {
     name: string;
 }
 
+interface WebhookUrlNormalizationExtensionSchema {
+    "port-variants"?: boolean;
+    "legacy-query-encoding"?: boolean;
+}
+
 interface WebhookSignatureExtensionSchema {
     type: "hmac" | "asymmetric";
     header: string;
@@ -54,6 +59,7 @@ interface WebhookSignatureExtensionSchema {
     "payload-format"?: WebhookPayloadFormatExtensionSchema;
     timestamp?: WebhookTimestampExtensionSchema;
     "body-hash-binding"?: WebhookBodyHashBindingExtensionSchema;
+    "url-normalization"?: WebhookUrlNormalizationExtensionSchema;
     // Asymmetric fields
     "asymmetric-algorithm"?: AsymmetricAlgorithmString;
     "jwks-url"?: string;
@@ -148,6 +154,35 @@ function convertBodyHashBinding(
     };
 }
 
+function convertUrlNormalization(
+    normalization: WebhookUrlNormalizationExtensionSchema | undefined,
+    logger: Logger
+): finalIr.WebhookNotificationUrlNormalization | undefined {
+    if (normalization == null) {
+        return undefined;
+    }
+    // The extension is untyped user input at runtime, so validate the shape before conversion and
+    // drop just the normalization (rather than throwing, which would discard the entire spec) on bad input.
+    const portVariants = normalization["port-variants"];
+    const legacyQueryEncoding = normalization["legacy-query-encoding"];
+    if (portVariants != null && typeof portVariants !== "boolean") {
+        logger.warn(
+            `Ignoring webhook url-normalization: "port-variants" must be a boolean, got "${typeof portVariants}".`
+        );
+        return undefined;
+    }
+    if (legacyQueryEncoding != null && typeof legacyQueryEncoding !== "boolean") {
+        logger.warn(
+            `Ignoring webhook url-normalization: "legacy-query-encoding" must be a boolean, got "${typeof legacyQueryEncoding}".`
+        );
+        return undefined;
+    }
+    return {
+        portVariants: portVariants ?? false,
+        legacyQueryEncoding: legacyQueryEncoding ?? false
+    };
+}
+
 function convertBodyHashAlgorithm(algorithm: BodyHashAlgorithmString): finalIr.WebhookBodyHashAlgorithm {
     switch (algorithm) {
         case "sha256":
@@ -238,7 +273,8 @@ function convertSignatureSchema(
             signaturePrefix: extension["signature-prefix"],
             payloadFormat: convertPayloadFormat(extension["payload-format"]),
             timestamp: convertTimestamp(extension.timestamp),
-            bodyHashBinding: convertBodyHashBinding(extension["body-hash-binding"], logger)
+            bodyHashBinding: convertBodyHashBinding(extension["body-hash-binding"], logger),
+            notificationUrlNormalization: convertUrlNormalization(extension["url-normalization"], logger)
         });
     }
 
