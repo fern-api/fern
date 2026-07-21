@@ -4,6 +4,7 @@ import { readSpecsManifest } from "../copySpecs.js";
 import type { DetectedAuthBinding } from "../detectAuth.js";
 import { readFullIr } from "../ir.js";
 import { renderWireTestHarness } from "./harness.js";
+import type { OAuthTokenEndpoint } from "./manifest.js";
 import { buildWireTestManifest } from "./manifest.js";
 
 export interface GenerateWireTestsResult {
@@ -49,13 +50,15 @@ export async function generateWireTests(args: {
     }));
 
     const authEnvVars = collectAuthEnvVars(authBindings);
+    const oauthTokenEndpoint = collectOAuthTokenEndpoint(authBindings);
 
     const ir = await readFullIr(irFilepath);
     const manifest = buildWireTestManifest(ir, {
         binaryName,
         rootGroup: rootGroup ?? null,
         specs,
-        authEnvVars
+        authEnvVars,
+        oauthTokenEndpoint
     });
 
     if (manifest.cases.length === 0) {
@@ -85,4 +88,20 @@ function collectAuthEnvVars(authBindings: DetectedAuthBinding[]): string[] {
         }
     }
     return [...names].sort();
+}
+
+/**
+ * Find the OAuth client-credentials token endpoint, if any. The CLI supports
+ * at most one such scheme (multiple would each define their own token exchange
+ * on distinct `Authorization`-style headers); we take the first resolved one,
+ * since the harness only needs a token exchange to succeed and business mocks
+ * don't match on the auth header.
+ */
+function collectOAuthTokenEndpoint(authBindings: DetectedAuthBinding[]): OAuthTokenEndpoint | null {
+    for (const binding of authBindings) {
+        if (binding.kind === "oauth-client-credentials" && binding.oauthTokenEndpoint != null) {
+            return binding.oauthTokenEndpoint;
+        }
+    }
+    return null;
 }

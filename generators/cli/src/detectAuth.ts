@@ -23,6 +23,27 @@ export interface DetectedAuthBinding {
     optionalEnvVars?: string[];
     /** Auth kind for documentation purposes. */
     kind: "bearer" | "header" | "basic" | "oauth-client-credentials";
+    /**
+     * For `oauth-client-credentials`, the resolved token-endpoint contract the
+     * generated CLI actually calls at runtime. Consumed by the wire-test
+     * generator: because the CLI performs a real token exchange before every
+     * authenticated request (and the token URL honors the `--base-url`
+     * override), the wire-test mock server must serve this endpoint too, or
+     * every authenticated endpoint's test 404s on the token fetch. Present
+     * only when the OAuth binding was successfully emitted — a scheme whose
+     * token endpoint couldn't be built (skipped, `rustCall` absent) never
+     * produces a binding at all, so no mock is needed.
+     */
+    oauthTokenEndpoint?: {
+        /** Uppercase HTTP method the token exchange uses (e.g. "POST"). */
+        method: string;
+        /** Token endpoint path, `{param}`-free (e.g. "/v1/oauth/token"). */
+        path: string;
+        /** Dotted path (segments) to the access token in the response JSON. */
+        accessTokenPath: string[];
+        /** Dotted path to the expiry, or null when the token endpoint omits it. */
+        expiresInPath: string[] | null;
+    };
 }
 
 /**
@@ -290,6 +311,7 @@ function clientCredentialsBinding(args: {
     }
     rustCall += ")";
 
+    const responseProperties = clientCredentials.tokenEndpoint.responseProperties;
     return {
         schemeName: key,
         rustCall,
@@ -297,7 +319,14 @@ function clientCredentialsBinding(args: {
         authTypeImport: "OAuth2Auth, OAuth2Endpoint, OAuth2RequestProperty, OAuth2RequestValue",
         envVars: [...new Set(envVars)],
         optionalEnvVars: [...new Set(optionalEnvVars)],
-        kind: "oauth-client-credentials"
+        kind: "oauth-client-credentials",
+        oauthTokenEndpoint: {
+            method: String(tokenEndpoint.endpoint.method),
+            path: tokenEndpoint.path,
+            accessTokenPath: responsePropertyPath(responseProperties.accessToken),
+            expiresInPath:
+                responseProperties.expiresIn != null ? responsePropertyPath(responseProperties.expiresIn) : null
+        }
     };
 }
 

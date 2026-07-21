@@ -67,7 +67,39 @@ export interface WireTestManifest {
      * missing credential.
      */
     authEnvVars: string[];
+    /**
+     * When the CLI declares OAuth client-credentials auth, the token endpoint
+     * the harness must stub on every mock server. The generated CLI performs
+     * a real token exchange before each authenticated request, and the token
+     * URL honors the `--base-url` override — so without this stub every
+     * authenticated endpoint's test 404s on the token fetch before reaching
+     * the endpoint under test. Null for non-OAuth CLIs.
+     */
+    authMock: AuthMock | null;
     cases: WireTestCase[];
+}
+
+/**
+ * A canned OAuth token-endpoint stub. The harness mounts this on every mock
+ * server so the CLI's client-credentials exchange succeeds with a fake token.
+ * The business-endpoint mocks don't match on the `Authorization` header, so
+ * any token value satisfies them.
+ */
+export interface AuthMock {
+    /** Uppercase HTTP method of the token exchange (e.g. "POST"). */
+    method: string;
+    /** Token endpoint path (e.g. "/v1/oauth/token"). */
+    path: string;
+    /** JSON response body carrying a fake access token at the configured path. */
+    responseBody: string;
+}
+
+/** The token-endpoint contract the harness needs, as resolved by detectAuth. */
+export interface OAuthTokenEndpoint {
+    method: string;
+    path: string;
+    accessTokenPath: string[];
+    expiresInPath: string[] | null;
 }
 
 /**
@@ -100,6 +132,12 @@ export function buildWireTestManifest(
         rootGroup: string | null;
         specs: Array<{ file: string; namespace: string | null }>;
         authEnvVars: string[];
+        /**
+         * The OAuth client-credentials token endpoint, when the CLI declares
+         * one. Turned into the shared `authMock` the harness mounts on every
+         * server so token exchanges succeed.
+         */
+        oauthTokenEndpoint?: OAuthTokenEndpoint | null;
     }
 ): WireTestManifest {
     const stub = convertToWireMock(ir);
@@ -111,6 +149,11 @@ export function buildWireTestManifest(
     // example inputs it was built from.
     const endpointsByKey = indexEndpointsByMethodAndPath(ir);
     const authHeaderNames = collectAuthHeaderNames(ir);
+    // Endpoints the OAuth machinery consumes internally (token + refresh). The
+    // generated CLI does NOT expose these as user commands — they're driven by
+    // the auth layer — so a wire-test case for them would resolve to a
+    // subcommand clap rejects. Skip them.
+    const authEndpointIds = collectOAuthEndpointIds(ir);
 
     const cases: WireTestCase[] = [];
     const usedIds = new Set<string>();
@@ -118,6 +161,9 @@ export function buildWireTestManifest(
         const key = `${mapping.request.method}:${mapping.request.urlPathTemplate}`;
         const endpoint = endpointsByKey.get(key);
         if (endpoint == null) {
+            continue;
+        }
+        if (authEndpointIds.has(endpoint.id)) {
             continue;
         }
         const example = firstExample(endpoint);
@@ -135,8 +181,55 @@ export function buildWireTestManifest(
         rootGroup: options.rootGroup,
         specs: options.specs,
         authEnvVars: options.authEnvVars,
+        authMock: buildAuthMock(options.oauthTokenEndpoint ?? null),
         cases
     };
+}
+
+/**
+ * Synthesize the OAuth token-endpoint stub from the resolved token endpoint.
+ * The response body sets a fake access token (and expiry) at exactly the paths
+ * the generated CLI reads (`access_token_path` / `expires_in_path`), so the
+ * client-credentials exchange succeeds regardless of what the endpoint's own
+ * IR example happened to contain.
+ */
+function buildAuthMock(tokenEndpoint: OAuthTokenEndpoint | null): AuthMock | null {
+    if (tokenEndpoint == null) {
+        return null;
+    }
+    const body: Record<string, unknown> = {};
+    setNested(body, tokenEndpoint.accessTokenPath, "test-access-token");
+    if (tokenEndpoint.expiresInPath != null) {
+        setNested(body, tokenEndpoint.expiresInPath, 3600);
+    }
+    return {
+        method: tokenEndpoint.method.toUpperCase(),
+        path: tokenEndpoint.path,
+        responseBody: JSON.stringify(body)
+    };
+}
+
+/** Set `value` at a nested `path` in `target`, creating intermediate objects. */
+function setNested(target: Record<string, unknown>, path: string[], value: unknown): void {
+    if (path.length === 0) {
+        return;
+    }
+    let cursor = target;
+    for (let i = 0; i < path.length - 1; i++) {
+        const key = path[i];
+        if (key == null) {
+            return;
+        }
+        const existing = cursor[key];
+        if (typeof existing !== "object" || existing === null) {
+            cursor[key] = {};
+        }
+        cursor = cursor[key] as Record<string, unknown>;
+    }
+    const last = path[path.length - 1];
+    if (last != null) {
+        cursor[last] = value;
+    }
 }
 
 function buildCase(args: {
@@ -242,6 +335,29 @@ function collectAuthHeaderNames(ir: FernIr.IntermediateRepresentation): Set<stri
         }
     }
     return names;
+}
+
+/**
+ * IR endpoint ids consumed internally by an OAuth client-credentials scheme —
+ * the token endpoint and (if declared) the refresh endpoint. These are never
+ * surfaced as invokable CLI commands, so they must not produce wire-test cases.
+ */
+function collectOAuthEndpointIds(ir: FernIr.IntermediateRepresentation): Set<string> {
+    const ids = new Set<string>();
+    for (const scheme of ir.auth.schemes) {
+        if (scheme.type !== "oauth") {
+            continue;
+        }
+        if (scheme.configuration.type !== "clientCredentials") {
+            continue;
+        }
+        const { configuration } = scheme;
+        ids.add(configuration.tokenEndpoint.endpointReference.endpointId);
+        if (configuration.refreshEndpoint != null) {
+            ids.add(configuration.refreshEndpoint.endpointReference.endpointId);
+        }
+    }
+    return ids;
 }
 
 function caseIdBase(endpoint: FernIr.HttpEndpoint): string {

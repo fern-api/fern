@@ -29,6 +29,8 @@ struct Manifest {
     specs: Vec<SpecEntry>,
     #[serde(rename = "authEnvVars")]
     auth_env_vars: Vec<String>,
+    #[serde(rename = "authMock")]
+    auth_mock: Option<AuthMock>,
     cases: Vec<Case>,
 }
 
@@ -36,6 +38,14 @@ struct Manifest {
 struct SpecEntry {
     file: String,
     namespace: Option<String>,
+}
+
+#[derive(Deserialize)]
+struct AuthMock {
+    method: String,
+    path: String,
+    #[serde(rename = "responseBody")]
+    response_body: String,
 }
 
 #[derive(Deserialize)]
@@ -183,6 +193,28 @@ async fn run_case(id: &str) {
     let expected_path = substitute_path(&case.path, &case.params);
 
     let server = MockServer::start().await;
+
+    // OAuth client-credentials CLIs perform a token exchange before every
+    // authenticated request, and the token URL honors the --base-url override
+    // — so the exchange lands on this mock. Mount a canned token stub (unless
+    // the token endpoint IS the case under test) so the exchange succeeds and
+    // the request reaches the endpoint we're actually testing. No count
+    // assertion: the token may be fetched zero or more times depending on
+    // caching.
+    if let Some(auth_mock) = &manifest.auth_mock {
+        let is_token_case = auth_mock.method.eq_ignore_ascii_case(&case.method)
+            && normalize_path(&auth_mock.path) == normalize_path(&case.path);
+        if !is_token_case {
+            Mock::given(match_method(auth_mock.method.as_str()))
+                .and(match_path(normalize_path(&auth_mock.path)))
+                .respond_with(
+                    ResponseTemplate::new(200)
+                        .set_body_raw(auth_mock.response_body.clone().into_bytes(), "application/json"),
+                )
+                .mount(&server)
+                .await;
+        }
+    }
 
     let mut template = ResponseTemplate::new(case.response.status);
     if !case.response.body.is_empty() {

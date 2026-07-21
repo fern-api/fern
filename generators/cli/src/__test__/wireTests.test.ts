@@ -88,6 +88,57 @@ describe("buildWireTestManifest", () => {
             expect(testCase.id).toMatch(/^[a-z][a-z0-9_]*$/);
         }
     });
+
+    it("emits no authMock for a non-OAuth CLI", () => {
+        const manifest = buildWireTestManifest(makeSingleEndpointIr(), {
+            binaryName: "acme-cli",
+            rootGroup: null,
+            specs: [],
+            authEnvVars: []
+        });
+        expect(manifest.authMock).toBeNull();
+    });
+
+    it("synthesizes an OAuth token-endpoint mock at the configured response paths", () => {
+        const manifest = buildWireTestManifest(makeSingleEndpointIr(), {
+            binaryName: "acme-cli",
+            rootGroup: null,
+            specs: [],
+            authEnvVars: ["ACME_CLIENT_ID", "ACME_CLIENT_SECRET"],
+            oauthTokenEndpoint: {
+                method: "POST",
+                path: "/v1/oauth/token",
+                accessTokenPath: ["access_token"],
+                expiresInPath: ["expires_in"]
+            }
+        });
+        expect(manifest.authMock).not.toBeNull();
+        expect(manifest.authMock?.method).toBe("POST");
+        expect(manifest.authMock?.path).toBe("/v1/oauth/token");
+        const body = JSON.parse(manifest.authMock?.responseBody ?? "");
+        // The token the CLI reads at access_token_path must be present + truthy.
+        expect(typeof body.access_token).toBe("string");
+        expect(body.access_token.length).toBeGreaterThan(0);
+        expect(body.expires_in).toBe(3600);
+    });
+
+    it("nests the synthesized token under a dotted access_token path", () => {
+        const manifest = buildWireTestManifest(makeSingleEndpointIr(), {
+            binaryName: "acme-cli",
+            rootGroup: null,
+            specs: [],
+            authEnvVars: [],
+            oauthTokenEndpoint: {
+                method: "POST",
+                path: "/token",
+                accessTokenPath: ["data", "token"],
+                expiresInPath: null
+            }
+        });
+        const body = JSON.parse(manifest.authMock?.responseBody ?? "");
+        expect(typeof body.data.token).toBe("string");
+        expect(body.expires_in).toBeUndefined();
+    });
 });
 
 describe("renderWireTestHarness", () => {
