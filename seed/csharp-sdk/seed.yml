@@ -231,13 +231,13 @@ fixtures:
       customConfig: null
     - outputFolder: disable-server-url-variables
       customConfig:
-        serverUrlVariables: false
+        server-url-variables: false
   server-url-templating-single-url:
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: disable-server-url-variables
       customConfig:
-        serverUrlVariables: false
+        server-url-variables: false
   exhaustive:
     - customConfig:
         explicit-namespaces: true

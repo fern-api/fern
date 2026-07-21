@@ -2,7 +2,7 @@
 - version: 2.77.0
   changelogEntry:
     - summary: |
-        Add a `serverUrlVariables` configuration flag (default `true`) that controls whether server
+        Add a `server-url-variables` configuration flag (default `true`) that controls whether server
         URL variables declared on the API's environments are exposed as client options and
         interpolated into the environment URL template(s) at construction time. When set to `false`,
         those client options and the URL-template interpolation are suppressed and the generated SDK

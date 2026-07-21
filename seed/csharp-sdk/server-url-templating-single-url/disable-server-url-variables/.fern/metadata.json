@@ -3,7 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "serverUrlVariables": false
+    "server-url-variables": false
   },
   "originGitCommit": "DUMMY",
   "invokedBy": "ci",

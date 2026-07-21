@@ -113,7 +113,7 @@ export const CsharpConfigSchema = z.object({
     // are exposed as ClientOptions properties and interpolated into the environment URL template(s)
     // at construction time. When false, these client options and the URL-template interpolation are
     // suppressed and the SDK falls back to the pre-feature base-URL behavior.
-    serverUrlVariables: z.boolean().optional(),
+    "server-url-variables": z.boolean().optional(),
     // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
     // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is
     // unset (e.g. SDKs imported from OpenAPI). Off by default to preserve the

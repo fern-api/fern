@@ -244,7 +244,7 @@ export class Generation {
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
         unifiedClientOptions: () => this.customConfig["unified-client-options"] ?? false,
         /** When true, exposes server URL variables as ClientOptions properties and interpolates them into the environment URL template(s) at construction time. When false, suppresses those options and the interpolation, falling back to the pre-feature base-URL behavior. Default: true. */
-        serverUrlVariables: () => this.customConfig.serverUrlVariables ?? true,
+        serverUrlVariables: () => this.customConfig["server-url-variables"] ?? true,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
