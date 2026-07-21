@@ -25,15 +25,15 @@ class WebhooksHelper:
         timestamp_header: str,
     ) -> bool:
         if request_body is None or signature_header is None or signature_key is None:
-            raise ValueError("Missing required parameters for webhook signature verification")
+            return False
 
         if timestamp_header is None or timestamp_header == "":
-            raise ValueError("Missing timestamp header 'x-webhook-timestamp' for webhook signature verification")
+            return False
 
         try:
             timestamp_value = int(timestamp_header)
         except ValueError:
-            raise ValueError("Invalid timestamp format: expected unix seconds") from None
+            return False
         timestamp_ms = timestamp_value * 1000
 
         if abs(time.time() * 1000 - timestamp_ms) > TIMESTAMP_TOLERANCE_SECONDS * 1000:

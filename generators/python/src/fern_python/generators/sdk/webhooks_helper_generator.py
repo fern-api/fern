@@ -136,6 +136,7 @@ class WebhooksHelperGenerator:
     def _compute_verification_key(self, config: ir_types.HmacSignatureVerification) -> str:
         timestamp = config.timestamp
         body_hash_binding = config.body_hash_binding
+        normalization = config.notification_url_normalization
         return json.dumps(
             {
                 "algorithm": config.algorithm.value,
@@ -167,6 +168,14 @@ class WebhooksHelperGenerator:
                         "queryParameter": _body_hash_query_param_name(body_hash_binding),
                     }
                 ),
+                "notificationUrlNormalization": (
+                    None
+                    if normalization is None
+                    else {
+                        "portVariants": normalization.port_variants,
+                        "legacyQueryEncoding": normalization.legacy_query_encoding,
+                    }
+                ),
             },
             sort_keys=True,
         )
@@ -194,6 +203,7 @@ class _HmacHelperWriter:
         self._has_timestamp = config.timestamp is not None
         self._components = list(config.payload_format.components)
         self._body_hash_binding = config.body_hash_binding
+        self._notification_url_normalization = config.notification_url_normalization
 
     def write(self) -> str:
         imports = self._build_imports()
@@ -237,8 +247,10 @@ class _HmacHelperWriter:
         signature_imports = ["compute_hmac_signature"]
         if self._body_hash_binding is not None:
             signature_imports.extend(["compute_hash", "get_webhook_query_parameter"])
+        if self._notification_url_normalization is not None:
+            signature_imports.append("notification_url_candidates")
         signature_imports.append("timing_safe_equal")
-        imports.append(f"from ..core.webhook_signature import {', '.join(sorted(signature_imports))}")
+        imports.append(f"from ..core.webhook_signature import {', '.join(sorted(set(signature_imports)))}")
         return imports
 
     def _build_constants(self) -> List[str]:
@@ -253,7 +265,11 @@ class _HmacHelperWriter:
         return constants
 
     def _build_parameters(self) -> List[str]:
-        body_type = "typing.Union[str, typing.Dict[str, str]]" if self._has_body_sort else "str"
+        body_type = (
+            "typing.Union[str, typing.Mapping[str, typing.Union[str, typing.Sequence[str]]]]"
+            if self._has_body_sort
+            else "str"
+        )
         params: List[str] = [
             f"request_body: {body_type}",
             "signature_header: str",
@@ -275,21 +291,37 @@ class _HmacHelperWriter:
     def _build_body(self) -> List[str]:
         lines: List[str] = []
 
+        # A verification helper returns a boolean and never raises, so missing inputs fail
+        # closed with False rather than throwing.
         lines.append("if request_body is None or signature_header is None or signature_key is None:")
-        lines.append('    raise ValueError("Missing required parameters for webhook signature verification")')
+        lines.append("    return False")
 
         if self._has_timestamp and self._config.timestamp is not None:
             lines.append("")
             lines.extend(self._build_timestamp_validation(self._config.timestamp))
 
-        if self._body_hash_binding is not None:
-            lines.append("")
-            lines.extend(self._build_body_hash_verification(self._body_hash_binding))
-
         signature_expr = self._build_signature_extraction(lines)
 
+        # Notification-URL normalization: some providers (e.g. Twilio) are inconsistent
+        # about the signed URL's port and query encoding, so verify against several
+        # normalized URL forms and accept on the first constant-time match.
+        if self._notification_url_normalization is not None:
+            lines.append("")
+            lines.extend(self._build_normalized_verification(signature_expr, self._notification_url_normalization))
+            return lines
+
         lines.append("")
-        lines.extend(self._build_payload_construction())
+        if self._body_hash_binding is not None:
+            # Body-hash binding (e.g. Twilio): the same endpoint accepts both classic
+            # form-encoded and JSON requests, so branch at runtime on whether the body-hash
+            # query parameter is present in the notification URL.
+            #   - present (JSON): the signed payload is the URL only; additionally recompute
+            #     hash(rawBody) and constant-time compare it to the transmitted value.
+            #   - absent (classic form): the signed payload is the URL + sorted/deduped form
+            #     params, with no body-hash check.
+            lines.extend(self._build_body_hash_branched_payload(self._body_hash_binding))
+        else:
+            lines.extend(self._build_payload_construction())
 
         lines.append("")
         algorithm = _map_hmac_algorithm(self._config.algorithm)
@@ -305,28 +337,97 @@ class _HmacHelperWriter:
         lines.append(f"return timing_safe_equal({signature_expr}, expected)")
         return lines
 
-    def _build_body_hash_verification(self, binding: ir_types.WebhookBodyHashBinding) -> List[str]:
+    def _build_body_hash_branched_payload(self, binding: ir_types.WebhookBodyHashBinding) -> List[str]:
         algorithm = _map_body_hash_algorithm(binding.algorithm)
         encoding = _map_encoding(binding.encoding)
         query_param = _body_hash_query_param_name(binding)
-        return [
-            "expected_body_hash = compute_hash(",
-            "    payload=request_body,",
-            f'    algorithm="{algorithm}",',
-            f'    encoding="{encoding}",',
-            ")",
+        raw_body_expr = self._raw_body_expr()
+
+        lines: List[str] = [
             f"transmitted_body_hash = get_webhook_query_parameter(notification_url, {json.dumps(query_param)})",
-            "if transmitted_body_hash is None or not timing_safe_equal(",
-            "    expected_body_hash, transmitted_body_hash",
-            "):",
-            "    return False",
+            "if transmitted_body_hash is not None:",
+            "    expected_body_hash = compute_hash(",
+            f"        payload={raw_body_expr},",
+            f'        algorithm="{algorithm}",',
+            f'        encoding="{encoding}",',
+            "    )",
+            "    if not timing_safe_equal(expected_body_hash, transmitted_body_hash):",
+            "        return False",
+            "    payload = notification_url",
+            "else:",
         ]
+        lines.extend(_indent(self._build_form_payload_lines(), 1))
+        return lines
+
+    def _build_normalized_verification(
+        self,
+        signature_expr: str,
+        normalization: ir_types.WebhookNotificationUrlNormalization,
+    ) -> List[str]:
+        algorithm = _map_hmac_algorithm(self._config.algorithm)
+        encoding = _map_encoding(self._config.encoding)
+        binding = self._body_hash_binding
+        lines: List[str] = []
+
+        # Body-hash check (once, independent of URL normalization). Only the JSON request
+        # carries the transmitted hash; when present it must match hash(rawBody).
+        if binding is not None:
+            body_hash_algorithm = _map_body_hash_algorithm(binding.algorithm)
+            body_hash_encoding = _map_encoding(binding.encoding)
+            query_param = _body_hash_query_param_name(binding)
+            raw_body_expr = self._raw_body_expr()
+            lines.extend(
+                [
+                    f"transmitted_body_hash = get_webhook_query_parameter(notification_url, {json.dumps(query_param)})",
+                    "if transmitted_body_hash is not None:",
+                    "    expected_body_hash = compute_hash(",
+                    f"        payload={raw_body_expr},",
+                    f'        algorithm="{body_hash_algorithm}",',
+                    f'        encoding="{body_hash_encoding}",',
+                    "    )",
+                    "    if not timing_safe_equal(expected_body_hash, transmitted_body_hash):",
+                    "        return False",
+                ]
+            )
+
+        # The form-path body string is URL-independent, so compute it once before the loop.
+        if self._has_body_sort:
+            lines.extend(self._build_body_string_lines())
+
+        lines.append(
+            "candidates = notification_url_candidates("
+            "notification_url, "
+            f"port_variants={normalization.port_variants!r}, "
+            f"legacy_query_encoding={normalization.legacy_query_encoding!r})"
+        )
+        lines.append("for candidate_url in candidates:")
+        form_payload_expr = self._build_payload_expression(url_expr="candidate_url")
+        if binding is not None:
+            # JSON request signs the URL only; classic form request signs URL + params.
+            lines.append(f"    payload = candidate_url if transmitted_body_hash is not None else {form_payload_expr}")
+        else:
+            lines.append(f"    payload = {form_payload_expr}")
+        lines.extend(
+            [
+                "    expected = compute_hmac_signature(",
+                "        payload=payload,",
+                "        secret=signature_key,",
+                f'        algorithm="{algorithm}",',
+                f'        encoding="{encoding}",',
+                "    )",
+                f"    if timing_safe_equal({signature_expr}, expected):",
+                "        return True",
+                "return False",
+            ]
+        )
+        return lines
 
     def _build_timestamp_validation(self, timestamp: ir_types.WebhookTimestampConfig) -> List[str]:
-        header_name = _wire_value(timestamp.header_name)
+        # A missing or malformed timestamp header fails closed with False (the helper never
+        # raises) rather than throwing.
         lines: List[str] = [
             'if timestamp_header is None or timestamp_header == "":',
-            f"    raise ValueError(\"Missing timestamp header '{header_name}' for webhook signature verification\")",
+            "    return False",
             "",
         ]
 
@@ -336,7 +437,7 @@ class _HmacHelperWriter:
                     "try:",
                     "    timestamp_value = int(timestamp_header)",
                     "except ValueError:",
-                    '    raise ValueError("Invalid timestamp format: expected unix seconds") from None',
+                    "    return False",
                     "timestamp_ms = timestamp_value * 1000",
                 ]
             )
@@ -346,7 +447,7 @@ class _HmacHelperWriter:
                     "try:",
                     "    timestamp_value = int(timestamp_header)",
                     "except ValueError:",
-                    '    raise ValueError("Invalid timestamp format: expected unix milliseconds") from None',
+                    "    return False",
                     "timestamp_ms = timestamp_value",
                 ]
             )
@@ -356,7 +457,7 @@ class _HmacHelperWriter:
                     "try:",
                     '    parsed_timestamp = datetime.datetime.fromisoformat(timestamp_header.replace("Z", "+00:00"))',
                     "except ValueError:",
-                    '    raise ValueError("Invalid timestamp format: expected ISO 8601 date string") from None',
+                    "    return False",
                     "timestamp_ms = parsed_timestamp.timestamp() * 1000",
                 ]
             )
@@ -382,25 +483,46 @@ class _HmacHelperWriter:
         return "signature_header"
 
     def _build_payload_construction(self) -> List[str]:
-        lines: List[str] = []
-        if self._has_body_sort:
-            lines.extend(
-                [
-                    "body_string = (",
-                    "    request_body",
-                    "    if isinstance(request_body, str)",
-                    '    else "".join(key + request_body[key] for key in sorted(request_body))',
-                    ")",
-                ]
-            )
-            body_expr = "body_string"
-        else:
-            body_expr = "request_body"
+        lines = self._build_form_payload_lines()
+        return lines
 
+    def _raw_body_expr(self) -> str:
+        # When bodySort widens request_body to a union, narrow it to a str for hashing (the
+        # JSON path only receives a raw string body).
+        return "typing.cast(str, request_body)" if self._has_body_sort else "request_body"
+
+    def _build_body_string_lines(self) -> List[str]:
+        """
+        Emit the ``body_string = ...`` assignment that flattens a form-parameter map into a
+        signed string. Mirrors twilio's ``toFormUrlEncodedParam``: keys are sorted (map keys
+        are inherently unique), and for each key the values are deduped and sorted,
+        concatenating ``key + value`` for every value with no delimiter between params. A raw
+        string body is passed through unchanged.
+        """
+        return [
+            "body_string = (",
+            "    request_body",
+            "    if isinstance(request_body, str)",
+            '    else "".join(',
+            '        "".join(',
+            "            key + value",
+            "            for value in sorted(",
+            "                set(",
+            "                    [request_body[key]]",
+            "                    if isinstance(request_body[key], str)",
+            "                    else list(request_body[key])",
+            "                )",
+            "            )",
+            "        )",
+            "        for key in sorted(request_body)",
+            "    )",
+            ")",
+        ]
+
+    def _build_payload_expression(self, url_expr: str = "notification_url") -> str:
+        body_expr = "body_string" if self._has_body_sort else "request_body"
         if len(self._components) == 1 and self._components[0] == ir_types.WebhookPayloadComponent.BODY:
-            lines.append(f"payload = {body_expr}")
-            return lines
-
+            return body_expr
         component_exprs: List[str] = []
         for component in self._components:
             if component == ir_types.WebhookPayloadComponent.BODY:
@@ -408,13 +530,18 @@ class _HmacHelperWriter:
             elif component == ir_types.WebhookPayloadComponent.TIMESTAMP:
                 component_exprs.append("timestamp_header")
             elif component == ir_types.WebhookPayloadComponent.NOTIFICATION_URL:
-                component_exprs.append("notification_url")
+                component_exprs.append(url_expr)
             elif component == ir_types.WebhookPayloadComponent.MESSAGE_ID:
                 component_exprs.append("message_id")
-
         delimiter = json.dumps(self._payload_format.delimiter)
         joined = ", ".join(component_exprs)
-        lines.append(f"payload = {delimiter}.join([{joined}])")
+        return f"{delimiter}.join([{joined}])"
+
+    def _build_form_payload_lines(self) -> List[str]:
+        lines: List[str] = []
+        if self._has_body_sort:
+            lines.extend(self._build_body_string_lines())
+        lines.append(f"payload = {self._build_payload_expression()}")
         return lines
 
     def _build_docstring(self) -> List[str]:
@@ -432,15 +559,21 @@ class _HmacHelperWriter:
         if self._has_body_sort:
             lines.extend(
                 [
-                    "The request_body parameter accepts either a raw string or a dict of POST body parameters.",
-                    "When a dict is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.",
+                    "The request_body parameter accepts either a raw string or a mapping of POST body parameters.",
+                    "When a mapping is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.",
                 ]
             )
         if self._body_hash_binding is not None:
-            query_param = _body_hash_query_param_name(self._body_hash_binding)
+            lines.extend(
+                [
+                    "This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.",
+                    "For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.",
+                    "Pass the exact raw body as request_body and the verbatim notification URL as notification_url.",
+                ]
+            )
+        if self._notification_url_normalization is not None:
             lines.append(
-                f'The raw request_body is hashed and compared against the "{query_param}" query parameter '
-                "on the notification_url before the HMAC signature is verified."
+                "The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches."
             )
         result = ['"""']
         result.extend(lines)
