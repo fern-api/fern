@@ -31,16 +31,19 @@ func NewClient(opts ...option.RequestOption) *Client {
 		if serverURLEnvironment == "" {
 			serverURLEnvironment = "prod"
 		}
-		options.Environment = fern.Environment{
-			Auth: fmt.Sprintf(
-				"https://auth.%s.example.com",
-				region,
-			),
-			Base: fmt.Sprintf(
-				"https://api.%s.%s.example.com/v1",
-				region,
-				serverURLEnvironment,
-			),
+		switch options.Environment {
+		case nil, fern.Environments.RegionalAPIServer:
+			options.Environment = fern.Environment{
+				Auth: fmt.Sprintf(
+					"https://auth.%s.example.com",
+					region,
+				),
+				Base: fmt.Sprintf(
+					"https://api.%s.%s.example.com/v1",
+					region,
+					serverURLEnvironment,
+				),
+			}
 		}
 	}
 	return &Client{
