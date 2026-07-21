@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: PHP Model
 image: fernapi/fern-php-model
 # This generator is no longer actively supported. The workspace is retained for

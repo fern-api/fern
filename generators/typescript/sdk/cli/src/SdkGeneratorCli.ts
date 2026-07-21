@@ -331,8 +331,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     }
 
     private async copyLicenseFile(destinationPath: string): Promise<void> {
-        // In Docker execution environment, the license file is mounted at /tmp/LICENSE
-        const dockerLicensePath = "/tmp/LICENSE";
+        // Fall back to the Docker license mount.
+        const dockerLicensePath = process.env.FERN_LICENSE_PATH ?? "/tmp/LICENSE";
 
         try {
             await copyFile(dockerLicensePath, destinationPath);

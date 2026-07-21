@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.9.0-rc.1
+  changelogEntry:
+    - summary: |
+        Support custom license files when the generator runs as a native local command.
+      type: feat
+  createdAt: "2026-07-21"
+  irVersion: 67
+
 - version: 1.9.0-rc.0
   changelogEntry:
     - summary: |

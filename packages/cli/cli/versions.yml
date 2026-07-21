@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.77.0
+  changelogEntry:
+    - summary: |
+        Support running local generators as native commands without a Docker image.
+      type: feat
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 5.76.0
   changelogEntry:
     - summary: |

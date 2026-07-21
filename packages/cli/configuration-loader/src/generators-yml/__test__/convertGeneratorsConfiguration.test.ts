@@ -1207,6 +1207,57 @@ describe("convertGeneratorsConfiguration", () => {
         expect(generator?.name).toBe("fernapi/fern-typescript-sdk");
     });
 
+    it("resolves a native generator command relative to generators.yml", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-typescript-sdk",
+                                version: "1.0.0",
+                                "local-command": ["node", "./generator.cjs", "argument with spaces"],
+                                output: { location: "local-file-system", path: "/out" }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        expect(converted.groups[0]?.generators[0]?.nativeExecution).toEqual({
+            executable: "node",
+            args: ["./generator.cjs", "argument with spaces"],
+            workingDirectory: AbsoluteFilePath.of("/path/to/repo/fern/api")
+        });
+    });
+
+    it("rejects an empty native generator command", async () => {
+        await expect(
+            convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0",
+                                    "local-command": [],
+                                    output: { location: "local-file-system", path: "/out" }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context: createMockTaskContext()
+            })
+        ).rejects.toThrow("local-command requires an executable");
+    });
+
     it("custom image generators are identifiable for remote generation guard", async () => {
         const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
