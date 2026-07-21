@@ -27,7 +27,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.tools.JavaCompiler;
@@ -144,19 +150,156 @@ class WebhookBodyHashTest {
         assertThat(verify(RAW_BODY, reorderedSignature, SECRET, url)).isFalse();
     }
 
+    @Test
+    void verifySignature_returnsFalseForNullInputs() throws Exception {
+        String bodyHash = referenceDigest(RAW_BODY, "SHA-256", "hex");
+        String url = "https://example.com/webhook?bodySHA256=" + bodyHash;
+        String signature = referenceHmac(url, SECRET, "HmacSHA1", "base64");
+        assertThat(verify(null, signature, SECRET, url)).isFalse();
+        assertThat(verify(RAW_BODY, null, SECRET, url)).isFalse();
+        assertThat(verify(RAW_BODY, signature, null, url)).isFalse();
+    }
+
+    @Test
+    void verifySignature_classicFormPath_signsUrlPlusSortedDedupedParams() throws Exception {
+        // Absent bodySHA256 => classic form path: sign URL + sorted/deduped/concatenated body params.
+        String url = "https://example.com/webhook";
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("To", "+15551234567");
+        params.put("From", "+15559876543");
+        params.put("Body", "Hi");
+        String bodyString = flattenFormParams(params);
+        String signature = referenceHmac(url + bodyString, SECRET, "HmacSHA1", "base64");
+        assertThat(verifyForm(params, signature, SECRET, url)).isTrue();
+
+        // Tampering a param value breaks verification.
+        Map<String, Object> tampered = new LinkedHashMap<>(params);
+        tampered.put("Body", "Bye");
+        assertThat(verifyForm(tampered, signature, SECRET, url)).isFalse();
+    }
+
+    @Test
+    void flattenFormParams_sortsKeysAndDedupsAndSortsValues() {
+        // Keys are sorted; per key values are deduped and sorted; concatenated key+value with no delimiter.
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("b", "2");
+        params.put("a", Arrays.asList("z", "a", "z")); // duplicate + out-of-order
+        // key "a" -> dedup+sort [a, z] -> "aa" + "az"; key "b" -> "b2".
+        assertThat(flattenFormParams(params)).isEqualTo("aaazb2");
+
+        Map<String, Object> single = new LinkedHashMap<>();
+        single.put("k", "v");
+        assertThat(flattenFormParams(single)).isEqualTo("kv");
+    }
+
+    @Test
+    void notificationUrlCandidates_asIsWhenPortVariantsDisabled() throws Exception {
+        assertThat(candidates("https://example.com/webhook?a=1", false, false))
+                .containsExactly("https://example.com/webhook?a=1");
+    }
+
+    @Test
+    void notificationUrlCandidates_addsStandardPortAndNoPortForms() throws Exception {
+        assertThat(candidates("https://example.com/webhook?a=1", true, false))
+                .containsExactly(
+                        "https://example.com/webhook?a=1", "https://example.com:443/webhook?a=1");
+        assertThat(candidates("http://example.com/webhook", true, false))
+                .containsExactly("http://example.com/webhook", "http://example.com:80/webhook");
+    }
+
+    @Test
+    void notificationUrlCandidates_collapsesFormThatAlreadyCarriesStandardPort() throws Exception {
+        assertThat(candidates("https://example.com:443/webhook", true, false))
+                .containsExactly("https://example.com:443/webhook", "https://example.com/webhook");
+    }
+
+    @Test
+    void notificationUrlCandidates_reEncodesQueryWithLegacyEncoding() throws Exception {
+        assertThat(candidates("https://example.com/webhook?a=b%20c&x=1", true, true))
+                .containsExactly(
+                        "https://example.com/webhook?a=b%20c&x=1",
+                        "https://example.com:443/webhook?a=b%20c&x=1",
+                        "https://example.com/webhook?a=b+c&x=1",
+                        "https://example.com:443/webhook?a=b+c&x=1");
+    }
+
+    @Test
+    void notificationUrlCandidates_unparseableOrNullYieldsSingleton() throws Exception {
+        assertThat(candidates("::::not a url::::", true, true)).containsExactly("::::not a url::::");
+        assertThat(candidates(null, true, true)).containsExactly((String) null);
+    }
+
+    @Test
+    void verifySignature_anyMatchAcceptsStandardPortSignedUrl() throws Exception {
+        // Twilio signs the URL with the standard port added; caller supplies the port-less URL.
+        String callerUrl = "https://mycompany.com/myapp?bodySHA256=" + referenceDigest(RAW_BODY, "SHA-256", "hex");
+        String signedUrl = "https://mycompany.com:443/myapp?bodySHA256=" + referenceDigest(RAW_BODY, "SHA-256", "hex");
+        String signature = referenceHmac(signedUrl, SECRET, "HmacSHA1", "base64");
+        assertThat(verify(RAW_BODY, signature, SECRET, callerUrl)).isTrue();
+    }
+
     /**
-     * Mirrors the generated {@code SmsStatusWebhooksHelper.verifySignature} two-step check (body-hash comparison before
-     * the HMAC verification, failing closed).
+     * Mirrors the generated {@code SmsStatusWebhooksHelper.verifySignature(String, ...)}: body-hash check runs once (JSON
+     * path only) above a candidate loop that ORs constant-time HMAC comparisons; the JSON path signs the URL only, the
+     * classic form path signs URL + body, and any candidate match accepts.
      */
     private boolean verify(String requestBody, String signatureHeader, String signatureKey, String notificationUrl)
             throws Exception {
-        String expectedBodyHash = computeHash(requestBody, "SHA-256", "hex");
-        String transmittedBodyHash = getQueryParameter(notificationUrl, "bodySHA256");
-        if (transmittedBodyHash == null || !timingSafeEqual(expectedBodyHash, transmittedBodyHash)) {
+        if (requestBody == null || requestBody.isEmpty() || signatureHeader == null || signatureKey == null) {
             return false;
         }
-        String expected = computeHmacSignature(notificationUrl, signatureKey, "HmacSHA1", "base64");
-        return timingSafeEqual(signatureHeader, expected);
+        String transmittedBodyHash = getQueryParameter(notificationUrl, "bodySHA256");
+        if (transmittedBodyHash != null) {
+            String expectedBodyHash = computeHash(requestBody, "SHA-256", "hex");
+            if (!timingSafeEqual(expectedBodyHash, transmittedBodyHash)) {
+                return false;
+            }
+        }
+        for (String candidateUrl : candidates(notificationUrl, true, true)) {
+            String payload = transmittedBodyHash != null ? candidateUrl : candidateUrl + requestBody;
+            String expected = computeHmacSignature(payload, signatureKey, "HmacSHA1", "base64");
+            if (timingSafeEqual(signatureHeader, expected)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Mirrors the {@code Map<String, ?>} overload: flatten the form params, then verify via the string overload. */
+    private boolean verifyForm(
+            Map<String, Object> requestBody, String signatureHeader, String signatureKey, String notificationUrl)
+            throws Exception {
+        if (requestBody == null) {
+            return false;
+        }
+        return verify(flattenFormParams(requestBody), signatureHeader, signatureKey, notificationUrl);
+    }
+
+    /** Mirrors the generated map-overload flattening exactly. */
+    private static String flattenFormParams(Map<String, Object> requestBody) {
+        StringBuilder bodyString = new StringBuilder();
+        for (String key : new TreeSet<>(requestBody.keySet())) {
+            Object value = requestBody.get(key);
+            TreeSet<String> values = new TreeSet<>();
+            if (value instanceof Iterable) {
+                for (Object item : (Iterable<?>) value) {
+                    values.add(String.valueOf(item));
+                }
+            } else {
+                values.add(String.valueOf(value));
+            }
+            for (String sortedValue : values) {
+                bodyString.append(key).append(sortedValue);
+            }
+        }
+        return bodyString.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<String> candidates(String url, boolean portVariants, boolean legacyQueryEncoding) throws Exception {
+        Method method = signatureClass.getMethod(
+                "notificationUrlCandidates", String.class, boolean.class, boolean.class);
+        return new ArrayList<>((List<String>) method.invoke(null, url, portVariants, legacyQueryEncoding));
     }
 
     private String computeHash(String payload, String algorithm, String encoding) throws Exception {

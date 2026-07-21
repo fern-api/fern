@@ -5,6 +5,9 @@ package com.seed.webhooks;
 
 import com.seed.webhooks.core.WebhookBodyHash;
 import com.seed.webhooks.core.WebhookSignature;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 public final class SmsStatusWebhooksHelper {
     private SmsStatusWebhooksHelper() {}
@@ -13,6 +16,11 @@ public final class SmsStatusWebhooksHelper {
      * Verify an HMAC webhook signature.
      *
      * Extract the signature from the "x-twilio-signature" header and pass it as the {@code signatureHeader} parameter.
+     * The {@code requestBody} parameter accepts either a raw string or a map of POST body parameters.
+     * When a map is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.
+     * This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.
+     * For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.
+     * The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches.
      */
     public static boolean verifySignature(
             String requestBody, String signatureHeader, String signatureKey, String notificationUrl) {
@@ -22,15 +30,57 @@ public final class SmsStatusWebhooksHelper {
                 || signatureHeader.isEmpty()
                 || signatureKey == null
                 || signatureKey.isEmpty()) {
-            throw new IllegalArgumentException("Missing required parameters for webhook signature verification");
-        }
-        String expectedBodyHash = WebhookBodyHash.computeHash(requestBody, "SHA-256", "hex");
-        String transmittedBodyHash = WebhookBodyHash.getQueryParameter(notificationUrl, "bodySHA256");
-        if (transmittedBodyHash == null || !WebhookSignature.timingSafeEqual(expectedBodyHash, transmittedBodyHash)) {
             return false;
         }
-        String payload = String.join("", notificationUrl);
-        String expected = WebhookSignature.computeHmacSignature(payload, signatureKey, "HmacSHA1", "base64");
-        return WebhookSignature.timingSafeEqual(signatureHeader, expected);
+        String transmittedBodyHash = WebhookBodyHash.getQueryParameter(notificationUrl, "bodySHA256");
+        if (transmittedBodyHash != null) {
+            String expectedBodyHash = WebhookBodyHash.computeHash(requestBody, "SHA-256", "hex");
+            if (!WebhookSignature.timingSafeEqual(expectedBodyHash, transmittedBodyHash)) {
+                return false;
+            }
+        }
+        List<String> candidates = WebhookSignature.notificationUrlCandidates(notificationUrl, true, true);
+        for (String candidateUrl : candidates) {
+            String payload = transmittedBodyHash != null ? candidateUrl : String.join("", candidateUrl, requestBody);
+            String expected = WebhookSignature.computeHmacSignature(payload, signatureKey, "HmacSHA1", "base64");
+            if (WebhookSignature.timingSafeEqual(signatureHeader, expected)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Verify an HMAC webhook signature.
+     *
+     * Extract the signature from the "x-twilio-signature" header and pass it as the {@code signatureHeader} parameter.
+     * The {@code requestBody} parameter accepts either a raw string or a map of POST body parameters.
+     * When a map is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.
+     * This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.
+     * For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.
+     * The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches.
+     */
+    public static boolean verifySignature(
+            Map<String, ?> requestBody, String signatureHeader, String signatureKey, String notificationUrl) {
+        if (requestBody == null) {
+            return false;
+        }
+        StringBuilder bodyStringBuilder = new StringBuilder();
+        for (String bodyStringKey : new TreeSet<>(requestBody.keySet())) {
+            Object bodyStringValue = requestBody.get(bodyStringKey);
+            TreeSet<String> bodyStringValues = new TreeSet<>();
+            if (bodyStringValue instanceof Iterable) {
+                for (Object bodyStringItem : (Iterable<?>) bodyStringValue) {
+                    bodyStringValues.add(String.valueOf(bodyStringItem));
+                }
+            } else {
+                bodyStringValues.add(String.valueOf(bodyStringValue));
+            }
+            for (String bodyStringSortedValue : bodyStringValues) {
+                bodyStringBuilder.append(bodyStringKey).append(bodyStringSortedValue);
+            }
+        }
+        String bodyString = bodyStringBuilder.toString();
+        return verifySignature(bodyString, signatureHeader, signatureKey, notificationUrl);
     }
 }

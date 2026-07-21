@@ -26,17 +26,16 @@ public final class WebhooksHelper {
                 || signatureHeader.isEmpty()
                 || signatureKey == null
                 || signatureKey.isEmpty()) {
-            throw new IllegalArgumentException("Missing required parameters for webhook signature verification");
+            return false;
         }
         if (timestampHeader == null || timestampHeader.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Missing timestamp header 'x-webhook-timestamp' for webhook signature verification");
+            return false;
         }
         long timestampMs;
         try {
             timestampMs = Long.parseLong(timestampHeader) * 1000;
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException("Invalid timestamp format: expected unix seconds");
+            return false;
         }
         if (Math.abs(System.currentTimeMillis() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000L) {
             return false;
