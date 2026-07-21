@@ -82,6 +82,49 @@
         }
       },
       "body": null,
+      "queryMatchers": [
+        {
+          "name": "limit",
+          "value": "1"
+        },
+        {
+          "name": "id",
+          "value": "id"
+        },
+        {
+          "name": "date",
+          "value": "2023-01-15"
+        },
+        {
+          "name": "deadline",
+          "value": "2024-01-15T09:30:00Z"
+        },
+        {
+          "name": "bytes",
+          "value": "bytes"
+        },
+        {
+          "name": "optionalDeadline",
+          "value": "2024-01-15T09:30:00Z"
+        },
+        {
+          "name": "optionalString",
+          "value": "optionalString"
+        },
+        {
+          "name": "filter",
+          "value": "filter"
+        },
+        {
+          "name": "tags",
+          "value": "tags"
+        },
+        {
+          "name": "optionalTags",
+          "value": "optionalTags"
+        }
+      ],
+      "headerMatchers": [],
       "response": {
         "status": 200,
         "body": "{\n  \"results\": [\n    \"results\",\n    \"results\"\n  ]\n}"

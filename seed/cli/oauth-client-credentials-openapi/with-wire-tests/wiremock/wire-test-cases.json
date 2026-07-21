@@ -23,6 +23,8 @@
       "path": "/plants",
       "params": {},
       "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
       "response": {
         "status": 200,
         "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"species\": \"species\"\n  }\n]"
@@ -36,6 +38,8 @@
         "plantId": "plantId"
       },
       "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
       "response": {
         "status": 200,
         "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"species\": \"species\"\n}"

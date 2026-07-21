@@ -1,5 +1,5 @@
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
-import { WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
+import { isEqualToMatcher, WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 /**
@@ -34,6 +34,24 @@ export interface WireTestCase {
     params: Record<string, unknown>;
     /** Request body JSON handed to `--json`, or null when the endpoint has no body. */
     body: unknown | null;
+    /**
+     * Scalar query parameters the mock must match on, so a request that omits or
+     * mis-serializes them fails (the mock won't respond) instead of silently
+     * passing on a path-only match — the same guarantee the SDK wire tests get
+     * from WireMock stub matching. Derived from the `mock-utils` mapping's
+     * single-value (`equalTo`) query matchers; multi-value/array params are
+     * intentionally excluded (their wire serialization — comma-joined vs
+     * repeated vs exploded — can legitimately differ between the CLI and
+     * `mock-utils`, which would cause false failures).
+     */
+    queryMatchers: Array<{ name: string; value: string }>;
+    /**
+     * Auth-header matchers the mock must match on, so a request missing its
+     * credential header fails. Derived from the `mock-utils` mapping's auth
+     * headers: `regex` for presence-only schemes (bearer/header → `.+`),
+     * `equalTo` for the exact Basic value.
+     */
+    headerMatchers: Array<{ name: string; equalTo?: string; matches?: string }>;
     /** Expected response the mock serves and the CLI is expected to render. */
     response: {
         status: number;
@@ -280,11 +298,47 @@ function buildCase(args: {
         path: mapping.request.urlPathTemplate,
         params,
         body,
+        queryMatchers: extractQueryMatchers(mapping),
+        headerMatchers: extractHeaderMatchers(mapping),
         response: {
             status: mapping.response.status,
             body: mapping.response.body
         }
     };
+}
+
+const DATETIME_WITH_ZERO_MILLIS_IN_VALUE = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})\.000(Z|[+-]\d{2}:\d{2})$/;
+
+/**
+ * Pull the single-value query matchers off the `mock-utils` mapping. Only
+ * `equalTo` (scalar) matchers are carried — array (`hasExactly`) matchers are
+ * skipped because the CLI and `mock-utils` can serialize repeated/exploded/
+ * comma-joined arrays differently, which would fail the mock on a request that
+ * is actually correct. Datetime milliseconds are stripped to match the CLI's
+ * chrono `SecondsFormat::Secs` rendering (same fix the response body gets).
+ */
+function extractQueryMatchers(mapping: WireMockMapping): Array<{ name: string; value: string }> {
+    const matchers: Array<{ name: string; value: string }> = [];
+    for (const [name, matcher] of Object.entries(mapping.request.queryParameters ?? {})) {
+        if (!isEqualToMatcher(matcher)) {
+            continue;
+        }
+        matchers.push({ name, value: matcher.equalTo.replace(DATETIME_WITH_ZERO_MILLIS_IN_VALUE, "$1$2") });
+    }
+    return matchers;
+}
+
+/** Pull the auth-header matchers (`equalTo` exact, or `matches` regex) off the mapping. */
+function extractHeaderMatchers(mapping: WireMockMapping): Array<{ name: string; equalTo?: string; matches?: string }> {
+    const matchers: Array<{ name: string; equalTo?: string; matches?: string }> = [];
+    for (const [name, matcher] of Object.entries(mapping.request.headers ?? {})) {
+        if (matcher.equalTo != null) {
+            matchers.push({ name, equalTo: matcher.equalTo });
+        } else if (matcher.matches != null) {
+            matchers.push({ name, matches: matcher.matches });
+        }
+    }
+    return matchers;
 }
 
 /**

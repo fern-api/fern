@@ -12,7 +12,10 @@
 
 use serde::Deserialize;
 use std::collections::HashMap;
-use wiremock::matchers::{method as match_method, path as match_path};
+use wiremock::matchers::{
+    header as match_header, header_regex as match_header_regex, method as match_method, path as match_path,
+    query_param as match_query_param,
+};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
 use fern_cli_sdk::openapi::discovery::RestResource;
@@ -56,7 +59,25 @@ struct Case {
     params: serde_json::Map<String, serde_json::Value>,
     #[serde(default)]
     body: serde_json::Value,
+    #[serde(rename = "queryMatchers", default)]
+    query_matchers: Vec<QueryMatcher>,
+    #[serde(rename = "headerMatchers", default)]
+    header_matchers: Vec<HeaderMatcher>,
     response: ExpectedResponse,
+}
+
+#[derive(Deserialize)]
+struct QueryMatcher {
+    name: String,
+    value: String,
+}
+
+#[derive(Deserialize)]
+struct HeaderMatcher {
+    name: String,
+    #[serde(rename = "equalTo")]
+    equal_to: Option<String>,
+    matches: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -287,12 +308,24 @@ async fn run_case(id: &str) {
     if !case.response.body.is_empty() {
         template = template.set_body_raw(case.response.body.clone().into_bytes(), "application/json");
     }
-    Mock::given(match_method(case.method.as_str()))
-        .and(match_path(expected_path.clone()))
-        .respond_with(template)
-        .expect(1)
-        .mount(&server)
-        .await;
+    // Match on method + path AND the scalar query params + auth headers the
+    // request must carry. A request that omits or mis-serializes any of them
+    // won't match this mock — the CLI then gets no response and the test fails,
+    // rather than passing on a path-only match. This gives the same
+    // request-shape verification the SDK wire tests get from WireMock stub
+    // matching, without a WireMock container.
+    let mut mock = Mock::given(match_method(case.method.as_str())).and(match_path(expected_path.clone()));
+    for q in &case.query_matchers {
+        mock = mock.and(match_query_param(q.name.as_str(), q.value.as_str()));
+    }
+    for h in &case.header_matchers {
+        if let Some(equal_to) = &h.equal_to {
+            mock = mock.and(match_header(h.name.as_str(), equal_to.as_str()));
+        } else if let Some(pattern) = &h.matches {
+            mock = mock.and(match_header_regex(h.name.as_str(), pattern.as_str()));
+        }
+    }
+    mock.respond_with(template).expect(1).mount(&server).await;
 
     let mut args: Vec<String> = command.chain.clone();
     args.push("--base-url".to_string());
