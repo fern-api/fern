@@ -56,11 +56,20 @@ interface BaseUrlTemplate {
     template: string;
 }
 
+interface TemplatedEnvironment {
+    /** Pascal-cased environment name, matching the Environments struct field (e.g. "Production"). */
+    name: string;
+    /** Whether this environment is the API's default environment. */
+    isDefault: boolean;
+    /** URL templates whose {id} placeholders reference the collected variables. */
+    templates: BaseUrlTemplate[];
+}
+
 interface ServerVariableConfig {
     /** Server URL variables, de-duplicated by id. */
     variables: FernIr.ServerVariable[];
-    /** URL templates whose {id} placeholders reference the above variables. */
-    templates: BaseUrlTemplate[];
+    /** Every environment that declares URL template(s), with its template(s). */
+    environments: TemplatedEnvironment[];
 }
 
 function dedupeServerVariablesById(variables: FernIr.ServerVariable[]): FernIr.ServerVariable[] {
@@ -296,17 +305,18 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     }
 
     /**
-     * Returns the server URL variables and the URL template(s) they interpolate, both
-     * read from the SAME environment (the first one that declares both). Sourcing the
-     * variables and templates from a single environment guarantees the template's {id}
-     * placeholders line up with the collected variable ids rather than being drawn from
-     * two independently-selected environments. Variables are de-duplicated by id, and
-     * the option naming mirrors the Go v1 generator so the generated field references
-     * line up. For singleBaseUrl the template fieldName is empty (the result is assigned
-     * to options.BaseURL rather than an Environment struct field).
+     * Returns the server URL variables together with the URL template(s) declared by
+     * EVERY templated environment. The variables are read from the first environment
+     * that declares both variables and template(s), which guarantees the template's
+     * {id} placeholders line up with the collected variable ids; the option naming
+     * mirrors the Go v1 generator so the generated field references line up. For
+     * singleBaseUrl each environment carries a single template with an empty fieldName
+     * (the result is assigned to options.BaseURL rather than an Environment struct
+     * field). For multipleBaseUrls a base URL missing a template falls back to that
+     * environment's literal URL.
      */
     private getServerVariableConfig(): ServerVariableConfig {
-        const empty: ServerVariableConfig = { variables: [], templates: [] };
+        const empty: ServerVariableConfig = { variables: [], environments: [] };
         // Gated behind the `serverUrlVariables` config option (default true). When
         // disabled, no server-URL-variable options nor the construction-time base-URL
         // template interpolation are emitted, matching the Go v1 generator's suppression
@@ -320,25 +330,40 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
         const environments = config.environments;
         switch (environments.type) {
-            case "singleBaseUrl":
+            case "singleBaseUrl": {
+                let variables: FernIr.ServerVariable[] = [];
                 for (const environment of environments.environments) {
                     if (
                         environment.urlVariables != null &&
                         environment.urlVariables.length > 0 &&
                         environment.urlTemplate != null
                     ) {
-                        return {
-                            variables: dedupeServerVariablesById(environment.urlVariables),
-                            templates: [{ fieldName: "", template: environment.urlTemplate }]
-                        };
+                        variables = dedupeServerVariablesById(environment.urlVariables);
+                        break;
                     }
                 }
-                return empty;
+                if (variables.length === 0) {
+                    return empty;
+                }
+                const templatedEnvironments: TemplatedEnvironment[] = [];
+                for (const environment of environments.environments) {
+                    if (environment.urlTemplate == null) {
+                        continue;
+                    }
+                    templatedEnvironments.push({
+                        name: this.context.caseConverter.pascalUnsafe(environment.name),
+                        isDefault: environment.id === config.defaultEnvironment,
+                        templates: [{ fieldName: "", template: environment.urlTemplate }]
+                    });
+                }
+                return { variables, environments: templatedEnvironments };
+            }
             case "multipleBaseUrls": {
                 const baseUrlNamesById = new Map<string, string>();
                 for (const baseUrl of environments.baseUrls) {
                     baseUrlNamesById.set(baseUrl.id, this.context.caseConverter.pascalUnsafe(baseUrl.name));
                 }
+                let variables: FernIr.ServerVariable[] = [];
                 for (const environment of environments.environments) {
                     if (
                         environment.urlVariables != null &&
@@ -346,25 +371,44 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                         environment.urlTemplates != null &&
                         Object.keys(environment.urlTemplates).length > 0
                     ) {
-                        const variables: FernIr.ServerVariable[] = [];
+                        const collected: FernIr.ServerVariable[] = [];
                         for (const baseUrlId of Object.keys(environment.urlVariables).sort()) {
-                            variables.push(...(environment.urlVariables[baseUrlId] ?? []));
+                            collected.push(...(environment.urlVariables[baseUrlId] ?? []));
                         }
-                        const templates: BaseUrlTemplate[] = [];
-                        for (const baseUrlId of Object.keys(environment.urlTemplates).sort()) {
-                            const template = environment.urlTemplates[baseUrlId];
-                            if (template == null) {
-                                continue;
-                            }
-                            templates.push({
-                                fieldName: baseUrlNamesById.get(baseUrlId) ?? baseUrlId,
-                                template
-                            });
-                        }
-                        return { variables: dedupeServerVariablesById(variables), templates };
+                        variables = dedupeServerVariablesById(collected);
+                        break;
                     }
                 }
-                return empty;
+                if (variables.length === 0) {
+                    return empty;
+                }
+                const templatedEnvironments: TemplatedEnvironment[] = [];
+                for (const environment of environments.environments) {
+                    if (environment.urlTemplates == null || Object.keys(environment.urlTemplates).length === 0) {
+                        continue;
+                    }
+                    const templates: BaseUrlTemplate[] = [];
+                    const baseUrlIds = new Set<string>([
+                        ...Object.keys(environment.urlTemplates),
+                        ...Object.keys(environment.urls)
+                    ]);
+                    for (const baseUrlId of [...baseUrlIds].sort()) {
+                        const template = environment.urlTemplates[baseUrlId] ?? environment.urls[baseUrlId];
+                        if (template == null) {
+                            continue;
+                        }
+                        templates.push({
+                            fieldName: baseUrlNamesById.get(baseUrlId) ?? baseUrlId,
+                            template
+                        });
+                    }
+                    templatedEnvironments.push({
+                        name: this.context.caseConverter.pascalUnsafe(environment.name),
+                        isDefault: environment.id === config.defaultEnvironment,
+                        templates
+                    });
+                }
+                return { variables, environments: templatedEnvironments };
             }
             default:
                 assertNever(environments);
@@ -383,13 +427,17 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
     /**
      * Writes the construction-time interpolation block: when any server URL variable
-     * option is set, rebuild the base URL(s) from the environment's URL template(s),
-     * substituting each {id} placeholder with the provided value (falling back to the
-     * variable's default).
+     * option is set, rebuild the base URL(s) from the SELECTED environment's URL
+     * template(s), substituting each {id} placeholder with the provided value (falling
+     * back to the variable's default). The selected environment is recognized by
+     * matching options.BaseURL (singleBaseUrl) or options.Environment
+     * (multipleBaseUrls) against the generated environment constants; when no
+     * environment is selected, the default (or first) templated environment's
+     * template(s) are used. A custom base URL or environment value is left untouched.
      */
     private writeServerVariableInterpolation({ writer }: { writer: go.Writer }): void {
-        const { variables, templates } = this.getServerVariableConfig();
-        if (variables.length === 0 || templates.length === 0) {
+        const { variables, environments: templatedEnvironments } = this.getServerVariableConfig();
+        if (variables.length === 0 || templatedEnvironments.length === 0) {
             return;
         }
         const options = this.toServerVariableOptions(variables);
@@ -398,13 +446,19 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             optionsByVariableId.set(option.variable.id, option);
         }
         const isMultipleBaseUrls = this.context.isMultipleBaseUrlsEnvironment();
+        const fallbackEnvironment =
+            templatedEnvironments.find((environment) => environment.isDefault) ?? templatedEnvironments[0];
 
-        // Only rebuild the base URL from the template(s) when the user has NOT supplied an
-        // explicit base URL. An explicit BaseURL always takes precedence and must not be
-        // clobbered by server-variable interpolation.
         const variableConditions = options.map((option) => `options.${option.fieldName} != ""`).join(" || ");
         writer.write("if ");
-        writer.write(`options.BaseURL == "" && (${variableConditions})`);
+        if (isMultipleBaseUrls) {
+            // Only rebuild the environment URLs from the template(s) when the user has NOT
+            // supplied an explicit base URL. An explicit BaseURL always takes precedence and
+            // must not be clobbered by server-variable interpolation.
+            writer.write(`options.BaseURL == "" && (${variableConditions})`);
+        } else {
+            writer.write(variableConditions);
+        }
         writer.writeLine(" {");
         writer.indent();
 
@@ -420,30 +474,73 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
         }
 
-        if (isMultipleBaseUrls) {
-            writer.write("options.Environment = ");
+        const writeEnvironmentsReference = (environmentName: string): void => {
             writer.writeNode(
                 go.typeReference({
-                    name: "Environment",
+                    name: "Environments",
                     importPath: this.context.getRootImportPath()
                 })
             );
-            writer.writeLine("{");
-            writer.indent();
-            for (const { fieldName, template } of templates) {
-                writer.write(`${fieldName}: `);
-                this.writeSprintfForTemplate({ writer, template, optionsByVariableId });
-                writer.writeLine(",");
+            writer.write(`.${environmentName}`);
+        };
+
+        if (isMultipleBaseUrls) {
+            // Match the selected environment against the generated environment constants and
+            // rebuild every host from that environment's template(s). A nil environment
+            // falls back to the default (or first) templated environment; a custom
+            // environment value is left untouched.
+            writer.writeLine("switch options.Environment {");
+            for (const environment of templatedEnvironments) {
+                writer.write("case ");
+                if (environment === fallbackEnvironment) {
+                    writer.write("nil, ");
+                }
+                writeEnvironmentsReference(environment.name);
+                writer.writeLine(":");
+                writer.indent();
+                writer.write("options.Environment = ");
+                writer.writeNode(
+                    go.typeReference({
+                        name: "Environment",
+                        importPath: this.context.getRootImportPath()
+                    })
+                );
+                writer.writeLine("{");
+                writer.indent();
+                for (const { fieldName, template } of environment.templates) {
+                    writer.write(`${fieldName}: `);
+                    this.writeSprintfForTemplate({ writer, template, optionsByVariableId });
+                    writer.writeLine(",");
+                }
+                writer.dedent();
+                writer.writeLine("}");
+                writer.dedent();
             }
-            writer.dedent();
             writer.writeLine("}");
         } else {
-            const template = templates[0];
-            if (template != null) {
+            // Match the selected base URL against the generated environment constants and
+            // rebuild it from that environment's template. An empty base URL falls back to
+            // the default (or first) templated environment; a custom base URL is left
+            // untouched.
+            writer.writeLine("switch options.BaseURL {");
+            for (const environment of templatedEnvironments) {
+                const template = environment.templates[0];
+                if (template == null) {
+                    continue;
+                }
+                writer.write("case ");
+                if (environment === fallbackEnvironment) {
+                    writer.write(`"", `);
+                }
+                writeEnvironmentsReference(environment.name);
+                writer.writeLine(":");
+                writer.indent();
                 writer.write("options.BaseURL = ");
                 this.writeSprintfForTemplate({ writer, template: template.template, optionsByVariableId });
                 writer.newLine();
+                writer.dedent();
             }
+            writer.writeLine("}");
         }
 
         writer.dedent();
@@ -475,6 +572,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             args.push(option.localName);
             return "%s";
         });
+        if (args.length === 0) {
+            writer.write(JSON.stringify(template));
+            return;
+        }
         writer.writeNode(
             go.invokeFunc({
                 func: go.typeReference({ name: "Sprintf", importPath: "fmt" }),

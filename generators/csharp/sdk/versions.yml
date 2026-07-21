@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.76.5
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both a named environment and server URL
+        variables (e.g. `Region`), the generated client now renders the selected
+        environment's URL template(s) instead of always using the first (default)
+        environment's template. Explicitly provided custom base URLs and custom
+        environment values are never overridden.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 2.76.4
   changelogEntry:
     - summary: |

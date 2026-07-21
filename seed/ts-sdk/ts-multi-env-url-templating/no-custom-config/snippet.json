@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-multi-env-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.auth.getToken();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/things",
+                "method": "GET",
+                "identifier_override": "endpoint_core.listThings"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-multi-env-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.core.listThings();\n"
+            }
+        }
+    ],
+    "types": {}
+}
