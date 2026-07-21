@@ -13,9 +13,8 @@
 
 ```go
 client.ListUsers(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -41,13 +40,12 @@ client.ListUsers(
 
 ```go
 request := &fern.GetUserRequest{
-        UserID: "userId",
-    }
-client.GetUser(
-        context.TODO(),
-        request,
-    )
+    UserID: "userId",
 }
+client.GetUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -88,9 +86,8 @@ client.GetUser(
 
 ```go
 client.ListInvoices(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -116,13 +113,12 @@ client.ListInvoices(
 
 ```go
 request := &fern.GetInvoiceRequest{
-        InvoiceID: "invoiceId",
-    }
-client.GetInvoice(
-        context.TODO(),
-        request,
-    )
+    InvoiceID: "invoiceId",
 }
+client.GetInvoice(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -54,6 +54,24 @@ class ComplexClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->complex->search(
+     *     'index',
+     *     new SearchRequest([
+     *         'pagination' => new StartingAfterPaging([
+     *             'perPage' => 1,
+     *             'startingAfter' => 'starting_after',
+     *         ]),
+     *         'query' => new SingleFilterSearchRequest([
+     *             'field' => 'field',
+     *             'operator' => SingleFilterSearchRequestOperator::Equals->value,
+     *             'value' => 'value',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $index
      * @param SearchRequest $request
      * @param ?array{

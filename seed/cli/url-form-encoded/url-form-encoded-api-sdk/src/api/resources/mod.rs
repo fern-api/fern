@@ -19,6 +19,28 @@ impl ApiClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use url_form_encoded_api_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UrlFormEncodedApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .submit_form_data(
+    ///             &PostSubmitRequest {
+    ///                 username: "johndoe".to_string(),
+    ///                 email: "john@example.com".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn submit_form_data(
         &self,
         request: &PostSubmitRequest,
@@ -35,6 +57,29 @@ impl ApiClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use url_form_encoded_api_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UrlFormEncodedApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .get_token(
+    ///             &TokenRequest {
+    ///                 client_id: "client_id".to_string(),
+    ///                 client_secret: "client_secret".to_string(),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_token(
         &self,
         request: &TokenRequest,

@@ -13,6 +13,29 @@ impl DummyClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_streaming::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = StreamingClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .dummy
+    ///         .generate(
+    ///             &GenerateRequest {
+    ///                 stream: false,
+    ///                 num_events: 5,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn generate(
         &self,
         request: &GenerateRequest,

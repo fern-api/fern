@@ -34,6 +34,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Status.GetStatus(
+//	    context.TODO(),
+//	)
 func (c *Client) GetStatus(
 	ctx context.Context,
 	opts ...option.RequestOption,

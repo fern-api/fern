@@ -53,6 +53,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.User.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -67,6 +72,11 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.User.GetAdmins(
+//	    context.TODO(),
+//	)
 func (c *Client) GetAdmins(
 	ctx context.Context,
 	opts ...option.RequestOption,

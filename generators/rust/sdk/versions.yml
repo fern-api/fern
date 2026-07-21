@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.43.0
+  changelogEntry:
+    - summary: |
+        Endpoint methods now include a usage example in their rustdoc comments (under a
+        `# Examples` section), so IDEs surface a ready-to-use code snippet on hover. The
+        examples are the same dynamic snippets used for the README and reference.md, and
+        are fenced with ```no_run so `cargo test` doctests compile but do not execute them.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 66
 - version: 0.42.2
   changelogEntry:
     - summary: |

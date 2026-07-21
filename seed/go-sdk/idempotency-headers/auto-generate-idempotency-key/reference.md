@@ -14,14 +14,13 @@
 
 ```go
 request := &fern.CreatePaymentRequest{
-        Amount: 1,
-        Currency: fern.CurrencyUsd,
-    }
-client.Payment.Create(
-        context.TODO(),
-        request,
-    )
+    Amount: 1,
+    Currency: fern.CurrencyUsd,
 }
+client.Payment.Create(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -70,10 +69,9 @@ client.Payment.Create(
 
 ```go
 client.Payment.Delete(
-        context.TODO(),
-        "paymentId",
-    )
-}
+    context.TODO(),
+    "paymentId",
+)
 ```
 </dd>
 </dl>

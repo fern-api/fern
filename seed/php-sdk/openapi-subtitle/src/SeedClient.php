@@ -65,6 +65,11 @@ class SeedClient
     /**
      * Returns a paginated list of all plants currently in the store inventory.
      *
+     * Example:
+     * ```php
+     * $client->listPlants();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -111,6 +116,13 @@ class SeedClient
 
     /**
      * Retrieve details about a specific plant by its unique identifier.
+     *
+     * Example:
+     * ```php
+     * $client->getPlant(
+     *     'plantId',
+     * );
+     * ```
      *
      * @param string $plantId
      * @param ?array{

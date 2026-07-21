@@ -7,6 +7,20 @@ public final class UnionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Unions
+    ///
+    /// private func main() async throws {
+    ///     let client = UnionsClient()
+    ///
+    ///     _ = try await client.union.get(id: "id")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> Shape {
         return try await httpClient.performRequest(
             method: .get,
@@ -16,6 +30,24 @@ public final class UnionClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Unions
+    ///
+    /// private func main() async throws {
+    ///     let client = UnionsClient()
+    ///
+    ///     _ = try await client.union.update(request: Shape.circle(
+    ///         Circle(
+    ///             radius: 1.1
+    ///         )
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func update(request: Shape, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .patch,

@@ -14,16 +14,15 @@
 
 ```go
 request := &fern.ClientRequest{
-        Client: &fern.Client{
-            Name: "Acme Corp",
-            Email: "contact@acme.com",
-        },
-    }
-client.Clients.Create(
-        context.TODO(),
-        request,
-    )
+    Client: &fern.Client{
+        Name: "Acme Corp",
+        Email: "contact@acme.com",
+    },
 }
+client.Clients.Create(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

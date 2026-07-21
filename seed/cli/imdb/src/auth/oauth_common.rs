@@ -82,6 +82,37 @@ pub(crate) fn token_http_client() -> Result<reqwest::Client, CliError> {
         .map_err(|e| CliError::Auth(format!("build OAuth HTTP client: {e}")))
 }
 
+/// Read an environment variable used by an OAuth2 token exchange.
+///
+/// Whitespace-only values are treated as unset. When `required`, an absent
+/// or empty variable is an error; otherwise it yields `Ok(None)`. `context`
+/// describes the caller for the error message (e.g. `"client_id"`,
+/// `"token request"`).
+pub(crate) fn read_oauth_env(
+    name: &str,
+    required: bool,
+    context: &str,
+) -> Result<Option<String>, CliError> {
+    let value = match std::env::var(name) {
+        Ok(value) => value,
+        Err(std::env::VarError::NotPresent) if !required => return Ok(None),
+        Err(_) => {
+            return Err(CliError::Auth(format!(
+                "Missing environment variable {name} (OAuth2 {context})"
+            )));
+        }
+    };
+    if value.trim().is_empty() {
+        if !required {
+            return Ok(None);
+        }
+        return Err(CliError::Auth(format!(
+            "Environment variable {name} (OAuth2 {context}) must be non-empty"
+        )));
+    }
+    Ok(Some(value))
+}
+
 /// Current epoch seconds.
 pub(crate) fn now_epoch() -> u64 {
     SystemTime::now()

@@ -34,6 +34,30 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendLiteralsInlinedRequest{
+//	    Context: fern.String(
+//	        "You're super wise",
+//	    ),
+//	    Query: "What is the weather today",
+//	    Temperature: fern.Float64(
+//	        10.1,
+//	    ),
+//	    AliasedContext: fern.SomeAliasedLiteral(
+//	        "You're super wise",
+//	    ),
+//	    MaybeContext: fern.String(
+//	        "You're super wise",
+//	    ),
+//	    ObjectWithLiteral: &fern.ATopLevelLiteral{
+//	        NestedLiteral: &fern.ANestedLiteral{},
+//	    },
+//	}
+//	client.Inlined.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendLiteralsInlinedRequest,

@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.get
+    #
     # @return [untyped]
     def get(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(

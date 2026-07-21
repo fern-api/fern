@@ -13,14 +13,13 @@
 
 ```go
 request := &fern.InlinedChildRequest{
-        Parent: "parent",
-        Child: "child",
-    }
-client.ExtendedInlineRequestBody(
-        context.TODO(),
-        request,
-    )
+    Parent: "parent",
+    Child: "child",
 }
+client.ExtendedInlineRequestBody(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

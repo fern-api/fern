@@ -13,6 +13,20 @@ impl PathClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_literal::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LiteralClient::new(config).expect("Failed to build client");
+    ///     client.path.send(&"123".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn send(
         &self,
         id: &str,

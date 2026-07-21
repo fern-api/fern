@@ -249,6 +249,9 @@ fixtures:
         packageName: sseresumable
         module:
           path: github.com/fern-api/sse-resumable-go
+  go-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
@@ -299,6 +302,10 @@ fixtures:
   go-oauth-token-optional:
     - outputFolder: no-custom-config
       customConfig: null
+  oauth-pkce:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   pagination-custom:
     - outputFolder: .
       customConfig:
@@ -353,6 +360,10 @@ fixtures:
     - outputFolder: .
       customConfig: null
   union-query-parameters:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  literal:
     - outputFolder: .
       customConfig:
         enableWireTests: true

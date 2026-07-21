@@ -13,6 +13,29 @@ impl TeamMemberClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use openapi_request_body_ref_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = OpenapiRequestBodyRefClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .team_member
+    ///         .update_team_member(
+    ///             &"team_member_id".to_string(),
+    ///             &UpdateTeamMemberRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update_team_member(
         &self,
         team_member_id: &str,

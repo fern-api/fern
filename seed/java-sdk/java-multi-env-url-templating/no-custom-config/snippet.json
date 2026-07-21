@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "1c06c20e",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.auth().getToken();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.auth().getToken();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "77d251b8",
+            "id": {
+                "method": "GET",
+                "path": "/things",
+                "identifier_override": "endpoint_core.listThings"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.core().listThings();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.core().listThings();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

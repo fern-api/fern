@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request that always throws an error
+//
+// Example:
+//
+//	client.PropertyBasedError.ThrowError(
+//	    context.TODO(),
+//	)
 func (c *Client) ThrowError(
 	ctx context.Context,
 	opts ...option.RequestOption,

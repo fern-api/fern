@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.18.0
+  changelogEntry:
+    - summary: |
+        Endpoint methods now include a usage example in their YARD doc comment via the
+        `@example` tag, so IDEs surface a code snippet on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
 - version: 1.17.8
   changelogEntry:
     - summary: |

@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.v1.list_users
+      #
       # @return [Array[Seed::V1::Types::UserV1]]
       def list_users(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(

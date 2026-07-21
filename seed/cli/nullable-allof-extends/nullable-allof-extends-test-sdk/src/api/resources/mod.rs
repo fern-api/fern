@@ -28,6 +28,21 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use nullable_allof_extends_test_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = NullableAllofExtendsTestClient::new(config).expect("Failed to build client");
+    ///     client.get_test(None).await;
+    /// }
+    /// ```
     pub async fn get_test(&self, options: Option<RequestOptions>) -> Result<RootObject, ApiError> {
         self.http_client
             .execute_request(Method::GET, "test", None, None, options)
@@ -43,6 +58,31 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use nullable_allof_extends_test_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = NullableAllofExtendsTestClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .create_test(
+    ///             &RootObject {
+    ///                 normal_object_fields: NormalObject {
+    ///                     ..Default::default()
+    ///                 },
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_test(
         &self,
         request: &RootObject,

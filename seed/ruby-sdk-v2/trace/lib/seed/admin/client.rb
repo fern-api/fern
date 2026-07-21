@@ -19,6 +19,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
+      # @example
+      #   client.admin.update_test_submission_status(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     request: {}
+      #   )
+      #
       # @return [untyped]
       def update_test_submission_status(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -49,6 +55,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
+      #
+      # @example
+      #   client.admin.send_test_submission_update(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     update_time: "2024-01-15T09:30:00Z",
+      #     update_info: {}
+      #   )
       #
       # @return [untyped]
       def send_test_submission_update(request_options: {}, **params)
@@ -81,6 +94,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
+      # @example
+      #   client.admin.update_workspace_submission_status(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     request: {}
+      #   )
+      #
       # @return [untyped]
       def update_workspace_submission_status(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -111,6 +130,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
+      #
+      # @example
+      #   client.admin.send_workspace_submission_update(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     update_time: "2024-01-15T09:30:00Z",
+      #     update_info: {}
+      #   )
       #
       # @return [untyped]
       def send_workspace_submission_update(request_options: {}, **params)
@@ -143,6 +169,73 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       # @option params [String] :test_case_id
+      #
+      # @example
+      #   client.admin.store_traced_test_case(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     test_case_id: "testCaseId",
+      #     result: {
+      #       result: {
+      #         expected_result: {},
+      #         actual_result: {
+      #           value: {}
+      #         },
+      #         passed: true
+      #       },
+      #       stdout: "stdout"
+      #     },
+      #     trace_responses: [{
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }, {
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }]
+      #   )
       #
       # @return [untyped]
       def store_traced_test_case(request_options: {}, **params)
@@ -180,6 +273,71 @@ module Seed
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       # @option params [Seed::V2::Problem::Types::TestCaseID] :test_case_id
       #
+      # @example
+      #   client.admin.store_traced_test_case_v2(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     test_case_id: "testCaseId",
+      #     request: [{
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       file: {
+      #         filename: "filename",
+      #         directory: "directory"
+      #       },
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }, {
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       file: {
+      #         filename: "filename",
+      #         directory: "directory"
+      #       },
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }]
+      #   )
+      #
       # @return [untyped]
       def store_traced_test_case_v2(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -210,6 +368,70 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
+      #
+      # @example
+      #   client.admin.store_traced_workspace(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     workspace_run_details: {
+      #       exception: {
+      #         exception_type: "exceptionType",
+      #         exception_message: "exceptionMessage",
+      #         exception_stacktrace: "exceptionStacktrace"
+      #       },
+      #       stdout: "stdout"
+      #     },
+      #     trace_responses: [{
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }, {
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }]
+      #   )
       #
       # @return [untyped]
       def store_traced_workspace(request_options: {}, **params)
@@ -245,6 +467,70 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Submission::Types::SubmissionID] :submission_id
+      #
+      # @example
+      #   client.admin.store_traced_workspace_v2(
+      #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     request: [{
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       file: {
+      #         filename: "filename",
+      #         directory: "directory"
+      #       },
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }, {
+      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       line_number: 1,
+      #       file: {
+      #         filename: "filename",
+      #         directory: "directory"
+      #       },
+      #       return_value: {},
+      #       expression_location: {
+      #         start: 1,
+      #         offset: 1
+      #       },
+      #       stack: {
+      #         num_stack_frames: 1,
+      #         top_stack_frame: {
+      #           method_name: "methodName",
+      #           line_number: 1,
+      #           scopes: [{
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }, {
+      #             variables: {
+      #               variables: {}
+      #             }
+      #           }]
+      #         }
+      #       },
+      #       stdout: "stdout"
+      #     }]
+      #   )
       #
       # @return [untyped]
       def store_traced_workspace_v2(request_options: {}, **params)

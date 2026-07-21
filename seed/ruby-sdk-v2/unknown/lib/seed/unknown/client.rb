@@ -18,6 +18,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.unknown.post(request: {
+      #     key: "value"
+      #   })
+      #
       # @return [Array[Object]]
       def post(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -47,6 +52,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.unknown.post_object(unknown: {
+      #     key: "value"
+      #   })
       #
       # @return [Array[Object]]
       def post_object(request_options: {}, **params)

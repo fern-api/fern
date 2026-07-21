@@ -19,6 +19,25 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.object.get_and_return_with_optional_field(
+        #     string: "string",
+        #     integer: 1,
+        #     long: 1000000,
+        #     double: 1.1,
+        #     bool: true,
+        #     datetime: "2024-01-15T09:30:00Z",
+        #     date: "2023-01-15",
+        #     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        #     base64: "SGVsbG8gd29ybGQh",
+        #     list: %w[list list],
+        #     set: Set.new(["set"]),
+        #     map: {
+        #       1 => "map"
+        #     },
+        #     bigint: "1000000"
+        #   )
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def get_and_return_with_optional_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -50,6 +69,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.object.get_and_return_with_required_field(string: "string")
         #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField]
         def get_and_return_with_required_field(request_options: {}, **params)
@@ -83,6 +105,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.object.get_and_return_with_map_of_map(map: {
+        #     map: {
+        #       map: "map"
+        #     }
+        #   })
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithMapOfMap]
         def get_and_return_with_map_of_map(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -114,6 +143,28 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.object.get_and_return_nested_with_optional_field(
+        #     string: "string",
+        #     nested_object: {
+        #       string: "string",
+        #       integer: 1,
+        #       long: 1000000,
+        #       double: 1.1,
+        #       bool: true,
+        #       datetime: "2024-01-15T09:30:00Z",
+        #       date: "2023-01-15",
+        #       uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        #       base64: "SGVsbG8gd29ybGQh",
+        #       list: %w[list list],
+        #       set: Set.new(["set"]),
+        #       map: {
+        #         1 => "map"
+        #       },
+        #       bigint: "1000000"
+        #     }
+        #   )
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
         def get_and_return_nested_with_optional_field(request_options: {}, **params)
@@ -148,6 +199,28 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :string
         #
+        # @example
+        #   client.endpoints.object.get_and_return_nested_with_required_field(
+        #     string: "string",
+        #     nested_object: {
+        #       string: "string",
+        #       integer: 1,
+        #       long: 1000000,
+        #       double: 1.1,
+        #       bool: true,
+        #       datetime: "2024-01-15T09:30:00Z",
+        #       date: "2023-01-15",
+        #       uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        #       base64: "SGVsbG8gd29ybGQh",
+        #       list: %w[list list],
+        #       set: Set.new(["set"]),
+        #       map: {
+        #         1 => "map"
+        #       },
+        #       bigint: "1000000"
+        #     }
+        #   )
+        #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -179,6 +252,47 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
+        #     string: "string",
+        #     nested_object: {
+        #       string: "string",
+        #       integer: 1,
+        #       long: 1000000,
+        #       double: 1.1,
+        #       bool: true,
+        #       datetime: "2024-01-15T09:30:00Z",
+        #       date: "2023-01-15",
+        #       uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        #       base64: "SGVsbG8gd29ybGQh",
+        #       list: %w[list list],
+        #       set: Set.new(["set"]),
+        #       map: {
+        #         1 => "map"
+        #       },
+        #       bigint: "1000000"
+        #     }
+        #   }, {
+        #     string: "string",
+        #     nested_object: {
+        #       string: "string",
+        #       integer: 1,
+        #       long: 1000000,
+        #       double: 1.1,
+        #       bool: true,
+        #       datetime: "2024-01-15T09:30:00Z",
+        #       date: "2023-01-15",
+        #       uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        #       base64: "SGVsbG8gd29ybGQh",
+        #       list: %w[list list],
+        #       set: Set.new(["set"]),
+        #       map: {
+        #         1 => "map"
+        #       },
+        #       bigint: "1000000"
+        #     }
+        #   }])
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field_as_list(request_options: {}, **params)
@@ -212,6 +326,11 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.object.get_and_return_with_unknown_field(unknown: {
+        #     "$ref" => "https://example.com/schema"
+        #   })
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithUnknownField]
         def get_and_return_with_unknown_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -244,6 +363,11 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.object.get_and_return_with_documented_unknown_type(documented_unknown_type: {
+        #     key: "value"
+        #   })
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType]
         def get_and_return_with_documented_unknown_type(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -275,6 +399,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {
+        #     string: {
+        #       key: "value"
+        #     }
+        #   })
         #
         # @return [Hash[String, Object]]
         def get_and_return_map_of_documented_unknown_type(request_options: {}, **params)
@@ -310,6 +441,14 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+        #     required_string: "hello",
+        #     required_integer: 0,
+        #     optional_string: "world",
+        #     required_long: 0
+        #   )
         #
         # @return [Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields]
         def get_and_return_with_mixed_required_and_optional_fields(request_options: {}, **params)
@@ -348,6 +487,15 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.object.get_and_return_with_required_nested_object(
+        #     required_string: "hello",
+        #     required_object: {
+        #       string: "nested",
+        #       nested_object: {}
+        #     }
+        #   )
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredNestedObject]
         def get_and_return_with_required_nested_object(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -383,6 +531,12 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.object.get_and_return_with_datetime_like_string(
+        #     datetime_like_string: "2023-08-31T14:15:22Z",
+        #     actual_datetime: "2023-08-31T14:15:22Z"
+        #   )
         #
         # @return [Seed::Types::Object_::Types::ObjectWithDatetimeLikeString]
         def get_and_return_with_datetime_like_string(request_options: {}, **params)

@@ -51,6 +51,14 @@ class ProductsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->products->search(
+     *     'regionId',
+     *     new SearchProductsRequest([]),
+     * );
+     * ```
+     *
      * @param string $regionId
      * @param SearchProductsRequest $request
      * @param ?array{
@@ -99,6 +107,14 @@ class ProductsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->products->get(
+     *     'regionId',
+     *     'productId',
+     * );
+     * ```
+     *
      * @param string $regionId
      * @param string $productId
      * @param ?array{

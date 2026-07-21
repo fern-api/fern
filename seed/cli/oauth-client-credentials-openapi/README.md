@@ -40,7 +40,14 @@ cargo build --release
 
 ## Authentication
 
-This API requires authentication. Run `oauth-client-credentials-openapi --help` for details.
+Set the following environment variable(s) before using the CLI:
+
+```bash
+export OAUTH_CLIENT_CREDENTIALS_OPENAPI_CLIENT_ID="<your OAuth client credential>"
+export OAUTH_CLIENT_CREDENTIALS_OPENAPI_CLIENT_SECRET="<your OAuth client credential>"
+```
+
+A `.env` file in the working directory is also supported — the CLI auto-loads it on startup.
 
 ## Quick start
 

@@ -5,6 +5,7 @@ package com.seed.idempotencyHeaders.resources.payment;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.idempotencyHeaders.core.ClientOptions;
+import com.seed.idempotencyHeaders.core.IdempotencyUtils;
 import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
 import com.seed.idempotencyHeaders.core.MediaTypes;
 import com.seed.idempotencyHeaders.core.ObjectMappers;
@@ -55,7 +56,8 @@ public class RawPaymentClient {
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(IdempotencyUtils.withGeneratedIdempotencyKey(
+                        clientOptions.headers(requestOptions), "Idempotency-Key")))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();

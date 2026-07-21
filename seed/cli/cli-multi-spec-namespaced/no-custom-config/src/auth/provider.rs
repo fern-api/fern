@@ -19,6 +19,7 @@ use crate::error::CliError;
 #[derive(Debug, Clone, Default)]
 pub struct EndpointAuthMetadata {
     pub security_requirements: Option<Vec<HashMap<String, Vec<String>>>>,
+    pub base_url_override: Option<String>,
 }
 
 impl EndpointAuthMetadata {
@@ -32,13 +33,20 @@ impl EndpointAuthMetadata {
     pub fn explicit_anonymous() -> Self {
         Self {
             security_requirements: Some(Vec::new()),
+            base_url_override: None,
         }
     }
 
     pub fn with_requirements(reqs: Vec<HashMap<String, Vec<String>>>) -> Self {
         Self {
             security_requirements: Some(reqs),
+            base_url_override: None,
         }
+    }
+
+    pub fn with_base_url_override(mut self, base_url_override: Option<&str>) -> Self {
+        self.base_url_override = base_url_override.map(str::to_string);
+        self
     }
 
     /// True when the operation pinned `security: []` — the spec's "this

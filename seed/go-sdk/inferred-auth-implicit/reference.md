@@ -14,20 +14,19 @@
 
 ```go
 request := &fern.GetTokenRequest{
-        XAPIKey: "X-Api-Key",
-        ClientID: "client_id",
-        ClientSecret: fern.String(
-            "client_secret",
-        ),
-        Scope: fern.String(
-            "scope",
-        ),
-    }
-client.Auth.GetTokenWithClientCredentials(
-        context.TODO(),
-        request,
-    )
+    XAPIKey: "X-Api-Key",
+    ClientID: "client_id",
+    ClientSecret: fern.String(
+        "client_secret",
+    ),
+    Scope: fern.String(
+        "scope",
+    ),
 }
+client.Auth.GetTokenWithClientCredentials(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -58,7 +57,7 @@ client.Auth.GetTokenWithClientCredentials(
 <dl>
 <dd>
 
-**clientSecret:** `*string`
+**clientSecret:** `*string` 
     
 </dd>
 </dl>
@@ -108,19 +107,18 @@ client.Auth.GetTokenWithClientCredentials(
 
 ```go
 request := &fern.RefreshTokenRequest{
-        XAPIKey: "X-Api-Key",
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-        RefreshToken: "refresh_token",
-        Scope: fern.String(
-            "scope",
-        ),
-    }
-client.Auth.RefreshToken(
-        context.TODO(),
-        request,
-    )
+    XAPIKey: "X-Api-Key",
+    ClientID: "client_id",
+    ClientSecret: "client_secret",
+    RefreshToken: "refresh_token",
+    Scope: fern.String(
+        "scope",
+    ),
 }
+client.Auth.RefreshToken(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -210,9 +208,8 @@ client.Auth.RefreshToken(
 
 ```go
 client.NestedNoAuth.API.GetSomething(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -239,9 +236,8 @@ client.NestedNoAuth.API.GetSomething(
 
 ```go
 client.Nested.API.GetSomething(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -268,9 +264,8 @@ client.Nested.API.GetSomething(
 
 ```go
 client.Simple.GetSomething(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -281,3 +276,4 @@ client.Simple.GetSomething(
 </dd>
 </dl>
 </details>
+

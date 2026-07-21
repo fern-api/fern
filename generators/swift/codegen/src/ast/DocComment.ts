@@ -7,8 +7,9 @@ export declare namespace DocComment {
     }
 
     interface Args {
-        summary: string;
+        summary?: string;
         description?: string;
+        codeExample?: string;
         parameters?: Parameter[];
         returns?: string;
         throws?: string[];
@@ -16,16 +17,18 @@ export declare namespace DocComment {
 }
 
 export class DocComment extends AstNode {
-    private readonly summary: string;
+    private readonly summary?: string;
     private readonly description?: string;
+    private readonly codeExample?: string;
     private readonly parameters: DocComment.Parameter[];
     private readonly returns?: string;
     private readonly throws: string[];
 
-    public constructor({ summary, description, parameters, returns, throws }: DocComment.Args) {
+    public constructor({ summary, description, codeExample, parameters, returns, throws }: DocComment.Args) {
         super();
-        this.summary = DocComment.sanitizeText(summary);
+        this.summary = summary != null ? DocComment.sanitizeText(summary) : undefined;
         this.description = description != null ? DocComment.sanitizeText(description) : undefined;
+        this.codeExample = codeExample != null ? DocComment.sanitizeText(codeExample) : undefined;
         this.parameters = (parameters ?? []).map((param) => ({
             name: param.name,
             description: DocComment.sanitizeText(param.description)
@@ -35,15 +38,32 @@ export class DocComment extends AstNode {
     }
 
     public write(writer: Writer): void {
-        this.writeMultilineText(writer, this.summary);
+        let hasPrecedingSection = false;
+        if (this.summary != null) {
+            this.writeMultilineText(writer, this.summary);
+            hasPrecedingSection = true;
+        }
         if (this.description != null) {
-            writer.write("///");
-            writer.newLine();
+            if (hasPrecedingSection) {
+                writer.write("///");
+                writer.newLine();
+            }
             this.writeMultilineText(writer, this.description);
+            hasPrecedingSection = true;
+        }
+        if (this.codeExample != null) {
+            if (hasPrecedingSection) {
+                writer.write("///");
+                writer.newLine();
+            }
+            this.writeMultilineText(writer, `\`\`\`swift\n${this.codeExample}\n\`\`\``);
+            hasPrecedingSection = true;
         }
         if (this.parameters.length > 0) {
-            writer.write("///");
-            writer.newLine();
+            if (hasPrecedingSection) {
+                writer.write("///");
+                writer.newLine();
+            }
             for (const param of this.parameters) {
                 const paramLines = param.description.split("\n");
                 paramLines.forEach((line, lineIdx) => {
@@ -93,8 +113,12 @@ export class DocComment extends AstNode {
     private writeMultilineText(writer: Writer, sanitizedText: string) {
         const lines = sanitizedText.split("\n");
         for (const line of lines) {
-            writer.write("/// ");
-            writer.write(line);
+            if (line === "") {
+                writer.write("///");
+            } else {
+                writer.write("/// ");
+                writer.write(line);
+            }
             writer.newLine();
         }
     }

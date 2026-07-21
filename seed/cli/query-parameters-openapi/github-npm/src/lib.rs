@@ -22,6 +22,7 @@ pub mod man;
 pub mod openapi;
 pub mod pager;
 pub mod stability;
+pub mod user_agent;
 pub mod validate;
 pub mod sdk_executor;
 pub mod websocket;

@@ -35,6 +35,16 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Creates a new contact. Returns 200 with the contact or 204 with no content.
+//
+// Example:
+//
+//	request := &fern.CreateContactRequest{
+//	    Name: "name",
+//	}
+//	client.Contacts.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.CreateContactRequest,
@@ -52,6 +62,16 @@ func (c *Client) Create(
 }
 
 // Gets a contact by ID. Returns 200 with the contact.
+//
+// Example:
+//
+//	request := &fern.GetContactsRequest{
+//	    ID: "id",
+//	}
+//	client.Contacts.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *fern.GetContactsRequest,

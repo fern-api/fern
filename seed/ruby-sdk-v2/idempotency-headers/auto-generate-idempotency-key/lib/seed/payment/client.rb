@@ -18,6 +18,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.payment.create(
+      #     amount: 1,
+      #     currency: "USD"
+      #   )
+      #
       # @return [String]
       def create(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -50,6 +56,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :payment_id
+      #
+      # @example
+      #   client.payment.delete(payment_id: "paymentId")
       #
       # @return [untyped]
       def delete(request_options: {}, **params)

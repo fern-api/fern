@@ -60,7 +60,12 @@ export async function runPipeline(args: {
     // (e.g. missing apiDisplayName + no customConfig override)
     // rather than half-producing output.
     const binaryName = deriveBinaryName({ customConfig, ir });
-    const authBindings = detectAuthBindings({ auth: ir.auth, binaryName });
+    const authBindings = detectAuthBindings({
+        auth: ir.auth,
+        binaryName,
+        services: ir.services,
+        environments: ir.environments
+    });
     const globalParamBindings = detectGlobalParams({ globalParameters: ir.globalParameters });
 
     await mkdir(outputDir, { recursive: true });
@@ -93,7 +98,8 @@ export async function runPipeline(args: {
         globalParamBindings,
         specsDir,
         customCommands,
-        rootGroup: customConfig.rootGroup
+        rootGroup: customConfig.rootGroup,
+        userAgentSuffixFlag: customConfig.userAgentSuffixFlag
     });
     await writeGitignore(outputDir);
     await emitReadme({

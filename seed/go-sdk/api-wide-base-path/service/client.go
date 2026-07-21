@@ -33,6 +33,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Service.Post(
+//	    context.TODO(),
+//	    "pathParam",
+//	    "serviceParam",
+//	    1,
+//	    "resourceParam",
+//	)
 func (c *Client) Post(
 	ctx context.Context,
 	pathParam string,

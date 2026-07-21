@@ -78,8 +78,23 @@ export async function copySpecs(args: {
     customCommands?: boolean;
     /** When set, emit `.command_namespace("<rootGroup>")` on the OpenApiBinding chain. */
     rootGroup?: string;
+    /**
+     * When set, emit `.user_agent_suffix_flag("<name>")` on the CliApp
+     * chain so the generated CLI exposes the consumer suffix under this
+     * flag/env name instead of the default `user-agent-suffix`.
+     */
+    userAgentSuffixFlag?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, globalParamBindings, specsDir, customCommands, rootGroup } = args;
+    const {
+        outputDir,
+        binaryName,
+        authBindings,
+        globalParamBindings,
+        specsDir,
+        customCommands,
+        rootGroup,
+        userAgentSuffixFlag
+    } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -108,7 +123,8 @@ export async function copySpecs(args: {
             authBindings,
             globalParamBindings,
             customCommands: customCommands ?? false,
-            rootGroup
+            rootGroup,
+            userAgentSuffixFlag
         })
     );
 
@@ -196,8 +212,10 @@ function renderMainRs(args: {
     globalParamBindings: DetectedGlobalParam[];
     customCommands: boolean;
     rootGroup?: string;
+    userAgentSuffixFlag?: string;
 }): string {
-    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup } = args;
+    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup, userAgentSuffixFlag } =
+        args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -241,6 +259,19 @@ function renderMainRs(args: {
     }
 
     lines.push(...imports, "", "fn main() {", `    let app = CliApp::new("${binaryName}")`);
+
+    // Consumer User-Agent suffix flag/env override (defaults to
+    // `user-agent-suffix` in the SDK when this is absent). Emitted before
+    // the bindings so the name propagates to every binding's HTTP config.
+    if (userAgentSuffixFlag != null && userAgentSuffixFlag !== "") {
+        if (!SAFE_RUST_STRING_LITERAL.test(userAgentSuffixFlag)) {
+            throw new Error(
+                `Unsafe userAgentSuffixFlag "${userAgentSuffixFlag}": contains characters that cannot be ` +
+                    "interpolated into a Rust string literal."
+            );
+        }
+        lines.push(`        .user_agent_suffix_flag("${userAgentSuffixFlag}")`);
+    }
 
     // Root-level auth bindings (typed builders)
     for (const binding of rootAuthBindings) {

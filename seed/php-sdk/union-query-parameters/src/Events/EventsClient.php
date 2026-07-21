@@ -55,6 +55,16 @@ class EventsClient
      * Subscribe to events with a oneOf-style query parameter that may be a
      * scalar enum value or a list of enum values.
      *
+     * Example:
+     * ```php
+     * $client->events->subscribe(
+     *     new SubscribeEventsRequest([
+     *         'eventType' => EventTypeEnum::GroupCreated->value,
+     *         'tags' => 'tags',
+     *     ]),
+     * );
+     * ```
+     *
      * @param SubscribeEventsRequest $request
      * @param ?array{
      *   baseUrl?: string,

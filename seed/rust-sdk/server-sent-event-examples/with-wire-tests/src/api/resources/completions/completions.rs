@@ -13,6 +13,28 @@ impl CompletionsClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_server_sent_events::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .completions
+    ///         .stream(
+    ///             &StreamCompletionRequest {
+    ///                 query: "foo".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream(
         &self,
         request: &StreamCompletionRequest,
@@ -30,6 +52,28 @@ impl CompletionsClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_server_sent_events::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .completions
+    ///         .stream_events(
+    ///             &StreamEventsRequest {
+    ///                 query: "query".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_events(
         &self,
         request: &StreamEventsRequest,
@@ -47,6 +91,28 @@ impl CompletionsClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_server_sent_events::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .completions
+    ///         .stream_events_discriminant_in_data(
+    ///             &StreamEventsDiscriminantInDataRequest {
+    ///                 query: "query".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_events_discriminant_in_data(
         &self,
         request: &StreamEventsDiscriminantInDataRequest,
@@ -64,6 +130,28 @@ impl CompletionsClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_server_sent_events::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .completions
+    ///         .stream_events_context_protocol(
+    ///             &StreamEventsContextProtocolRequest {
+    ///                 query: "query".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_events_context_protocol(
         &self,
         request: &StreamEventsContextProtocolRequest,
