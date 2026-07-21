@@ -147,9 +147,16 @@ public class AsyncSeedApiClientBuilder {
         if (this.region != null || this.serverUrlEnvironment != null) {
             String _region = this.region != null ? this.region : "us-east-1";
             String _serverUrlEnvironment = this.serverUrlEnvironment != null ? this.serverUrlEnvironment : "prod";
-            this.environment = Environment.custom("https://api.{region}.{environment}.example.com/v1"
-                    .replace("{region}", _region)
-                    .replace("{environment}", _serverUrlEnvironment));
+            String _urlTemplate = null;
+            if (this.environment == null) {
+                _urlTemplate = "https://api.{region}.{environment}.example.com/v1";
+            } else if (this.environment.equals(Environment.REGIONAL_API_SERVER)) {
+                _urlTemplate = "https://api.{region}.{environment}.example.com/v1";
+            }
+            if (_urlTemplate != null) {
+                this.environment = Environment.custom(
+                        _urlTemplate.replace("{region}", _region).replace("{environment}", _serverUrlEnvironment));
+            }
         }
         builder.environment(this.environment);
     }

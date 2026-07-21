@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 
-public class SeedApiClientBuilder {
+public class AsyncSeedApiClientBuilder {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
@@ -24,7 +24,7 @@ public class SeedApiClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private Environment environment = Environment.REGIONAL_API_SERVER;
+    private Environment environment = Environment.PRODUCTION;
 
     private OkHttpClient httpClient;
 
@@ -32,9 +32,7 @@ public class SeedApiClientBuilder {
 
     private String region;
 
-    private String serverUrlEnvironment;
-
-    public SeedApiClientBuilder environment(Environment environment) {
+    public AsyncSeedApiClientBuilder environment(Environment environment) {
         this.environment = environment;
         return this;
     }
@@ -42,7 +40,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
-    public SeedApiClientBuilder timeout(int timeout) {
+    public AsyncSeedApiClientBuilder timeout(int timeout) {
         this.timeout = Optional.of(timeout);
         return this;
     }
@@ -50,7 +48,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
-    public SeedApiClientBuilder maxRetries(int maxRetries) {
+    public AsyncSeedApiClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
         return this;
     }
@@ -58,7 +56,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
      */
-    public SeedApiClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+    public AsyncSeedApiClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
         this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
         return this;
     }
@@ -66,7 +64,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
      */
-    public SeedApiClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+    public AsyncSeedApiClientBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
         this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
         return this;
     }
@@ -74,7 +72,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
      */
-    public SeedApiClientBuilder retryJitterFactor(double retryJitterFactor) {
+    public AsyncSeedApiClientBuilder retryJitterFactor(double retryJitterFactor) {
         this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
@@ -82,7 +80,7 @@ public class SeedApiClientBuilder {
     /**
      * Sets the underlying OkHttp client
      */
-    public SeedApiClientBuilder httpClient(OkHttpClient httpClient) {
+    public AsyncSeedApiClientBuilder httpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
         return this;
     }
@@ -90,7 +88,7 @@ public class SeedApiClientBuilder {
     /**
      * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
      */
-    public SeedApiClientBuilder logging(LogConfig logging) {
+    public AsyncSeedApiClientBuilder logging(LogConfig logging) {
         this.logging = Optional.of(logging);
         return this;
     }
@@ -103,18 +101,13 @@ public class SeedApiClientBuilder {
      * @param value The header value
      * @return This builder for method chaining
      */
-    public SeedApiClientBuilder addHeader(String name, String value) {
+    public AsyncSeedApiClientBuilder addHeader(String name, String value) {
         this.customHeaders.put(name, value);
         return this;
     }
 
-    public SeedApiClientBuilder region(String region) {
+    public AsyncSeedApiClientBuilder region(String region) {
         this.region = region;
-        return this;
-    }
-
-    public SeedApiClientBuilder serverUrlEnvironment(String serverUrlEnvironment) {
-        this.serverUrlEnvironment = serverUrlEnvironment;
         return this;
     }
 
@@ -139,19 +132,23 @@ public class SeedApiClientBuilder {
      * @param builder The ClientOptions.Builder to configure
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
-        if (this.region != null || this.serverUrlEnvironment != null) {
-            String _region = this.region != null ? this.region : "us-east-1";
-            String _serverUrlEnvironment = this.serverUrlEnvironment != null ? this.serverUrlEnvironment : "prod";
-            Environment _selectedEnvironment =
-                    this.environment != null ? this.environment : Environment.REGIONAL_API_SERVER;
-            if (_selectedEnvironment.equals(Environment.REGIONAL_API_SERVER)) {
+        if (this.region != null) {
+            String _region = this.region != null ? this.region : "us1";
+            Environment _selectedEnvironment = this.environment != null ? this.environment : Environment.PRODUCTION;
+            if (_selectedEnvironment.equals(Environment.PRODUCTION)) {
                 this.environment = Environment.custom()
-                        .base("https://api.{region}.{environment}.example.com/v1"
-                                .replace("{region}", _region)
-                                .replace("{environment}", _serverUrlEnvironment))
-                        .auth("https://auth.{region}.example.com"
-                                .replace("{region}", _region)
-                                .replace("{environment}", _serverUrlEnvironment))
+                        .acme("https://api.{region}.acme.com".replace("{region}", _region))
+                        .oauth("https://oauth.{region}.acme.com".replace("{region}", _region))
+                        .build();
+            } else if (_selectedEnvironment.equals(Environment.STAGING)) {
+                this.environment = Environment.custom()
+                        .acme("https://api.stage.{region}.acme.com".replace("{region}", _region))
+                        .oauth("https://oauth.stage.{region}.acme.com".replace("{region}", _region))
+                        .build();
+            } else if (_selectedEnvironment.equals(Environment.DEVELOPMENT)) {
+                this.environment = Environment.custom()
+                        .acme("https://api.dev.{region}.acme.com".replace("{region}", _region))
+                        .oauth("https://oauth.dev.{region}.acme.com".replace("{region}", _region))
                         .build();
             }
         }
@@ -251,8 +248,8 @@ public class SeedApiClientBuilder {
      */
     protected void validateConfiguration() {}
 
-    public SeedApiClient build() {
+    public AsyncSeedApiClient build() {
         validateConfiguration();
-        return new SeedApiClient(buildClientOptions());
+        return new AsyncSeedApiClient(buildClientOptions());
     }
 }
