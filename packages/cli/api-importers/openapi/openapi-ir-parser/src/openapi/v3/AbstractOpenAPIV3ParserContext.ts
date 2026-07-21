@@ -8,15 +8,38 @@ import { getExtension } from "../../getExtension.js";
 import type { ParseOpenAPIOptions } from "../../options.js";
 import type { SchemaParserContext } from "../../schema/SchemaParserContext.js";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences.js";
+import { getGeneratedTypeName } from "../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions.js";
 import { OpenAPIFilter } from "./OpenAPIFilter.js";
+import { resolveSecuritySchemeReference } from "./resolveSecuritySchemeReference.js";
+
+export class OpenAPIV3DocumentMetadata {
+    private readonly refOccurrences: Readonly<Record<string, number>>;
+    private readonly generatedComponentSchemaNames: ReadonlySet<string>;
+
+    public constructor(document: OpenAPIV3.Document, options: ParseOpenAPIOptions) {
+        this.refOccurrences = getReferenceOccurrences(document);
+        this.generatedComponentSchemaNames = new Set(
+            Object.keys(document.components?.schemas ?? {}).map((schemaKey) =>
+                getGeneratedTypeName([schemaKey], options.preserveSchemaIds)
+            )
+        );
+    }
+
+    public getNumberOfOccurrencesForRef(ref: string): number {
+        return this.refOccurrences[ref] ?? 0;
+    }
+
+    public hasGeneratedComponentSchemaName(name: string): boolean {
+        return this.generatedComponentSchemaNames.has(name);
+    }
+}
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
 export const EXAMPLES_REFERENCE_PREFIX = "#/components/examples/";
 export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/";
-export const SECURITY_SCHEME_REFERENCE_PREFIX = "#/components/securitySchemes/";
 
 export interface DiscriminatedUnionReference {
     discriminants: Set<string>;
@@ -33,8 +56,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly document: OpenAPIV3.Document;
     public readonly taskContext: TaskContext;
     public readonly authHeaders: Set<string>;
-    public readonly refOccurrences: Record<string, number>;
-    public readonly DUMMY: SchemaParserContext;
+    private readonly documentMetadata: OpenAPIV3DocumentMetadata;
+    public readonly DUMMY: AbstractOpenAPIV3ParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
     public readonly filter: OpenAPIFilter;
@@ -46,7 +69,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         authHeaders,
         options,
         source,
-        namespace
+        namespace,
+        documentMetadata
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
@@ -54,23 +78,31 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         options: ParseOpenAPIOptions;
         source: Source;
         namespace: string | undefined;
+        documentMetadata?: OpenAPIV3DocumentMetadata;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
-        this.refOccurrences = getReferenceOccurrences(document);
+        this.documentMetadata = documentMetadata ?? new OpenAPIV3DocumentMetadata(document, options);
         this.options = options;
         this.source = source;
         this.filter = new OpenAPIFilter({ context: taskContext, options });
-        this.DUMMY = this.getDummy();
-
         this.namespace = namespace;
         this.schemaNamespaceMapping = this.buildSchemaNamespaceMapping();
+        this.DUMMY = this.getDummy();
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
-        return this.refOccurrences[schema.$ref] ?? 0;
+        return this.documentMetadata.getNumberOfOccurrencesForRef(schema.$ref);
+    }
+
+    public hasGeneratedComponentSchemaName(name: string): boolean {
+        return this.documentMetadata.hasGeneratedComponentSchemaName(name);
+    }
+
+    protected getDocumentMetadata(): OpenAPIV3DocumentMetadata {
+        return this.documentMetadata;
     }
 
     public resolveTagsToTagIds(operationTags: string[] | undefined): string[] {
@@ -231,25 +263,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     }
 
     public resolveSecuritySchemeReference(securityScheme: OpenAPIV3.ReferenceObject): OpenAPIV3.SecuritySchemeObject {
-        if (
-            this.document.components == null ||
-            this.document.components.securitySchemes == null ||
-            !securityScheme.$ref.startsWith(SECURITY_SCHEME_REFERENCE_PREFIX)
-        ) {
-            throw new CliError({
-                message: `Failed to resolve ${securityScheme.$ref}`,
-                code: CliError.Code.ReferenceError
-            });
-        }
-        const securitySchemeKey = securityScheme.$ref.substring(SECURITY_SCHEME_REFERENCE_PREFIX.length);
-        const resolvedSecurityScheme = this.document.components.securitySchemes[securitySchemeKey];
-        if (resolvedSecurityScheme == null) {
-            throw new CliError({ message: `${securityScheme.$ref} is undefined`, code: CliError.Code.ReferenceError });
-        }
-        if (isReferenceObject(resolvedSecurityScheme)) {
-            return this.resolveSecuritySchemeReference(resolvedSecurityScheme);
-        }
-        return resolvedSecurityScheme;
+        return resolveSecuritySchemeReference(this.document, securityScheme);
     }
 
     public referenceExists(ref: string): boolean {
@@ -281,7 +295,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public abstract getReferencedSchemas(): Set<SchemaId>;
 
-    public abstract getDummy(): SchemaParserContext;
+    public abstract getDummy(): AbstractOpenAPIV3ParserContext;
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
