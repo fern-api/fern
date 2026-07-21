@@ -19,6 +19,27 @@ impl ApiClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use query_param_name_conflict_api_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = QueryParamNameConflictApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .bulk_update_tasks(
+    ///             &BulkUpdateTasksRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn bulk_update_tasks(
         &self,
         request: &BulkUpdateTasksRequest,

@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.75.6
+  changelogEntry:
+    - summary: |
+        Resolve the PHP SDK generator's camelCase `packageName` config key when
+        computing the package name for a generator. This lets local-file-system PHP
+        generation populate the `User-Agent` (and SDK name/version) headers, matching
+        the behavior of the other generators' package-identity config keys.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 5.75.5
+  changelogEntry:
+    - summary: |
+        Speed up `fern docs dev` refreshes on content edits. Editing a `.md`/`.mdx`
+        page no longer re-parses every API/OpenAPI workspace, and the snippet
+        dependency map is now updated incrementally instead of rescanning every page.
+      type: chore
+  createdAt: "2026-07-20"
+  irVersion: 67
 - version: 5.75.4
   changelogEntry:
     - summary: |

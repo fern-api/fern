@@ -244,6 +244,9 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
         for (const envVar of binding.envVars) {
             envLines.push(`export ${envVar}="${placeholderForKind(binding.kind)}"`);
         }
+        for (const envVar of binding.optionalEnvVars ?? []) {
+            envLines.push(`# export ${envVar}="${placeholderForKind(binding.kind)}" # optional`);
+        }
     }
     return new Block({
         id: "AUTHENTICATION",
@@ -400,6 +403,8 @@ function placeholderForKind(kind: DetectedAuthBinding["kind"]): string {
             return "<your api key>";
         case "basic":
             return "<your credential>";
+        case "oauth-client-credentials":
+            return "<your OAuth client credential>";
     }
 }
 
