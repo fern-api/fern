@@ -23,4 +23,11 @@ export interface HmacSignatureVerification {
      * raw body and compare it to the transmitted value.
      */
     bodyHashBinding: FernIr.WebhookBodyHashBinding | undefined;
+    /**
+     * When present, the signature is verified against multiple normalized forms of the
+     * notification URL, succeeding if ANY candidate's signature matches (each compared in
+     * constant time). Required by providers (such as Twilio) whose backend is inconsistent
+     * about whether the signed URL carried a port and how its query string was encoded.
+     */
+    notificationUrlNormalization: FernIr.WebhookNotificationUrlNormalization | undefined;
 }
