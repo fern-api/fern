@@ -185,8 +185,28 @@ mock-driven integration suite into the output:
   baked OpenAPI spec the binary runs on (via `fern_cli_sdk::openapi::
   load_openapi_spec` — so it never reproduces the CLI's command-naming
   rules), drives the compiled binary (`--base-url` + `--params` + `--json`),
-  and asserts (a) exactly one request hit the mock with the right method +
-  path and (b) stdout rendered the mocked response body.
+  and asserts the call succeeded and the mock saw exactly one matching request
+  (`Mock::expect(1)`), mirroring the SDK wire tests' `is_ok()` +
+  `verify_request_count` model. For non-streaming endpoints whose stdout parses
+  to the same JSON kind as the mocked body it additionally requires a byte-exact
+  render; streaming/NDJSON responses re-shape the payload, so there it only
+  requires the call to produce output.
+
+**OAuth:** for client-credentials CLIs the manifest carries an `authMock` (token
+endpoint method/path + a synthesized `{access_token, expires_in}` body at the
+paths the CLI reads). The harness mounts it on every server so the token
+exchange — which honors `--base-url` — succeeds before the business request.
+The token/refresh endpoints themselves are excluded from the case list (the CLI
+consumes them internally and never exposes them as commands).
+
+**Body-modality skips:** the harness reads each endpoint's `RestMethod` and
+skips (logging why, test still passes) the ones the generic `--params`/`--json`
+driver can't feed: binary/file uploads (`--file`/`--audio`/…), multipart bodies,
+and bodies the CLI flattened into per-field flags (which reject a whole-body
+`--json`). This mirrors the SDK generator skipping endpoints it can't synthesize
+a call for. Known remaining gap: endpoints whose IR example omits a required
+body property fail the CLI's client-side schema validation — a data-quality
+signal, not a harness bug.
 
 No docker, no `RUN_WIRE_TESTS` gate — `wiremock` is already a `[dev-dependencies]`
 entry in `sdk/Cargo.toml`, so `seed`'s `cargo test --all-features` compiles and
