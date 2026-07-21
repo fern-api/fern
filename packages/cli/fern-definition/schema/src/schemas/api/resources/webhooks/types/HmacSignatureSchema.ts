@@ -19,4 +19,10 @@ export interface HmacSignatureSchema {
      * bodies) and verification also recomputes and compares the body hash.
      */
     "body-hash-binding"?: FernDefinition.WebhookBodyHashBindingSchema;
+    /**
+     * When set, the signature is verified against multiple normalized forms of the
+     * notification URL (e.g. with/without port, legacy query encoding), succeeding if any
+     * candidate matches. Required by providers like Twilio.
+     */
+    "url-normalization"?: FernDefinition.WebhookUrlNormalizationSchema;
 }

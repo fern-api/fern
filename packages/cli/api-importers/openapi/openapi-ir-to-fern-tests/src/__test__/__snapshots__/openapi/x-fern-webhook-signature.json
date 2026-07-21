@@ -146,6 +146,10 @@
               "signature-prefix": undefined,
               "timestamp": undefined,
               "type": "hmac",
+              "url-normalization": {
+                "legacy-query-encoding": true,
+                "port-variants": true,
+              },
             },
           },
           "orderPlaced": {
@@ -183,6 +187,7 @@
                 "tolerance": 300,
               },
               "type": "hmac",
+              "url-normalization": undefined,
             },
           },
           "paymentProcessed": {
@@ -281,6 +286,7 @@
                 "tolerance": 300,
               },
               "type": "hmac",
+              "url-normalization": undefined,
             },
           },
         },
@@ -391,6 +397,9 @@ webhooks:
         location:
           type: query-parameter
           name: bodySHA256
+      url-normalization:
+        port-variants: true
+        legacy-query-encoding: true
     examples:
       - payload:
           messageSid: messageSid

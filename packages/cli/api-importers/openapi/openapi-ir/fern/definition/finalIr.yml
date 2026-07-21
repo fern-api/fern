@@ -249,6 +249,7 @@ types:
       payloadFormat: optional<WebhookPayloadFormat>
       timestamp: optional<WebhookTimestamp>
       bodyHashBinding: optional<WebhookBodyHashBinding>
+      notificationUrlNormalization: optional<WebhookNotificationUrlNormalization>
 
   AsymmetricWebhookSignatureVerification:
     properties:
@@ -297,6 +298,11 @@ types:
   WebhookPayloadBodySort:
     enum:
       - alphabetical
+
+  WebhookNotificationUrlNormalization:
+    properties:
+      portVariants: boolean
+      legacyQueryEncoding: boolean
 
   WebhookPayloadComponent:
     enum:

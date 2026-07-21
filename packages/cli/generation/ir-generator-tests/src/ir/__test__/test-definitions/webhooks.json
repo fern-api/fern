@@ -483,7 +483,8 @@
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
                     },
-                    "bodyHashBinding": null
+                    "bodyHashBinding": null,
+                    "notificationUrlNormalization": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -643,7 +644,8 @@
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
                     },
-                    "bodyHashBinding": null
+                    "bodyHashBinding": null,
+                    "notificationUrlNormalization": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
