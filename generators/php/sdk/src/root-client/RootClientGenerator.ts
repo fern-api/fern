@@ -697,6 +697,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         };
         const writeDefaults = (): void => {
+            // With a single variable, the enclosing guard already ensures it is non-null,
+            // so a `??=` default would be dead code (and rejected by phpstan).
+            if (serverVariableOptions.length === 1) {
+                return;
+            }
             for (const option of serverVariableOptions) {
                 if (option.variable.default != null) {
                     writer.writeTextStatement(

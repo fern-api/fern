@@ -64,7 +64,6 @@ class SeedClient
         $this->options = $options ?? [];
         if ($region != null) {
             if ($environment == null || $environment == Environments::Production() || $environment == Environments::Staging() || $environment == Environments::Development()) {
-                $region ??= 'us1';
                 if ($environment == Environments::Staging()) {
                     $environment = Environments::custom(
                         acme: 'https://api.stage.' . $region . '.acme.com',
