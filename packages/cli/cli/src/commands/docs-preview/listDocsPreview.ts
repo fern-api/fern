@@ -11,12 +11,10 @@ interface PreviewDeployment {
     updatedAt: string;
 }
 
-interface DocsUrlItem {
-    domain: string;
-    basePath?: string;
-    organizationId: string;
-    updatedAt: string;
-}
+/** A single docs-url entry as returned by FDR's `listAllDocsUrls`. */
+type DocsUrlItem = Awaited<
+    ReturnType<ReturnType<typeof createFdrService>["docs"]["v2"]["read"]["listAllDocsUrls"]>
+>["urls"][number];
 
 /**
  * Maps FDR docs-url items to preview deployments. Preview deployments are
