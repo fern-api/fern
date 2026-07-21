@@ -1,0 +1,22 @@
+openapi: 3.1.0
+info:
+  title: php-global-header-env
+  version: 0.0.0
+paths:
+  /apiVersion:
+    get:
+      description: GET request with a version header
+      operationId: service_getWithApiVersion
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas: {}
+  securitySchemes: {}

@@ -30,6 +30,10 @@ interface ConstructorParameter {
     docs?: string;
     header?: HeaderInfo;
     environmentVariable?: string;
+    /**
+     * Whether this parameter comes from a global API header (as opposed to an auth scheme).
+     */
+    isGlobalHeader?: boolean;
     clientDefault?: FernIr.Literal;
 }
 
@@ -177,7 +181,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         // getFromEnvOrThrow helper is not emitted.
         if (
             !this.isAnyAuthWithMultipleSchemes() &&
-            constructorParameters.optional.some((parameter) => parameter.environmentVariable != null)
+            constructorParameters.optional.some(
+                (parameter) =>
+                    parameter.environmentVariable != null && !(parameter.isGlobalHeader && parameter.isOptional)
+            )
         ) {
             class_.addMethod(this.getFromEnvOrThrowMethod());
         }
@@ -286,7 +293,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             // Under `any`-composed multi-scheme auth, env-var-backed auth headers are
             // written conditionally below (only when the cred is present) instead of
             // being baked into the static default headers map.
-            if (param.header != null && param.environmentVariable != null && !anyAuthMultiScheme) {
+            if (
+                param.header != null &&
+                param.environmentVariable != null &&
+                !anyAuthMultiScheme &&
+                !(param.isGlobalHeader && param.isOptional && param.clientDefault == null)
+            ) {
                 // Variables backed by an environment variable can be instantiated in-line.
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
@@ -378,9 +390,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             writer.writeTextStatement(
                                 `$${param.name} ??= ($envValue !== false ? $envValue : '${escaped}')`
                             );
-                        } else if (anyAuthMultiScheme) {
+                        } else if (anyAuthMultiScheme || (param.isGlobalHeader && param.isOptional)) {
                             // Fall back to the env var if present, but do not throw when it is
-                            // missing — the caller may be authenticating with another scheme.
+                            // missing — an optional header may simply be unset, and under
+                            // `any`-composed auth the caller may be using another scheme.
                             writer.writeTextStatement(
                                 `$${param.name} ??= getenv('${param.environmentVariable}') ?: null`
                             );
@@ -412,7 +425,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
                 for (const param of constructorParameters.optional) {
-                    if (param.header != null && (param.environmentVariable == null || anyAuthMultiScheme)) {
+                    if (
+                        param.header != null &&
+                        (param.environmentVariable == null ||
+                            anyAuthMultiScheme ||
+                            (param.isGlobalHeader && param.isOptional && param.clientDefault == null))
+                    ) {
                         writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
@@ -1012,6 +1030,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
             typeReference: header.valueType,
+            environmentVariable: header.env,
+            isGlobalHeader: true,
             clientDefault: header.clientDefault
         };
     }

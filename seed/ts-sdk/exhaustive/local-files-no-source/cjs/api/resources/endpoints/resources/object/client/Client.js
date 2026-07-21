@@ -58,6 +58,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
      *         string: "string",
@@ -119,6 +122,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithRequiredField({
      *         string: "string"
@@ -165,6 +171,9 @@ class ObjectClient {
     /**
      * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
@@ -216,6 +225,9 @@ class ObjectClient {
     /**
      * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
@@ -282,6 +294,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
@@ -345,6 +360,9 @@ class ObjectClient {
     /**
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
@@ -429,6 +447,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithUnknownField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithUnknownField({
      *         unknown: {
@@ -478,6 +499,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
      *         documentedUnknownType: {
@@ -526,6 +550,9 @@ class ObjectClient {
     /**
      * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
@@ -578,6 +605,9 @@ class ObjectClient {
      *
      * @param {SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
@@ -634,6 +664,9 @@ class ObjectClient {
      * @param {SeedExhaustive.types.ObjectWithRequiredNestedObject} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.object.getAndReturnWithRequiredNestedObject({
      *         requiredString: "hello",
@@ -688,6 +721,9 @@ class ObjectClient {
      *
      * @param {SeedExhaustive.types.ObjectWithDatetimeLikeString} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithDatetimeLikeString({

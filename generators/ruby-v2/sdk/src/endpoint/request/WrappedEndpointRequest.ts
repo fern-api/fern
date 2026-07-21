@@ -4,6 +4,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
@@ -241,14 +242,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        if (
-            (this.endpoint.requestBody?.type === "inlinedRequestBody" ||
-                this.endpoint.requestBody?.type === "reference") &&
-            this.endpoint.requestBody.contentType === "application/x-www-form-urlencoded"
-        ) {
-            return "urlencoded";
-        }
-        return "json";
+        return isUrlEncodedRequestBody(this.endpoint.requestBody) ? "urlencoded" : "json";
     }
 
     private getPathParameterNames(): string[] {

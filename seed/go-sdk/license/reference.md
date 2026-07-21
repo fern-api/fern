@@ -13,9 +13,8 @@
 
 ```go
 client.Get(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

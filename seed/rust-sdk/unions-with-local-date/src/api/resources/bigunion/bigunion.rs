@@ -14,6 +14,20 @@ impl BigunionClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UnionsClient::new(config).expect("Failed to build client");
+    ///     client.bigunion.get(&"id".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get(
         &self,
         id: &str,
@@ -24,6 +38,31 @@ impl BigunionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .bigunion
+    ///         .update(
+    ///             &BigUnion::NormalSweet {
+    ///                 data: NormalSweet {
+    ///                     value: "value".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update(
         &self,
         request: &BigUnion,
@@ -40,6 +79,39 @@ impl BigunionClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .bigunion
+    ///         .update_many(
+    ///             &vec![
+    ///                 BigUnion::NormalSweet {
+    ///                     data: NormalSweet {
+    ///                         value: "value".to_string(),
+    ///                         ..Default::default()
+    ///                     },
+    ///                 },
+    ///                 BigUnion::NormalSweet {
+    ///                     data: NormalSweet {
+    ///                         value: "value".to_string(),
+    ///                         ..Default::default()
+    ///                     },
+    ///                 },
+    ///             ],
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update_many(
         &self,
         request: &Vec<BigUnion>,

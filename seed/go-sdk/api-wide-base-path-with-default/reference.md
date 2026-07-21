@@ -14,14 +14,13 @@
 
 ```go
 request := &fern.Widget{
-        Name: "name",
-    }
-client.Widgets.Create(
-        context.TODO(),
-        "v1beta",
-        request,
-    )
+    Name: "name",
 }
+client.Widgets.Create(
+    context.TODO(),
+    "v1beta",
+    request,
+)
 ```
 </dd>
 </dl>

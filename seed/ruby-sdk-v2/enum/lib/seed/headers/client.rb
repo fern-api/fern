@@ -22,6 +22,13 @@ module Seed
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
       # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
       #
+      # @example
+      #   client.headers.send_(
+      #     operand: ">",
+      #     maybe_operand: ">",
+      #     operand_or_color: "red"
+      #   )
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

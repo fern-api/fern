@@ -63,6 +63,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUnion();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -108,6 +113,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->listUnions();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

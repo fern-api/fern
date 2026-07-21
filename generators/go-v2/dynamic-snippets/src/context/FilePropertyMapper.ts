@@ -59,7 +59,7 @@ export class FilePropertyMapper {
         property,
         record
     }: {
-        property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
+        property: FernIr.dynamic.FileUploadRequestBodyProperty.File;
         record: Record<string, unknown>;
     }): go.TypeInstantiation {
         // fix(williammcadams): always return a string reader even if no example was provided

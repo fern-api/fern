@@ -20,6 +20,13 @@ module Seed
       # @option params [String] :endpoint_version
       # @option params [Boolean] :async
       #
+      # @example
+      #   client.headers.send_(
+      #     endpoint_version: "02-12-2024",
+      #     async: true,
+      #     query: "What is the weather today"
+      #   )
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -64,6 +71,14 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :endpoint_version
       # @option params [Boolean] :async
+      #
+      # @example
+      #   client.headers.send_literals_only(request_options: {
+      #     additional_headers: {
+      #       "X-Endpoint-Version" => "02-12-2024",
+      #       "X-Async" => "true"
+      #     }
+      #   })
       #
       # @return [Seed::Types::SendResponse]
       def send_literals_only(request_options: {}, **_params)

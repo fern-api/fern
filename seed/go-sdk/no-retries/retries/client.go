@@ -34,6 +34,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Retries.GetUsers(
+//	    context.TODO(),
+//	)
 func (c *Client) GetUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,

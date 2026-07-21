@@ -23,6 +23,12 @@ module Seed
       # @option params [Seed::Types::PlainObject, nil] :query_param_object
       # @option params [Integer, nil] :query_param_integer
       #
+      # @example
+      #   client.test_group.test_method_name(
+      #     path_param: "path_param",
+      #     body: {}
+      #   )
+      #
       # @return [Object]
       def test_method_name(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

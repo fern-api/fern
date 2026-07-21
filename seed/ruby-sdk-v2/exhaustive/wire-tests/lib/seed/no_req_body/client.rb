@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.no_req_body.get_with_no_request_body
+      #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def get_with_no_request_body(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -47,6 +50,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.no_req_body.post_with_no_request_body
       #
       # @return [String]
       def post_with_no_request_body(request_options: {}, **_params)

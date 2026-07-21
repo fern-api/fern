@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.primitive.get_and_return_string(request: "string")
+        #
         # @return [String]
         def get_and_return_string(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -48,6 +51,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.primitive.get_and_return_int(request: 1)
         #
         # @return [Integer]
         def get_and_return_int(request_options: {}, **params)
@@ -79,6 +85,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.primitive.get_and_return_long(request: 1000000)
+        #
         # @return [Integer]
         def get_and_return_long(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -108,6 +117,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.primitive.get_and_return_double(request: 1.1)
         #
         # @return [Integer]
         def get_and_return_double(request_options: {}, **params)
@@ -139,6 +151,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.primitive.get_and_return_bool(request: true)
+        #
         # @return [Boolean]
         def get_and_return_bool(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -168,6 +183,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.primitive.get_and_return_datetime(request: "2024-01-15T09:30:00Z")
         #
         # @return [String]
         def get_and_return_datetime(request_options: {}, **params)
@@ -199,6 +217,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.primitive.get_and_return_date(request: "2023-01-15")
+        #
         # @return [String]
         def get_and_return_date(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -229,6 +250,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.primitive.get_and_return_uuid(request: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+        #
         # @return [String]
         def get_and_return_uuid(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -258,6 +282,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.primitive.get_and_return_base64(request: "SGVsbG8gd29ybGQh")
         #
         # @return [String]
         def get_and_return_base64(request_options: {}, **params)

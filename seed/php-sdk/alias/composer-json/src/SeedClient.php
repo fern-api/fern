@@ -60,6 +60,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->get(
+     *     'typeId',
+     * );
+     * ```
+     *
      * @param string $typeId
      * @param ?array{
      *   baseUrl?: string,

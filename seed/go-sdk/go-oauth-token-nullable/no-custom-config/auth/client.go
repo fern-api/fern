@@ -34,6 +34,16 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetTokenRequest{
+//	    ClientID: "my_oauth_app_123",
+//	    ClientSecret: "sk_live_abcdef123456789",
+//	}
+//	client.Auth.GetTokenWithClientCredentials(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetTokenWithClientCredentials(
 	ctx context.Context,
 	request *fern.GetTokenRequest,

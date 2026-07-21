@@ -14,14 +14,13 @@
 
 ```go
 request := &fern.GetTokenRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-    }
-client.Auth.GetToken(
-        context.TODO(),
-        request,
-    )
+    ClientID: "client_id",
+    ClientSecret: "client_secret",
 }
+client.Auth.GetToken(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -79,9 +78,8 @@ client.Auth.GetToken(
 
 ```go
 client.NestedNoAuth.API.GetSomething(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -108,9 +106,8 @@ client.NestedNoAuth.API.GetSomething(
 
 ```go
 client.Nested.API.GetSomething(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -137,9 +134,8 @@ client.Nested.API.GetSomething(
 
 ```go
 client.Simple.GetSomething(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

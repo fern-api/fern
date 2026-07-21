@@ -19,6 +19,14 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Array[String]] :tags
       #
+      # @example
+      #   client.user.create_username(
+      #     tags: %w[tags tags],
+      #     username: "username",
+      #     password: "password",
+      #     name: "test"
+      #   )
+      #
       # @return [untyped]
       def create_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -58,6 +66,14 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Array[String]] :tags
       #
+      # @example
+      #   client.user.create_username_with_referenced_type(
+      #     tags: %w[tags tags],
+      #     username: "username",
+      #     password: "password",
+      #     name: "test"
+      #   )
+      #
       # @return [untyped]
       def create_username_with_referenced_type(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -93,6 +109,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.user.create_username_optional(request: {})
       #
       # @return [untyped]
       def create_username_optional(request_options: {}, **params)
@@ -139,6 +158,44 @@ module Seed
       # @option params [String] :filter
       # @option params [Integer] :long_param
       # @option params [String] :big_int_param
+      #
+      # @example
+      #   client.user.get_username(
+      #     limit: 1,
+      #     id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #     date: "2023-01-15",
+      #     deadline: "2024-01-15T09:30:00Z",
+      #     bytes: "SGVsbG8gd29ybGQh",
+      #     user: {
+      #       name: "name",
+      #       tags: %w[tags tags]
+      #     },
+      #     user_list: [{
+      #       name: "name",
+      #       tags: %w[tags tags]
+      #     }, {
+      #       name: "name",
+      #       tags: %w[tags tags]
+      #     }],
+      #     optional_deadline: "2024-01-15T09:30:00Z",
+      #     key_value: {
+      #       keyValue: "keyValue"
+      #     },
+      #     optional_string: "optionalString",
+      #     nested_user: {
+      #       name: "name",
+      #       user: {
+      #         name: "name",
+      #         tags: %w[tags tags]
+      #       }
+      #     },
+      #     optional_user: {
+      #       name: "name",
+      #       tags: %w[tags tags]
+      #     },
+      #     long_param: 1000000,
+      #     big_int_param: "1000000"
+      #   )
       #
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)

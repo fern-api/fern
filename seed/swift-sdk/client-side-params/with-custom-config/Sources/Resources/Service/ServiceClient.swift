@@ -9,6 +9,27 @@ public final class ServiceClient: Sendable {
 
     /// List resources with pagination
     ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.listResources(
+    ///         page: 1,
+    ///         perPage: 1,
+    ///         sort: "created_at",
+    ///         order: "desc",
+    ///         includeTotals: true,
+    ///         fields: "fields",
+    ///         search: "search"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter page: Zero-indexed page number
     /// - Parameter perPage: Number of items per page
     /// - Parameter sort: Sort field
@@ -37,6 +58,23 @@ public final class ServiceClient: Sendable {
 
     /// Get a single resource
     ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.getResource(
+    ///         resourceId: "resourceId",
+    ///         includeMetadata: true,
+    ///         format: "json"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter includeMetadata: Include metadata in response
     /// - Parameter format: Response format
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
@@ -54,6 +92,30 @@ public final class ServiceClient: Sendable {
     }
 
     /// Search resources with complex parameters
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.searchResources(
+    ///         limit: 1,
+    ///         offset: 1,
+    ///         request: .init(
+    ///             query: "query",
+    ///             filters: [
+    ///                 "filters": .object([
+    ///                     "key": .string("value")
+    ///                 ])
+    ///             ]
+    ///         )
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter limit: Maximum results to return
     /// - Parameter offset: Offset for pagination
@@ -73,6 +135,28 @@ public final class ServiceClient: Sendable {
     }
 
     /// List or search for users
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.listUsers(
+    ///         page: 1,
+    ///         perPage: 1,
+    ///         includeTotals: true,
+    ///         sort: "sort",
+    ///         connection: "connection",
+    ///         q: "q",
+    ///         searchEngine: "search_engine",
+    ///         fields: "fields"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter page: Page index of the results to return. First page is 0.
     /// - Parameter perPage: Number of results per page.
@@ -104,6 +188,23 @@ public final class ServiceClient: Sendable {
 
     /// Get a user by ID
     ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.getUserById(
+    ///         userId: "userId",
+    ///         fields: "fields",
+    ///         includeFields: true
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter fields: Comma-separated list of fields to include or exclude
     /// - Parameter includeFields: true to include the fields specified, false to exclude them
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
@@ -122,6 +223,37 @@ public final class ServiceClient: Sendable {
 
     /// Create a new user
     ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.createUser(request: CreateUserRequest(
+    ///         email: "email",
+    ///         emailVerified: true,
+    ///         username: "username",
+    ///         password: "password",
+    ///         phoneNumber: "phone_number",
+    ///         phoneVerified: true,
+    ///         userMetadata: [
+    ///             "user_metadata": .object([
+    ///                 "key": .string("value")
+    ///             ])
+    ///         ],
+    ///         appMetadata: [
+    ///             "app_metadata": .object([
+    ///                 "key": .string("value")
+    ///             ])
+    ///         ],
+    ///         connection: "connection"
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createUser(request: CreateUserRequest, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
@@ -134,6 +266,40 @@ public final class ServiceClient: Sendable {
     }
 
     /// Update a user
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.updateUser(
+    ///         userId: "userId",
+    ///         request: UpdateUserRequest(
+    ///             email: "email",
+    ///             emailVerified: true,
+    ///             username: "username",
+    ///             phoneNumber: "phone_number",
+    ///             phoneVerified: true,
+    ///             userMetadata: [
+    ///                 "user_metadata": .object([
+    ///                     "key": .string("value")
+    ///                 ])
+    ///             ],
+    ///             appMetadata: [
+    ///                 "app_metadata": .object([
+    ///                     "key": .string("value")
+    ///                 ])
+    ///             ],
+    ///             password: "password",
+    ///             blocked: true
+    ///         )
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func updateUser(userId: String, request: UpdateUserRequest, requestOptions: RequestOptions? = nil) async throws -> User {
@@ -148,6 +314,19 @@ public final class ServiceClient: Sendable {
 
     /// Delete a user
     ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.deleteUser(userId: "userId")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func deleteUser(userId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
@@ -158,6 +337,23 @@ public final class ServiceClient: Sendable {
     }
 
     /// List all connections
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.listConnections(
+    ///         strategy: "strategy",
+    ///         name: "name",
+    ///         fields: "fields"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter strategy: Filter by strategy type (e.g., auth0, google-oauth2, samlp)
     /// - Parameter name: Filter by connection name
@@ -179,6 +375,22 @@ public final class ServiceClient: Sendable {
 
     /// Get a connection by ID
     ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.getConnection(
+    ///         connectionId: "connectionId",
+    ///         fields: "fields"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter fields: Comma-separated list of fields to include
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getConnection(connectionId: String, fields: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Connection {
@@ -194,6 +406,31 @@ public final class ServiceClient: Sendable {
     }
 
     /// List all clients/applications
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.listClients(
+    ///         fields: "fields",
+    ///         includeFields: true,
+    ///         page: 1,
+    ///         perPage: 1,
+    ///         includeTotals: true,
+    ///         isGlobal: true,
+    ///         isFirstParty: true,
+    ///         appType: [
+    ///             "app_type",
+    ///             "app_type"
+    ///         ]
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter fields: Comma-separated list of fields to include
     /// - Parameter includeFields: Whether specified fields are included or excluded
@@ -224,6 +461,23 @@ public final class ServiceClient: Sendable {
     }
 
     /// Get a client by ID
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import MyCustomModule
+    ///
+    /// private func main() async throws {
+    ///     let client = MyCustomClient(token: "<token>")
+    ///
+    ///     _ = try await client.service.getClient(
+    ///         clientId: "clientId",
+    ///         fields: "fields",
+    ///         includeFields: true
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter fields: Comma-separated list of fields to include
     /// - Parameter includeFields: Whether specified fields are included or excluded

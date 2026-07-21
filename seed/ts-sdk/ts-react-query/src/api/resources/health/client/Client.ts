@@ -25,6 +25,9 @@ export class HealthClient {
      *
      * @param {HealthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.health.check()
      */
@@ -68,6 +71,9 @@ export class HealthClient {
      * Get health details
      *
      * @param {HealthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.health.details()

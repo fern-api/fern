@@ -26,6 +26,9 @@ export class SeedValidationClient {
      * @param {SeedValidation.CreateRequest} request
      * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedValidationError}
+     * @throws {@link errors.SeedValidationTimeoutError}
+     *
      * @example
      *     await client.create({
      *         decimal: 2.2,
@@ -82,6 +85,9 @@ export class SeedValidationClient {
     /**
      * @param {SeedValidation.GetRequest} request
      * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedValidationError}
+     * @throws {@link errors.SeedValidationTimeoutError}
      *
      * @example
      *     await client.get({

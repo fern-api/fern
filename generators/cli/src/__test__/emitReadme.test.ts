@@ -195,6 +195,32 @@ describe("emitReadme", () => {
         expect(readme).toContain('export ACME_PASSWORD="<your credential>"');
     });
 
+    it("documents OAuth client-credentials env vars", async () => {
+        const oauthBinding: DetectedAuthBinding = {
+            schemeName: "OAuth2",
+            rustCall:
+                '.auth(OAuth2Auth::new("OAuth2").token_url("https://api.example.com/token").client_id_env("ACME_CLIENT_ID").client_secret_env("ACME_CLIENT_SECRET"))',
+            placement: "root",
+            authTypeImport: "OAuth2Auth",
+            envVars: ["ACME_CLIENT_ID", "ACME_CLIENT_SECRET"],
+            optionalEnvVars: ["ACME_AUDIENCE"],
+            kind: "oauth-client-credentials"
+        };
+
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [oauthBinding],
+            npmPublishInfo: undefined,
+            repoUrl: undefined
+        });
+
+        expect(readme).toContain('export ACME_CLIENT_ID="<your OAuth client credential>"');
+        expect(readme).toContain('export ACME_CLIENT_SECRET="<your OAuth client credential>"');
+        expect(readme).toContain('# export ACME_AUDIENCE="<your OAuth client credential>" # optional');
+    });
+
     // ── Merge preserves customer-added sections ─────────────────────
 
     it("preserves a customer-added section while regenerating generated ones", async () => {

@@ -93,6 +93,29 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .service
+    ///         .get_speech_to_speech_settings(
+    ///             &SpeechToSpeechRequest {
+    ///                 voice_id: "voice_id".to_string(),
+    ///                 model_id: Some("model_id".to_string()),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_speech_to_speech_settings(
         &self,
         request: &SpeechToSpeechRequest,
@@ -109,6 +132,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.service.simple(None).await;
+    /// }
+    /// ```
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::POST, "/snippet", None, None, options)

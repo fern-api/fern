@@ -35,6 +35,17 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Post a nullable request body
+//
+// Example:
+//
+//	request := &fern.TestMethodNameTestGroupRequest{
+//	    PathParam: "path_param",
+//	    Body: &fern.PlainObject{},
+//	}
+//	client.TestGroup.TestMethodName(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) TestMethodName(
 	ctx context.Context,
 	request *fern.TestMethodNameTestGroupRequest,

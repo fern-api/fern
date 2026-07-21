@@ -28,6 +28,9 @@ export class UserClient {
      * @param {SeedPathParameters.GetUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.user.getUser("user_id")
      */
@@ -87,6 +90,9 @@ export class UserClient {
     /**
      * @param {SeedPathParameters.User} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.createUser({
@@ -155,6 +161,9 @@ export class UserClient {
      * @param {string} user_id
      * @param {SeedPathParameters.UpdateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.updateUser("user_id", {
@@ -228,6 +237,9 @@ export class UserClient {
      * @param {string} user_id
      * @param {SeedPathParameters.SearchUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.searchUsers("user_id", {
@@ -308,6 +320,9 @@ export class UserClient {
      * @param {SeedPathParameters.GetUserMetadataRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
+     *
      * @example
      *     await client.user.getUserMetadata("user_id", 1)
      */
@@ -379,6 +394,9 @@ export class UserClient {
      * @param {string} thought
      * @param {SeedPathParameters.GetUserSpecificsRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedPathParametersError}
+     * @throws {@link errors.SeedPathParametersTimeoutError}
      *
      * @example
      *     await client.user.getUserSpecifics("user_id", 1, "thought")

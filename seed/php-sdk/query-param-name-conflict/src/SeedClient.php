@@ -63,6 +63,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->bulkUpdateTasks(
+     *     new BulkUpdateTasksRequest([]),
+     * );
+     * ```
+     *
      * @param BulkUpdateTasksRequest $request
      * @param ?array{
      *   baseUrl?: string,

@@ -35,6 +35,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.GetUnion(
+//	    context.TODO(),
+//	)
 func (c *Client) GetUnion(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -49,6 +54,11 @@ func (c *Client) GetUnion(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.ListUnions(
+//	    context.TODO(),
+//	)
 func (c *Client) ListUnions(
 	ctx context.Context,
 	opts ...option.RequestOption,

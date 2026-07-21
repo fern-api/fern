@@ -26,6 +26,9 @@ export class HeadersClient {
      * @param {SeedLiteral.SendLiteralsInHeadersRequest} request
      * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
+     *
      * @example
      *     await client.headers.send({
      *         query: "What is the weather today"
@@ -83,5 +86,63 @@ export class HeadersClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/headers");
+    }
+
+    /**
+     * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
+     *
+     * @example
+     *     await client.headers.sendLiteralsOnly()
+     */
+    public sendLiteralsOnly(
+        requestOptions?: HeadersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__sendLiteralsOnly(requestOptions));
+    }
+
+    private async __sendLiteralsOnly(
+        requestOptions?: HeadersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
+                "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "headers/literals-only",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedLiteralError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/headers/literals-only");
     }
 }

@@ -28,6 +28,21 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.create_plant(&serde_json::json!({"name":"Venus Flytrap","species":"Dionaea muscipula","care":{"light":"full sun","water":"distilled only","humidity":"high"},"tags":["carnivorous","tropical"]}), None).await;
+    /// }
+    /// ```
     pub async fn create_plant(
         &self,
         request: &serde_json::Value,
@@ -53,6 +68,27 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .update_plant(
+    ///             &"plantId".to_string(),
+    ///             &serde_json::json!({"name":"Updated Venus Flytrap","care":{"light":"partial shade"}}),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update_plant(
         &self,
         plant_id: &str,
@@ -79,6 +115,30 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .create_plant_with_schema(
+    ///             &CreatePlantWithSchemaRequest {
+    ///                 name: Some("Sundew".to_string()),
+    ///                 species: Some("Drosera capensis".to_string()),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_plant_with_schema(
         &self,
         request: &CreatePlantWithSchemaRequest,

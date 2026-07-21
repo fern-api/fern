@@ -355,7 +355,7 @@ client = Acme(
 )
 
 client.s3.get_presigned_url(
-    s3_key="xyz",
+    s3key="xyz",
 )
 "
 `;
@@ -380,7 +380,7 @@ client = Acme(
 )
 
 client.s3.get_presigned_url(
-    s3_key="xyz",
+    s3key="xyz",
 )
 "
 `;
@@ -395,7 +395,7 @@ client = Acme(
 )
 
 client.s3.get_presigned_url(
-    s3_key="xyz",
+    s3key="xyz",
 )
 "
 `;
@@ -963,7 +963,7 @@ client = Acme(
 )
 
 client.s3.get_presigned_url(
-    s3_key="xyz",
+    s3key="xyz",
 )
 "
 `;
@@ -988,7 +988,7 @@ client = Acme(
 )
 
 client.s3.get_presigned_url(
-    s3_key="xyz",
+    s3key="xyz",
 )
 "
 `;
@@ -1003,7 +1003,7 @@ client = Acme(
 )
 
 client.s3.get_presigned_url(
-    s3_key="xyz",
+    s3key="xyz",
 )
 "
 `;

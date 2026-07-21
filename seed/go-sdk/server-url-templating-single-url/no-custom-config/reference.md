@@ -13,9 +13,8 @@
 
 ```go
 client.GetUsers(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -41,13 +40,12 @@ client.GetUsers(
 
 ```go
 request := &fern.GetUserRequest{
-        UserID: "userId",
-    }
-client.GetUser(
-        context.TODO(),
-        request,
-    )
+    UserID: "userId",
 }
+client.GetUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

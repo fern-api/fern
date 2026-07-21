@@ -35,6 +35,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.ListUsers(
+//	    context.TODO(),
+//	)
 func (c *Client) ListUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -49,6 +54,15 @@ func (c *Client) ListUsers(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetUserRequest{
+//	    UserID: "userId",
+//	}
+//	client.GetUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	request *fern.GetUserRequest,
@@ -65,6 +79,11 @@ func (c *Client) GetUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.ListInvoices(
+//	    context.TODO(),
+//	)
 func (c *Client) ListInvoices(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -79,6 +98,15 @@ func (c *Client) ListInvoices(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetInvoiceRequest{
+//	    InvoiceID: "invoiceId",
+//	}
+//	client.GetInvoice(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetInvoice(
 	ctx context.Context,
 	request *fern.GetInvoiceRequest,

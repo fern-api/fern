@@ -25,6 +25,7 @@ import {
     WebhookBodyHashBinding,
     WebhookBodyHashLocation,
     WebhookGroup,
+    WebhookNotificationUrlNormalization,
     WebhookPayload,
     WebhookPayloadBodySort,
     WebhookPayloadComponent,
@@ -426,7 +427,20 @@ function convertHmacSignature({
         signaturePrefix: hmac["signature-prefix"],
         payloadFormat: convertPayloadFormat(hmac["payload-format"]),
         timestamp: convertTimestampConfig({ timestamp: hmac.timestamp, file }),
-        bodyHashBinding: convertBodyHashBinding(hmac["body-hash-binding"])
+        bodyHashBinding: convertBodyHashBinding(hmac["body-hash-binding"]),
+        notificationUrlNormalization: convertUrlNormalization(hmac["url-normalization"])
+    };
+}
+
+function convertUrlNormalization(
+    normalization: RawSchemas.WebhookUrlNormalizationSchema | undefined
+): WebhookNotificationUrlNormalization | undefined {
+    if (normalization == null) {
+        return undefined;
+    }
+    return {
+        portVariants: normalization["port-variants"] ?? false,
+        legacyQueryEncoding: normalization["legacy-query-encoding"] ?? false
     };
 }
 

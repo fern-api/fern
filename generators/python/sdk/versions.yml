@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.20.2
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an `environment` and server URL
+        variables (e.g. `region`), the generated client now renders the selected
+        environment's URL template instead of always using the default (first)
+        environment's template. For example, `Client(environment=Environment.STAGING,
+        region="ie1")` now resolves to the Staging template
+        (`https://api.stage.ie1.example.com`) rather than the Production one.
+        An explicitly provided `base_url` is no longer overridden by URL variables.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 5.20.1
+  changelogEntry:
+    - summary: |
+        Stop passing required literal query parameters as keyword arguments in generated
+        snippets and wire tests. Required literals (e.g. `response_type="code"`) are
+        hardcoded inside the generated method and omitted from its signature, so passing
+        them raised `TypeError: got an unexpected keyword argument`. Optional literal
+        query parameters remain in the signature and are still included.
+      type: fix
+  createdAt: "2026-07-17"
+  irVersion: 67
+- version: 5.20.0
+  changelogEntry:
+    - summary: |
+        Add opt-in, platform-guarded TCP keepalive for the generated default HTTP
+        transport. Enable it via the new `tcp_keepalive` custom config
+        (`enabled`, `idle_seconds`, `interval_seconds`, `count`); it is disabled by
+        default so existing generated output is unchanged. When enabled, the default
+        httpx transport applies `SO_KEEPALIVE` plus the platform's idle/interval/count
+        knobs (with a macOS `TCP_KEEPIDLE` -> `TCP_KEEPALIVE` fallback and guards for
+        older/minimal platforms) so long, non-streaming requests survive
+        idle-connection reaping by a firewall/load balancer/NAT. A user-supplied
+        `httpx_client` or a `custom_transport` `http_client` always takes precedence
+        over the keepalive default. Opting in requires `httpx>=0.25`.
+      type: feat
+    - summary: |
+        Fix the async default client dropping a `custom_transport` `http_client`.
+        `_make_default_async_client` now threads the supplied transport through to the
+        underlying `httpx.AsyncClient` (the httpx-aiohttp path remains a documented
+        no-op, since aiohttp manages its own connector).
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 5.19.3
   changelogEntry:
     - summary: |

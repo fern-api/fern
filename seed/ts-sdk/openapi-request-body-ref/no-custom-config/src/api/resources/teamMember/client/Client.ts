@@ -26,6 +26,9 @@ export class TeamMemberClient {
      * @param {SeedApi.UpdateTeamMemberRequest} request
      * @param {TeamMemberClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.teamMember.updateTeamMember({
      *         team_member_id: "team_member_id"

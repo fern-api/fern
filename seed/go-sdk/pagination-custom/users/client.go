@@ -34,6 +34,20 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.ListWithCustomPagerRequest{
+//	    Limit: fern.Int(
+//	        1,
+//	    ),
+//	    StartingAfter: fern.String(
+//	        "starting_after",
+//	    ),
+//	}
+//	client.Users.ListWithCustomPager(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListWithCustomPager(
 	ctx context.Context,
 	request *fern.ListWithCustomPagerRequest,

@@ -428,6 +428,7 @@ public partial class ParamsClient : IParamsClient
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
+            .AddIdempotencyHeader()
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);
@@ -513,6 +514,7 @@ public partial class ParamsClient : IParamsClient
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
+            .AddIdempotencyHeader()
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);
@@ -599,6 +601,7 @@ public partial class ParamsClient : IParamsClient
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
+            .AddIdempotencyHeader()
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);
@@ -685,6 +688,7 @@ public partial class ParamsClient : IParamsClient
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
+            .AddIdempotencyHeader()
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);
@@ -768,6 +772,7 @@ public partial class ParamsClient : IParamsClient
         var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
             .Add(_client.Options.Headers)
             .Add(_client.Options.AdditionalHeaders)
+            .AddIdempotencyHeader()
             .Add(options?.AdditionalHeaders)
             .BuildAsync()
             .ConfigureAwait(false);

@@ -28,6 +28,9 @@ export class AdminClient {
      * @param {SeedTrace.TestSubmissionStatus} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         type: "stopped"
@@ -98,6 +101,9 @@ export class AdminClient {
      * @param {SeedTrace.SubmissionId} submissionId
      * @param {SeedTrace.TestSubmissionUpdate} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
@@ -174,6 +180,9 @@ export class AdminClient {
      * @param {SeedTrace.WorkspaceSubmissionStatus} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         type: "stopped"
@@ -244,6 +253,9 @@ export class AdminClient {
      * @param {SeedTrace.SubmissionId} submissionId
      * @param {SeedTrace.WorkspaceSubmissionUpdate} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
@@ -320,6 +332,9 @@ export class AdminClient {
      * @param {string} testCaseId
      * @param {SeedTrace.StoreTracedTestCaseRequest} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", {
@@ -480,6 +495,9 @@ export class AdminClient {
      * @param {SeedTrace.TraceResponseV2[]} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", [{
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -626,6 +644,9 @@ export class AdminClient {
      * @param {SeedTrace.SubmissionId} submissionId
      * @param {SeedTrace.StoreTracedWorkspaceRequest} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
@@ -777,6 +798,9 @@ export class AdminClient {
      * @param {SeedTrace.SubmissionId} submissionId
      * @param {SeedTrace.TraceResponseV2[]} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [{

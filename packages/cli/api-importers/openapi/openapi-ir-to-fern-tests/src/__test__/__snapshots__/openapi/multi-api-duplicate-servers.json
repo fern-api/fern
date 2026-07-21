@@ -183,11 +183,11 @@
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "default-environment": "STG",
+      "default-environment": "Staging",
       "default-url": "stage",
       "display-name": "Messages API",
       "environments": {
-        "STG": {
+        "Staging": {
           "urls": {
             "oauth": "https://oauth.stage.example.com",
             "stage": "https://api.stage.example.com",
@@ -205,11 +205,11 @@ error-discrimination:
   strategy: status-code
 display-name: Messages API
 environments:
-  STG:
+  Staging:
     urls:
       stage: https://api.stage.example.com
       oauth: https://oauth.stage.example.com
-default-environment: STG
+default-environment: Staging
 default-url: stage
 ",
   },

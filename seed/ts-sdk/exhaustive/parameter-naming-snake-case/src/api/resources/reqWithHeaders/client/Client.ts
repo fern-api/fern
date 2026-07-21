@@ -26,6 +26,9 @@ export class ReqWithHeadersClient {
      * @param {SeedExhaustive.ReqWithHeaders} request
      * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
      *         x_test_service_header: "X-TEST-SERVICE-HEADER",

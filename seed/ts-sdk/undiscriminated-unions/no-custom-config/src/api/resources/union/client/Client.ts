@@ -26,6 +26,9 @@ export class UnionClient {
      * @param {SeedUndiscriminatedUnions.MyUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.get("string")
      */
@@ -75,6 +78,9 @@ export class UnionClient {
     /**
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.getMetadata()
      */
@@ -121,6 +127,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.MetadataUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.updateMetadata({
@@ -177,6 +186,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.Request} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.call({
@@ -236,6 +248,9 @@ export class UnionClient {
      * @param {SeedUndiscriminatedUnions.UnionWithDuplicateTypes} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.duplicateTypesUnion("string")
      */
@@ -291,6 +306,9 @@ export class UnionClient {
      * @param {SeedUndiscriminatedUnions.NestedUnionRoot} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.nestedUnions("string")
      */
@@ -343,6 +361,9 @@ export class UnionClient {
      * @param {SeedUndiscriminatedUnions.OuterNestedUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
+     *
      * @example
      *     await client.union.nestedObjectUnions("string")
      */
@@ -394,6 +415,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.AliasedObjectUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.aliasedObjectUnion({
@@ -449,6 +473,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.UnionWithBaseProperties} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.getWithBaseProperties({
@@ -511,6 +538,9 @@ export class UnionClient {
     /**
      * @param {SeedUndiscriminatedUnions.PaymentRequest} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUndiscriminatedUnionsError}
+     * @throws {@link errors.SeedUndiscriminatedUnionsTimeoutError}
      *
      * @example
      *     await client.union.testCamelCaseProperties({

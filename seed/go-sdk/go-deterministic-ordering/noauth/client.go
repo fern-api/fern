@@ -34,6 +34,16 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // POST request with no auth
+//
+// Example:
+//
+//	request := map[string]any{
+//	    "key": "value",
+//	}
+//	client.NoAuth.PostWithNoAuth(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) PostWithNoAuth(
 	ctx context.Context,
 	request any,

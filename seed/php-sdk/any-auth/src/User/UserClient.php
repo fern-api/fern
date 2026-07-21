@@ -50,6 +50,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->get();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -95,6 +100,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getAdmins();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

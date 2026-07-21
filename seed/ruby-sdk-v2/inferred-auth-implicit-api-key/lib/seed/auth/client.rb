@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :api_key
       #
+      # @example
+      #   client.auth.get_token(api_key: "api_key")
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

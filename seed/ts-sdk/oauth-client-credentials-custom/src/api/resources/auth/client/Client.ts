@@ -26,6 +26,9 @@ export class AuthClient {
      * @param {SeedOauthClientCredentials.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
+     *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
      *         cid: "cid",
@@ -90,6 +93,9 @@ export class AuthClient {
     /**
      * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
      *
      * @example
      *     await client.auth.refreshToken({

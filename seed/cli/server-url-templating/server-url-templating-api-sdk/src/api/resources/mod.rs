@@ -19,6 +19,20 @@ impl ApiClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use server_url_templating_api_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerUrlTemplatingApiClient::new(config).expect("Failed to build client");
+    ///     client.get_users(None).await;
+    /// }
+    /// ```
     pub async fn get_users(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
         let base_url = self
             .http_client
@@ -31,6 +45,20 @@ impl ApiClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use server_url_templating_api_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerUrlTemplatingApiClient::new(config).expect("Failed to build client");
+    ///     client.get_user(&"userId".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_user(
         &self,
         user_id: &str,
@@ -54,6 +82,28 @@ impl ApiClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use server_url_templating_api_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerUrlTemplatingApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .get_token(
+    ///             &TokenRequest {
+    ///                 client_id: "client_id".to_string(),
+    ///                 client_secret: "client_secret".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_token(
         &self,
         request: &TokenRequest,

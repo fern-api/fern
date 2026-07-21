@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.14.6
+  changelogEntry:
+    - summary: |
+        Fixed an issue where the client builder rendered the first environment's URL
+        template instead of the selected environment's template when both a named
+        environment and server URL variables (e.g. `region`) were provided. The
+        builder now resolves the template(s) from the selected environment, falls
+        back to the first templated environment when no environment is selected, and
+        no longer overrides a custom environment or explicitly provided base URL.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 4.14.5
+  changelogEntry:
+    - summary: |
+        Honor `includePlatformHeaders` when generating to local file system output.
+        Previously the flag was only read for GitHub/publish output, so locally
+        generated SDKs always emitted the static `{package}/{version}` User-Agent
+        instead of the structured `{package}/{version} (os; arch) Java/{version}` form.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
 - version: 4.14.4
   changelogEntry:
     - summary: |

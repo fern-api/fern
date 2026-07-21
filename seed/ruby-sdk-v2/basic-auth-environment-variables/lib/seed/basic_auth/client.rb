@@ -20,6 +20,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.basic_auth.get_with_basic_auth
+      #
       # @return [Boolean]
       def get_with_basic_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -49,6 +52,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.basic_auth.post_with_basic_auth(request: {
+      #     key: "value"
+      #   })
       #
       # @return [Boolean]
       def post_with_basic_auth(request_options: {}, **params)

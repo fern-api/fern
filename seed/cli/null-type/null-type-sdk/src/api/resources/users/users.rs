@@ -22,6 +22,21 @@ impl UsersClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use null_type_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = NullTypeClient::new(config).expect("Failed to build client");
+    ///     client.users.get(&"id".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get(&self, id: &str, options: Option<RequestOptions>) -> Result<User, ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("users/{}", id), None, None, options)

@@ -22,6 +22,9 @@ module Seed
           # @option request_options [Hash{String => Object}] :additional_body_parameters
           # @option request_options [Integer] :timeout_in_seconds
           #
+          # @example
+          #   client.v2.problem.get_lightweight_problems
+          #
           # @return [Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]]
           def get_lightweight_problems(request_options: {}, **_params)
             request = Seed::Internal::JSON::Request.new(
@@ -51,6 +54,9 @@ module Seed
           # @option request_options [Hash{String => Object}] :additional_query_parameters
           # @option request_options [Hash{String => Object}] :additional_body_parameters
           # @option request_options [Integer] :timeout_in_seconds
+          #
+          # @example
+          #   client.v2.problem.get_problems
           #
           # @return [Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]]
           def get_problems(request_options: {}, **_params)
@@ -82,6 +88,9 @@ module Seed
           # @option request_options [Hash{String => Object}] :additional_body_parameters
           # @option request_options [Integer] :timeout_in_seconds
           # @option params [Seed::Commons::Types::ProblemID] :problem_id
+          #
+          # @example
+          #   client.v2.problem.get_latest_problem(problem_id: "problemId")
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_latest_problem(request_options: {}, **params)
@@ -117,6 +126,12 @@ module Seed
           # @option request_options [Integer] :timeout_in_seconds
           # @option params [Seed::Commons::Types::ProblemID] :problem_id
           # @option params [Integer] :problem_version
+          #
+          # @example
+          #   client.v2.problem.get_problem_version(
+          #     problem_id: "problemId",
+          #     problem_version: 1
+          #   )
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_problem_version(request_options: {}, **params)

@@ -19,6 +19,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :x_test_endpoint_header
       #
+      # @example
+      #   client.req_with_headers.get_with_custom_header(
+      #     x_test_service_header: "X-TEST-SERVICE-HEADER",
+      #     x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+      #     body: "string"
+      #   )
+      #
       # @return [untyped]
       def get_with_custom_header(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

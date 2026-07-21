@@ -212,8 +212,7 @@ async function patchSdkCrate(args: {
     //    type identity (`<sdk>::Pet` == `<types>::Pet`).
     const srcDir = path.join(sdkOutputDir, "src");
     await mkdir(srcDir, { recursive: true });
-    const preludeContent = `pub use ${typesSnakeName}::*;\n`;
-    await writeFile(path.join(srcDir, "prelude.rs"), preludeContent);
+    await writeFile(path.join(srcDir, "prelude.rs"), buildEmbeddedSdkPrelude(typesSnakeName));
 
     // 2b. Patch src/api/mod.rs — re-export the types crate so that
     //     service resource files (`use crate::api::*;`) can resolve
@@ -252,4 +251,28 @@ async function patchSdkCrate(args: {
     // 4. Remove the .fern/ metadata directory written by the base
     //    generator framework — not needed inside a workspace member.
     await rm(path.join(sdkOutputDir, ".fern"), { recursive: true, force: true });
+}
+
+/**
+ * Build the embedded SDK crate's `src/prelude.rs`.
+ *
+ * Re-exports:
+ *   1. The co-generated types crate, for single type identity
+ *      (`<sdk>::Pet` == `<types>::Pet`).
+ *   2. `std::collections::{HashMap, HashSet}`, mirroring the standalone
+ *      Rust SDK prelude (`generators/rust/base/src/asIs/prelude.rs`).
+ *
+ * The Rust SDK generator emits `use crate::prelude::*;` in files that
+ * reference `HashMap`/`HashSet` by bare name and rely on the prelude to
+ * bring `std::collections` into scope — most notably `error.rs`, whose
+ * error-body fields can resolve to `Vec<HashMap<String, serde_json::Value>>`.
+ * When the CLI generator overwrites the standalone prelude with only the
+ * types re-export, those files fail to compile with `cannot find type
+ * HashMap in this scope`. Keeping the std re-export here restores parity
+ * with the standalone SDK. It's dependency-free (std is always available),
+ * and explicit `use std::collections::HashMap;` in sibling files simply
+ * shadows this glob, so there is no ambiguity.
+ */
+export function buildEmbeddedSdkPrelude(typesSnakeName: string): string {
+    return [`pub use ${typesSnakeName}::*;`, "pub use std::collections::{HashMap, HashSet};", ""].join("\n");
 }

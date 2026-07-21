@@ -35,6 +35,15 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.TestGetRequest{
+//	    Region: "region",
+//	}
+//	client.TestGet(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) TestGet(
 	ctx context.Context,
 	request *fern.TestGetRequest,

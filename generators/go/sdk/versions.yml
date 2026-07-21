@@ -1,4 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.50.0
+  changelogEntry:
+    - summary: |
+        Client endpoint methods now include a usage example in their godoc comment,
+        so IDEs surface a code snippet on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 1.49.7
+  changelogEntry:
+    - summary: |
+        Materialize optional and nullable literal query/header parameters in generated
+        snippets and wire tests so they are set on the request and serialized on the wire.
+        Previously a direct optional literal (e.g. PKCE's `code_challenge_method=S256`) was
+        treated as a no-op and left unset, so it was never sent even though the generated
+        WireMock stub asserted it, causing generated wire tests to fail immediately after
+        generation. Required literals remain hardcoded in the request implementation.
+      type: fix
+  createdAt: "2026-07-17"
+  irVersion: 67
+- version: 1.49.6
+  changelogEntry:
+    - summary: |
+        Consume the discriminated-union base-property dedupe decision from the IR
+        (`UnionTypeDeclaration.inheritedBaseProperties`) as the language-agnostic structural core,
+        instead of computing that core in the generator. Go still applies a thin local
+        render-equivalence widening on top (list/set both render `[]T`, optional/nullable both render
+        `*T`, and `getters-pass-by-value` strips the leading `*`), so the set of deduped fields — and
+        therefore the generated output — is unchanged from before. The delegating-getter emission, the
+        local literal filter, and the opt-in `dedupeUnionBaseProperties` flag (default off) all remain.
+        The same widening is applied in the Go dynamic-snippets generator, so the model and snippets
+        dedupe an identical set (removing the prior drift between them). Moves the generator to IR v67,
+        where the `inheritedBaseProperties` fact is available.
+      type: chore
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 1.49.5
   changelogEntry:
     - summary: |
