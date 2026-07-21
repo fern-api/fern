@@ -117,10 +117,20 @@ module Seed
       if !region.nil? || !server_url_environment.nil?
         region_value = region.nil? ? "us-east-1" : region
         server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
-        environment = {
-          base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
-          auth: "https://auth.#{region_value}.example.com"
+        environment_url_templates = {
+          Seed::Environment::REGIONAL_API_SERVER => {
+            base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
+            auth: "https://auth.#{region_value}.example.com"
+          }
         }
+        if environment.nil?
+          environment = {
+            base: "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1",
+            auth: "https://auth.#{region_value}.example.com"
+          }
+        else
+          environment = environment_url_templates.fetch(environment, environment)
+        end
       end
 
       @base_url = base_url
