@@ -87,14 +87,18 @@ class SeedApi:
         if region is not None or server_url_environment is not None:
             _region = region if region is not None else "us-east-1"
             _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
-            environment = SeedApiEnvironment(
-                base="https://api.{region}.{environment}.example.com/v1".format(
-                    region=_region, environment=_server_url_environment
-                ),
-                auth="https://auth.{region}.example.com".format(
-                    region=_region,
-                ),
-            )
+            _environment_url_templates = {
+                SeedApiEnvironment.REGIONAL_API_SERVER: {
+                    "base": "https://api.{region}.{environment}.example.com/v1",
+                    "auth": "https://auth.{region}.example.com",
+                },
+            }
+            _url_templates = _environment_url_templates.get(environment)
+            if _url_templates is not None:
+                environment = SeedApiEnvironment(
+                    base=_url_templates["base"].format(region=_region, environment=_server_url_environment),
+                    auth=_url_templates["auth"].format(region=_region, environment=_server_url_environment),
+                )
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
             headers=headers,
@@ -294,14 +298,18 @@ class AsyncSeedApi:
         if region is not None or server_url_environment is not None:
             _region = region if region is not None else "us-east-1"
             _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
-            environment = SeedApiEnvironment(
-                base="https://api.{region}.{environment}.example.com/v1".format(
-                    region=_region, environment=_server_url_environment
-                ),
-                auth="https://auth.{region}.example.com".format(
-                    region=_region,
-                ),
-            )
+            _environment_url_templates = {
+                SeedApiEnvironment.REGIONAL_API_SERVER: {
+                    "base": "https://api.{region}.{environment}.example.com/v1",
+                    "auth": "https://auth.{region}.example.com",
+                },
+            }
+            _url_templates = _environment_url_templates.get(environment)
+            if _url_templates is not None:
+                environment = SeedApiEnvironment(
+                    base=_url_templates["base"].format(region=_region, environment=_server_url_environment),
+                    auth=_url_templates["auth"].format(region=_region, environment=_server_url_environment),
+                )
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,
             headers=headers,
