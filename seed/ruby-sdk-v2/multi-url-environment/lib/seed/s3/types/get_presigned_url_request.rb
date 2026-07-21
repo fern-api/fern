@@ -4,7 +4,7 @@ module Seed
   module S3
     module Types
       class GetPresignedURLRequest < Internal::Types::Model
-        field :s3_key, -> { String }, optional: false, nullable: false, api_name: "s3Key"
+        field :s3key, -> { String }, optional: false, nullable: false, api_name: "s3Key"
       end
     end
   end

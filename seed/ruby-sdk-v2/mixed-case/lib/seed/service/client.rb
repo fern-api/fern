@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :resource_id
       #
+      # @example
+      #   client.service.get_resource(resource_id: "rsc-xyz")
+      #
       # @return [Seed::Service::Types::Resource]
       def get_resource(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -51,6 +54,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :page_limit
       # @option params [String] :before_date
+      #
+      # @example
+      #   client.service.list_resources(
+      #     page_limit: 10,
+      #     before_date: "2023-01-01"
+      #   )
       #
       # @return [Array[Seed::Service::Types::Resource]]
       def list_resources(request_options: {}, **params)

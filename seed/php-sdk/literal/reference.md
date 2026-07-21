@@ -62,6 +62,54 @@ $client->headers->send(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;headers-&gt;sendLiteralsOnly() -> ?SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->headers->sendLiteralsOnly();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$endpointVersion:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$async:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>$client-&gt;inlined-&gt;send($request) -> ?SendResponse</code></summary>
 <dl>

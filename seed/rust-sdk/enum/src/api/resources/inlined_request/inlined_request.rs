@@ -13,6 +13,31 @@ impl InlinedRequestClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_enum::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = EnumClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .inlined_request
+    ///         .send(
+    ///             &SendEnumInlinedRequest {
+    ///                 operand: Operand::GreaterThan,
+    ///                 operand_or_color: ColorOrOperand::Color(Color::Red),
+    ///                 maybe_operand: None,
+    ///                 maybe_operand_or_color: None,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn send(
         &self,
         request: &SendEnumInlinedRequest,

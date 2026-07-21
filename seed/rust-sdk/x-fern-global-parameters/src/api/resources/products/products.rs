@@ -13,6 +13,29 @@ impl ProductsClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .products
+    ///         .search(
+    ///             &"regionId".to_string(),
+    ///             &SearchProductsRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn search(
         &self,
         region_id: &str,
@@ -30,6 +53,23 @@ impl ProductsClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .products
+    ///         .get(&"regionId".to_string(), &"productId".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get(
         &self,
         region_id: &str,

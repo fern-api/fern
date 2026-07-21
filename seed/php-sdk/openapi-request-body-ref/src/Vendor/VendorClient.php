@@ -51,6 +51,18 @@ class VendorClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->vendor->updateVendor(
+     *     'vendor_id',
+     *     new UpdateVendorBody([
+     *         'body' => new UpdateVendorRequest([
+     *             'name' => 'name',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $vendorId
      * @param UpdateVendorBody $request
      * @param ?array{
@@ -99,6 +111,15 @@ class VendorClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->vendor->createVendor(
+     *     new CreateVendorRequest([
+     *         'name' => 'name',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateVendorRequest $request
      * @param ?array{
      *   baseUrl?: string,

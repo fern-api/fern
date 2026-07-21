@@ -52,6 +52,10 @@ interface ConstructorParameter {
     header?: HeaderInfo;
     environmentVariable?: string;
     /**
+     * Whether this parameter comes from a global API header (as opposed to an auth scheme).
+     */
+    isGlobalHeader?: boolean;
+    /**
      * The wire value to use in examples (e.g., "client_id", "X-API-Key")
      * Falls back to parameter name if not provided
      */
@@ -227,7 +231,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const { optionalParameters } = this.getConstructorParameters();
         if (
             !this.isAnyAuthWithMultipleSchemes() &&
-            optionalParameters.some((parameter) => parameter.environmentVariable != null)
+            optionalParameters.some(
+                (parameter) =>
+                    parameter.environmentVariable != null && !(parameter.isGlobalHeader && parameter.isOptional)
+            )
         ) {
             this.getFromEnvironmentOrThrowMethod(class_);
         }
@@ -470,7 +477,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     for (const param of optionalParameters) {
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
-                            if (anyAuthMultiScheme) {
+                            if (anyAuthMultiScheme || (param.isGlobalHeader && param.isOptional)) {
                                 // Fall back to the env var if set, but do not throw when it is
                                 // missing — the caller may be authenticating with another scheme.
                                 innerWriter.write(`${target} ??= Environment.GetEnvironmentVariable(`);
@@ -1214,6 +1221,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
+            environmentVariable: header.env,
+            isGlobalHeader: true,
             exampleValue: this.case.screamingSnakeSafe(header.name),
             clientDefault: header.clientDefault
         };

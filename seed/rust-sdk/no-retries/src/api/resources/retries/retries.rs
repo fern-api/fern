@@ -13,6 +13,20 @@ impl RetriesClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_no_retries::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = NoRetriesClient::new(config).expect("Failed to build client");
+    ///     client.retries.get_users(None).await;
+    /// }
+    /// ```
     pub async fn get_users(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/users", None, None, options)

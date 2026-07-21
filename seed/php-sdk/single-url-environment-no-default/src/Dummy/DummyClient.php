@@ -49,6 +49,11 @@ class DummyClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->dummy->getDummy();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

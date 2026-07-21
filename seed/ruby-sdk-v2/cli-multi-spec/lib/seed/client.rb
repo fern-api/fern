@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.list_users
+    #
     # @return [Array[Seed::Types::User]]
     def list_users(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -38,6 +41,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :user_id
+    #
+    # @example
+    #   client.get_user(user_id: "userId")
     #
     # @return [Seed::Types::User]
     def get_user(request_options: {}, **params)
@@ -70,6 +76,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.list_invoices
+    #
     # @return [Array[Seed::Types::Invoice]]
     def list_invoices(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -98,6 +107,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     # @option params [String] :invoice_id
+    #
+    # @example
+    #   client.get_invoice(invoice_id: "invoiceId")
     #
     # @return [Seed::Types::Invoice]
     def get_invoice(request_options: {}, **params)

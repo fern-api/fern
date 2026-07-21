@@ -1,0 +1,6 @@
+name: php-global-header-env
+headers:
+  X-API-Version:
+    name: version
+    type: optional<string>
+    env: MY_API_VERSION

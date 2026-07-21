@@ -20,12 +20,12 @@ class RawS3Client:
         self._client_wrapper = client_wrapper
 
     def get_presigned_url(
-        self, *, s3_key: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
         """
         Parameters
         ----------
-        s3_key : str
+        s3key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -39,7 +39,7 @@ class RawS3Client:
             base_url=self._client_wrapper.get_environment().s3,
             method="POST",
             json={
-                "s3Key": s3_key,
+                "s3Key": s3key,
             },
             request_options=request_options,
             omit=OMIT,
@@ -69,12 +69,12 @@ class AsyncRawS3Client:
         self._client_wrapper = client_wrapper
 
     async def get_presigned_url(
-        self, *, s3_key: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
-        s3_key : str
+        s3key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -88,7 +88,7 @@ class AsyncRawS3Client:
             base_url=self._client_wrapper.get_environment().s3,
             method="POST",
             json={
-                "s3Key": s3_key,
+                "s3Key": s3key,
             },
             request_options=request_options,
             omit=OMIT,

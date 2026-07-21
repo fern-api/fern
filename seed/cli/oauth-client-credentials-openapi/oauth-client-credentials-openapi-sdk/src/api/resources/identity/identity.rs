@@ -13,6 +13,29 @@ impl IdentityClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use oauth_client_credentials_openapi_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = OauthClientCredentialsOpenapiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .identity
+    ///         .get_token(
+    ///             &GetTokenIdentityRequest {
+    ///                 username: "username".to_string(),
+    ///                 password: "password".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_token(
         &self,
         request: &GetTokenIdentityRequest,

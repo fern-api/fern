@@ -14,10 +14,9 @@
 
 ```go
 client.Service.GetResource(
-        context.TODO(),
-        "rsc-xyz",
-    )
-}
+    context.TODO(),
+    "rsc-xyz",
+)
 ```
 </dd>
 </dl>
@@ -58,16 +57,15 @@ client.Service.GetResource(
 
 ```go
 request := &fern.ListResourcesRequest{
-        PageLimit: 10,
-        BeforeDate: fern.MustParseDate(
-            "2023-01-01",
-        ),
-    }
-client.Service.ListResources(
-        context.TODO(),
-        request,
-    )
+    PageLimit: 10,
+    BeforeDate: fern.MustParseDate(
+        "2023-01-01",
+    ),
 }
+client.Service.ListResources(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

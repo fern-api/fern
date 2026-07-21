@@ -13,6 +13,28 @@ impl CompletionsClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_server_sent_events::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .completions
+    ///         .stream(
+    ///             &StreamCompletionRequest {
+    ///                 query: "foo".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream(
         &self,
         request: &StreamCompletionRequest,
@@ -30,6 +52,28 @@ impl CompletionsClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_server_sent_events::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .completions
+    ///         .stream_without_terminator(
+    ///             &StreamCompletionRequestWithoutTerminator {
+    ///                 query: "query".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_without_terminator(
         &self,
         request: &StreamCompletionRequestWithoutTerminator,

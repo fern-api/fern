@@ -65,6 +65,16 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->submitFormData(
+     *     new PostSubmitRequest([
+     *         'username' => 'johndoe',
+     *         'email' => 'john@example.com',
+     *     ]),
+     * );
+     * ```
+     *
      * @param PostSubmitRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -112,6 +122,16 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getToken(
+     *     new TokenRequest([
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *     ]),
+     * );
+     * ```
+     *
      * @param TokenRequest $request
      * @param ?array{
      *   baseUrl?: string,

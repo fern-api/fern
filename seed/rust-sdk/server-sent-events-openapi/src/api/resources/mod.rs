@@ -28,6 +28,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_no_collision(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_protocol_no_collision(
         &self,
         request: &StreamRequest,
@@ -54,6 +76,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_collision(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_protocol_collision(
         &self,
         request: &StreamRequest,
@@ -80,6 +124,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_data_context(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_data_context(
         &self,
         request: &StreamRequest,
@@ -106,6 +172,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_no_context(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_no_context(
         &self,
         request: &StreamRequest,
@@ -132,6 +220,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_with_flat_schema(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_protocol_with_flat_schema(
         &self,
         request: &StreamRequest,
@@ -158,6 +268,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_data_context_with_envelope_schema(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_data_context_with_envelope_schema(
         &self,
         request: &StreamRequest,
@@ -184,6 +316,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_oas_spec_native(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_oas_spec_native(
         &self,
         request: &StreamRequest,
@@ -210,6 +364,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_condition_stream(
+    ///             &StreamXFernStreamingConditionStreamRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: true,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_condition_stream(
         &self,
         request: &StreamXFernStreamingConditionStreamRequest,
@@ -235,6 +412,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_condition(
+    ///             &StreamXFernStreamingConditionRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: false,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_condition(
         &self,
         request: &StreamXFernStreamingConditionRequest,
@@ -260,6 +460,30 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_shared_schema_stream(
+    ///             &StreamXFernStreamingSharedSchemaStreamRequest {
+    ///                 prompt: "prompt".to_string(),
+    ///                 model: "model".to_string(),
+    ///                 stream: true,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_shared_schema_stream(
         &self,
         request: &StreamXFernStreamingSharedSchemaStreamRequest,
@@ -285,6 +509,30 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_shared_schema(
+    ///             &StreamXFernStreamingSharedSchemaRequest {
+    ///                 prompt: "prompt".to_string(),
+    ///                 model: "model".to_string(),
+    ///                 stream: false,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_shared_schema(
         &self,
         request: &StreamXFernStreamingSharedSchemaRequest,
@@ -310,6 +558,30 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .validate_completion(
+    ///             &SharedCompletionRequest {
+    ///                 prompt: "prompt".to_string(),
+    ///                 model: "model".to_string(),
+    ///                 stream: None,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn validate_completion(
         &self,
         request: &SharedCompletionRequest,
@@ -336,6 +608,36 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_union_stream(
+    ///             &StreamXFernStreamingUnionStreamRequest::Message {
+    ///                 data: UnionStreamMessageVariant {
+    ///                     union_stream_request_base_fields: UnionStreamRequestBase {
+    ///                         stream_response: Some(true),
+    ///                         prompt: "prompt".to_string(),
+    ///                         ..Default::default()
+    ///                     },
+    ///                     message: "message".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_union_stream(
         &self,
         request: &StreamXFernStreamingUnionStreamRequest,
@@ -362,6 +664,36 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_union_stream(
+    ///             &StreamXFernStreamingUnionStreamRequest::Message {
+    ///                 data: UnionStreamMessageVariant {
+    ///                     union_stream_request_base_fields: UnionStreamRequestBase {
+    ///                         stream_response: Some(false),
+    ///                         prompt: "prompt".to_string(),
+    ///                         ..Default::default()
+    ///                     },
+    ///                     message: "message".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_union(
         &self,
         request: &StreamXFernStreamingUnionRequest,
@@ -387,6 +719,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .validate_union_request(
+    ///             &UnionStreamRequestBase {
+    ///                 prompt: "prompt".to_string(),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn validate_union_request(
         &self,
         request: &UnionStreamRequestBase,
@@ -412,6 +767,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// Complete JSON response (fetched at once, not streaming)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_nullable_condition_stream(
+    ///             &StreamXFernStreamingNullableConditionStreamRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: true,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_nullable_condition_stream(
         &self,
         request: &StreamXFernStreamingNullableConditionStreamRequest,
@@ -437,6 +815,29 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_nullable_condition(
+    ///             &StreamXFernStreamingNullableConditionRequest {
+    ///                 query: "query".to_string(),
+    ///                 stream: false,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_nullable_condition(
         &self,
         request: &StreamXFernStreamingNullableConditionRequest,
@@ -462,6 +863,28 @@ impl ApiClient {
     /// # Returns
     ///
     /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_x_fern_streaming_sse_only(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn stream_x_fern_streaming_sse_only(
         &self,
         request: &StreamRequest,

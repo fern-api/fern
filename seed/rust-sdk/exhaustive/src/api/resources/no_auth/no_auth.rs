@@ -21,6 +21,25 @@ impl NoAuthClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .no_auth
+    ///         .post_with_no_auth(&serde_json::json!({"key":"value"}), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn post_with_no_auth(
         &self,
         request: &serde_json::Value,

@@ -64,6 +64,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->listUsers();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -109,6 +114,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,
@@ -155,6 +167,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->listInvoices();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -200,6 +217,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getInvoice(
+     *     'invoiceId',
+     * );
+     * ```
+     *
      * @param string $invoiceId
      * @param ?array{
      *   baseUrl?: string,

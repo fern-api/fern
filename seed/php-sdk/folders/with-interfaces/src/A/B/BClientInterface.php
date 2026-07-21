@@ -5,6 +5,11 @@ namespace Seed\A\B;
 interface BClientInterface
 {
     /**
+     * Example:
+     * ```php
+     * $client->foo();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

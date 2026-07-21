@@ -22,6 +22,26 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_path(&"param".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_path(
         &self,
         param: &str,
@@ -47,6 +67,26 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_path(&"param".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_inline_path(
         &self,
         param: &str,
@@ -72,6 +112,32 @@ impl ParamsClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_query(
+    ///             &GetWithQueryQueryRequest {
+    ///                 query: "query".to_string(),
+    ///                 number: 1,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_query(
         &self,
         request: &GetWithQueryQueryRequest,
@@ -100,6 +166,32 @@ impl ParamsClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_query(
+    ///             &GetWithQueryQueryRequest {
+    ///                 query: "query".to_string(),
+    ///                 number: 1,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_allow_multiple_query(
         &self,
         request: &GetWithAllowMultipleQueryQueryRequest,
@@ -128,6 +220,32 @@ impl ParamsClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_path_and_query(
+    ///             &"param".to_string(),
+    ///             &GetWithPathAndQueryQueryRequest {
+    ///                 query: "query".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_path_and_query(
         &self,
         param: &str,
@@ -156,6 +274,32 @@ impl ParamsClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_path_and_query(
+    ///             &"param".to_string(),
+    ///             &GetWithPathAndQueryQueryRequest {
+    ///                 query: "query".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_inline_path_and_query(
         &self,
         param: &str,
@@ -184,6 +328,26 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .modify_with_path(&"param".to_string(), &"string".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn modify_with_path(
         &self,
         param: &str,
@@ -210,6 +374,26 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .modify_with_path(&"param".to_string(), &"string".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn modify_with_inline_path(
         &self,
         param: &str,
@@ -236,6 +420,26 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .upload_with_path(&"upload-path".to_string(), &vec![], None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn upload_with_path(
         &self,
         param: &str,
@@ -262,6 +466,35 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .create_with_body_and_query(
+    ///             &CreateWithBodyAndQueryRequest {
+    ///                 fields: Some("_fields".to_string()),
+    ///                 body: ObjectWithRequiredField {
+    ///                     string: "string".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_with_body_and_query(
         &self,
         request: &CreateWithBodyAndQueryRequest,
@@ -316,6 +549,26 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_boolean_path(true, None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_boolean_path(
         &self,
         param: bool,
@@ -341,6 +594,26 @@ impl ParamsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .params
+    ///         .get_with_path(&"param".to_string(), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_with_path_and_errors(
         &self,
         param: &str,

@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SearchProductsRequest{
+//	    RegionID: "regionId",
+//	}
+//	client.Products.Search(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Search(
 	ctx context.Context,
 	request *fern.SearchProductsRequest,
@@ -50,6 +59,16 @@ func (c *Client) Search(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetProductsRequest{
+//	    RegionID: "regionId",
+//	    ProductID: "productId",
+//	}
+//	client.Products.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *fern.GetProductsRequest,

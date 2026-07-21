@@ -7,6 +7,24 @@ public final class ReqWithHeadersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Exhaustive
+    ///
+    /// private func main() async throws {
+    ///     let client = ExhaustiveClient(token: "<token>")
+    ///
+    ///     _ = try await client.reqWithHeaders.getWithCustomHeader(
+    ///         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+    ///         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+    ///         request: "string"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithCustomHeader(xTestServiceHeader: String, xTestEndpointHeader: String, request: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

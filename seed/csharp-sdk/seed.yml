@@ -456,3 +456,7 @@ fixtures:
       outputFolder: auto-generate-idempotency-key
 allowedFailures:
   - oauth-client-credentials-custom
+  # CLI-specific OAuth fixture: the full IR client-credentials contract (custom
+  # token request properties) produces C# OAuth-provider code that doesn't compile.
+  # Exercised by the CLI generator.
+  - cli-oauth

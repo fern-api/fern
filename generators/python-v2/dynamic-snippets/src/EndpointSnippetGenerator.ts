@@ -679,6 +679,10 @@ export class EndpointSnippetGenerator {
         }
     }
 
+    // Whether a type resolves to a literal, treating optional/nullable literals AS literals.
+    // Used for request-body properties and path parameters, which omit ALL literals (required
+    // and optional alike) from the generated method call because they are set internally.
+    // Contrast with resolvesToNonOptionalLiteralType below, which keeps optional literals.
     private resolvesToLiteralType(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
             case "literal":
@@ -696,6 +700,45 @@ export class EndpointSnippetGenerator {
                 }
                 return false;
             }
+            case "list":
+            case "map":
+            case "set":
+            case "primitive":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    // Whether a type resolves to a REQUIRED literal, i.e. a literal NOT wrapped in optional/nullable.
+    // Used to filter query parameters and headers: a required literal (e.g. response_type="code") is
+    // hardcoded inside the generated method and omitted from its signature, so passing it as a keyword
+    // argument raises TypeError. An optional literal, by contrast, stays in the signature, so it must
+    // remain a valid keyword argument and is kept.
+    //
+    // This deliberately differs from resolvesToLiteralType above in the optional/nullable cases: here
+    // they return false (keep the parameter) instead of recursing. The asymmetry is intentional and is
+    // validated by the literal fixture's wire tests. Note the two cannot be collapsed into a single
+    // guard like `t.type !== "optional" && resolvesToLiteralType(t)`: a named alias whose target is
+    // optional<literal> has top-level type "named", so such a guard would misclassify it as a required
+    // literal and wrongly drop it, whereas recursing through the alias here correctly returns false.
+    private resolvesToNonOptionalLiteralType(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "literal":
+                return true;
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return false;
+                }
+                if (named.type === "alias") {
+                    return this.resolvesToNonOptionalLiteralType(named.typeReference);
+                }
+                return false;
+            }
+            case "optional":
+            case "nullable":
             case "list":
             case "map":
             case "set":
@@ -881,10 +924,14 @@ export class EndpointSnippetGenerator {
             parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
-        const queryParameterFields = queryParameters.map((queryParameter) => ({
-            name: this.context.getPropertyName(queryParameter.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
-        }));
+        const queryParameterFields = queryParameters
+            // Required literals are hardcoded in the generated method and omitted from its
+            // signature, so they are not valid keyword arguments. Optional literals remain.
+            .filter((queryParameter) => !this.resolvesToNonOptionalLiteralType(queryParameter.typeReference))
+            .map((queryParameter) => ({
+                name: this.context.getPropertyName(queryParameter.name.name),
+                value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+            }));
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.Headers);
@@ -892,10 +939,14 @@ export class EndpointSnippetGenerator {
             parameters: request.headers ?? [],
             values: snippet.headers ?? {}
         });
-        const headerFields = headers.map((header) => ({
-            name: this.context.getPropertyName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(header)
-        }));
+        const headerFields = headers
+            // Required literals are hardcoded in the generated method and omitted from its
+            // signature, so they are not valid keyword arguments. Optional literals remain.
+            .filter((header) => !this.resolvesToNonOptionalLiteralType(header.typeReference))
+            .map((header) => ({
+                name: this.context.getPropertyName(header.name.name),
+                value: this.context.dynamicTypeLiteralMapper.convert(header)
+            }));
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);

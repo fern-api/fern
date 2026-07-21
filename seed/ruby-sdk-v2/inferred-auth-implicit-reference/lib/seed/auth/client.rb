@@ -18,6 +18,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.auth.get_token_with_client_credentials(
+      #     client_id: "client_id",
+      #     client_secret: "client_secret",
+      #     audience: "https://api.example.com",
+      #     grant_type: "client_credentials",
+      #     scope: "scope"
+      #   )
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -49,6 +58,16 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.auth.refresh_token(
+      #     client_id: "client_id",
+      #     client_secret: "client_secret",
+      #     refresh_token: "refresh_token",
+      #     audience: "https://api.example.com",
+      #     grant_type: "refresh_token",
+      #     scope: "scope"
+      #   )
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)

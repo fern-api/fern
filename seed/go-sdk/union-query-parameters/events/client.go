@@ -36,6 +36,21 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Subscribe to events with a oneOf-style query parameter that may be a
 // scalar enum value or a list of enum values.
+//
+// Example:
+//
+//	request := &fern.SubscribeEventsRequest{
+//	    EventType: &fern.EventTypeParam{
+//	        EventTypeEnum: fern.EventTypeEnumGroupCreated,
+//	    },
+//	    Tags: &fern.StringOrListParam{
+//	        String: "tags",
+//	    },
+//	}
+//	client.Events.Subscribe(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Subscribe(
 	ctx context.Context,
 	request *fern.SubscribeEventsRequest,

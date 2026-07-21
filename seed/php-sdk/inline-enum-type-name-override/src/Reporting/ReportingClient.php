@@ -48,6 +48,13 @@ class ReportingClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->reporting->load(
+     *     new LoadRequest([]),
+     * );
+     * ```
+     *
      * @param LoadRequest $request
      * @param ?array{
      *   baseUrl?: string,

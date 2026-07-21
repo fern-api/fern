@@ -1,0 +1,57 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    scopes=\"scopes\",\n    grant_type=\"client_credentials\",\n    tenant=\"tenant\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        scopes=\"scopes\",\n        grant_type=\"client_credentials\",\n        tenant=\"tenant\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/refresh",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.refresh_token(\n    refresh_token=\"refresh_token\",\n    grant_type=\"refresh_token\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.refresh_token(\n        refresh_token=\"refresh_token\",\n        grant_type=\"refresh_token\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/health",
+                "method": "GET",
+                "identifier_override": "endpoint_system.health"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.system.health()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.system.health()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/pets",
+                "method": "GET",
+                "identifier_override": "endpoint_pets.list"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.pets.list()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.pets.list()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

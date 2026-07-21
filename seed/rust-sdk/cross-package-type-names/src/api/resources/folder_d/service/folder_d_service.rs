@@ -13,6 +13,20 @@ impl ServiceClient2 {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_cross_package_type_names::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = CrossPackageTypeNamesClient::new(config).expect("Failed to build client");
+    ///     client.folder_a.service.get_direct_thread(None).await;
+    /// }
+    /// ```
     pub async fn get_direct_thread(
         &self,
         options: Option<RequestOptions>,

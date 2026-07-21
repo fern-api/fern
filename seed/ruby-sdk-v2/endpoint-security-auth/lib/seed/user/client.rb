@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.user.get_with_bearer
+      #
       # @return [Array[Seed::User::Types::User]]
       def get_with_bearer(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -45,6 +48,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.user.get_with_bearer
       #
       # @return [Array[Seed::User::Types::User]]
       def get_with_api_key(request_options: {}, **_params)
@@ -74,6 +80,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.user.get_with_bearer
+      #
       # @return [Array[Seed::User::Types::User]]
       def get_with_o_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -101,6 +110,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.user.get_with_bearer
       #
       # @return [Array[Seed::User::Types::User]]
       def get_with_basic(request_options: {}, **_params)
@@ -130,6 +142,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.user.get_with_bearer
+      #
       # @return [Array[Seed::User::Types::User]]
       def get_with_inferred_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -158,6 +173,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.user.get_with_bearer
+      #
       # @return [Array[Seed::User::Types::User]]
       def get_with_any_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -185,6 +203,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.user.get_with_bearer
       #
       # @return [Array[Seed::User::Types::User]]
       def get_with_all_auth(request_options: {}, **_params)

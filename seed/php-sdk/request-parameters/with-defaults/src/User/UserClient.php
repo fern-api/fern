@@ -54,6 +54,21 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->createUsername(
+     *     new CreateUsernameRequest([
+     *         'tags' => [
+     *             'tags',
+     *             'tags',
+     *         ],
+     *         'username' => 'username',
+     *         'password' => 'password',
+     *         'name' => 'test',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateUsernameRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -97,6 +112,23 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->createUsernameWithReferencedType(
+     *     new CreateUsernameReferencedRequest([
+     *         'tags' => [
+     *             'tags',
+     *             'tags',
+     *         ],
+     *         'body' => new CreateUsernameBody([
+     *             'username' => 'username',
+     *             'password' => 'password',
+     *             'name' => 'test',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateUsernameReferencedRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -140,6 +172,13 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->createUsernameOptional(
+     *     new CreateUsernameBodyOptionalProperties([]),
+     * );
+     * ```
+     *
      * @param ?CreateUsernameBodyOptionalProperties $request
      * @param ?array{
      *   baseUrl?: string,
@@ -180,6 +219,78 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getUsername(
+     *     new GetUsersRequest([
+     *         'limit' => 1,
+     *         'id' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *         'date' => new DateTime('2023-01-15'),
+     *         'deadline' => new DateTime('2024-01-15T09:30:00Z'),
+     *         'bytes' => 'SGVsbG8gd29ybGQh',
+     *         'user' => new User([
+     *             'name' => 'name',
+     *             'tags' => [
+     *                 'tags',
+     *                 'tags',
+     *             ],
+     *         ]),
+     *         'userList' => [
+     *             new User([
+     *                 'name' => 'name',
+     *                 'tags' => [
+     *                     'tags',
+     *                     'tags',
+     *                 ],
+     *             ]),
+     *             new User([
+     *                 'name' => 'name',
+     *                 'tags' => [
+     *                     'tags',
+     *                     'tags',
+     *                 ],
+     *             ]),
+     *         ],
+     *         'optionalDeadline' => new DateTime('2024-01-15T09:30:00Z'),
+     *         'keyValue' => [
+     *             'keyValue' => 'keyValue',
+     *         ],
+     *         'optionalString' => 'optionalString',
+     *         'nestedUser' => new NestedUser([
+     *             'name' => 'name',
+     *             'user' => new User([
+     *                 'name' => 'name',
+     *                 'tags' => [
+     *                     'tags',
+     *                     'tags',
+     *                 ],
+     *             ]),
+     *         ]),
+     *         'optionalUser' => new User([
+     *             'name' => 'name',
+     *             'tags' => [
+     *                 'tags',
+     *                 'tags',
+     *             ],
+     *         ]),
+     *         'excludeUser' => [
+     *             new User([
+     *                 'name' => 'name',
+     *                 'tags' => [
+     *                     'tags',
+     *                     'tags',
+     *                 ],
+     *             ]),
+     *         ],
+     *         'filter' => [
+     *             'filter',
+     *         ],
+     *         'longParam' => 1000000,
+     *         'bigIntParam' => '1000000',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,

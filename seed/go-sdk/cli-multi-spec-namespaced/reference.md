@@ -14,9 +14,8 @@
 
 ```go
 client.V1.ListUsers(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -42,10 +41,11 @@ client.V1.ListUsers(
 <dd>
 
 ```go
-client.V1.ListUsers(
-        context.TODO(),
-    )
-}
+request := &v2.ListUsersRequest{}
+client.V2.ListUsers(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

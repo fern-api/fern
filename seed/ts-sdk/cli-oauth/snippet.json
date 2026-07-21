@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-oauth\";\n\nconst client = new SeedApiClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scopes: \"scopes\",\n    grant_type: \"client_credentials\",\n    tenant: \"tenant\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/refresh",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-oauth\";\n\nconst client = new SeedApiClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    refresh_token: \"refresh_token\",\n    grant_type: \"refresh_token\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/health",
+                "method": "GET",
+                "identifier_override": "endpoint_system.health"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-oauth\";\n\nconst client = new SeedApiClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.system.health();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/pets",
+                "method": "GET",
+                "identifier_override": "endpoint_pets.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-oauth\";\n\nconst client = new SeedApiClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.pets.list();\n"
+            }
+        }
+    ],
+    "types": {}
+}

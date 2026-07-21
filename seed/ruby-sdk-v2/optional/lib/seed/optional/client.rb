@@ -18,6 +18,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.optional.send_optional_body(request: {
+      #     string: {
+      #       key: "value"
+      #     }
+      #   })
+      #
       # @return [String]
       def send_optional_body(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -47,6 +54,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.optional.send_optional_typed_body(request: {
+      #     message: "message"
+      #   })
       #
       # @return [String]
       def send_optional_typed_body(request_options: {}, **params)
@@ -82,6 +94,15 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :action_id
       # @option params [String] :id
+      #
+      # @example
+      #   client.optional.send_optional_nullable_with_all_optional_properties(
+      #     action_id: "actionId",
+      #     id: "id",
+      #     request: {
+      #       update_draft: true
+      #     }
+      #   )
       #
       # @return [Seed::Optional::Types::DeployResponse]
       def send_optional_nullable_with_all_optional_properties(request_options: {}, **params)

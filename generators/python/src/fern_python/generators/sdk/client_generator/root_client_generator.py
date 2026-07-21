@@ -1927,6 +1927,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         env_union = environments_config.environments.get_as_union()
         var_params = [(var, self._get_server_variable_param_name(var)) for var in server_variables]
 
+        env_class_name = self._context.get_class_name_of_environments()
+        env_param = RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME
         condition = " or ".join(f"{param_name} is not None" for _, param_name in var_params)
         writer.write_line(f"if {condition}:")
         with writer.indent():
@@ -1938,32 +1940,55 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             format_kwargs = ", ".join(f"{var.id}=_{param_name}" for var, param_name in var_params)
 
             if env_union.type == "singleBaseUrl":
-                if len(env_union.environments) > 0:
-                    first_env = env_union.environments[0]
-                    if first_env.url_template is not None:
-                        writer.write_line(f'base_url = "{first_env.url_template}".format({format_kwargs})')
+                templated_environments = [
+                    single_env for single_env in env_union.environments if single_env.url_template is not None
+                ]
+                if len(templated_environments) > 0:
+                    writer.write_line("_environment_url_templates = {")
+                    with writer.indent():
+                        for single_env in templated_environments:
+                            class_var_name = resolve_name(single_env.name).screaming_snake_case.safe_name
+                            writer.write_line(f'{env_class_name}.{class_var_name}: "{single_env.url_template}",')
+                    writer.write_line("}")
+                    first_template = templated_environments[0].url_template
+                    writer.write_line("_url_template = _environment_url_templates.get(")
+                    with writer.indent():
+                        writer.write_line(f'{env_param}, "{first_template}"')
+                    writer.write_line(")")
+                    writer.write_line("if base_url is None:")
+                    with writer.indent():
+                        writer.write_line(f"base_url = _url_template.format({format_kwargs})")
             elif env_union.type == "multipleBaseUrls":
-                if len(env_union.environments) > 0:
-                    first_multi_env = env_union.environments[0]
-                    if first_multi_env.url_templates is not None:
-                        env_class_name = self._context.get_class_name_of_environments()
-                        kwargs_lines = []
-                        for base_url in env_union.base_urls:
-                            prop_name = resolve_name(base_url.name).snake_case.safe_name
-                            template = first_multi_env.url_templates.get(base_url.id)
-                            if template is not None:
-                                kwargs_lines.append(f'{prop_name}="{template}".format({format_kwargs})')
-                            else:
-                                url = first_multi_env.urls.get(base_url.id, "")
-                                kwargs_lines.append(f'{prop_name}="{url}"')
-                        if len(kwargs_lines) == 1:
-                            writer.write_line(f"environment = {env_class_name}({kwargs_lines[0]})")
-                        else:
-                            writer.write_line(f"environment = {env_class_name}(")
+                templated_multi_environments = [
+                    multi_env for multi_env in env_union.environments if multi_env.url_templates is not None
+                ]
+                if len(templated_multi_environments) > 0:
+                    writer.write_line("_environment_url_templates = {")
+                    with writer.indent():
+                        for multi_env in templated_multi_environments:
+                            class_var_name = resolve_name(multi_env.name).screaming_snake_case.safe_name
+                            writer.write_line(f"{env_class_name}.{class_var_name}: {{")
                             with writer.indent():
-                                for kwarg_line in kwargs_lines:
-                                    writer.write_line(f"{kwarg_line},")
-                            writer.write_line(")")
+                                for base_url in env_union.base_urls:
+                                    prop_name = resolve_name(base_url.name).snake_case.safe_name
+                                    template = (
+                                        multi_env.url_templates.get(base_url.id)
+                                        if multi_env.url_templates is not None
+                                        else None
+                                    )
+                                    value = template if template is not None else multi_env.urls.get(base_url.id, "")
+                                    writer.write_line(f'"{prop_name}": "{value}",')
+                            writer.write_line("},")
+                    writer.write_line("}")
+                    writer.write_line(f"_url_templates = _environment_url_templates.get({env_param})")
+                    writer.write_line("if _url_templates is not None:")
+                    with writer.indent():
+                        writer.write_line(f"{env_param} = {env_class_name}(")
+                        with writer.indent():
+                            for base_url in env_union.base_urls:
+                                prop_name = resolve_name(base_url.name).snake_case.safe_name
+                                writer.write_line(f'{prop_name}=_url_templates["{prop_name}"].format({format_kwargs}),')
+                        writer.write_line(")")
 
     class GeneratedRootClientBuilder:
         def __init__(

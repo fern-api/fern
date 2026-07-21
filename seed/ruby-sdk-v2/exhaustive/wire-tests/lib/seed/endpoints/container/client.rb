@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
+        #
         # @return [Array[String]]
         def get_and_return_list_of_primitives(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -48,6 +51,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_list_of_objects(request: [{
+        #     string: "string"
+        #   }, {
+        #     string: "string"
+        #   }])
         #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_list_of_objects(request_options: {}, **params)
@@ -79,6 +89,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(["string"]))
+        #
         # @return [Array[String]]
         def get_and_return_set_of_primitives(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -108,6 +121,11 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
+        #     string: "string"
+        #   }]))
         #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_set_of_objects(request_options: {}, **params)
@@ -139,6 +157,11 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.container.get_and_return_map_prim_to_prim(request: {
+        #     string: "string"
+        #   })
+        #
         # @return [Hash[String, String]]
         def get_and_return_map_prim_to_prim(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -168,6 +191,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
+        #     string: {
+        #       string: "string"
+        #     }
+        #   })
         #
         # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
@@ -199,6 +229,11 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(request: {
+        #     string: 1.1
+        #   })
+        #
         # @return [Hash[String, Seed::Types::Union::Types::MixedType]]
         def get_and_return_map_of_prim_to_undiscriminated_union(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -228,6 +263,11 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_optional(request: {
+        #     string: "string"
+        #   })
         #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField, nil]
         def get_and_return_optional(request_options: {}, **params)

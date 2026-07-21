@@ -18,3 +18,4 @@ export * from "./WebhookSignatureEncodingSchema.js";
 export * from "./WebhookSignatureSchema.js";
 export * from "./WebhookTimestampFormatSchema.js";
 export * from "./WebhookTimestampSchema.js";
+export * from "./WebhookUrlNormalizationSchema.js";

@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get_text
+      #
       # @return [String]
       def get_text(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -46,6 +49,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get_csv
+      #
       # @return [String]
       def get_csv(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
@@ -73,6 +79,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_xml
       #
       # @return [String]
       def get_xml(request_options: {}, **_params)

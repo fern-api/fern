@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Speed up `fern docs dev` refreshes on content edits. Editing a `.md`/`.mdx`
+    page no longer re-parses every API/OpenAPI workspace, and the snippet
+    dependency map is now updated incrementally instead of rescanning every page.
+  type: chore

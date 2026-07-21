@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "6e9a3c7a",
+            "id": {
+                "method": "POST",
+                "path": "/ast",
+                "identifier_override": "endpoint_.createAst"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.AstNode;\nimport com.seed.api.types.AstNodeLlm;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createAst(\n            AstNode.llm(\n                AstNodeLlm\n                    .builder()\n                    .model(\"model\")\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.AstNode;\nimport com.seed.api.types.AstNodeLlm;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createAst(\n            AstNode.llm(\n                AstNodeLlm\n                    .builder()\n                    .model(\"model\")\n                    .build()\n            )\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
