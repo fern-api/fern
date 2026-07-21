@@ -807,6 +807,12 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/ir-utils
+      '@fern-api/mock-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/mock-utils
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../rust/base

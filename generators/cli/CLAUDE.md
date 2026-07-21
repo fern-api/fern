@@ -96,6 +96,7 @@ the path the patched Cargo.toml references).
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
 | [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`. |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` via `visitDiscriminatedUnion` and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, OAuth, and two-field basic go to root; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
+| [`src/wireTests/`](src/wireTests/) | Opt-in (`customConfig.generateWireTests`) mock-driven integration suite. `manifest.ts` reuses `@fern-api/mock-utils` `convertToWireMock` to derive one naming-independent case per endpoint example (`{method, path, params, body, response}`) and emits `wiremock/wire-test-cases.json`. `harness.ts` renders the generic `tests/wire_test.rs`. `generateWireTests.ts` wires them together after `copySpecs`. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
 | [`./sdk/`](./sdk/) | Hand-authored Rust SDK — the bulk of the CLI's runtime behavior. Edit this when you need to extend what `CliApp` can do. |
@@ -167,6 +168,35 @@ docker run --rm \
   -v $(pwd)/seed/cli/query-parameters-openapi/no-custom-config:/workspace \
   -w /workspace --entrypoint sh fernapi/cli-seed:latest \
   -c 'cargo build --locked --all-features --tests'
+```
+
+### Wire tests (opt-in)
+
+Setting `customConfig.generateWireTests: true` makes the generator emit a
+mock-driven integration suite into the output:
+
+- `wiremock/wire-test-cases.json` — a declarative manifest, one case per
+  endpoint example, built from `@fern-api/mock-utils` `convertToWireMock`
+  (the same engine the SDK wire tests use). Each case is **naming
+  independent**: it carries `{method, path, params, body, response}`, not a
+  CLI command chain.
+- `tests/wire_test.rs` — a generic harness. Per case it starts an in-process
+  `wiremock::MockServer`, resolves the CLI command chain by loading the same
+  baked OpenAPI spec the binary runs on (via `fern_cli_sdk::openapi::
+  load_openapi_spec` — so it never reproduces the CLI's command-naming
+  rules), drives the compiled binary (`--base-url` + `--params` + `--json`),
+  and asserts (a) exactly one request hit the mock with the right method +
+  path and (b) stdout rendered the mocked response body.
+
+No docker, no `RUN_WIRE_TESTS` gate — `wiremock` is already a `[dev-dependencies]`
+entry in `sdk/Cargo.toml`, so `seed`'s `cargo test --all-features` compiles and
+runs the suite automatically. The `query-parameters-openapi:with-wire-tests`
+seed variant exercises this end to end.
+
+```bash
+# Regenerate the wire-test seed fixture and run the emitted suite locally.
+pnpm seed test --generator cli --fixture query-parameters-openapi --skip-scripts
+cd seed/cli/query-parameters-openapi/with-wire-tests && cargo test --all-features
 ```
 
 ## Common tasks

@@ -85,6 +85,13 @@ fixtures:
       outputFolder: github-no-publish
       outputMode: github
       outputVersion: "1.0.0"
+    # Opt-in wire tests — emits `wiremock/wire-test-cases.json` and
+    # `tests/wire_test.rs`. seed's `cargo test --all-features` compiles and
+    # runs the emitted suite (in-process wiremock, no docker), so this is the
+    # "wire tests run on every generation" guarantee in CI.
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
   # x-fern-global-parameters — exercises the global parameter codegen
   # path: IR-driven GlobalParameter[] → detectGlobalParams.ts →
   # .global_parameter(GlobalParameter { ... }) calls in main.rs.

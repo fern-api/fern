@@ -1,0 +1,280 @@
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
+import { WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+/**
+ * A single wire-test case: enough to drive the generated CLI binary once
+ * and assert "request X → response Y". The Rust harness reads a list of
+ * these from `wiremock/wire-test-cases.json`.
+ *
+ * The case is deliberately *naming-independent*: it carries the HTTP
+ * method + operation path (not a resource/method command chain). The
+ * harness resolves the command chain by loading the same baked OpenAPI
+ * spec the CLI runs on and matching `(method, path)` against its own
+ * discovery tree — so the TS side never has to reproduce the CLI's
+ * kebab-casing / `x-fern-sdk-*` command-naming rules.
+ */
+export interface WireTestCase {
+    /** Stable, unique, snake_case-safe identifier used to name the Rust test fn. */
+    id: string;
+    /** Uppercase HTTP method (GET, POST, …). */
+    method: string;
+    /**
+     * Operation path template as the IR sees it, with `{param}` placeholders,
+     * e.g. `/users/{userId}`. Used by the harness to (a) resolve the command
+     * chain against the baked spec and (b) assert the request landed on the
+     * right path.
+     */
+    path: string;
+    /**
+     * Path/query/header parameter values keyed by wire name. Handed to the CLI
+     * verbatim via `--params <JSON>`; `collect_params_from_flags` substitutes
+     * path params into the URL and appends query/header params.
+     */
+    params: Record<string, unknown>;
+    /** Request body JSON handed to `--json`, or null when the endpoint has no body. */
+    body: unknown | null;
+    /** Expected response the mock serves and the CLI is expected to render. */
+    response: {
+        status: number;
+        /** Response body exactly as the mock serves it (already JSON-encoded text). */
+        body: string;
+    };
+}
+
+/**
+ * The full manifest emitted alongside the generated CLI. Everything the
+ * generic Rust harness needs to stand up mocks and drive the binary.
+ */
+export interface WireTestManifest {
+    /** The generated binary's name — used for `env!("CARGO_BIN_EXE_<binaryName>")`. */
+    binaryName: string;
+    /**
+     * `customConfig.rootGroup`, when set: every spec command nests one level
+     * under this namespace (`<bin> <rootGroup> <resource> <method>`). Null
+     * when unset.
+     */
+    rootGroup: string | null;
+    /**
+     * The baked spec files (relative to the crate root) in binding order, each
+     * with its per-spec `namespace:` (from `generators.yml`), if any. The
+     * harness loads these to resolve command chains.
+     */
+    specs: Array<{ file: string; namespace: string | null }>;
+    /**
+     * Environment variable names the harness sets to dummy values before
+     * invoking the binary, so auth-gated endpoints don't bail out on a
+     * missing credential.
+     */
+    authEnvVars: string[];
+    cases: WireTestCase[];
+}
+
+/**
+ * mock-utils and the CLI generator resolve `@fern-fern/ir-sdk` to
+ * different (structurally compatible) versions, so the nominal `FernIr`
+ * types don't unify. This narrows the call site to that single seam —
+ * mirrors the Rust SDK's `WireTestSetupGenerator.getWiremockConfigContent`.
+ */
+function convertToWireMock(ir: FernIr.IntermediateRepresentation): WireMockStubMapping {
+    // @ts-expect-error Nominal IR-SDK version mismatch between mock-utils and
+    // the CLI generator; the shapes are compatible at runtime.
+    return new WireMock().convertToWireMock(ir);
+}
+
+const DATETIME_WITH_ZERO_MILLIS_IN_BODY = /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})\.000(Z|[+-]\d{2}:\d{2})/g;
+
+/**
+ * Build the wire-test manifest from the IR.
+ *
+ * The WireMock stub mappings (method/path/query/response) come from the
+ * shared `mock-utils` engine every SDK generator uses, so the mock
+ * responses stay identical to the SDK wire suites. We then pair each
+ * mapping back to its IR endpoint + example to recover the concrete
+ * `--params` / `--json` inputs the CLI needs.
+ */
+export function buildWireTestManifest(
+    ir: FernIr.IntermediateRepresentation,
+    options: {
+        binaryName: string;
+        rootGroup: string | null;
+        specs: Array<{ file: string; namespace: string | null }>;
+        authEnvVars: string[];
+    }
+): WireTestManifest {
+    const stub = convertToWireMock(ir);
+    // Reuse the Rust SDK's response post-processing so the CLI (also Rust,
+    // also chrono/serde) renders the mocked bodies identically.
+    stripDatetimeMilliseconds(stub);
+
+    // Index endpoints by their WireMock key so we can pair a mapping to the
+    // example inputs it was built from.
+    const endpointsByKey = indexEndpointsByMethodAndPath(ir);
+    const authHeaderNames = collectAuthHeaderNames(ir);
+
+    const cases: WireTestCase[] = [];
+    const usedIds = new Set<string>();
+    for (const mapping of stub.mappings) {
+        const key = `${mapping.request.method}:${mapping.request.urlPathTemplate}`;
+        const endpoint = endpointsByKey.get(key);
+        if (endpoint == null) {
+            continue;
+        }
+        const example = firstExample(endpoint);
+        if (example == null) {
+            continue;
+        }
+        const testCase = buildCase({ mapping, endpoint, example, authHeaderNames, usedIds });
+        if (testCase != null) {
+            cases.push(testCase);
+        }
+    }
+
+    return {
+        binaryName: options.binaryName,
+        rootGroup: options.rootGroup,
+        specs: options.specs,
+        authEnvVars: options.authEnvVars,
+        cases
+    };
+}
+
+function buildCase(args: {
+    mapping: WireMockMapping;
+    endpoint: FernIr.HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+    authHeaderNames: Set<string>;
+    usedIds: Set<string>;
+}): WireTestCase | null {
+    const { mapping, endpoint, example, authHeaderNames, usedIds } = args;
+
+    const params: Record<string, unknown> = {};
+
+    // Path parameters (root + service + endpoint), keyed by original name.
+    for (const param of [
+        ...example.rootPathParameters,
+        ...example.servicePathParameters,
+        ...example.endpointPathParameters
+    ]) {
+        const name = getOriginalName(param.name);
+        if (name != null && name !== "") {
+            params[name] = param.value.jsonExample;
+        }
+    }
+
+    // Query parameters, keyed by wire name.
+    for (const param of example.queryParameters) {
+        const name = param.name != null ? getWireValue(param.name) : undefined;
+        if (name != null && name !== "") {
+            params[name] = param.value.jsonExample;
+        }
+    }
+
+    // Header parameters (service + endpoint), keyed by wire name. Skip
+    // auth-scheme headers — those are supplied via env vars, not --params.
+    for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
+        const name = header.name != null ? getWireValue(header.name) : undefined;
+        if (name != null && name !== "" && !authHeaderNames.has(name)) {
+            params[name] = header.value.jsonExample;
+        }
+    }
+
+    const body = example.request != null ? (example.request.jsonExample ?? null) : null;
+
+    return {
+        id: uniqueId(caseIdBase(endpoint), usedIds),
+        method: mapping.request.method,
+        path: mapping.request.urlPathTemplate,
+        params,
+        body,
+        response: {
+            status: mapping.response.status,
+            body: mapping.response.body
+        }
+    };
+}
+
+/**
+ * Build the `(method, path)` → endpoint index using the same URL-path
+ * template mock-utils produces, so mapping keys line up exactly.
+ */
+function indexEndpointsByMethodAndPath(ir: FernIr.IntermediateRepresentation): Map<string, FernIr.HttpEndpoint> {
+    const index = new Map<string, FernIr.HttpEndpoint>();
+    for (const service of Object.values(ir.services)) {
+        for (const endpoint of service.endpoints) {
+            const key = `${endpoint.method}:${buildUrlPathTemplate(endpoint)}`;
+            // First writer wins — mirrors mock-utils, which emits one mapping
+            // per (method, path) from the first matching endpoint.
+            if (!index.has(key)) {
+                index.set(key, endpoint);
+            }
+        }
+    }
+    return index;
+}
+
+/** Mirrors `mock-utils`' `buildUrlPathTemplate` so keys match its mappings. */
+function buildUrlPathTemplate(endpoint: FernIr.HttpEndpoint): string {
+    let path = endpoint.fullPath.head;
+    for (const part of endpoint.fullPath.parts ?? []) {
+        path += `{${part.pathParameter}}${part.tail}`;
+    }
+    if (!path.startsWith("/")) {
+        path = `/${path}`;
+    }
+    const fragmentIndex = path.indexOf("#");
+    if (fragmentIndex !== -1) {
+        path = path.substring(0, fragmentIndex);
+    }
+    return path;
+}
+
+function firstExample(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | undefined {
+    return (endpoint.userSpecifiedExamples[0] ?? endpoint.autogeneratedExamples[0])?.example;
+}
+
+/** Wire names of `header` auth schemes — excluded from `--params`. */
+function collectAuthHeaderNames(ir: FernIr.IntermediateRepresentation): Set<string> {
+    const names = new Set<string>();
+    for (const scheme of ir.auth.schemes) {
+        if (scheme.type === "header" && scheme.name != null) {
+            names.add(getWireValue(scheme.name));
+        }
+    }
+    return names;
+}
+
+function caseIdBase(endpoint: FernIr.HttpEndpoint): string {
+    const raw = endpoint.name != null ? getOriginalName(endpoint.name) : endpoint.id;
+    const sanitized = raw
+        .replace(/[^a-zA-Z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "")
+        .toLowerCase();
+    return sanitized.length > 0 ? sanitized : "endpoint";
+}
+
+function uniqueId(base: string, used: Set<string>): string {
+    let candidate = base;
+    let suffix = 1;
+    while (used.has(candidate)) {
+        candidate = `${base}_${suffix}`;
+        suffix += 1;
+    }
+    used.add(candidate);
+    return candidate;
+}
+
+/**
+ * Strip `.000` milliseconds from datetime strings in response bodies.
+ * Rust's chrono serializes with `SecondsFormat::Secs` (no milliseconds),
+ * but JS `Date.toISOString()` always includes `.000`, so the CLI-rendered
+ * body would otherwise differ from the mock body. Mirrors the Rust SDK's
+ * `WireTestSetupGenerator.stripDatetimeMilliseconds`.
+ */
+function stripDatetimeMilliseconds(stub: WireMockStubMapping): void {
+    for (const mapping of stub.mappings ?? []) {
+        if (typeof mapping.response.body === "string") {
+            mapping.response.body = mapping.response.body.replace(DATETIME_WITH_ZERO_MILLIS_IN_BODY, "$1$2");
+        }
+    }
+}
