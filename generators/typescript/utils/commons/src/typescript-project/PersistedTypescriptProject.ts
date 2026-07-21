@@ -434,6 +434,11 @@ export class PersistedTypescriptProject {
             unzipOutput
         }: { destinationPath: AbsoluteFilePath; zipFilename: string; logger: Logger; unzipOutput?: boolean }
     ) {
+        if (unzipOutput) {
+            await cp(directoryToZip, destinationPath, { recursive: true });
+            return;
+        }
+
         const zip = createLoggingExecutable("zip", {
             cwd: directoryToZip,
             logger,
