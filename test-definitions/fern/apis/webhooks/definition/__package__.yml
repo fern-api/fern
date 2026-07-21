@@ -166,6 +166,9 @@ webhooks:
         location:
           type: query-parameter
           name: bodySHA256
+      url-normalization:
+        port-variants: true
+        legacy-query-encoding: true
     examples:
       - name: SmsStatusExample
         payload:

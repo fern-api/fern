@@ -1222,6 +1222,10 @@
                             "type": "queryParameter",
                             "name": "bodySHA256"
                         }
+                    },
+                    "notificationUrlNormalization": {
+                        "portVariants": true,
+                        "legacyQueryEncoding": true
                     }
                 },
                 "fileUploadPayload": null,

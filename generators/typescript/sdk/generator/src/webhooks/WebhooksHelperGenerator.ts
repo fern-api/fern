@@ -165,6 +165,20 @@ export class WebhooksHelperGenerator {
         // Signature extraction
         const sigIdentifier = this.addSignatureExtraction(fileConstants, lines, config.signaturePrefix);
 
+        // Notification-URL normalization: some providers (e.g. Twilio) are inconsistent
+        // about the signed URL's port and query encoding, so verify against several
+        // normalized URL forms and accept on the first constant-time match.
+        if (config.notificationUrlNormalization != null) {
+            this.addNormalizedHmacVerification(
+                context,
+                lines,
+                config,
+                sigIdentifier,
+                config.notificationUrlNormalization
+            );
+            return { fileConstants, body: lines.join("\n") };
+        }
+
         // Payload construction.
         lines.push("");
         if (config.bodyHashBinding != null) {
@@ -393,8 +407,16 @@ export class WebhooksHelperGenerator {
         ];
     }
 
-    /** Builds the RHS expression for `payload` from the configured components. */
-    private buildPayloadExpression(payloadFormat: FernIr.WebhookPayloadFormat, bodyExpr: string): string {
+    /**
+     * Builds the RHS expression for `payload` from the configured components.
+     * `urlExpr` is the identifier used for the notification-URL component — normally
+     * `"notificationUrl"`, but the candidate loop substitutes `"candidateUrl"`.
+     */
+    private buildPayloadExpression(
+        payloadFormat: FernIr.WebhookPayloadFormat,
+        bodyExpr: string,
+        urlExpr = "notificationUrl"
+    ): string {
         const componentExprs: string[] = [];
         for (const component of payloadFormat.components) {
             switch (component) {
@@ -405,7 +427,7 @@ export class WebhooksHelperGenerator {
                     componentExprs.push("timestampHeader");
                     break;
                 case "NOTIFICATION_URL":
-                    componentExprs.push("notificationUrl");
+                    componentExprs.push(urlExpr);
                     break;
                 case "MESSAGE_ID":
                     componentExprs.push("messageId");
@@ -484,6 +506,120 @@ export class WebhooksHelperGenerator {
         const bodyExpr = hasBodySort ? "bodyString" : "requestBody";
         lines.push(`    payload = ${this.buildPayloadExpression(config.payloadFormat, bodyExpr)};`);
         lines.push("}");
+    }
+
+    /**
+     * Emits HMAC verification against several normalized notification-URL forms, accepting
+     * on the first constant-time match. The body-hash check (when configured) runs once
+     * above the loop because it does not depend on URL normalization; only the HMAC over
+     * the URL is recomputed per candidate.
+     */
+    private addNormalizedHmacVerification(
+        context: FileContext,
+        lines: string[],
+        config: FernIr.HmacSignatureVerification,
+        sigIdentifier: string,
+        normalization: FernIr.WebhookNotificationUrlNormalization
+    ): void {
+        const algorithm = this.mapHmacAlgorithm(config.algorithm);
+        const encoding = this.mapEncoding(config.encoding);
+        const binding = config.bodyHashBinding;
+        const hasBodySort = config.payloadFormat.bodySort != null;
+
+        lines.push("");
+
+        // Body-hash check (once, independent of URL normalization). Only the JSON request
+        // carries the transmitted hash; when present it must match hash(rawBody).
+        if (binding != null) {
+            const paramName = this.getBodyHashQueryParameterName(binding.location);
+            const extractCall = context.coreUtilities.webhookCrypto.getWebhookQueryParameter._invoke(
+                ts.factory.createIdentifier("notificationUrl"),
+                ts.factory.createStringLiteral(paramName)
+            );
+            lines.push(`const transmittedBodyHash = ${getTextOfTsNode(extractCall)};`);
+            lines.push("if (transmittedBodyHash != null) {");
+            const rawBodyExpr: ts.Expression = hasBodySort
+                ? ts.factory.createAsExpression(
+                      ts.factory.createIdentifier("requestBody"),
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                  )
+                : ts.factory.createIdentifier("requestBody");
+            const hashArgs = ts.factory.createObjectLiteralExpression(
+                [
+                    ts.factory.createPropertyAssignment("payload", rawBodyExpr),
+                    ts.factory.createPropertyAssignment(
+                        "algorithm",
+                        ts.factory.createStringLiteral(this.mapBodyHashAlgorithm(binding.algorithm))
+                    ),
+                    ts.factory.createPropertyAssignment(
+                        "encoding",
+                        ts.factory.createStringLiteral(this.mapEncoding(binding.encoding))
+                    )
+                ],
+                false
+            );
+            const hashCall = context.coreUtilities.webhookCrypto.computeHash._invoke(hashArgs);
+            lines.push(`    const expectedBodyHash = ${getTextOfTsNode(hashCall)};`);
+            const bodyCompare = context.coreUtilities.webhookCrypto.timingSafeEqual._invoke(
+                ts.factory.createIdentifier("expectedBodyHash"),
+                ts.factory.createIdentifier("transmittedBodyHash")
+            );
+            lines.push(`    if (!(${getTextOfTsNode(bodyCompare)})) {`, "        return false;", "    }");
+            lines.push("}");
+        }
+
+        // The form-path body string is URL-independent, so compute it once before the loop.
+        if (hasBodySort) {
+            lines.push(...this.buildBodyStringAssignment(""));
+        }
+
+        // Build the candidate URL list and OR the per-candidate signature comparisons.
+        const optionsExpr = ts.factory.createObjectLiteralExpression(
+            [
+                ts.factory.createPropertyAssignment(
+                    "portVariants",
+                    normalization.portVariants ? ts.factory.createTrue() : ts.factory.createFalse()
+                ),
+                ts.factory.createPropertyAssignment(
+                    "legacyQueryEncoding",
+                    normalization.legacyQueryEncoding ? ts.factory.createTrue() : ts.factory.createFalse()
+                )
+            ],
+            false
+        );
+        const candidatesCall = context.coreUtilities.webhookCrypto.notificationUrlCandidates._invoke(
+            ts.factory.createIdentifier("notificationUrl"),
+            optionsExpr
+        );
+        lines.push(`const candidates = ${getTextOfTsNode(candidatesCall)};`);
+
+        lines.push("for (const candidateUrl of candidates) {");
+        const bodyExpr = hasBodySort ? "bodyString" : "requestBody";
+        const formPayloadExpr = this.buildPayloadExpression(config.payloadFormat, bodyExpr, "candidateUrl");
+        if (binding != null) {
+            // JSON request signs the URL only; classic form request signs URL + params.
+            lines.push(`    const payload = transmittedBodyHash != null ? candidateUrl : ${formPayloadExpr};`);
+        } else {
+            lines.push(`    const payload = ${formPayloadExpr};`);
+        }
+        const hmacArgs = ts.factory.createObjectLiteralExpression(
+            [
+                ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("payload")),
+                ts.factory.createPropertyAssignment("secret", ts.factory.createIdentifier("signatureKey")),
+                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
+            ],
+            false
+        );
+        const hmacCall = context.coreUtilities.webhookCrypto.computeHmacSignature._invoke(hmacArgs);
+        lines.push(`    const expected = ${getTextOfTsNode(hmacCall)};`);
+        const compare = context.coreUtilities.webhookCrypto.timingSafeEqual._invoke(
+            ts.factory.createIdentifier(sigIdentifier),
+            ts.factory.createIdentifier("expected")
+        );
+        lines.push(`    if (${getTextOfTsNode(compare)}) {`, "        return true;", "    }");
+        lines.push("}");
+        lines.push("return false;");
     }
 
     private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
@@ -579,6 +715,11 @@ export class WebhooksHelperGenerator {
                 "This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.",
                 "For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.",
                 "Pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
+            );
+        }
+        if (config.notificationUrlNormalization != null) {
+            lines.push(
+                "The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches."
             );
         }
         return lines.join("\n");
