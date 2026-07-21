@@ -25,6 +25,14 @@ vi.mock("@fern-api/cli-ai", () => ({
     VersionBump: { MAJOR: "MAJOR", MINOR: "MINOR", PATCH: "PATCH", NO_CHANGE: "NO_CHANGE" }
 }));
 
+// Wrap child_process so a test can assert the exact git argv AutoVersionStep spawns while still
+// running real git. execFileSync is a live named import both here and in AutoVersionStep, so an
+// ESM-namespace spy isn't possible; a module mock that forwards to the original is.
+vi.mock("child_process", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("child_process")>();
+    return { ...actual, execFileSync: vi.fn(actual.execFileSync) };
+});
+
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
 import { AutoVersionStep } from "../pipeline/steps/AutoVersionStep";
 import type { AutoVersionStepConfig, PipelineContext } from "../pipeline/types";
@@ -495,6 +503,43 @@ describe("AutoVersionStep.execute() — adversarial baseline recovery", () => {
         expect(result.previousVersion).toBe("1.0.0");
         expect(result.version).toBe("1.1.0");
         expect(packageVersion(repoPath)).toBe("1.1.0");
+    });
+
+    it("bounds the re-anchor history walk with --max-count so it cannot traverse full history (FSE-50)", async () => {
+        // Regression: on a large repo an unreachable recorded SHA triggered an *unbounded*
+        // `git log --first-parent` that walked the entire history and pegged a coordinator CPU
+        // core (generator-cli 0.9.46). The JS early-break below does not help — git produces its
+        // whole output before Node reads a byte — so the walk must be bounded via git's own
+        // --max-count. Assert the re-anchor invocation carries that bound.
+        mockAnalyzeSdkDiff.mockResolvedValue(minorAnalysis);
+        const repoPath = await newRepo();
+        commit(repoPath, "[fern-generated] gen 1", { "package.json": pkg("1.0.0"), "src/client.ts": "export {};\n" });
+        const currentSha = commit(repoPath, "[fern-generated] gen 2", { "package.json": pkg(MAGIC), ...FEATURE });
+
+        vi.mocked(execFileSync).mockClear();
+        const step = new AutoVersionStep(repoPath, makeLogger(), baseConfig);
+        const result = await step.execute(
+            makeContext(
+                fakePreparedReplay({
+                    outputDir: repoPath,
+                    previousGenerationSha: "0".repeat(40),
+                    currentGenerationSha: currentSha
+                })
+            )
+        );
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.1.0");
+
+        const historyWalk = vi.mocked(execFileSync).mock.calls.find(
+            ([cmd, args]) =>
+                cmd === "git" &&
+                Array.isArray(args) &&
+                args[0] === "log" &&
+                (args as string[]).includes("--first-parent")
+        );
+        expect(historyWalk, "expected a re-anchor `git log --first-parent` invocation").toBeDefined();
+        expect(historyWalk![1] as string[]).toContain("--max-count=200");
     });
 
     it("ignores a rogue [fern-generated] commit on a merged side branch (--first-parent)", async () => {
