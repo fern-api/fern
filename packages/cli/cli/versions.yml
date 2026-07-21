@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.75.8
+  changelogEntry:
+    - summary: |
+        Fix multi-API environment grouping (`group-multi-api-environments`) when a spec's
+        environment URLs differ by a dot-separated host segment (e.g. `api.stage.acme.com`):
+        the per-API URL key is now derived once per spec instead of per server, so all
+        environments share a consistent set of URL keys. Grouped environments also keep
+        their original user-facing names (e.g. `Production`) instead of normalized
+        matching keys (e.g. `PRD`).
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 5.75.7
   changelogEntry:
     - summary: |
