@@ -11,6 +11,12 @@ export interface ServerVariable {
     name: FernIr.NameOrString;
     /** The default value for this variable. */
     default: string | undefined;
+    /**
+     * Whether this variable must be supplied when constructing a client.
+     * When true, generators emit it as a required constructor input and never
+     * fall back to the default (the default is preserved but unreferenced).
+     */
+    required: boolean | undefined;
     /** If present, the allowed values for this variable (from OpenAPI enum). */
     values: string[] | undefined;
 }

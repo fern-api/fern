@@ -8,6 +8,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AudienceExtension } from "../../extensions/x-fern-audiences.js";
+import { RequireServerVarExtension } from "../../extensions/x-fern-require-server-var.js";
 import { ServerNameExtension } from "../../extensions/x-fern-server-name.js";
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 
@@ -167,6 +168,11 @@ export class ServersConverter extends AbstractConverter<
             id: variableId,
             name: this.context.casingsGenerator.generateName(variableId),
             default: variable.default,
+            required: new RequireServerVarExtension({
+                breadcrumbs: [...this.breadcrumbs, "variables", variableId],
+                variable,
+                context: this.context
+            }).convert(),
             values: variable.enum
         }));
     }

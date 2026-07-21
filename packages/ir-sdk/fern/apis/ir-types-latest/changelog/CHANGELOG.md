@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.15.0] - 2026-07-21
+
+- Add `ServerVariable.required` (`optional<boolean>`): marks a server URL variable as a required
+  constructor input. Sourced from the `x-fern-require-server-var` OpenAPI extension. When true,
+  generators emit the variable as a required input and never fall back to its `default` (the
+  `default` is preserved but unreferenced). Defaults to unset, preserving existing
+  optional-with-default behavior.
+
 ## [v67.14.0] - 2026-07-15
 
 - Add `CasingsConfig.smartCasingDigitWordBoundary` (`optional<boolean>`): when smart casing

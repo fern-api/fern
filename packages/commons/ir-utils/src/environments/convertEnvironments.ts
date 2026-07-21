@@ -86,6 +86,7 @@ function convertSingleBaseUrlEnvironments({
                                 id: v.id,
                                 name: casingsGenerator.generateName(v.id),
                                 default: v.default,
+                                required: undefined,
                                 values: v.values
                             }))
                         };
@@ -135,6 +136,7 @@ function convertMultipleBaseUrlEnvironments({
                                               id: v.id,
                                               name: casingsGenerator.generateName(v.id),
                                               default: v.default,
+                                              required: undefined,
                                               values: v.values
                                           }))
                                       ])

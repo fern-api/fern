@@ -10,6 +10,7 @@ export const ServerVariable: core.serialization.ObjectSchema<serializers.ServerV
         id: core.serialization.string(),
         name: NameOrString,
         default: core.serialization.string().optional(),
+        required: core.serialization.boolean().optional(),
         values: core.serialization.list(core.serialization.string()).optional(),
     });
 
@@ -18,6 +19,7 @@ export declare namespace ServerVariable {
         id: string;
         name: NameOrString.Raw;
         default?: string | null;
+        required?: boolean | null;
         values?: string[] | null;
     }
 }

@@ -4,6 +4,7 @@ export { FernDiscriminatorContextExtension } from "./x-fern-discriminator-contex
 export { FernEnumExtension } from "./x-fern-enum.js";
 export { FernIgnoreExtension } from "./x-fern-ignore.js";
 export { FernOptionalExtension } from "./x-fern-optional.js";
+export { RequireServerVarExtension } from "./x-fern-require-server-var.js";
 export { SdkGroupNameExtension } from "./x-fern-sdk-group-name.js";
 export { SdkMethodNameExtension } from "./x-fern-sdk-method-name.js";
 export { ServerFromOperationNameExtension } from "./x-fern-server-name-from-operation.js";

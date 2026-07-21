@@ -1,0 +1,24 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Garden API
+servers:
+  - url: https://{tenantDomain}.garden.com/{version}
+    x-fern-server-name: Prod
+    variables:
+      tenantDomain:
+        default: "{TENANT}"
+        x-fern-require-server-var: true
+      version:
+        default: v2
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      responses:
+        "200":
+          description: A list of plants
+          content:
+            application/json:
+              schema:
+                type: string
