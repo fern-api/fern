@@ -22,6 +22,30 @@ impl ConversationsClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use null_type_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = NullTypeClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .conversations
+    ///         .outbound_call(
+    ///             &OutboundCallConversationsRequest {
+    ///                 to_phone_number: "to_phone_number".to_string(),
+    ///                 dry_run: None,
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn outbound_call(
         &self,
         request: &OutboundCallConversationsRequest,

@@ -68,6 +68,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->ping();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

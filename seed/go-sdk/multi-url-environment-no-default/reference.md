@@ -14,13 +14,12 @@
 
 ```go
 request := &fern.BootInstanceRequest{
-        Size: "size",
-    }
-client.Ec2.BootInstance(
-        context.TODO(),
-        request,
-    )
+    Size: "size",
 }
+client.Ec2.BootInstance(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -62,13 +61,12 @@ client.Ec2.BootInstance(
 
 ```go
 request := &fern.GetPresignedURLRequest{
-        S3Key: "s3Key",
-    }
-client.S3.GetPresignedURL(
-        context.TODO(),
-        request,
-    )
+    S3Key: "s3Key",
 }
+client.S3.GetPresignedURL(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

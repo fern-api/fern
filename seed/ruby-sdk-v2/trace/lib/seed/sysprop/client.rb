@@ -20,6 +20,12 @@ module Seed
       # @option params [Seed::Commons::Types::Language] :language
       # @option params [Integer] :num_warm_instances
       #
+      # @example
+      #   client.sysprop.set_num_warm_instances(
+      #     language: "JAVA",
+      #     num_warm_instances: 1
+      #   )
+      #
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -48,6 +54,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.sysprop.get_num_warm_instances
       #
       # @return [Hash[Seed::Commons::Types::Language, Integer]]
       def get_num_warm_instances(request_options: {}, **_params)

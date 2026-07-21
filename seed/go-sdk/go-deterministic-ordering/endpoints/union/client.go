@@ -34,6 +34,18 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &types.Animal{
+//	    Dog: &types.Dog{
+//	        Name: "name",
+//	        LikesToWoof: true,
+//	    },
+//	}
+//	client.Endpoints.Union.GetAndReturnUnion(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnUnion(
 	ctx context.Context,
 	request *types.Animal,

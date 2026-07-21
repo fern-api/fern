@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.enum.get_and_return_enum(request: "SUNNY")
+        #
         # @return [Seed::Types::Enum::Types::WeatherReport]
         def get_and_return_enum(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)

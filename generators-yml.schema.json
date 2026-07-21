@@ -4629,6 +4629,17 @@
           ],
           "description": "Feature flag used to enable better IR naming."
         },
+        "smart-casing-digit-word-boundary": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
+        },
         "api": {
           "oneOf": [
             {
@@ -4814,6 +4825,17 @@
             }
           ],
           "description": "Feature flag used to enable better IR naming."
+        },
+        "smart-casing-digit-word-boundary": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
         },
         "api": {
           "oneOf": [

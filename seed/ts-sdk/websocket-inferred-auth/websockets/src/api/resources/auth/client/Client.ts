@@ -26,6 +26,9 @@ export class AuthClient {
      * @param {SeedWebsocketAuth.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedWebsocketAuthError}
+     * @throws {@link errors.SeedWebsocketAuthTimeoutError}
+     *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
      *         "X-Api-Key": "X-Api-Key",
@@ -90,6 +93,9 @@ export class AuthClient {
     /**
      * @param {SeedWebsocketAuth.RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedWebsocketAuthError}
+     * @throws {@link errors.SeedWebsocketAuthTimeoutError}
      *
      * @example
      *     await client.auth.refreshToken({

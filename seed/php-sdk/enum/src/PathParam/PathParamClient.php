@@ -49,6 +49,14 @@ class PathParamClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->pathParam->send(
+     *     Operand::GreaterThan->value,
+     *     Color::Red->value,
+     * );
+     * ```
+     *
      * @param value-of<Operand> $operand
      * @param (
      *    value-of<Color>

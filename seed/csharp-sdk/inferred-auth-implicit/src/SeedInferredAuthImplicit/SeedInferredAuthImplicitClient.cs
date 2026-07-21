@@ -11,7 +11,7 @@ public partial class SeedInferredAuthImplicitClient : ISeedInferredAuthImplicitC
     public SeedInferredAuthImplicitClient(
         string xApiKey,
         string clientId,
-        string clientSecret,
+        string? clientSecret = null,
         string? scope = null,
         ClientOptions? clientOptions = null
     )

@@ -1,0 +1,337 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Core API",
+  "servers": [
+    {
+      "type": "grouped",
+      "name": "Production",
+      "description": "Production environment",
+      "urls": {
+        "acme": {
+          "url": "https://api.us1.acme.com",
+          "defaultUrl": "https://api.acme.com",
+          "urlTemplate": "https://api.{region}.acme.com",
+          "variables": [
+            {
+              "id": "region",
+              "default": "us1"
+            }
+          ]
+        },
+        "oauth": {
+          "url": "https://oauth.us1.acme.com",
+          "defaultUrl": "https://oauth.acme.com",
+          "urlTemplate": "https://oauth.{region}.acme.com",
+          "variables": [
+            {
+              "id": "region",
+              "default": "us1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "Staging",
+      "description": "Staging environment",
+      "urls": {
+        "acme": {
+          "url": "https://api.stage.us1.acme.com",
+          "defaultUrl": "https://api.stage.acme.com",
+          "urlTemplate": "https://api.stage.{region}.acme.com",
+          "variables": [
+            {
+              "id": "region",
+              "default": "us1"
+            }
+          ]
+        },
+        "oauth": {
+          "url": "https://oauth.stage.us1.acme.com",
+          "defaultUrl": "https://oauth.stage.acme.com",
+          "urlTemplate": "https://oauth.stage.{region}.acme.com",
+          "variables": [
+            {
+              "id": "region",
+              "default": "us1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "grouped",
+      "name": "Development",
+      "description": "Development environment",
+      "urls": {
+        "acme": {
+          "url": "https://api.dev.us1.acme.com",
+          "defaultUrl": "https://api.dev.acme.com",
+          "urlTemplate": "https://api.dev.{region}.acme.com",
+          "variables": [
+            {
+              "id": "region",
+              "default": "us1"
+            }
+          ]
+        },
+        "oauth": {
+          "url": "https://oauth.dev.us1.acme.com",
+          "defaultUrl": "https://oauth.dev.acme.com",
+          "urlTemplate": "https://oauth.dev.{region}.acme.com",
+          "variables": [
+            {
+              "id": "region",
+              "default": "us1"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listThings",
+      "tags": [
+        "core"
+      ],
+      "namespace": "core",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListThingsRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "listThingsResponseId",
+              "key": "id",
+              "schema": {
+                "generatedName": "ListThingsResponseId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ListThingsResponseId",
+                  "namespace": "core",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "core"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "core",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "core"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ListThingsResponse",
+          "namespace": "core",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "core"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../core-api.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../core-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/things",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../core-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "acme",
+      "servers": [
+        {
+          "name": "acme"
+        }
+      ]
+    },
+    {
+      "audiences": [],
+      "operationId": "getToken",
+      "tags": [
+        "auth"
+      ],
+      "namespace": "auth",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetTokenRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getTokenResponseAccessToken",
+              "key": "access_token",
+              "schema": {
+                "generatedName": "GetTokenResponseAccessToken",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "GetTokenResponseAccessToken",
+                  "namespace": "auth",
+                  "groupName": [
+                    {
+                      "type": "namespace",
+                      "name": "auth"
+                    }
+                  ],
+                  "type": "primitive"
+                },
+                "namespace": "auth",
+                "groupName": [
+                  {
+                    "type": "namespace",
+                    "name": "auth"
+                  }
+                ],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetTokenResponse",
+          "namespace": "auth",
+          "groupName": [
+            {
+              "type": "namespace",
+              "name": "auth"
+            }
+          ],
+          "additionalProperties": false,
+          "source": {
+            "file": "../auth-api.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../auth-api.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "POST",
+      "path": "/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "access_token": {
+                  "value": {
+                    "value": "access_token",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../auth-api.yml",
+        "type": "openapi"
+      },
+      "__apiName": "oauth",
+      "servers": [
+        {
+          "name": "oauth"
+        }
+      ]
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {
+      "core": {},
+      "auth": {}
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

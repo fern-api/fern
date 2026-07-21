@@ -22,6 +22,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.auth.gettoken(
+      #     client_id: "client_id",
+      #     client_secret: "client_secret"
+      #   )
+      #
       # @return [Seed::Auth::Types::AuthGetTokenResponse]
       def gettoken(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

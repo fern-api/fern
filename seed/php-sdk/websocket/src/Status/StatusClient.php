@@ -49,6 +49,11 @@ class StatusClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->status->getStatus();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

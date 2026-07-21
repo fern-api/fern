@@ -28,6 +28,9 @@ export class ImdbClient {
      * @param {SeedApi.CreateMovieRequest} request
      * @param {ImdbClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.imdb.createMovie({
      *         id: "id",
@@ -85,6 +88,8 @@ export class ImdbClient {
      * @param {ImdbClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedApi.MovieDoesNotExistError}
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.imdb.getMovie("movie_id")

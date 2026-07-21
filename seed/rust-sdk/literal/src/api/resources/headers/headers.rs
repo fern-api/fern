@@ -13,6 +13,32 @@ impl HeadersClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_literal::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LiteralClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .headers
+    ///         .send(
+    ///             &SendLiteralsInHeadersRequest {
+    ///                 query: "What is the weather today".to_string(),
+    ///             },
+    ///             Some(
+    ///                 RequestOptions::new()
+    ///                     .additional_header("X-Endpoint-Version", "02-12-2024")
+    ///                     .additional_header("X-Async", "true"),
+    ///             ),
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn send(
         &self,
         request: &SendLiteralsInHeadersRequest,
@@ -45,6 +71,20 @@ impl HeadersClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_literal::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LiteralClient::new(config).expect("Failed to build client");
+    ///     client.headers.send_literals_only(None).await;
+    /// }
+    /// ```
     pub async fn send_literals_only(
         &self,
         options: Option<RequestOptions>,

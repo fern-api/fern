@@ -167,7 +167,9 @@ export class EndpointSnippetsGenerator {
 
             // Convert to the expected format for the generator
             const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-            const generatedSnippet = await dynamicSnippetsGenerator.generate(snippetRequest);
+            const generatedSnippet = await dynamicSnippetsGenerator.generate(snippetRequest, {
+                endpointId: endpoint.id
+            });
 
             this.context.logger.debug(
                 `Generated snippet response for endpoint ${endpoint.id}: ${JSON.stringify(generatedSnippet, null, 2)}`
@@ -198,6 +200,7 @@ export class EndpointSnippetsGenerator {
         let methodCallLines: string[] = [];
         let inMethodCall = false;
         let braceCount = 0;
+        let sawOpenParen = false;
 
         for (const line of lines) {
             const trimmedLine = line.trim();
@@ -215,14 +218,15 @@ export class EndpointSnippetsGenerator {
                 for (const char of line) {
                     if (char === "(") {
                         braceCount++;
+                        sawOpenParen = true;
                     }
                     if (char === ")") {
                         braceCount--;
                     }
                 }
 
-                // If we hit a semicolon and braces are balanced, we're done
-                if (line.includes(";") && braceCount === 0) {
+                // Once the parentheses are balanced, the method call is complete
+                if (sawOpenParen && braceCount === 0) {
                     break;
                 }
             }
@@ -300,9 +304,14 @@ export class EndpointSnippetsGenerator {
             return ""; // No matching closing brace found
         }
 
-        // Extract the request body lines
+        // Extract the request body lines, removing any common leading whitespace
         const requestBodyLines = lines.slice(requestStartIndex, requestEndIndex + 1);
-        return requestBodyLines.join("\n");
+        const nonEmptyLines = requestBodyLines.filter((line) => line.trim().length > 0);
+        if (nonEmptyLines.length === 0) {
+            return "";
+        }
+        const minIndent = Math.min(...nonEmptyLines.map((line) => line.length - line.trimStart().length));
+        return requestBodyLines.map((line) => (line.length > minIndent ? line.substring(minIndent) : line)).join("\n");
     }
 
     private getIrEndpointById(endpointId: string): FernIr.HttpEndpoint | undefined {

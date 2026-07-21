@@ -27,6 +27,9 @@ export class ComplexClient {
      * @param {SeedPagination.SearchRequest} request
      * @param {ComplexClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPaginationError}
+     * @throws {@link errors.SeedPaginationTimeoutError}
+     *
      * @example
      *     await client.complex.search("index", {
      *         pagination: {

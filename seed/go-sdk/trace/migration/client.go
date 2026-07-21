@@ -34,6 +34,15 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetAttemptedMigrationsRequest{
+//	    AdminKeyHeader: "admin-key-header",
+//	}
+//	client.Migration.GetAttemptedMigrations(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAttemptedMigrations(
 	ctx context.Context,
 	request *fern.GetAttemptedMigrationsRequest,

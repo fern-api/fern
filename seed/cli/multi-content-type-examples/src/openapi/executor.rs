@@ -866,9 +866,13 @@ fn parse_and_validate_inputs(
 /// Build the per-operation auth metadata from the lowered security
 /// requirements. Computed once per execute_method call and reused across
 /// pagination iterations — the requirements don't change page to page.
-fn endpoint_metadata_for(method: &RestMethod) -> EndpointAuthMetadata {
+fn endpoint_metadata_for(
+    method: &RestMethod,
+    base_url_override: Option<&str>,
+) -> EndpointAuthMetadata {
     EndpointAuthMetadata {
         security_requirements: method.security_requirements.clone(),
+        base_url_override: base_url_override.map(str::to_string),
     }
 }
 
@@ -2088,7 +2092,7 @@ pub async fn execute_method(
     let mut page_state: PageState = PageState::initial(endpoint_pag);
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
-    let auth_metadata = endpoint_metadata_for(method);
+    let auth_metadata = endpoint_metadata_for(method, base_url_override);
 
     // Spawn an external pager when --page-all is active on a TTY.
     let fallback_label = format!(

@@ -28,6 +28,9 @@ export class ServiceClient {
      * @param {string} notificationId
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExamplesError}
+     * @throws {@link errors.SeedExamplesTimeoutError}
+     *
      * @example
      *     await client.file.notification.service.getException("notification-hsy129x")
      */

@@ -10,6 +10,14 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.create(
+    #     decimal: 2.2,
+    #     even: 100,
+    #     name: "fern",
+    #     shape: "SQUARE"
+    #   )
+    #
     # @return [Seed::Types::Type]
     def create(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -44,6 +52,13 @@ module Seed
     # @option params [Integer] :decimal
     # @option params [Integer] :even
     # @option params [String] :name
+    #
+    # @example
+    #   client.get(
+    #     decimal: 2.2,
+    #     even: 100,
+    #     name: "fern"
+    #   )
     #
     # @return [Seed::Types::Type]
     def get(request_options: {}, **params)

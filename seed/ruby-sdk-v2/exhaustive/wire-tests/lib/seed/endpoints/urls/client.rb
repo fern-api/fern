@@ -19,6 +19,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.urls.with_mixed_case
+        #
         # @return [String]
         def with_mixed_case(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
@@ -46,6 +49,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.urls.no_ending_slash
         #
         # @return [String]
         def no_ending_slash(request_options: {}, **_params)
@@ -75,6 +81,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
+        # @example
+        #   client.endpoints.urls.with_ending_slash
+        #
         # @return [String]
         def with_ending_slash(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
@@ -102,6 +111,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.urls.with_underscores
         #
         # @return [String]
         def with_underscores(request_options: {}, **_params)

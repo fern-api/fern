@@ -56,6 +56,73 @@ class ProblemClient
     /**
      * Creates a problem
      *
+     * Example:
+     * ```php
+     * $client->problem->createProblem(
+     *     new CreateProblemRequest([
+     *         'problemName' => 'problemName',
+     *         'problemDescription' => new ProblemDescription([
+     *             'boards' => [
+     *                 ProblemDescriptionBoard::html('boards'),
+     *                 ProblemDescriptionBoard::html('boards'),
+     *             ],
+     *         ]),
+     *         'files' => [
+     *             Language::Java->value => new ProblemFiles([
+     *                 'solutionFile' => new FileInfo([
+     *                     'filename' => 'filename',
+     *                     'contents' => 'contents',
+     *                 ]),
+     *                 'readOnlyFiles' => [
+     *                     new FileInfo([
+     *                         'filename' => 'filename',
+     *                         'contents' => 'contents',
+     *                     ]),
+     *                     new FileInfo([
+     *                         'filename' => 'filename',
+     *                         'contents' => 'contents',
+     *                     ]),
+     *                 ],
+     *             ]),
+     *         ],
+     *         'inputParams' => [
+     *             new VariableTypeAndName([
+     *                 'variableType' => VariableType::integerType(),
+     *                 'name' => 'name',
+     *             ]),
+     *             new VariableTypeAndName([
+     *                 'variableType' => VariableType::integerType(),
+     *                 'name' => 'name',
+     *             ]),
+     *         ],
+     *         'outputType' => VariableType::integerType(),
+     *         'testcases' => [
+     *             new TestCaseWithExpectedResult([
+     *                 'testCase' => new TestCase([
+     *                     'id' => 'id',
+     *                     'params' => [
+     *                         VariableValue::integerValue(1),
+     *                         VariableValue::integerValue(1),
+     *                     ],
+     *                 ]),
+     *                 'expectedResult' => VariableValue::integerValue(1),
+     *             ]),
+     *             new TestCaseWithExpectedResult([
+     *                 'testCase' => new TestCase([
+     *                     'id' => 'id',
+     *                     'params' => [
+     *                         VariableValue::integerValue(1),
+     *                         VariableValue::integerValue(1),
+     *                     ],
+     *                 ]),
+     *                 'expectedResult' => VariableValue::integerValue(1),
+     *             ]),
+     *         ],
+     *         'methodName' => 'methodName',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateProblemRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -104,6 +171,74 @@ class ProblemClient
 
     /**
      * Updates a problem
+     *
+     * Example:
+     * ```php
+     * $client->problem->updateProblem(
+     *     'problemId',
+     *     new CreateProblemRequest([
+     *         'problemName' => 'problemName',
+     *         'problemDescription' => new ProblemDescription([
+     *             'boards' => [
+     *                 ProblemDescriptionBoard::html('boards'),
+     *                 ProblemDescriptionBoard::html('boards'),
+     *             ],
+     *         ]),
+     *         'files' => [
+     *             Language::Java->value => new ProblemFiles([
+     *                 'solutionFile' => new FileInfo([
+     *                     'filename' => 'filename',
+     *                     'contents' => 'contents',
+     *                 ]),
+     *                 'readOnlyFiles' => [
+     *                     new FileInfo([
+     *                         'filename' => 'filename',
+     *                         'contents' => 'contents',
+     *                     ]),
+     *                     new FileInfo([
+     *                         'filename' => 'filename',
+     *                         'contents' => 'contents',
+     *                     ]),
+     *                 ],
+     *             ]),
+     *         ],
+     *         'inputParams' => [
+     *             new VariableTypeAndName([
+     *                 'variableType' => VariableType::integerType(),
+     *                 'name' => 'name',
+     *             ]),
+     *             new VariableTypeAndName([
+     *                 'variableType' => VariableType::integerType(),
+     *                 'name' => 'name',
+     *             ]),
+     *         ],
+     *         'outputType' => VariableType::integerType(),
+     *         'testcases' => [
+     *             new TestCaseWithExpectedResult([
+     *                 'testCase' => new TestCase([
+     *                     'id' => 'id',
+     *                     'params' => [
+     *                         VariableValue::integerValue(1),
+     *                         VariableValue::integerValue(1),
+     *                     ],
+     *                 ]),
+     *                 'expectedResult' => VariableValue::integerValue(1),
+     *             ]),
+     *             new TestCaseWithExpectedResult([
+     *                 'testCase' => new TestCase([
+     *                     'id' => 'id',
+     *                     'params' => [
+     *                         VariableValue::integerValue(1),
+     *                         VariableValue::integerValue(1),
+     *                     ],
+     *                 ]),
+     *                 'expectedResult' => VariableValue::integerValue(1),
+     *             ]),
+     *         ],
+     *         'methodName' => 'methodName',
+     *     ]),
+     * );
+     * ```
      *
      * @param string $problemId
      * @param CreateProblemRequest $request
@@ -155,6 +290,13 @@ class ProblemClient
     /**
      * Soft deletes a problem
      *
+     * Example:
+     * ```php
+     * $client->problem->deleteProblem(
+     *     'problemId',
+     * );
+     * ```
+     *
      * @param string $problemId
      * @param ?array{
      *   baseUrl?: string,
@@ -195,6 +337,26 @@ class ProblemClient
 
     /**
      * Returns default starter files for problem
+     *
+     * Example:
+     * ```php
+     * $client->problem->getDefaultStarterFiles(
+     *     new GetDefaultStarterFilesRequest([
+     *         'inputParams' => [
+     *             new VariableTypeAndName([
+     *                 'variableType' => VariableType::integerType(),
+     *                 'name' => 'name',
+     *             ]),
+     *             new VariableTypeAndName([
+     *                 'variableType' => VariableType::integerType(),
+     *                 'name' => 'name',
+     *             ]),
+     *         ],
+     *         'outputType' => VariableType::integerType(),
+     *         'methodName' => 'methodName',
+     *     ]),
+     * );
+     * ```
      *
      * @param GetDefaultStarterFilesRequest $request
      * @param ?array{

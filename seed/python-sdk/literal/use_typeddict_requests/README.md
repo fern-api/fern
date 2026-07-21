@@ -41,8 +41,6 @@ client = SeedLiteral(
 )
 
 client.headers.send(
-    endpoint_version="02-12-2024",
-    async_=True,
     query="What is the weather today",
 )
 ```
@@ -63,8 +61,6 @@ client = AsyncSeedLiteral(
 
 async def main() -> None:
     await client.headers.send(
-        endpoint_version="02-12-2024",
-        async_=True,
         query="What is the weather today",
     )
 

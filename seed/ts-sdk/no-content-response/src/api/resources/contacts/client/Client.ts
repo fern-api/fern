@@ -28,6 +28,9 @@ export class ContactsClient {
      * @param {SeedApi.CreateContactRequest} request
      * @param {ContactsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.contacts.create({
      *         name: "name"
@@ -83,6 +86,9 @@ export class ContactsClient {
      *
      * @param {SeedApi.GetContactsRequest} request
      * @param {ContactsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.contacts.get({

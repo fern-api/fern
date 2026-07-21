@@ -32,6 +32,9 @@ export class SubmissionClient {
      * @param {SeedTrace.Language} language
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
@@ -104,6 +107,9 @@ export class SubmissionClient {
      * @param {string} sessionId
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.submission.getExecutionSession("sessionId")
      */
@@ -171,6 +177,9 @@ export class SubmissionClient {
      * @param {string} sessionId
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.submission.stopExecutionSession("sessionId")
      */
@@ -225,6 +234,9 @@ export class SubmissionClient {
 
     /**
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.submission.getExecutionSessionsState()

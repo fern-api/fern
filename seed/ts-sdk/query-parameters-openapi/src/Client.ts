@@ -26,6 +26,9 @@ export class SeedApiClient {
      * @param {SeedApi.SearchRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.search({
      *         limit: 1,

@@ -26,6 +26,9 @@ export class InlinedClient {
      * @param {SeedLiteral.SendLiteralsInlinedRequest} request
      * @param {InlinedClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedLiteralError}
+     * @throws {@link errors.SeedLiteralTimeoutError}
+     *
      * @example
      *     await client.inlined.send({
      *         temperature: 10.1,

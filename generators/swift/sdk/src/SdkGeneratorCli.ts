@@ -29,7 +29,6 @@ import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
-import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -77,16 +76,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
         this.generatePackageSwiftFile(context);
 
-        // Create a shared DynamicSnippetsGenerator to avoid duplicate IR conversion
+        // Use the shared DynamicSnippetsGenerator to avoid duplicate IR conversion
         // and symbol registration between README and Reference generation.
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
             throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
-        const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
-            config: context.config
-        });
+        const sharedSnippetsGenerator = context.dynamicSnippetsGenerator;
 
         await Promise.all([
             this.generateReadme(context, dynamicIr, sharedSnippetsGenerator),

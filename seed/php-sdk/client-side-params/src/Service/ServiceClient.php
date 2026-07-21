@@ -69,6 +69,21 @@ class ServiceClient
     /**
      * List resources with pagination
      *
+     * Example:
+     * ```php
+     * $client->service->listResources(
+     *     new ListResourcesRequest([
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'sort' => 'created_at',
+     *         'order' => 'desc',
+     *         'includeTotals' => true,
+     *         'fields' => 'fields',
+     *         'search' => 'search',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListResourcesRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -130,6 +145,17 @@ class ServiceClient
     /**
      * Get a single resource
      *
+     * Example:
+     * ```php
+     * $client->service->getResource(
+     *     'resourceId',
+     *     new GetResourceRequest([
+     *         'includeMetadata' => true,
+     *         'format' => 'json',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $resourceId
      * @param GetResourceRequest $request
      * @param ?array{
@@ -183,6 +209,22 @@ class ServiceClient
     /**
      * Search resources with complex parameters
      *
+     * Example:
+     * ```php
+     * $client->service->searchResources(
+     *     new SearchResourcesRequest([
+     *         'limit' => 1,
+     *         'offset' => 1,
+     *         'query' => 'query',
+     *         'filters' => [
+     *             'filters' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param SearchResourcesRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -235,6 +277,22 @@ class ServiceClient
 
     /**
      * List or search for users
+     *
+     * Example:
+     * ```php
+     * $client->service->listUsers(
+     *     new ListUsersRequest([
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'includeTotals' => true,
+     *         'sort' => 'sort',
+     *         'connection' => 'connection',
+     *         'q' => 'q',
+     *         'searchEngine' => 'search_engine',
+     *         'fields' => 'fields',
+     *     ]),
+     * );
+     * ```
      *
      * @param ListUsersRequest $request
      * @param ?array{
@@ -310,6 +368,17 @@ class ServiceClient
     /**
      * Get a user by ID
      *
+     * Example:
+     * ```php
+     * $client->service->getUserById(
+     *     'userId',
+     *     new GetUserRequest([
+     *         'fields' => 'fields',
+     *         'includeFields' => true,
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $userId
      * @param GetUserRequest $request
      * @param ?array{
@@ -367,6 +436,31 @@ class ServiceClient
     /**
      * Create a new user
      *
+     * Example:
+     * ```php
+     * $client->service->createUser(
+     *     new CreateUserRequest([
+     *         'email' => 'email',
+     *         'emailVerified' => true,
+     *         'username' => 'username',
+     *         'password' => 'password',
+     *         'phoneNumber' => 'phone_number',
+     *         'phoneVerified' => true,
+     *         'userMetadata' => [
+     *             'user_metadata' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *         'appMetadata' => [
+     *             'app_metadata' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *         'connection' => 'connection',
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -415,6 +509,32 @@ class ServiceClient
 
     /**
      * Update a user
+     *
+     * Example:
+     * ```php
+     * $client->service->updateUser(
+     *     'userId',
+     *     new UpdateUserRequest([
+     *         'email' => 'email',
+     *         'emailVerified' => true,
+     *         'username' => 'username',
+     *         'phoneNumber' => 'phone_number',
+     *         'phoneVerified' => true,
+     *         'userMetadata' => [
+     *             'user_metadata' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *         'appMetadata' => [
+     *             'app_metadata' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *         'password' => 'password',
+     *         'blocked' => true,
+     *     ]),
+     * );
+     * ```
      *
      * @param string $userId
      * @param UpdateUserRequest $request
@@ -466,6 +586,13 @@ class ServiceClient
     /**
      * Delete a user
      *
+     * Example:
+     * ```php
+     * $client->service->deleteUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,
@@ -506,6 +633,17 @@ class ServiceClient
 
     /**
      * List all connections
+     *
+     * Example:
+     * ```php
+     * $client->service->listConnections(
+     *     new ListConnectionsRequest([
+     *         'strategy' => 'strategy',
+     *         'name' => 'name',
+     *         'fields' => 'fields',
+     *     ]),
+     * );
+     * ```
      *
      * @param ListConnectionsRequest $request
      * @param ?array{
@@ -566,6 +704,16 @@ class ServiceClient
     /**
      * Get a connection by ID
      *
+     * Example:
+     * ```php
+     * $client->service->getConnection(
+     *     'connectionId',
+     *     new GetConnectionRequest([
+     *         'fields' => 'fields',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $connectionId
      * @param GetConnectionRequest $request
      * @param ?array{
@@ -619,6 +767,25 @@ class ServiceClient
 
     /**
      * List all clients/applications
+     *
+     * Example:
+     * ```php
+     * $client->service->listClients(
+     *     new ListClientsRequest([
+     *         'fields' => 'fields',
+     *         'includeFields' => true,
+     *         'page' => 1,
+     *         'perPage' => 1,
+     *         'includeTotals' => true,
+     *         'isGlobal' => true,
+     *         'isFirstParty' => true,
+     *         'appType' => [
+     *             'app_type',
+     *             'app_type',
+     *         ],
+     *     ]),
+     * );
+     * ```
      *
      * @param ListClientsRequest $request
      * @param ?array{
@@ -693,6 +860,17 @@ class ServiceClient
 
     /**
      * Get a client by ID
+     *
+     * Example:
+     * ```php
+     * $client->service->getClient(
+     *     'clientId',
+     *     new GetClientRequest([
+     *         'fields' => 'fields',
+     *         'includeFields' => true,
+     *     ]),
+     * );
+     * ```
      *
      * @param string $clientId
      * @param GetClientRequest $request

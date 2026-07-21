@@ -34,6 +34,16 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.GetTokenIdentityRequest{
+//	    Username: "username",
+//	    Password: "password",
+//	}
+//	client.Identity.GetToken(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetToken(
 	ctx context.Context,
 	request *fern.GetTokenIdentityRequest,

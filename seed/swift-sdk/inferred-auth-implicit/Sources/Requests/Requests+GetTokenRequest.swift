@@ -3,7 +3,7 @@ import Foundation
 extension Requests {
     public struct GetTokenRequest: Codable, Hashable, Sendable {
         public let clientId: String
-        public let clientSecret: String
+        public let clientSecret: Nullable<String>
         public let audience: HttpsApiExampleCom
         public let grantType: ClientCredentials
         public let scope: String?
@@ -12,7 +12,7 @@ extension Requests {
 
         public init(
             clientId: String,
-            clientSecret: String,
+            clientSecret: Nullable<String>,
             audience: HttpsApiExampleCom,
             grantType: ClientCredentials,
             scope: String? = nil,
@@ -29,7 +29,7 @@ extension Requests {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.clientId = try container.decode(String.self, forKey: .clientId)
-            self.clientSecret = try container.decode(String.self, forKey: .clientSecret)
+            self.clientSecret = try container.decode(Nullable<String>.self, forKey: .clientSecret)
             self.audience = try container.decode(HttpsApiExampleCom.self, forKey: .audience)
             self.grantType = try container.decode(ClientCredentials.self, forKey: .grantType)
             self.scope = try container.decodeIfPresent(String.self, forKey: .scope)

@@ -53,6 +53,16 @@ class ImdbClient
     /**
      * Add a movie to the database using the movies/* /... path.
      *
+     * Example:
+     * ```php
+     * $client->imdb->createMovie(
+     *     new CreateMovieRequest([
+     *         'title' => 'title',
+     *         'rating' => 1.1,
+     *     ]),
+     * );
+     * ```
+     *
      * @param CreateMovieRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -100,6 +110,13 @@ class ImdbClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->imdb->getMovie(
+     *     'movieId',
+     * );
+     * ```
+     *
      * @param string $movieId
      * @param ?array{
      *   baseUrl?: string,

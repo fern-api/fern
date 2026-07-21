@@ -48,6 +48,17 @@ class ReqWithHeadersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->reqWithHeaders->getWithCustomHeader(
+     *     new ReqWithHeaders([
+     *         'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
+     *         'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
+     *         'body' => 'string',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ReqWithHeaders $request
      * @param ?array{
      *   baseUrl?: string,

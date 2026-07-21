@@ -13,6 +13,21 @@ impl NoReqBodyClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client.no_req_body.get_with_no_request_body(None).await;
+    /// }
+    /// ```
     pub async fn get_with_no_request_body(
         &self,
         options: Option<RequestOptions>,
@@ -22,6 +37,21 @@ impl NoReqBodyClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client.no_req_body.post_with_no_request_body(None).await;
+    /// }
+    /// ```
     pub async fn post_with_no_request_body(
         &self,
         options: Option<RequestOptions>,

@@ -27,6 +27,9 @@ export class BigunionClient {
      * @param {string} id
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
+     *
      * @example
      *     await client.bigunion.get("id")
      */
@@ -84,6 +87,9 @@ export class BigunionClient {
     /**
      * @param {SeedUnions.BigUnion} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
      *
      * @example
      *     await client.bigunion.update({
@@ -154,6 +160,9 @@ export class BigunionClient {
     /**
      * @param {SeedUnions.BigUnion[]} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
      *
      * @example
      *     await client.bigunion.updateMany([{

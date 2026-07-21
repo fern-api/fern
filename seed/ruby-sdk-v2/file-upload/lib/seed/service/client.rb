@@ -121,6 +121,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.just_file
+      #
       # @return [untyped]
       def just_file(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -439,6 +442,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.optional_args
+      #
       # @return [String]
       def optional_args(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -560,6 +566,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.with_ref_body
+      #
       # @return [String]
       def with_ref_body(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -600,6 +609,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.simple
       #
       # @return [untyped]
       def simple(request_options: {}, **_params)

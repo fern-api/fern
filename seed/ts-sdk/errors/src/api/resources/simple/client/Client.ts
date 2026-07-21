@@ -29,6 +29,8 @@ export class SimpleClient {
      * @throws {@link SeedErrors.NotFoundError}
      * @throws {@link SeedErrors.BadRequestError}
      * @throws {@link SeedErrors.InternalServerError}
+     * @throws {@link errors.SeedErrorsError}
+     * @throws {@link errors.SeedErrorsTimeoutError}
      *
      * @example
      *     await client.simple.fooWithoutEndpointError({
@@ -107,6 +109,8 @@ export class SimpleClient {
      * @throws {@link SeedErrors.NotFoundError}
      * @throws {@link SeedErrors.BadRequestError}
      * @throws {@link SeedErrors.InternalServerError}
+     * @throws {@link errors.SeedErrorsError}
+     * @throws {@link errors.SeedErrorsTimeoutError}
      *
      * @example
      *     await client.simple.foo({
@@ -190,6 +194,8 @@ export class SimpleClient {
      * @throws {@link SeedErrors.NotFoundError}
      * @throws {@link SeedErrors.BadRequestError}
      * @throws {@link SeedErrors.InternalServerError}
+     * @throws {@link errors.SeedErrorsError}
+     * @throws {@link errors.SeedErrorsTimeoutError}
      *
      * @example
      *     await client.simple.fooWithExamples({

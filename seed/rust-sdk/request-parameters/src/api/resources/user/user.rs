@@ -13,6 +13,31 @@ impl UserClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_request_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = RequestParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .create_username(
+    ///             &CreateUsernameRequest {
+    ///                 tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                 username: "username".to_string(),
+    ///                 password: "password".to_string(),
+    ///                 name: "test".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_username(
         &self,
         request: &CreateUsernameRequest,
@@ -31,6 +56,34 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_request_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = RequestParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .create_username_with_referenced_type(
+    ///             &CreateUsernameWithReferencedTypeRequest {
+    ///                 tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                 body: CreateUsernameBody {
+    ///                     username: "username".to_string(),
+    ///                     password: "password".to_string(),
+    ///                     name: "test".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_username_with_referenced_type(
         &self,
         request: &CreateUsernameWithReferencedTypeRequest,
@@ -49,6 +102,28 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_request_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = RequestParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .create_username_optional(
+    ///             &Some(CreateUsernameBodyOptionalProperties {
+    ///                 ..Default::default()
+    ///             }),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_username_optional(
         &self,
         request: &Option<CreateUsernameBodyOptionalProperties>,
@@ -65,6 +140,78 @@ impl UserClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_request_parameters::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = RequestParametersClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .user
+    ///         .get_username(
+    ///             &GetUsernameQueryRequest {
+    ///                 limit: 1,
+    ///                 id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+    ///                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+    ///                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+    ///                 bytes: base64::engine::general_purpose::STANDARD
+    ///                     .decode("SGVsbG8gd29ybGQh")
+    ///                     .unwrap(),
+    ///                 user: User {
+    ///                     name: "name".to_string(),
+    ///                     tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                     ..Default::default()
+    ///                 },
+    ///                 user_list: vec![
+    ///                     User {
+    ///                         name: "name".to_string(),
+    ///                         tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                         ..Default::default()
+    ///                     },
+    ///                     User {
+    ///                         name: "name".to_string(),
+    ///                         tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                         ..Default::default()
+    ///                     },
+    ///                 ],
+    ///                 optional_deadline: Some(
+    ///                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+    ///                 ),
+    ///                 key_value: HashMap::from([("keyValue".to_string(), "keyValue".to_string())]),
+    ///                 optional_string: Some("optionalString".to_string()),
+    ///                 nested_user: NestedUser {
+    ///                     name: "name".to_string(),
+    ///                     user: User {
+    ///                         name: "name".to_string(),
+    ///                         tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                         ..Default::default()
+    ///                     },
+    ///                     ..Default::default()
+    ///                 },
+    ///                 optional_user: Some(User {
+    ///                     name: "name".to_string(),
+    ///                     tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                     ..Default::default()
+    ///                 }),
+    ///                 exclude_user: vec![User {
+    ///                     name: "name".to_string(),
+    ///                     tags: vec!["tags".to_string(), "tags".to_string()],
+    ///                     ..Default::default()
+    ///                 }],
+    ///                 filter: vec!["filter".to_string()],
+    ///                 long_param: 1000000,
+    ///                 big_int_param: BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_username(
         &self,
         request: &GetUsernameQueryRequest,

@@ -35,6 +35,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.GetAccount(
+//	    context.TODO(),
+//	    "account_id",
+//	)
 func (c *Client) GetAccount(
 	ctx context.Context,
 	accountID string,

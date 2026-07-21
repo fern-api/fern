@@ -12,6 +12,20 @@ impl ServiceClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_variables::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = VariablesClient::new(config).expect("Failed to build client");
+    ///     client.service.post(None).await;
+    /// }
+    /// ```
     pub async fn post(
         &self,
         endpoint_param: &str,

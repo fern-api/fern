@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.76.4
+  changelogEntry:
+    - summary: |
+        Global API headers configured with an `env` fallback (e.g. `X-Twilio-Version` with
+        `env: TWILIO_VERSION`) now fall back to the environment variable in the root client
+        constructor when the parameter is not passed explicitly. Optional headers never throw
+        when both the parameter and the environment variable are missing.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.76.3
+  changelogEntry:
+    - summary: |
+        The README "Environments" usage example now passes the client options via the
+        `clientOptions:` named argument so the generated snippet compiles. The root
+        client constructor's first positional parameter is the auth token string, so
+        the previous `new Client(new ClientOptions { ... })` snippet passed
+        `ClientOptions` where a `string?` token was expected.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.2
+  changelogEntry:
+    - summary: |
+        A generated nested type whose name matches the SDK's root namespace segment now emits 
+        `global::`-qualified references. Previously such a nested type shadowed the namespace 
+        root within its enclosing type's body, so references like `Acme.Api.SomeType` resolved to the
+        nested type and failed to compile. The `global::` qualifier is applied
+        only to references written inside the enclosing type where the shadow is visible, so
+        unrelated references to the same root segment elsewhere in the SDK are left
+        unqualified.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
 - version: 2.76.1
   changelogEntry:
     - summary: |

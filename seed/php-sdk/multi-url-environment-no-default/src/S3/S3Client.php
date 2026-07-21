@@ -50,6 +50,15 @@ class S3Client
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->s3->getPresignedUrl(
+     *     new GetPresignedUrlRequest([
+     *         's3Key' => 's3Key',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetPresignedUrlRequest $request
      * @param ?array{
      *   maxRetries?: int,

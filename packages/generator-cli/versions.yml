@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.52
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.19.2.
+      type: chore
+  createdAt: "2026-07-16"
+- version: 0.9.51
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` producing a false "changed"/"removed" changelog entry (e.g.
+        claiming the `User-Agent` header is no longer sent) when several version-bearing
+        lines bump together. Unified diffs group all deletions before all additions, so the
+        diff-cleaning pass left interleaved version-only deletions behind after stripping the
+        magic-version additions; the AI then read those orphan deletions as removals. Version
+        change pairs are now matched across the whole diff section regardless of layout.
+      type: fix
+    - summary: |
+        Fix `--version AUTO` dropping the `/vN` Go module suffix from the
+        `X-Fern-SDK-Name` header value and README install/import samples. The suffix
+        retrofit now covers non-import module-path string literals and Markdown docs
+        in addition to imports and `go.mod`, while leaving the composite `User-Agent`
+        value and web URLs (e.g. `pkg.go.dev`) untouched.
+      type: fix
+  createdAt: "2026-07-16"
 - version: 0.9.50
   changelogEntry:
     - summary: |

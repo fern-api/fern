@@ -14,11 +14,10 @@
 
 ```go
 client.Organizations.GetOrganization(
-        context.TODO(),
-        "tenant_id",
-        "organization_id",
-    )
-}
+    context.TODO(),
+    "tenant_id",
+    "organization_id",
+)
 ```
 </dd>
 </dl>
@@ -67,15 +66,14 @@ client.Organizations.GetOrganization(
 
 ```go
 request := &fern.GetOrganizationUserRequest{
-        TenantID: "tenant_id",
-        OrganizationID: "organization_id",
-        UserID: "user_id",
-    }
-client.Organizations.GetOrganizationUser(
-        context.TODO(),
-        request,
-    )
+    TenantID: "tenant_id",
+    OrganizationID: "organization_id",
+    UserID: "user_id",
 }
+client.Organizations.GetOrganizationUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -132,17 +130,16 @@ client.Organizations.GetOrganizationUser(
 
 ```go
 request := &fern.SearchOrganizationsRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
-client.Organizations.SearchOrganizations(
-        context.TODO(),
-        "tenant_id",
-        "organization_id",
-        request,
-    )
+    Limit: fern.Int(
+        1,
+    ),
 }
+client.Organizations.SearchOrganizations(
+    context.TODO(),
+    "tenant_id",
+    "organization_id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -200,14 +197,13 @@ client.Organizations.SearchOrganizations(
 
 ```go
 request := &fern.GetUsersRequest{
-        TenantID: "tenant_id",
-        UserID: "user_id",
-    }
-client.User.GetUser(
-        context.TODO(),
-        request,
-    )
+    TenantID: "tenant_id",
+    UserID: "user_id",
 }
+client.User.GetUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -256,18 +252,17 @@ client.User.GetUser(
 
 ```go
 request := &fern.User{
-        Name: "name",
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-    }
-client.User.CreateUser(
-        context.TODO(),
-        "tenant_id",
-        request,
-    )
+    Name: "name",
+    Tags: []string{
+        "tags",
+        "tags",
+    },
 }
+client.User.CreateUser(
+    context.TODO(),
+    "tenant_id",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -316,21 +311,20 @@ client.User.CreateUser(
 
 ```go
 request := &fern.UpdateUserRequest{
-        TenantID: "tenant_id",
-        UserID: "user_id",
-        Body: &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
+    TenantID: "tenant_id",
+    UserID: "user_id",
+    Body: &fern.User{
+        Name: "name",
+        Tags: []string{
+            "tags",
+            "tags",
         },
-    }
-client.User.UpdateUser(
-        context.TODO(),
-        request,
-    )
+    },
 }
+client.User.UpdateUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -387,17 +381,16 @@ client.User.UpdateUser(
 
 ```go
 request := &fern.SearchUsersRequest{
-        TenantID: "tenant_id",
-        UserID: "user_id",
-        Limit: fern.Int(
-            1,
-        ),
-    }
-client.User.SearchUsers(
-        context.TODO(),
-        request,
-    )
+    TenantID: "tenant_id",
+    UserID: "user_id",
+    Limit: fern.Int(
+        1,
+    ),
 }
+client.User.SearchUsers(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -468,15 +461,14 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```go
 request := &fern.GetUserMetadataRequest{
-        TenantID: "tenant_id",
-        UserID: "user_id",
-        Version: 1,
-    }
-client.User.GetUserMetadata(
-        context.TODO(),
-        request,
-    )
+    TenantID: "tenant_id",
+    UserID: "user_id",
+    Version: 1,
 }
+client.User.GetUserMetadata(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -547,16 +539,15 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```go
 request := &fern.GetUserSpecificsRequest{
-        TenantID: "tenant_id",
-        UserID: "user_id",
-        Version: 1,
-        Thought: "thought",
-    }
-client.User.GetUserSpecifics(
-        context.TODO(),
-        request,
-    )
+    TenantID: "tenant_id",
+    UserID: "user_id",
+    Version: 1,
+    Thought: "thought",
 }
+client.User.GetUserSpecifics(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

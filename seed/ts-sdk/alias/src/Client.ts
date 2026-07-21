@@ -25,6 +25,9 @@ export class SeedAliasClient {
      * @param {SeedAlias.TypeId} typeId
      * @param {SeedAliasClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedAliasError}
+     * @throws {@link errors.SeedAliasTimeoutError}
+     *
      * @example
      *     await client.get("typeId")
      */

@@ -34,6 +34,16 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.Widget{
+//	    Name: "name",
+//	}
+//	client.Widgets.Create(
+//	    context.TODO(),
+//	    "v1beta",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	apiVersion string,

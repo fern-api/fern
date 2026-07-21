@@ -43,6 +43,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with a version header
+//
+// Example:
+//
+//	client.Service.GetWithAPIVersion(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithAPIVersion(
 	ctx context.Context,
 	opts ...option.RequestOption,

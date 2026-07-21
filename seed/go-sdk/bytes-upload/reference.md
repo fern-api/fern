@@ -14,10 +14,9 @@
 
 ```go
 client.Service.Upload(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -43,14 +42,13 @@ client.Service.Upload(
 
 ```go
 request := &fern.UploadWithQueryParamsRequest{
-        Model: "nova-2",
-        Body: []byte(""),
-    }
-client.Service.UploadWithQueryParams(
-        context.TODO(),
-        request,
-    )
+    Model: "nova-2",
+    Body: []byte(""),
 }
+client.Service.UploadWithQueryParams(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

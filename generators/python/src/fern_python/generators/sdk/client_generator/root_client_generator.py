@@ -1542,6 +1542,27 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 )
                 writer.write_newline_if_last_line_not()
 
+    def _get_keepalive_transport_expression(self, *, is_async: bool) -> AST.Expression:
+        """Build a default httpx transport carrying platform-guarded TCP keepalive
+        socket options, e.g. ``httpx.HTTPTransport(socket_options=get_keepalive_socket_options(...))``."""
+        keepalive = self._context.custom_config.tcp_keepalive
+        socket_options = AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=self._context.core_utilities.get_reference_to_keepalive_socket_options(),
+                kwargs=[
+                    ("idle", AST.Expression(str(keepalive.idle_seconds))),
+                    ("intvl", AST.Expression(str(keepalive.interval_seconds))),
+                    ("cnt", AST.Expression(str(keepalive.count))),
+                ],
+            )
+        )
+        return AST.Expression(
+            AST.ClassInstantiation(
+                HttpX.ASYNC_HTTP_TRANSPORT if is_async else HttpX.HTTP_TRANSPORT,
+                kwargs=[("socket_options", socket_options)],
+            )
+        )
+
     def _get_client_wrapper_kwargs(
         self,
         client_wrapper_generator: ClientWrapperGenerator,
@@ -1642,9 +1663,20 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         httpx_client_kwargs_without_redirects: List[typing.Tuple[str, AST.Expression]] = [
             ("timeout", AST.Expression(f"{timeout_local_variable}")),
         ]
+        # Transport precedence for the generated default client: a custom_transport
+        # http_client (when configured) always wins; otherwise, if TCP keepalive is
+        # enabled, inject a keepalive transport. A user-supplied httpx_client wins
+        # over both (the whole default construction is skipped when it is provided).
         if transport_variable_name is not None:
             httpx_client_kwargs_with_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
             httpx_client_kwargs_without_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
+        elif self._context.custom_config.tcp_keepalive.enabled:
+            httpx_client_kwargs_with_redirects.append(
+                ("transport", self._get_keepalive_transport_expression(is_async=is_async))
+            )
+            httpx_client_kwargs_without_redirects.append(
+                ("transport", self._get_keepalive_transport_expression(is_async=is_async))
+            )
 
         if ignore_httpx_constructor_parameter:
             client_wrapper_constructor_kwargs.append(
@@ -1672,15 +1704,23 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
             )
         elif is_async:
+            # The async default is built by _make_default_async_client. Thread the
+            # custom_transport http_client through it (previously dropped on the
+            # async path); the keepalive default is applied inside that helper.
+            async_default_client_call = (
+                f"_make_default_async_client(timeout={timeout_local_variable}, "
+                f"follow_redirects={self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"
+            )
+            if transport_variable_name is not None:
+                async_default_client_call += f", transport={transport_variable_name}"
+            async_default_client_call += ")"
             client_wrapper_constructor_kwargs.append(
                 (
                     ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
                     AST.Expression(
                         AST.ConditionalExpression(
                             left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
-                            right=AST.Expression(
-                                f"_make_default_async_client(timeout={timeout_local_variable}, follow_redirects={self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME})"
-                            ),
+                            right=AST.Expression(async_default_client_call),
                             test=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
                             ),
@@ -1761,13 +1801,28 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         return client_wrapper_constructor_kwargs
 
     def _write_make_default_async_client(self, writer: AST.NodeWriter) -> None:
+        keepalive_enabled = self._context.custom_config.tcp_keepalive.enabled
+        # The transport parameter exists when either a custom_transport http_client
+        # must be threaded through the async default (previously dropped) or when a
+        # keepalive default transport is applied. Otherwise the signature/body are
+        # left exactly as-is to keep generated output unchanged.
+        accepts_transport = keepalive_enabled or self._context.custom_config.custom_transport
+
         writer.write_line("")
         writer.write_line("def _make_default_async_client(")
         with writer.indent():
             writer.write_line("timeout: typing.Optional[float],")
             writer.write_line("follow_redirects: typing.Optional[bool],")
+            if accepts_transport:
+                writer.write_line("transport: typing.Optional[httpx.AsyncBaseTransport] = None,")
         writer.write_line(") -> httpx.AsyncClient:")
         with writer.indent():
+            if keepalive_enabled:
+                writer.write_line("if transport is None:")
+                with writer.indent():
+                    writer.write("transport = ")
+                    writer.write_node(self._get_keepalive_transport_expression(is_async=True))
+                    writer.write_newline_if_last_line_not()
             writer.write_line("try:")
             with writer.indent():
                 writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
@@ -1776,6 +1831,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 writer.write_line("pass")
             writer.write_line("else:")
             with writer.indent():
+                # aiohttp uses its own TCPConnector, not httpx socket_options, so the
+                # keepalive/custom transport is a documented no-op on this path.
                 writer.write_line("if follow_redirects is not None:")
                 with writer.indent():
                     writer.write_line(
@@ -1783,10 +1840,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
             writer.write_line("")
-            writer.write_line("if follow_redirects is not None:")
-            with writer.indent():
-                writer.write_line("return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)")
-            writer.write_line("return httpx.AsyncClient(timeout=timeout)")
+            if accepts_transport:
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line(
+                        "return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport)"
+                    )
+                writer.write_line("return httpx.AsyncClient(timeout=timeout, transport=transport)")
+            else:
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line("return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)")
+                writer.write_line("return httpx.AsyncClient(timeout=timeout)")
         writer.write_line("")
 
     def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:
@@ -1862,6 +1927,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         env_union = environments_config.environments.get_as_union()
         var_params = [(var, self._get_server_variable_param_name(var)) for var in server_variables]
 
+        env_class_name = self._context.get_class_name_of_environments()
+        env_param = RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME
         condition = " or ".join(f"{param_name} is not None" for _, param_name in var_params)
         writer.write_line(f"if {condition}:")
         with writer.indent():
@@ -1873,32 +1940,55 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             format_kwargs = ", ".join(f"{var.id}=_{param_name}" for var, param_name in var_params)
 
             if env_union.type == "singleBaseUrl":
-                if len(env_union.environments) > 0:
-                    first_env = env_union.environments[0]
-                    if first_env.url_template is not None:
-                        writer.write_line(f'base_url = "{first_env.url_template}".format({format_kwargs})')
+                templated_environments = [
+                    single_env for single_env in env_union.environments if single_env.url_template is not None
+                ]
+                if len(templated_environments) > 0:
+                    writer.write_line("_environment_url_templates = {")
+                    with writer.indent():
+                        for single_env in templated_environments:
+                            class_var_name = resolve_name(single_env.name).screaming_snake_case.safe_name
+                            writer.write_line(f'{env_class_name}.{class_var_name}: "{single_env.url_template}",')
+                    writer.write_line("}")
+                    first_template = templated_environments[0].url_template
+                    writer.write_line("_url_template = _environment_url_templates.get(")
+                    with writer.indent():
+                        writer.write_line(f'{env_param}, "{first_template}"')
+                    writer.write_line(")")
+                    writer.write_line("if base_url is None:")
+                    with writer.indent():
+                        writer.write_line(f"base_url = _url_template.format({format_kwargs})")
             elif env_union.type == "multipleBaseUrls":
-                if len(env_union.environments) > 0:
-                    first_multi_env = env_union.environments[0]
-                    if first_multi_env.url_templates is not None:
-                        env_class_name = self._context.get_class_name_of_environments()
-                        kwargs_lines = []
-                        for base_url in env_union.base_urls:
-                            prop_name = resolve_name(base_url.name).snake_case.safe_name
-                            template = first_multi_env.url_templates.get(base_url.id)
-                            if template is not None:
-                                kwargs_lines.append(f'{prop_name}="{template}".format({format_kwargs})')
-                            else:
-                                url = first_multi_env.urls.get(base_url.id, "")
-                                kwargs_lines.append(f'{prop_name}="{url}"')
-                        if len(kwargs_lines) == 1:
-                            writer.write_line(f"environment = {env_class_name}({kwargs_lines[0]})")
-                        else:
-                            writer.write_line(f"environment = {env_class_name}(")
+                templated_multi_environments = [
+                    multi_env for multi_env in env_union.environments if multi_env.url_templates is not None
+                ]
+                if len(templated_multi_environments) > 0:
+                    writer.write_line("_environment_url_templates = {")
+                    with writer.indent():
+                        for multi_env in templated_multi_environments:
+                            class_var_name = resolve_name(multi_env.name).screaming_snake_case.safe_name
+                            writer.write_line(f"{env_class_name}.{class_var_name}: {{")
                             with writer.indent():
-                                for kwarg_line in kwargs_lines:
-                                    writer.write_line(f"{kwarg_line},")
-                            writer.write_line(")")
+                                for base_url in env_union.base_urls:
+                                    prop_name = resolve_name(base_url.name).snake_case.safe_name
+                                    template = (
+                                        multi_env.url_templates.get(base_url.id)
+                                        if multi_env.url_templates is not None
+                                        else None
+                                    )
+                                    value = template if template is not None else multi_env.urls.get(base_url.id, "")
+                                    writer.write_line(f'"{prop_name}": "{value}",')
+                            writer.write_line("},")
+                    writer.write_line("}")
+                    writer.write_line(f"_url_templates = _environment_url_templates.get({env_param})")
+                    writer.write_line("if _url_templates is not None:")
+                    with writer.indent():
+                        writer.write_line(f"{env_param} = {env_class_name}(")
+                        with writer.indent():
+                            for base_url in env_union.base_urls:
+                                prop_name = resolve_name(base_url.name).snake_case.safe_name
+                                writer.write_line(f'{prop_name}=_url_templates["{prop_name}"].format({format_kwargs}),')
+                        writer.write_line(")")
 
     class GeneratedRootClientBuilder:
         def __init__(

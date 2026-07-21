@@ -14,9 +14,8 @@
 
 ```go
 client.Service.GetText(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -42,9 +41,8 @@ client.Service.GetText(
 
 ```go
 client.Service.GetCsv(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -70,9 +68,8 @@ client.Service.GetCsv(
 
 ```go
 client.Service.GetXML(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

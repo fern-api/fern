@@ -19,6 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page_size
       #
+      # @example
+      #   client.v1.list_users
+      #
       # @return [Array[Seed::V2::Types::UserV2]]
       def list_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

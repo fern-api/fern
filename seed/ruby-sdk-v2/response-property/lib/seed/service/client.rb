@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get_movie(request: "string")
+      #
       # @return [Seed::Service::Types::Response]
       def get_movie(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -49,6 +52,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_docs(request_options: {}, **params)
@@ -82,6 +88,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get_movie(request: "string")
+      #
       # @return [Seed::Types::StringResponse]
       def get_movie_name(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -113,6 +122,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_metadata(request_options: {}, **params)
@@ -146,6 +158,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.service.get_movie(request: "string")
+      #
       # @return [Seed::Service::Types::Response, nil]
       def get_optional_movie(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -175,6 +190,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Service::Types::WithDocs, nil]
       def get_optional_movie_docs(request_options: {}, **params)
@@ -207,6 +225,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.service.get_movie(request: "string")
       #
       # @return [Seed::Types::StringResponse, nil]
       def get_optional_movie_name(request_options: {}, **params)

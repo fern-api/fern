@@ -67,6 +67,7 @@ export async function getGeneratorInvocation({
         language,
         keywords: undefined,
         smartCasing: smartCasing ?? true,
+        smartCasingDigitWordBoundary: false,
         disableExamples: false,
         irVersionOverride: irVersion,
         publishMetadata:
