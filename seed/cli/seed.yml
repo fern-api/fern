@@ -111,6 +111,15 @@ fixtures:
     - customConfig:
         binaryName: acme-versioned
       outputFolder: no-custom-config
+    # Namespaced multi-spec wire tests. Exercises the harness's command-prefix
+    # resolution: each spec is bound under its own namespace (`v1`, `v2`), so
+    # commands nest as `<bin> v1 users list` / `<bin> v2 users list`. Confirms
+    # the harness prefixes resolved command chains with the spec namespace to
+    # match the CLI's `.spec_under(<ns>, ...)` command tree.
+    - customConfig:
+        binaryName: acme-versioned
+        generateWireTests: true
+      outputFolder: with-wire-tests
   cli-oauth:
     - customConfig:
         binaryName: oauth-test
