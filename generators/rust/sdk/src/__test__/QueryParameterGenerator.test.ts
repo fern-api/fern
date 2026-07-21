@@ -159,6 +159,7 @@ function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorC
                 .replace(/^_/, "");
         },
         hasMultipleBaseUrls: () => false,
+        getEndpointSnippet: () => undefined,
         escapeRustKeyword: (name: string) => {
             // Simple implementation for testing - just returns the name as-is
             // In production, this would escape Rust keywords with r# prefix

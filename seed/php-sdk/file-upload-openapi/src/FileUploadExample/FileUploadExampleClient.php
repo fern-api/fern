@@ -53,6 +53,16 @@ class FileUploadExampleClient
     /**
      * Upload a file to the database
      *
+     * Example:
+     * ```php
+     * $client->fileUploadExample->uploadFile(
+     *     new UploadFileRequest([
+     *         'file' => File::createFromString("example_file", "example_file"),
+     *         'name' => 'name',
+     *     ]),
+     * );
+     * ```
+     *
      * @param UploadFileRequest $request
      * @param ?array{
      *   baseUrl?: string,

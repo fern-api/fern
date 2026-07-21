@@ -4,6 +4,7 @@ import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WebhookBodyHashBinding } from "./WebhookBodyHashBinding.js";
+import { WebhookNotificationUrlNormalization } from "./WebhookNotificationUrlNormalization.js";
 import { WebhookPayloadFormat } from "./WebhookPayloadFormat.js";
 import { WebhookSignatureAlgorithm } from "./WebhookSignatureAlgorithm.js";
 import { WebhookSignatureEncoding } from "./WebhookSignatureEncoding.js";
@@ -20,6 +21,7 @@ export const HmacWebhookSignatureVerification: core.serialization.ObjectSchema<
     payloadFormat: WebhookPayloadFormat.optional(),
     timestamp: WebhookTimestamp.optional(),
     bodyHashBinding: WebhookBodyHashBinding.optional(),
+    notificationUrlNormalization: WebhookNotificationUrlNormalization.optional(),
 });
 
 export declare namespace HmacWebhookSignatureVerification {
@@ -31,5 +33,6 @@ export declare namespace HmacWebhookSignatureVerification {
         payloadFormat?: WebhookPayloadFormat.Raw | null;
         timestamp?: WebhookTimestamp.Raw | null;
         bodyHashBinding?: WebhookBodyHashBinding.Raw | null;
+        notificationUrlNormalization?: WebhookNotificationUrlNormalization.Raw | null;
     }
 }

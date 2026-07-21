@@ -52,6 +52,16 @@ class TestGroupClient
     /**
      * Post a nullable request body
      *
+     * Example:
+     * ```php
+     * $client->testGroup->testMethodName(
+     *     'path_param',
+     *     new TestMethodNameTestGroupRequest([
+     *         'body' => new PlainObject([]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $pathParam
      * @param TestMethodNameTestGroupRequest $request
      * @param ?array{

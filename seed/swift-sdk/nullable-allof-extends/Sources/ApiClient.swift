@@ -55,6 +55,19 @@ public final class ApiClient: Sendable {
 
     /// Returns a RootObject which inherits from a nullable schema.
     ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getTest()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getTest(requestOptions: RequestOptions? = nil) async throws -> RootObject {
         return try await httpClient.performRequest(
@@ -66,6 +79,21 @@ public final class ApiClient: Sendable {
     }
 
     /// Creates a test object with nullable allOf in request body.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.createTest(request: RootObject(
+    ///
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createTest(request: RootObject, requestOptions: RequestOptions? = nil) async throws -> RootObject {

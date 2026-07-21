@@ -14,13 +14,12 @@
 
 ```go
 request := &sseresumable.StreamCompletionRequest{
-        Query: "foo",
-    }
-client.Completions.Stream(
-        context.TODO(),
-        request,
-    )
+    Query: "foo",
 }
+client.Completions.Stream(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -61,13 +60,12 @@ client.Completions.Stream(
 
 ```go
 request := &sseresumable.StreamCompletionRequestNonResumable{
-        Query: "bar",
-    }
-client.Completions.StreamNonResumable(
-        context.TODO(),
-        request,
-    )
+    Query: "bar",
 }
+client.Completions.StreamNonResumable(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

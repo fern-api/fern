@@ -27,6 +27,9 @@ export class UsersClient {
      * @param {SeedApi.GetUsersRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.users.get({
      *         id: "id"

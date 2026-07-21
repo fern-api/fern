@@ -10,6 +10,7 @@ import { RubyGeneratorAgent } from "./RubyGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { hasUrlEncodedRequestBody } from "./utils/requestBody.js";
 
 const ROOT_TYPES_FOLDER = "types";
 
@@ -281,6 +282,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
+    /**
+     * Returns true if any endpoint sends a request body as
+     * `application/x-www-form-urlencoded`. Used to decide whether the
+     * URL-encoded request as-is file needs to be emitted.
+     */
+    public hasUrlEncodedRequestBodies(): boolean {
+        return hasUrlEncodedRequestBody(this.ir);
+    }
+
     public getReferenceToInternalMultipartRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
@@ -354,8 +364,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.JsonRequest,
             AsIsFiles.JsonSerializable,
 
-            // URL-encoded forms
-            AsIsFiles.UrlEncodedRequest,
+            // URL-encoded forms — only emitted when an endpoint actually uses a
+            // form-urlencoded body, so the root require and its as-is file stay in
+            // lockstep and never ship a dangling require.
+            ...(this.hasUrlEncodedRequestBodies() ? [AsIsFiles.UrlEncodedRequest] : []),
 
             // Multipart
             AsIsFiles.MultipartEncoder,

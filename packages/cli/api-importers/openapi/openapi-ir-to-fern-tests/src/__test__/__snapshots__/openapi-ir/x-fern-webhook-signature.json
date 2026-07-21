@@ -301,6 +301,10 @@
             "type": "queryParameter"
           }
         },
+        "notificationUrlNormalization": {
+          "portVariants": true,
+          "legacyQueryEncoding": true
+        },
         "type": "hmac"
       },
       "examples": [

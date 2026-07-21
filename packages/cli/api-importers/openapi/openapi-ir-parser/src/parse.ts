@@ -211,9 +211,15 @@ interface MultiApiEndpoint extends Endpoint {
 
 type TypedEndpoint = StandardEndpoint | MultiApiEndpoint;
 
-function getEnvironmentName(server: SingleServerInput): string {
-    const rawName = String(server.description || server.name || server["x-fern-server-name"] || "default").trim();
+function getRawEnvironmentName(server: SingleServerInput): string {
+    return String(server.description || server.name || server["x-fern-server-name"] || "default").trim();
+}
 
+function getEnvironmentName(server: SingleServerInput): string {
+    return normalizeEnvironmentName(getRawEnvironmentName(server));
+}
+
+function normalizeEnvironmentName(rawName: string): string {
     const normalized = rawName.toUpperCase();
 
     // Map common variations to standard names
@@ -468,12 +474,22 @@ function merge(
         const api2Name = extractApiNameFromServers(ir2.servers);
 
         const environmentMap = new Map<string, Record<string, ApiServerConfig>>();
+        // Preserve the first user-facing name seen for each normalized environment
+        // (e.g. keep "Production" instead of the normalized "PRD" matching key)
+        const environmentDisplayNames = new Map<string, string>();
 
         // Process servers from first API - handle already-grouped servers from previous merges
+        // The API name must be constant across all of the first API's servers (each server is
+        // the same API in a different environment), so derive it once from the first server.
+        const api1Name = extractApiNameFromServers(ir1.servers);
         for (const server of ir1.servers as AnyServerInput[]) {
             if (server.type === "grouped") {
                 // Preserve existing grouped URLs from previous merges
-                const envName = server.name ?? "default";
+                const rawEnvName = server.name ?? "default";
+                const envName = normalizeEnvironmentName(rawEnvName);
+                if (!environmentDisplayNames.has(envName)) {
+                    environmentDisplayNames.set(envName, rawEnvName);
+                }
                 if (!environmentMap.has(envName)) {
                     environmentMap.set(envName, {});
                 }
@@ -486,8 +502,10 @@ function merge(
                 }
             } else {
                 // Handle single server (first merge case)
-                const api1Name = extractApiNameFromUrl(getPreferredUrlForNameExtraction(server));
                 const envName = getEnvironmentName(server);
+                if (!environmentDisplayNames.has(envName)) {
+                    environmentDisplayNames.set(envName, getRawEnvironmentName(server));
+                }
                 if (!environmentMap.has(envName)) {
                     environmentMap.set(envName, {});
                 }
@@ -507,6 +525,9 @@ function merge(
         // Process servers from second API (always single servers from fresh IR)
         for (const server of ir2.servers) {
             const envName = getEnvironmentName(server);
+            if (!environmentDisplayNames.has(envName)) {
+                environmentDisplayNames.set(envName, getRawEnvironmentName(server));
+            }
             if (!environmentMap.has(envName)) {
                 environmentMap.set(envName, {});
             }
@@ -523,10 +544,11 @@ function merge(
         }
 
         for (const [envName, urls] of environmentMap.entries()) {
+            const displayName = environmentDisplayNames.get(envName) ?? envName;
             const groupedServer: GroupedServerInput = {
                 type: "grouped",
-                name: envName,
-                description: `${envName} environment`,
+                name: displayName,
+                description: `${displayName} environment`,
                 urls: urls
             };
             mergedServers.push(groupedServer);
@@ -546,11 +568,6 @@ function merge(
                 };
             }
             // First merge - derive API name from the first server
-            const firstServer = ir1.servers[0] as AnyServerInput | undefined;
-            const api1Name =
-                firstServer != null && firstServer.type !== "grouped"
-                    ? extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer))
-                    : "api";
             return {
                 ...endpoint,
                 type: "multi-api" as const,

@@ -405,3 +405,6 @@ scripts:
 allowedFailures:
   # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
+  # CLI-specific OAuth fixture: declares scheme-level scopes, which the Java
+  # generator explicitly rejects ("Scopes not supported"). Exercised by the CLI generator.
+  - cli-oauth

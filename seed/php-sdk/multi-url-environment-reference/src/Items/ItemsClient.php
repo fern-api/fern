@@ -49,6 +49,11 @@ class ItemsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->items->listItems();
+     * ```
+     *
      * @param ?array{
      *   maxRetries?: int,
      *   timeout?: float,

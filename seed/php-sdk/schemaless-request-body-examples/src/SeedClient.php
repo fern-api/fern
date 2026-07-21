@@ -68,6 +68,25 @@ class SeedClient
     /**
      * Creates a plant with example JSON but no request body schema.
      *
+     * Example:
+     * ```php
+     * $client->createPlant(
+     *     [
+     *         'name' => "Venus Flytrap",
+     *         'species' => "Dionaea muscipula",
+     *         'care' => [
+     *             'light' => "full sun",
+     *             'water' => "distilled only",
+     *             'humidity' => "high",
+     *         ],
+     *         'tags' => [
+     *             "carnivorous",
+     *             "tropical",
+     *         ],
+     *     ],
+     * );
+     * ```
+     *
      * @param mixed $request
      * @param ?array{
      *   baseUrl?: string,
@@ -116,6 +135,21 @@ class SeedClient
 
     /**
      * Updates a plant with example JSON but no request body schema.
+     *
+     * Example:
+     * ```php
+     * $client->updatePlant(
+     *     'plantId',
+     *     new UpdatePlantRequest([
+     *         'body' => [
+     *             'name' => "Updated Venus Flytrap",
+     *             'care' => [
+     *                 'light' => "partial shade",
+     *             ],
+     *         ],
+     *     ]),
+     * );
+     * ```
      *
      * @param string $plantId
      * @param UpdatePlantRequest $request
@@ -166,6 +200,16 @@ class SeedClient
 
     /**
      * A control endpoint that has both schema and example defined.
+     *
+     * Example:
+     * ```php
+     * $client->createPlantWithSchema(
+     *     new CreatePlantWithSchemaRequest([
+     *         'name' => 'Sundew',
+     *         'species' => 'Drosera capensis',
+     *     ]),
+     * );
+     * ```
      *
      * @param CreatePlantWithSchemaRequest $request
      * @param ?array{

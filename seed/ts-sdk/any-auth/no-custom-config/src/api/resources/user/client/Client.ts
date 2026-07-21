@@ -24,6 +24,9 @@ export class UserClient {
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedAnyAuthError}
+     * @throws {@link errors.SeedAnyAuthTimeoutError}
+     *
      * @example
      *     await client.user.get()
      */
@@ -70,6 +73,9 @@ export class UserClient {
 
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedAnyAuthError}
+     * @throws {@link errors.SeedAnyAuthTimeoutError}
      *
      * @example
      *     await client.user.getAdmins()

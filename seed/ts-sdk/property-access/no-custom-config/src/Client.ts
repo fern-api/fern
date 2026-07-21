@@ -26,6 +26,9 @@ export class SeedPropertyAccessClient {
      * @param {SeedPropertyAccess.User} request
      * @param {SeedPropertyAccessClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPropertyAccessError}
+     * @throws {@link errors.SeedPropertyAccessTimeoutError}
+     *
      * @example
      *     await client.createUser({
      *         id: "id",

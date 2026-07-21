@@ -26,6 +26,9 @@ export class SeedAliasExtendsClient {
      * @param {SeedAliasExtends.InlinedChildRequest} request
      * @param {SeedAliasExtendsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedAliasExtendsError}
+     * @throws {@link errors.SeedAliasExtendsTimeoutError}
+     *
      * @example
      *     await client.extendedInlineRequestBody({
      *         child: "child",

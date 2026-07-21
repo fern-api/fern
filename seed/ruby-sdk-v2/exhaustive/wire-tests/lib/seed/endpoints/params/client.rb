@@ -22,6 +22,9 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         #
+        # @example
+        #   client.endpoints.params.get_with_path(param: "param")
+        #
         # @return [String]
         def get_with_path(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -53,6 +56,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
+        #
+        # @example
+        #   client.endpoints.params.get_with_path(param: "param")
         #
         # @return [String]
         def get_with_inline_path(request_options: {}, **params)
@@ -86,6 +92,12 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :query
         # @option params [Integer] :number
+        #
+        # @example
+        #   client.endpoints.params.get_with_query(
+        #     query: "query",
+        #     number: 1
+        #   )
         #
         # @return [untyped]
         def get_with_query(request_options: {}, **params)
@@ -125,6 +137,12 @@ module Seed
         # @option params [String] :query
         # @option params [Integer] :number
         #
+        # @example
+        #   client.endpoints.params.get_with_query(
+        #     query: "query",
+        #     number: 1
+        #   )
+        #
         # @return [untyped]
         def get_with_allow_multiple_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -163,6 +181,12 @@ module Seed
         # @option params [String] :param
         # @option params [String] :query
         #
+        # @example
+        #   client.endpoints.params.get_with_path_and_query(
+        #     param: "param",
+        #     query: "query"
+        #   )
+        #
         # @return [untyped]
         def get_with_path_and_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -200,6 +224,12 @@ module Seed
         # @option params [String] :param
         # @option params [String] :query
         #
+        # @example
+        #   client.endpoints.params.get_with_path_and_query(
+        #     param: "param",
+        #     query: "query"
+        #   )
+        #
         # @return [untyped]
         def get_with_inline_path_and_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -236,6 +266,12 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         #
+        # @example
+        #   client.endpoints.params.modify_with_path(
+        #     param: "param",
+        #     request: "string"
+        #   )
+        #
         # @return [String]
         def modify_with_path(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -268,6 +304,12 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
+        #
+        # @example
+        #   client.endpoints.params.modify_with_path(
+        #     param: "param",
+        #     request: "string"
+        #   )
         #
         # @return [String]
         def modify_with_inline_path(request_options: {}, **params)
@@ -305,6 +347,9 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         #
+        # @example
+        #   client.endpoints.params.upload_with_path(param: "upload-path")
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField]
         def upload_with_path(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -338,6 +383,12 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String, nil] :fields
+        #
+        # @example
+        #   client.endpoints.params.create_with_body_and_query(
+        #     fields: "_fields",
+        #     string: "string"
+        #   )
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def create_with_body_and_query(request_options: {}, **params)
@@ -421,6 +472,9 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [Boolean] :param
         #
+        # @example
+        #   client.endpoints.params.get_with_boolean_path(param: true)
+        #
         # @return [String]
         def get_with_boolean_path(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -452,6 +506,9 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
+        #
+        # @example
+        #   client.endpoints.params.get_with_path(param: "param")
         #
         # @return [String]
         def get_with_path_and_errors(request_options: {}, **params)

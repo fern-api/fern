@@ -34,6 +34,16 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := []string{
+//	    "string",
+//	    "string",
+//	}
+//	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnListOfPrimitives(
 	ctx context.Context,
 	request []string,
@@ -50,6 +60,20 @@ func (c *Client) GetAndReturnListOfPrimitives(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := []*types.ObjectWithRequiredField{
+//	    &types.ObjectWithRequiredField{
+//	        FieldString: "string",
+//	    },
+//	    &types.ObjectWithRequiredField{
+//	        FieldString: "string",
+//	    },
+//	}
+//	client.Endpoints.Container.GetAndReturnListOfObjects(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnListOfObjects(
 	ctx context.Context,
 	request []*types.ObjectWithRequiredField,
@@ -66,6 +90,15 @@ func (c *Client) GetAndReturnListOfObjects(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := []string{
+//	    "string",
+//	}
+//	client.Endpoints.Container.GetAndReturnSetOfPrimitives(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnSetOfPrimitives(
 	ctx context.Context,
 	request []string,
@@ -82,6 +115,17 @@ func (c *Client) GetAndReturnSetOfPrimitives(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := []*types.ObjectWithRequiredField{
+//	    &types.ObjectWithRequiredField{
+//	        FieldString: "string",
+//	    },
+//	}
+//	client.Endpoints.Container.GetAndReturnSetOfObjects(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnSetOfObjects(
 	ctx context.Context,
 	request []*types.ObjectWithRequiredField,
@@ -98,6 +142,15 @@ func (c *Client) GetAndReturnSetOfObjects(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := map[string]string{
+//	    "string": "string",
+//	}
+//	client.Endpoints.Container.GetAndReturnMapPrimToPrim(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnMapPrimToPrim(
 	ctx context.Context,
 	request map[string]string,
@@ -114,6 +167,17 @@ func (c *Client) GetAndReturnMapPrimToPrim(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := map[string]*types.ObjectWithRequiredField{
+//	    "string": &types.ObjectWithRequiredField{
+//	        FieldString: "string",
+//	    },
+//	}
+//	client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnMapOfPrimToObject(
 	ctx context.Context,
 	request map[string]*types.ObjectWithRequiredField,
@@ -130,6 +194,17 @@ func (c *Client) GetAndReturnMapOfPrimToObject(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := map[string]*types.MixedType{
+//	    "string": &types.MixedType{
+//	        Double: 1.1,
+//	    },
+//	}
+//	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 	ctx context.Context,
 	request map[string]*types.MixedType,
@@ -146,6 +221,15 @@ func (c *Client) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &types.ObjectWithRequiredField{
+//	    FieldString: "string",
+//	}
+//	client.Endpoints.Container.GetAndReturnOptional(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetAndReturnOptional(
 	ctx context.Context,
 	request *types.ObjectWithRequiredField,

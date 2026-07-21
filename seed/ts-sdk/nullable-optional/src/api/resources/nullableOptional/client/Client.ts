@@ -28,6 +28,9 @@ export class NullableOptionalClient {
      * @param {string} userId
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.getUser("userId")
      */
@@ -78,6 +81,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.CreateUserRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.createUser({
@@ -146,6 +152,9 @@ export class NullableOptionalClient {
      * @param {string} userId
      * @param {SeedNullableOptional.UpdateUserRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.updateUser("userId", {
@@ -216,6 +225,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.ListUsersRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.listUsers({
      *         limit: 1,
@@ -283,6 +295,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.SearchUsersRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.searchUsers({
      *         query: "query",
@@ -349,6 +364,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.ComplexProfile} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.createComplexProfile({
@@ -495,6 +513,9 @@ export class NullableOptionalClient {
      * @param {string} profileId
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.getComplexProfile("profileId")
      */
@@ -551,6 +572,9 @@ export class NullableOptionalClient {
      * @param {string} profileId
      * @param {SeedNullableOptional.UpdateComplexProfileRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.updateComplexProfile("profileId", {
@@ -640,6 +664,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.DeserializationTestRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.testDeserialization({
@@ -748,6 +775,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.FilterByRoleRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.filterByRole({
      *         role: "ADMIN",
@@ -813,6 +843,9 @@ export class NullableOptionalClient {
      * @param {string} userId
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.getNotificationSettings("userId")
      */
@@ -873,6 +906,9 @@ export class NullableOptionalClient {
      * @param {SeedNullableOptional.UpdateTagsRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
+     *
      * @example
      *     await client.nullableOptional.updateTags("userId", {
      *         tags: ["tags", "tags"],
@@ -932,6 +968,9 @@ export class NullableOptionalClient {
      *
      * @param {SeedNullableOptional.SearchRequest} request
      * @param {NullableOptionalClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedNullableOptionalError}
+     * @throws {@link errors.SeedNullableOptionalTimeoutError}
      *
      * @example
      *     await client.nullableOptional.getSearchResults({

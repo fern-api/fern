@@ -24,6 +24,9 @@ export class UserClient {
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedEndpointSecurityAuthError}
+     * @throws {@link errors.SeedEndpointSecurityAuthTimeoutError}
+     *
      * @example
      *     await client.user.getWithBearer()
      */
@@ -78,6 +81,9 @@ export class UserClient {
 
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedEndpointSecurityAuthError}
+     * @throws {@link errors.SeedEndpointSecurityAuthTimeoutError}
      *
      * @example
      *     await client.user.getWithApiKey()
@@ -134,6 +140,9 @@ export class UserClient {
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedEndpointSecurityAuthError}
+     * @throws {@link errors.SeedEndpointSecurityAuthTimeoutError}
+     *
      * @example
      *     await client.user.getWithOAuth()
      */
@@ -188,6 +197,9 @@ export class UserClient {
 
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedEndpointSecurityAuthError}
+     * @throws {@link errors.SeedEndpointSecurityAuthTimeoutError}
      *
      * @example
      *     await client.user.getWithBasic()
@@ -244,6 +256,9 @@ export class UserClient {
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedEndpointSecurityAuthError}
+     * @throws {@link errors.SeedEndpointSecurityAuthTimeoutError}
+     *
      * @example
      *     await client.user.getWithInferredAuth()
      */
@@ -298,6 +313,9 @@ export class UserClient {
 
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedEndpointSecurityAuthError}
+     * @throws {@link errors.SeedEndpointSecurityAuthTimeoutError}
      *
      * @example
      *     await client.user.getWithAnyAuth()
@@ -355,6 +373,9 @@ export class UserClient {
 
     /**
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedEndpointSecurityAuthError}
+     * @throws {@link errors.SeedEndpointSecurityAuthTimeoutError}
      *
      * @example
      *     await client.user.getWithAllAuth()

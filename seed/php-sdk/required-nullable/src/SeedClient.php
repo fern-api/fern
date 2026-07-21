@@ -64,6 +64,16 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getFoo(
+     *     new GetFooRequest([
+     *         'requiredBaz' => 'required_baz',
+     *         'requiredNullableBaz' => 'required_nullable_baz',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetFooRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -120,6 +130,19 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->updateFoo(
+     *     'id',
+     *     new UpdateFooRequest([
+     *         'xIdempotencyKey' => 'X-Idempotency-Key',
+     *         'nullableText' => 'nullable_text',
+     *         'nullableNumber' => 1.1,
+     *         'nonNullableText' => 'non_nullable_text',
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $id
      * @param UpdateFooRequest $request
      * @param ?array{

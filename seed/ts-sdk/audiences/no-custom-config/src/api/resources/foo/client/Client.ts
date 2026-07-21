@@ -26,6 +26,9 @@ export class FooClient {
      * @param {SeedAudiences.FindRequest} request
      * @param {FooClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedAudiencesError}
+     * @throws {@link errors.SeedAudiencesTimeoutError}
+     *
      * @example
      *     await client.foo.find({
      *         optionalString: "optionalString",

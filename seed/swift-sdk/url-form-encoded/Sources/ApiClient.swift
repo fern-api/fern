@@ -53,6 +53,23 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.submitFormData(request: .init(
+    ///         username: "johndoe",
+    ///         email: "john@example.com"
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func submitFormData(request: Requests.PostSubmitRequest, requestOptions: RequestOptions? = nil) async throws -> PostSubmitResponse {
         return try await httpClient.performRequest(
             method: .post,
@@ -63,6 +80,23 @@ public final class ApiClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Api
+    ///
+    /// private func main() async throws {
+    ///     let client = ApiClient()
+    ///
+    ///     _ = try await client.getToken(request: TokenRequest(
+    ///         clientId: "client_id",
+    ///         clientSecret: "client_secret"
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getToken(request: TokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,

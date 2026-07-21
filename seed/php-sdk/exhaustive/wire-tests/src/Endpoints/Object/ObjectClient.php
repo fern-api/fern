@@ -60,6 +60,34 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithOptionalField(
+     *     new ObjectWithOptionalField([
+     *         'string' => 'string',
+     *         'integer' => 1,
+     *         'long' => 1000000,
+     *         'double' => 1.1,
+     *         'bool' => true,
+     *         'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+     *         'date' => new DateTime('2023-01-15'),
+     *         'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *         'base64' => 'SGVsbG8gd29ybGQh',
+     *         'list' => [
+     *             'list',
+     *             'list',
+     *         ],
+     *         'set' => [
+     *             'set',
+     *         ],
+     *         'map' => [
+     *             1 => 'map',
+     *         ],
+     *         'bigint' => '1000000',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
@@ -107,6 +135,15 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithRequiredField(
+     *     new ObjectWithRequiredField([
+     *         'string' => 'string',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
@@ -154,6 +191,19 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithMapOfMap(
+     *     new ObjectWithMapOfMap([
+     *         'map' => [
+     *             'map' => [
+     *                 'map' => 'map',
+     *             ],
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param ObjectWithMapOfMap $request
      * @param ?array{
      *   baseUrl?: string,
@@ -201,6 +251,37 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnNestedWithOptionalField(
+     *     new NestedObjectWithOptionalField([
+     *         'string' => 'string',
+     *         'nestedObject' => new ObjectWithOptionalField([
+     *             'string' => 'string',
+     *             'integer' => 1,
+     *             'long' => 1000000,
+     *             'double' => 1.1,
+     *             'bool' => true,
+     *             'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'date' => new DateTime('2023-01-15'),
+     *             'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *             'base64' => 'SGVsbG8gd29ybGQh',
+     *             'list' => [
+     *                 'list',
+     *                 'list',
+     *             ],
+     *             'set' => [
+     *                 'set',
+     *             ],
+     *             'map' => [
+     *                 1 => 'map',
+     *             ],
+     *             'bigint' => '1000000',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param NestedObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
@@ -248,6 +329,38 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnNestedWithRequiredField(
+     *     'string',
+     *     new NestedObjectWithRequiredField([
+     *         'string' => 'string',
+     *         'nestedObject' => new ObjectWithOptionalField([
+     *             'string' => 'string',
+     *             'integer' => 1,
+     *             'long' => 1000000,
+     *             'double' => 1.1,
+     *             'bool' => true,
+     *             'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+     *             'date' => new DateTime('2023-01-15'),
+     *             'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *             'base64' => 'SGVsbG8gd29ybGQh',
+     *             'list' => [
+     *                 'list',
+     *                 'list',
+     *             ],
+     *             'set' => [
+     *                 'set',
+     *             ],
+     *             'map' => [
+     *                 1 => 'map',
+     *             ],
+     *             'bigint' => '1000000',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $string
      * @param NestedObjectWithRequiredField $request
      * @param ?array{
@@ -296,6 +409,64 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
+     *     [
+     *         new NestedObjectWithRequiredField([
+     *             'string' => 'string',
+     *             'nestedObject' => new ObjectWithOptionalField([
+     *                 'string' => 'string',
+     *                 'integer' => 1,
+     *                 'long' => 1000000,
+     *                 'double' => 1.1,
+     *                 'bool' => true,
+     *                 'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+     *                 'date' => new DateTime('2023-01-15'),
+     *                 'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *                 'base64' => 'SGVsbG8gd29ybGQh',
+     *                 'list' => [
+     *                     'list',
+     *                     'list',
+     *                 ],
+     *                 'set' => [
+     *                     'set',
+     *                 ],
+     *                 'map' => [
+     *                     1 => 'map',
+     *                 ],
+     *                 'bigint' => '1000000',
+     *             ]),
+     *         ]),
+     *         new NestedObjectWithRequiredField([
+     *             'string' => 'string',
+     *             'nestedObject' => new ObjectWithOptionalField([
+     *                 'string' => 'string',
+     *                 'integer' => 1,
+     *                 'long' => 1000000,
+     *                 'double' => 1.1,
+     *                 'bool' => true,
+     *                 'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+     *                 'date' => new DateTime('2023-01-15'),
+     *                 'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+     *                 'base64' => 'SGVsbG8gd29ybGQh',
+     *                 'list' => [
+     *                     'list',
+     *                     'list',
+     *                 ],
+     *                 'set' => [
+     *                     'set',
+     *                 ],
+     *                 'map' => [
+     *                     1 => 'map',
+     *                 ],
+     *                 'bigint' => '1000000',
+     *             ]),
+     *         ]),
+     *     ],
+     * );
+     * ```
+     *
      * @param array<NestedObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -343,6 +514,17 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithUnknownField(
+     *     new ObjectWithUnknownField([
+     *         'unknown' => [
+     *             '$ref' => "https://example.com/schema",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param ObjectWithUnknownField $request
      * @param ?array{
      *   baseUrl?: string,
@@ -390,6 +572,17 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithDocumentedUnknownType(
+     *     new ObjectWithDocumentedUnknownType([
+     *         'documentedUnknownType' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
      * @param ObjectWithDocumentedUnknownType $request
      * @param ?array{
      *   baseUrl?: string,
@@ -437,6 +630,17 @@ class ObjectClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
+     *     [
+     *         'string' => [
+     *             'key' => "value",
+     *         ],
+     *     ],
+     * );
+     * ```
+     *
      * @param array<string, mixed> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -486,6 +690,18 @@ class ObjectClient
     /**
      * Tests that dynamic snippets include all required properties in the
      * object initializer, even when the example omits some required fields.
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithMixedRequiredAndOptionalFields(
+     *     new ObjectWithMixedRequiredAndOptionalFields([
+     *         'requiredString' => 'hello',
+     *         'requiredInteger' => 0,
+     *         'optionalString' => 'world',
+     *         'requiredLong' => 0,
+     *     ]),
+     * );
+     * ```
      *
      * @param ObjectWithMixedRequiredAndOptionalFields $request
      * @param ?array{
@@ -539,6 +755,19 @@ class ObjectClient
      * omits the nested object, the generator should construct a default
      * initializer with the nested object's required properties filled in.
      *
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithRequiredNestedObject(
+     *     new ObjectWithRequiredNestedObject([
+     *         'requiredString' => 'hello',
+     *         'requiredObject' => new NestedObjectWithRequiredField([
+     *             'string' => 'nested',
+     *             'nestedObject' => new ObjectWithOptionalField([]),
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param ObjectWithRequiredNestedObject $request
      * @param ?array{
      *   baseUrl?: string,
@@ -589,6 +818,16 @@ class ObjectClient
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".
+     *
+     * Example:
+     * ```php
+     * $client->endpoints->object->getAndReturnWithDatetimeLikeString(
+     *     new ObjectWithDatetimeLikeString([
+     *         'datetimeLikeString' => '2023-08-31T14:15:22Z',
+     *         'actualDatetime' => new DateTime('2023-08-31T14:15:22Z'),
+     *     ]),
+     * );
+     * ```
      *
      * @param ObjectWithDatetimeLikeString $request
      * @param ?array{

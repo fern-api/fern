@@ -27,6 +27,9 @@ export class AuthClient {
      * @param {SeedOauthClientCredentials.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
+     *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
      *         clientId: "my_oauth_app_123",
@@ -101,6 +104,9 @@ export class AuthClient {
     /**
      * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
      *
      * @example
      *     await client.auth.refreshToken({

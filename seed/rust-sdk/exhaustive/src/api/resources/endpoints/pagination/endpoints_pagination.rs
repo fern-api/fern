@@ -24,6 +24,33 @@ impl PaginationClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .pagination
+    ///         .list_items(
+    ///             &ListItemsQueryRequest {
+    ///                 cursor: Some("cursor".to_string()),
+    ///                 limit: Some(1),
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn list_items(
         &self,
         request: &ListItemsQueryRequest,

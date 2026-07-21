@@ -31,7 +31,7 @@ class AuthClient:
         *,
         x_api_key: str,
         client_id: str,
-        client_secret: str,
+        client_secret: typing.Optional[str] = OMIT,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
@@ -42,7 +42,7 @@ class AuthClient:
 
         client_id : str
 
-        client_secret : str
+        client_secret : typing.Optional[str]
 
         scope : typing.Optional[str]
 
@@ -158,7 +158,7 @@ class AsyncAuthClient:
         *,
         x_api_key: str,
         client_id: str,
-        client_secret: str,
+        client_secret: typing.Optional[str] = OMIT,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
@@ -169,7 +169,7 @@ class AsyncAuthClient:
 
         client_id : str
 
-        client_secret : str
+        client_secret : typing.Optional[str]
 
         scope : typing.Optional[str]
 

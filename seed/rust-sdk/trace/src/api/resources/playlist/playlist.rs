@@ -22,6 +22,42 @@ impl PlaylistClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .playlist
+    ///         .create_playlist(
+    ///             1,
+    ///             &CreatePlaylistRequest {
+    ///                 datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+    ///                 optional_datetime: Some(
+    ///                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+    ///                 ),
+    ///                 body: PlaylistCreateRequest {
+    ///                     name: "name".to_string(),
+    ///                     problems: vec![
+    ///                         ProblemId("problems".to_string()),
+    ///                         ProblemId("problems".to_string()),
+    ///                     ],
+    ///                     ..Default::default()
+    ///                 },
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn create_playlist(
         &self,
         service_param: i64,
@@ -54,6 +90,35 @@ impl PlaylistClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .playlist
+    ///         .get_playlists(
+    ///             1,
+    ///             &GetPlaylistsQueryRequest {
+    ///                 limit: Some(1),
+    ///                 other_field: "otherField".to_string(),
+    ///                 multi_line_docs: "multiLineDocs".to_string(),
+    ///                 optional_multiple_field: vec![Some("optionalMultipleField".to_string())],
+    ///                 multiple_field: vec!["multipleField".to_string()],
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_playlists(
         &self,
         service_param: i64,
@@ -89,6 +154,25 @@ impl PlaylistClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .playlist
+    ///         .get_playlist(1, &PlaylistId("playlistId".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_playlist(
         &self,
         service_param: i64,
@@ -115,6 +199,37 @@ impl PlaylistClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .playlist
+    ///         .update_playlist(
+    ///             1,
+    ///             &PlaylistId("playlistId".to_string()),
+    ///             &Some(UpdatePlaylistRequest {
+    ///                 name: "name".to_string(),
+    ///                 problems: vec![
+    ///                     ProblemId("problems".to_string()),
+    ///                     ProblemId("problems".to_string()),
+    ///                 ],
+    ///                 ..Default::default()
+    ///             }),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update_playlist(
         &self,
         service_param: i64,
@@ -142,6 +257,25 @@ impl PlaylistClient {
     /// # Returns
     ///
     /// Empty response
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .playlist
+    ///         .delete_playlist(1, &PlaylistId("playlist_id".to_string()), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn delete_playlist(
         &self,
         service_param: i64,

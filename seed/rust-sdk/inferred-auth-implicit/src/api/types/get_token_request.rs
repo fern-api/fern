@@ -4,8 +4,8 @@ pub use crate::prelude::*;
 pub struct GetTokenRequest {
     #[serde(default)]
     pub client_id: String,
-    #[serde(default)]
-    pub client_secret: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub client_secret: Option<String>,
     pub audience: String,
     pub grant_type: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -57,7 +57,6 @@ impl GetTokenRequestBuilder {
     /// Consumes the builder and constructs a [`GetTokenRequest`].
     /// This method will fail if any of the following fields are not set:
     /// - [`client_id`](GetTokenRequestBuilder::client_id)
-    /// - [`client_secret`](GetTokenRequestBuilder::client_secret)
     /// - [`audience`](GetTokenRequestBuilder::audience)
     /// - [`grant_type`](GetTokenRequestBuilder::grant_type)
     pub fn build(self) -> Result<GetTokenRequest, BuildError> {
@@ -65,9 +64,7 @@ impl GetTokenRequestBuilder {
             client_id: self
                 .client_id
                 .ok_or_else(|| BuildError::missing_field("client_id"))?,
-            client_secret: self
-                .client_secret
-                .ok_or_else(|| BuildError::missing_field("client_secret"))?,
+            client_secret: self.client_secret,
             audience: self
                 .audience
                 .ok_or_else(|| BuildError::missing_field("audience"))?,

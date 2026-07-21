@@ -34,6 +34,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.NoReqBody.GetWithNoRequestBody(
+//	    context.TODO(),
+//	)
 func (c *Client) GetWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -48,6 +53,11 @@ func (c *Client) GetWithNoRequestBody(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.NoReqBody.PostWithNoRequestBody(
+//	    context.TODO(),
+//	)
 func (c *Client) PostWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,

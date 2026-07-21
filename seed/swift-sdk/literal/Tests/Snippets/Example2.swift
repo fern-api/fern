@@ -5,19 +5,6 @@ enum Example2 {
     static func snippet() async throws {
         let client = LiteralClient(baseURL: "https://api.fern.com")
 
-        _ = try await client.inlined.send(request: .init(
-            prompt: .youAreAHelpfulAssistant,
-            context: .youreSuperWise,
-            query: "What is the weather today",
-            temperature: 10.1,
-            stream: false,
-            aliasedContext: .youreSuperWise,
-            maybeContext: .youreSuperWise,
-            objectWithLiteral: ATopLevelLiteral(
-                nestedLiteral: ANestedLiteral(
-                    myLiteral: .howSuperCool
-                )
-            )
-        ))
+        _ = try await client.headers.sendLiteralsOnly()
     }
 }

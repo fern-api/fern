@@ -20,6 +20,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.imdb.create_movie(
+      #     title: "title",
+      #     rating: 1.1
+      #   )
+      #
       # @return [String]
       def create_movie(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -52,6 +58,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Types::MovieID] :movie_id
+      #
+      # @example
+      #   client.imdb.get_movie(movie_id: "movieId")
       #
       # @return [Seed::Types::Movie]
       def get_movie(request_options: {}, **params)

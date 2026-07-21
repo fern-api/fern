@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -177,6 +177,12 @@ fixtures:
         packageName: unions
         module:
           path: github.com/fern-api/unions-go
+  go-union-base-properties:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: dedupe-union-base-properties
+      customConfig:
+        dedupeUnionBaseProperties: true
   file-upload:
     - outputFolder: no-custom-config
       customConfig: null
@@ -293,6 +299,10 @@ fixtures:
   go-oauth-token-optional:
     - outputFolder: no-custom-config
       customConfig: null
+  oauth-pkce:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   pagination-custom:
     - outputFolder: .
       customConfig:
@@ -347,6 +357,10 @@ fixtures:
     - outputFolder: .
       customConfig: null
   union-query-parameters:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  literal:
     - outputFolder: .
       customConfig:
         enableWireTests: true

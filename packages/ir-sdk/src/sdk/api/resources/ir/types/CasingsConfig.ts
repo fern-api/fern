@@ -14,4 +14,10 @@ export interface CasingsConfig {
     keywords: string[] | undefined;
     /** Whether to apply smart casing (e.g., capitalizing acronyms like HTTP → Http in camelCase). */
     smartCasing: boolean;
+    /**
+     * When smart casing is enabled, whether snake_case preserves the word boundary after a digit
+     * run (e.g., ConversationsV2Configuration → conversations_v2_configuration). Defaults to false,
+     * which keeps the digit run fused to the following word (conversations_v2configuration).
+     */
+    smartCasingDigitWordBoundary: boolean | undefined;
 }

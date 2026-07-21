@@ -14,9 +14,8 @@
 
 ```go
 client.Retries.GetUsers(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

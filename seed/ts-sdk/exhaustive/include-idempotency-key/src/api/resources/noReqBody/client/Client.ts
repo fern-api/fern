@@ -25,6 +25,9 @@ export class NoReqBodyClient {
     /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
@@ -78,6 +81,9 @@ export class NoReqBodyClient {
 
     /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
      *
      * @example
      *     await client.noReqBody.postWithNoRequestBody()

@@ -35,6 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Service.Upload(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Upload(
 	ctx context.Context,
 	request io.Reader,
@@ -51,6 +57,16 @@ func (c *Client) Upload(
 	return nil
 }
 
+// Example:
+//
+//	request := &fern.UploadWithQueryParamsRequest{
+//	    Model: "nova-2",
+//	    Body: []byte(""),
+//	}
+//	client.Service.UploadWithQueryParams(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UploadWithQueryParams(
 	ctx context.Context,
 	request *fern.UploadWithQueryParamsRequest,

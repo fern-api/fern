@@ -23,6 +23,9 @@ export class DummyClient {
     /**
      * @param {DummyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedNoEnvironmentError}
+     * @throws {@link errors.SeedNoEnvironmentTimeoutError}
+     *
      * @example
      *     await client.dummy.getDummy()
      */

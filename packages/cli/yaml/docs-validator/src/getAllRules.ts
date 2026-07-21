@@ -14,6 +14,7 @@ import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
 import { ValidInstanceUrlRule } from "./rules/valid-instance-url/index.js";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
+import { ValidMarkdownRule } from "./rules/valid-markdown/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidSkillsPageActionRule } from "./rules/valid-skills-page-action/index.js";
@@ -28,6 +29,7 @@ const allRules = [
     ValidOpenApiExamples, // Validate human examples in OpenAPI specs
     NoNonComponentRefsRule, // Check non-component references (will skip v2 files)
     ValidLocalReferencesRule, // Validate that local references actually exist
+    ValidMarkdownRule, // Compile each page's MDX and surface syntax errors (e.g. unclosed components)
     NavigationConflicts,
     ValidateVersionFileRule,
     ValidateProductFileRule,

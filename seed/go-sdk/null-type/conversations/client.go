@@ -35,6 +35,16 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Place an outbound call or validate call setup with dry_run.
+//
+// Example:
+//
+//	request := &fern.OutboundCallConversationsRequest{
+//	    ToPhoneNumber: "to_phone_number",
+//	}
+//	client.Conversations.OutboundCall(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) OutboundCall(
 	ctx context.Context,
 	request *fern.OutboundCallConversationsRequest,

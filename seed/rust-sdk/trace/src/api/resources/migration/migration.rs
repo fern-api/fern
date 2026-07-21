@@ -13,6 +13,26 @@ impl MigrationClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .migration
+    ///         .get_attempted_migrations(Some(
+    ///             RequestOptions::new().additional_header("admin-key-header", "admin-key-header"),
+    ///         ))
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_attempted_migrations(
         &self,
         options: Option<RequestOptions>,

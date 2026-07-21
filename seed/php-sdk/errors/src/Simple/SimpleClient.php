@@ -50,6 +50,15 @@ class SimpleClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->simple->fooWithoutEndpointError(
+     *     new FooRequest([
+     *         'bar' => 'bar',
+     *     ]),
+     * );
+     * ```
+     *
      * @param FooRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -97,6 +106,15 @@ class SimpleClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->simple->foo(
+     *     new FooRequest([
+     *         'bar' => 'bar',
+     *     ]),
+     * );
+     * ```
+     *
      * @param FooRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -144,6 +162,15 @@ class SimpleClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->simple->fooWithExamples(
+     *     new FooRequest([
+     *         'bar' => 'hello',
+     *     ]),
+     * );
+     * ```
+     *
      * @param FooRequest $request
      * @param ?array{
      *   baseUrl?: string,

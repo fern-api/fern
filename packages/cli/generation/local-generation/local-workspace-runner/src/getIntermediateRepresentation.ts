@@ -62,6 +62,7 @@ export async function getIntermediateRepresentation({
             generationLanguage: generatorInvocation.language,
             keywords: generatorInvocation.keywords,
             smartCasing: generatorInvocation.smartCasing,
+            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples,
                 disabled: generatorInvocation.disableExamples

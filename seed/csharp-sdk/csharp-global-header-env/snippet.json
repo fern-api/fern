@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/apiVersion",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithApiVersion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpGlobalHeaderEnv;\n\nvar client = new SeedCsharpGlobalHeaderEnvClient(\"VERSION\");\nawait client.Service.GetWithApiVersionAsync();\n"
+            }
+        }
+    ]
+}

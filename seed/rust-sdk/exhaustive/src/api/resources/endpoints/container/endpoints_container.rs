@@ -14,6 +14,25 @@ impl ContainerClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_list_of_primitives(&vec!["string".to_string(), "string".to_string()], None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_list_of_primitives(
         &self,
         request: &Vec<String>,
@@ -30,6 +49,37 @@ impl ContainerClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_list_of_objects(
+    ///             &vec![
+    ///                 ObjectWithRequiredField {
+    ///                     string: "string".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///                 ObjectWithRequiredField {
+    ///                     string: "string".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             ],
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_list_of_objects(
         &self,
         request: &Vec<ObjectWithRequiredField>,
@@ -46,6 +96,25 @@ impl ContainerClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_set_of_primitives(&HashSet::from(["string".to_string()]), None)
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_set_of_primitives(
         &self,
         request: &HashSet<String>,
@@ -62,6 +131,31 @@ impl ContainerClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_set_of_objects(
+    ///             &HashSet::from([ObjectWithRequiredField {
+    ///                 string: "string".to_string(),
+    ///                 ..Default::default()
+    ///             }]),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_set_of_objects(
         &self,
         request: &HashSet<ObjectWithRequiredField>,
@@ -78,6 +172,28 @@ impl ContainerClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_map_prim_to_prim(
+    ///             &HashMap::from([("string".to_string(), "string".to_string())]),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_map_prim_to_prim(
         &self,
         request: &HashMap<String, String>,
@@ -94,6 +210,34 @@ impl ContainerClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_map_of_prim_to_object(
+    ///             &HashMap::from([(
+    ///                 "string".to_string(),
+    ///                 ObjectWithRequiredField {
+    ///                     string: "string".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             )]),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_map_of_prim_to_object(
         &self,
         request: &HashMap<String, ObjectWithRequiredField>,
@@ -110,6 +254,28 @@ impl ContainerClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_map_of_prim_to_undiscriminated_union(
+    ///             &HashMap::from([("string".to_string(), MixedType::Double(1.1))]),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_map_of_prim_to_undiscriminated_union(
         &self,
         request: &HashMap<String, MixedType>,
@@ -126,6 +292,31 @@ impl ContainerClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
+    ///         .get_and_return_optional(
+    ///             &Some(ObjectWithRequiredField {
+    ///                 string: "string".to_string(),
+    ///                 ..Default::default()
+    ///             }),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_and_return_optional(
         &self,
         request: &Option<ObjectWithRequiredField>,
