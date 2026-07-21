@@ -256,7 +256,7 @@ export type BaseClientOptions = {
         }
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
-        const serverVariableInterpolation = this.getServerVariableInterpolation();
+        const serverVariableInterpolation = this.getServerVariableInterpolation(context);
 
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
@@ -278,7 +278,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
      * provided the base URL is rebuilt from the environment's URL template(s) using those values.
      * Returns empty strings when the API declares no server variables, leaving output unchanged.
      */
-    private getServerVariableInterpolation(): { section: string; returnFields: string } {
+    private getServerVariableInterpolation(context: FileContext): { section: string; returnFields: string } {
         const empty = { section: "", returnFields: "" };
         const options = getServerVariableOptions(this.ir, this.caseConverter);
         if (options.length === 0) {
@@ -299,44 +299,76 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
                 return `        const ${localName} = ${OPTIONS_PARAMETER_NAME}?.${getPropertyKey(optionName)} ?? ${fallback};`;
             })
             .join("\n");
+        const environmentsEnum = getTextOfTsNode(context.environments.getReferenceToEnvironmentsEnum().getExpression());
 
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
-                if (templatedEnvironment?.urlTemplate == null) {
+                const templatedEnvironments = environments.environments.flatMap((env) =>
+                    env.urlTemplate != null ? [{ env, urlTemplate: env.urlTemplate }] : []
+                );
+                const firstTemplate = templatedEnvironments[0]?.urlTemplate;
+                if (firstTemplate == null) {
                     return empty;
                 }
-                const literal = urlTemplateToTemplateLiteral(templatedEnvironment.urlTemplate, options);
+                const entries = templatedEnvironments.map(({ env, urlTemplate }) => {
+                    const environmentName = this.caseConverter.pascalUnsafe(env.name);
+                    const literal = urlTemplateToTemplateLiteral(urlTemplate, options);
+                    return `                [${environmentsEnum}.${environmentName}, ${literal}],`;
+                });
                 const section = `    let baseUrl = ${OPTIONS_PARAMETER_NAME}?.baseUrl;
     if (${condition}) {
 ${localDeclarations}
-        baseUrl = ${literal};
+        if (baseUrl == null) {
+            const _environmentUrls = new Map<unknown, string>([
+${entries.join("\n")}
+            ]);
+            baseUrl = _environmentUrls.get(${OPTIONS_PARAMETER_NAME}?.environment) ?? ${urlTemplateToTemplateLiteral(firstTemplate, options)};
+        }
     }
 
 `;
                 return { section, returnFields: "\n        baseUrl," };
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
-                if (templatedEnvironment?.urlTemplates == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
+                const firstTemplatedEnvironment = templatedEnvironments[0];
+                if (firstTemplatedEnvironment == null) {
                     return empty;
                 }
-                const templates = templatedEnvironment.urlTemplates;
-                const staticUrls = templatedEnvironment.urls;
-                const entries = environments.baseUrls.map((baseUrl) => {
-                    const propertyKey = getPropertyKey(this.caseConverter.camelUnsafe(baseUrl.name));
-                    const template = templates[baseUrl.id];
-                    if (template != null) {
-                        return `            ${propertyKey}: ${urlTemplateToTemplateLiteral(template, options)},`;
-                    }
-                    return `            ${propertyKey}: ${JSON.stringify(staticUrls[baseUrl.id] ?? "")},`;
+                const environmentUrlsType = getTextOfTsNode(
+                    context.environments.getReferenceToEnvironmentUrls().getTypeNode()
+                );
+                const getUrlEntries = (env: FernIr.MultipleBaseUrlsEnvironment, indent: string): string[] =>
+                    environments.baseUrls.map((baseUrl) => {
+                        const propertyKey = getPropertyKey(this.caseConverter.camelUnsafe(baseUrl.name));
+                        const template = env.urlTemplates?.[baseUrl.id];
+                        if (template != null) {
+                            return `${indent}${propertyKey}: ${urlTemplateToTemplateLiteral(template, options)},`;
+                        }
+                        return `${indent}${propertyKey}: ${JSON.stringify(env.urls[baseUrl.id] ?? "")},`;
+                    });
+                const entries = templatedEnvironments.map((env) => {
+                    const environmentName = this.caseConverter.pascalUnsafe(env.name);
+                    return `                [
+                    ${environmentsEnum}.${environmentName},
+                    {
+${getUrlEntries(env, "                        ").join("\n")}
+                    },
+                ],`;
                 });
                 const section = `    let environment = ${OPTIONS_PARAMETER_NAME}?.environment;
     if (${condition}) {
 ${localDeclarations}
-        environment = {
+        if (environment == null) {
+            environment = {
+${getUrlEntries(firstTemplatedEnvironment, "                ").join("\n")}
+            };
+        } else {
+            const _environmentUrls = new Map<unknown, ${environmentUrlsType}>([
 ${entries.join("\n")}
-        };
+            ]);
+            environment = _environmentUrls.get(environment) ?? environment;
+        }
     }
 
 `;
