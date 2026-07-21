@@ -34,18 +34,18 @@ class WebhooksHelper
     public static function verifySignature(string|null $requestBody, string|null $signatureHeader, string|null $signatureKey, string|null $timestampHeader): bool
     {
         if ($requestBody === null || $requestBody === '' || $signatureHeader === null || $signatureHeader === '' || $signatureKey === null || $signatureKey === '') {
-            throw new \InvalidArgumentException("Missing required parameters for webhook signature verification");
+            return false;
         }
 
         if ($timestampHeader === null || $timestampHeader === '') {
-            throw new \InvalidArgumentException("Missing timestamp header 'x-webhook-timestamp' for webhook signature verification");
+            return false;
         }
 
         $timestampValue = filter_var($timestampHeader, FILTER_VALIDATE_INT);
         if ($timestampValue === false) {
-            throw new \InvalidArgumentException("Invalid timestamp format: expected unix seconds");
+            return false;
         }
-        $timestampMs = $timestampValue * 1000;
+        $timestampMs = (float) $timestampValue * 1000;
 
         if (abs(microtime(true) * 1000 - $timestampMs) > 300 * 1000) {
             return false;

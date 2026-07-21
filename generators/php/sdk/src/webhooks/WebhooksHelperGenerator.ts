@@ -122,6 +122,13 @@ export class WebhooksHelperGenerator {
                           algorithm: config.bodyHashBinding.algorithm,
                           encoding: config.bodyHashBinding.encoding,
                           location: config.bodyHashBinding.location
+                      },
+            notificationUrlNormalization:
+                config.notificationUrlNormalization == null
+                    ? null
+                    : {
+                          portVariants: config.notificationUrlNormalization.portVariants,
+                          legacyQueryEncoding: config.notificationUrlNormalization.legacyQueryEncoding
                       }
         });
     }
@@ -152,12 +159,19 @@ export class WebhooksHelperGenerator {
 
     private buildParameters(config: FernIr.HmacSignatureVerification): php.Parameter[] {
         const nullableString = php.Type.union([php.Type.string(), php.Type.null()]);
+        // When bodySort is set the body may be a raw string or a form-parameter multimap
+        // whose values are a single string or a list of strings. The union renders as the
+        // native hint `string|array|null`, which accepts arrays so the runtime is_string
+        // guard (not the native type system) selects the branch.
         const requestBodyType =
             config.payloadFormat.bodySort == null
                 ? nullableString
                 : php.Type.union([
                       php.Type.string(),
-                      php.Type.map(php.Type.string(), php.Type.string()),
+                      php.Type.map(
+                          php.Type.string(),
+                          php.Type.union([php.Type.string(), php.Type.array(php.Type.string())])
+                      ),
                       php.Type.null()
                   ]);
         const parameters = [
@@ -188,6 +202,8 @@ export class WebhooksHelperGenerator {
 
     private buildBody(config: FernIr.HmacSignatureVerification): php.CodeBlock {
         return php.codeblock((writer) => {
+            // A verification helper returns a boolean and never throws, so missing inputs
+            // fail closed with `false` rather than raising.
             const emptyRequestBodyCheck =
                 config.payloadFormat.bodySort == null
                     ? "$requestBody === null || $requestBody === ''"
@@ -196,9 +212,7 @@ export class WebhooksHelperGenerator {
                 `if (${emptyRequestBodyCheck} || $signatureHeader === null || $signatureHeader === '' || $signatureKey === null || $signatureKey === '') {`
             );
             writer.indent();
-            writer.writeLine(
-                'throw new \\InvalidArgumentException("Missing required parameters for webhook signature verification");'
-            );
+            writer.writeLine("return false;");
             writer.dedent();
             writer.writeLine("}");
 
@@ -220,52 +234,68 @@ export class WebhooksHelperGenerator {
                 writer.writeLine("$signature = $signatureHeader;");
             }
 
-            writer.newLine();
-            this.writePayloadConstruction(writer, config.payloadFormat);
-
-            if (config.bodyHashBinding != null) {
-                writer.newLine();
-                this.writeBodyHashVerification(writer, config.bodyHashBinding);
+            // Notification-URL normalization: some providers (e.g. Twilio) are inconsistent
+            // about the signed URL's port and query encoding, so verify against several
+            // normalized URL forms and accept on the first constant-time match.
+            if (config.notificationUrlNormalization != null) {
+                this.writeNormalizedHmacVerification(writer, config, config.notificationUrlNormalization);
+                return;
             }
 
             writer.newLine();
-            writer.write("$expected = ");
-            writer.writeNode(
-                php.classReference({
-                    name: "WebhookSignature",
-                    namespace: this.context.getCoreNamespace()
-                })
-            );
-            writer.writeLine("::computeHmacSignature(");
-            writer.indent();
-            writer.writeLine("payload: $payload,");
-            writer.writeLine("secret: $signatureKey,");
-            writer.writeLine(`algorithm: ${this.phpString(this.mapHmacAlgorithm(config.algorithm))},`);
-            writer.writeLine(`encoding: ${this.phpString(this.mapEncoding(config.encoding))},`);
-            writer.dedent();
-            writer.writeLine(");");
+            if (config.bodyHashBinding != null) {
+                // Body-hash binding (e.g. Twilio): the same endpoint accepts both classic
+                // form-encoded and JSON requests, so branch at runtime on whether the
+                // body-hash query parameter is present in the notification URL.
+                //   - present (JSON): the signed payload is the URL only; additionally
+                //     recompute hash(rawBody) and constant-time compare it to the
+                //     transmitted value.
+                //   - absent (classic form): the signed payload is the URL + sorted/deduped
+                //     form params, with no body-hash check.
+                this.writeBodyHashBranchedPayloadConstruction(writer, config, config.bodyHashBinding);
+            } else {
+                this.writePayloadConstruction(writer, config.payloadFormat);
+            }
+
+            writer.newLine();
+            this.writeHmacComputation(writer, config, "$payload");
 
             writer.newLine();
             writer.write("return ");
-            writer.writeNode(
-                php.classReference({
-                    name: "WebhookSignature",
-                    namespace: this.context.getCoreNamespace()
-                })
-            );
+            writer.writeNode(this.webhookSignatureReference());
             writer.writeLine("::timingSafeEqual($signature, $expected);");
         });
     }
 
+    private webhookSignatureReference(): php.ClassReference {
+        return php.classReference({
+            name: "WebhookSignature",
+            namespace: this.context.getCoreNamespace()
+        });
+    }
+
+    private writeHmacComputation(
+        writer: php.Writer,
+        config: FernIr.HmacSignatureVerification,
+        payloadExpression: string
+    ): void {
+        writer.write("$expected = ");
+        writer.writeNode(this.webhookSignatureReference());
+        writer.writeLine("::computeHmacSignature(");
+        writer.indent();
+        writer.writeLine(`payload: ${payloadExpression},`);
+        writer.writeLine("secret: $signatureKey,");
+        writer.writeLine(`algorithm: ${this.phpString(this.mapHmacAlgorithm(config.algorithm))},`);
+        writer.writeLine(`encoding: ${this.phpString(this.mapEncoding(config.encoding))},`);
+        writer.dedent();
+        writer.writeLine(");");
+    }
+
     private writeTimestampValidation(writer: php.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
-        const headerName = getWireValue(timestamp.headerName);
+        // A missing or malformed timestamp header fails closed with `false` rather than raising.
         writer.writeLine("if ($timestampHeader === null || $timestampHeader === '') {");
         writer.indent();
-        writer.writeLine(
-            `throw new \\InvalidArgumentException(${this.phpString(
-                `Missing timestamp header '${headerName}' for webhook signature verification`
-            )});`
-        );
+        writer.writeLine("return false;");
         writer.dedent();
         writer.writeLine("}");
         writer.newLine();
@@ -285,9 +315,7 @@ export class WebhooksHelperGenerator {
                 writer.dedent();
                 writer.writeLine("} catch (\\Exception) {");
                 writer.indent();
-                writer.writeLine(
-                    'throw new \\InvalidArgumentException("Invalid timestamp format: expected ISO 8601 date string");'
-                );
+                writer.writeLine("return false;");
                 writer.dedent();
                 writer.writeLine("}");
                 break;
@@ -304,46 +332,73 @@ export class WebhooksHelperGenerator {
         writer.writeLine("}");
     }
 
-    private writeUnixTimestampParsing(writer: php.Writer, unit: string, convertSeconds: boolean): void {
+    private writeUnixTimestampParsing(writer: php.Writer, _unit: string, convertSeconds: boolean): void {
+        // A missing or malformed timestamp fails closed with `false` (the helper never throws).
         writer.writeLine("$timestampValue = filter_var($timestampHeader, FILTER_VALIDATE_INT);");
         writer.writeLine("if ($timestampValue === false) {");
         writer.indent();
-        writer.writeLine(
-            `throw new \\InvalidArgumentException(${this.phpString(
-                `Invalid timestamp format: expected unix ${unit}`
-            )});`
-        );
+        writer.writeLine("return false;");
         writer.dedent();
         writer.writeLine("}");
-        writer.writeLine(convertSeconds ? "$timestampMs = $timestampValue * 1000;" : "$timestampMs = $timestampValue;");
+        // Keep $timestampMs a consistent float across all timestamp formats so the abs()
+        // comparison operates on a stable inferred type.
+        writer.writeLine(
+            convertSeconds
+                ? "$timestampMs = (float) $timestampValue * 1000;"
+                : "$timestampMs = (float) $timestampValue;"
+        );
     }
 
     private writePayloadConstruction(writer: php.Writer, payloadFormat: FernIr.WebhookPayloadFormat): void {
         const hasBodySort = payloadFormat.bodySort != null;
         if (hasBodySort) {
-            writer.writeLine("if (is_string($requestBody)) {");
-            writer.indent();
-            writer.writeLine("$bodyString = $requestBody;");
-            writer.dedent();
-            writer.writeLine("} else {");
-            writer.indent();
-            writer.writeLine("ksort($requestBody);");
-            writer.writeLine("$bodyString = '';");
-            writer.writeLine("foreach ($requestBody as $key => $value) {");
-            writer.indent();
-            writer.writeLine("$bodyString .= $key . $value;");
-            writer.dedent();
-            writer.writeLine("}");
-            writer.dedent();
-            writer.writeLine("}");
+            this.writeBodyStringAssignment(writer);
         }
+        writer.writeLine(`$payload = ${this.buildPayloadExpression(payloadFormat, hasBodySort)};`);
+    }
 
+    /**
+     * Emits the `$bodyString` assignment that flattens a form-parameter multimap into the
+     * signed string. Mirrors Twilio's toFormUrlEncodedParam: keys are sorted, and for each
+     * key the values are deduped and sorted, concatenating `key . value` for every value
+     * with no delimiter between params. A raw string body is passed through unchanged.
+     */
+    private writeBodyStringAssignment(writer: php.Writer): void {
+        writer.writeLine("if (is_string($requestBody)) {");
+        writer.indent();
+        writer.writeLine("$bodyString = $requestBody;");
+        writer.dedent();
+        writer.writeLine("} else {");
+        writer.indent();
+        writer.writeLine("ksort($requestBody);");
+        writer.writeLine("$bodyString = '';");
+        writer.writeLine("foreach ($requestBody as $key => $value) {");
+        writer.indent();
+        writer.writeLine("$values = is_array($value) ? $value : [$value];");
+        writer.writeLine("$values = array_values(array_unique($values));");
+        writer.writeLine("sort($values, SORT_STRING);");
+        writer.writeLine("foreach ($values as $singleValue) {");
+        writer.indent();
+        writer.writeLine("$bodyString .= $key . $singleValue;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Builds the RHS expression for `$payload`. `urlExpression` is the identifier used for
+     * the notification-URL component — normally `$notificationUrl`, but the candidate loop
+     * substitutes `$candidateUrl`.
+     */
+    private buildPayloadExpression(
+        payloadFormat: FernIr.WebhookPayloadFormat,
+        hasBodySort: boolean,
+        urlExpression = "$notificationUrl"
+    ): string {
         const bodyExpression = hasBodySort ? "$bodyString" : "$requestBody";
-        if (payloadFormat.components.length === 1 && payloadFormat.components[0] === "BODY") {
-            writer.writeLine(`$payload = ${bodyExpression};`);
-            return;
-        }
-
         const components = payloadFormat.components.map((component) => {
             switch (component) {
                 case "BODY":
@@ -351,51 +406,150 @@ export class WebhooksHelperGenerator {
                 case "TIMESTAMP":
                     return "$timestampHeader";
                 case "NOTIFICATION_URL":
-                    return "$notificationUrl";
+                    return urlExpression;
                 case "MESSAGE_ID":
                     return "$messageId";
                 default:
                     assertNever(component);
             }
         });
-        writer.writeLine(`$payload = implode(${this.phpString(payloadFormat.delimiter)}, [${components.join(", ")}]);`);
+        const firstComponent = components[0];
+        if (components.length === 1 && firstComponent != null) {
+            return firstComponent;
+        }
+        return `implode(${this.phpString(payloadFormat.delimiter)}, [${components.join(", ")}])`;
     }
 
-    private writeBodyHashVerification(writer: php.Writer, binding: FernIr.WebhookBodyHashBinding): void {
-        const algorithm = this.mapBodyHashAlgorithm(binding.algorithm);
-        const encoding = this.mapEncoding(binding.encoding);
+    /**
+     * Emits the runtime branch for a body-hash binding. The same endpoint can receive
+     * either a JSON request (body-hash query parameter present) or a classic form-encoded
+     * request (absent), so the signed payload is assembled differently at runtime and only
+     * the JSON path performs the separate body-hash comparison.
+     */
+    private writeBodyHashBranchedPayloadConstruction(
+        writer: php.Writer,
+        config: FernIr.HmacSignatureVerification,
+        binding: FernIr.WebhookBodyHashBinding
+    ): void {
+        const hasBodySort = config.payloadFormat.bodySort != null;
         const parameterName = this.getBodyHashQueryParameterName(binding.location);
-
-        writer.write("$expectedBodyHash = ");
-        writer.writeNode(
-            php.classReference({
-                name: "WebhookSignature",
-                namespace: this.context.getCoreNamespace()
-            })
-        );
-        writer.writeLine(`::computeHash($requestBody, ${this.phpString(algorithm)}, ${this.phpString(encoding)});`);
-
         writer.write("$transmittedBodyHash = ");
-        writer.writeNode(
-            php.classReference({
-                name: "WebhookSignature",
-                namespace: this.context.getCoreNamespace()
-            })
-        );
+        writer.writeNode(this.webhookSignatureReference());
         writer.writeLine(`::getWebhookQueryParameter($notificationUrl, ${this.phpString(parameterName)});`);
 
-        writer.write("if ($transmittedBodyHash === null || !");
-        writer.writeNode(
-            php.classReference({
-                name: "WebhookSignature",
-                namespace: this.context.getCoreNamespace()
-            })
+        writer.writeLine("if ($transmittedBodyHash !== null) {");
+        writer.indent();
+        // JSON path: the URL alone is the signed payload; the raw body is transmitted as a
+        // separately-recomputed hash and compared in constant time. Both must pass.
+        this.writeBodyHashCheck(writer, binding, hasBodySort);
+        writer.writeLine("$payload = $notificationUrl;");
+        writer.dedent();
+        writer.writeLine("} else {");
+        writer.indent();
+        // Classic form path: URL + sorted/deduped form params, no body-hash check.
+        if (hasBodySort) {
+            this.writeBodyStringAssignment(writer);
+        }
+        writer.writeLine(`$payload = ${this.buildPayloadExpression(config.payloadFormat, hasBodySort)};`);
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Emits the constant-time body-hash comparison for the JSON path. Assumes
+     * `$transmittedBodyHash` is a non-null string in scope.
+     */
+    private writeBodyHashCheck(writer: php.Writer, binding: FernIr.WebhookBodyHashBinding, hasBodySort: boolean): void {
+        const algorithm = this.mapBodyHashAlgorithm(binding.algorithm);
+        const encoding = this.mapEncoding(binding.encoding);
+
+        // When bodySort widens $requestBody to string|array, narrow it to a string for the
+        // hash: the JSON path only receives a raw string body. A non-string here fails
+        // closed via the constant-time compare below.
+        const rawBodyExpression = hasBodySort ? "$rawBody" : "$requestBody";
+        if (hasBodySort) {
+            writer.writeLine("$rawBody = is_string($requestBody) ? $requestBody : '';");
+        }
+        writer.write("$expectedBodyHash = ");
+        writer.writeNode(this.webhookSignatureReference());
+        writer.writeLine(
+            `::computeHash(${rawBodyExpression}, ${this.phpString(algorithm)}, ${this.phpString(encoding)});`
         );
-        writer.writeLine("::timingSafeEqual($transmittedBodyHash, $expectedBodyHash)) {");
+
+        writer.write("if (!");
+        writer.writeNode(this.webhookSignatureReference());
+        writer.writeLine("::timingSafeEqual($expectedBodyHash, $transmittedBodyHash)) {");
         writer.indent();
         writer.writeLine("return false;");
         writer.dedent();
         writer.writeLine("}");
+    }
+
+    /**
+     * Emits HMAC verification against several normalized notification-URL forms, accepting
+     * on the first constant-time match. The body-hash check (when configured) runs once
+     * above the loop because it does not depend on URL normalization; only the HMAC over
+     * the URL is recomputed per candidate.
+     */
+    private writeNormalizedHmacVerification(
+        writer: php.Writer,
+        config: FernIr.HmacSignatureVerification,
+        normalization: FernIr.WebhookNotificationUrlNormalization
+    ): void {
+        const binding = config.bodyHashBinding;
+        const hasBodySort = config.payloadFormat.bodySort != null;
+
+        writer.newLine();
+
+        // Body-hash check (once, independent of URL normalization). Only the JSON request
+        // carries the transmitted hash; when present it must match hash(rawBody).
+        if (binding != null) {
+            const parameterName = this.getBodyHashQueryParameterName(binding.location);
+            writer.write("$transmittedBodyHash = ");
+            writer.writeNode(this.webhookSignatureReference());
+            writer.writeLine(`::getWebhookQueryParameter($notificationUrl, ${this.phpString(parameterName)});`);
+            writer.writeLine("if ($transmittedBodyHash !== null) {");
+            writer.indent();
+            this.writeBodyHashCheck(writer, binding, hasBodySort);
+            writer.dedent();
+            writer.writeLine("}");
+        }
+
+        // The form-path body string is URL-independent, so compute it once before the loop.
+        if (hasBodySort) {
+            this.writeBodyStringAssignment(writer);
+        }
+
+        writer.write("$candidates = ");
+        writer.writeNode(this.webhookSignatureReference());
+        writer.writeLine(
+            `::notificationUrlCandidates($notificationUrl, ${normalization.portVariants ? "true" : "false"}, ${
+                normalization.legacyQueryEncoding ? "true" : "false"
+            });`
+        );
+
+        writer.writeLine("foreach ($candidates as $candidateUrl) {");
+        writer.indent();
+        const formPayloadExpression = this.buildPayloadExpression(config.payloadFormat, hasBodySort, "$candidateUrl");
+        if (binding != null) {
+            // JSON request signs the URL only; classic form request signs URL + params.
+            writer.writeLine(`$payload = $transmittedBodyHash !== null ? $candidateUrl : ${formPayloadExpression};`);
+        } else {
+            writer.writeLine(`$payload = ${formPayloadExpression};`);
+        }
+        this.writeHmacComputation(writer, config, "$payload");
+        writer.write("if (");
+        writer.writeNode(this.webhookSignatureReference());
+        writer.writeLine("::timingSafeEqual($signature, $expected)) {");
+        writer.indent();
+        writer.writeLine("return true;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+
+        writer.newLine();
+        writer.writeLine("return false;");
     }
 
     private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
@@ -466,12 +620,19 @@ export class WebhooksHelperGenerator {
         if (config.payloadFormat.bodySort != null) {
             lines.push(
                 "The requestBody parameter accepts either a raw string or an array of POST body parameters.",
-                "When an array is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
+                "When an array is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing."
             );
         }
         if (config.bodyHashBinding != null) {
             lines.push(
-                "The raw request body is verified against a hash transmitted separately (not signed directly): pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
+                "This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.",
+                "For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.",
+                "Pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl."
+            );
+        }
+        if (config.notificationUrlNormalization != null) {
+            lines.push(
+                "The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches."
             );
         }
         return lines.join("\n");

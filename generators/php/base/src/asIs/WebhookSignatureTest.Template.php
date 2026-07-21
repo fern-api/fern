@@ -130,6 +130,50 @@ class WebhookSignatureTest extends TestCase
         $this->assertFalse($this->verify($body, $signature, $secret, $reorderedUrl));
     }
 
+    public function testNotificationUrlCandidatesIncludesCallerUrl(): void
+    {
+        $candidates = WebhookSignature::notificationUrlCandidates('https://example.com/hook?a=1', true, true);
+        // The caller's exact URL is always the first candidate.
+        $this->assertSame('https://example.com/hook?a=1', $candidates[0]);
+    }
+
+    public function testNotificationUrlCandidatesAddsStandardPortAndNoPortForms(): void
+    {
+        $candidates = WebhookSignature::notificationUrlCandidates('https://example.com/hook', true, false);
+        $this->assertContains('https://example.com:443/hook', $candidates);
+        $this->assertContains('https://example.com/hook', $candidates);
+
+        $httpCandidates = WebhookSignature::notificationUrlCandidates('http://example.com/hook', true, false);
+        $this->assertContains('http://example.com:80/hook', $httpCandidates);
+    }
+
+    public function testNotificationUrlCandidatesRemovesExistingPort(): void
+    {
+        $candidates = WebhookSignature::notificationUrlCandidates('https://example.com:8443/hook', true, false);
+        $this->assertContains('https://example.com/hook', $candidates);
+        $this->assertContains('https://example.com:8443/hook', $candidates);
+    }
+
+    public function testNotificationUrlCandidatesReencodesLegacyQuery(): void
+    {
+        $candidates = WebhookSignature::notificationUrlCandidates('https://example.com/hook?a=b%20c', true, true);
+        // Legacy form-encoding renders a space as '+'.
+        $this->assertContains('https://example.com/hook?a=b+c', $candidates);
+    }
+
+    public function testNotificationUrlCandidatesWithoutPortVariantsReturnsOnlyCallerUrl(): void
+    {
+        $candidates = WebhookSignature::notificationUrlCandidates('https://example.com/hook?a=1', false, false);
+        $this->assertSame(['https://example.com/hook?a=1'], $candidates);
+    }
+
+    public function testNotificationUrlCandidatesFallsBackForUnparseableUrl(): void
+    {
+        // An unparseable URL never throws and yields the caller's URL unchanged.
+        $this->assertSame(['not-a-url'], WebhookSignature::notificationUrlCandidates('not-a-url', true, true));
+        $this->assertSame([], WebhookSignature::notificationUrlCandidates(null, true, true));
+    }
+
     /**
      * @return array{0: string, 1: string, 2: string, 3: string}
      */
