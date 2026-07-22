@@ -1,10 +1,29 @@
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 
 /**
- * Language-specific fixture prefixes. Fixtures starting with these prefixes
- * are only available for generators whose workspace name starts with the same prefix.
+ * Language-specific fixture prefixes. Fixtures matching these prefixes
+ * are only available for generators whose workspace name matches the same prefix.
  */
-export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "php", "python", "ruby", "rust", "ts"];
+export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = [
+    "cli",
+    "csharp",
+    "go",
+    "java",
+    "php",
+    "python",
+    "ruby",
+    "rust",
+    "ts"
+];
+
+/**
+ * Whether a fixture/generator name belongs to a language prefix. Matching is
+ * anchored on a hyphen boundary (or exact match), so `cli` scopes `cli-*`
+ * fixtures to the `cli` generator without also claiming `client-side-params`.
+ */
+export function matchesLanguagePrefix(name: string, prefix: string): boolean {
+    return name === prefix || name.startsWith(`${prefix}-`);
+}
 
 /**
  * Get all available fixtures for a generator, optionally including output folders.
@@ -36,8 +55,10 @@ export function getAvailableFixturesFromList(
 ): string[] {
     // Get all available fixtures, filtering out language-specific ones that don't match this generator
     const availableFixtures = allFixtures.filter((fixture) => {
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
-        return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
+        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) =>
+            matchesLanguagePrefix(fixture, prefix)
+        )[0];
+        return matchingPrefix == null || matchesLanguagePrefix(generator.workspaceName, matchingPrefix);
     });
 
     // Optionally, include output folders in format fixture:outputFolder

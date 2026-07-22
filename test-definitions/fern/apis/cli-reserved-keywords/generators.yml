@@ -2,4 +2,9 @@
 api:
   specs:
     - openapi: ./openapi.yml
-groups: {}
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest
