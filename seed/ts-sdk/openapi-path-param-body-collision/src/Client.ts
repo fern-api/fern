@@ -27,6 +27,9 @@ export class SeedApiClient {
      * @param {SeedApi.IdentifierUpdate} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.updateProfileIdentifier({
      *         profileId: "profile_123",
