@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.82.4
+  changelogEntry:
+    - summary: |
+        Reference inline multipart files by their generated request property names while
+        preserving the original wire names in form-data fields.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 3.82.3
   changelogEntry:
     - summary: |

@@ -28,20 +28,32 @@ export function appendPropertyToFormData({
     return FernIr.FileUploadRequestProperty._visit(property, {
         file: (property) => {
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
-
+            const referenceToFile = context.inlineFileProperties
+                ? (requestParameter?.getReferenceToFileProperty(property, context) ??
+                  ts.factory.createIdentifier(
+                      getParameterNameForFile({
+                          property,
+                          wrapperName,
+                          includeSerdeLayer: context.includeSerdeLayer,
+                          retainOriginalCasing: context.retainOriginalCasing,
+                          inlineFileProperties: true,
+                          caseConverter: context.case
+                      })
+                  ))
+                : ts.factory.createIdentifier(
+                      getParameterNameForFile({
+                          property,
+                          wrapperName,
+                          includeSerdeLayer: context.includeSerdeLayer,
+                          retainOriginalCasing: context.retainOriginalCasing,
+                          inlineFileProperties: false,
+                          caseConverter: context.case
+                      })
+                  );
             let statement = context.coreUtilities.formDataUtils.appendFile({
                 referenceToFormData,
                 key: getWireValue(property.key),
-                value: ts.factory.createIdentifier(
-                    getParameterNameForFile({
-                        property,
-                        wrapperName,
-                        includeSerdeLayer: context.includeSerdeLayer,
-                        retainOriginalCasing: context.retainOriginalCasing,
-                        inlineFileProperties: context.inlineFileProperties,
-                        caseConverter: context.case
-                    })
-                )
+                value: referenceToFile
             });
 
             if (property.type === "fileArray") {
@@ -58,16 +70,7 @@ export function appendPropertyToFormData({
                         ],
                         ts.NodeFlags.Const
                     ),
-                    ts.factory.createIdentifier(
-                        getParameterNameForFile({
-                            property,
-                            wrapperName,
-                            includeSerdeLayer: context.includeSerdeLayer,
-                            retainOriginalCasing: context.retainOriginalCasing,
-                            inlineFileProperties: context.inlineFileProperties,
-                            caseConverter: context.case
-                        })
-                    ),
+                    referenceToFile,
                     ts.factory.createBlock(
                         [
                             context.coreUtilities.formDataUtils.appendFile({
@@ -84,16 +87,7 @@ export function appendPropertyToFormData({
             if (property.isOptional) {
                 statement = ts.factory.createIfStatement(
                     ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier(
-                            getParameterNameForFile({
-                                property,
-                                wrapperName,
-                                includeSerdeLayer: context.includeSerdeLayer,
-                                retainOriginalCasing: context.retainOriginalCasing,
-                                inlineFileProperties: context.inlineFileProperties,
-                                caseConverter: context.case
-                            })
-                        ),
+                        referenceToFile,
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                         ts.factory.createNull()
                     ),
