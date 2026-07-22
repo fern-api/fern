@@ -17,14 +17,14 @@ module Seed
     #
     # @return [Boolean]
     def self.verify_signature(request_body:, signature_header:, signature_key:, timestamp_header:)
-      raise ArgumentError, "Missing required parameters for webhook signature verification" if request_body.nil? || signature_header.nil? || signature_key.nil?
+      return false if request_body.nil? || signature_header.nil? || signature_key.nil?
 
-      raise ArgumentError, "Missing timestamp header 'x-webhook-timestamp' for webhook signature verification" if timestamp_header.nil? || timestamp_header == ""
+      return false if timestamp_header.nil? || timestamp_header == ""
 
       begin
         timestamp_value = Integer(timestamp_header, 10)
       rescue ArgumentError, TypeError
-        raise ArgumentError, "Invalid timestamp format: expected unix seconds"
+        return false
       end
       timestamp_ms = timestamp_value * 1000
 

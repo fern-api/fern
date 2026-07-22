@@ -144,7 +144,9 @@ export class WebhooksHelperGenerator {
                           encoding: config.bodyHashBinding.encoding,
                           location: {
                               type: config.bodyHashBinding.location.type,
-                              name: this.getBodyHashQueryParameterName(config.bodyHashBinding.location)
+                              name: WebhooksHelperGenerator.getBodyHashQueryParameterName(
+                                  config.bodyHashBinding.location
+                              )
                           }
                       },
             timestamp:
@@ -200,7 +202,11 @@ export class WebhooksHelperGenerator {
     }
 
     private buildRequires(config: FernIr.HmacSignatureVerification): string[] {
-        if (config.timestamp?.format === "ISO8601") {
+        // `require "time"` is needed whenever the emitted body can reach a Time.parse /
+        // Time.iso8601 call: the ISO8601 branch always does, and the default branch
+        // (any future/unknown timestamp format) falls through to Time.parse.
+        const timestampFormat = config.timestamp?.format;
+        if (timestampFormat != null && timestampFormat !== "UNIX_SECONDS" && timestampFormat !== "UNIX_MILLIS") {
             return ["time"];
         }
         return [];
@@ -231,7 +237,7 @@ export class WebhooksHelperGenerator {
         const bodyHashEncoding = mapEncoding(binding.encoding);
         const hmacAlgorithm = mapHmacAlgorithm(config.algorithm);
         const hmacEncoding = mapEncoding(config.encoding);
-        const queryParameterName = this.getBodyHashQueryParameterName(binding.location);
+        const queryParameterName = WebhooksHelperGenerator.getBodyHashQueryParameterName(binding.location);
         const rootModuleName = this.context.getRootModuleName();
 
         return new RubyFile({
@@ -349,14 +355,31 @@ export class WebhooksHelperGenerator {
             parameters: { keyword: this.buildParameters(config) },
             returnType: ruby.Type.boolean()
         });
-        method.addStatement(ruby.codeblock((writer) => this.writeMethodBody(writer, config)));
+        method.addStatement(ruby.codeblock((writer) => WebhooksHelperGenerator.writeMethodBody(writer, config)));
         return method;
+    }
+
+    /**
+     * Renders the body of the generated `verify_signature` method to a string. Exposed as a
+     * static method for unit testing the emitted Ruby for each verification-config shape
+     * without a full generator context.
+     */
+    public static renderVerifySignatureBody(config: FernIr.HmacSignatureVerification): string {
+        const writer = new ruby.Writer({ customConfig: {} });
+        WebhooksHelperGenerator.writeMethodBody(writer, config);
+        return writer.toString();
     }
 
     private buildParameters(config: FernIr.HmacSignatureVerification): ruby.KeywordParameter[] {
         const bodyType =
             config.payloadFormat.bodySort != null
-                ? ruby.Type.union([ruby.Type.string(), ruby.Type.hash(ruby.Type.string(), ruby.Type.string())])
+                ? ruby.Type.union([
+                      ruby.Type.string(),
+                      ruby.Type.hash(
+                          ruby.Type.string(),
+                          ruby.Type.union([ruby.Type.string(), ruby.Type.array(ruby.Type.string())])
+                      )
+                  ])
                 : ruby.Type.string();
         const params: ruby.KeywordParameter[] = [
             ruby.parameters.keyword({ name: "request_body", type: bodyType }),
@@ -376,25 +399,44 @@ export class WebhooksHelperGenerator {
         return params;
     }
 
-    private writeMethodBody(writer: ruby.Writer, config: FernIr.HmacSignatureVerification): void {
-        writer.writeLine(
-            'raise ArgumentError, "Missing required parameters for webhook signature verification" if ' +
-                "request_body.nil? || signature_header.nil? || signature_key.nil?"
-        );
+    private static writeMethodBody(writer: ruby.Writer, config: FernIr.HmacSignatureVerification): void {
+        // Input validation. A verification helper returns a boolean and never raises, so
+        // missing inputs fail closed with `false`.
+        writer.writeLine("return false if request_body.nil? || signature_header.nil? || signature_key.nil?");
 
         if (config.timestamp != null) {
             writer.newLine();
-            this.writeTimestampValidation(writer, config.timestamp);
+            WebhooksHelperGenerator.writeTimestampValidation(writer, config.timestamp);
         }
 
-        const signatureExpr = this.writeSignatureExtraction(writer, config.signaturePrefix);
+        const signatureExpr = WebhooksHelperGenerator.writeSignatureExtraction(writer, config.signaturePrefix);
+
+        // Notification-URL normalization: some providers (e.g. Twilio) are inconsistent
+        // about the signed URL's port and query encoding, so verify against several
+        // normalized URL forms and accept on the first constant-time match.
+        if (config.notificationUrlNormalization != null) {
+            WebhooksHelperGenerator.writeNormalizedVerification(
+                writer,
+                config,
+                signatureExpr,
+                config.notificationUrlNormalization
+            );
+            return;
+        }
 
         writer.newLine();
-        this.writePayloadConstruction(writer, config.payloadFormat, config.bodyHashBinding != null);
-
         if (config.bodyHashBinding != null) {
-            writer.newLine();
-            this.writeBodyHashVerification(writer, config.bodyHashBinding);
+            // Body-hash binding (e.g. Twilio): the same endpoint accepts both classic
+            // form-encoded and JSON requests, so branch at runtime on whether the
+            // body-hash query parameter is present in the notification URL.
+            //   - present (JSON): the signed payload is the URL only; additionally
+            //     recompute hash(rawBody) and constant-time compare it to the transmitted
+            //     value.
+            //   - absent (classic form): the signed payload is the URL + sorted/deduped
+            //     form params, with no body-hash check.
+            WebhooksHelperGenerator.writeBodyHashBranchedPayloadConstruction(writer, config, config.bodyHashBinding);
+        } else {
+            WebhooksHelperGenerator.writePayloadConstruction(writer, config.payloadFormat);
         }
 
         writer.newLine();
@@ -413,21 +455,20 @@ export class WebhooksHelperGenerator {
         writer.writeLine(`Internal::WebhookSignature.timing_safe_equal(${signatureExpr}, expected)`);
     }
 
-    private writeTimestampValidation(writer: ruby.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
-        const headerName = getWireValue(timestamp.headerName);
-        writer.writeLine(
-            `raise ArgumentError, ${rubyStringLiteral(
-                `Missing timestamp header '${headerName}' for webhook signature verification`
-            )} if timestamp_header.nil? || timestamp_header == ""`
-        );
+    private static writeTimestampValidation(writer: ruby.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
+        // A missing or malformed timestamp header fails closed with `false` (the helper
+        // never raises).
+        writer.writeLine('return false if timestamp_header.nil? || timestamp_header == ""');
         writer.newLine();
 
         switch (timestamp.format) {
             case "UNIX_SECONDS":
-                this.writeUnixTimestampParse(writer, "expected unix seconds", 1000);
+                // Unix seconds -> milliseconds requires multiplying by 1000.
+                WebhooksHelperGenerator.writeUnixTimestampParse(writer, 1000);
                 break;
             case "UNIX_MILLIS":
-                this.writeUnixTimestampParse(writer, "expected unix milliseconds", 1);
+                // Unix milliseconds are already in milliseconds, so no scaling (x1).
+                WebhooksHelperGenerator.writeUnixTimestampParse(writer, 1);
                 break;
             case "ISO8601":
                 writer.writeLine("begin");
@@ -436,12 +477,20 @@ export class WebhooksHelperGenerator {
                 writer.dedent();
                 writer.writeLine("rescue ArgumentError");
                 writer.indent();
-                writer.writeLine('raise ArgumentError, "Invalid timestamp format: expected ISO 8601 date string"');
+                writer.writeLine("return false");
                 writer.dedent();
                 writer.writeLine("end");
                 break;
             default:
+                writer.writeLine("begin");
+                writer.indent();
                 writer.writeLine("timestamp_ms = (Time.parse(timestamp_header).to_f * 1000).to_i");
+                writer.dedent();
+                writer.writeLine("rescue ArgumentError");
+                writer.indent();
+                writer.writeLine("return false");
+                writer.dedent();
+                writer.writeLine("end");
                 break;
         }
 
@@ -450,24 +499,26 @@ export class WebhooksHelperGenerator {
         writer.writeLine("return false if (now_ms - timestamp_ms).abs > TIMESTAMP_TOLERANCE_SECONDS * 1000");
     }
 
-    private writeUnixTimestampParse(writer: ruby.Writer, errorDescription: string, multiplier: number): void {
+    // `millisecondsPerUnit` scales the parsed timestamp into milliseconds: 1000 for a
+    // value expressed in seconds, 1 for a value already in milliseconds.
+    private static writeUnixTimestampParse(writer: ruby.Writer, millisecondsPerUnit: number): void {
         writer.writeLine("begin");
         writer.indent();
         writer.writeLine("timestamp_value = Integer(timestamp_header, 10)");
         writer.dedent();
         writer.writeLine("rescue ArgumentError, TypeError");
         writer.indent();
-        writer.writeLine(`raise ArgumentError, "Invalid timestamp format: ${errorDescription}"`);
+        writer.writeLine("return false");
         writer.dedent();
         writer.writeLine("end");
-        if (multiplier === 1) {
+        if (millisecondsPerUnit === 1) {
             writer.writeLine("timestamp_ms = timestamp_value");
         } else {
-            writer.writeLine(`timestamp_ms = timestamp_value * ${multiplier}`);
+            writer.writeLine(`timestamp_ms = timestamp_value * ${millisecondsPerUnit}`);
         }
     }
 
-    private writeSignatureExtraction(writer: ruby.Writer, signaturePrefix: string | undefined): string {
+    private static writeSignatureExtraction(writer: ruby.Writer, signaturePrefix: string | undefined): string {
         if (signaturePrefix == null) {
             return "signature_header";
         }
@@ -479,41 +530,52 @@ export class WebhooksHelperGenerator {
         return "signature";
     }
 
-    private writePayloadConstruction(
-        writer: ruby.Writer,
-        payloadFormat: FernIr.WebhookPayloadFormat,
-        hasBodyHashBinding: boolean
-    ): void {
+    private static writePayloadConstruction(writer: ruby.Writer, payloadFormat: FernIr.WebhookPayloadFormat): void {
         const hasBodySort = payloadFormat.bodySort != null;
         if (hasBodySort) {
-            writer.writeLine(
-                "body_string = request_body.is_a?(::Hash) ? " +
-                    'request_body.keys.sort.map { |key| "#{key}#{request_body[key]}" }.join : request_body'
-            );
+            WebhooksHelperGenerator.writeBodyString(writer);
         }
         const bodyExpr = hasBodySort ? "body_string" : "request_body";
+        writer.writeLine(`payload = ${WebhooksHelperGenerator.buildPayloadExpression(payloadFormat, bodyExpr)}`);
+    }
 
-        const components = payloadFormat.components;
-        if (hasBodyHashBinding && components.length === 1) {
-            const component = components[0];
-            if (component === "BODY") {
-                writer.writeLine(`payload = ${bodyExpr}`);
-            } else if (component === "TIMESTAMP") {
-                writer.writeLine("payload = timestamp_header");
-            } else if (component === "NOTIFICATION_URL") {
-                writer.writeLine("payload = notification_url");
-            } else if (component === "MESSAGE_ID") {
-                writer.writeLine("payload = message_id");
-            }
-            return;
-        }
-        if (components.length === 1 && components[0] === "BODY") {
-            writer.writeLine(`payload = ${bodyExpr}`);
-            return;
-        }
+    /**
+     * Emits the `body_string = ...` assignment that flattens a form-parameter map into a
+     * signed string. Mirrors Twilio's `toFormUrlEncodedParam`: keys are sorted (Hash keys
+     * are inherently unique), and for each key the values are deduped and sorted,
+     * concatenating `key + value` for every value with no delimiter between params. A raw
+     * string body is passed through unchanged.
+     */
+    private static writeBodyString(writer: ruby.Writer): void {
+        writer.writeLine("body_string = if request_body.is_a?(::Hash)");
+        writer.indent();
+        writer.writeLine("request_body.keys.sort.map do |key|");
+        writer.indent();
+        writer.writeLine("value = request_body[key]");
+        writer.writeLine("values = value.is_a?(::Array) ? value : [value]");
+        writer.writeLine('values.uniq.sort.map { |v| "#{key}#{v}" }.join');
+        writer.dedent();
+        writer.writeLine("end.join");
+        writer.dedent();
+        writer.writeLine("else");
+        writer.indent();
+        writer.writeLine("request_body");
+        writer.dedent();
+        writer.writeLine("end");
+    }
 
+    /**
+     * Builds the RHS Ruby expression for `payload` from the configured components.
+     * `urlExpr` is the identifier used for the notification-URL component — normally
+     * `notification_url`, but the candidate loop substitutes `candidate_url`.
+     */
+    private static buildPayloadExpression(
+        payloadFormat: FernIr.WebhookPayloadFormat,
+        bodyExpr: string,
+        urlExpr = "notification_url"
+    ): string {
         const componentExprs: string[] = [];
-        for (const component of components) {
+        for (const component of payloadFormat.components) {
             switch (component) {
                 case "BODY":
                     componentExprs.push(bodyExpr);
@@ -522,7 +584,7 @@ export class WebhooksHelperGenerator {
                     componentExprs.push("timestamp_header");
                     break;
                 case "NOTIFICATION_URL":
-                    componentExprs.push("notification_url");
+                    componentExprs.push(urlExpr);
                     break;
                 case "MESSAGE_ID":
                     componentExprs.push("message_id");
@@ -531,15 +593,63 @@ export class WebhooksHelperGenerator {
                     break;
             }
         }
+
+        // Each component expression is already a string, so a single component can be used
+        // directly rather than round-tripping through an array join.
+        const [first] = componentExprs;
+        if (componentExprs.length === 1 && first != null) {
+            return first;
+        }
         const delimiter = rubyStringLiteral(payloadFormat.delimiter);
-        writer.writeLine(`payload = [${componentExprs.join(", ")}].join(${delimiter})`);
+        return `[${componentExprs.join(", ")}].join(${delimiter})`;
     }
 
-    private writeBodyHashVerification(writer: ruby.Writer, binding: FernIr.WebhookBodyHashBinding): void {
+    /**
+     * Emits the runtime branch for a body-hash binding. The same endpoint can receive
+     * either a JSON request (body-hash query parameter present) or a classic form-encoded
+     * request (absent), so the signed payload is assembled differently at runtime and only
+     * the JSON path performs the separate body-hash comparison.
+     */
+    private static writeBodyHashBranchedPayloadConstruction(
+        writer: ruby.Writer,
+        config: FernIr.HmacSignatureVerification,
+        binding: FernIr.WebhookBodyHashBinding
+    ): void {
+        const queryParameterName = WebhooksHelperGenerator.getBodyHashQueryParameterName(binding.location);
+        writer.writeLine(
+            `transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, ${rubyStringLiteral(
+                queryParameterName
+            )})`
+        );
+        writer.writeLine("payload = if transmitted_body_hash.nil?");
+        writer.indent();
+
+        // Classic form path: URL + sorted/deduped form params, no body-hash check.
+        const hasBodySort = config.payloadFormat.bodySort != null;
+        if (hasBodySort) {
+            WebhooksHelperGenerator.writeBodyString(writer);
+        }
+        const bodyExpr = hasBodySort ? "body_string" : "request_body";
+        writer.writeLine(WebhooksHelperGenerator.buildPayloadExpression(config.payloadFormat, bodyExpr));
+        writer.dedent();
+        writer.writeLine("else");
+        writer.indent();
+
+        // JSON path: the URL alone is the signed payload; the raw body is transmitted as a
+        // separately-recomputed hash and compared in constant time. Both must pass.
+        WebhooksHelperGenerator.writeBodyHashComparison(writer, binding);
+        writer.writeLine("notification_url");
+        writer.dedent();
+        writer.writeLine("end");
+    }
+
+    /**
+     * Emits the raw-body-hash recomputation and constant-time comparison against the
+     * transmitted hash. Returns false on mismatch (the helper never raises).
+     */
+    private static writeBodyHashComparison(writer: ruby.Writer, binding: FernIr.WebhookBodyHashBinding): void {
         const algorithm = mapBodyHashAlgorithm(binding.algorithm);
         const encoding = mapEncoding(binding.encoding);
-        const queryParameterName = this.getBodyHashQueryParameterName(binding.location);
-
         writer.writeLine("expected_body_hash = Internal::WebhookBodyHash.compute_hash(");
         writer.indent();
         writer.writeLine("payload: request_body,");
@@ -548,17 +658,87 @@ export class WebhooksHelperGenerator {
         writer.dedent();
         writer.writeLine(")");
         writer.writeLine(
-            `transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, ${rubyStringLiteral(
-                queryParameterName
-            )})`
-        );
-        writer.writeLine(
-            "return false if transmitted_body_hash.nil? || " +
-                "!Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)"
+            "return false unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)"
         );
     }
 
-    private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
+    /**
+     * Emits HMAC verification against several normalized notification-URL forms, accepting
+     * on the first constant-time match. The body-hash check (when configured) runs once
+     * above the loop because it does not depend on URL normalization; only the HMAC over
+     * the URL is recomputed per candidate.
+     */
+    private static writeNormalizedVerification(
+        writer: ruby.Writer,
+        config: FernIr.HmacSignatureVerification,
+        signatureExpr: string,
+        normalization: FernIr.WebhookNotificationUrlNormalization
+    ): void {
+        const algorithm = mapHmacAlgorithm(config.algorithm);
+        const encoding = mapEncoding(config.encoding);
+        const binding = config.bodyHashBinding;
+        const hasBodySort = config.payloadFormat.bodySort != null;
+
+        writer.newLine();
+
+        // Body-hash check (once, independent of URL normalization). Only the JSON request
+        // carries the transmitted hash; when present it must match hash(rawBody).
+        if (binding != null) {
+            const queryParameterName = WebhooksHelperGenerator.getBodyHashQueryParameterName(binding.location);
+            writer.writeLine(
+                "transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, " +
+                    `${rubyStringLiteral(queryParameterName)})`
+            );
+            writer.writeLine("unless transmitted_body_hash.nil?");
+            writer.indent();
+            WebhooksHelperGenerator.writeBodyHashComparison(writer, binding);
+            writer.dedent();
+            writer.writeLine("end");
+        }
+
+        // The form-path body string is URL-independent, so compute it once before the loop.
+        if (hasBodySort) {
+            WebhooksHelperGenerator.writeBodyString(writer);
+        }
+
+        writer.writeLine("candidates = Internal::WebhookSignature.notification_url_candidates(");
+        writer.indent();
+        writer.writeLine("notification_url,");
+        writer.writeLine(`port_variants: ${normalization.portVariants ? "true" : "false"},`);
+        writer.writeLine(`legacy_query_encoding: ${normalization.legacyQueryEncoding ? "true" : "false"}`);
+        writer.dedent();
+        writer.writeLine(")");
+        writer.writeLine("candidates.each do |candidate_url|");
+        writer.indent();
+
+        const bodyExpr = hasBodySort ? "body_string" : "request_body";
+        const formPayloadExpr = WebhooksHelperGenerator.buildPayloadExpression(
+            config.payloadFormat,
+            bodyExpr,
+            "candidate_url"
+        );
+        if (binding != null) {
+            // JSON request signs the URL only; classic form request signs URL + params.
+            writer.writeLine(`payload = transmitted_body_hash.nil? ? ${formPayloadExpr} : candidate_url`);
+        } else {
+            writer.writeLine(`payload = ${formPayloadExpr}`);
+        }
+        writer.writeLine("expected = Internal::WebhookSignature.compute_hmac_signature(");
+        writer.indent();
+        writer.writeLine("payload: payload,");
+        writer.writeLine("secret: signature_key,");
+        writer.writeLine(`algorithm: "${algorithm}",`);
+        writer.writeLine(`encoding: "${encoding}"`);
+        writer.dedent();
+        writer.writeLine(")");
+        writer.writeLine(`return true if Internal::WebhookSignature.timing_safe_equal(${signatureExpr}, expected)`);
+        writer.dedent();
+        writer.writeLine("end");
+        writer.newLine();
+        writer.writeLine("false");
+    }
+
+    private static getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
         return location._visit({
             queryParameter: (queryParameter) => queryParameter.name,
             _other: (other) => {
@@ -583,15 +763,25 @@ export class WebhooksHelperGenerator {
         }
         if (config.payloadFormat.bodySort != null) {
             lines.push(
-                "The request_body parameter accepts either a raw string or a Hash of POST body parameters.",
-                "When a Hash is provided, parameters are sorted alphabetically by key and concatenated as " +
-                    "key-value pairs before signing."
+                "The request_body parameter accepts either a raw string or a Hash of POST body parameters " +
+                    "(each value a string or an array of strings).",
+                "When a Hash is provided, keys are sorted and each key's values are deduped and sorted, then " +
+                    "concatenated as key-value pairs before signing."
             );
         }
         if (config.bodyHashBinding != null) {
             lines.push(
-                "The raw request body is verified against a separately transmitted hash. Pass the exact raw body " +
-                    "as request_body and the verbatim notification URL as notification_url."
+                "This helper verifies both classic form-encoded and JSON requests: it branches at runtime on " +
+                    "whether the body-hash query parameter is present on the notification URL.",
+                "For a JSON request the raw body is verified against that separately-transmitted hash and the " +
+                    "signature is checked over the notification URL only.",
+                "Pass the exact raw body as request_body and the verbatim notification URL as notification_url."
+            );
+        }
+        if (config.notificationUrlNormalization != null) {
+            lines.push(
+                "The signature is verified against several normalized forms of the notification URL, succeeding " +
+                    "if any candidate matches."
             );
         }
         return lines.join("\n");
