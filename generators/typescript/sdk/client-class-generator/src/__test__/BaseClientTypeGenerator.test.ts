@@ -148,6 +148,14 @@ function createMockContext(opts?: {
                 properties: [{ name: "idempotencyKey", type: "string", hasQuestionToken: true }]
             })
         },
+        environments: {
+            getReferenceToEnvironmentsEnum: () => ({
+                getExpression: () => ts.factory.createIdentifier("environments.TestEnvironment")
+            }),
+            getReferenceToEnvironmentUrls: () => ({
+                getTypeNode: () => ts.factory.createTypeReferenceNode("environments.TestEnvironmentUrls")
+            })
+        },
         coreUtilities: {
             runtime: {
                 type: {
@@ -1540,13 +1548,24 @@ describe("BaseClientTypeGenerator", () => {
                 "base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`"
             );
             expect(normalizeFunction).toContain("auth: `https://auth.${_region}.example.com`");
+            // The selected environment's templates are used; custom environments are untouched
+            expect(normalizeFunction).toContain("environments.TestEnvironment.RegionalApiServer");
+            expect(normalizeFunction).toContain("environment = _environmentUrls.get(environment) ?? environment;");
+            expect(normalizeFunction).toContain("if (environment == null) {");
         });
 
         it("interpolates server variables into a single base URL", () => {
             const normalizeFunction = getNormalizeFunction(createSingleBaseUrlIR());
             expect(normalizeFunction).toContain("options?.region != null");
             expect(normalizeFunction).toContain('const _region = options?.region ?? "us-east-1"');
-            expect(normalizeFunction).toContain("baseUrl = `https://api.${_region}.example.com`");
+            // The selected environment's template is used; an explicit baseUrl is not overridden
+            expect(normalizeFunction).toContain("if (baseUrl == null) {");
+            expect(normalizeFunction).toContain(
+                "[environments.TestEnvironment.Default, `https://api.${_region}.example.com`]"
+            );
+            expect(normalizeFunction).toContain(
+                "baseUrl = _environmentUrls.get(options?.environment) ?? `https://api.${_region}.example.com`;"
+            );
         });
     });
 });

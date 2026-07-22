@@ -19,6 +19,20 @@ impl LicenseClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_license::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LicenseClient::new(config).expect("Failed to build client");
+    ///     client.get(None).await;
+    /// }
+    /// ```
     pub async fn get(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::GET, "/", None, None, options)

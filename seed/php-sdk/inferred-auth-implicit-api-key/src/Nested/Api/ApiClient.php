@@ -47,6 +47,11 @@ class ApiClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->nested->api->getSomething();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

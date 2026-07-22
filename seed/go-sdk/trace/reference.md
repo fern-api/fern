@@ -14,9 +14,8 @@
 
 ```go
 client.V2.Test(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -43,16 +42,15 @@ client.V2.Test(
 
 ```go
 request := &fern.TestSubmissionStatus{
-        Stopped: "stopped",
-    }
-client.Admin.UpdateTestSubmissionStatus(
-        context.TODO(),
-        uuid.MustParse(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        request,
-    )
+    Stopped: "stopped",
 }
+client.Admin.UpdateTestSubmissionStatus(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -101,19 +99,18 @@ client.Admin.UpdateTestSubmissionStatus(
 
 ```go
 request := &fern.TestSubmissionUpdate{
-        UpdateTime: fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
-        ),
-        UpdateInfo: &fern.TestSubmissionUpdateInfo{},
-    }
-client.Admin.SendTestSubmissionUpdate(
-        context.TODO(),
-        uuid.MustParse(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        request,
-    )
+    UpdateTime: fern.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
+    ),
+    UpdateInfo: &fern.TestSubmissionUpdateInfo{},
 }
+client.Admin.SendTestSubmissionUpdate(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -162,16 +159,15 @@ client.Admin.SendTestSubmissionUpdate(
 
 ```go
 request := &fern.WorkspaceSubmissionStatus{
-        Stopped: "stopped",
-    }
-client.Admin.UpdateWorkspaceSubmissionStatus(
-        context.TODO(),
-        uuid.MustParse(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        request,
-    )
+    Stopped: "stopped",
 }
+client.Admin.UpdateWorkspaceSubmissionStatus(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -220,19 +216,18 @@ client.Admin.UpdateWorkspaceSubmissionStatus(
 
 ```go
 request := &fern.WorkspaceSubmissionUpdate{
-        UpdateTime: fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
-        ),
-        UpdateInfo: &fern.WorkspaceSubmissionUpdateInfo{},
-    }
-client.Admin.SendWorkspaceSubmissionUpdate(
-        context.TODO(),
-        uuid.MustParse(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        request,
-    )
+    UpdateTime: fern.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
+    ),
+    UpdateInfo: &fern.WorkspaceSubmissionUpdateInfo{},
 }
+client.Admin.SendWorkspaceSubmissionUpdate(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -281,94 +276,93 @@ client.Admin.SendWorkspaceSubmissionUpdate(
 
 ```go
 request := &fern.StoreTracedTestCaseRequest{
-        Result: &fern.TestCaseResultWithStdout{
-            Result: &fern.TestCaseResult{
-                ExpectedResult: &common.VariableValue{},
-                ActualResult: &fern.ActualResult{
-                    Value: &common.VariableValue{},
-                },
-                Passed: true,
+    Result: &fern.TestCaseResultWithStdout{
+        Result: &fern.TestCaseResult{
+            ExpectedResult: &common.VariableValue{},
+            ActualResult: &fern.ActualResult{
+                Value: &common.VariableValue{},
             },
-            Stdout: "stdout",
+            Passed: true,
         },
-        TraceResponses: []*fern.TraceResponse{
-            &fern.TraceResponse{
-                SubmissionID: uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                LineNumber: 1,
-                ReturnValue: &fern.DebugVariableValue{},
-                ExpressionLocation: &fern.ExpressionLocation{
-                    Start: 1,
-                    Offset: 1,
-                },
-                Stack: &fern.StackInformation{
-                    NumStackFrames: 1,
-                    TopStackFrame: &fern.StackFrame{
-                        MethodName: "methodName",
-                        LineNumber: 1,
-                        Scopes: []*fern.Scope{
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+        Stdout: "stdout",
+    },
+    TraceResponses: []*fern.TraceResponse{
+        &fern.TraceResponse{
+            SubmissionID: uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            LineNumber: 1,
+            ReturnValue: &fern.DebugVariableValue{},
+            ExpressionLocation: &fern.ExpressionLocation{
+                Start: 1,
+                Offset: 1,
+            },
+            Stack: &fern.StackInformation{
+                NumStackFrames: 1,
+                TopStackFrame: &fern.StackFrame{
+                    MethodName: "methodName",
+                    LineNumber: 1,
+                    Scopes: []*fern.Scope{
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+                        },
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
                         },
                     },
                 },
-                Stdout: fern.String(
-                    "stdout",
-                ),
             },
-            &fern.TraceResponse{
-                SubmissionID: uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                LineNumber: 1,
-                ReturnValue: &fern.DebugVariableValue{},
-                ExpressionLocation: &fern.ExpressionLocation{
-                    Start: 1,
-                    Offset: 1,
-                },
-                Stack: &fern.StackInformation{
-                    NumStackFrames: 1,
-                    TopStackFrame: &fern.StackFrame{
-                        MethodName: "methodName",
-                        LineNumber: 1,
-                        Scopes: []*fern.Scope{
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+            Stdout: fern.String(
+                "stdout",
+            ),
+        },
+        &fern.TraceResponse{
+            SubmissionID: uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            LineNumber: 1,
+            ReturnValue: &fern.DebugVariableValue{},
+            ExpressionLocation: &fern.ExpressionLocation{
+                Start: 1,
+                Offset: 1,
+            },
+            Stack: &fern.StackInformation{
+                NumStackFrames: 1,
+                TopStackFrame: &fern.StackFrame{
+                    MethodName: "methodName",
+                    LineNumber: 1,
+                    Scopes: []*fern.Scope{
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+                        },
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
                         },
                     },
                 },
-                Stdout: fern.String(
-                    "stdout",
-                ),
             },
+            Stdout: fern.String(
+                "stdout",
+            ),
         },
-    }
-client.Admin.StoreTracedTestCase(
-        context.TODO(),
-        uuid.MustParse(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        "testCaseId",
-        request,
-    )
+    },
 }
+client.Admin.StoreTracedTestCase(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    "testCaseId",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -433,90 +427,89 @@ client.Admin.StoreTracedTestCase(
 
 ```go
 request := []*fern.TraceResponseV2{
-        &fern.TraceResponseV2{
-            SubmissionID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            LineNumber: 1,
-            File: &fern.TracedFile{
-                Filename: "filename",
-                Directory: "directory",
-            },
-            ReturnValue: &fern.DebugVariableValue{},
-            ExpressionLocation: &fern.ExpressionLocation{
-                Start: 1,
-                Offset: 1,
-            },
-            Stack: &fern.StackInformation{
-                NumStackFrames: 1,
-                TopStackFrame: &fern.StackFrame{
-                    MethodName: "methodName",
-                    LineNumber: 1,
-                    Scopes: []*fern.Scope{
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                    },
-                },
-            },
-            Stdout: fern.String(
-                "stdout",
-            ),
-        },
-        &fern.TraceResponseV2{
-            SubmissionID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            LineNumber: 1,
-            File: &fern.TracedFile{
-                Filename: "filename",
-                Directory: "directory",
-            },
-            ReturnValue: &fern.DebugVariableValue{},
-            ExpressionLocation: &fern.ExpressionLocation{
-                Start: 1,
-                Offset: 1,
-            },
-            Stack: &fern.StackInformation{
-                NumStackFrames: 1,
-                TopStackFrame: &fern.StackFrame{
-                    MethodName: "methodName",
-                    LineNumber: 1,
-                    Scopes: []*fern.Scope{
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                    },
-                },
-            },
-            Stdout: fern.String(
-                "stdout",
-            ),
-        },
-    }
-client.Admin.StoreTracedTestCaseV2(
-        context.TODO(),
-        uuid.MustParse(
+    &fern.TraceResponseV2{
+        SubmissionID: uuid.MustParse(
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         ),
-        "testCaseId",
-        request,
-    )
+        LineNumber: 1,
+        File: &fern.TracedFile{
+            Filename: "filename",
+            Directory: "directory",
+        },
+        ReturnValue: &fern.DebugVariableValue{},
+        ExpressionLocation: &fern.ExpressionLocation{
+            Start: 1,
+            Offset: 1,
+        },
+        Stack: &fern.StackInformation{
+            NumStackFrames: 1,
+            TopStackFrame: &fern.StackFrame{
+                MethodName: "methodName",
+                LineNumber: 1,
+                Scopes: []*fern.Scope{
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                },
+            },
+        },
+        Stdout: fern.String(
+            "stdout",
+        ),
+    },
+    &fern.TraceResponseV2{
+        SubmissionID: uuid.MustParse(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        LineNumber: 1,
+        File: &fern.TracedFile{
+            Filename: "filename",
+            Directory: "directory",
+        },
+        ReturnValue: &fern.DebugVariableValue{},
+        ExpressionLocation: &fern.ExpressionLocation{
+            Start: 1,
+            Offset: 1,
+        },
+        Stack: &fern.StackInformation{
+            NumStackFrames: 1,
+            TopStackFrame: &fern.StackFrame{
+                MethodName: "methodName",
+                LineNumber: 1,
+                Scopes: []*fern.Scope{
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                },
+            },
+        },
+        Stdout: fern.String(
+            "stdout",
+        ),
+    },
 }
+client.Admin.StoreTracedTestCaseV2(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    "testCaseId",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -573,98 +566,97 @@ client.Admin.StoreTracedTestCaseV2(
 
 ```go
 request := &fern.StoreTracedWorkspaceRequest{
-        WorkspaceRunDetails: &fern.WorkspaceRunDetails{
-            ExceptionV2: &fern.ExceptionV2{
-                Generic: &fern.ExceptionInfo{
-                    ExceptionType: "exceptionType",
-                    ExceptionMessage: "exceptionMessage",
-                    ExceptionStacktrace: "exceptionStacktrace",
-                },
-            },
-            Exception: &fern.ExceptionInfo{
+    WorkspaceRunDetails: &fern.WorkspaceRunDetails{
+        ExceptionV2: &fern.ExceptionV2{
+            Generic: &fern.ExceptionInfo{
                 ExceptionType: "exceptionType",
                 ExceptionMessage: "exceptionMessage",
                 ExceptionStacktrace: "exceptionStacktrace",
             },
-            Stdout: "stdout",
         },
-        TraceResponses: []*fern.TraceResponse{
-            &fern.TraceResponse{
-                SubmissionID: uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                LineNumber: 1,
-                ReturnValue: &fern.DebugVariableValue{},
-                ExpressionLocation: &fern.ExpressionLocation{
-                    Start: 1,
-                    Offset: 1,
-                },
-                Stack: &fern.StackInformation{
-                    NumStackFrames: 1,
-                    TopStackFrame: &fern.StackFrame{
-                        MethodName: "methodName",
-                        LineNumber: 1,
-                        Scopes: []*fern.Scope{
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+        Exception: &fern.ExceptionInfo{
+            ExceptionType: "exceptionType",
+            ExceptionMessage: "exceptionMessage",
+            ExceptionStacktrace: "exceptionStacktrace",
+        },
+        Stdout: "stdout",
+    },
+    TraceResponses: []*fern.TraceResponse{
+        &fern.TraceResponse{
+            SubmissionID: uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            LineNumber: 1,
+            ReturnValue: &fern.DebugVariableValue{},
+            ExpressionLocation: &fern.ExpressionLocation{
+                Start: 1,
+                Offset: 1,
+            },
+            Stack: &fern.StackInformation{
+                NumStackFrames: 1,
+                TopStackFrame: &fern.StackFrame{
+                    MethodName: "methodName",
+                    LineNumber: 1,
+                    Scopes: []*fern.Scope{
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+                        },
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
                         },
                     },
                 },
-                Stdout: fern.String(
-                    "stdout",
-                ),
             },
-            &fern.TraceResponse{
-                SubmissionID: uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                LineNumber: 1,
-                ReturnValue: &fern.DebugVariableValue{},
-                ExpressionLocation: &fern.ExpressionLocation{
-                    Start: 1,
-                    Offset: 1,
-                },
-                Stack: &fern.StackInformation{
-                    NumStackFrames: 1,
-                    TopStackFrame: &fern.StackFrame{
-                        MethodName: "methodName",
-                        LineNumber: 1,
-                        Scopes: []*fern.Scope{
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+            Stdout: fern.String(
+                "stdout",
+            ),
+        },
+        &fern.TraceResponse{
+            SubmissionID: uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            LineNumber: 1,
+            ReturnValue: &fern.DebugVariableValue{},
+            ExpressionLocation: &fern.ExpressionLocation{
+                Start: 1,
+                Offset: 1,
+            },
+            Stack: &fern.StackInformation{
+                NumStackFrames: 1,
+                TopStackFrame: &fern.StackFrame{
+                    MethodName: "methodName",
+                    LineNumber: 1,
+                    Scopes: []*fern.Scope{
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
-                            &fern.Scope{
-                                Variables: map[string]*fern.DebugVariableValue{
-                                    "variables": &fern.DebugVariableValue{},
-                                },
+                        },
+                        &fern.Scope{
+                            Variables: map[string]*fern.DebugVariableValue{
+                                "variables": &fern.DebugVariableValue{},
                             },
                         },
                     },
                 },
-                Stdout: fern.String(
-                    "stdout",
-                ),
             },
+            Stdout: fern.String(
+                "stdout",
+            ),
         },
-    }
-client.Admin.StoreTracedWorkspace(
-        context.TODO(),
-        uuid.MustParse(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        request,
-    )
+    },
 }
+client.Admin.StoreTracedWorkspace(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -721,89 +713,88 @@ client.Admin.StoreTracedWorkspace(
 
 ```go
 request := []*fern.TraceResponseV2{
-        &fern.TraceResponseV2{
-            SubmissionID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            LineNumber: 1,
-            File: &fern.TracedFile{
-                Filename: "filename",
-                Directory: "directory",
-            },
-            ReturnValue: &fern.DebugVariableValue{},
-            ExpressionLocation: &fern.ExpressionLocation{
-                Start: 1,
-                Offset: 1,
-            },
-            Stack: &fern.StackInformation{
-                NumStackFrames: 1,
-                TopStackFrame: &fern.StackFrame{
-                    MethodName: "methodName",
-                    LineNumber: 1,
-                    Scopes: []*fern.Scope{
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                    },
-                },
-            },
-            Stdout: fern.String(
-                "stdout",
-            ),
-        },
-        &fern.TraceResponseV2{
-            SubmissionID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            LineNumber: 1,
-            File: &fern.TracedFile{
-                Filename: "filename",
-                Directory: "directory",
-            },
-            ReturnValue: &fern.DebugVariableValue{},
-            ExpressionLocation: &fern.ExpressionLocation{
-                Start: 1,
-                Offset: 1,
-            },
-            Stack: &fern.StackInformation{
-                NumStackFrames: 1,
-                TopStackFrame: &fern.StackFrame{
-                    MethodName: "methodName",
-                    LineNumber: 1,
-                    Scopes: []*fern.Scope{
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                        &fern.Scope{
-                            Variables: map[string]*fern.DebugVariableValue{
-                                "variables": &fern.DebugVariableValue{},
-                            },
-                        },
-                    },
-                },
-            },
-            Stdout: fern.String(
-                "stdout",
-            ),
-        },
-    }
-client.Admin.StoreTracedWorkspaceV2(
-        context.TODO(),
-        uuid.MustParse(
+    &fern.TraceResponseV2{
+        SubmissionID: uuid.MustParse(
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         ),
-        request,
-    )
+        LineNumber: 1,
+        File: &fern.TracedFile{
+            Filename: "filename",
+            Directory: "directory",
+        },
+        ReturnValue: &fern.DebugVariableValue{},
+        ExpressionLocation: &fern.ExpressionLocation{
+            Start: 1,
+            Offset: 1,
+        },
+        Stack: &fern.StackInformation{
+            NumStackFrames: 1,
+            TopStackFrame: &fern.StackFrame{
+                MethodName: "methodName",
+                LineNumber: 1,
+                Scopes: []*fern.Scope{
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                },
+            },
+        },
+        Stdout: fern.String(
+            "stdout",
+        ),
+    },
+    &fern.TraceResponseV2{
+        SubmissionID: uuid.MustParse(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        LineNumber: 1,
+        File: &fern.TracedFile{
+            Filename: "filename",
+            Directory: "directory",
+        },
+        ReturnValue: &fern.DebugVariableValue{},
+        ExpressionLocation: &fern.ExpressionLocation{
+            Start: 1,
+            Offset: 1,
+        },
+        Stack: &fern.StackInformation{
+            NumStackFrames: 1,
+            TopStackFrame: &fern.StackFrame{
+                MethodName: "methodName",
+                LineNumber: 1,
+                Scopes: []*fern.Scope{
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                    &fern.Scope{
+                        Variables: map[string]*fern.DebugVariableValue{
+                            "variables": &fern.DebugVariableValue{},
+                        },
+                    },
+                },
+            },
+        },
+        Stdout: fern.String(
+            "stdout",
+        ),
+    },
 }
+client.Admin.StoreTracedWorkspaceV2(
+    context.TODO(),
+    uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -853,9 +844,8 @@ client.Admin.StoreTracedWorkspaceV2(
 
 ```go
 client.Homepage.GetHomepageProblems(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -881,14 +871,13 @@ client.Homepage.GetHomepageProblems(
 
 ```go
 request := []common.ProblemID{
-        "string",
-        "string",
-    }
-client.Homepage.SetHomepageProblems(
-        context.TODO(),
-        request,
-    )
+    "string",
+    "string",
 }
+client.Homepage.SetHomepageProblems(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -930,13 +919,12 @@ client.Homepage.SetHomepageProblems(
 
 ```go
 request := &fern.GetAttemptedMigrationsRequest{
-        AdminKeyHeader: "admin-key-header",
-    }
-client.Migration.GetAttemptedMigrations(
-        context.TODO(),
-        request,
-    )
+    AdminKeyHeader: "admin-key-header",
 }
+client.Migration.GetAttemptedMigrations(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -992,28 +980,27 @@ Create a new playlist
 
 ```go
 request := &fern.CreatePlaylistRequest{
-        Datetime: fern.MustParseDateTime(
+    Datetime: fern.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
+    ),
+    OptionalDatetime: fern.Time(
+        fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
-        OptionalDatetime: fern.Time(
-            fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
-        Body: &fern.PlaylistCreateRequest{
-            Name: "name",
-            Problems: []common.ProblemID{
-                "problems",
-                "problems",
-            },
+    ),
+    Body: &fern.PlaylistCreateRequest{
+        Name: "name",
+        Problems: []common.ProblemID{
+            "problems",
+            "problems",
         },
-    }
-client.Playlist.CreatePlaylist(
-        context.TODO(),
-        1,
-        request,
-    )
+    },
 }
+client.Playlist.CreatePlaylist(
+    context.TODO(),
+    1,
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1092,26 +1079,25 @@ Returns the user's playlists
 
 ```go
 request := &fern.GetPlaylistsRequest{
-        Limit: fern.Int(
-            1,
-        ),
-        OtherField: "otherField",
-        MultiLineDocs: "multiLineDocs",
-        OptionalMultipleField: []*string{
-            fern.String(
-                "optionalMultipleField",
-            ),
-        },
-        MultipleField: []string{
-            "multipleField",
-        },
-    }
-client.Playlist.GetPlaylists(
-        context.TODO(),
+    Limit: fern.Int(
         1,
-        request,
-    )
+    ),
+    OtherField: "otherField",
+    MultiLineDocs: "multiLineDocs",
+    OptionalMultipleField: []*string{
+        fern.String(
+            "optionalMultipleField",
+        ),
+    },
+    MultipleField: []string{
+        "multipleField",
+    },
 }
+client.Playlist.GetPlaylists(
+    context.TODO(),
+    1,
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1209,11 +1195,10 @@ Returns a playlist
 
 ```go
 client.Playlist.GetPlaylist(
-        context.TODO(),
-        1,
-        "playlistId",
-    )
-}
+    context.TODO(),
+    1,
+    "playlistId",
+)
 ```
 </dd>
 </dl>
@@ -1276,19 +1261,18 @@ Updates a playlist
 
 ```go
 request := &fern.UpdatePlaylistRequest{
-        Name: "name",
-        Problems: []common.ProblemID{
-            "problems",
-            "problems",
-        },
-    }
-client.Playlist.UpdatePlaylist(
-        context.TODO(),
-        1,
-        "playlistId",
-        request,
-    )
+    Name: "name",
+    Problems: []common.ProblemID{
+        "problems",
+        "problems",
+    },
 }
+client.Playlist.UpdatePlaylist(
+    context.TODO(),
+    1,
+    "playlistId",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1359,11 +1343,10 @@ Deletes a playlist
 
 ```go
 client.Playlist.DeletePlaylist(
-        context.TODO(),
-        1,
-        "playlist_id",
-    )
-}
+    context.TODO(),
+    1,
+    "playlist_id",
+)
 ```
 </dd>
 </dl>
@@ -1427,77 +1410,76 @@ Creates a problem
 
 ```go
 request := &fern.CreateProblemRequest{
-        ProblemName: "problemName",
-        ProblemDescription: &common.ProblemDescription{
-            Boards: []*common.ProblemDescriptionBoard{
-                &common.ProblemDescriptionBoard{},
-                &common.ProblemDescriptionBoard{},
-            },
+    ProblemName: "problemName",
+    ProblemDescription: &common.ProblemDescription{
+        Boards: []*common.ProblemDescriptionBoard{
+            &common.ProblemDescriptionBoard{},
+            &common.ProblemDescriptionBoard{},
         },
-        Files: map[common.Language]*fern.ProblemFiles{
-            common.LanguageJava: &fern.ProblemFiles{
-                SolutionFile: &fern.FileInfo{
+    },
+    Files: map[common.Language]*fern.ProblemFiles{
+        common.LanguageJava: &fern.ProblemFiles{
+            SolutionFile: &fern.FileInfo{
+                Filename: "filename",
+                Contents: "contents",
+            },
+            ReadOnlyFiles: []*fern.FileInfo{
+                &fern.FileInfo{
                     Filename: "filename",
                     Contents: "contents",
                 },
-                ReadOnlyFiles: []*fern.FileInfo{
-                    &fern.FileInfo{
-                        Filename: "filename",
-                        Contents: "contents",
-                    },
-                    &fern.FileInfo{
-                        Filename: "filename",
-                        Contents: "contents",
-                    },
+                &fern.FileInfo{
+                    Filename: "filename",
+                    Contents: "contents",
                 },
             },
         },
-        InputParams: []*fern.VariableTypeAndName{
-            &fern.VariableTypeAndName{
-                VariableType: &common.VariableType{
-                    IntegerType: "integerType",
-                },
-                Name: "name",
+    },
+    InputParams: []*fern.VariableTypeAndName{
+        &fern.VariableTypeAndName{
+            VariableType: &common.VariableType{
+                IntegerType: "integerType",
             },
-            &fern.VariableTypeAndName{
-                VariableType: &common.VariableType{
-                    IntegerType: "integerType",
-                },
-                Name: "name",
-            },
+            Name: "name",
         },
-        OutputType: &common.VariableType{
-            IntegerType: "integerType",
-        },
-        Testcases: []*fern.TestCaseWithExpectedResult{
-            &fern.TestCaseWithExpectedResult{
-                TestCase: &fern.TestCase{
-                    ID: "id",
-                    Params: []*common.VariableValue{
-                        &common.VariableValue{},
-                        &common.VariableValue{},
-                    },
-                },
-                ExpectedResult: &common.VariableValue{},
+        &fern.VariableTypeAndName{
+            VariableType: &common.VariableType{
+                IntegerType: "integerType",
             },
-            &fern.TestCaseWithExpectedResult{
-                TestCase: &fern.TestCase{
-                    ID: "id",
-                    Params: []*common.VariableValue{
-                        &common.VariableValue{},
-                        &common.VariableValue{},
-                    },
-                },
-                ExpectedResult: &common.VariableValue{},
-            },
+            Name: "name",
         },
-        MethodName: "methodName",
-    }
-client.Problem.CreateProblem(
-        context.TODO(),
-        request,
-    )
+    },
+    OutputType: &common.VariableType{
+        IntegerType: "integerType",
+    },
+    Testcases: []*fern.TestCaseWithExpectedResult{
+        &fern.TestCaseWithExpectedResult{
+            TestCase: &fern.TestCase{
+                ID: "id",
+                Params: []*common.VariableValue{
+                    &common.VariableValue{},
+                    &common.VariableValue{},
+                },
+            },
+            ExpectedResult: &common.VariableValue{},
+        },
+        &fern.TestCaseWithExpectedResult{
+            TestCase: &fern.TestCase{
+                ID: "id",
+                Params: []*common.VariableValue{
+                    &common.VariableValue{},
+                    &common.VariableValue{},
+                },
+            },
+            ExpectedResult: &common.VariableValue{},
+        },
+    },
+    MethodName: "methodName",
 }
+client.Problem.CreateProblem(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1552,78 +1534,77 @@ Updates a problem
 
 ```go
 request := &fern.CreateProblemRequest{
-        ProblemName: "problemName",
-        ProblemDescription: &common.ProblemDescription{
-            Boards: []*common.ProblemDescriptionBoard{
-                &common.ProblemDescriptionBoard{},
-                &common.ProblemDescriptionBoard{},
-            },
+    ProblemName: "problemName",
+    ProblemDescription: &common.ProblemDescription{
+        Boards: []*common.ProblemDescriptionBoard{
+            &common.ProblemDescriptionBoard{},
+            &common.ProblemDescriptionBoard{},
         },
-        Files: map[common.Language]*fern.ProblemFiles{
-            common.LanguageJava: &fern.ProblemFiles{
-                SolutionFile: &fern.FileInfo{
+    },
+    Files: map[common.Language]*fern.ProblemFiles{
+        common.LanguageJava: &fern.ProblemFiles{
+            SolutionFile: &fern.FileInfo{
+                Filename: "filename",
+                Contents: "contents",
+            },
+            ReadOnlyFiles: []*fern.FileInfo{
+                &fern.FileInfo{
                     Filename: "filename",
                     Contents: "contents",
                 },
-                ReadOnlyFiles: []*fern.FileInfo{
-                    &fern.FileInfo{
-                        Filename: "filename",
-                        Contents: "contents",
-                    },
-                    &fern.FileInfo{
-                        Filename: "filename",
-                        Contents: "contents",
-                    },
+                &fern.FileInfo{
+                    Filename: "filename",
+                    Contents: "contents",
                 },
             },
         },
-        InputParams: []*fern.VariableTypeAndName{
-            &fern.VariableTypeAndName{
-                VariableType: &common.VariableType{
-                    IntegerType: "integerType",
-                },
-                Name: "name",
+    },
+    InputParams: []*fern.VariableTypeAndName{
+        &fern.VariableTypeAndName{
+            VariableType: &common.VariableType{
+                IntegerType: "integerType",
             },
-            &fern.VariableTypeAndName{
-                VariableType: &common.VariableType{
-                    IntegerType: "integerType",
-                },
-                Name: "name",
-            },
+            Name: "name",
         },
-        OutputType: &common.VariableType{
-            IntegerType: "integerType",
-        },
-        Testcases: []*fern.TestCaseWithExpectedResult{
-            &fern.TestCaseWithExpectedResult{
-                TestCase: &fern.TestCase{
-                    ID: "id",
-                    Params: []*common.VariableValue{
-                        &common.VariableValue{},
-                        &common.VariableValue{},
-                    },
-                },
-                ExpectedResult: &common.VariableValue{},
+        &fern.VariableTypeAndName{
+            VariableType: &common.VariableType{
+                IntegerType: "integerType",
             },
-            &fern.TestCaseWithExpectedResult{
-                TestCase: &fern.TestCase{
-                    ID: "id",
-                    Params: []*common.VariableValue{
-                        &common.VariableValue{},
-                        &common.VariableValue{},
-                    },
-                },
-                ExpectedResult: &common.VariableValue{},
-            },
+            Name: "name",
         },
-        MethodName: "methodName",
-    }
-client.Problem.UpdateProblem(
-        context.TODO(),
-        "problemId",
-        request,
-    )
+    },
+    OutputType: &common.VariableType{
+        IntegerType: "integerType",
+    },
+    Testcases: []*fern.TestCaseWithExpectedResult{
+        &fern.TestCaseWithExpectedResult{
+            TestCase: &fern.TestCase{
+                ID: "id",
+                Params: []*common.VariableValue{
+                    &common.VariableValue{},
+                    &common.VariableValue{},
+                },
+            },
+            ExpectedResult: &common.VariableValue{},
+        },
+        &fern.TestCaseWithExpectedResult{
+            TestCase: &fern.TestCase{
+                ID: "id",
+                Params: []*common.VariableValue{
+                    &common.VariableValue{},
+                    &common.VariableValue{},
+                },
+            },
+            ExpectedResult: &common.VariableValue{},
+        },
+    },
+    MethodName: "methodName",
 }
+client.Problem.UpdateProblem(
+    context.TODO(),
+    "problemId",
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1686,10 +1667,9 @@ Soft deletes a problem
 
 ```go
 client.Problem.DeleteProblem(
-        context.TODO(),
-        "problemId",
-    )
-}
+    context.TODO(),
+    "problemId",
+)
 ```
 </dd>
 </dl>
@@ -1744,30 +1724,29 @@ Returns default starter files for problem
 
 ```go
 request := &fern.GetDefaultStarterFilesRequest{
-        InputParams: []*fern.VariableTypeAndName{
-            &fern.VariableTypeAndName{
-                VariableType: &common.VariableType{
-                    IntegerType: "integerType",
-                },
-                Name: "name",
+    InputParams: []*fern.VariableTypeAndName{
+        &fern.VariableTypeAndName{
+            VariableType: &common.VariableType{
+                IntegerType: "integerType",
             },
-            &fern.VariableTypeAndName{
-                VariableType: &common.VariableType{
-                    IntegerType: "integerType",
-                },
-                Name: "name",
+            Name: "name",
+        },
+        &fern.VariableTypeAndName{
+            VariableType: &common.VariableType{
+                IntegerType: "integerType",
             },
+            Name: "name",
         },
-        OutputType: &common.VariableType{
-            IntegerType: "integerType",
-        },
-        MethodName: "methodName",
-    }
-client.Problem.GetDefaultStarterFiles(
-        context.TODO(),
-        request,
-    )
+    },
+    OutputType: &common.VariableType{
+        IntegerType: "integerType",
+    },
+    MethodName: "methodName",
 }
+client.Problem.GetDefaultStarterFiles(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -1846,10 +1825,9 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```go
 client.Submission.CreateExecutionSession(
-        context.TODO(),
-        common.LanguageJava.Ptr(),
-    )
-}
+    context.TODO(),
+    common.LanguageJava.Ptr(),
+)
 ```
 </dd>
 </dl>
@@ -1904,10 +1882,9 @@ Returns execution server URL for session. Returns empty if session isn't registe
 
 ```go
 client.Submission.GetExecutionSession(
-        context.TODO(),
-        "sessionId",
-    )
-}
+    context.TODO(),
+    "sessionId",
+)
 ```
 </dd>
 </dl>
@@ -1962,10 +1939,9 @@ Stops execution session.
 
 ```go
 client.Submission.StopExecutionSession(
-        context.TODO(),
-        "sessionId",
-    )
-}
+    context.TODO(),
+    "sessionId",
+)
 ```
 </dd>
 </dl>
@@ -2006,9 +1982,8 @@ client.Submission.StopExecutionSession(
 
 ```go
 client.Submission.GetExecutionSessionsState(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -2035,11 +2010,10 @@ client.Submission.GetExecutionSessionsState(
 
 ```go
 client.Sysprop.SetNumWarmInstances(
-        context.TODO(),
-        common.LanguageJava.Ptr(),
-        1,
-    )
-}
+    context.TODO(),
+    common.LanguageJava.Ptr(),
+    1,
+)
 ```
 </dd>
 </dl>
@@ -2088,9 +2062,8 @@ client.Sysprop.SetNumWarmInstances(
 
 ```go
 client.Sysprop.GetNumWarmInstances(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -2131,9 +2104,8 @@ Returns lightweight versions of all problems
 
 ```go
 client.V2.Problem.GetLightweightProblems(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -2173,9 +2145,8 @@ Returns latest versions of all problems
 
 ```go
 client.V2.Problem.GetProblems(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -2215,10 +2186,9 @@ Returns latest version of a problem
 
 ```go
 client.V2.Problem.GetLatestProblem(
-        context.TODO(),
-        "problemId",
-    )
-}
+    context.TODO(),
+    "problemId",
+)
 ```
 </dd>
 </dl>
@@ -2273,11 +2243,10 @@ Returns requested version of a problem
 
 ```go
 client.V2.Problem.GetProblemVersion(
-        context.TODO(),
-        "problemId",
-        1,
-    )
-}
+    context.TODO(),
+    "problemId",
+    1,
+)
 ```
 </dd>
 </dl>
@@ -2340,10 +2309,9 @@ Returns lightweight versions of all problems
 <dd>
 
 ```go
-client.V2.Problem.GetLightweightProblems(
-        context.TODO(),
-    )
-}
+client.V2.V3.Problem.GetLightweightProblems(
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -2382,10 +2350,9 @@ Returns latest versions of all problems
 <dd>
 
 ```go
-client.V2.Problem.GetProblems(
-        context.TODO(),
-    )
-}
+client.V2.V3.Problem.GetProblems(
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -2424,11 +2391,10 @@ Returns latest version of a problem
 <dd>
 
 ```go
-client.V2.Problem.GetLatestProblem(
-        context.TODO(),
-        "problemId",
-    )
-}
+client.V2.V3.Problem.GetLatestProblem(
+    context.TODO(),
+    "problemId",
+)
 ```
 </dd>
 </dl>
@@ -2482,12 +2448,11 @@ Returns requested version of a problem
 <dd>
 
 ```go
-client.V2.Problem.GetProblemVersion(
-        context.TODO(),
-        "problemId",
-        1,
-    )
-}
+client.V2.V3.Problem.GetProblemVersion(
+    context.TODO(),
+    "problemId",
+    1,
+)
 ```
 </dd>
 </dl>

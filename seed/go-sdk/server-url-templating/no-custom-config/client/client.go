@@ -31,16 +31,19 @@ func NewClient(opts ...option.RequestOption) *Client {
 		if serverURLEnvironment == "" {
 			serverURLEnvironment = "prod"
 		}
-		options.Environment = fern.Environment{
-			Auth: fmt.Sprintf(
-				"https://auth.%s.example.com",
-				region,
-			),
-			Base: fmt.Sprintf(
-				"https://api.%s.%s.example.com/v1",
-				region,
-				serverURLEnvironment,
-			),
+		switch options.Environment {
+		case nil, fern.Environments.RegionalAPIServer:
+			options.Environment = fern.Environment{
+				Auth: fmt.Sprintf(
+					"https://auth.%s.example.com",
+					region,
+				),
+				Base: fmt.Sprintf(
+					"https://api.%s.%s.example.com/v1",
+					region,
+					serverURLEnvironment,
+				),
+			}
 		}
 	}
 	return &Client{
@@ -57,6 +60,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	client.GetUsers(
+//	    context.TODO(),
+//	)
 func (c *Client) GetUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -71,6 +79,15 @@ func (c *Client) GetUsers(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetUserRequest{
+//	    UserID: "userId",
+//	}
+//	client.GetUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetUser(
 	ctx context.Context,
 	request *fern.GetUserRequest,
@@ -87,6 +104,16 @@ func (c *Client) GetUser(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.TokenRequest{
+//	    ClientID: "client_id",
+//	    ClientSecret: "client_secret",
+//	}
+//	client.GetToken(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetToken(
 	ctx context.Context,
 	request *fern.TokenRequest,

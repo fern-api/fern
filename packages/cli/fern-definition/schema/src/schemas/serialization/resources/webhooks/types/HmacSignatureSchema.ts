@@ -8,6 +8,7 @@ import { WebhookPayloadFormatSchema } from "./WebhookPayloadFormatSchema.js";
 import { WebhookSignatureAlgorithmSchema } from "./WebhookSignatureAlgorithmSchema.js";
 import { WebhookSignatureEncodingSchema } from "./WebhookSignatureEncodingSchema.js";
 import { WebhookTimestampSchema } from "./WebhookTimestampSchema.js";
+import { WebhookUrlNormalizationSchema } from "./WebhookUrlNormalizationSchema.js";
 
 export const HmacSignatureSchema: core.serialization.ObjectSchema<
     serializers.HmacSignatureSchema.Raw,
@@ -20,6 +21,7 @@ export const HmacSignatureSchema: core.serialization.ObjectSchema<
     "payload-format": WebhookPayloadFormatSchema.optional(),
     timestamp: WebhookTimestampSchema.optional(),
     "body-hash-binding": WebhookBodyHashBindingSchema.optional(),
+    "url-normalization": WebhookUrlNormalizationSchema.optional(),
 });
 
 export declare namespace HmacSignatureSchema {
@@ -31,5 +33,6 @@ export declare namespace HmacSignatureSchema {
         "payload-format"?: WebhookPayloadFormatSchema.Raw | null;
         timestamp?: WebhookTimestampSchema.Raw | null;
         "body-hash-binding"?: WebhookBodyHashBindingSchema.Raw | null;
+        "url-normalization"?: WebhookUrlNormalizationSchema.Raw | null;
     }
 }

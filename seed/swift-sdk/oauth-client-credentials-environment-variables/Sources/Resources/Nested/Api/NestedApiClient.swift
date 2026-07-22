@@ -7,6 +7,20 @@ public final class NestedApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import OauthClientCredentialsEnvironmentVariables
+    ///
+    /// private func main() async throws {
+    ///     let client = OauthClientCredentialsEnvironmentVariablesClient()
+    ///
+    ///     _ = try await client.nested.api.getSomething()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getSomething(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,

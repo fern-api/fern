@@ -14,15 +14,14 @@
 
 ```go
 request := &upload.JustFileRequest{
-        File: strings.NewReader(
-            "",
-        ),
-    }
-client.Service.JustFile(
-        context.TODO(),
-        request,
-    )
+    File: strings.NewReader(
+        "",
+    ),
 }
+client.Service.JustFile(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -48,15 +47,14 @@ client.Service.JustFile(
 
 ```go
 request := &upload.OptionalArgsRequest{
-        ImageFile: strings.NewReader(
-            "",
-        ),
-    }
-client.Service.OptionalArgs(
-        context.TODO(),
-        request,
-    )
+    ImageFile: strings.NewReader(
+        "",
+    ),
 }
+client.Service.OptionalArgs(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -82,18 +80,17 @@ client.Service.OptionalArgs(
 
 ```go
 request := &upload.WithRefBodyRequest{
-        ImageFile: strings.NewReader(
-            "",
-        ),
-        Request: &upload.MyObject{
-            Foo: "bar",
-        },
-    }
-client.Service.WithRefBody(
-        context.TODO(),
-        request,
-    )
+    ImageFile: strings.NewReader(
+        "",
+    ),
+    Request: &upload.MyObject{
+        Foo: "bar",
+    },
 }
+client.Service.WithRefBody(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -119,9 +116,8 @@ client.Service.WithRefBody(
 
 ```go
 client.Service.Simple(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>

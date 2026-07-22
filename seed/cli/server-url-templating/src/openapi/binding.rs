@@ -656,6 +656,13 @@ impl Binding for OpenApiBinding {
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let base_url_override = base_url_override_owned.as_deref();
 
+            // --user-agent-suffix flag wins; otherwise {NAME}_USER_AGENT_SUFFIX
+            // env var (resolved inside HttpConfig). Apply the flag override to
+            // a clone so the client this request builds carries it.
+            let http_config = prepared.http_config.clone().with_user_agent_suffix_override(
+                crate::cli_args::resolve_user_agent_suffix_override(root_matches),
+            );
+
             // Read --output flag for binary response file writing. The literal
             // `-` is a stdout sentinel (curl/wget convention) and bypasses
             // path validation — handle_binary_response branches on it to
@@ -726,7 +733,7 @@ impl Binding for OpenApiBinding {
                 &pipeline,
                 capture_output,
                 base_url_override,
-                &prepared.http_config,
+                &http_config,
                 no_extract,
                 no_retry,
                 no_stream,
@@ -757,10 +764,13 @@ impl Binding for OpenApiBinding {
         let debug = matches.get_flag("debug");
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let http_config = entry.http_config.with_user_agent_suffix_override(
+            crate::cli_args::resolve_user_agent_suffix_override(matches),
+        );
         let ctx = super::AppContext::new(
             entry.doc,
             entry.auth_provider,
-            entry.http_config,
+            http_config,
             entry.global_headers,
             entry.global_params,
         ).with_quiet(quiet)
@@ -784,6 +794,12 @@ impl Binding for OpenApiBinding {
         let debug = matches.get_flag("debug");
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let entry = super::app::BindingEntry {
+            http_config: entry.http_config.with_user_agent_suffix_override(
+                crate::cli_args::resolve_user_agent_suffix_override(matches),
+            ),
+            ..entry
+        };
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {

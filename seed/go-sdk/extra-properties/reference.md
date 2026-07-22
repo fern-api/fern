@@ -14,13 +14,12 @@
 
 ```go
 request := &fern.CreateUserRequest{
-        Name: "Alice",
-    }
-client.User.CreateUser(
-        context.TODO(),
-        request,
-    )
+    Name: "Alice",
 }
+client.User.CreateUser(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

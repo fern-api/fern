@@ -1839,7 +1839,8 @@
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
                     },
-                    "bodyHashBinding": null
+                    "bodyHashBinding": null,
+                    "notificationUrlNormalization": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -1927,6 +1928,10 @@
                             "type": "queryParameter",
                             "name": "bodySHA256"
                         }
+                    },
+                    "notificationUrlNormalization": {
+                        "portVariants": true,
+                        "legacyQueryEncoding": true
                     }
                 },
                 "fileUploadPayload": null,

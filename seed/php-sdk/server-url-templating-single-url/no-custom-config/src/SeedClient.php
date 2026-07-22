@@ -55,10 +55,13 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if (($region != null || $serverUrlEnvironment != null) && !isset($this->options['baseUrl'])) {
-            $region ??= 'us-east-1';
-            $serverUrlEnvironment ??= 'prod';
-            $this->options['baseUrl'] = 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1';
+        if ($region != null || $serverUrlEnvironment != null) {
+            $baseUrl = $this->options['baseUrl'] ?? null;
+            if ($baseUrl == null || $baseUrl === Environments::RegionalApiServer->value) {
+                $region ??= 'us-east-1';
+                $serverUrlEnvironment ??= 'prod';
+                $this->options['baseUrl'] = 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1';
+            }
         }
 
 
@@ -73,6 +76,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUsers();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -118,6 +126,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   baseUrl?: string,

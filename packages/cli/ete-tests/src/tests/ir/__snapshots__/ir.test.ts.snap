@@ -33109,7 +33109,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
                     },
-                    "bodyHashBinding": null
+                    "bodyHashBinding": null,
+                    "notificationUrlNormalization": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -33162,7 +33163,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         "format": "UNIX_SECONDS",
                         "tolerance": 300
                     },
-                    "bodyHashBinding": null
+                    "bodyHashBinding": null,
+                    "notificationUrlNormalization": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,

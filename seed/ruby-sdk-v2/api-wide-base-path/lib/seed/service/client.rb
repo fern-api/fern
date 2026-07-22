@@ -22,6 +22,14 @@ module Seed
       # @option params [Integer] :endpoint_param
       # @option params [String] :resource_param
       #
+      # @example
+      #   client.service.post(
+      #     path_param: "pathParam",
+      #     service_param: "serviceParam",
+      #     endpoint_param: 1,
+      #     resource_param: "resourceParam"
+      #   )
+      #
       # @return [untyped]
       def post(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

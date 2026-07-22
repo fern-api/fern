@@ -6,6 +6,7 @@ package com.seed.javaIdempotencyHeadersFileUpload.resources.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.javaIdempotencyHeadersFileUpload.core.ClientOptions;
 import com.seed.javaIdempotencyHeadersFileUpload.core.FileStream;
+import com.seed.javaIdempotencyHeadersFileUpload.core.IdempotencyUtils;
 import com.seed.javaIdempotencyHeadersFileUpload.core.IdempotentRequestOptions;
 import com.seed.javaIdempotencyHeadersFileUpload.core.ObjectMappers;
 import com.seed.javaIdempotencyHeadersFileUpload.core.RequestOptions;
@@ -65,7 +66,8 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", multipartBodyBuilder.build())
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .headers(Headers.of(IdempotencyUtils.withGeneratedIdempotencyKey(
+                        clientOptions.headers(requestOptions), "Idempotency-Key")))
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -110,7 +112,8 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
+        _requestBuilder.headers(Headers.of(IdempotencyUtils.withGeneratedIdempotencyKey(
+                this.clientOptions.headers((RequestOptions) null), "Idempotency-Key")));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -143,7 +146,8 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
+        _requestBuilder.headers(Headers.of(IdempotencyUtils.withGeneratedIdempotencyKey(
+                this.clientOptions.headers((RequestOptions) null), "Idempotency-Key")));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -181,7 +185,8 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(IdempotencyUtils.withGeneratedIdempotencyKey(
+                this.clientOptions.headers(requestOptions), "Idempotency-Key")));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -231,7 +236,8 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(IdempotencyUtils.withGeneratedIdempotencyKey(
+                this.clientOptions.headers(requestOptions), "Idempotency-Key")));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

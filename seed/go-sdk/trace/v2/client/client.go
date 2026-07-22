@@ -39,6 +39,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.V2.Test(
+//	    context.TODO(),
+//	)
 func (c *Client) Test(
 	ctx context.Context,
 	opts ...option.RequestOption,

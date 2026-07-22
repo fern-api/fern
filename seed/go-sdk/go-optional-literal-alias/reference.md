@@ -13,16 +13,15 @@
 
 ```go
 request := &fern.SearchRequest{
-        SortField: fern.String(
-            "DEFAULT",
-        ),
-        Query: "test query",
-    }
-client.Search(
-        context.TODO(),
-        request,
-    )
+    SortField: fern.String(
+        "DEFAULT",
+    ),
+    Query: "test query",
 }
+client.Search(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

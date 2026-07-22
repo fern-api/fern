@@ -21,6 +21,21 @@ impl V2Client {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_trace::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = TraceClient::new(config).expect("Failed to build client");
+    ///     client.v2.test(None).await;
+    /// }
+    /// ```
     pub async fn test(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::GET, "", None, None, options)

@@ -10,4 +10,5 @@ export interface HmacWebhookSignatureVerification {
     payloadFormat: FernOpenapiIr.WebhookPayloadFormat | undefined;
     timestamp: FernOpenapiIr.WebhookTimestamp | undefined;
     bodyHashBinding: FernOpenapiIr.WebhookBodyHashBinding | undefined;
+    notificationUrlNormalization: FernOpenapiIr.WebhookNotificationUrlNormalization | undefined;
 }

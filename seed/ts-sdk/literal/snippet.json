@@ -13,6 +13,17 @@
         },
         {
             "id": {
+                "path": "/headers/literals-only",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.sendLiteralsOnly"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.headers.sendLiteralsOnly();\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/inlined",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined.send"

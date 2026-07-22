@@ -18,6 +18,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.user.create_user(
+      #     type: "CreateUserRequest",
+      #     version: "v1",
+      #     name: "Alice"
+      #   )
+      #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)

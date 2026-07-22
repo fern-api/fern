@@ -13,6 +13,20 @@ impl TypesClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UnionsClient::new(config).expect("Failed to build client");
+    ///     client.types.get(&"date-example".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get(
         &self,
         id: &str,
@@ -23,6 +37,28 @@ impl TypesClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_unions::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = UnionsClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .types
+    ///         .update(
+    ///             &UnionWithTime::Date {
+    ///                 value: NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn update(
         &self,
         request: &UnionWithTime,

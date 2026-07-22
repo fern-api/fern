@@ -22,6 +22,30 @@ impl FileUploadExampleClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .file_upload_example
+    ///         .upload_file(
+    ///             &UploadFileRequest {
+    ///                 file: b"test file content".to_vec(),
+    ///                 name: "name".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn upload_file(
         &self,
         request: &UploadFileRequest,

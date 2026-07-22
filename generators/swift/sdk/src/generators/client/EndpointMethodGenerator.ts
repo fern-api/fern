@@ -38,6 +38,7 @@ export class EndpointMethodGenerator {
 
     public generateMethod(endpoint: FernIr.HttpEndpoint): swift.Method {
         const parameters = this.getMethodParametersForEndpoint(endpoint);
+        const codeExample = this.sdkGeneratorContext.getEndpointSnippet(endpoint);
         return swift.method({
             unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(endpoint.name),
             accessLevel: swift.AccessLevel.Public,
@@ -46,17 +47,19 @@ export class EndpointMethodGenerator {
             throws: true,
             returnType: this.getMethodReturnTypeForEndpoint(endpoint),
             body: this.getMethodBodyForEndpoint(endpoint),
-            docs: endpoint.docs
-                ? swift.docComment({
-                      summary: endpoint.docs,
-                      parameters: parameters
-                          .map((p) => ({
-                              name: p.unsafeName,
-                              description: p.docsContent ?? ""
-                          }))
-                          .filter((p) => p.description !== "")
-                  })
-                : undefined
+            docs:
+                endpoint.docs != null || codeExample != null
+                    ? swift.docComment({
+                          summary: endpoint.docs,
+                          codeExample,
+                          parameters: parameters
+                              .map((p) => ({
+                                  name: p.unsafeName,
+                                  description: p.docsContent ?? ""
+                              }))
+                              .filter((p) => p.description !== "")
+                      })
+                    : undefined
         });
     }
 

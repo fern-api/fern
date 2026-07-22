@@ -7,6 +7,23 @@ public final class SyspropClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    ///
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    ///
+    ///     _ = try await client.sysprop.setNumWarmInstances(
+    ///         language: "JAVA",
+    ///         numWarmInstances: "1"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func setNumWarmInstances(language: String, numWarmInstances: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .put,
@@ -15,6 +32,20 @@ public final class SyspropClient: Sendable {
         )
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Trace
+    ///
+    /// private func main() async throws {
+    ///     let client = TraceClient(token: "<token>")
+    ///
+    ///     _ = try await client.sysprop.getNumWarmInstances()
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getNumWarmInstances(requestOptions: RequestOptions? = nil) async throws -> [Language: Int] {
         return try await httpClient.performRequest(
             method: .get,

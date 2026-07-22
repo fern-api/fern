@@ -12,6 +12,21 @@ impl ApiClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_oauth_client_credentials_environment_variables::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = OauthClientCredentialsEnvironmentVariablesClient::new(config)
+    ///         .expect("Failed to build client");
+    ///     client.nested_no_auth.api.get_something(None).await;
+    /// }
+    /// ```
     pub async fn get_something(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(

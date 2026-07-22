@@ -59,6 +59,8 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        await context.snippetGenerator.populateSnippetsCache();
+
         const models = generateModels({ context });
         for (const file of models) {
             context.project.addRawFiles(file);
@@ -114,8 +116,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         this.generateInferredAuthProvider(context);
         this.generateOAuthProvider(context);
-
-        await context.snippetGenerator.populateSnippetsCache();
 
         if (this.shouldGenerateReadme(context)) {
             try {

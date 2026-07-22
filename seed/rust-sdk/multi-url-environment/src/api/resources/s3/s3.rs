@@ -13,6 +13,29 @@ impl S3Client {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_multi_url_environment::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .s3
+    ///         .get_presigned_url(
+    ///             &GetPresignedUrlRequest {
+    ///                 s3key: "s3Key".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn get_presigned_url(
         &self,
         request: &GetPresignedUrlRequest,

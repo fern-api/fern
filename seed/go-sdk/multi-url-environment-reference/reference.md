@@ -14,9 +14,8 @@
 
 ```go
 client.Items.ListItems(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -43,14 +42,13 @@ client.Items.ListItems(
 
 ```go
 request := &fern.AuthGetTokenRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-    }
-client.Auth.Gettoken(
-        context.TODO(),
-        request,
-    )
+    ClientID: "client_id",
+    ClientSecret: "client_secret",
 }
+client.Auth.Gettoken(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -100,14 +98,13 @@ client.Auth.Gettoken(
 
 ```go
 request := &fern.FilesUploadRequest{
-        Name: "name",
-        ParentID: "parent_id",
-    }
-client.Files.Upload(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
+    ParentID: "parent_id",
 }
+client.Files.Upload(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

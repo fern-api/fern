@@ -50,6 +50,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -95,6 +100,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -140,6 +150,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -185,6 +200,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -230,6 +250,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -275,6 +300,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -320,6 +350,11 @@ class UserClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->user->getWithBearer();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

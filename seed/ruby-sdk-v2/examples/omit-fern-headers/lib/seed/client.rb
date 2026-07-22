@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
+    #
     # @return [String]
     def echo(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -39,6 +42,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.echo(request: "primitive")
     #
     # @return [Seed::Types::Identifier]
     def create_type(request_options: {}, **params)

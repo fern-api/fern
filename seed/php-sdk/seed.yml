@@ -180,6 +180,9 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+  php-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
@@ -203,6 +206,10 @@ allowedFailures:
   # dynamic IR to carry the parameter's `clientDefault` (it currently drops the field), which
   # is an additive IR change that must ship via the separate IR-publish flow before the
   # generator can consume it. Tracked separately; left here until the IR change lands.
+  # CLI-specific OAuth fixture: the full IR client-credentials contract (custom
+  # token request properties) produces PHP OAuth-provider code that doesn't compile.
+  # Exercised by the CLI generator.
+  - cli-oauth
   - api-wide-base-path-with-default
 
 

@@ -53,6 +53,24 @@ public final class ExtendsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// ```swift
+    /// import Foundation
+    /// import Extends
+    ///
+    /// private func main() async throws {
+    ///     let client = ExtendsClient()
+    ///
+    ///     _ = try await client.extendedInlineRequestBody(request: .init(
+    ///         name: "name",
+    ///         docs: "docs",
+    ///         unique: "unique"
+    ///     ))
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func extendedInlineRequestBody(request: Requests.Inlined, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

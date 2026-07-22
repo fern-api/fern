@@ -35,6 +35,18 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SearchRequest{
+//	    SortField: fern.String(
+//	        "DEFAULT",
+//	    ),
+//	    Query: "test query",
+//	}
+//	client.Search(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Search(
 	ctx context.Context,
 	request *fern.SearchRequest,

@@ -50,6 +50,18 @@ class ClientsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->clients->create(
+     *     new ClientRequest([
+     *         'client' => new Client([
+     *             'name' => 'Acme Corp',
+     *             'email' => 'contact@acme.com',
+     *         ]),
+     *     ]),
+     * );
+     * ```
+     *
      * @param ClientRequest $request
      * @param ?array{
      *   baseUrl?: string,

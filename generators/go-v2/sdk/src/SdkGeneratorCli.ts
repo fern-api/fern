@@ -59,11 +59,11 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        await context.snippetGenerator.populateSnippetsCache();
+
         this.generateClients(context);
         this.generateRawClients(context);
         this.generateInternalFiles(context);
-
-        await context.snippetGenerator.populateSnippetsCache();
 
         await this.generateWireTestFiles(context);
 

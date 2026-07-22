@@ -50,6 +50,28 @@ class ReferenceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->reference->send(
+     *     new SendRequest([
+     *         'prompt' => 'You are a helpful assistant',
+     *         'query' => 'What is the weather today',
+     *         'stream' => false,
+     *         'context' => "You're super wise",
+     *         'containerObject' => new ContainerObject([
+     *             'nestedObjects' => [
+     *                 new NestedObjectWithLiterals([
+     *                     'literal1' => 'literal1',
+     *                     'literal2' => 'literal2',
+     *                     'strProp' => 'strProp',
+     *                 ]),
+     *             ],
+     *         ]),
+     *         'ending' => '$ending',
+     *     ]),
+     * );
+     * ```
+     *
      * @param SendRequest $request
      * @param ?array{
      *   baseUrl?: string,

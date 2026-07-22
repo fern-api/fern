@@ -62,13 +62,15 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if ($environment == null && ($region != null || $serverUrlEnvironment != null)) {
-            $region ??= 'us-east-1';
-            $serverUrlEnvironment ??= 'prod';
-            $environment = Environments::custom(
-                base: 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1',
-                auth: 'https://auth.' . $region . '.example.com'
-            );
+        if ($region != null || $serverUrlEnvironment != null) {
+            if ($environment == null || $environment == Environments::RegionalApiServer()) {
+                $region ??= 'us-east-1';
+                $serverUrlEnvironment ??= 'prod';
+                $environment = Environments::custom(
+                    base: 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1',
+                    auth: 'https://auth.' . $region . '.example.com'
+                );
+            }
         }
 
         $environment ??= Environments::RegionalApiServer();
@@ -85,6 +87,11 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUsers();
+     * ```
+     *
      * @param ?array{
      *   maxRetries?: int,
      *   timeout?: float,
@@ -129,6 +136,13 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getUser(
+     *     'userId',
+     * );
+     * ```
+     *
      * @param string $userId
      * @param ?array{
      *   maxRetries?: int,
@@ -174,6 +188,16 @@ class SeedClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->getToken(
+     *     new TokenRequest([
+     *         'clientId' => 'client_id',
+     *         'clientSecret' => 'client_secret',
+     *     ]),
+     * );
+     * ```
+     *
      * @param TokenRequest $request
      * @param ?array{
      *   maxRetries?: int,

@@ -31,7 +31,9 @@ paths:
                 client_id:
                   type: string
                 client_secret:
-                  type: string
+                  type:
+                    - string
+                    - 'null'
                 audience:
                   type: string
                   const: https://api.example.com

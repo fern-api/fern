@@ -28,6 +28,21 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.list_plants(None).await;
+    /// }
+    /// ```
     pub async fn list_plants(
         &self,
         options: Option<RequestOptions>,
@@ -46,6 +61,21 @@ impl ApiClient {
     /// # Returns
     ///
     /// JSON response from the API
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client.get_plant(&"plantId".to_string(), None).await;
+    /// }
+    /// ```
     pub async fn get_plant(
         &self,
         plant_id: &str,

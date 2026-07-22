@@ -226,6 +226,9 @@ fixtures:
     - customConfig:
         environment-class-name: CustomEnvironment
       outputFolder: environment-class-name
+  csharp-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
@@ -450,3 +453,7 @@ fixtures:
       outputFolder: auto-generate-idempotency-key
 allowedFailures:
   - oauth-client-credentials-custom
+  # CLI-specific OAuth fixture: the full IR client-credentials contract (custom
+  # token request properties) produces C# OAuth-provider code that doesn't compile.
+  # Exercised by the CLI generator.
+  - cli-oauth

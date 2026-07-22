@@ -20,6 +20,12 @@ module Seed
       # @option params [String] :tenant_id
       # @option params [String] :organization_id
       #
+      # @example
+      #   client.organizations.get_organization(
+      #     tenant_id: "tenant_id",
+      #     organization_id: "organization_id"
+      #   )
+      #
       # @return [Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -54,6 +60,13 @@ module Seed
       # @option params [String] :organization_id
       # @option params [String] :user_id
       #
+      # @example
+      #   client.organizations.get_organization_user(
+      #     tenant_id: "tenant_id",
+      #     organization_id: "organization_id",
+      #     user_id: "user_id"
+      #   )
+      #
       # @return [Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -87,6 +100,13 @@ module Seed
       # @option params [String] :tenant_id
       # @option params [String] :organization_id
       # @option params [Integer, nil] :limit
+      #
+      # @example
+      #   client.organizations.search_organizations(
+      #     tenant_id: "tenant_id",
+      #     organization_id: "organization_id",
+      #     limit: 1
+      #   )
       #
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)

@@ -35,6 +35,17 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Add a movie to the database using the movies/* /... path.
+//
+// Example:
+//
+//	request := &fern.CreateMovieRequest{
+//	    Title: "title",
+//	    Rating: 1.1,
+//	}
+//	client.Imdb.CreateMovie(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *fern.CreateMovieRequest,
@@ -51,6 +62,15 @@ func (c *Client) CreateMovie(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &fern.GetMovieImdbRequest{
+//	    MovieID: "movieId",
+//	}
+//	client.Imdb.GetMovie(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) GetMovie(
 	ctx context.Context,
 	request *fern.GetMovieImdbRequest,

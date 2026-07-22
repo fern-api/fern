@@ -21,6 +21,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Commons::Types::Language] :language
       #
+      # @example
+      #   client.submission.create_execution_session(language: "JAVA")
+      #
       # @return [Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -55,6 +58,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :session_id
       #
+      # @example
+      #   client.submission.get_execution_session(session_id: "sessionId")
+      #
       # @return [Seed::Submission::Types::ExecutionSessionResponse, nil]
       def get_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -87,6 +93,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :session_id
       #
+      # @example
+      #   client.submission.stop_execution_session(session_id: "sessionId")
+      #
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -115,6 +124,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.submission.get_execution_sessions_state
       #
       # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
       def get_execution_sessions_state(request_options: {}, **_params)

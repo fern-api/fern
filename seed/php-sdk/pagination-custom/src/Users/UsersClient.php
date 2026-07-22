@@ -52,6 +52,16 @@ class UsersClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->users->listWithCustomPager(
+     *     new ListWithCustomPagerRequest([
+     *         'limit' => 1,
+     *         'startingAfter' => 'starting_after',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ListWithCustomPagerRequest $request
      * @param ?array{
      *   baseUrl?: string,

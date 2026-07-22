@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.File.Notification.Service.GetException(
+//	    context.TODO(),
+//	    "notification-hsy129x",
+//	)
 func (c *Client) GetException(
 	ctx context.Context,
 	notificationID string,
