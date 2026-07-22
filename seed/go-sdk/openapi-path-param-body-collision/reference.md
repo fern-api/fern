@@ -13,17 +13,16 @@
 
 ```go
 request := &fern.IdentifierUpdate{
-        ProfileID: "profile_123",
-        IDTypePathParam: "email",
-        IDType: "phone",
-        OldValue: "+13175556789",
-        NewValue: "+13175556798",
-    }
-client.UpdateProfileIdentifier(
-        context.TODO(),
-        request,
-    )
+    ProfileID: "profile_123",
+    IDTypePathParam: "email",
+    IDType: "phone",
+    OldValue: "+13175556789",
+    NewValue: "+13175556798",
 }
+client.UpdateProfileIdentifier(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
