@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.77.0
+  changelogEntry:
+    - summary: |
+        Add an `ignore-tags` OpenAPI setting to `generators.yml`. When enabled,
+        operation-level tags are ignored when determining the SDK structure:
+        endpoints fall back to the root package (or their namespace) and method
+        names are derived from each operation's `operationId`.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: ./openapi.yml
+              settings:
+                ignore-tags: true
+        ```
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 5.76.0
   changelogEntry:
     - summary: |
