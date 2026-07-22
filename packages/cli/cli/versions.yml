@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.78.0
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now automatically deconflicts path parameters whose names collide
+        with other request properties (query parameters, headers, or request body properties).
+        The colliding path parameter's SDK-facing name gets a `PathParam` suffix (e.g. an
+        `{idType}` path parameter colliding with an `idType` body property becomes
+        `idTypePathParam`), so such OpenAPI-compliant specs generate without requiring an
+        `x-fern-parameter-name` override. The wire format is unchanged, since path parameter
+        names never appear on the wire. Explicit `x-fern-parameter-name` overrides still take
+        precedence.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 5.77.0
   changelogEntry:
     - summary: |
