@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add webhook body-hash binding support. When a webhook's HMAC signature verification
+    declares a `bodyHashBinding` in the IR, the generated `verifySignature` helper now
+    recomputes the encoded hash of the raw request body using the binding's own
+    algorithm/encoding, extracts the configured query parameter from the notification URL,
+    and timing-safe-compares them (failing closed) before performing the existing HMAC
+    verification over the verbatim notification URL. A stdlib-only `WebhookBodyHash` core
+    utility (unkeyed digest plus read-only query-parameter extraction) is emitted alongside
+    the existing signature utility. Output is unchanged when no binding is present.
+  type: feat

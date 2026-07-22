@@ -314,7 +314,8 @@ describe("TypeSchemaGenerator", () => {
             properties: [],
             extends: [],
             extraProperties: false,
-            extendedProperties: undefined
+            extendedProperties: undefined,
+            deferredUnionBaseProperties: undefined
         });
         const schema = generator.generateTypeSchema({
             typeName: "User",
@@ -363,6 +364,7 @@ describe("TypeSchemaGenerator", () => {
 
         const shape = FernIr.Type.union({
             discriminant: createNameAndWireValue("type", "type"),
+            inheritedBaseProperties: undefined,
             extends: [],
             types: [],
             baseProperties: [],
@@ -415,7 +417,8 @@ describe("TypeSchemaGenerator", () => {
             properties: [createObjectProperty("name", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))],
             extends: [],
             extraProperties: false,
-            extendedProperties: undefined
+            extendedProperties: undefined,
+            deferredUnionBaseProperties: undefined
         });
         const schema = generator.generateTypeSchema({
             typeName: "User",
@@ -442,6 +445,7 @@ describe("TypeSchemaGenerator", () => {
 
         const shape = FernIr.Type.union({
             discriminant: createNameAndWireValue("type", "type"),
+            inheritedBaseProperties: undefined,
             extends: [],
             types: [],
             baseProperties: [],
@@ -559,7 +563,8 @@ describe("GeneratedObjectTypeSchemaImpl", () => {
                 properties: opts.properties ?? [],
                 extends: opts.extends ?? [],
                 extraProperties: opts.extraProperties ?? false,
-                extendedProperties: undefined
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
             },
             getGeneratedType: () =>
                 createMockGeneratedObjectType({
@@ -926,6 +931,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             typeName: opts.typeName,
             shape: {
                 discriminant: opts.discriminant,
+                inheritedBaseProperties: undefined,
                 extends: [],
                 types: opts.types ?? [],
                 baseProperties: opts.baseProperties ?? [],

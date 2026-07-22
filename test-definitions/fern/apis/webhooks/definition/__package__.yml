@@ -137,6 +137,10 @@ webhooks:
           amount: 25.00
           reason: "Customer request"
 
+  # Per-webhook override: HMAC-SHA1 over the notification URL (verbatim), with a hash of
+  # the raw JSON body transmitted separately as the "bodySHA256" query parameter on that
+  # URL (Twilio's JSON webhook scheme). The body-hash algorithm/encoding (SHA256/hex) are
+  # independent of the outer HMAC's (SHA1/base64).
   smsStatus:
     display-name: SMS Status
     docs: |

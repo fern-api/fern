@@ -19,16 +19,16 @@ export class WebhooksHelper {
         timestampHeader: string,
     ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null || signatureKey == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
+            return false;
         }
 
         if (timestampHeader == null || timestampHeader === "") {
-            throw new Error("Missing timestamp header 'x-webhook-timestamp' for webhook signature verification");
+            return false;
         }
 
         const timestampValue = parseInt(timestampHeader, 10);
         if (Number.isNaN(timestampValue)) {
-            throw new Error("Invalid timestamp format: expected unix seconds");
+            return false;
         }
         const timestampMs = timestampValue * 1000;
 

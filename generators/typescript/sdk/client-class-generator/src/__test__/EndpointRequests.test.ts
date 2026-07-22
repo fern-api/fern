@@ -57,7 +57,8 @@ function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: bool
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             }),
             getReferenceToType: (typeRef: FernIr.TypeReference) => {

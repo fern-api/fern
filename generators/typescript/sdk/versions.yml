@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add support for webhook body-hash binding in the generated `verifySignature` helper.
+        When a webhook's signature declares a body-hash binding, the helper now hashes the raw
+        request body and compares it to the hash transmitted separately as a query parameter on
+        the notification URL (e.g. Twilio's `bodySHA256`) before verifying the HMAC signature.
+        Both checks must pass. The body-hash algorithm and encoding are independent of the outer
+        HMAC's.
+      type: feat
+    - summary: |
+        Webhook signature helpers now support multi-value form parameters (with per-key
+        dedup + sort), branch at runtime on the body-hash query parameter to verify either
+        classic form-encoded or JSON requests, verify against normalized notification-URL
+        variants (port / legacy query encoding) when configured, and return `false` instead
+        of throwing on missing/invalid inputs.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 3.82.3
   changelogEntry:
     - summary: |

@@ -1,0 +1,7 @@
+- summary: |
+    Fix generated `verify_signature` webhook helper raising instead of returning `false`
+    when `signature_header` or `signature_key` is an empty string. An empty key was passed
+    to `OpenSSL::HMAC.digest`, which raises on OpenSSL 3.x; the input guard now fails
+    closed on empty (not just nil) signature header and key, matching the never-raise
+    contract.
+  type: fix
