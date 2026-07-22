@@ -137,6 +137,15 @@ fixtures:
         binaryName: plant-store
         generateWireTests: true
       outputFolder: with-wire-tests
+  # Reserved-keyword regression guard. The `CreatedBy` enum's `self` value
+  # PascalCases to the Rust keyword `Self`, which must be escaped in the
+  # embedded types crate or the CLI won't `cargo build`. Because the wire test
+  # compiles the whole generated crate before running, this fixture catches
+  # any keyword-escaping regression at `cargo test` time. See fern#17183.
+  cli-reserved-keywords:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures
