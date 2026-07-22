@@ -62,13 +62,15 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        if ($environment == null && ($region != null || $serverUrlEnvironment != null)) {
-            $region ??= 'us-east-1';
-            $serverUrlEnvironment ??= 'prod';
-            $environment = Environments::custom(
-                base: 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1',
-                auth: 'https://auth.' . $region . '.example.com'
-            );
+        if ($region != null || $serverUrlEnvironment != null) {
+            if ($environment == null || $environment == Environments::RegionalApiServer()) {
+                $region ??= 'us-east-1';
+                $serverUrlEnvironment ??= 'prod';
+                $environment = Environments::custom(
+                    base: 'https://api.' . $region . '.' . $serverUrlEnvironment . '.example.com/v1',
+                    auth: 'https://auth.' . $region . '.example.com'
+                );
+            }
         }
 
         $environment ??= Environments::RegionalApiServer();
