@@ -325,6 +325,7 @@ export const DocsSettingsConfig = z.object({
     search: SearchSettingsConfig.optional(),
     "http-snippets": HttpSnippetsConfig.optional(),
     "hide-404-page": z.boolean().optional(),
+    "show-permission-denied-page": z.boolean().optional(),
     "use-javascript-as-typescript": z.boolean().optional(),
     "disable-explorer-proxy": z.boolean().optional(),
     "disable-analytics": z.boolean().optional(),
