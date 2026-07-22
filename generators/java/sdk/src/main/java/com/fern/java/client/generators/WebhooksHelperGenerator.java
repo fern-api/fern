@@ -192,7 +192,8 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         }
 
         if (config.getBodyHashBinding().isPresent()) {
-            // Body-hash binding (e.g. Twilio): the same endpoint accepts both classic form-encoded and JSON requests, so
+            // Body-hash binding (e.g. Twilio): the same endpoint accepts both classic form-encoded and JSON requests,
+            // so
             // branch at runtime on whether the body-hash query parameter is present in the notification URL.
             //   - present (JSON): the signed payload is the URL only; additionally recompute hash(rawBody) and
             //     constant-time compare it to the transmitted value.
@@ -246,12 +247,13 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     /**
      * Emits the {@code String <target> = ...} flattening of a form-parameter map into a signed string. Keys are sorted
      * (map keys are inherently unique), and for each key the values are deduped and sorted, concatenating {@code key +
-     * value} for every value with no delimiter between params. Values may be a {@code String} or a {@code
-     * Collection<String>}.
+     * value} for every value with no delimiter between params. Values may be a {@code String} or a
+     * {@code Collection<String>}.
      */
     private void addBodyStringAssignment(MethodSpec.Builder method, String mapExpr, String targetName) {
         method.addStatement("$T $LBuilder = new $T()", StringBuilder.class, targetName, StringBuilder.class)
-                .beginControlFlow("for ($T $LKey : new $T<>($L.keySet()))", String.class, targetName, TreeSet.class, mapExpr)
+                .beginControlFlow(
+                        "for ($T $LKey : new $T<>($L.keySet()))", String.class, targetName, TreeSet.class, mapExpr)
                 .addStatement("$T $LValue = $L.get($LKey)", Object.class, targetName, mapExpr, targetName)
                 .addStatement("$T<$T> $LValues = new $T<>()", TreeSet.class, String.class, targetName, TreeSet.class)
                 .beginControlFlow("if ($LValue instanceof $T)", targetName, Iterable.class)
@@ -397,8 +399,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 rawBodyExpr,
                 mapBodyHashAlgorithm(binding.getAlgorithm()),
                 mapEncoding(binding.getEncoding()));
-        method.beginControlFlow(
-                        "if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
+        method.beginControlFlow("if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
                 .addStatement("return false")
                 .endControlFlow();
         method.addStatement("payload = notificationUrl");
@@ -440,8 +441,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                     rawBodyExpr,
                     mapBodyHashAlgorithm(binding.getAlgorithm()),
                     mapEncoding(binding.getEncoding()));
-            method.beginControlFlow(
-                            "if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
+            method.beginControlFlow("if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
                     .addStatement("return false")
                     .endControlFlow();
             method.endControlFlow();
@@ -486,8 +486,8 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
 
     /**
      * Builds the RHS expression for the payload from the configured components. {@code bodyExpr} is the identifier for
-     * the BODY component and {@code urlExpr} for the NOTIFICATION_URL component (the candidate loop substitutes {@code
-     * candidateUrl}).
+     * the BODY component and {@code urlExpr} for the NOTIFICATION_URL component (the candidate loop substitutes
+     * {@code candidateUrl}).
      */
     private CodeBlock buildPayloadExpression(WebhookPayloadFormat payloadFormat, String bodyExpr, String urlExpr) {
         List<String> componentExpressions = new ArrayList<>();
@@ -515,8 +515,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             return CodeBlock.of("$L", componentExpressions.get(0));
         }
 
-        CodeBlock.Builder payload =
-                CodeBlock.builder().add("$T.join($S", String.class, payloadFormat.getDelimiter());
+        CodeBlock.Builder payload = CodeBlock.builder().add("$T.join($S", String.class, payloadFormat.getDelimiter());
         for (String componentExpression : componentExpressions) {
             payload.add(", $L", componentExpression);
         }

@@ -201,8 +201,7 @@ class WebhookBodyHashTest {
     @Test
     void notificationUrlCandidates_addsStandardPortAndNoPortForms() throws Exception {
         assertThat(candidates("https://example.com/webhook?a=1", true, false))
-                .containsExactly(
-                        "https://example.com/webhook?a=1", "https://example.com:443/webhook?a=1");
+                .containsExactly("https://example.com/webhook?a=1", "https://example.com:443/webhook?a=1");
         assertThat(candidates("http://example.com/webhook", true, false))
                 .containsExactly("http://example.com/webhook", "http://example.com:80/webhook");
     }
@@ -239,9 +238,9 @@ class WebhookBodyHashTest {
     }
 
     /**
-     * Mirrors the generated {@code SmsStatusWebhooksHelper.verifySignature(String, ...)}: body-hash check runs once (JSON
-     * path only) above a candidate loop that ORs constant-time HMAC comparisons; the JSON path signs the URL only, the
-     * classic form path signs URL + body, and any candidate match accepts.
+     * Mirrors the generated {@code SmsStatusWebhooksHelper.verifySignature(String, ...)}: body-hash check runs once
+     * (JSON path only) above a candidate loop that ORs constant-time HMAC comparisons; the JSON path signs the URL
+     * only, the classic form path signs URL + body, and any candidate match accepts.
      */
     private boolean verify(String requestBody, String signatureHeader, String signatureKey, String notificationUrl)
             throws Exception {
@@ -297,8 +296,8 @@ class WebhookBodyHashTest {
 
     @SuppressWarnings("unchecked")
     private List<String> candidates(String url, boolean portVariants, boolean legacyQueryEncoding) throws Exception {
-        Method method = signatureClass.getMethod(
-                "notificationUrlCandidates", String.class, boolean.class, boolean.class);
+        Method method =
+                signatureClass.getMethod("notificationUrlCandidates", String.class, boolean.class, boolean.class);
         return new ArrayList<>((List<String>) method.invoke(null, url, portVariants, legacyQueryEncoding));
     }
 
