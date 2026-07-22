@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.76.6
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated `OAuthTokenProvider`. The token
+        cache is now guarded by a `SemaphoreSlim` with double-checked locking (the
+        same pattern already used by `InferredAuthTokenProvider`), so only one
+        caller refreshes the token under concurrent load and cached values are
+        published safely. The cache-hit path stays lock-free.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 2.76.5
   changelogEntry:
     - summary: |
