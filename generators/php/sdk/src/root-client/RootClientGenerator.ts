@@ -697,6 +697,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         };
         const writeDefaults = (): void => {
+            // With a single variable, the enclosing guard already ensures it is non-null,
+            // so a `??=` default would be dead code (and rejected by phpstan).
+            if (serverVariableOptions.length === 1) {
+                return;
+            }
             for (const option of serverVariableOptions) {
                 if (option.variable.default != null) {
                     writer.writeTextStatement(
@@ -708,57 +713,154 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = getSingleBaseUrlTemplatedEnvironment(config);
-                if (templatedEnvironment?.urlTemplate == null) {
+                const fallbackEnvironment = getSingleBaseUrlTemplatedEnvironment(config);
+                if (fallbackEnvironment?.urlTemplate == null) {
                     return;
                 }
-                const optionsName = this.context.getClientOptionsName();
-                const phpString = urlTemplateToPhpConcatenation(
-                    templatedEnvironment.urlTemplate,
-                    serverVariableOptions
+                const templatedEnvironments = environments.environments.filter(
+                    (environment): environment is FernIr.SingleBaseUrlEnvironment & { urlTemplate: string } =>
+                        environment.urlTemplate != null
                 );
-                writer.controlFlow("if", php.codeblock(`(${anyProvided}) && !isset($this->${optionsName}['baseUrl'])`));
+                const optionsName = this.context.getClientOptionsName();
+                const environmentValueExpression = (environment: FernIr.SingleBaseUrlEnvironment): php.CodeBlock =>
+                    php.codeblock((w) => {
+                        w.writeNode(this.context.getEnvironmentsClassReference());
+                        w.write(`::${this.context.getEnvironmentName(environment.name)}->value`);
+                    });
+                writer.controlFlow("if", php.codeblock(anyProvided));
+                writer.writeTextStatement(`$baseUrl = $this->${optionsName}['baseUrl'] ?? null`);
+                writer.controlFlow(
+                    "if",
+                    php.codeblock((w) => {
+                        w.write("$baseUrl == null");
+                        for (const environment of templatedEnvironments) {
+                            w.write(" || $baseUrl === ");
+                            w.writeNode(environmentValueExpression(environment));
+                        }
+                    })
+                );
                 writeMissingDefaultGuards();
                 writeDefaults();
-                writer.writeTextStatement(`$this->${optionsName}['baseUrl'] = ${phpString}`);
+                const alternativeEnvironments = templatedEnvironments.filter(
+                    (environment) => environment.id !== fallbackEnvironment.id
+                );
+                let hasWrittenBranch = false;
+                for (const environment of alternativeEnvironments) {
+                    const condition = php.codeblock((w) => {
+                        w.write("$baseUrl === ");
+                        w.writeNode(environmentValueExpression(environment));
+                    });
+                    if (!hasWrittenBranch) {
+                        writer.controlFlow("if", condition);
+                        hasWrittenBranch = true;
+                    } else {
+                        writer.contiguousControlFlow("elseif", condition);
+                    }
+                    writer.writeTextStatement(
+                        `$this->${optionsName}['baseUrl'] = ${urlTemplateToPhpConcatenation(
+                            environment.urlTemplate,
+                            serverVariableOptions
+                        )}`
+                    );
+                }
+                if (hasWrittenBranch) {
+                    writer.alternativeControlFlow("else");
+                }
+                writer.writeTextStatement(
+                    `$this->${optionsName}['baseUrl'] = ${urlTemplateToPhpConcatenation(
+                        fallbackEnvironment.urlTemplate,
+                        serverVariableOptions
+                    )}`
+                );
+                if (hasWrittenBranch) {
+                    writer.endControlFlow();
+                }
+                writer.endControlFlow();
                 writer.endControlFlow();
                 writer.writeLine();
                 return;
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = getMultipleBaseUrlsTemplatedEnvironment(config);
-                if (templatedEnvironment?.urlTemplates == null) {
+                const fallbackEnvironment = getMultipleBaseUrlsTemplatedEnvironment(config);
+                if (fallbackEnvironment?.urlTemplates == null) {
                     return;
                 }
-                const templates = templatedEnvironment.urlTemplates;
-                const staticUrls = templatedEnvironment.urls;
-                writer.controlFlow("if", php.codeblock(`$environment == null && (${anyProvided})`));
-                writeMissingDefaultGuards();
-                writeDefaults();
-                writer.write("$environment = ");
-                writer.writeNodeStatement(
+                const templatedEnvironments = environments.environments.filter(
+                    (environment) => environment.urlTemplates != null
+                );
+                const environmentConstantExpression = (
+                    environment: FernIr.MultipleBaseUrlsEnvironment
+                ): php.CodeBlock =>
                     php.codeblock((w) => {
                         w.writeNode(this.context.getEnvironmentsClassReference());
-                        w.write("::custom(");
-                        w.indent();
-                        w.newLine();
-                        environments.baseUrls.forEach((baseUrl, index) => {
-                            const propertyName = this.case.camelSafe(baseUrl.name);
-                            const template = templates[baseUrl.id];
-                            const value =
-                                template != null
-                                    ? urlTemplateToPhpConcatenation(template, serverVariableOptions)
-                                    : `'${this.escapeSingleQuoted(staticUrls[baseUrl.id] ?? "")}'`;
-                            w.write(`${propertyName}: ${value}`);
-                            if (index < environments.baseUrls.length - 1) {
-                                w.write(",");
-                            }
+                        w.write(`::${this.context.getEnvironmentName(environment.name)}()`);
+                    });
+                const writeCustomEnvironmentAssignment = (environment: FernIr.MultipleBaseUrlsEnvironment): void => {
+                    const templates = environment.urlTemplates ?? {};
+                    const staticUrls = environment.urls;
+                    writer.write("$environment = ");
+                    writer.writeNodeStatement(
+                        php.codeblock((w) => {
+                            w.writeNode(this.context.getEnvironmentsClassReference());
+                            w.write("::custom(");
+                            w.indent();
                             w.newLine();
-                        });
-                        w.dedent();
-                        w.write(")");
+                            environments.baseUrls.forEach((baseUrl, index) => {
+                                const propertyName = this.case.camelSafe(baseUrl.name);
+                                const template = templates[baseUrl.id];
+                                const value =
+                                    template != null
+                                        ? urlTemplateToPhpConcatenation(template, serverVariableOptions)
+                                        : `'${this.escapeSingleQuoted(staticUrls[baseUrl.id] ?? "")}'`;
+                                w.write(`${propertyName}: ${value}`);
+                                if (index < environments.baseUrls.length - 1) {
+                                    w.write(",");
+                                }
+                                w.newLine();
+                            });
+                            w.dedent();
+                            w.write(")");
+                        })
+                    );
+                };
+                writer.controlFlow("if", php.codeblock(anyProvided));
+                writer.controlFlow(
+                    "if",
+                    php.codeblock((w) => {
+                        w.write("$environment == null");
+                        for (const environment of templatedEnvironments) {
+                            w.write(" || $environment == ");
+                            w.writeNode(environmentConstantExpression(environment));
+                        }
                     })
                 );
+                writeMissingDefaultGuards();
+                writeDefaults();
+                const alternativeEnvironments = templatedEnvironments.filter(
+                    (environment) => environment.id !== fallbackEnvironment.id
+                );
+                let hasWrittenBranch = false;
+                for (const environment of alternativeEnvironments) {
+                    const condition = php.codeblock((w) => {
+                        w.write("$environment == ");
+                        w.writeNode(environmentConstantExpression(environment));
+                    });
+                    if (!hasWrittenBranch) {
+                        writer.controlFlow("if", condition);
+                        hasWrittenBranch = true;
+                    } else {
+                        writer.contiguousControlFlow("elseif", condition);
+                    }
+                    writeCustomEnvironmentAssignment(environment);
+                }
+                if (hasWrittenBranch) {
+                    writer.alternativeControlFlow("else");
+                }
+                writeCustomEnvironmentAssignment(fallbackEnvironment);
+                if (hasWrittenBranch) {
+                    writer.endControlFlow();
+                }
+                writer.endControlFlow();
                 writer.endControlFlow();
                 writer.writeLine();
                 return;
