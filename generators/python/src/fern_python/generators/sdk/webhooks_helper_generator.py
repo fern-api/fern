@@ -236,9 +236,9 @@ class _HmacHelperWriter:
 
     def _build_imports(self) -> List[str]:
         imports: List[str] = []
-        if self._has_timestamp:
-            timestamp_format = self._config.timestamp.format if self._config.timestamp is not None else None
-            if timestamp_format == ir_types.WebhookTimestampFormat.ISO_8601:
+        timestamp = self._config.timestamp
+        if timestamp is not None:
+            if timestamp.format == ir_types.WebhookTimestampFormat.ISO_8601:
                 imports.append("import datetime")
             imports.append("import time")
         if self._has_body_sort:
@@ -458,6 +458,10 @@ class _HmacHelperWriter:
                     '    parsed_timestamp = datetime.datetime.fromisoformat(timestamp_header.replace("Z", "+00:00"))',
                     "except ValueError:",
                     "    return False",
+                    "# An offset-less ISO string parses to a naive datetime, which .timestamp() would",
+                    "# interpret as local time; treat it as UTC so the tolerance check is not skewed.",
+                    "if parsed_timestamp.tzinfo is None:",
+                    "    parsed_timestamp = parsed_timestamp.replace(tzinfo=datetime.timezone.utc)",
                     "timestamp_ms = parsed_timestamp.timestamp() * 1000",
                 ]
             )
