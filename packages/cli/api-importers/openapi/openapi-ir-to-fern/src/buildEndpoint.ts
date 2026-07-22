@@ -169,7 +169,7 @@ export function buildEndpoint({
             pathParameterRenames[pathParameter.name] = parameterNameOverride;
         }
         if (parameterNameOverride) {
-            path = path.replace(pathParameter.name, parameterNameOverride);
+            path = path.replace(`{${pathParameter.name}}`, `{${parameterNameOverride}}`);
         }
         pathParameters[parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
