@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.79.0
+  changelogEntry:
+    - summary: |
+        Add an experimental `external-sitemaps` option to the `experimental` block in
+        docs.yml. It accepts a list of absolute sitemap URLs whose pages are indexed in
+        search alongside your documentation (tagged to the same domain) but flagged as
+        third-party so they rank below all first-party docs.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 5.78.0
   changelogEntry:
     - summary: |
