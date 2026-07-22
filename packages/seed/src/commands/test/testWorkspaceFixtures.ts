@@ -5,7 +5,10 @@ import { difference } from "lodash-es";
 import path from "path";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
-import { LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, matchesLanguagePrefix } from "../list-test-fixtures/getAvailableFixtures.js";
+import {
+    LANGUAGE_SPECIFIC_FIXTURE_PREFIXES,
+    matchesLanguagePrefix
+} from "../list-test-fixtures/getAvailableFixtures.js";
 import { printTestCases } from "./printTestCases.js";
 import { TestRunner } from "./test-runner/index.js";
 

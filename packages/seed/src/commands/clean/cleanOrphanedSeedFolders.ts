@@ -38,7 +38,9 @@ function getExpectedFixtures(generator: GeneratorWorkspace, testDefinitions: Set
     const expectedFixtures = new Set<string>();
 
     for (const testDef of testDefinitions) {
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.find((prefix) => matchesLanguagePrefix(testDef, prefix));
+        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.find((prefix) =>
+            matchesLanguagePrefix(testDef, prefix)
+        );
         if (matchingPrefix != null && !matchesLanguagePrefix(generator.workspaceName, matchingPrefix)) {
             continue;
         }
