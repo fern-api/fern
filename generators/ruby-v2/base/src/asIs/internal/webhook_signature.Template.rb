@@ -93,9 +93,7 @@ module <%= gem_namespace %>
         candidates = {}
         candidates[url] = true
         port_forms.each { |form| candidates[form] = true }
-        if legacy_query_encoding
-          port_forms.each { |form| candidates[with_legacy_querystring(form)] = true }
-        end
+        port_forms.each { |form| candidates[with_legacy_querystring(form)] = true } if legacy_query_encoding
         candidates.keys
       rescue URI::InvalidURIError
         [url]

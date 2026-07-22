@@ -22,7 +22,7 @@ module Seed
     # @param notification_url [String]
     #
     # @return [Boolean]
-    def self.verify_signature(request_body:, signature_header:, signature_key:, notification_url:)
+    def self.verify_signature(request_body:, signature_header:, signature_key:, notification_url:) # rubocop:disable Naming/PredicateMethod
       return false if request_body.nil? || signature_header.nil? || signature_key.nil?
 
       transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, "bodySHA256")
@@ -34,22 +34,23 @@ module Seed
         )
         return false unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)
       end
-      body_string = if request_body.is_a?(::Hash)
-        request_body.keys.sort.map do |key|
-          value = request_body[key]
-          values = value.is_a?(::Array) ? value : [value]
-          values.uniq.sort.map { |v| "#{key}#{v}" }.join
-        end.join
-      else
-        request_body
-      end
+      body_string =
+        if request_body.is_a?(::Hash)
+          request_body.keys.sort.map do |key|
+            value = request_body[key]
+            values = value.is_a?(::Array) ? value : [value]
+            values.uniq.sort.map { |v| "#{key}#{v}" }.join
+          end.join
+        else
+          request_body
+        end
       candidates = Internal::WebhookSignature.notification_url_candidates(
         notification_url,
         port_variants: true,
         legacy_query_encoding: true
       )
       candidates.each do |candidate_url|
-        payload = transmitted_body_hash.nil? ? [candidate_url, body_string].join("") : candidate_url
+        payload = transmitted_body_hash.nil? ? [candidate_url, body_string].join : candidate_url
         expected = Internal::WebhookSignature.compute_hmac_signature(
           payload: payload,
           secret: signature_key,

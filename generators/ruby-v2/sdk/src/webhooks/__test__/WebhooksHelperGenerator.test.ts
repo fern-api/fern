@@ -110,7 +110,8 @@ describe("WebhooksHelperGenerator", () => {
     describe("behavior 1: multi-value form params", () => {
         it("emits sorted/deduped key-value assembly when bodySort is set", () => {
             const body = render(hmacConfig({ components: ["BODY"], delimiter: "", bodySort: "ALPHABETICAL" }));
-            expect(body).toContain("body_string = if request_body.is_a?(::Hash)");
+            expect(body).toContain("body_string =");
+            expect(body).toContain("if request_body.is_a?(::Hash)");
             expect(body).toContain("request_body.keys.sort.map do |key|");
             expect(body).toContain("values = value.is_a?(::Array) ? value : [value]");
             expect(body).toContain('values.uniq.sort.map { |v| "#{key}#{v}" }.join');
@@ -150,7 +151,8 @@ describe("WebhooksHelperGenerator", () => {
             expect(body).toContain(
                 'transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, "bodySHA256")'
             );
-            expect(body).toContain("payload = if transmitted_body_hash.nil?");
+            expect(body).toContain("payload =");
+            expect(body).toContain("if transmitted_body_hash.nil?");
             // JSON path: signs the URL only and compares the recomputed body hash.
             expect(body).toContain("expected_body_hash = Internal::WebhookBodyHash.compute_hash(");
             expect(body).toContain(
@@ -171,8 +173,9 @@ describe("WebhooksHelperGenerator", () => {
                     bodyHashBinding: { algorithm: "SHA256", encoding: "HEX", location: bodySHA256Location() }
                 })
             );
-            expect(body).toContain("body_string = if request_body.is_a?(::Hash)");
-            expect(body).toContain('[notification_url, body_string].join("")');
+            expect(body).toContain("body_string =");
+            expect(body).toContain("if request_body.is_a?(::Hash)");
+            expect(body).toContain("[notification_url, body_string].join");
         });
     });
 
@@ -205,7 +208,7 @@ describe("WebhooksHelperGenerator", () => {
             expect(body).toContain("legacy_query_encoding: true");
             // JSON request signs the URL only; classic form signs URL + params.
             expect(body).toContain(
-                'payload = transmitted_body_hash.nil? ? [candidate_url, body_string].join("") : candidate_url'
+                "payload = transmitted_body_hash.nil? ? [candidate_url, body_string].join : candidate_url"
             );
             expect(body).toContain(
                 "return true if Internal::WebhookSignature.timing_safe_equal(signature_header, expected)"

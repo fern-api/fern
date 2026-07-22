@@ -353,7 +353,14 @@ export class WebhooksHelperGenerator {
             name: "verify_signature",
             kind: ruby.MethodKind.Class_,
             parameters: { keyword: this.buildParameters(config) },
-            returnType: ruby.Type.boolean()
+            returnType: ruby.Type.boolean(),
+            // The URL-normalization path ends with explicit `return true` / `false` literals,
+            // which rubocop's Naming/PredicateMethod flags because the method reads as a
+            // predicate yet the public API name cannot end in `?`. Disable the cop on that
+            // signature only; the other paths end with a method call rubocop does not flag, so
+            // adding the directive there would trip Lint/RedundantCopDisableDirective.
+            inlineComment:
+                config.notificationUrlNormalization != null ? "rubocop:disable Naming/PredicateMethod" : undefined
         });
         method.addStatement(ruby.codeblock((writer) => WebhooksHelperGenerator.writeMethodBody(writer, config)));
         return method;
@@ -547,7 +554,15 @@ export class WebhooksHelperGenerator {
      * string body is passed through unchanged.
      */
     private static writeBodyString(writer: ruby.Writer): void {
-        writer.writeLine("body_string = if request_body.is_a?(::Hash)");
+        // Emit the conditional on its own line (`body_string =` then the `if`) rather than
+        // `body_string = if ...` so the branch bodies, `else`, and `end` align at 2-space
+        // multiples. Assigning a multi-line `if` on the same line as `=` makes rubocop
+        // (Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment) expect the
+        // body indented under the `if` keyword column, which the fixed-width Writer cannot
+        // produce.
+        writer.writeLine("body_string =");
+        writer.indent();
+        writer.writeLine("if request_body.is_a?(::Hash)");
         writer.indent();
         writer.writeLine("request_body.keys.sort.map do |key|");
         writer.indent();
@@ -562,6 +577,7 @@ export class WebhooksHelperGenerator {
         writer.writeLine("request_body");
         writer.dedent();
         writer.writeLine("end");
+        writer.dedent();
     }
 
     /**
@@ -600,8 +616,11 @@ export class WebhooksHelperGenerator {
         if (componentExprs.length === 1 && first != null) {
             return first;
         }
-        const delimiter = rubyStringLiteral(payloadFormat.delimiter);
-        return `[${componentExprs.join(", ")}].join(${delimiter})`;
+        // Ruby's Array#join defaults to "", so emit `.join` (no argument) for an empty
+        // delimiter — passing `.join("")` explicitly trips rubocop's Style/RedundantArgument.
+        const joinCall =
+            payloadFormat.delimiter === "" ? ".join" : `.join(${rubyStringLiteral(payloadFormat.delimiter)})`;
+        return `[${componentExprs.join(", ")}]${joinCall}`;
     }
 
     /**
@@ -621,7 +640,13 @@ export class WebhooksHelperGenerator {
                 queryParameterName
             )})`
         );
-        writer.writeLine("payload = if transmitted_body_hash.nil?");
+        // Emit the conditional on its own line (`payload =` then the `if`) so both branch
+        // bodies, `else`, and `end` align at 2-space multiples. `payload = if ...` on one
+        // line makes rubocop expect the body indented under the `if` keyword column, which
+        // the fixed-width Writer cannot produce.
+        writer.writeLine("payload =");
+        writer.indent();
+        writer.writeLine("if transmitted_body_hash.nil?");
         writer.indent();
 
         // Classic form path: URL + sorted/deduped form params, no body-hash check.
@@ -641,6 +666,7 @@ export class WebhooksHelperGenerator {
         writer.writeLine("notification_url");
         writer.dedent();
         writer.writeLine("end");
+        writer.dedent();
     }
 
     /**
