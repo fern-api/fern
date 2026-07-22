@@ -1,3 +1,0 @@
-rootProject.name = 'php-global-header-env'
-
-include 'sample-app'
