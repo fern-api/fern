@@ -26,7 +26,7 @@ class AuthClient:
         """
         return self._raw_client
 
-    def create_oauth2_token(
+    def create_oauth2token(
         self,
         *,
         client_id: str,
@@ -59,13 +59,13 @@ class AuthClient:
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
         )
-        client.auth.create_oauth2_token(
+        client.auth.create_oauth2token(
             client_id="my_oauth_app_123",
             client_secret="sk_live_abcdef123456789",
             grant_type="client_credentials",
         )
         """
-        _response = self._raw_client.create_oauth2_token(
+        _response = self._raw_client.create_oauth2token(
             client_id=client_id, client_secret=client_secret, grant_type=grant_type, request_options=request_options
         )
         return _response.data
@@ -86,7 +86,7 @@ class AsyncAuthClient:
         """
         return self._raw_client
 
-    async def create_oauth2_token(
+    async def create_oauth2token(
         self,
         *,
         client_id: str,
@@ -124,7 +124,7 @@ class AsyncAuthClient:
 
 
         async def main() -> None:
-            await client.auth.create_oauth2_token(
+            await client.auth.create_oauth2token(
                 client_id="my_oauth_app_123",
                 client_secret="sk_live_abcdef123456789",
                 grant_type="client_credentials",
@@ -133,7 +133,7 @@ class AsyncAuthClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_oauth2_token(
+        _response = await self._raw_client.create_oauth2token(
             client_id=client_id, client_secret=client_secret, grant_type=grant_type, request_options=request_options
         )
         return _response.data

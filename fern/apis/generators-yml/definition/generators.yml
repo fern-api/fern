@@ -590,6 +590,14 @@ types:
           If false, keep the original "Request" suffix regardless of collisions.
           Defaults to true.
         default: true
+      ignore-tags:
+        type: optional<boolean>
+        docs: |
+          If true, ignore operation-level tags when determining the SDK structure.
+          Endpoints fall back to the root package (or their namespace) and method
+          names are derived from each operation's operationId.
+          Defaults to false.
+        default: false
 
   ResolveAliases:
     discriminated: false

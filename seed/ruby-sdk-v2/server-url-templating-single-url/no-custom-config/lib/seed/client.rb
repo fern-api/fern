@@ -75,10 +75,13 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, region: nil, server_url_environment: nil, max_retries: 2)
-      if base_url.nil? && (!region.nil? || !server_url_environment.nil?)
+      if !region.nil? || !server_url_environment.nil?
         region_value = region.nil? ? "us-east-1" : region
         server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
-        base_url = "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1"
+        environment_url_templates = {
+          Seed::Environment::REGIONAL_API_SERVER => "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1"
+        }
+        base_url = base_url.nil? ? "https://api.#{region_value}.#{server_url_environment_value}.example.com/v1" : environment_url_templates.fetch(base_url, base_url)
       end
 
       @raw_client = Seed::Internal::Http::RawClient.new(

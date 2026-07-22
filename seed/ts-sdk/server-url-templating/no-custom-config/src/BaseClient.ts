@@ -2,7 +2,7 @@
 
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
-import type * as environments from "./environments.js";
+import * as environments from "./environments.js";
 
 export interface BaseClientOptions {
     environment?: core.Supplier<environments.SeedApiEnvironment | environments.SeedApiEnvironmentUrls>;
@@ -66,10 +66,23 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     if (options?.region != null || options?.serverUrlEnvironment != null) {
         const _region = options?.region ?? "us-east-1";
         const _serverUrlEnvironment = options?.serverUrlEnvironment ?? "prod";
-        environment = {
-            base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`,
-            auth: `https://auth.${_region}.example.com`,
-        };
+        if (environment == null) {
+            environment = {
+                base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`,
+                auth: `https://auth.${_region}.example.com`,
+            };
+        } else {
+            const _environmentUrls = new Map<unknown, environments.SeedApiEnvironmentUrls>([
+                [
+                    environments.SeedApiEnvironment.RegionalApiServer,
+                    {
+                        base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`,
+                        auth: `https://auth.${_region}.example.com`,
+                    },
+                ],
+            ]);
+            environment = _environmentUrls.get(environment) ?? environment;
+        }
     }
 
     return {

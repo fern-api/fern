@@ -1,0 +1,102 @@
+# frozen_string_literal: true
+
+module Seed
+  module Auth
+    class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @param request_options [Hash]
+      # @param params [Seed::Auth::Types::GetTokenAuthRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::Auth::Types::GetTokenAuthRequestAudience, nil] :audience
+      #
+      # @example
+      #   client.auth.get_token(
+      #     client_id: "client_id",
+      #     client_secret: "client_secret",
+      #     scopes: "scopes",
+      #     grant_type: "client_credentials",
+      #     tenant: "tenant"
+      #   )
+      #
+      # @return [Seed::Types::TokenResponse]
+      def get_token(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request_data = Seed::Auth::Types::GetTokenAuthRequest.new(params).to_h
+        non_body_param_names = %w[audience]
+        body = request_data.except(*non_body_param_names)
+
+        query_params = {}
+        query_params["audience"] = params[:audience] if params.key?(:audience)
+
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "token",
+          query: query_params,
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Seed::Types::TokenResponse.load(response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # @param request_options [Hash]
+      # @param params [Seed::Auth::Types::RefreshTokenAuthRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.auth.refresh_token(
+      #     refresh_token: "refresh_token",
+      #     grant_type: "refresh_token"
+      #   )
+      #
+      # @return [Seed::Types::TokenResponse]
+      def refresh_token(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "refresh",
+          body: Seed::Auth::Types::RefreshTokenAuthRequest.new(params).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Seed::Types::TokenResponse.load(response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+    end
+  end
+end

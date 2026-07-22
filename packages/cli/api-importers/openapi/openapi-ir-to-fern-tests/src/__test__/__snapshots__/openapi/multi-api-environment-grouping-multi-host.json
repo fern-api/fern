@@ -1,0 +1,333 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "auth/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getToken": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "access_token": "access_token",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/token",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "GetTokenResponse",
+              },
+              "source": {
+                "openapi": "../auth-api.yml",
+              },
+              "url": "oauth",
+            },
+          },
+          "source": {
+            "openapi": "../auth-api.yml",
+          },
+        },
+        "types": {
+          "GetTokenResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "access_token": "optional<string>",
+            },
+            "source": {
+              "openapi": "../auth-api.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  GetTokenResponse:
+    properties:
+      access_token: optional<string>
+    source:
+      openapi: ../auth-api.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      source:
+        openapi: ../auth-api.yml
+      response:
+        docs: Success
+        type: GetTokenResponse
+        status-code: 200
+      url: oauth
+      examples:
+        - response:
+            body:
+              access_token: access_token
+  source:
+    openapi: ../auth-api.yml
+",
+    },
+    "core/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listThings": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "id": "id",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/things",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ListThingsResponse",
+              },
+              "source": {
+                "openapi": "../core-api.yml",
+              },
+              "url": "acme",
+            },
+          },
+          "source": {
+            "openapi": "../core-api.yml",
+          },
+        },
+        "types": {
+          "ListThingsResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../core-api.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  ListThingsResponse:
+    properties:
+      id: optional<string>
+    source:
+      openapi: ../core-api.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listThings:
+      path: /things
+      method: GET
+      source:
+        openapi: ../core-api.yml
+      response:
+        docs: Success
+        type: ListThingsResponse
+        status-code: 200
+      url: acme
+      examples:
+        - response:
+            body:
+              id: id
+  source:
+    openapi: ../core-api.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Production",
+      "default-url": "acme",
+      "display-name": "Core API",
+      "environments": {
+        "Development": {
+          "default-urls": {
+            "acme": "https://api.dev.acme.com",
+            "oauth": "https://oauth.dev.acme.com",
+          },
+          "url-templates": {
+            "acme": "https://api.dev.{region}.acme.com",
+            "oauth": "https://oauth.dev.{region}.acme.com",
+          },
+          "urls": {
+            "acme": "https://api.dev.acme.com",
+            "oauth": "https://oauth.dev.acme.com",
+          },
+          "variables": {
+            "acme": [
+              {
+                "default": "us1",
+                "id": "region",
+                "values": undefined,
+              },
+            ],
+            "oauth": [
+              {
+                "default": "us1",
+                "id": "region",
+                "values": undefined,
+              },
+            ],
+          },
+        },
+        "Production": {
+          "default-urls": {
+            "acme": "https://api.acme.com",
+            "oauth": "https://oauth.acme.com",
+          },
+          "url-templates": {
+            "acme": "https://api.{region}.acme.com",
+            "oauth": "https://oauth.{region}.acme.com",
+          },
+          "urls": {
+            "acme": "https://api.acme.com",
+            "oauth": "https://oauth.acme.com",
+          },
+          "variables": {
+            "acme": [
+              {
+                "default": "us1",
+                "id": "region",
+                "values": undefined,
+              },
+            ],
+            "oauth": [
+              {
+                "default": "us1",
+                "id": "region",
+                "values": undefined,
+              },
+            ],
+          },
+        },
+        "Staging": {
+          "default-urls": {
+            "acme": "https://api.stage.acme.com",
+            "oauth": "https://oauth.stage.acme.com",
+          },
+          "url-templates": {
+            "acme": "https://api.stage.{region}.acme.com",
+            "oauth": "https://oauth.stage.{region}.acme.com",
+          },
+          "urls": {
+            "acme": "https://api.stage.acme.com",
+            "oauth": "https://oauth.stage.acme.com",
+          },
+          "variables": {
+            "acme": [
+              {
+                "default": "us1",
+                "id": "region",
+                "values": undefined,
+              },
+            ],
+            "oauth": [
+              {
+                "default": "us1",
+                "id": "region",
+                "values": undefined,
+              },
+            ],
+          },
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "acme",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Core API
+environments:
+  Production:
+    urls:
+      acme: https://api.acme.com
+      oauth: https://oauth.acme.com
+    url-templates:
+      acme: https://api.{region}.acme.com
+      oauth: https://oauth.{region}.acme.com
+    default-urls:
+      acme: https://api.acme.com
+      oauth: https://oauth.acme.com
+    variables:
+      acme:
+        - id: region
+          default: us1
+      oauth:
+        - id: region
+          default: us1
+  Staging:
+    urls:
+      acme: https://api.stage.acme.com
+      oauth: https://oauth.stage.acme.com
+    url-templates:
+      acme: https://api.stage.{region}.acme.com
+      oauth: https://oauth.stage.{region}.acme.com
+    default-urls:
+      acme: https://api.stage.acme.com
+      oauth: https://oauth.stage.acme.com
+    variables:
+      acme:
+        - id: region
+          default: us1
+      oauth:
+        - id: region
+          default: us1
+  Development:
+    urls:
+      acme: https://api.dev.acme.com
+      oauth: https://oauth.dev.acme.com
+    url-templates:
+      acme: https://api.dev.{region}.acme.com
+      oauth: https://oauth.dev.{region}.acme.com
+    default-urls:
+      acme: https://api.dev.acme.com
+      oauth: https://oauth.dev.acme.com
+    variables:
+      acme:
+        - id: region
+          default: us1
+      oauth:
+        - id: region
+          default: us1
+default-environment: Production
+default-url: acme
+",
+  },
+  "specVersion": "1.0.0",
+}

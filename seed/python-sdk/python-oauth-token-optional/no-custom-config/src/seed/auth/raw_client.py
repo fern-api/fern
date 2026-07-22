@@ -20,7 +20,7 @@ class RawAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_oauth2_token(
+    def create_oauth2token(
         self,
         *,
         client_id: str,
@@ -82,7 +82,7 @@ class AsyncRawAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_oauth2_token(
+    async def create_oauth2token(
         self,
         *,
         client_id: str,

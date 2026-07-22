@@ -374,24 +374,16 @@ impl AuthProvider for RoutingAuthProvider {
             req.keys().all(|name| {
                 self.schemes
                     .get(name)
-                    .is_some_and(|p| p.has_credentials_for(endpoint))
+                    .is_some_and(|p| p.has_credentials())
             })
         });
 
         let Some(requirement) = satisfiable else {
-            let alternatives = requirements
-                .iter()
-                .map(|requirement| {
-                    let mut names = requirement.keys().cloned().collect::<Vec<_>>();
-                    names.sort();
-                    names.join(" + ")
-                })
-                .collect::<Vec<_>>()
-                .join(" or ");
-            return Err(CliError::Auth(format!(
-                "No configured credentials satisfy this endpoint's authentication requirement ({alternatives}). \
-                 Refusing to send an unauthenticated request."
-            )));
+            // No declared requirement is satisfiable. Diverges from the TS
+            // generator (which throws): we let the request go out unauthed
+            // so the server's 401/403 + `handle_error_response`
+            // can surface a friendly "no credentials configured" message.
+            return Ok(request);
         };
 
         let mut req = request;
@@ -712,7 +704,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn routing_no_satisfiable_requirement_fails_closed() {
+    async fn routing_no_satisfiable_requirement_is_passthrough() {
         let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
         schemes.insert(
             "bearer".to_string(),
@@ -725,8 +717,8 @@ mod tests {
         let mut requirement = HashMap::new();
         requirement.insert("bearer".to_string(), Vec::<String>::new());
         let endpoint = EndpointAuthMetadata::with_requirements(vec![requirement]);
-        let error = routing.apply(req(), &endpoint).unwrap_err();
-        assert!(matches!(error, CliError::Auth(message) if message.contains("Refusing to send")));
+        let out = routing.apply(req(), &endpoint).unwrap();
+        assert_eq!(auth_header(out), None);
     }
 
     // -------- has_credentials_for(endpoint) --------

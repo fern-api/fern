@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.14.1
+  changelogEntry:
+    - summary: |
+        Render the selected environment's URL template(s) when server URL variables
+        (e.g. region) are provided alongside a named environment. Previously the
+        first environment's template was always used, so
+        `new Client(environment: Environments::Staging(), region: 'ie1')` resolved
+        to Production-shaped URLs. A custom environment or explicitly provided
+        base URL is left untouched.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 2.14.0
   changelogEntry:
     - summary: |

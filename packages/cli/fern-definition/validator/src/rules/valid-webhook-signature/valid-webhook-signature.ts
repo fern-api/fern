@@ -82,6 +82,27 @@ function validateHmac(signature: RawSchemas.WebhookSignatureSchema.Hmac, violati
     if (signature["body-hash-binding"] != null) {
         validateBodyHashBinding(signature, violations);
     }
+
+    if (signature["url-normalization"] != null) {
+        validateUrlNormalization(signature, violations);
+    }
+}
+
+function validateUrlNormalization(
+    signature: RawSchemas.WebhookSignatureSchema.Hmac,
+    violations: RuleViolation[]
+): void {
+    const normalization = signature["url-normalization"];
+    if (normalization == null) {
+        return;
+    }
+
+    if (!normalization["port-variants"] && !normalization["legacy-query-encoding"]) {
+        violations.push({
+            severity: "error",
+            message: "url-normalization must enable at least one of port-variants or legacy-query-encoding"
+        });
+    }
 }
 
 function validateBodyHashBinding(signature: RawSchemas.WebhookSignatureSchema.Hmac, violations: RuleViolation[]): void {

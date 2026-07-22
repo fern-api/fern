@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/discriminated-union-with-nested-oneof";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.createAst({
     type: "llm",
     model: "model"

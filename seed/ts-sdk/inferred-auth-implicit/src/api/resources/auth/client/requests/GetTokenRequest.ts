@@ -12,6 +12,6 @@
 export interface GetTokenRequest {
     "X-Api-Key": string;
     client_id: string;
-    client_secret: string;
+    client_secret: string | null;
     scope?: string;
 }

@@ -1,0 +1,5 @@
+- summary: |
+    Support webhook signature verification against multiple normalized notification URL
+    forms via `url-normalization` (port variants and legacy query encoding) on HMAC webhook
+    signatures, in both Fern Definition and OpenAPI (`x-fern-webhook-signature`).
+  type: feat
