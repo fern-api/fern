@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError } from "@fern-api/task-context";
 import { copyFile, rm } from "fs/promises";
@@ -11,14 +12,12 @@ import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 
 const LICENSE_MOUNT_PATH = "/tmp/LICENSE";
 
-/**
- * Executes generators natively on the host system using provided commands.
- */
 export class NativeExecutionEnvironment implements ExecutionEnvironment {
     public readonly usesContainerPaths = false;
     private readonly commands: string[];
     private readonly workingDirectory?: string;
     private readonly env?: Record<string, string>;
+    private argv?: { executable: string; args: string[] };
     constructor({
         commands,
         workingDirectory,
@@ -33,6 +32,22 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         this.env = env;
     }
 
+    public static fromArgv({
+        executable,
+        args,
+        workingDirectory,
+        env
+    }: {
+        executable: string;
+        args: string[];
+        workingDirectory?: AbsoluteFilePath;
+        env?: Record<string, string>;
+    }): NativeExecutionEnvironment {
+        const environment = new NativeExecutionEnvironment({ commands: [], workingDirectory, env });
+        environment.argv = { executable, args };
+        return environment;
+    }
+
     public async execute({
         generatorName,
         irPath,
@@ -45,13 +60,11 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         context,
         inspect
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
-        context.logger.info(
-            `Executing generator ${generatorName} natively with commands: ${this.commands.join(" && ")}`
-        );
+        context.logger.info(`Executing generator ${generatorName} natively`);
 
-        // Copy license file to /tmp/LICENSE to match the Docker mount path that generators expect
+        // Legacy commands expect the license at the Docker mount path.
         let copiedLicense = false;
-        if (licenseFilePath != null) {
+        if (licenseFilePath != null && this.argv == null) {
             try {
                 await copyFile(licenseFilePath, LICENSE_MOUNT_PATH);
                 copiedLicense = true;
@@ -63,9 +76,6 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
             }
         }
 
-        // Resolve source-mount env vars for native execution. In container mode these
-        // become Docker volume mounts; natively we expose them as environment variables
-        // so generators can locate mounted directories (e.g. FERN_SPECS_DIR).
         const specsMount = sourceMounts?.find((m: SourceMount) => m.containerPath === CONTAINER_SPECS_DIRECTORY);
         const specsEnv = specsMount != null ? { FERN_SPECS_DIR: specsMount.hostPath } : {};
 
@@ -78,6 +88,40 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         };
 
         try {
+            if (this.argv != null) {
+                const result = await loggingExeca(
+                    context.logger,
+                    this.argv.executable,
+                    [...this.argv.args, configPath],
+                    {
+                        doNotPipeOutput: false,
+                        reject: false,
+                        cwd: this.workingDirectory,
+                        env: {
+                            ...process.env,
+                            ...this.env,
+                            ...specsEnv,
+                            ...relocationsEnv,
+                            IR_PATH: irPath,
+                            CONFIG_PATH: configPath,
+                            OUTPUT_PATH: outputPath,
+                            SNIPPET_PATH: snippetPath || "",
+                            SNIPPET_TEMPLATE_PATH: snippetTemplatePath || "",
+                            GENERATOR_NAME: generatorName,
+                            ...(licenseFilePath != null ? { FERN_LICENSE_PATH: licenseFilePath } : {}),
+                            ...(inspect ? { NODE_OPTIONS: "--inspect-brk=0.0.0.0:9229" } : {})
+                        },
+                        shell: false
+                    }
+                );
+                if (result.failed) {
+                    throw new CliError({
+                        message: `Command failed: ${this.argv.executable}\n${result.stderr || result.stdout}`,
+                        code: CliError.Code.InternalError
+                    });
+                }
+                return;
+            }
             for (const command of this.commands) {
                 const processedCommand = command
                     .replace("{IR_PATH}", irPath)

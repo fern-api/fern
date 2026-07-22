@@ -823,7 +823,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                     @Override
                     public Void visitCustom(com.fern.generator.exec.model.config.CustomLicense customLicense) {
-                        Path dockerLicensePath = Paths.get("/tmp/LICENSE");
+                        Path dockerLicensePath =
+                                Paths.get(System.getenv().getOrDefault("FERN_LICENSE_PATH", "/tmp/LICENSE"));
                         Path destinationPath = outputDirectory.resolve(customLicense.getFilename());
 
                         try {

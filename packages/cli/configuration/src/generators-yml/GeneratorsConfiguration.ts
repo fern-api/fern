@@ -186,6 +186,13 @@ export interface GeneratorInvocation {
     name: string;
     /** Fully-qualified container image for local generation (e.g., `ghcr.io/myorg/fernapi/fern-typescript-sdk`). Undefined means use Docker Hub default. */
     containerImage: string | undefined;
+    nativeExecution?:
+        | {
+              executable: string;
+              args: string[];
+              workingDirectory: AbsoluteFilePath;
+          }
+        | undefined;
     irVersionOverride: string | undefined;
     version: string;
     config: unknown;

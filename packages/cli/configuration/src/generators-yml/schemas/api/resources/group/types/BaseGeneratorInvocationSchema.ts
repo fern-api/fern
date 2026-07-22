@@ -22,6 +22,8 @@ export interface BaseGeneratorInvocationSchema {
      * Defaults to false, which keeps the digit run fused to the following word.
      */
     "smart-casing-digit-word-boundary"?: boolean;
+    /** Host command for local generation. Fern appends the config path. No shell expansion. */
+    "local-command"?: string[];
     /** Override API import settings (this is applied across all specs) */
     api?: GeneratorsYml.GeneratorApiSettingsSchema;
     /** Temporary way to unblock example serialization. */

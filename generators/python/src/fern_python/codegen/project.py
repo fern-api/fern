@@ -369,13 +369,12 @@ __all__ = ["{next_part}"]
             current_path = os.path.join(current_path, part)
 
     def _copy_license_file(self) -> None:
-        """Copy LICENSE file from /tmp/LICENSE to project root for local generation."""
+        """Copy the configured license into the project."""
         if self.license_ is not None:
             license_union = self.license_.get_as_union()
             if license_union.type == "custom":
-                # In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
-                # For remote generation, Fiddle handles writing the LICENSE file after generation
-                docker_license_path = "/tmp/LICENSE"
+                # Local generators read custom licenses from FERN_LICENSE_PATH.
+                docker_license_path = os.environ.get("FERN_LICENSE_PATH", "/tmp/LICENSE")
                 destination_path = os.path.join(self._root_filepath, license_union.filename)
 
                 try:

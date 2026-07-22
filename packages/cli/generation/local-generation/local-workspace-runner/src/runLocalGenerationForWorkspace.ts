@@ -47,6 +47,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
+import { NativeExecutionEnvironment } from "./NativeExecutionEnvironment.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
 export async function runLocalGenerationForWorkspace({
@@ -422,7 +423,10 @@ export async function runLocalGenerationForWorkspace({
                     generatePaginatedClients: orgBody?.paginationEnabled ?? false,
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
-                    executionEnvironment: undefined, // This should use the Docker fallback with proper image name
+                    executionEnvironment:
+                        generatorInvocation.nativeExecution != null
+                            ? NativeExecutionEnvironment.fromArgv(generatorInvocation.nativeExecution)
+                            : undefined,
                     ir: intermediateRepresentation,
                     whiteLabel: orgBody?.isWhitelabled ?? false,
                     publishToRegistry,

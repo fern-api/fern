@@ -25,9 +25,8 @@ const CUSTOM_LICENSE_NAME = "LicenseRef-LICENSE";
 
 const COMPOSER_JSON_FILENAME = "composer.json";
 
-// In the Docker execution environment (local generation), the license file is mounted here.
-// For remote generation, Fiddle handles writing the LICENSE file after generation.
-const DOCKER_LICENSE_PATH = "/tmp/LICENSE";
+// Local generators read custom licenses from FERN_LICENSE_PATH.
+const DOCKER_LICENSE_PATH = process.env.FERN_LICENSE_PATH ?? "/tmp/LICENSE";
 
 /**
  * In memory representation of a PHP project.

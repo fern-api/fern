@@ -4640,6 +4640,20 @@
           ],
           "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
         },
+        "local-command": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Host command for local generation. Fern appends the config path. No shell expansion."
+        },
         "api": {
           "oneOf": [
             {
@@ -4836,6 +4850,20 @@
             }
           ],
           "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
+        },
+        "local-command": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Host command for local generation. Fern appends the config path. No shell expansion."
         },
         "api": {
           "oneOf": [

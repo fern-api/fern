@@ -698,6 +698,24 @@ async function convertGenerator({
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
     const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
+    const localCommand = generator["local-command"];
+    const nativeExecution = (() => {
+        if (localCommand == null) {
+            return undefined;
+        }
+        const [executable, ...args] = localCommand;
+        if (executable == null || executable.trim().length === 0) {
+            throw new CliError({
+                message: "local-command requires an executable",
+                code: CliError.Code.ConfigError
+            });
+        }
+        return {
+            executable,
+            args,
+            workingDirectory: dirname(absolutePathToGeneratorsConfiguration)
+        };
+    })();
     const perGeneratorIdempotencyKeyGeneration =
         typeof generator.config === "object" && generator.config !== null
             ? (generator.config as { "auto-generate-idempotency-key"?: unknown })["auto-generate-idempotency-key"]
@@ -712,6 +730,7 @@ async function convertGenerator({
         }),
         name: normalizedName,
         containerImage,
+        nativeExecution,
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({

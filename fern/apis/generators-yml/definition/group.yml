@@ -58,6 +58,10 @@ types:
           When smart casing is enabled, preserves the word boundary after a digit run in
           snake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).
           Defaults to false, which keeps the digit run fused to the following word.
+      local-command:
+        type: optional<list<string>>
+        docs: |
+          Host command for local generation. Fern appends the config path. No shell expansion.
       api:
         type: optional<GeneratorAPISettingsSchema>
         docs: Override API import settings (this is applied across all specs)

@@ -242,9 +242,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             return;
         }
 
-        // In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
-        // For remote generation, Fiddle handles writing the LICENSE file after generation
-        const dockerLicensePath = "/tmp/LICENSE";
+        // Local generators read custom licenses from FERN_LICENSE_PATH.
+        const dockerLicensePath = process.env.FERN_LICENSE_PATH ?? "/tmp/LICENSE";
         const licenseFileName = licenseConfig.filename ?? "LICENSE";
         const destinationPath = path.join(this.absolutePathToOutputDirectory, licenseFileName);
 
