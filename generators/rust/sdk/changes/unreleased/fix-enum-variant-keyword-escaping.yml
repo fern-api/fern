@@ -4,5 +4,7 @@
     Escape Rust reserved keywords in generated enum variant names. An enum
     value that PascalCases onto a keyword (e.g. `self` -> `Self`) is now
     emitted as `Self_` with the wire value preserved, instead of the
-    unparseable `pub enum Foo { Self, ... }`.
+    unparseable `pub enum Foo { Self, ... }`. Generated code examples
+    (README, reference docs, snippets, and doc-test comments) now reference
+    the same keyword-safe variant name so they compile too.
   type: fix
