@@ -65,6 +65,7 @@ import { VersionDeclarationReferencer } from "./declaration-referencers/VersionD
 import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/WebhooksHelperDeclarationReferencer.js";
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { GenerationShard, shardOwnsFile, validateGenerationShard } from "./generationShard.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
 import { ReactQueryGenerator } from "./react-query/ReactQueryGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
@@ -105,6 +106,7 @@ export declare namespace SdkGenerator {
         generateJestTests: boolean;
         rawConfig: FernGeneratorExec.GeneratorConfig;
         config: Config;
+        generationShard?: GenerationShard;
     }
 
     export interface Config {
@@ -187,6 +189,7 @@ export class SdkGenerator {
     private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private rawConfig: FernGeneratorExec.GeneratorConfig;
     private config: SdkGenerator.Config;
+    private generationShard: GenerationShard;
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
     private generateJestTests: boolean;
@@ -277,7 +280,8 @@ export class SdkGenerator {
         npmPackage,
         rawConfig,
         config,
-        generateJestTests
+        generateJestTests,
+        generationShard
     }: SdkGenerator.Init) {
         this.rootDirectoryPath = "/";
         this.defaultSrcDirectory = "src";
@@ -300,6 +304,7 @@ export class SdkGenerator {
             config.generateEndpointMetadata = true;
         }
         this.config = config;
+        this.generationShard = validateGenerationShard(generationShard ?? { count: 1, index: 0 });
 
         this.npmPackage = npmPackage;
         this.rawConfig = rawConfig;
@@ -1907,6 +1912,10 @@ export class SdkGenerator {
     }) {
         filepath.rootDir = packagePath;
         const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
+        const shard = this.generationShard;
+        if (!shardOwnsFile(filepathStr, shard.count, shard.index)) {
+            return;
+        }
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite: true });

@@ -1,6 +1,8 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
-import { readFile, rm } from "fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { PersistedTypescriptProject } from "../PersistedTypescriptProject.js";
@@ -40,6 +42,32 @@ function collectLogs(): { lines: string[]; logger: ReturnType<typeof createLogge
 describe("PersistedTypescriptProject", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+    });
+
+    it("copies unzipped output without invoking zip", async () => {
+        const source = await mkdtemp(join(tmpdir(), "fern-project-"));
+        const destination = await mkdtemp(join(tmpdir(), "fern-output-"));
+        await mkdir(join(source, "src"));
+        await writeFile(join(source, "src", "index.ts"), "export {};\n");
+        const project = makeProject({ directory: AbsoluteFilePath.of(source) });
+        const { logger } = collectLogs();
+
+        try {
+            await project.copyProjectTo({
+                destinationPath: AbsoluteFilePath.of(destination),
+                zipFilename: "output.zip",
+                unzipOutput: true,
+                logger
+            });
+
+            await expect(readFile(join(destination, "src", "index.ts"), "utf8")).resolves.toBe("export {};\n");
+            expect(mockedCreateLoggingExecutable).not.toHaveBeenCalled();
+        } finally {
+            await Promise.all([
+                rm(source, { recursive: true, force: true }),
+                rm(destination, { recursive: true, force: true })
+            ]);
+        }
     });
 
     describe("format", () => {

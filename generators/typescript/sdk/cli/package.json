@@ -27,6 +27,8 @@
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
+    "test": "vitest --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../..",
     "podmanTagLatest": "podman build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
   },
@@ -45,6 +47,8 @@
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",
     "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "ts-morph": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

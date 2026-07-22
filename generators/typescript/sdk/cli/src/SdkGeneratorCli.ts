@@ -15,7 +15,7 @@ import {
     writeTemplateFiles
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { SdkGenerator } from "@fern-typescript/sdk-generator";
+import { GenerationShard, SdkGenerator } from "@fern-typescript/sdk-generator";
 import { copyFile } from "fs/promises";
 import path from "path";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig.js";
@@ -23,15 +23,18 @@ import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSch
 export declare namespace SdkGeneratorCli {
     export interface Init {
         configOverrides?: Partial<SdkCustomConfig>;
+        generationShard?: GenerationShard;
     }
 }
 
 export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     private configOverrides: Partial<SdkCustomConfig>;
+    private generationShard: GenerationShard | undefined;
 
-    constructor({ configOverrides }: SdkGeneratorCli.Init = {}) {
+    constructor({ configOverrides, generationShard }: SdkGeneratorCli.Init = {}) {
         super();
         this.configOverrides = configOverrides ?? {};
+        this.generationShard = generationShard;
     }
 
     protected parseCustomConfig(customConfig: unknown, logger: Logger): SdkCustomConfig {
@@ -274,7 +277,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 maxRetries: customConfig.maxRetries,
                 alwaysSendAuth: customConfig.alwaysSendAuth,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
-            }
+            },
+            generationShard: this.generationShard
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
@@ -346,7 +350,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         _customConfig: SdkCustomConfig
     ): Promise<void> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
-        if (customConfig.useLegacyExports === false) {
+        if (customConfig.useLegacyExports === false && (this.generationShard?.count ?? 1) <= 1) {
             await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
         }
         if (customConfig.testFramework === "vitest") {
