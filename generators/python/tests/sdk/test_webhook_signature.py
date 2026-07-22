@@ -280,13 +280,13 @@ _BODY_HASH_BINDING = {
 _URL_NORMALIZATION = {"portVariants": True, "legacyQueryEncoding": True}
 
 
-def _form_body_string(params: typing.Dict[str, typing.Union[str, typing.List[str]]]) -> str:
-    return "".join(
-        "".join(
-            key + value for value in sorted(set([params[key]] if isinstance(params[key], str) else list(params[key])))
-        )
-        for key in sorted(params)
-    )
+def _form_body_string(params: typing.Mapping[str, typing.Union[str, typing.Sequence[str]]]) -> str:
+    parts: typing.List[str] = []
+    for key in sorted(params):
+        value = params[key]
+        values = [value] if isinstance(value, str) else list(value)
+        parts.append("".join(key + v for v in sorted(set(values))))
+    return "".join(parts)
 
 
 def test_generated_body_sort_single_value() -> None:
