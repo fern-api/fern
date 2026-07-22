@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/Profiles/{profileId}/Identifiers/{idTypePathParam}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_.updateProfileIdentifier"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-path-param-body-collision/fern\"\n\tfernclient \"github.com/openapi-path-param-body-collision/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.UpdateProfileIdentifier(\n\tcontext.TODO(),\n\t\u0026fern.IdentifierUpdate{\n\t\tProfileID:       \"profile_123\",\n\t\tIDTypePathParam: \"email\",\n\t\tIDType:          \"phone\",\n\t\tOldValue:        \"+13175556789\",\n\t\tNewValue:        \"+13175556798\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

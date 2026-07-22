@@ -13,10 +13,12 @@ import { convertEndpointResponseExample, convertFullExample } from "./utils/conv
 
 export function buildEndpointExample({
     endpointExample,
-    context
+    context,
+    pathParameterRenames
 }: {
     endpointExample: EndpointExample;
     context: OpenApiIrConverterContext;
+    pathParameterRenames?: Record<string, string>;
 }): RawSchemas.ExampleEndpointCallSchema {
     const example: RawSchemas.ExampleEndpointCallSchema = {};
     if (endpointExample.type !== "full") {
@@ -45,7 +47,10 @@ export function buildEndpointExample({
         }
     }
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
-        Object.assign(pathParametersForExample, convertPathParameterExample(endpointExample.pathParameters));
+        Object.assign(
+            pathParametersForExample,
+            convertPathParameterExample(endpointExample.pathParameters, pathParameterRenames)
+        );
     }
     if (Object.keys(pathParametersForExample).length > 0) {
         example["path-parameters"] = pathParametersForExample;
@@ -182,13 +187,18 @@ interface NamedFullExample {
 }
 
 function convertPathParameterExample(
-    pathParameterExamples: PathParameterExample[]
+    pathParameterExamples: PathParameterExample[],
+    pathParameterRenames?: Record<string, string>
 ): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     pathParameterExamples.forEach((pathParameterExample) => {
         const convertedExample = convertFullExample(pathParameterExample.value);
         if (convertedExample != null) {
-            result[pathParameterExample.parameterNameOverride ?? pathParameterExample.name] = convertedExample;
+            const name =
+                pathParameterExample.parameterNameOverride ??
+                pathParameterRenames?.[pathParameterExample.name] ??
+                pathParameterExample.name;
+            result[name] = convertedExample;
         }
     });
     return result;
