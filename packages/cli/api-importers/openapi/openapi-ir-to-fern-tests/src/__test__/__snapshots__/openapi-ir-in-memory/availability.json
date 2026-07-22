@@ -420,6 +420,7 @@
     "coerceConstsTo": "enums-coerceable-to-literals",
     "respectByteFormat": false,
     "shouldInferDiscriminatedUnionBaseProperties": false,
-    "disambiguateRequestNames": true
+    "disambiguateRequestNames": true,
+    "ignoreTags": false
   }
 }
