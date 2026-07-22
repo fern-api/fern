@@ -6,36 +6,65 @@ import * as core from "../core/index.js";
  * Verify an HMAC webhook signature.
  *
  * Extract the signature from the "x-twilio-signature" header and pass it as the signatureHeader parameter.
- * The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.
- * When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.
+ * The requestBody parameter accepts either a raw string or a Record<string, string | string[]> of POST body parameters.
+ * When a Record is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.
+ * This helper verifies both classic form-encoded and JSON requests: it branches at runtime on whether the body-hash query parameter is present on the notification URL.
+ * For a JSON request the raw body is verified against that separately-transmitted hash and the signature is checked over the notification URL only.
+ * Pass the exact raw body as requestBody and the verbatim notification URL as notificationUrl.
+ * The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches.
  */
 export class SmsStatusWebhooksHelper {
     public static async verifySignature(
-        requestBody: string | Record<string, string>,
+        requestBody: string | Record<string, string | string[]>,
         signatureHeader: string,
         signatureKey: string,
         notificationUrl: string,
     ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null || signatureKey == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
+            return false;
         }
 
+        const transmittedBodyHash = core.getWebhookQueryParameter(notificationUrl, "bodySHA256");
+        if (transmittedBodyHash != null) {
+            const expectedBodyHash = await core.computeHash({
+                payload: requestBody as string,
+                algorithm: "sha256",
+                encoding: "hex",
+            });
+            if (!(await core.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+                return false;
+            }
+        }
         const bodyString =
             typeof requestBody === "string"
                 ? requestBody
                 : Object.keys(requestBody)
                       .sort()
-                      .map((key) => key + requestBody[key])
+                      .map((key) => {
+                          const value = requestBody[key];
+                          const values = Array.isArray(value) ? value : [value];
+                          return Array.from(new Set(values))
+                              .sort()
+                              .map((v) => key + v)
+                              .join("");
+                      })
                       .join("");
-        const payload = [notificationUrl, bodyString].join("");
-
-        const expected = await core.computeHmacSignature({
-            payload: payload,
-            secret: signatureKey,
-            algorithm: "sha1",
-            encoding: "base64",
+        const candidates = core.notificationUrlCandidates(notificationUrl, {
+            portVariants: true,
+            legacyQueryEncoding: true,
         });
-
-        return await core.timingSafeEqual(signatureHeader, expected);
+        for (const candidateUrl of candidates) {
+            const payload = transmittedBodyHash != null ? candidateUrl : [candidateUrl, bodyString].join("");
+            const expected = await core.computeHmacSignature({
+                payload: payload,
+                secret: signatureKey,
+                algorithm: "sha1",
+                encoding: "base64",
+            });
+            if (await core.timingSafeEqual(signatureHeader, expected)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
