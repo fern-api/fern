@@ -1178,7 +1178,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             return undefined;
         }
         const environments = config.environments;
-        const condition = options.map(({ optionName }) => `!${optionName}.nil?`).join(" || ");
+        // A single negated condition must use `unless` to satisfy rubocop's Style/NegatedIf.
+        const firstOptionName = options[0]?.optionName;
+        const guard =
+            options.length === 1 && firstOptionName != null
+                ? `unless ${firstOptionName}.nil?`
+                : `if ${options.map(({ optionName }) => `!${optionName}.nil?`).join(" || ")}`;
 
         const writeLocalDeclarations = (writer: ruby.Writer): void => {
             for (const { optionName, localName, variable } of options) {
@@ -1210,7 +1215,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     return undefined;
                 }
                 return ruby.codeblock((writer) => {
-                    writer.writeLine(`if ${condition}`);
+                    writer.writeLine(guard);
                     writer.indent();
                     writeLocalDeclarations(writer);
                     // Map each environment constant to its URL template so the SELECTED
@@ -1271,7 +1276,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     return undefined;
                 }
                 return ruby.codeblock((writer) => {
-                    writer.writeLine(`if ${condition}`);
+                    writer.writeLine(guard);
                     writer.indent();
                     writeLocalDeclarations(writer);
                     // Map each environment constant to its formatted URLs so EVERY host of

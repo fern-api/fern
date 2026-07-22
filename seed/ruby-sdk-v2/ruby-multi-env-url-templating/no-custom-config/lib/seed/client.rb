@@ -9,7 +9,7 @@ module Seed
     #
     # @return [void]
     def initialize(base_url: nil, environment: Seed::Environment::PRODUCTION, region: nil, max_retries: 2)
-      if !region.nil?
+      unless region.nil?
         region_value = region.nil? ? "us1" : region
         environment_url_templates = {
           Seed::Environment::PRODUCTION => {
