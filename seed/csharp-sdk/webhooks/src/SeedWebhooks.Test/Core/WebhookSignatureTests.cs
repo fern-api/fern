@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using SeedWebhooks.Core;
 
@@ -203,14 +201,24 @@ public class WebhookSignatureTests
     // sorted, per-key values are deduped and sorted, and `key + value` pairs are
     // concatenated with no separator (mirroring twilio-node's `toFormUrlEncodedParam`).
 
-    private static string FlattenFormParams(IReadOnlyDictionary<string, object?> requestBody)
+    private static string FlattenFormParams(
+        global::System.Collections.Generic.IReadOnlyDictionary<string, object?> requestBody
+    )
     {
-        var builder = new System.Text.StringBuilder();
-        foreach (var key in requestBody.Keys.OrderBy(k => k, System.StringComparer.Ordinal))
+        var builder = new global::System.Text.StringBuilder();
+        foreach (
+            var key in global::System.Linq.Enumerable.OrderBy(
+                requestBody.Keys,
+                k => k,
+                global::System.StringComparer.Ordinal
+            )
+        )
         {
             var value = requestBody[key];
-            var values = new SortedSet<string>(System.StringComparer.Ordinal);
-            if (value is IEnumerable<string> stringEnumerable)
+            var values = new global::System.Collections.Generic.SortedSet<string>(
+                global::System.StringComparer.Ordinal
+            );
+            if (value is global::System.Collections.Generic.IEnumerable<string> stringEnumerable)
             {
                 foreach (var item in stringEnumerable)
                 {
@@ -234,18 +242,22 @@ public class WebhookSignatureTests
     [Test]
     public void FormParams_SingleValue_SortsKeys()
     {
-        var body = new Dictionary<string, object?> { { "Zeta", "1" }, { "Alpha", "2" } };
+        var body = new global::System.Collections.Generic.Dictionary<string, object?>
+        {
+            { "Zeta", "1" },
+            { "Alpha", "2" },
+        };
         Assert.That(FlattenFormParams(body), Is.EqualTo("Alpha2Zeta1"));
     }
 
     [Test]
     public void FormParams_RepeatedValues_AreDeduped()
     {
-        var body = new Dictionary<string, object?>
+        var body = new global::System.Collections.Generic.Dictionary<string, object?>
         {
             {
                 "Key",
-                new List<string> { "b", "b", "a" }
+                new global::System.Collections.Generic.List<string> { "b", "b", "a" }
             },
         };
         // Values are deduped and sorted: a, b -> "KeyaKeyb".
@@ -255,11 +267,11 @@ public class WebhookSignatureTests
     [Test]
     public void FormParams_KeysAndValuesSortedIndependently()
     {
-        var body = new Dictionary<string, object?>
+        var body = new global::System.Collections.Generic.Dictionary<string, object?>
         {
             {
                 "B",
-                new List<string> { "2", "1" }
+                new global::System.Collections.Generic.List<string> { "2", "1" }
             },
             { "A", "z" },
         };
@@ -317,7 +329,7 @@ public class WebhookSignatureTests
             legacyQueryEncoding: true
         );
 
-        Assert.That(candidates.First(), Is.EqualTo(url));
+        Assert.That(global::System.Linq.Enumerable.First(candidates), Is.EqualTo(url));
     }
 
     [Test]
@@ -330,7 +342,14 @@ public class WebhookSignatureTests
             legacyQueryEncoding: false
         );
 
-        Assert.That(candidates, Is.EqualTo(candidates.Distinct().ToArray()));
+        Assert.That(
+            candidates,
+            Is.EqualTo(
+                global::System.Linq.Enumerable.ToArray(
+                    global::System.Linq.Enumerable.Distinct(candidates)
+                )
+            )
+        );
     }
 
     [Test]
