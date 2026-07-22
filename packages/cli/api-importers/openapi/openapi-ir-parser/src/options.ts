@@ -149,6 +149,14 @@ export interface ParseOpenAPIOptions {
      * Defaults to true.
      */
     disambiguateRequestNames: boolean;
+
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    ignoreTags: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -189,7 +197,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceConstsTo: "enums-coerceable-to-literals",
     respectByteFormat: false,
     shouldInferDiscriminatedUnionBaseProperties: false,
-    disambiguateRequestNames: true
+    disambiguateRequestNames: true,
+    ignoreTags: false
 };
 
 function mergeOptions<T extends object>(params: {

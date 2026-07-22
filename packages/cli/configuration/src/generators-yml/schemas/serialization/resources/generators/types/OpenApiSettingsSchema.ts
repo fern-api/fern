@@ -35,6 +35,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "default-integer-format": DefaultIntegerFormat.optional(),
         "infer-discriminated-union-base-properties": core.serialization.boolean().optional(),
         "disambiguate-request-names": core.serialization.boolean().optional(),
+        "ignore-tags": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -60,5 +61,6 @@ export declare namespace OpenApiSettingsSchema {
         "default-integer-format"?: DefaultIntegerFormat.Raw | null;
         "infer-discriminated-union-base-properties"?: boolean | null;
         "disambiguate-request-names"?: boolean | null;
+        "ignore-tags"?: boolean | null;
     }
 }

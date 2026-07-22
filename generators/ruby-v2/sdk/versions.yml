@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.18.2
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated `OAuthProvider` and
+        `InferredAuthProvider`. The token cache is now guarded by a `Mutex` with
+        double-checked locking, so only one thread refreshes the token under
+        concurrent load (e.g. multi-threaded servers like Puma or Sidekiq). The
+        cache-hit path stays lock-free.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.18.1
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an environment and server URL variables
+        (e.g. `region`), the generated client now renders the SELECTED environment's URL
+        template(s) instead of always using the first environment's template. For
+        multi-host environments, every host's URL is formatted from the selected
+        environment's templates. An explicitly provided custom base URL or environment
+        is never overridden.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 1.18.0
   changelogEntry:
     - summary: |
