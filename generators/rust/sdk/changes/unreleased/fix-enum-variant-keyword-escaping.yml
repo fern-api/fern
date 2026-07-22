@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Escape Rust reserved keywords in generated enum variant names. An enum
+    value that PascalCases onto a keyword (e.g. `self` -> `Self`) is now
+    emitted as `Self_` with the wire value preserved, instead of the
+    unparseable `pub enum Foo { Self, ... }`.
+  type: fix
