@@ -153,13 +153,18 @@ webhooks:
       payload-format:
         components:
           - notification-url
+          - body
         delimiter: ""
+        body-sort: alphabetical
       body-hash-binding:
         algorithm: sha256
         encoding: hex
         location:
           type: query-parameter
           name: bodySHA256
+      url-normalization:
+        port-variants: true
+        legacy-query-encoding: true
     examples:
       - name: SmsStatusExample
         payload:

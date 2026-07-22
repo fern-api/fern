@@ -1,4 +1,3 @@
-import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
@@ -141,12 +140,12 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             namespace: this.namespaces.core
         });
 
+        // Input validation. A verification helper returns a boolean and never throws, so
+        // missing inputs fail closed with `false` rather than raising.
         writer.writeLine("if (requestBody == null || signatureHeader == null || signatureKey == null)");
         writer.writeLine("{");
         writer.indent();
-        writer.writeTextStatement(
-            'throw new global::System.ArgumentException("Missing required parameters for webhook signature verification")'
-        );
+        writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
         writer.newLine();
@@ -164,12 +163,32 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             writer.newLine();
         }
 
-        if (this.config.bodyHashBinding != null) {
-            this.writeBodyHashValidation(writer, this.config.bodyHashBinding, webhookSignatureReference);
-            writer.newLine();
+        // Notification-URL normalization: some providers (e.g. Twilio) are inconsistent
+        // about the signed URL's port and query encoding, so verify against several
+        // normalized URL forms and accept on the first constant-time match.
+        if (this.config.notificationUrlNormalization != null) {
+            this.writeNormalizedHmacVerification(
+                writer,
+                webhookSignatureReference,
+                signatureVar,
+                this.config.notificationUrlNormalization
+            );
+            return;
         }
 
-        this.writePayload(writer);
+        if (this.config.bodyHashBinding != null) {
+            // Body-hash binding (e.g. Twilio): the same endpoint accepts both classic
+            // form-encoded and JSON requests, so branch at runtime on whether the
+            // body-hash query parameter is present in the notification URL.
+            //   - present (JSON): the signed payload is the URL only; additionally
+            //     recompute hash(rawBody) and constant-time compare it to the transmitted
+            //     value.
+            //   - absent (classic form): the signed payload is the URL + sorted/deduped
+            //     form params, with no body-hash check.
+            this.writeBodyHashBranchedPayload(writer, this.config.bodyHashBinding, webhookSignatureReference);
+        } else {
+            this.writePayload(writer);
+        }
         writer.newLine();
 
         writer.write("var expected = ");
@@ -186,14 +205,12 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     private writeTimestampValidation(writer: ast.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
-        const headerWireValue = getWireValue(timestamp.headerName);
+        // A missing or malformed timestamp header fails closed with `false` (the helper
+        // never throws) rather than raising.
         writer.writeLine("if (string.IsNullOrEmpty(timestampHeader))");
         writer.writeLine("{");
         writer.indent();
-        writer.writeTextStatement(
-            `throw new global::System.ArgumentException("Missing timestamp header '${headerWireValue}' ` +
-                `for webhook signature verification")`
-        );
+        writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
         writer.newLine();
@@ -203,9 +220,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
                 writer.writeLine("if (!long.TryParse(timestampHeader, out var timestampValue))");
                 writer.writeLine("{");
                 writer.indent();
-                writer.writeTextStatement(
-                    'throw new global::System.ArgumentException("Invalid timestamp format: expected unix seconds")'
-                );
+                writer.writeTextStatement("return false");
                 writer.dedent();
                 writer.writeLine("}");
                 writer.writeTextStatement("var timestampMs = timestampValue * 1000L");
@@ -214,9 +229,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
                 writer.writeLine("if (!long.TryParse(timestampHeader, out var timestampValue))");
                 writer.writeLine("{");
                 writer.indent();
-                writer.writeTextStatement(
-                    'throw new global::System.ArgumentException("Invalid timestamp format: expected unix milliseconds")'
-                );
+                writer.writeTextStatement("return false");
                 writer.dedent();
                 writer.writeLine("}");
                 writer.writeTextStatement("var timestampMs = timestampValue");
@@ -229,9 +242,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
                 );
                 writer.writeLine("{");
                 writer.indent();
-                writer.writeTextStatement(
-                    'throw new global::System.ArgumentException("Invalid timestamp format: expected ISO 8601 date string")'
-                );
+                writer.writeTextStatement("return false");
                 writer.dedent();
                 writer.writeLine("}");
                 writer.writeTextStatement("var timestampMs = parsedTimestamp.ToUnixTimeMilliseconds()");
@@ -252,26 +263,44 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.newLine();
     }
 
-    private writeBodyHashValidation(
+    /**
+     * Emits `var transmittedBodyHash = ...;` reading the configured body-hash query
+     * parameter from the notification URL. Callers branch at runtime on whether it is
+     * present (JSON request) or absent (classic form request).
+     */
+    private writeTransmittedBodyHashExtraction(
         writer: ast.Writer,
         bodyHashBinding: FernIr.WebhookBodyHashBinding,
         webhookSignatureReference: ast.ClassReference
     ): void {
-        const algorithm = this.mapBodyHashAlgorithm(bodyHashBinding.algorithm);
-        const encoding = this.mapEncoding(bodyHashBinding.encoding);
         const queryParameterName = this.getBodyHashQueryParameterName(bodyHashBinding.location);
-
-        writer.write("var expectedBodyHash = ");
-        writer.writeNode(webhookSignatureReference);
-        writer.writeTextStatement(`.ComputeHash(requestBody, "${algorithm}", "${encoding}")`);
-
         writer.write("var transmittedBodyHash = ");
         writer.writeNode(webhookSignatureReference);
         writer.write(".GetQueryParameter(notificationUrl, ");
         writer.writeNode(this.csharp.string_({ string: queryParameterName }));
         writer.writeTextStatement(")");
+    }
 
-        writer.write("if (transmittedBodyHash == null || !");
+    /**
+     * Emits the JSON-path body-hash comparison inside an `if (transmittedBodyHash != null)`
+     * block: recompute hash(rawBody) and constant-time compare it to the transmitted
+     * value, returning false on mismatch. Only the JSON request carries the transmitted
+     * hash. `rawBodyExpr` is the string-typed raw body expression.
+     */
+    private writeBodyHashComparison(
+        writer: ast.Writer,
+        bodyHashBinding: FernIr.WebhookBodyHashBinding,
+        webhookSignatureReference: ast.ClassReference,
+        rawBodyExpr: string
+    ): void {
+        const algorithm = this.mapBodyHashAlgorithm(bodyHashBinding.algorithm);
+        const encoding = this.mapEncoding(bodyHashBinding.encoding);
+
+        writer.write("var expectedBodyHash = ");
+        writer.writeNode(webhookSignatureReference);
+        writer.writeTextStatement(`.ComputeHash(${rawBodyExpr}, "${algorithm}", "${encoding}")`);
+
+        writer.write("if (!");
         writer.writeNode(webhookSignatureReference);
         writer.writeLine(".TimingSafeEqual(expectedBodyHash, transmittedBodyHash))");
         writer.writeLine("{");
@@ -279,6 +308,131 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
+    }
+
+    /**
+     * Emits the runtime body-hash branch for the non-normalized path. The same endpoint
+     * can receive either a JSON request (body-hash query parameter present) or a classic
+     * form-encoded request (absent), so the signed payload is assembled differently at
+     * runtime and only the JSON path performs the separate body-hash comparison.
+     */
+    private writeBodyHashBranchedPayload(
+        writer: ast.Writer,
+        bodyHashBinding: FernIr.WebhookBodyHashBinding,
+        webhookSignatureReference: ast.ClassReference
+    ): void {
+        this.writeTransmittedBodyHashExtraction(writer, bodyHashBinding, webhookSignatureReference);
+        writer.writeTextStatement("string payload");
+        writer.writeLine("if (transmittedBodyHash != null)");
+        writer.writeLine("{");
+        writer.indent();
+        // JSON path: the URL alone is the signed payload; the raw body is transmitted as a
+        // separately-recomputed hash and compared in constant time. Both must pass. When
+        // bodySort widens requestBody to `object`, the JSON path only receives a raw
+        // string body, so narrow with a guarded cast that fails closed.
+        const rawBodyExpr = this.writeRawBodyNarrowing(writer);
+        this.writeBodyHashComparison(writer, bodyHashBinding, webhookSignatureReference, rawBodyExpr);
+        writer.writeTextStatement("payload = notificationUrl");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("else");
+        writer.writeLine("{");
+        writer.indent();
+        // Classic form path: URL + sorted/deduped form params, no body-hash check.
+        if (this.hasBodySort()) {
+            this.writeBodyStringAssignment(writer);
+        }
+        writer.writeTextStatement(`payload = ${this.buildPayloadExpression()}`);
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Emits HMAC verification against several normalized notification-URL forms, accepting
+     * on the first constant-time match. The body-hash check (when configured) runs once
+     * above the loop because it does not depend on URL normalization; only the HMAC over
+     * the URL is recomputed per candidate.
+     */
+    private writeNormalizedHmacVerification(
+        writer: ast.Writer,
+        webhookSignatureReference: ast.ClassReference,
+        signatureVar: string,
+        normalization: FernIr.WebhookNotificationUrlNormalization
+    ): void {
+        const binding = this.config.bodyHashBinding;
+
+        // Body-hash check (once, independent of URL normalization). Only the JSON request
+        // carries the transmitted hash; when present it must match hash(rawBody).
+        if (binding != null) {
+            this.writeTransmittedBodyHashExtraction(writer, binding, webhookSignatureReference);
+            writer.writeLine("if (transmittedBodyHash != null)");
+            writer.writeLine("{");
+            writer.indent();
+            const rawBodyExpr = this.writeRawBodyNarrowing(writer);
+            this.writeBodyHashComparison(writer, binding, webhookSignatureReference, rawBodyExpr);
+            writer.dedent();
+            writer.writeLine("}");
+        }
+
+        // The form-path body string is URL-independent, so compute it once before the loop.
+        if (this.hasBodySort()) {
+            this.writeBodyStringAssignment(writer);
+        }
+
+        const portVariants = normalization.portVariants ? "true" : "false";
+        const legacyQueryEncoding = normalization.legacyQueryEncoding ? "true" : "false";
+        writer.write("var candidates = ");
+        writer.writeNode(webhookSignatureReference);
+        writer.writeTextStatement(
+            `.NotificationUrlCandidates(notificationUrl, ${portVariants}, ${legacyQueryEncoding})`
+        );
+
+        writer.writeLine("foreach (var candidateUrl in candidates)");
+        writer.writeLine("{");
+        writer.indent();
+        const formPayloadExpr = this.buildPayloadExpression("candidateUrl");
+        if (binding != null) {
+            // JSON request signs the URL only; classic form request signs URL + params.
+            writer.writeTextStatement(`var payload = transmittedBodyHash != null ? candidateUrl : ${formPayloadExpr}`);
+        } else {
+            writer.writeTextStatement(`var payload = ${formPayloadExpr}`);
+        }
+        writer.write("var expected = ");
+        writer.writeNode(webhookSignatureReference);
+        writer.writeTextStatement(
+            `.ComputeHmacSignature(payload, signatureKey, "${this.mapAlgorithm(this.config.algorithm)}", ` +
+                `"${this.mapEncoding(this.config.encoding)}")`
+        );
+        writer.write("if (");
+        writer.writeNode(webhookSignatureReference);
+        writer.writeLine(`.TimingSafeEqual(${signatureVar}, expected))`);
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("return true");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("return false");
+    }
+
+    /**
+     * Narrows the (possibly widened to `object`) requestBody to a raw string for hashing
+     * and returns the identifier to use. When bodySort widened the parameter to `object`,
+     * emits a guarded cast that fails closed (returns false) rather than throwing on an
+     * unexpected type; otherwise requestBody is already a string and is used directly.
+     */
+    private writeRawBodyNarrowing(writer: ast.Writer): string {
+        if (!this.hasBodySort()) {
+            return "requestBody";
+        }
+        writer.writeLine("if (requestBody is not string rawBody)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        return "rawBody";
     }
 
     private getBodyHashQueryParameterName(location: FernIr.WebhookBodyHashLocation): string {
@@ -306,38 +460,131 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     private writePayload(writer: ast.Writer): void {
-        const components = this.config.payloadFormat.components;
-        const delimiter = this.config.payloadFormat.delimiter;
-
         if (this.hasBodySort()) {
-            writer.writeTextStatement(
-                "var bodyString = requestBody is string rawBody ? rawBody : string.Concat(" +
-                    "global::System.Linq.Enumerable.Select(" +
-                    "global::System.Linq.Enumerable.OrderBy(" +
-                    "(global::System.Collections.Generic.IEnumerable<" +
-                    "global::System.Collections.Generic.KeyValuePair<string, string>>)requestBody, " +
-                    "kv => kv.Key, global::System.StringComparer.Ordinal), kv => kv.Key + kv.Value))"
-            );
+            this.writeBodyStringAssignment(writer);
         }
-
-        const componentExpressions = components.map((component) => this.getComponentExpression(component));
-        if (componentExpressions.length === 1 && componentExpressions[0] != null) {
-            writer.writeTextStatement(`var payload = ${componentExpressions[0]}`);
-            return;
-        }
-
-        const args = componentExpressions.filter((expression): expression is string => expression != null).join(", ");
-        writer.writeTextStatement(`var payload = string.Join(${JSON.stringify(delimiter)}, ${args})`);
+        writer.writeTextStatement(`var payload = ${this.buildPayloadExpression()}`);
     }
 
-    private getComponentExpression(component: FernIr.WebhookPayloadComponent): string | undefined {
+    /**
+     * Emits the `string bodyString = ...` flattening of a form-parameter map into a
+     * signed string. Mirrors Twilio's `toFormUrlEncodedParam`: keys are sorted (map keys
+     * are inherently unique), and for each key the values are deduped and sorted,
+     * concatenating `key + value` for every value with no delimiter between params. A raw
+     * string body is passed through unchanged.
+     *
+     * The (possibly widened to `object`) requestBody is narrowed at runtime: a string
+     * passes through; a dictionary is flattened; any other type fails closed (`return
+     * false`) rather than throwing. Returns false when it emitted a terminating
+     * `return false`, so the caller knows the surrounding block is closed off.
+     */
+    private writeBodyStringAssignment(writer: ast.Writer): boolean {
+        writer.writeLine("string bodyString;");
+        writer.writeLine("if (requestBody is string bodyStringRaw)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("bodyString = bodyStringRaw");
+        writer.dedent();
+        writer.writeLine("}");
+        // A form-parameter multimap: param -> string | collection of strings. Keys sorted;
+        // per key, values deduped and sorted; key + value concatenated with no separator.
+        writer.writeLine(
+            "else if (requestBody is global::System.Collections.Generic.IReadOnlyDictionary<" +
+                "string, object?> bodyStringMap)"
+        );
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("var bodyStringBuilder = new global::System.Text.StringBuilder()");
+        writer.writeLine(
+            "foreach (var bodyStringKey in global::System.Linq.Enumerable.OrderBy(" +
+                "bodyStringMap.Keys, bodyStringItemKey => bodyStringItemKey, " +
+                "global::System.StringComparer.Ordinal))"
+        );
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("var bodyStringValue = bodyStringMap[bodyStringKey]");
+        writer.writeTextStatement(
+            "var bodyStringValues = new global::System.Collections.Generic.SortedSet<string>(" +
+                "global::System.StringComparer.Ordinal)"
+        );
+        writer.writeLine(
+            "if (bodyStringValue is global::System.Collections.Generic.IEnumerable<string> bodyStringStringEnumerable)"
+        );
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeLine("foreach (var bodyStringItem in bodyStringStringEnumerable)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("bodyStringValues.Add(bodyStringItem)");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("else if (bodyStringValue is string bodyStringSingle)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("bodyStringValues.Add(bodyStringSingle)");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("else");
+        writer.writeLine("{");
+        writer.indent();
+        // Unexpected value type inside the map fails closed rather than throwing.
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("foreach (var bodyStringSortedValue in bodyStringValues)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("bodyStringBuilder.Append(bodyStringKey).Append(bodyStringSortedValue)");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("bodyString = bodyStringBuilder.ToString()");
+        writer.dedent();
+        writer.writeLine("}");
+        // An unexpected requestBody type (neither string nor dictionary) fails closed.
+        writer.writeLine("else");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        return true;
+    }
+
+    /**
+     * Builds the RHS expression for `payload` from the configured components. `urlExpr` is
+     * the identifier used for the notification-URL component - normally `"notificationUrl"`,
+     * but the candidate loop substitutes `"candidateUrl"`.
+     */
+    private buildPayloadExpression(urlExpr = "notificationUrl"): string {
+        const componentExpressions = this.config.payloadFormat.components
+            .map((component) => this.getComponentExpression(component, urlExpr))
+            .filter((expression): expression is string => expression != null);
+
+        // Each component expression is already a string, so a single component can be used
+        // directly rather than round-tripping through string.Join.
+        if (componentExpressions.length === 1 && componentExpressions[0] != null) {
+            return componentExpressions[0];
+        }
+
+        const delimiter = this.config.payloadFormat.delimiter;
+        return `string.Join(${JSON.stringify(delimiter)}, ${componentExpressions.join(", ")})`;
+    }
+
+    private getComponentExpression(
+        component: FernIr.WebhookPayloadComponent,
+        urlExpr = "notificationUrl"
+    ): string | undefined {
         switch (component) {
             case "BODY":
                 return this.hasBodySort() ? "bodyString" : "requestBody";
             case "TIMESTAMP":
                 return "timestampHeader";
             case "NOTIFICATION_URL":
-                return "notificationUrl";
+                return urlExpr;
             case "MESSAGE_ID":
                 return "messageId";
             default:

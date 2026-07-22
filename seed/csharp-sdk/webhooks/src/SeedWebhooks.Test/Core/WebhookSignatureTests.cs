@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using SeedWebhooks.Core;
 
@@ -195,5 +197,203 @@ public class WebhookSignatureTests
         // A reordered URL produces a different HMAC and must not verify.
         var reordered = $"https://example.com/webhooks/sms?alpha=2&bodySHA256={bodyHash}&zeta=1";
         Assert.That(VerifyTwilioStyle(RawBody, reordered, signature, Secret), Is.False);
+    }
+
+    // The following tests exercise the multi-value form-parameter flattening: keys are
+    // sorted, per-key values are deduped and sorted, and `key + value` pairs are
+    // concatenated with no separator (mirroring twilio-node's `toFormUrlEncodedParam`).
+
+    private static string FlattenFormParams(IReadOnlyDictionary<string, object?> requestBody)
+    {
+        var builder = new System.Text.StringBuilder();
+        foreach (var key in requestBody.Keys.OrderBy(k => k, System.StringComparer.Ordinal))
+        {
+            var value = requestBody[key];
+            var values = new SortedSet<string>(System.StringComparer.Ordinal);
+            if (value is IEnumerable<string> stringEnumerable)
+            {
+                foreach (var item in stringEnumerable)
+                {
+                    values.Add(item);
+                }
+            }
+            else if (value is string single)
+            {
+                values.Add(single);
+            }
+
+            foreach (var sortedValue in values)
+            {
+                builder.Append(key).Append(sortedValue);
+            }
+        }
+
+        return builder.ToString();
+    }
+
+    [Test]
+    public void FormParams_SingleValue_SortsKeys()
+    {
+        var body = new Dictionary<string, object?> { { "Zeta", "1" }, { "Alpha", "2" } };
+        Assert.That(FlattenFormParams(body), Is.EqualTo("Alpha2Zeta1"));
+    }
+
+    [Test]
+    public void FormParams_RepeatedValues_AreDeduped()
+    {
+        var body = new Dictionary<string, object?>
+        {
+            {
+                "Key",
+                new List<string> { "b", "b", "a" }
+            },
+        };
+        // Values are deduped and sorted: a, b -> "KeyaKeyb".
+        Assert.That(FlattenFormParams(body), Is.EqualTo("KeyaKeyb"));
+    }
+
+    [Test]
+    public void FormParams_KeysAndValuesSortedIndependently()
+    {
+        var body = new Dictionary<string, object?>
+        {
+            {
+                "B",
+                new List<string> { "2", "1" }
+            },
+            { "A", "z" },
+        };
+        Assert.That(FlattenFormParams(body), Is.EqualTo("AzB1B2"));
+    }
+
+    // The following tests exercise the notification-URL candidate normalization used for
+    // the any-match verification path.
+
+    [Test]
+    public void NotificationUrlCandidates_PortVariants_AddsStandardAndNoPort()
+    {
+        var candidates = WebhookSignature.NotificationUrlCandidates(
+            "https://example.com/webhooks/sms",
+            portVariants: true,
+            legacyQueryEncoding: false
+        );
+
+        // The caller URL is always present, plus the no-port and :443 forms.
+        Assert.That(candidates, Contains.Item("https://example.com/webhooks/sms"));
+        Assert.That(candidates, Contains.Item("https://example.com:443/webhooks/sms"));
+    }
+
+    [Test]
+    public void NotificationUrlCandidates_HttpUsesPort80()
+    {
+        var candidates = WebhookSignature.NotificationUrlCandidates(
+            "http://example.com/webhooks/sms",
+            portVariants: true,
+            legacyQueryEncoding: false
+        );
+
+        Assert.That(candidates, Contains.Item("http://example.com:80/webhooks/sms"));
+    }
+
+    [Test]
+    public void NotificationUrlCandidates_AsIsWhenDisabled()
+    {
+        var candidates = WebhookSignature.NotificationUrlCandidates(
+            "https://example.com:8443/webhooks/sms",
+            portVariants: false,
+            legacyQueryEncoding: false
+        );
+
+        Assert.That(candidates, Is.EqualTo(new[] { "https://example.com:8443/webhooks/sms" }));
+    }
+
+    [Test]
+    public void NotificationUrlCandidates_AlwaysIncludesCallerUrlFirst()
+    {
+        var url = "https://example.com/webhooks/sms?bodySHA256=abc";
+        var candidates = WebhookSignature.NotificationUrlCandidates(
+            url,
+            portVariants: true,
+            legacyQueryEncoding: true
+        );
+
+        Assert.That(candidates.First(), Is.EqualTo(url));
+    }
+
+    [Test]
+    public void NotificationUrlCandidates_DedupesPreservingOrder()
+    {
+        // A URL already carrying the standard port collapses the as-is and add-port forms.
+        var candidates = WebhookSignature.NotificationUrlCandidates(
+            "https://example.com:443/webhooks/sms",
+            portVariants: true,
+            legacyQueryEncoding: false
+        );
+
+        Assert.That(candidates, Is.EqualTo(candidates.Distinct().ToArray()));
+    }
+
+    [Test]
+    public void NotificationUrlCandidates_UnparseableUrl_ReturnsSingleton()
+    {
+        var candidates = WebhookSignature.NotificationUrlCandidates(
+            "not a url",
+            portVariants: true,
+            legacyQueryEncoding: true
+        );
+
+        Assert.That(candidates, Is.EqualTo(new[] { "not a url" }));
+    }
+
+    // End-to-end any-match verification: the SmsStatusWebhooksHelper signs the URL only on
+    // the JSON path (body-hash query parameter present). A signature computed over ANY
+    // candidate form of the URL must verify.
+
+    [Test]
+    public void AnyMatch_SignatureOverNoPortForm_Verifies()
+    {
+        var bodyHash = WebhookSignature.ComputeHash(RawBody, "sha256", "hex");
+        // The caller receives a :443 URL, but the provider signed the no-port form.
+        var receivedUrl = $"https://example.com:443/webhooks/sms?bodySHA256={bodyHash}";
+        var signedUrl = $"https://example.com/webhooks/sms?bodySHA256={bodyHash}";
+        var signature = WebhookSignature.ComputeHmacSignature(signedUrl, Secret, "sha1", "base64");
+
+        var verified = VerifyAnyMatch(receivedUrl, signature, Secret);
+        Assert.That(verified, Is.True);
+    }
+
+    [Test]
+    public void AnyMatch_WrongSecret_ReturnsFalse()
+    {
+        var bodyHash = WebhookSignature.ComputeHash(RawBody, "sha256", "hex");
+        var receivedUrl = $"https://example.com/webhooks/sms?bodySHA256={bodyHash}";
+        var signedUrl = $"https://example.com:443/webhooks/sms?bodySHA256={bodyHash}";
+        var signature = WebhookSignature.ComputeHmacSignature(signedUrl, Secret, "sha1", "base64");
+
+        Assert.That(VerifyAnyMatch(receivedUrl, signature, "different-secret"), Is.False);
+    }
+
+    private static bool VerifyAnyMatch(string notificationUrl, string signature, string secret)
+    {
+        var candidates = WebhookSignature.NotificationUrlCandidates(
+            notificationUrl,
+            portVariants: true,
+            legacyQueryEncoding: true
+        );
+        foreach (var candidate in candidates)
+        {
+            var expected = WebhookSignature.ComputeHmacSignature(
+                candidate,
+                secret,
+                "sha1",
+                "base64"
+            );
+            if (WebhookSignature.TimingSafeEqual(signature, expected))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

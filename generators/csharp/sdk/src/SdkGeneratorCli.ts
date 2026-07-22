@@ -160,6 +160,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         });
         context.project.addSourceFiles(defaultGenerator.generate());
 
+        // Override helper class names derive from the first webhook name in each config
+        // group. Two distinct configs whose first webhook names pascal-case to the same
+        // identifier would otherwise emit two files with the same class name and collide,
+        // so a numeric suffix is appended to disambiguate on the (unlikely) collision.
+        const usedClassNames = new Set<string>(["WebhooksHelper"]);
         for (const entry of grouped.values()) {
             if (entry === defaultEntry) {
                 continue;
@@ -168,7 +173,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             if (firstWebhookName == null) {
                 continue;
             }
-            const className = `${context.generation.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
+            const baseClassName = `${context.generation.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
+            let className = baseClassName;
+            let suffix = 2;
+            while (usedClassNames.has(className)) {
+                className = `${baseClassName}${suffix}`;
+                suffix += 1;
+            }
+            usedClassNames.add(className);
             const overrideGenerator = new WebhooksHelperGenerator({
                 context,
                 config: entry.config,

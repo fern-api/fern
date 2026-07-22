@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Extend the generated `WebhooksHelper.VerifySignature` helper to be Twilio-compatible,
+    mirroring the TypeScript reference. When a webhook's HMAC configuration declares
+    `payloadFormat.bodySort`, `requestBody` widens to `object` and accepts either a raw
+    string or an `IReadOnlyDictionary<string, ...>` of POST body parameters whose values
+    are a string or a collection of strings; keys are sorted, per-key values are deduped
+    and sorted, and `key + value` pairs are concatenated with no separator before signing.
+    When a `bodyHashBinding` is configured, verification branches at runtime on whether the
+    body-hash query parameter is present on the notification URL: a JSON request recomputes
+    `hash(rawBody)`, constant-time compares it, and signs the URL only, while a classic
+    form request signs the URL plus the sorted/deduped params with no body-hash check.
+    When `notificationUrlNormalization` is configured, the signature is verified against
+    several normalized forms of the notification URL (standard/absent port, and legacy
+    query re-encoding), succeeding on the first constant-time match via a new stdlib-only
+    `NotificationUrlCandidates` helper on the core `WebhookSignature` utility. The verifier
+    is now a pure boolean and never throws: every failure on the verification path
+    (null/empty inputs, a missing or malformed timestamp, an unparseable URL, a missing
+    body-hash parameter on the JSON path, or an unexpected request-body type) fails closed
+    with `false`. Output is unchanged for webhooks that do not configure these fields.
+  type: feat

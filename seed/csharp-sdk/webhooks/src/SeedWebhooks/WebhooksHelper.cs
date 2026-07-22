@@ -20,23 +20,17 @@ public static class WebhooksHelper
     {
         if (requestBody == null || signatureHeader == null || signatureKey == null)
         {
-            throw new global::System.ArgumentException(
-                "Missing required parameters for webhook signature verification"
-            );
+            return false;
         }
 
         if (string.IsNullOrEmpty(timestampHeader))
         {
-            throw new global::System.ArgumentException(
-                "Missing timestamp header 'x-webhook-timestamp' for webhook signature verification"
-            );
+            return false;
         }
 
         if (!long.TryParse(timestampHeader, out var timestampValue))
         {
-            throw new global::System.ArgumentException(
-                "Invalid timestamp format: expected unix seconds"
-            );
+            return false;
         }
         var timestampMs = timestampValue * 1000L;
         if (
