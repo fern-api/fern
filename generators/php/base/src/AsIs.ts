@@ -78,6 +78,8 @@ export enum AsIsFiles {
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
     Union = "Types/Union.Template.php",
+    WebhookSignature = "WebhookSignature.Template.php",
+    WebhookSignatureTest = "WebhookSignatureTest.Template.php",
 
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better
