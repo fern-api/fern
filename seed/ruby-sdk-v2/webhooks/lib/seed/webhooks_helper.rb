@@ -17,7 +17,7 @@ module Seed
     #
     # @return [Boolean]
     def self.verify_signature(request_body:, signature_header:, signature_key:, timestamp_header:)
-      return false if request_body.nil? || signature_header.nil? || signature_key.nil?
+      return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?
 
       return false if timestamp_header.nil? || timestamp_header == ""
 

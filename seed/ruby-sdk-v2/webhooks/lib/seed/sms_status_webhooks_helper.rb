@@ -23,7 +23,7 @@ module Seed
     #
     # @return [Boolean]
     def self.verify_signature(request_body:, signature_header:, signature_key:, notification_url:) # rubocop:disable Naming/PredicateMethod
-      return false if request_body.nil? || signature_header.nil? || signature_key.nil?
+      return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?
 
       transmitted_body_hash = Internal::WebhookBodyHash.get_query_parameter(notification_url, "bodySHA256")
       unless transmitted_body_hash.nil?

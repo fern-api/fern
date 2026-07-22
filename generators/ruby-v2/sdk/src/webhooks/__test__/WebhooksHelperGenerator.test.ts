@@ -59,7 +59,9 @@ describe("WebhooksHelperGenerator", () => {
     describe("no-throw behavior", () => {
         it("returns false on missing required inputs rather than raising", () => {
             const body = render(hmacConfig());
-            expect(body).toContain("return false if request_body.nil? || signature_header.nil? || signature_key.nil?");
+            expect(body).toContain(
+                "return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?"
+            );
             expect(body).not.toContain("raise");
         });
 

@@ -409,7 +409,9 @@ export class WebhooksHelperGenerator {
     private static writeMethodBody(writer: ruby.Writer, config: FernIr.HmacSignatureVerification): void {
         // Input validation. A verification helper returns a boolean and never raises, so
         // missing inputs fail closed with `false`.
-        writer.writeLine("return false if request_body.nil? || signature_header.nil? || signature_key.nil?");
+        writer.writeLine(
+            "return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?"
+        );
 
         if (config.timestamp != null) {
             writer.newLine();
