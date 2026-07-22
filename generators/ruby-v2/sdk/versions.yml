@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.19.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding verification before HMAC signature checks.
+      type: feat
+    - summary: |
+        Fix generated `verify_signature` webhook helper raising instead of returning `false`
+        when `signature_header` or `signature_key` is an empty string. An empty key was passed
+        to `OpenSSL::HMAC.digest`, which raises on OpenSSL 3.x; the input guard now fails
+        closed on empty (not just nil) signature header and key, matching the never-raise
+        contract.
+      type: fix
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generator now emits a `WebhooksHelper` (plus named
+        `<WebhookName>WebhooksHelper` overrides for distinct configs) exposing a static
+        `verify_signature` method, backed by a stdlib-only `Internal::WebhookSignature`
+        core utility (HMAC via OpenSSL, constant-time comparison). Supports timestamp
+        tolerance checks, signature prefixes, configurable payload components/delimiter,
+        and alphabetical body sorting. Asymmetric verification is not emitted.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 1.18.2
   changelogEntry:
     - summary: |
