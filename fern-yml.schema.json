@@ -1745,6 +1745,12 @@
             },
             "basepath-aware": {
               "type": "boolean"
+            },
+            "external-sitemaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           "additionalProperties": false
