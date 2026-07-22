@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.79.0
+  changelogEntry:
+    - summary: |
+        Add an experimental `external-sitemaps` option to the `experimental` block in
+        docs.yml. It accepts a list of absolute sitemap URLs whose pages are indexed in
+        search alongside your documentation (tagged to the same domain) but flagged as
+        third-party so they rank below all first-party docs.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.78.0
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now automatically deconflicts path parameters whose names collide
+        with other request properties (query parameters, headers, or request body properties).
+        The colliding path parameter's SDK-facing name gets a `PathParam` suffix (e.g. an
+        `{idType}` path parameter colliding with an `idType` body property becomes
+        `idTypePathParam`), so such OpenAPI-compliant specs generate without requiring an
+        `x-fern-parameter-name` override. The wire format is unchanged, since path parameter
+        names never appear on the wire. Explicit `x-fern-parameter-name` overrides still take
+        precedence.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.77.0
+  changelogEntry:
+    - summary: |
+        Add an `ignore-tags` OpenAPI setting to `generators.yml`. When enabled,
+        operation-level tags are ignored when determining the SDK structure:
+        endpoints fall back to the root package (or their namespace) and method
+        names are derived from each operation's `operationId`.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: ./openapi.yml
+              settings:
+                ignore-tags: true
+        ```
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 5.76.0
   changelogEntry:
     - summary: |

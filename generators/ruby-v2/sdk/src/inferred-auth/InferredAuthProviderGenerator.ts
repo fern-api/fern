@@ -120,6 +120,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             ruby.codeblock((writer) => {
                 writer.writeLine("@auth_client = auth_client");
                 writer.writeLine("@options = options");
+                writer.writeLine("@mutex = Mutex.new");
                 writer.writeLine("@access_token = nil");
 
                 const expiryProperty = this.scheme.tokenEndpoint.expiryProperty;
@@ -139,19 +140,24 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             name: "token",
             kind: ruby.MethodKind.Instance,
             docstring:
-                "Returns a cached access token, refreshing if necessary.\nRefreshes the token if it's nil, or if we're within the buffer period before expiration.",
+                "Returns a cached access token, refreshing if necessary.\nRefreshes the token if it's nil, or if we're within the buffer period before expiration.\nOnly one thread refreshes the token at a time.",
             returnType: ruby.Type.string()
         });
 
+        const staleCondition =
+            expiryProperty != null ? "@access_token.nil? || token_needs_refresh?" : "@access_token.nil?";
+
         method.addStatement(
             ruby.codeblock((writer) => {
-                if (expiryProperty != null) {
-                    writer.writeLine("return refresh if @access_token.nil? || token_needs_refresh?");
-                } else {
-                    writer.writeLine("return refresh if @access_token.nil?");
-                }
+                writer.writeLine(`return @access_token unless ${staleCondition}`);
                 writer.newLine();
-                writer.writeLine("@access_token");
+                writer.writeLine("@mutex.synchronize do");
+                writer.indent();
+                writer.writeLine(`return @access_token unless ${staleCondition}`);
+                writer.newLine();
+                writer.writeLine("refresh");
+                writer.dedent();
+                writer.writeLine("end");
             })
         );
 

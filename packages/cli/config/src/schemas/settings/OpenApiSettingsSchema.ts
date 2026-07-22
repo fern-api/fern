@@ -100,7 +100,15 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * If false, keep the original "Request" suffix regardless of collisions.
      * Defaults to true.
      */
-    "disambiguate-request-names": z.boolean().optional()
+    "disambiguate-request-names": z.boolean().optional(),
+
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    "ignore-tags": z.boolean().optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

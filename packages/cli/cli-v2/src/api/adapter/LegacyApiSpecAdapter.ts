@@ -204,7 +204,8 @@ export class LegacyApiSpecAdapter {
             defaultIntegerFormat: this.adaptDefaultIntegerFormat(settings.defaultIntegerFormat),
             coerceConstsTo: settings.coerceConstsTo,
             shouldInferDiscriminatedUnionBaseProperties: settings.inferDiscriminatedUnionBaseProperties,
-            disambiguateRequestNames: settings["disambiguate-request-names"]
+            disambiguateRequestNames: settings["disambiguate-request-names"],
+            ignoreTags: settings["ignore-tags"]
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
