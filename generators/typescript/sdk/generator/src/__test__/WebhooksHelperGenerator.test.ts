@@ -15,59 +15,72 @@ function createMockFileContext() {
         sourceFile,
         coreUtilities: {
             webhookCrypto: {
+                // The real WebhookCrypto._invoke wraps these async helpers in `await`, so the
+                // mock does too — otherwise the snapshot would omit `await` and silently stop
+                // protecting against a regression that dropped it.
                 computeHmacSignature: {
                     _invoke: (argsExpr: ts.Expression) =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("webhookCrypto"),
-                                "computeHmacSignature"
-                            ),
-                            undefined,
-                            [argsExpr]
+                        ts.factory.createAwaitExpression(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("webhookCrypto"),
+                                    "computeHmacSignature"
+                                ),
+                                undefined,
+                                [argsExpr]
+                            )
                         )
                 },
                 timingSafeEqual: {
                     _invoke: (a: ts.Expression, b: ts.Expression) =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("webhookCrypto"),
-                                "timingSafeEqual"
-                            ),
-                            undefined,
-                            [a, b]
+                        ts.factory.createAwaitExpression(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("webhookCrypto"),
+                                    "timingSafeEqual"
+                                ),
+                                undefined,
+                                [a, b]
+                            )
                         )
                 },
                 verifyAsymmetricSignature: {
                     _invoke: (argsExpr: ts.Expression) =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("webhookCrypto"),
-                                "verifyAsymmetricSignature"
-                            ),
-                            undefined,
-                            [argsExpr]
+                        ts.factory.createAwaitExpression(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("webhookCrypto"),
+                                    "verifyAsymmetricSignature"
+                                ),
+                                undefined,
+                                [argsExpr]
+                            )
                         )
                 },
                 fetchJwks: {
                     _invoke: (argsExpr: ts.Expression) =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("webhookCrypto"),
-                                "fetchJwks"
-                            ),
-                            undefined,
-                            [argsExpr]
+                        ts.factory.createAwaitExpression(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("webhookCrypto"),
+                                    "fetchJwks"
+                                ),
+                                undefined,
+                                [argsExpr]
+                            )
                         )
                 },
                 computeHash: {
                     _invoke: (argsExpr: ts.Expression) =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("webhookCrypto"),
-                                "computeHash"
-                            ),
-                            undefined,
-                            [argsExpr]
+                        ts.factory.createAwaitExpression(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("webhookCrypto"),
+                                    "computeHash"
+                                ),
+                                undefined,
+                                [argsExpr]
+                            )
                         )
                 },
                 getWebhookQueryParameter: {
@@ -942,6 +955,12 @@ describe("WebhooksHelperGenerator", () => {
             // form path: URL + sorted/deduped params
             expect(text).toContain("Array.from(new Set(values))");
             expect(text).toContain('payload = [notificationUrl, bodyString].join("")');
+            // the async core helpers must be awaited — a dropped `await` would compare a
+            // Promise and silently never reject a mismatch
+            expect(text).toContain("await webhookCrypto.computeHash");
+            expect(text).toContain("await webhookCrypto.timingSafeEqual");
+            expect(text).toContain("await webhookCrypto.computeHmacSignature");
+            expect(text).not.toContain("!(webhookCrypto.timingSafeEqual");
             expect(text).toMatchSnapshot();
         });
     });

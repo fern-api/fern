@@ -14,9 +14,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -36,9 +36,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha512", encoding: "base64" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha512", encoding: "base64" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -73,9 +73,9 @@ export class WebhooksHelper {
                 .join("");
         const payload = bodyString;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -110,9 +110,9 @@ export class WebhooksHelper {
                 .join("");
         const payload = [notificationUrl, bodyString].join("");
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -148,9 +148,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -170,9 +170,9 @@ export class WebhooksHelper {
 
         const payload = [notificationUrl, requestBody].join("|");
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -209,9 +209,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -248,9 +248,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -287,9 +287,9 @@ export class WebhooksHelper {
 
         const payload = [messageId, timestampHeader, requestBody].join(".");
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -315,9 +315,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(sig, expected);
+        return await webhookCrypto.timingSafeEqual(sig, expected);
     }
 }
 "
@@ -337,9 +337,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -359,7 +359,7 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -394,7 +394,7 @@ export class WebhooksHelper {
                 .join("");
         const payload = bodyString;
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -414,7 +414,7 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -435,9 +435,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const resolvedKey = await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json" });
+        const resolvedKey = await await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json" });
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -459,9 +459,9 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        const resolvedKey = await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json", keyId: keyIdHeader });
+        const resolvedKey = await await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json", keyId: keyIdHeader });
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -482,9 +482,9 @@ export class WebhooksHelper {
 
         const payload = [notificationUrl, requestBody].join("|");
 
-        const resolvedKey = await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json" });
+        const resolvedKey = await await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json" });
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "ECDSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "ECDSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -521,7 +521,7 @@ export class WebhooksHelper {
 
         const payload = [messageId, timestampHeader, requestBody].join(".");
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -563,7 +563,7 @@ export class WebhooksHelper {
 
         const payload = requestBody;
 
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: sig, publicKey: publicKey, algorithm: "ECDSA_SHA256", encoding: "base64" });
+        return await webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: sig, publicKey: publicKey, algorithm: "ECDSA_SHA256", encoding: "base64" });
     }
 }
 "
@@ -587,8 +587,8 @@ export class WebhooksHelper {
         const transmittedBodyHash = webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256");
         let payload: string;
         if (transmittedBodyHash != null) {
-            const expectedBodyHash = webhookCrypto.computeHash({ payload: requestBody, algorithm: "sha256", encoding: "hex" });
-            if (!(webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+            const expectedBodyHash = await webhookCrypto.computeHash({ payload: requestBody, algorithm: "sha256", encoding: "hex" });
+            if (!(await webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
                 return false;
             }
             payload = notificationUrl;
@@ -596,9 +596,9 @@ export class WebhooksHelper {
             payload = notificationUrl;
         }
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -633,9 +633,9 @@ export class WebhooksHelper {
                 .join("");
         const payload = [notificationUrl, bodyString].join("");
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
@@ -672,8 +672,8 @@ export class WebhooksHelper {
         const candidates = webhookCrypto.notificationUrlCandidates(notificationUrl, { portVariants: true, legacyQueryEncoding: false });
         for (const candidateUrl of candidates) {
             const payload = [candidateUrl, bodyString].join("");
-            const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
-            if (webhookCrypto.timingSafeEqual(signatureHeader, expected)) {
+            const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+            if (await webhookCrypto.timingSafeEqual(signatureHeader, expected)) {
                 return true;
             }
         }
@@ -703,8 +703,8 @@ export class WebhooksHelper {
 
         const transmittedBodyHash = webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256");
         if (transmittedBodyHash != null) {
-            const expectedBodyHash = webhookCrypto.computeHash({ payload: requestBody as string, algorithm: "sha256", encoding: "hex" });
-            if (!(webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+            const expectedBodyHash = await webhookCrypto.computeHash({ payload: requestBody as string, algorithm: "sha256", encoding: "hex" });
+            if (!(await webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
                 return false;
             }
         }
@@ -724,8 +724,8 @@ export class WebhooksHelper {
         const candidates = webhookCrypto.notificationUrlCandidates(notificationUrl, { portVariants: true, legacyQueryEncoding: true });
         for (const candidateUrl of candidates) {
             const payload = transmittedBodyHash != null ? candidateUrl : [candidateUrl, bodyString].join("");
-            const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
-            if (webhookCrypto.timingSafeEqual(signatureHeader, expected)) {
+            const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+            if (await webhookCrypto.timingSafeEqual(signatureHeader, expected)) {
                 return true;
             }
         }
@@ -755,8 +755,8 @@ export class WebhooksHelper {
         const transmittedBodyHash = webhookCrypto.getWebhookQueryParameter(notificationUrl, "bodySHA256");
         let payload: string;
         if (transmittedBodyHash != null) {
-            const expectedBodyHash = webhookCrypto.computeHash({ payload: requestBody as string, algorithm: "sha256", encoding: "hex" });
-            if (!(webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+            const expectedBodyHash = await webhookCrypto.computeHash({ payload: requestBody as string, algorithm: "sha256", encoding: "hex" });
+            if (!(await webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
                 return false;
             }
             payload = notificationUrl;
@@ -777,9 +777,9 @@ export class WebhooksHelper {
             payload = [notificationUrl, bodyString].join("");
         }
 
-        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+        const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
 
-        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
     }
 }
 "
