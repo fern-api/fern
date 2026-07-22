@@ -307,7 +307,8 @@ export const LayoutConfig = z.object({
     "hide-nav-links": z.boolean().optional(),
     "hide-feedback": z.boolean().optional(),
     "mobile-toc": z.boolean().optional(),
-    "changelog-layout": ChangelogLayout.optional()
+    "changelog-layout": ChangelogLayout.optional(),
+    "show-nav-availability-badges": z.boolean().optional()
 });
 
 // ===== Settings =====

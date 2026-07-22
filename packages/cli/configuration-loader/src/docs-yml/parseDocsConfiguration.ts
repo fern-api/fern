@@ -666,6 +666,10 @@ function convertLayoutConfig(
         // fern-platform companion PR. Part of the `as unknown as` cast below
         // until the published FDR SDK adds `changelogLayout`.
         changelogLayout: layout.changelogLayout,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when true the sidebar renders inline availability badges. Part of the
+        // `as unknown as` cast below until the published FDR SDK adds the field.
+        showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
