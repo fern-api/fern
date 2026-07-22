@@ -267,8 +267,12 @@ const phpRunner = resolvePhpRunner();
 const runtimeDescribe = phpRunner != null && existsSync(CORE_TEMPLATE_PATH) ? describe : describe.skip;
 
 runtimeDescribe("WebhooksHelper PHP runtime", () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const runner = phpRunner!;
+    // This suite is `describe.skip` when phpRunner is unavailable; the guard also
+    // narrows the type so no non-null assertion is needed.
+    if (phpRunner == null) {
+        return;
+    }
+    const runner = phpRunner;
 
     function materialize(verification: FernIr.WebhookSignatureVerification, script: string): string {
         const dir = mkdtempSync(join(tmpdir(), "php-webhook-"));
