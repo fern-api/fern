@@ -48,13 +48,8 @@ class SmsStatusWebhooksHelper:
             request_body
             if isinstance(request_body, str)
             else "".join(
-                "".join(
-                    key + value
-                    for value in sorted(
-                        set([request_body[key]] if isinstance(request_body[key], str) else list(request_body[key]))
-                    )
-                )
-                for key in sorted(request_body)
+                "".join(key + v for v in sorted(set([value] if isinstance(value, str) else list(value))))
+                for key, value in sorted(request_body.items(), key=lambda item: item[0])
             )
         )
         candidates = notification_url_candidates(notification_url, port_variants=True, legacy_query_encoding=True)

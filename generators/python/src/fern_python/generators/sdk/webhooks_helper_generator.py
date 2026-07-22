@@ -503,22 +503,22 @@ class _HmacHelperWriter:
         concatenating ``key + value`` for every value with no delimiter between params. A raw
         string body is passed through unchanged.
         """
+        # Iterate over ``.items()`` so ``value`` is a local that ``isinstance`` can narrow
+        # (a ``request_body[key]`` subscript cannot be narrowed, which trips the generated
+        # SDK's own mypy on ``str + Sequence[str]``). Sort by key only so mypy never has to
+        # compare the ``str | Sequence[str]`` values.
         return [
             "body_string = (",
             "    request_body",
             "    if isinstance(request_body, str)",
             '    else "".join(',
             '        "".join(',
-            "            key + value",
-            "            for value in sorted(",
-            "                set(",
-            "                    [request_body[key]]",
-            "                    if isinstance(request_body[key], str)",
-            "                    else list(request_body[key])",
-            "                )",
+            "            key + v",
+            "            for v in sorted(",
+            "                set([value] if isinstance(value, str) else list(value))",
             "            )",
             "        )",
-            "        for key in sorted(request_body)",
+            "        for key, value in sorted(request_body.items(), key=lambda item: item[0])",
             "    )",
             ")",
         ]
