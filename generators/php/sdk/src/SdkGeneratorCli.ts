@@ -8,6 +8,7 @@ import { generateModels, generateTraits } from "@fern-api/php-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { RoutingAuthProviderGenerator } from "./auth/RoutingAuthProviderGenerator.js";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator.js";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator.js";
@@ -71,6 +72,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateErrors(context);
         this.generateOauthTokenProvider(context);
         this.generateInferredAuthProvider(context);
+        this.generateRoutingAuthProvider(context);
         await this.generateWireTestFiles(context);
 
         if (context.config.output.snippetFilepath != null) {
@@ -199,6 +201,14 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             });
             context.project.addSourceFiles(inferredAuthProvider.generate());
         }
+    }
+
+    private generateRoutingAuthProvider(context: SdkGeneratorContext) {
+        if (!context.isEndpointSecurity()) {
+            return;
+        }
+        const routingAuthProvider = new RoutingAuthProviderGenerator(context);
+        context.project.addSourceFiles(routingAuthProvider.generate());
     }
 
     private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {

@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.51.0
+  changelogEntry:
+    - summary: |
+        Support per-endpoint auth routing. When the API's auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it
+        declares in its IR security requirements: the SDK routes to the first
+        requirement whose schemes all have credentials available (OR across the
+        requirements, AND within one), and returns a clear error naming the missing
+        schemes when none is satisfiable. The flat `RequestOptions.ToHeader()` no
+        longer injects auth headers in this mode; a new
+        `RequestOptions.AuthHeadersForEndpoint` method performs the routing, mirroring
+        the TypeScript RoutingAuthProvider. APIs using the `ALL`/`ANY` requirement are
+        unaffected and produce byte-identical output.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 1.50.0
   changelogEntry:
     - summary: |

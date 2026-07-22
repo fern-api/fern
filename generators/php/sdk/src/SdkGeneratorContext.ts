@@ -843,4 +843,22 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
         return undefined;
     }
+
+    /**
+     * Whether the API routes auth per-endpoint: each endpoint declares its own set of
+     * required auth schemes (via `HttpEndpoint.security`) rather than applying every
+     * configured scheme's credentials flatly to every request. When true, the flat
+     * auth-header wiring is suppressed and a RoutingAuthProvider selects the schemes
+     * for each endpoint at call time.
+     */
+    public isEndpointSecurity(): boolean {
+        return this.ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+    }
+
+    public getRoutingAuthProviderClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "RoutingAuthProvider",
+            namespace: this.getCoreNamespace()
+        });
+    }
 }

@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.76.5
+  changelogEntry:
+    - summary: |
+        SDKs whose API uses per-endpoint security (`auth.requirement == ENDPOINT_SECURITY`)
+        now route auth per endpoint: each endpoint applies only the auth scheme(s) it declares
+        in its IR `security`, instead of flatly applying every configured scheme to every
+        request. The root client stores each scheme's headers keyed by scheme, and
+        `ClientOptions.GetAuthHeadersForEndpoint` selects the first satisfiable requirement
+        (OR across requirements, AND within one), throwing a clear error naming the missing
+        schemes when none can be satisfied. Auth credentials for such APIs are now independently
+        optional (callers only need creds for the schemes their endpoints use). APIs using
+        `ALL`/`ANY` auth are unaffected.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 2.76.4
   changelogEntry:
     - summary: |

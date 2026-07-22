@@ -7,6 +7,7 @@ import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { RoutingAuthProviderGenerator } from "./auth/RoutingAuthProviderGenerator.js";
 import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
@@ -116,6 +117,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         this.generateInferredAuthProvider(context);
         this.generateOAuthProvider(context);
+        this.generateRoutingAuthProvider(context);
 
         if (this.shouldGenerateReadme(context)) {
             try {
@@ -185,6 +187,17 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             });
             context.project.addRawFiles(oauthProvider.generate());
         }
+    }
+
+    private generateRoutingAuthProvider(context: SdkGeneratorContext): void {
+        // The routing auth provider only exists under endpoint-security, where each
+        // endpoint applies only the schemes it declares. ALL/ANY auth continues to use
+        // the flat client headers / single auth provider, so nothing is emitted here.
+        if (!context.isEndpointSecurity()) {
+            return;
+        }
+        const routingAuthProvider = new RoutingAuthProviderGenerator(context);
+        context.project.addRawFiles(routingAuthProvider.generate());
     }
 
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {

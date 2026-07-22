@@ -14,6 +14,7 @@ type TypeReference = FernIr.TypeReference;
 import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
+import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -204,6 +205,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // Add client-level headers (from root client constructor)
                 writer.writeLine();
                 writer.write(".Add(_client.Options.Headers)");
+
+                // In endpoint-security mode, route this endpoint's declared auth scheme(s) here.
+                writeEndpointAuthHeaderAdd({ writer, context: this.context, endpoint: this.endpoint });
 
                 // Add client-level additional headers
                 writer.writeLine();

@@ -38,6 +38,10 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enable-wire-tests: true
+  endpoint-security-auth:
+    - outputFolder: .
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null

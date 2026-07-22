@@ -11,6 +11,12 @@ public partial class ClientOptions
     internal Headers Headers { get; init; } = new();
 
     /// <summary>
+    /// Per-scheme auth headers, keyed by auth-scheme key, populated by the root client.
+    /// Used to route auth headers per endpoint based on each endpoint's declared security.
+    /// </summary>
+    internal Dictionary<string, Headers> AuthHeaderSchemes { get; set; } = new();
+
+    /// <summary>
     /// The Base URL for the API.
     /// </summary>
     public string BaseUrl { get;
@@ -65,6 +71,53 @@ public partial class ClientOptions
         set;
 #endif
     } = TimeSpan.FromMilliseconds(30000);
+
+    /// <summary>
+    /// Resolves the auth headers that apply to an endpoint with the given security requirements.
+    /// </summary>
+    internal Headers GetAuthHeadersForEndpoint(string[][] security)
+    {
+        var result = new Headers();
+        if (security.Length == 0)
+        {
+            return result;
+        }
+        foreach (var requirement in security)
+        {
+            if (
+                Array.TrueForAll(requirement, schemeKey => AuthHeaderSchemes.ContainsKey(schemeKey))
+            )
+            {
+                foreach (var schemeKey in requirement)
+                {
+                    foreach (var header in AuthHeaderSchemes[schemeKey])
+                    {
+                        result[header.Key] = header.Value;
+                    }
+                }
+                return result;
+            }
+        }
+        var missing = string.Join(
+            " OR ",
+            Array.ConvertAll(
+                security,
+                requirement =>
+                    string.Join(
+                        " AND ",
+                        Array.FindAll(
+                            requirement,
+                            schemeKey => !AuthHeaderSchemes.ContainsKey(schemeKey)
+                        )
+                    )
+            )
+        );
+        throw new InvalidOperationException(
+            "No authentication credentials provided that satisfy the endpoint's security requirements. "
+                + "Please provide credentials for: "
+                + missing
+        );
+    }
 
     /// <summary>
     /// Clones this and returns a new instance

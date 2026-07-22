@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.15.0
+  changelogEntry:
+    - summary: |
+        Support per-endpoint auth routing. When the API's auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth schemes it declares
+        in its security requirements. A new `RoutingAuthProvider` selects, per request, the
+        first declared requirement whose schemes all have credentials available (OR across
+        requirements, AND within one), combines those schemes' headers, and otherwise throws
+        naming the missing schemes. Auth requirements of `ALL`/`ANY` are unaffected.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 2.14.0
   changelogEntry:
     - summary: |

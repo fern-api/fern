@@ -43,9 +43,16 @@ func (r *RawClient) GetWithBearer(
 		"",
 	)
 	endpointURL := baseURL + "/users"
+	authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"Bearer"}})
+	if authErr != nil {
+		return nil, authErr
+	}
 	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
+		internal.MergeHeaders(
+			r.options.ToHeader(),
+			options.ToHeader(),
+		),
+		authHeaders,
 	)
 	var response []*fern.User
 	raw, err := r.caller.Call(
@@ -83,9 +90,16 @@ func (r *RawClient) GetWithAPIKey(
 		"",
 	)
 	endpointURL := baseURL + "/users"
+	authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"ApiKey"}})
+	if authErr != nil {
+		return nil, authErr
+	}
 	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
+		internal.MergeHeaders(
+			r.options.ToHeader(),
+			options.ToHeader(),
+		),
+		authHeaders,
 	)
 	var response []*fern.User
 	raw, err := r.caller.Call(
@@ -123,9 +137,16 @@ func (r *RawClient) GetWithOAuth(
 		"",
 	)
 	endpointURL := baseURL + "/users"
+	authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"OAuth"}})
+	if authErr != nil {
+		return nil, authErr
+	}
 	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
+		internal.MergeHeaders(
+			r.options.ToHeader(),
+			options.ToHeader(),
+		),
+		authHeaders,
 	)
 	var response []*fern.User
 	raw, err := r.caller.Call(
@@ -163,9 +184,16 @@ func (r *RawClient) GetWithBasic(
 		"",
 	)
 	endpointURL := baseURL + "/users"
+	authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"Basic"}})
+	if authErr != nil {
+		return nil, authErr
+	}
 	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
+		internal.MergeHeaders(
+			r.options.ToHeader(),
+			options.ToHeader(),
+		),
+		authHeaders,
 	)
 	var response []*fern.User
 	raw, err := r.caller.Call(
@@ -203,9 +231,16 @@ func (r *RawClient) GetWithInferredAuth(
 		"",
 	)
 	endpointURL := baseURL + "/users"
+	authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"InferredAuth"}})
+	if authErr != nil {
+		return nil, authErr
+	}
 	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
+		internal.MergeHeaders(
+			r.options.ToHeader(),
+			options.ToHeader(),
+		),
+		authHeaders,
 	)
 	var response []*fern.User
 	raw, err := r.caller.Call(
@@ -243,9 +278,16 @@ func (r *RawClient) GetWithAnyAuth(
 		"",
 	)
 	endpointURL := baseURL + "/users"
+	authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"Bearer"}, {"ApiKey"}, {"OAuth"}, {"Basic"}, {"InferredAuth"}})
+	if authErr != nil {
+		return nil, authErr
+	}
 	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
+		internal.MergeHeaders(
+			r.options.ToHeader(),
+			options.ToHeader(),
+		),
+		authHeaders,
 	)
 	var response []*fern.User
 	raw, err := r.caller.Call(
@@ -283,9 +325,16 @@ func (r *RawClient) GetWithAllAuth(
 		"",
 	)
 	endpointURL := baseURL + "/users"
+	authHeaders, authErr := r.options.AuthHeadersForEndpoint([][]string{{"Bearer", "ApiKey", "OAuth", "Basic", "InferredAuth"}})
+	if authErr != nil {
+		return nil, authErr
+	}
 	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
+		internal.MergeHeaders(
+			r.options.ToHeader(),
+			options.ToHeader(),
+		),
+		authHeaders,
 	)
 	var response []*fern.User
 	raw, err := r.caller.Call(

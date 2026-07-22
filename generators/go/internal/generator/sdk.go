@@ -433,6 +433,13 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	hasOAuth := getOAuthClientCredentials(auth) != nil
 	hasInferred := getInferredAuthScheme(auth) != nil
 
+	// In endpoint-security mode, auth is applied per-endpoint (each endpoint
+	// declares its own schemes) rather than flatly on every request. The flat
+	// ToHeader() therefore emits no auth headers; routing happens in
+	// AuthHeadersForEndpoint, which the endpoint code calls with the endpoint's
+	// static security requirements.
+	endpointSecurity := isEndpointSecurity(auth)
+
 	// Generate TokenGetter type if OAuth or inferred auth is configured
 	if hasOAuth || hasInferred {
 		f.P("// TokenGetter is a function that returns an access token.")
@@ -577,6 +584,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("func (r *RequestOptions) ToHeader() http.Header {")
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
+		if endpointSecurity {
+			// Auth headers are routed per-endpoint via AuthHeadersForEndpoint.
+			break
+		}
 		if authScheme.Bearer != nil {
 			name := authScheme.Bearer.Token.PascalCase.UnsafeName
 			f.P("if r.", name, ` != "" {`)
@@ -717,6 +728,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	if endpointSecurity {
+		f.writeAuthHeadersForEndpoint(auth)
+		f.P()
+	}
+
 	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
 		return err
 	}
@@ -728,6 +744,192 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	}
 
 	return nil
+}
+
+// writeAuthHeadersForEndpoint generates the AuthHeadersForEndpoint method on
+// *RequestOptions, used in endpoint-security mode. Given an endpoint's static
+// security requirements ([][]string, where the outer slice is OR'd and each
+// inner slice of scheme keys is AND'd), it returns only the auth headers for
+// the first requirement whose schemes all have credentials available. If none
+// is satisfiable, it returns an error naming the missing schemes. This mirrors
+// the TypeScript RoutingAuthProvider and the Python get_auth_headers_for_endpoint.
+func (f *fileWriter) writeAuthHeadersForEndpoint(auth *ir.ApiAuth) {
+	// Bearer and OAuth schemes share the single token slot: a resolved token
+	// is applied as "Authorization: Bearer <token>" for whichever of those keys
+	// the endpoint declares.
+	var (
+		bearerScheme    *ir.BearerAuthScheme
+		basicScheme     *ir.BasicAuthScheme
+		inferredScheme  *ir.InferredAuthScheme
+		headerSchemes   []*ir.HeaderAuthScheme
+		tokenSchemeKeys []string
+	)
+	for _, authScheme := range auth.Schemes {
+		switch {
+		case authScheme.Bearer != nil:
+			bearerScheme = authScheme.Bearer
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Bearer.Key)
+		case authScheme.Oauth != nil:
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Oauth.Key)
+		case authScheme.Basic != nil:
+			basicScheme = authScheme.Basic
+		case authScheme.Header != nil:
+			if shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
+				headerSchemes = append(headerSchemes, authScheme.Header)
+			}
+		case authScheme.Inferred != nil:
+			inferredScheme = authScheme.Inferred
+		}
+	}
+
+	f.P("// AuthHeadersForEndpoint returns the auth headers to apply for an endpoint,")
+	f.P("// given the endpoint's static security requirements. It routes to the first")
+	f.P("// requirement whose schemes all have credentials available (OR across the")
+	f.P("// list, AND within a requirement).")
+	f.P("func (r *RequestOptions) AuthHeadersForEndpoint(security [][]string) (http.Header, error) {")
+	f.P("if len(security) == 0 {")
+	f.P("return make(http.Header), nil")
+	f.P("}")
+	f.P("availableAuthHeaders := make(map[string]http.Header)")
+
+	// Bearer / OAuth token schemes.
+	if len(tokenSchemeKeys) > 0 {
+		if bearerScheme != nil {
+			name := bearerScheme.Token.PascalCase.UnsafeName
+			f.P("token := r.", name)
+			f.P("if token == \"\" && r.", name, "Func != nil {")
+			f.P("if value, err := r.", name, "Func(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		} else {
+			// OAuth without an explicit bearer scheme: the token is either provided
+			// directly or fetched via the configured token getter.
+			f.P("token := r.Token")
+			f.P("if token == \"\" && r.tokenGetter != nil {")
+			f.P("if value, err := r.tokenGetter(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		}
+		f.P("if token != \"\" {")
+		f.P("tokenHeaders := make(http.Header)")
+		f.P(`tokenHeaders.Set("Authorization", "Bearer " + token)`)
+		for _, key := range tokenSchemeKeys {
+			f.P(`availableAuthHeaders["`, key, `"] = tokenHeaders`)
+		}
+		f.P("}")
+	}
+
+	// Header auth schemes (e.g. X-API-Key).
+	for _, header := range headerSchemes {
+		var prefix string
+		if header.Prefix != nil {
+			prefix = *header.Prefix + " "
+		}
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
+		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+		f.P("headerValues := make(http.Header)")
+		f.P(`headerValues.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+		f.P(`availableAuthHeaders["`, header.Key, `"] = headerValues`)
+		f.P("}")
+	}
+
+	// Basic auth.
+	if basicScheme != nil {
+		usernameOmitted := isBasicAuthUsernameOmitted(basicScheme)
+		passwordOmitted := isBasicAuthPasswordOmitted(basicScheme)
+		username := basicScheme.Username.PascalCase.UnsafeName
+		password := basicScheme.Password.PascalCase.UnsafeName
+		var (
+			condition   string
+			usernameArg string
+			passwordArg string
+		)
+		switch {
+		case usernameOmitted && passwordOmitted:
+			// Both omitted — no basic credentials to apply.
+		case usernameOmitted:
+			condition = "r." + password + ` != ""`
+			usernameArg = `""`
+			passwordArg = "r." + password
+		case passwordOmitted:
+			condition = "r." + username + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = `""`
+		default:
+			condition = "r." + username + ` != "" || r.` + password + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = "r." + password
+		}
+		if condition != "" {
+			f.P("if ", condition, " {")
+			f.P("basicHeaders := make(http.Header)")
+			f.P(`basicHeaders.Set("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(`, usernameArg, ` + ":" + `, passwordArg, `)))`)
+			f.P(`availableAuthHeaders["`, basicScheme.Key, `"] = basicHeaders`)
+			f.P("}")
+		}
+	}
+
+	// Inferred auth: fetch the token and apply the configured authenticated
+	// request headers.
+	if inferredScheme != nil && inferredScheme.TokenEndpoint != nil {
+		f.P("if r.tokenGetter != nil {")
+		f.P("if inferredToken, err := r.tokenGetter(); err == nil && inferredToken != \"\" {")
+		f.P("inferredHeaders := make(http.Header)")
+		for _, authHeader := range inferredScheme.TokenEndpoint.AuthenticatedRequestHeaders {
+			if authHeader.ValuePrefix != nil {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, %q + inferredToken)`, authHeader.HeaderName, *authHeader.ValuePrefix))
+			} else {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, inferredToken)`, authHeader.HeaderName))
+			}
+		}
+		f.P(`availableAuthHeaders["`, inferredScheme.Key, `"] = inferredHeaders`)
+		f.P("}")
+		f.P("}")
+	}
+
+	// OR across requirements: pick the first fully-satisfiable requirement and
+	// combine the headers of its schemes.
+	f.P("for _, requirement := range security {")
+	f.P("satisfied := true")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("satisfied = false")
+	f.P("break")
+	f.P("}")
+	f.P("}")
+	f.P("if !satisfied {")
+	f.P("continue")
+	f.P("}")
+	f.P("combined := make(http.Header)")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("for name, values := range availableAuthHeaders[schemeKey] {")
+	f.P("for _, value := range values {")
+	f.P("combined.Set(name, value)")
+	f.P("}")
+	f.P("}")
+	f.P("}")
+	f.P("return combined, nil")
+	f.P("}")
+
+	// No requirement satisfiable: report the missing schemes.
+	f.P("missing := make([]string, 0, len(security))")
+	f.P("for _, requirement := range security {")
+	f.P("var missingSchemes []string")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("missingSchemes = append(missingSchemes, schemeKey)")
+	f.P("}")
+	f.P("}")
+	f.P(`missing = append(missing, strings.Join(missingSchemes, " AND "))`)
+	f.P("}")
+	f.P("return nil, fmt.Errorf(")
+	f.P(`"no authentication credentials provided that satisfy the endpoint's security requirements; please provide credentials for: %s",`)
+	f.P(`strings.Join(missing, " OR "),`)
+	f.P(")")
+	f.P("}")
 }
 
 // writePlatformHeaders generates the platform headers.
@@ -4652,6 +4854,12 @@ func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
 		}
 	}
 	return nil
+}
+
+// isEndpointSecurity returns true when the API applies auth per-endpoint (each
+// endpoint declares its own schemes) rather than flatly on every request.
+func isEndpointSecurity(auth *ir.ApiAuth) bool {
+	return auth != nil && string(auth.Requirement) == "ENDPOINT_SECURITY"
 }
 
 // hasBearerAuth returns true if the auth configuration has a bearer auth scheme.

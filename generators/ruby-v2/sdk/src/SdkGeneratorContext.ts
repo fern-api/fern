@@ -424,6 +424,40 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return undefined;
     }
 
+    /**
+     * Whether the API applies auth per-endpoint: each endpoint declares its own
+     * collection(s) of schemes in `HttpEndpoint.security`, and only those schemes
+     * are applied to that endpoint's requests. Contrast with `ALL`/`ANY`, where a
+     * single global auth policy is baked into every request.
+     */
+    public isEndpointSecurity(): boolean {
+        return this.ir.auth.requirement === "ENDPOINT_SECURITY";
+    }
+
+    public getBearerAuth(): FernIr.BearerAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "bearer") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    public getBasicAuth(): FernIr.BasicAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "basic") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    public getHeaderAuthSchemes(): (FernIr.AuthScheme & { type: "header" })[] {
+        return this.ir.auth.schemes.filter(
+            (scheme): scheme is FernIr.AuthScheme & { type: "header" } => scheme.type === "header"
+        );
+    }
+
     public get selfHosted(): boolean {
         return this.ir.selfHosted ?? false;
     }

@@ -1356,6 +1356,92 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             inferred_auth_scheme=inferred_auth_scheme,
         ).get_credential_properties()
 
+    def _get_endpoint_security_inferred_auth_scheme(self) -> Optional[ir_types.InferredAuthScheme]:
+        # In endpoint-security mode the client must carry credentials for every scheme so that
+        # per-endpoint routing can satisfy any endpoint's declared requirement. The inferred-auth
+        # provider therefore has to be wired even when it is NOT the sole scheme (which the
+        # `_get_inferred_auth_scheme` helper deliberately excludes). This variant returns the
+        # inferred scheme regardless of how many other schemes exist, but only under
+        # ENDPOINT_SECURITY — constructor-parameter derivation still uses the guarded helper, so
+        # the inferred credentials are supplied by the other schemes' params (e.g. OAuth's
+        # client_id/client_secret) rather than being added twice.
+        if self._context.ir.auth.requirement != ir_types.AuthSchemesRequirement.ENDPOINT_SECURITY:
+            return None
+        maybe_inferred_auth_scheme = next(
+            (scheme for scheme in self._context.ir.auth.schemes if scheme.get_as_union().type == "inferred"),
+            None,
+        )
+        return (
+            maybe_inferred_auth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda _: None,
+                inferred=lambda inferred: inferred,
+            )
+            if maybe_inferred_auth_scheme is not None
+            else None
+        )
+
+    def _write_inferred_auth_provider_and_get_auth_headers_kwarg(
+        self,
+        *,
+        writer: AST.NodeWriter,
+        client_wrapper_generator: ClientWrapperGenerator,
+        inferred_auth_scheme: ir_types.InferredAuthScheme,
+        is_async: bool,
+        timeout_local_variable: str,
+        max_retries_local_variable: str,
+        transport_variable_name: Optional[str],
+    ) -> typing.Tuple[str, AST.Expression]:
+        """Writes the ``inferred_auth_token_provider = ...`` assignment and returns the
+        ``(auth_headers|async_auth_headers, provider.get_headers)`` kwarg to attach to the
+        client wrapper so that endpoint-security routing can resolve the inferred scheme."""
+        inferred_auth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+            client_wrapper_generator=client_wrapper_generator,
+            environments_config=self._environments_config,
+            timeout_local_variable=timeout_local_variable,
+            max_retries_local_variable=max_retries_local_variable,
+            is_async=is_async,
+            exclude_auth=True,
+            transport_variable_name=transport_variable_name,
+        )
+        inferred_auth_provider_class = (
+            self._context.core_utilities.get_async_inferred_auth_token_provider()
+            if is_async
+            else self._context.core_utilities.get_inferred_auth_token_provider()
+        )
+        inferred_auth_provider_kwargs: List[typing.Tuple[str, AST.Expression]] = []
+        for cred in self._get_inferred_auth_credential_properties(inferred_auth_scheme):
+            if cred.is_literal:
+                continue
+            inferred_auth_provider_kwargs.append((cred.field_name, AST.Expression(cred.constructor_param_name)))
+        inferred_auth_provider_kwargs.append(
+            (
+                "client_wrapper",
+                AST.Expression(
+                    AST.ClassInstantiation(
+                        class_=self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=inferred_auth_client_wrapper_kwargs,
+                    )
+                ),
+            )
+        )
+        writer.write(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME} = ")
+        writer.write_node(
+            AST.ClassInstantiation(
+                class_=inferred_auth_provider_class,
+                kwargs=inferred_auth_provider_kwargs,
+            )
+        )
+        writer.write_newline_if_last_line_not()
+        param_name = (
+            ClientWrapperGenerator.ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+            if is_async
+            else ClientWrapperGenerator.AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+        )
+        return (param_name, AST.Expression(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME}.get_headers"))
+
     def _write_oauth_token_override_constructor_body(
         self,
         *,
@@ -1401,6 +1487,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
             )
+            # Note: inferred auth is intentionally NOT wired in the token-only branch. The
+            # inferred-auth token endpoint is driven by the OAuth client_id/client_secret
+            # credentials, which are not available (and not narrowed to non-None) here, so an
+            # endpoint requiring inferred auth cannot be satisfied in token-only mode anyway.
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
                 AST.ClassInstantiation(
@@ -1493,6 +1583,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 use_oauth_token_provider=True,
                 transport_variable_name=transport_variable_name,
             )
+            endpoint_security_inferred_scheme = self._get_endpoint_security_inferred_auth_scheme()
+            if endpoint_security_inferred_scheme is not None:
+                final_client_wrapper_kwargs.append(
+                    self._write_inferred_auth_provider_and_get_auth_headers_kwarg(
+                        writer=writer,
+                        client_wrapper_generator=client_wrapper_generator,
+                        inferred_auth_scheme=endpoint_security_inferred_scheme,
+                        is_async=is_async,
+                        timeout_local_variable=timeout_local_variable,
+                        max_retries_local_variable=max_retries_local_variable,
+                        transport_variable_name=transport_variable_name,
+                    )
+                )
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
                 AST.ClassInstantiation(

@@ -1,4 +1,5 @@
 import { GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { ast, escapeForCSharpString, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -14,7 +15,22 @@ type TypeReference = FernIr.TypeReference;
 
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody.js";
 import { normalizePathSlashes } from "../../endpoint/utils/normalizePath.js";
+import { isEndpointSecurity } from "../../endpoint/request/endpointAuthHeaders.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+
+type AuthScheme = FernIr.AuthScheme;
+
+/**
+ * A single expected auth header matcher for a mock-server request.
+ * - `present`: the header must be present with any value (used for schemes whose
+ *   header value is resolved dynamically at runtime, e.g. OAuth/inferred tokens).
+ * - `exact`: the header must be present with exactly this value.
+ * - `absent`: the header must NOT be present on the request.
+ */
+type AuthHeaderMatcher =
+    | { headerName: string; kind: "present" }
+    | { headerName: string; kind: "exact"; value: string }
+    | { headerName: string; kind: "absent" };
 
 export declare namespace TestClass {
     interface TestInput {
@@ -113,37 +129,69 @@ export class MockEndpointGenerator extends WithGeneration {
                     }
                 }
                 // Add auth header matching for endpoints that require authentication.
-                // Skip auth header matching when endpoint has per-endpoint security because
-                // the C# client configures all auth schemes globally and header overwriting
-                // (e.g., multiple schemes writing to "Authorization") makes the exact value unpredictable.
-                if (endpoint.auth && !this.hasEndpointSecurity(endpoint)) {
-                    for (const scheme of this.context.ir.auth.schemes) {
-                        switch (scheme.type) {
-                            case "basic": {
-                                // Compute exact expected header value from the known test credentials
-                                const username = this.case.screamingSnakeSafe(scheme.username);
-                                const password = this.case.screamingSnakeSafe(scheme.password);
-                                const encoded = Buffer.from(`${username}:${password}`).toString("base64");
-                                writer.write(`.WithHeader("Authorization", "Basic ${escapeForCSharpString(encoded)}")`);
-                                break;
+                if (endpoint.auth) {
+                    if (isEndpointSecurity(this.context)) {
+                        // Per-endpoint security: the SDK routes only the auth scheme(s) this endpoint
+                        // declares, so assert the routed scheme's header(s) are present (and the other
+                        // schemes' headers are absent) rather than every scheme's header.
+                        for (const matcher of this.getEndpointSecurityAuthHeaderMatchers(endpoint)) {
+                            switch (matcher.kind) {
+                                case "exact":
+                                    writer.write(
+                                        `.WithHeader("${matcher.headerName}", "${escapeForCSharpString(matcher.value)}")`
+                                    );
+                                    break;
+                                case "present":
+                                    // Match on presence only (any value); the value is resolved at runtime.
+                                    writer.write(`.WithHeader("${matcher.headerName}", "*")`);
+                                    break;
+                                case "absent":
+                                    // Reject the request if this auth header is present, proving the SDK
+                                    // did not send a scheme this endpoint does not declare.
+                                    writer.write(
+                                        `.WithHeader("${matcher.headerName}", "*", WireMock.Matchers.MatchBehaviour.RejectOnMatch)`
+                                    );
+                                    break;
+                                default:
+                                    assertNever(matcher);
                             }
-                            case "bearer": {
-                                const tokenValue = this.case.screamingSnakeSafe(scheme.token);
-                                writer.write(
-                                    `.WithHeader("Authorization", "Bearer ${escapeForCSharpString(tokenValue)}")`
-                                );
-                                break;
-                            }
-                            case "header": {
-                                const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
-                                const headerValue =
-                                    scheme.name != null ? this.case.screamingSnakeSafe(scheme.name) : undefined;
-                                if (headerName && headerValue) {
-                                    const prefix = scheme.prefix;
-                                    const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
-                                    writer.write(`.WithHeader("${headerName}", "${escapeForCSharpString(fullValue)}")`);
+                        }
+                    } else if (!this.hasEndpointSecurity(endpoint)) {
+                        // Non-endpoint-security API: preserve existing behavior. Skip when the
+                        // endpoint carries a per-endpoint security list (header overwriting across
+                        // schemes makes the exact value unpredictable in that case).
+                        for (const scheme of this.context.ir.auth.schemes) {
+                            switch (scheme.type) {
+                                case "basic": {
+                                    // Compute exact expected header value from the known test credentials
+                                    const username = this.case.screamingSnakeSafe(scheme.username);
+                                    const password = this.case.screamingSnakeSafe(scheme.password);
+                                    const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                                    writer.write(
+                                        `.WithHeader("Authorization", "Basic ${escapeForCSharpString(encoded)}")`
+                                    );
+                                    break;
                                 }
-                                break;
+                                case "bearer": {
+                                    const tokenValue = this.case.screamingSnakeSafe(scheme.token);
+                                    writer.write(
+                                        `.WithHeader("Authorization", "Bearer ${escapeForCSharpString(tokenValue)}")`
+                                    );
+                                    break;
+                                }
+                                case "header": {
+                                    const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
+                                    const headerValue =
+                                        scheme.name != null ? this.case.screamingSnakeSafe(scheme.name) : undefined;
+                                    if (headerName && headerValue) {
+                                        const prefix = scheme.prefix;
+                                        const fullValue = prefix != null ? `${prefix} ${headerValue}` : headerValue;
+                                        writer.write(
+                                            `.WithHeader("${headerName}", "${escapeForCSharpString(fullValue)}")`
+                                        );
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }
@@ -256,6 +304,126 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private hasEndpointSecurity(endpoint: HttpEndpoint): boolean {
         return endpoint.security != null && endpoint.security.length > 0;
+    }
+
+    /**
+     * Computes the auth-header matchers to assert on the mock server request for an endpoint in
+     * endpoint-security mode.
+     *
+     * The base mock-server test constructs the client with credentials for every auth scheme, so
+     * every scheme is "available". `ClientOptions.GetAuthHeadersForEndpoint` then routes headers by
+     * selecting the FIRST of the endpoint's security requirements whose schemes are all available
+     * (OR across requirements, AND within one) and combining that requirement's schemes' headers
+     * (last write wins per header name). This mirrors that routing to determine exactly which auth
+     * headers the SDK will send, then asserts:
+     * - the routed header(s) are present (exact value for static schemes; presence-only for schemes
+     *   whose value is resolved at runtime, i.e. OAuth/inferred),
+     * - every other auth header the API could emit is absent.
+     */
+    private getEndpointSecurityAuthHeaderMatchers(endpoint: HttpEndpoint): AuthHeaderMatcher[] {
+        // Map each scheme (by its IR key) to the header(s) it contributes when its credentials are present.
+        const schemeHeadersByKey = new Map<string, Array<{ headerName: string; kind: "present" | "exact"; value?: string }>>();
+        for (const scheme of this.context.ir.auth.schemes) {
+            schemeHeadersByKey.set(scheme.key, this.getSchemeAuthHeaders(scheme));
+        }
+
+        // The universe of auth header names the API could emit; anything not routed to this endpoint
+        // must be asserted absent. Preserves scheme order for deterministic output.
+        const universe: string[] = [];
+        for (const headers of schemeHeadersByKey.values()) {
+            for (const header of headers) {
+                if (!universe.includes(header.headerName)) {
+                    universe.push(header.headerName);
+                }
+            }
+        }
+
+        // The mock client supplies every scheme's credentials, so treat all schemes as available.
+        const availableKeys = new Set(schemeHeadersByKey.keys());
+        const requirements = endpoint.security ?? [];
+        const winningRequirement = requirements.find((requirement) =>
+            Object.keys(requirement).every((schemeKey) => availableKeys.has(schemeKey))
+        );
+
+        // Build the effective header map for the winning requirement (last write wins per header name).
+        const effective = new Map<string, { kind: "present" | "exact"; value?: string }>();
+        if (winningRequirement != null) {
+            for (const schemeKey of Object.keys(winningRequirement)) {
+                for (const header of schemeHeadersByKey.get(schemeKey) ?? []) {
+                    effective.set(header.headerName, { kind: header.kind, value: header.value });
+                }
+            }
+        }
+
+        const matchers: AuthHeaderMatcher[] = [];
+        for (const [headerName, matcher] of effective) {
+            if (matcher.kind === "exact" && matcher.value != null) {
+                matchers.push({ headerName, kind: "exact", value: matcher.value });
+            } else {
+                matchers.push({ headerName, kind: "present" });
+            }
+        }
+        for (const headerName of universe) {
+            if (!effective.has(headerName)) {
+                matchers.push({ headerName, kind: "absent" });
+            }
+        }
+        return matchers;
+    }
+
+    /**
+     * Returns the auth header(s) a scheme contributes when its credentials are present, using the
+     * same placeholder credential values the base mock-server test constructs the client with
+     * (see RootClientGenerator.generateExampleClientInstantiationSnippet). Static schemes
+     * (bearer/header/basic) yield an exact expected value; OAuth/inferred yield presence-only
+     * because their header values are resolved from a live token endpoint at runtime.
+     */
+    private getSchemeAuthHeaders(
+        scheme: AuthScheme
+    ): Array<{ headerName: string; kind: "present" | "exact"; value?: string }> {
+        switch (scheme.type) {
+            case "bearer": {
+                const tokenValue = this.case.screamingSnakeSafe(scheme.token);
+                return [{ headerName: "Authorization", kind: "exact", value: `Bearer ${tokenValue}` }];
+            }
+            case "header": {
+                if (scheme.name == null) {
+                    return [];
+                }
+                const headerName = getWireValue(scheme.name);
+                const headerValue = this.case.screamingSnakeSafe(scheme.name);
+                const value = scheme.prefix != null ? `${scheme.prefix} ${headerValue}` : headerValue;
+                return [{ headerName, kind: "exact", value }];
+            }
+            case "basic": {
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
+                if (usernameOmitted && passwordOmitted) {
+                    return [];
+                }
+                const username = usernameOmitted ? "" : this.case.screamingSnakeSafe(scheme.username);
+                const password = passwordOmitted ? "" : this.case.screamingSnakeSafe(scheme.password);
+                const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                return [{ headerName: "Authorization", kind: "exact", value: `Basic ${encoded}` }];
+            }
+            case "oauth":
+                // OAuth writes Authorization with a token fetched from the token endpoint at runtime.
+                return [{ headerName: "Authorization", kind: "present" }];
+            case "inferred": {
+                // Inferred auth writes its authenticated request header(s) with a runtime-resolved value.
+                const inferred = this.context.getInferredAuth();
+                const authenticatedHeaders = inferred?.tokenEndpoint.authenticatedRequestHeaders ?? [];
+                if (authenticatedHeaders.length === 0) {
+                    return [{ headerName: "Authorization", kind: "present" }];
+                }
+                return authenticatedHeaders.map((header) => ({
+                    headerName: header.headerName,
+                    kind: "present" as const
+                }));
+            }
+            default:
+                assertNever(scheme);
+        }
     }
 
     /**

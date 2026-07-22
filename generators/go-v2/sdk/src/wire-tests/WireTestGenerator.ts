@@ -1,4 +1,5 @@
 import { GeneratorError, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
@@ -6,6 +7,7 @@ import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { isEndpointSecurity } from "../authUtils.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
@@ -90,18 +92,26 @@ export class WireTestGenerator {
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
 
-        // Generate OAuth-specific wire tests if the API uses OAuth
-        const oauthTestGenerator = new OAuthWireTestGenerator(this.context);
-        const oauthTestFile = oauthTestGenerator.generate();
-        if (oauthTestFile != null) {
-            this.context.project.addGoFiles(oauthTestFile);
-        }
+        // The standalone OAuth/inferred-auth wire tests assume the scheme is applied
+        // globally to every endpoint (the ALL/ANY auth model). Under endpoint-security
+        // auth is routed per-endpoint, so those assumptions no longer hold (e.g. calling
+        // a Bearer-only endpoint without a token errors). Per-endpoint routing — including
+        // OAuth and inferred endpoints — is already asserted by the per-service wire tests
+        // above, so skip these standalone generators in endpoint-security mode.
+        if (!isEndpointSecurity(this.context.ir)) {
+            // Generate OAuth-specific wire tests if the API uses OAuth
+            const oauthTestGenerator = new OAuthWireTestGenerator(this.context);
+            const oauthTestFile = oauthTestGenerator.generate();
+            if (oauthTestFile != null) {
+                this.context.project.addGoFiles(oauthTestFile);
+            }
 
-        // Generate inferred auth wire tests if the API uses inferred auth
-        const inferredAuthTestGenerator = new InferredAuthWireTestGenerator(this.context);
-        const inferredAuthTestFile = inferredAuthTestGenerator.generate();
-        if (inferredAuthTestFile != null) {
-            this.context.project.addGoFiles(inferredAuthTestFile);
+            // Generate inferred auth wire tests if the API uses inferred auth
+            const inferredAuthTestGenerator = new InferredAuthWireTestGenerator(this.context);
+            const inferredAuthTestFile = inferredAuthTestGenerator.generate();
+            if (inferredAuthTestFile != null) {
+                this.context.project.addGoFiles(inferredAuthTestFile);
+            }
         }
     }
 
@@ -141,7 +151,7 @@ export class WireTestGenerator {
                 const firstExample = this.getDynamicEndpointExample(endpoint);
                 if (firstExample) {
                     try {
-                        const snippet = await this.generateSnippetForExample(firstExample);
+                        const snippet = await this.generateSnippetForExample(firstExample, endpoint.id);
                         endpointTestCases.set(endpoint.id, snippet);
                     } catch (error) {
                         this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
@@ -213,6 +223,13 @@ export class WireTestGenerator {
             this.writeVerifyRequestCount(writer);
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
+            // In endpoint-security mode, emit a helper that asserts the exact set of auth
+            // headers routed for an endpoint (declared scheme(s) present, all others absent).
+            if (isEndpointSecurity(this.context.ir)) {
+                this.writeVerifyAuthHeaders(writer);
+                writer.writeNewLineIfLastLineNot();
+                writer.newLine();
+            }
             for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
                 writer.writeNode(endpointTestCaseCodeBlock);
                 writer.writeNewLineIfLastLineNot();
@@ -373,11 +390,23 @@ export class WireTestGenerator {
         );
     }
 
-    private async generateSnippetForExample(example: FernIr.dynamic.EndpointExample): Promise<string> {
+    private async generateSnippetForExample(
+        example: FernIr.dynamic.EndpointExample,
+        endpointId: string
+    ): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-        // Generate a wiremock test snippet with the test function wrapper
+        // Generate a wiremock test snippet with the test function wrapper.
+        // Pass the endpointId so the correct endpoint is resolved when multiple endpoints
+        // share the same HTTP method and path (e.g. endpoint-security fixtures where every
+        // endpoint is `GET /users` but declares a different auth scheme).
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
-            config: { outputWiremockTests: true }
+            config: { outputWiremockTests: true },
+            // Only disambiguate by endpointId in endpoint-security mode. This is required
+            // there because every endpoint shares the same method+path but declares a
+            // different auth scheme, and location-based resolution would otherwise collapse
+            // them all onto the first endpoint. Restricting it to endpoint-security keeps all
+            // other fixtures' generated wire tests byte-for-byte unchanged.
+            endpointId: isEndpointSecurity(this.context.ir) ? endpointId : undefined
         });
         if (!response.snippet) {
             throw GeneratorError.internalError("No snippet generated for example");
@@ -804,7 +833,222 @@ export class WireTestGenerator {
             );
 
             writer.writeLine();
+
+            // In endpoint-security mode, assert that only the auth header(s) for the
+            // endpoint's declared scheme(s) were sent and all other schemes' headers are absent.
+            if (isEndpointSecurity(this.context.ir)) {
+                const authHeaderMatchers = this.buildAuthHeaderMatchers(endpoint);
+                if (authHeaderMatchers != null) {
+                    writer.writeNode(
+                        go.codeblock(
+                            `VerifyAuthHeaders(t, "${testFunctionName}", "${endpoint.method}", "${basePath}", ${authHeaderMatchers})`
+                        )
+                    );
+                    writer.writeLine();
+                }
+            }
         });
+    }
+
+    /**
+     * Writes the VerifyAuthHeaders helper used in endpoint-security mode. It queries
+     * WireMock's requests/find endpoint (scoped by the per-test X-Test-Id header) with a
+     * set of per-header matchers and asserts exactly one matching request was recorded.
+     * A present header uses a `matches` matcher (optionally pinned to the scheme's value
+     * prefix, e.g. "Bearer "), and an absent header uses an `absent` matcher.
+     */
+    private writeVerifyAuthHeaders(writer: go.Writer) {
+        writer.write(
+            go.func({
+                name: "VerifyAuthHeaders",
+                parameters: [
+                    go.parameter({
+                        name: "t",
+                        type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
+                    }),
+                    go.parameter({ name: "testId", type: go.Type.string() }),
+                    go.parameter({ name: "method", type: go.Type.string() }),
+                    go.parameter({ name: "urlPath", type: go.Type.string() }),
+                    go.parameter({
+                        name: "headerMatchers",
+                        type: go.Type.map(go.Type.string(), go.Type.string())
+                    })
+                ],
+                return_: [],
+                body: go.codeblock((writer) => {
+                    writer.writeNode(
+                        go.codeblock(
+                            'wiremockURL := os.Getenv("WIREMOCK_URL")\n\tif wiremockURL == "" {\n\t\twiremockURL = "http://localhost:8080"\n\t}\n\tWiremockAdminURL := wiremockURL + "/__admin"'
+                        )
+                    );
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("var reqBody bytes.Buffer"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`{"method":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("reqBody.WriteString(method)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`","urlPath":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("reqBody.WriteString(urlPath)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("reqBody.WriteString(testId)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`"}`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("for name, matcher := range headerMatchers {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('    reqBody.WriteString(`,"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("    reqBody.WriteString(name)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('    reqBody.WriteString(`":`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("    reqBody.WriteString(matcher)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("}"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`}}`)'));
+                    writer.newLine();
+                    writer.writeNode(
+                        go.codeblock(
+                            'resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)'
+                        )
+                    );
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("require.NoError(t, err)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('var result struct { Requests []interface{} `json:"requests"` }'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("json.NewDecoder(resp.Body).Decode(&result)"));
+                    writer.newLine();
+                    writer.writeNode(
+                        go.codeblock(
+                            'require.Equal(t, 1, len(result.Requests), "expected exactly one request with the routed auth headers for "+testId)'
+                        )
+                    );
+                })
+            })
+        );
+    }
+
+    /**
+     * Builds a Go `map[string]string` literal of WireMock header matchers describing the
+     * auth headers that must (and must not) be present for the given endpoint under
+     * endpoint-security routing. Returns null when there are no auth headers in play.
+     *
+     * The endpoint routes to the first satisfiable security requirement; since the wire
+     * test client is constructed with credentials for every scheme, that is always the
+     * first requirement (`endpoint.security[0]`). The headers contributed by that
+     * requirement's schemes are expected present; every other scheme's header is expected
+     * absent. Endpoints with no security (e.g. the token endpoint) expect all auth headers
+     * absent.
+     */
+    private buildAuthHeaderMatchers(endpoint: FernIr.HttpEndpoint): string | null {
+        const schemeHeaderInfoByKey = this.getSchemeHeaderInfoByKey();
+        if (schemeHeaderInfoByKey.size === 0) {
+            return null;
+        }
+
+        // All auth header names across every scheme in the API.
+        const allHeaderNames = new Set<string>();
+        for (const info of schemeHeaderInfoByKey.values()) {
+            allHeaderNames.add(info.headerName);
+        }
+
+        // The scheme keys satisfied for this endpoint (first requirement, or none).
+        const firstRequirement = endpoint.security?.[0];
+        const presentSchemeKeys = firstRequirement != null ? Object.keys(firstRequirement) : [];
+
+        // Collect the distinct value prefixes contributing to each present header name so
+        // that a single-scheme header can be pinned to its prefix (e.g. "Bearer "/"Basic ").
+        const presentPrefixesByHeader = new Map<string, Set<string | undefined>>();
+        for (const schemeKey of presentSchemeKeys) {
+            const info = schemeHeaderInfoByKey.get(schemeKey);
+            if (info == null) {
+                continue;
+            }
+            const prefixes = presentPrefixesByHeader.get(info.headerName) ?? new Set<string | undefined>();
+            prefixes.add(info.valuePrefix);
+            presentPrefixesByHeader.set(info.headerName, prefixes);
+        }
+
+        const entries: string[] = [];
+        for (const headerName of Array.from(allHeaderNames).sort()) {
+            const prefixes = presentPrefixesByHeader.get(headerName);
+            if (prefixes == null) {
+                // Header not routed for this endpoint: assert it is absent.
+                entries.push(`\t\t"${headerName}": \`{"absent":true}\``);
+                continue;
+            }
+            // Header routed: assert present, pinned to the value prefix when unambiguous.
+            const onlyPrefix = prefixes.size === 1 ? Array.from(prefixes)[0] : undefined;
+            const matcher =
+                onlyPrefix != null && /^[A-Za-z0-9 ]+$/.test(onlyPrefix)
+                    ? `{"matches":"${onlyPrefix}.*"}`
+                    : `{"matches":".*"}`;
+            entries.push(`\t\t"${headerName}": \`${matcher}\``);
+        }
+
+        if (entries.length === 0) {
+            return null;
+        }
+
+        return `map[string]string{\n${entries.join(",\n")},\n\t}`;
+    }
+
+    /**
+     * Maps each auth scheme's key to the wire header it produces and (when known) the
+     * value prefix the SDK writes. Header/basic/bearer/oauth/inferred are all covered.
+     */
+    private getSchemeHeaderInfoByKey(): Map<string, { headerName: string; valuePrefix: string | undefined }> {
+        const result = new Map<string, { headerName: string; valuePrefix: string | undefined }>();
+        const auth = this.context.ir.auth;
+        if (auth == null) {
+            return result;
+        }
+        for (const scheme of auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    result.set(scheme.key, { headerName: "Authorization", valuePrefix: "Bearer " });
+                    break;
+                case "basic":
+                    result.set(scheme.key, { headerName: "Authorization", valuePrefix: "Basic " });
+                    break;
+                case "header": {
+                    // Literal-valued header schemes are baked into requests, not routed as auth.
+                    if (this.context.maybeLiteral(scheme.valueType) != null) {
+                        break;
+                    }
+                    result.set(scheme.key, {
+                        headerName: getWireValue(scheme.name),
+                        valuePrefix: scheme.prefix != null ? `${scheme.prefix} ` : undefined
+                    });
+                    break;
+                }
+                case "oauth": {
+                    const credentials = scheme.configuration;
+                    result.set(scheme.key, {
+                        headerName: credentials.tokenHeader ?? "Authorization",
+                        valuePrefix: credentials.tokenPrefix ?? "Bearer "
+                    });
+                    break;
+                }
+                case "inferred": {
+                    const header = scheme.tokenEndpoint.authenticatedRequestHeaders[0];
+                    const headerName = header?.headerName ?? "Authorization";
+                    const valuePrefix =
+                        header?.valuePrefix ?? (headerName === "Authorization" ? "Bearer " : undefined);
+                    result.set(scheme.key, { headerName, valuePrefix });
+                    break;
+                }
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return result;
     }
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
