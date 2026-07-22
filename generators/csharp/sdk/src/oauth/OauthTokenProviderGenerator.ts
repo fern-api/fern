@@ -32,6 +32,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     private bufferInMinutesField: ast.Field;
     private accessTokenField: ast.Field;
     private expiresAtField: ast.Field | undefined;
+    private lockField: ast.Field;
     private clientIdField: ast.Field;
     private clientSecretField: ast.Field;
     private expiresIn: ResponseProperty | undefined;
@@ -91,6 +92,17 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                       access: ast.Access.Private,
                       type: this.Value.dateTime.asOptional()
                   });
+
+        this.lockField = this.cls.addField({
+            origin: this.cls.explicit("_lock"),
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.csharp.classReference({
+                name: "SemaphoreSlim",
+                namespace: "System.Threading"
+            }),
+            initializer: this.csharp.codeblock("new SemaphoreSlim(1, 1)")
+        });
 
         this.clientIdField = this.cls.addField({
             origin: this.cls.explicit("_clientId"),
@@ -200,17 +212,22 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     private getAccessTokenBody(): ast.CodeBlock {
         const tokenEndpoint = this.scheme.configuration.tokenEndpoint;
 
+        const staleCheck = (writer: ast.Writer) => {
+            writer.write(`${this.accessTokenField.name} == null`);
+            // check expiresIn if present in the IR
+            if (this.expiresIn != null && this.expiresAtField != null) {
+                writer.write(`|| DateTime.UtcNow >= ${this.expiresAtField.name}`);
+            }
+        };
+
         return this.csharp.codeblock((writer) => {
-            writer.controlFlow(
-                "if",
-                this.csharp.codeblock((writer) => {
-                    writer.write(`${this.accessTokenField.name} == null`);
-                    // check expiresIn if present in the IR
-                    if (this.expiresIn != null && this.expiresAtField != null) {
-                        writer.write(`|| DateTime.UtcNow >= ${this.expiresAtField.name}`);
-                    }
-                })
-            );
+            writer.controlFlow("if", this.csharp.codeblock(staleCheck));
+
+            writer.writeTextStatement(`await ${this.lockField.name}.WaitAsync().ConfigureAwait(false)`);
+            writer.writeLine("try");
+            writer.pushScope();
+
+            writer.controlFlow("if", this.csharp.codeblock(staleCheck));
 
             writer.writeNodeStatement(
                 this.csharp.codeblock((writer) => {
@@ -281,6 +298,14 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                     );
                 }
             }
+
+            writer.endControlFlow();
+
+            writer.popScope();
+            writer.writeLine("finally");
+            writer.pushScope();
+            writer.writeTextStatement(`${this.lockField.name}.Release()`);
+            writer.popScope();
 
             writer.endControlFlow();
 

@@ -12,6 +12,8 @@ public partial class OAuthTokenProvider
 
     private DateTime? _expiresAt;
 
+    private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+
     private string _clientId;
 
     private string _clientSecret;
@@ -27,20 +29,31 @@ public partial class OAuthTokenProvider
     {
         if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
         {
-            var tokenResponse = await _client
-                .CreateOauth2TokenAsync(
-                    new CreateOauth2TokenRequest
-                    {
-                        ClientId = _clientId,
-                        ClientSecret = _clientSecret,
-                        GrantType = "client_credentials",
-                    }
-                )
-                .ConfigureAwait(false);
-            _accessToken = tokenResponse.AccessToken;
-            _expiresAt = tokenResponse.ExpiresIn is { } expiresIn
-                ? DateTime.UtcNow.AddSeconds(expiresIn).AddMinutes(-BufferInMinutes)
-                : null;
+            await _lock.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
+                {
+                    var tokenResponse = await _client
+                        .CreateOauth2TokenAsync(
+                            new CreateOauth2TokenRequest
+                            {
+                                ClientId = _clientId,
+                                ClientSecret = _clientSecret,
+                                GrantType = "client_credentials",
+                            }
+                        )
+                        .ConfigureAwait(false);
+                    _accessToken = tokenResponse.AccessToken;
+                    _expiresAt = tokenResponse.ExpiresIn is { } expiresIn
+                        ? DateTime.UtcNow.AddSeconds(expiresIn).AddMinutes(-BufferInMinutes)
+                        : null;
+                }
+            }
+            finally
+            {
+                _lock.Release();
+            }
         }
         return $"Bearer {_accessToken}";
     }
