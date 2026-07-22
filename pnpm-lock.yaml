@@ -9609,10 +9609,6 @@ packages:
     resolution: {integrity: sha512-Y/qMjaW+5ayybyGe6kUTPOo1rLhD7o3gbGnm7wi55dhzW808jLyj1rkFx9DJlIXghgMVSA/cKYyuAb0engG0Cw==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@67.15.0':
-    resolution: {integrity: sha512-Y/qMjaW+5ayybyGe6kUTPOo1rLhD7o3gbGnm7wi55dhzW808jLyj1rkFx9DJlIXghgMVSA/cKYyuAb0engG0Cw==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-v53-sdk@1.0.1':
     resolution: {integrity: sha512-SVNbkGBVgE/PkgurqqdFEYkmYBGNZzD2Qh8wF9nApp1NH2Wipte5zbzngl78snGTk/e9DN6+mYHfgQPzv6Pi4w==}
     engines: {node: '>=18.0.0'}
@@ -16646,8 +16642,6 @@ snapshots:
   '@fern-fern/ir-sdk@67.10.1': {}
 
   '@fern-fern/ir-sdk@67.11.0': {}
-
-  '@fern-fern/ir-sdk@67.15.0': {}
 
   '@fern-fern/ir-sdk@67.15.0': {}
 
