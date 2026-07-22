@@ -1,4 +1,41 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.15.0
+  changelogEntry:
+    - summary: |
+        Support webhook body-hash binding in generated signature verification helpers.
+        When a webhook signature declares a body-hash binding, the helper now recomputes
+        the encoded hash of the raw request body, extracts the transmitted hash from the
+        configured query parameter of the notification URL, and timing-safe-compares them
+        (failing closed) before verifying the outer HMAC over the verbatim notification URL.
+      type: feat
+    - summary: |
+        Generate HMAC webhook signature verification helpers from the IR.
+      type: feat
+    - summary: |
+        Extend the generated `verifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, the request-body
+          parameter accepts either a raw string or a `string|array` multimap of POST body
+          parameters whose values are a string or a list of strings; keys are sorted, each
+          key's values are deduped and sorted, and `key . value` pairs are concatenated with
+          no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check.
+        - No-throw: the verifier is a pure boolean. Every throw on the verification path (null
+          or empty inputs, a missing/malformed timestamp) now returns `false`.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `notificationUrlCandidates` method (using
+          `parse_url`/`http_build_query`) is added to the `WebhookSignature` core utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 2.14.1
   changelogEntry:
     - summary: |
