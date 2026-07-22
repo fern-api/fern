@@ -6305,6 +6305,17 @@
           ],
           "description": "If set to true, when a user navigates to a page that does not exist, they will be redirected to the home page.\nBy default, a 404 page will be displayed.\n\n@default: false"
         },
+        "show-permission-denied-page": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, an authenticated user who navigates to a page they do not have permission to view\nwill see a \"You don't have permission to view this page\" screen (with a login button) instead of the\ndefault 404 page. By default, a 404 page is displayed so that restricted pages are indistinguishable\nfrom pages that do not exist.\n\n@default: false"
+        },
         "use-javascript-as-typescript": {
           "oneOf": [
             {

@@ -52,6 +52,15 @@ export interface DocsSettingsConfig {
      */
     hide404Page?: boolean;
     /**
+     * If set to true, an authenticated user who navigates to a page they do not have permission to
+     * view will see a "You don't have permission to view this page" screen (with a login button)
+     * instead of the default 404 page. By default, a 404 page is displayed so that restricted pages
+     * are indistinguishable from pages that do not exist.
+     *
+     * @default: false
+     */
+    showPermissionDeniedPage?: boolean;
+    /**
      * If set to true, the TypeScript snippets will be displayed as JavaScript snippets in the API Reference.
      *
      * @default: false
