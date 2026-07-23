@@ -997,6 +997,14 @@ types:
           - `timeline` renders the searchable timeline-of-cards layout.
           - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
 
+      show-nav-availability-badges:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
+          are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
+          availability badge is unaffected by this setting.
+
   DocsSettingsConfig:
     properties:
       search-text:

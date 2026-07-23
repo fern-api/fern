@@ -6108,6 +6108,17 @@
             }
           ],
           "description": "Sets which layout to use for changelog pages.\n\n@default: `timeline`\n\n- `timeline` renders the searchable timeline-of-cards layout.\n- `classic` renders the legacy stacked-entries layout with a per-page table of contents."
+        },
+        "show-nav-availability-badges": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
         }
       },
       "additionalProperties": false

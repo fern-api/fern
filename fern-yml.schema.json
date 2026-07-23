@@ -2887,6 +2887,9 @@
                 "timeline",
                 "classic"
               ]
+            },
+            "show-nav-availability-badges": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
