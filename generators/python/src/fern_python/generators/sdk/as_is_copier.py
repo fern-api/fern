@@ -18,13 +18,25 @@ class AsIsFile(BaseModel):
     replacements: Optional[Dict[str, str]] = None
 
 
-def copy_to_project(*, project: Project) -> None:
+def copy_to_project(
+    *, project: Project, test_http_client_replacements: Optional[Dict[str, str]] = None
+) -> None:
     # Add more files you need to copy as is
     # This file is really to simplify the process of copying, leaving core utilities for files
     # that need to be referenced within the project, and more complex cases.
 
     # Use the full module path including package_path for import replacements
     module_path = project.get_module_path_for_imports()
+
+    # Import replacements for the copied test_http_client.py, plus any additional
+    # (e.g. phase-timeout) replacements gated on the SDK's timeouts config. When no
+    # extra replacements are provided the copied test is byte-identical to before.
+    test_http_client_all_replacements: Dict[str, str] = {
+        "core_utilities.shared.request_options": f"{module_path}.core.request_options",
+        "core_utilities.shared.http_client": f"{module_path}.core.http_client",
+    }
+    if test_http_client_replacements is not None:
+        test_http_client_all_replacements.update(test_http_client_replacements)
 
     AS_IS_FILES = [
         AsIsFile(
@@ -41,10 +53,7 @@ def copy_to_project(*, project: Project) -> None:
         AsIsFile(
             from_="tests/utils/test_http_client.py",
             to="tests/utils/test_http_client",
-            replacements={
-                "core_utilities.shared.request_options": f"{module_path}.core.request_options",
-                "core_utilities.shared.http_client": f"{module_path}.core.http_client",
-            },
+            replacements=test_http_client_all_replacements,
         ),
         AsIsFile(
             from_="tests/utils/test_serialization.py",

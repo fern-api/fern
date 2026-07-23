@@ -714,28 +714,28 @@ def test_sync_request_options_timeout_used() -> None:
     """The new `timeout` request option is passed through to httpx (in seconds)."""
     http_client, dummy_client = _sync_client_with_base_timeout(60)
     http_client.request(path="/test", method="GET", request_options={"timeout": 30})
-    assert dummy_client.last_request_kwargs["timeout"] == 30
+    assert dummy_client.last_request_kwargs["timeout"] == httpx.Timeout(30, connect=5.0, read=30.0, write=30.0, pool=30)
 
 
 def test_sync_request_options_timeout_in_seconds_still_works() -> None:
     """The deprecated `timeout_in_seconds` request option remains backwards compatible."""
     http_client, dummy_client = _sync_client_with_base_timeout(60)
     http_client.request(path="/test", method="GET", request_options={"timeout_in_seconds": 45})
-    assert dummy_client.last_request_kwargs["timeout"] == 45
+    assert dummy_client.last_request_kwargs["timeout"] == httpx.Timeout(45, connect=5.0, read=30.0, write=30.0, pool=45)
 
 
 def test_sync_request_options_timeout_takes_precedence() -> None:
     """When both are set, `timeout` wins over `timeout_in_seconds` (same seconds unit)."""
     http_client, dummy_client = _sync_client_with_base_timeout(60)
     http_client.request(path="/test", method="GET", request_options={"timeout": 30, "timeout_in_seconds": 45})
-    assert dummy_client.last_request_kwargs["timeout"] == 30
+    assert dummy_client.last_request_kwargs["timeout"] == httpx.Timeout(30, connect=5.0, read=30.0, write=30.0, pool=30)
 
 
 def test_sync_request_options_timeout_falls_back_to_base() -> None:
     """When neither key is set, the client-level base timeout is used."""
     http_client, dummy_client = _sync_client_with_base_timeout(60)
     http_client.request(path="/test", method="GET", request_options=None)
-    assert dummy_client.last_request_kwargs["timeout"] == 60
+    assert dummy_client.last_request_kwargs["timeout"] == httpx.Timeout(60, connect=5.0, read=30.0, write=30.0, pool=60)
 
 
 def test_sync_request_options_timeout_none_falls_back_to_deprecated() -> None:
@@ -743,7 +743,7 @@ def test_sync_request_options_timeout_none_falls_back_to_deprecated() -> None:
     http_client, dummy_client = _sync_client_with_base_timeout(60)
     request_options = cast(RequestOptions, {"timeout": None, "timeout_in_seconds": 45})
     http_client.request(path="/test", method="GET", request_options=request_options)
-    assert dummy_client.last_request_kwargs["timeout"] == 45
+    assert dummy_client.last_request_kwargs["timeout"] == httpx.Timeout(45, connect=5.0, read=30.0, write=30.0, pool=45)
 
 
 @pytest.mark.asyncio
@@ -758,4 +758,4 @@ async def test_async_request_options_timeout_takes_precedence() -> None:
         async_base_headers=None,
     )
     await http_client.request(path="/test", method="GET", request_options={"timeout": 30, "timeout_in_seconds": 45})
-    assert dummy_client.last_request_kwargs["timeout"] == 30
+    assert dummy_client.last_request_kwargs["timeout"] == httpx.Timeout(30, connect=5.0, read=30.0, write=30.0, pool=30)

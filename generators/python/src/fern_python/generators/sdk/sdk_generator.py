@@ -402,7 +402,10 @@ class SdkGenerator(AbstractGenerator):
             not (generator_config.output.mode.get_as_union().type == "downloadFiles")
             and project.should_emit_scaffolding
         ):
-            as_is_copier.copy_to_project(project=project)
+            as_is_copier.copy_to_project(
+                project=project,
+                test_http_client_replacements=context.core_utilities.get_test_http_client_phase_timeout_replacements(),
+            )
 
         test_fac = SnippetTestFactory(
             project=project,

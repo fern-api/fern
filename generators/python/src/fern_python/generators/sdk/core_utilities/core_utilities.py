@@ -485,6 +485,45 @@ class CoreUtilities:
             timeout_block_anchor: timeout_block_replacement,
         }
 
+    def get_test_http_client_phase_timeout_replacements(self) -> dict[str, str]:
+        """String replacements for the copied ``tests/utils/test_http_client.py``.
+
+        When a ``timeouts`` block is configured, ``http_client.py`` wraps the
+        per-call overall timeout in an ``httpx.Timeout(...)`` (granular phases win,
+        overall drives ``pool``). The copied test's timeout assertions still expect
+        the bare scalar, so update them to expect the wrapped ``httpx.Timeout``.
+
+        Returns an empty mapping when no ``timeouts`` block is configured, keeping
+        the copied test byte-identical to before for existing users.
+        """
+        if not self._custom_config.has_phase_timeouts:
+            return {}
+        timeouts = self._custom_config.timeouts
+        assert timeouts is not None  # guaranteed by has_phase_timeouts
+
+        def _phase_literal(value: Optional[float]) -> str:
+            return "None" if value is None else repr(value)
+
+        connect = _phase_literal(timeouts.connect)
+        read = _phase_literal(timeouts.read)
+        write = _phase_literal(timeouts.write)
+
+        def _wrapped(overall: int) -> str:
+            return (
+                f"assert dummy_client.last_request_kwargs[\"timeout\"] == "
+                f"httpx.Timeout({overall}, connect={connect}, read={read}, write={write}, pool={overall})"
+            )
+
+        # Full-line replacements keyed on the configured overall timeout value. The
+        # copied test uses the fixture's overall timeout (30/45/60); each resolves to
+        # httpx.Timeout(overall, connect=, read=, write=, pool=overall). Covers the
+        # async test too, which reuses the `== 30` line.
+        return {
+            'assert dummy_client.last_request_kwargs["timeout"] == 30': _wrapped(30),
+            'assert dummy_client.last_request_kwargs["timeout"] == 45': _wrapped(45),
+            'assert dummy_client.last_request_kwargs["timeout"] == 60': _wrapped(60),
+        }
+
     @staticmethod
     def _resolve_core_utilities_path(relative_filepath: str) -> str:
         """Resolve the core utilities source directory.
