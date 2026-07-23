@@ -52,7 +52,15 @@ scripts:
         - bundle install
       test:
         - bundle exec rubocop
-        - bundle exec rake test
+        # Wire tests spin up a WireMock container via wire_helper.rb, so only enable them
+        # when a working Docker daemon is reachable. The default seed container path
+        # (image: ruby:3.3) has no Docker, so wire tests stay skipped there; the local
+        # script runner (--local) runs on the host where Docker is available and executes them.
+        - |
+          if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
+            export RUN_WIRE_TESTS=true
+          fi
+          bundle exec rake test
 
 fixtures:
   basic-auth:
@@ -60,6 +68,10 @@ fixtures:
       customConfig:
         enableWireTests: true
   basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
+  endpoint-security-auth:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true

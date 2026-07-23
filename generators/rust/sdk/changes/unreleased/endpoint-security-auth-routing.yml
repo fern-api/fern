@@ -1,0 +1,10 @@
+- summary: |
+    Add support for per-endpoint auth routing. When the API-level auth requirement is
+    `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+    its IR `security` field (OR across the list of requirements, AND within a requirement,
+    and no auth when `security` is empty), instead of applying every configured credential
+    to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+    is unchanged.
+    Inferred auth is not supported by the Rust SDK, so an endpoint whose only satisfiable
+    requirement is inferred auth returns a configuration error.
+  type: feat

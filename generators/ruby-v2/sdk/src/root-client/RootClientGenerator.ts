@@ -14,6 +14,12 @@ import { Comments } from "../utils/comments.js";
 
 const TOKEN_PARAMETER_NAME = "token";
 
+/** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
+const AUTH_PROVIDER_MEMBER = "@auth_provider";
+/** Instance members the OAuth / inferred providers are assigned to under endpoint-security. */
+const OAUTH_PROVIDER_MEMBER = "@oauth_provider";
+const INFERRED_AUTH_PROVIDER_MEMBER = "@inferred_auth_provider";
+
 /**
  * Initializer keyword names already used by the client. A server URL variable whose
  * name collides with one of these is exposed under a `server_url_`-prefixed name so it
@@ -181,6 +187,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // `any` order and how the TS/Rust `AnyAuthProvider` tries schemes in order).
         const inferredAuth = this.context.getInferredAuth();
         const oauthAuth = this.context.getOAuthAuth();
+        const isEndpointSecurity = this.context.isEndpointSecurity();
         const useOAuthProvider = this.shouldUseOAuthProvider(inferredAuth, oauthAuth);
 
         // Under `any`-composed auth with more than one scheme, each scheme's
@@ -192,7 +199,28 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // provider scheme we keep the existing eager behavior.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
 
-        if (oauthAuth != null && useOAuthProvider) {
+        if (isEndpointSecurity) {
+            // Under endpoint-security every provider-based scheme may be routed to by
+            // some endpoint, so instantiate each one (rather than picking a single
+            // deterministic provider). Each is gated on its own credentials so it stays
+            // nil when the caller did not supply them, and the routing provider treats a
+            // nil sub-provider as "credentials unavailable". Providers resolve tokens
+            // lazily on first use, so instantiating both is cheap.
+            if (oauthAuth != null) {
+                method.addStatement(
+                    this.getOAuthInitializationStatement(oauthAuth, /* gateOnCredentials */ true, OAUTH_PROVIDER_MEMBER)
+                );
+            }
+            if (inferredAuth != null) {
+                method.addStatement(
+                    this.getInferredAuthInitializationStatement(
+                        inferredAuth,
+                        /* gateOnCredentials */ true,
+                        INFERRED_AUTH_PROVIDER_MEMBER
+                    )
+                );
+            }
+        } else if (oauthAuth != null && useOAuthProvider) {
             method.addStatement(this.getOAuthInitializationStatement(oauthAuth, anyAuthMultiScheme));
         } else if (inferredAuth != null) {
             method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth, anyAuthMultiScheme));
@@ -218,7 +246,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const hasBasicAuth = basicAuthSchemes.length > 0;
         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
         const conditionalHeaderStatements = this.getConditionalGlobalHeaderStatements();
-        const buildHeadersVariable = hasBasicAuth || conditionalHeaderStatements.length > 0;
+        // Under endpoint-security, auth headers (bearer, header, basic) are NOT baked
+        // into the RawClient's default headers; they are routed per-endpoint via the
+        // routing auth provider. So the flat basic-auth header block is suppressed.
+        const emitFlatAuth = !isEndpointSecurity;
+        const basicAuthSchemesToEmit = emitFlatAuth ? basicAuthSchemes : [];
+        const buildHeadersVariable = basicAuthSchemesToEmit.length > 0 || conditionalHeaderStatements.length > 0;
 
         method.addStatement(
             ruby.codeblock((writer) => {
@@ -226,12 +259,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // Build headers in a variable so we can conditionally add
                     // basic auth and nilable global headers
                     writer.write(`headers = `);
-                    writer.writeNode(this.getRawClientHeaders());
+                    writer.writeNode(this.getRawClientHeaders({ includeAuth: emitFlatAuth }));
                     writer.newLine();
                     let isFirstBlock = true;
                     let emittedAnyBlock = false;
-                    for (let i = 0; i < basicAuthSchemes.length; i++) {
-                        const basicAuthScheme = basicAuthSchemes[i];
+                    for (let i = 0; i < basicAuthSchemesToEmit.length; i++) {
+                        const basicAuthScheme = basicAuthSchemesToEmit[i];
                         if (basicAuthScheme == null) {
                             continue;
                         }
@@ -262,7 +295,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             continue;
                         }
                         const authHeaderStmt = `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`;
-                        if (basicAuthSchemes.length > 1) {
+                        if (basicAuthSchemesToEmit.length > 1) {
                             // Multiple basic-auth schemes: emit as an if/elsif chain so
                             // only one scheme is applied at runtime. Modifier form isn't
                             // applicable when there are alternative branches.
@@ -285,7 +318,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             writer.writeLine(authHeaderStmt);
                         }
                     }
-                    if (emittedAnyBlock && basicAuthSchemes.length > 1) {
+                    if (emittedAnyBlock && basicAuthSchemesToEmit.length > 1) {
                         writer.writeLine(`end`);
                     }
                 }
@@ -318,10 +351,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.writeLine(`headers: headers,`);
                 } else {
                     writer.write(`headers: `);
-                    writer.writeNode(this.getRawClientHeaders());
+                    writer.writeNode(this.getRawClientHeaders({ includeAuth: emitFlatAuth }));
                     writer.writeLine(`,`);
                 }
-                if (hasAuthProvider) {
+                if (isEndpointSecurity) {
+                    // Under endpoint-security, the RawClient is given a routing auth
+                    // provider that holds every scheme's credentials. It contributes no
+                    // flat auth headers on each request; instead each endpoint calls
+                    // `auth_headers_for_endpoint` with its declared security to get only
+                    // the headers it needs.
+                    writer.write(`auth_provider: `);
+                    writer.writeNode(this.getRoutingAuthProviderInstantiation());
+                    writer.writeLine(`,`);
+                } else if (hasAuthProvider) {
                     // Pass the auth provider into the RawClient so its `auth_headers`
                     // are resolved on EVERY request rather than baked once here. This
                     // lets token-based providers (OAuth client-credentials, inferred
@@ -338,6 +380,65 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         );
 
         return method;
+    }
+
+    /**
+     * Builds the `Internal::RoutingAuthProvider.new(...)` expression, forwarding each
+     * auth scheme's credentials: the bearer token, each header-auth value, the basic
+     * username/password (respecting omit), and the OAuth / inferred token providers
+     * (nil when their credentials were not supplied).
+     */
+    private getRoutingAuthProviderInstantiation(): ruby.AstNode {
+        const keywordArguments: string[] = [];
+
+        const bearerAuth = this.context.getBearerAuth();
+        if (bearerAuth != null) {
+            keywordArguments.push(`${TOKEN_PARAMETER_NAME}: ${TOKEN_PARAMETER_NAME}`);
+        }
+        for (const headerScheme of this.context.getHeaderAuthSchemes()) {
+            const paramName = this.case.snakeSafe(headerScheme.name);
+            keywordArguments.push(`${paramName}: ${paramName}`);
+        }
+        const basicAuth = this.context.getBasicAuth();
+        if (basicAuth != null) {
+            if (basicAuth.usernameOmit !== true) {
+                const usernameName = this.case.snakeSafe(basicAuth.username);
+                keywordArguments.push(`${usernameName}: ${usernameName}`);
+            }
+            if (basicAuth.passwordOmit !== true) {
+                const passwordName = this.case.snakeSafe(basicAuth.password);
+                keywordArguments.push(`${passwordName}: ${passwordName}`);
+            }
+        }
+        if (this.context.getOAuthAuth() != null) {
+            keywordArguments.push(`oauth_provider: ${OAUTH_PROVIDER_MEMBER}`);
+        }
+        if (this.context.getInferredAuth() != null) {
+            keywordArguments.push(`inferred_auth_provider: ${INFERRED_AUTH_PROVIDER_MEMBER}`);
+        }
+
+        return ruby.codeblock((writer) => {
+            writer.writeNode(this.getRoutingAuthProviderClassReference());
+            if (keywordArguments.length === 0) {
+                writer.write(`.new`);
+                return;
+            }
+            writer.writeLine(`.new(`);
+            writer.indent();
+            keywordArguments.forEach((argument, index) => {
+                writer.writeLine(`${argument}${index < keywordArguments.length - 1 ? "," : ""}`);
+            });
+            writer.dedent();
+            writer.write(`)`);
+        });
+    }
+
+    private getRoutingAuthProviderClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "RoutingAuthProvider",
+            modules: [this.context.getRootModule().name, "Internal"],
+            fullyQualified: true
+        });
     }
 
     /**
@@ -372,7 +473,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getInferredAuthInitializationStatement(
         scheme: FernIr.InferredAuthScheme,
-        anyAuthMultiScheme: boolean
+        gateOnCredentials: boolean,
+        targetMember: string = AUTH_PROVIDER_MEMBER
     ): ruby.AstNode {
         const inferredParams = this.getParametersForInferredAuth(scheme);
 
@@ -393,7 +495,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // its (non-optional) credential params being present, so the provider (and
         // its token request) is only created when the caller actually supplied them.
         // A set-but-empty string is treated the same as absent (`.to_s.empty?`).
-        const gatedParams = anyAuthMultiScheme
+        const gatedParams = gateOnCredentials
             ? inferredParams.filter((param) => param != null && !param.isOptional)
             : [];
         const inferredGuard =
@@ -473,7 +575,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Create the auth provider with auth_client and options
             writer.writeLine(`# Create the auth provider with the auth client and credentials`);
-            writer.write(`@auth_provider = `);
+            writer.write(`${targetMember} = `);
             writer.writeNode(this.getInferredAuthProviderClassReference());
             writer.writeLine(`.new(`);
             writer.indent();
@@ -545,7 +647,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return [rootModuleName, "Auth"];
     }
 
-    private getOAuthInitializationStatement(scheme: FernIr.OAuthScheme, anyAuthMultiScheme: boolean): ruby.AstNode {
+    private getOAuthInitializationStatement(
+        scheme: FernIr.OAuthScheme,
+        gateOnCredentials: boolean,
+        targetMember: string = AUTH_PROVIDER_MEMBER
+    ): ruby.AstNode {
         if (scheme.configuration.type !== "clientCredentials") {
             return ruby.codeblock("");
         }
@@ -563,7 +669,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
         return ruby.codeblock((writer) => {
-            if (anyAuthMultiScheme) {
+            if (gateOnCredentials) {
                 // Under `any`-composed multi-scheme auth OAuth is a fallback. Only
                 // instantiate the provider (which fires a synchronous token request)
                 // when both credentials were supplied (treating a set-but-empty
@@ -623,7 +729,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Create the OAuth provider with the auth client and credentials
             writer.writeLine(`# Create the OAuth provider with the auth client and credentials`);
-            writer.write(`@auth_provider = `);
+            writer.write(`${targetMember} = `);
             writer.writeNode(this.getOAuthProviderClassReference());
             writer.writeLine(`.new(`);
             writer.indent();
@@ -635,7 +741,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.writeLine(` }`);
             writer.dedent();
             writer.writeLine(`)`);
-            if (anyAuthMultiScheme) {
+            if (gateOnCredentials) {
                 writer.dedent();
                 writer.writeLine(`end`);
             }
@@ -955,7 +1061,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return undefined;
     }
 
-    private getRawClientHeaders(): ruby.TypeLiteral {
+    private getRawClientHeaders({ includeAuth = true }: { includeAuth?: boolean } = {}): ruby.TypeLiteral {
         const headers: ruby.HashEntry[] = [];
 
         if (!this.context.customConfig.omitFernHeaders) {
@@ -985,7 +1091,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             });
         }
 
-        for (const header of this.context.ir.auth.schemes) {
+        // In endpoint-security mode, auth headers are NOT baked into the RawClient's
+        // default headers; each endpoint routes its own schemes via the routing auth
+        // provider. So the flat per-scheme header emission is skipped here.
+        for (const header of includeAuth ? this.context.ir.auth.schemes : []) {
             switch (header.type) {
                 case "bearer":
                     headers.push({

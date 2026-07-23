@@ -16,6 +16,7 @@ import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { writeEndpointAuthHeaderAdd } from "../request/endpointAuthHeaders.js";
 import { writeLiteralHeaders } from "../request/literalHeaders.js";
 import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
 import { getEndpointReturnType, getStreamElementType, isStreamingEndpoint } from "../utils/getEndpointReturnType.js";
@@ -1969,6 +1970,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
                 writer.writeLine();
                 writer.writeLine(".Add(_client.Options.Headers)");
+                writeEndpointAuthHeaderAdd({ writer, context: this.context, endpoint });
+                writer.writeLine();
                 writer.writeLine(".Add(_client.Options.AdditionalHeaders)");
 
                 // Fallback auto-generated idempotency-key header for the eligible HTTP methods carried

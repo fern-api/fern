@@ -346,6 +346,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  endpoint-security-auth:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   inferred-auth-implicit-api-key:
     - outputFolder: .
       customConfig: null

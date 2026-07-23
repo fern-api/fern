@@ -4,6 +4,7 @@ import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+import { isEndpointSecurity } from "../endpoint/request/endpointAuthHeaders.js";
 import { getServerVariableOptions } from "../root-client/serverVariables.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
@@ -70,6 +71,10 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         this.baseOptionsGenerator.getMaxRetriesField(class_, optionArgs);
         this.baseOptionsGenerator.getTimeoutField(class_, optionArgs);
         this.baseOptionsGenerator.getLiteralHeaderOptions(class_, optionArgs);
+
+        if (isEndpointSecurity(this.context)) {
+            this.addEndpointSecurityAuthRouting(class_);
+        }
 
         if (this.settings.unifiedClientOptions) {
             this.addUnifiedAuthAndHeaderFields(class_);
@@ -498,6 +503,78 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         } else {
             assertNever(scheme);
         }
+    }
+
+    /**
+     * In endpoint-security mode, each endpoint applies only the auth scheme(s) it declares.
+     * The root client stores each scheme's ready-to-send headers (keyed by the scheme's IR key)
+     * in `AuthHeaderSchemes`, and `GetAuthHeadersForEndpoint` routes them per request: it picks
+     * the first requirement whose schemes ALL have credentials available (OR across the list,
+     * AND within a requirement), combines those schemes' headers, and throws naming the missing
+     * schemes when none is satisfiable. Mirrors the TypeScript RoutingAuthProvider.
+     */
+    private addEndpointSecurityAuthRouting(class_: ast.Class): void {
+        const headersType = this.Types.Headers;
+        class_.addField({
+            origin: class_.explicit("AuthHeaderSchemes"),
+            access: ast.Access.Internal,
+            get: true,
+            set: true,
+            type: this.Collection.map(this.Primitive.string, headersType),
+            initializer: this.csharp.codeblock("new()"),
+            summary:
+                "Per-scheme auth headers, keyed by auth-scheme key, populated by the root client.\nUsed to route auth headers per endpoint based on each endpoint's declared security."
+        });
+
+        class_.addMethod({
+            access: ast.Access.Internal,
+            name: "GetAuthHeadersForEndpoint",
+            return_: headersType,
+            isAsync: false,
+            parameters: [
+                this.csharp.parameter({
+                    name: "security",
+                    type: this.Collection.array(this.Collection.array(this.Primitive.string))
+                })
+            ],
+            summary: "Resolves the auth headers that apply to an endpoint with the given security requirements.",
+            body: this.csharp.codeblock((writer) => {
+                writer.write("var result = new ");
+                writer.writeNode(headersType);
+                writer.writeLine("();");
+                writer.controlFlow("if", this.csharp.codeblock("security.Length == 0"));
+                writer.writeLine("return result;");
+                writer.endControlFlow();
+                writer.controlFlow("foreach", this.csharp.codeblock("var requirement in security"));
+                writer.controlFlow(
+                    "if",
+                    this.csharp.codeblock(
+                        "Array.TrueForAll(requirement, schemeKey => AuthHeaderSchemes.ContainsKey(schemeKey))"
+                    )
+                );
+                writer.controlFlow("foreach", this.csharp.codeblock("var schemeKey in requirement"));
+                writer.controlFlow("foreach", this.csharp.codeblock("var header in AuthHeaderSchemes[schemeKey]"));
+                writer.writeLine("result[header.Key] = header.Value;");
+                writer.endControlFlow();
+                writer.endControlFlow();
+                writer.writeLine("return result;");
+                writer.endControlFlow();
+                writer.endControlFlow();
+                writer.writeLine(
+                    "var missing = string.Join(" +
+                        '" OR ", ' +
+                        "Array.ConvertAll(security, requirement => string.Join(" +
+                        '" AND ", ' +
+                        "Array.FindAll(requirement, schemeKey => !AuthHeaderSchemes.ContainsKey(schemeKey)))));"
+                );
+                writer.writeLine("throw new InvalidOperationException(");
+                writer.writeLine(
+                    '"No authentication credentials provided that satisfy the endpoint\'s security requirements. "'
+                );
+                writer.writeLine('+ "Please provide credentials for: " + missing');
+                writer.writeLine(");");
+            })
+        });
     }
 
     private getCloneMethod(cls: ast.Class): void {

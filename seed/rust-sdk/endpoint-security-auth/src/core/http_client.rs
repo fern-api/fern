@@ -1,4 +1,5 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
+use base64::Engine;
 use futures::{future::BoxFuture, Stream, StreamExt};
 use reqwest::{
     header::{HeaderMap, HeaderName, HeaderValue},
@@ -383,23 +384,30 @@ impl HttpClient {
         request: &mut Request,
         options: &Option<RequestOptions>,
     ) -> Result<(), ApiError> {
-        let headers = request.headers_mut();
+        // In endpoint-security mode, authentication is resolved per-endpoint via
+        // resolve_endpoint_auth_headers and injected as request headers, so no
+        // client-wide auth headers are applied here.
+        let _ = (request, options);
+        Ok(())
+    }
 
-        // Apply API key (request options override config)
-        let api_key = options
-            .as_ref()
-            .and_then(|opts| opts.api_key.as_ref())
-            .or(self.config.api_key.as_ref());
-
-        if let Some(key) = api_key {
-            let header_value = key.to_string();
-            headers.insert(
-                "X-API-Key",
-                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
-            );
+    /// Resolves the authentication headers to apply for an endpoint, given the endpoint's
+    /// declared security requirements. `requirements` is an OR-list of AND-groups of auth
+    /// scheme keys: the first group whose schemes all have credentials available is applied.
+    /// An empty `requirements` means the endpoint requires no auth. If no group is
+    /// satisfiable, an error naming the missing schemes is returned.
+    pub(crate) async fn resolve_endpoint_auth_headers(
+        &self,
+        options: &Option<RequestOptions>,
+        requirements: &[&[&str]],
+    ) -> Result<HashMap<String, String>, ApiError> {
+        if requirements.is_empty() {
+            return Ok(HashMap::new());
         }
 
-        // Apply bearer token - priority: request options > OAuth > config
+        let mut available: HashMap<&str, Vec<(String, String)>> = HashMap::new();
+
+        // Bearer / OAuth token schemes both resolve to `Authorization: Bearer <token>`.
         let token = if let Some(opts) = options.as_ref() {
             if opts.token.is_some() {
                 opts.token.clone()
@@ -409,29 +417,86 @@ impl HttpClient {
         } else {
             None
         };
-
         let token = match token {
             Some(t) => Some(t),
             None => {
-                // Try OAuth token provider if configured
                 if let Some(oauth_config) = &self.oauth_config {
                     Some(self.get_oauth_token(oauth_config).await?)
                 } else {
-                    // Fall back to static token from config
                     self.config.token.clone()
                 }
             }
         };
-
         if let Some(token) = token {
             let auth_value = format!("Bearer {}", token);
-            headers.insert(
-                "Authorization",
-                auth_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            available.insert(
+                "Bearer",
+                vec![("Authorization".to_string(), auth_value.clone())],
+            );
+            available.insert(
+                "OAuth",
+                vec![("Authorization".to_string(), auth_value.clone())],
             );
         }
 
-        Ok(())
+        // Header (API key) scheme "ApiKey".
+        {
+            let api_key = options
+                .as_ref()
+                .and_then(|opts| opts.api_key.as_ref())
+                .or(self.config.api_key.as_ref());
+            if let Some(key) = api_key {
+                let header_value = key.to_string();
+                available.insert("ApiKey", vec![("X-API-Key".to_string(), header_value)]);
+            }
+        }
+
+        // Basic auth schemes resolve to `Authorization: Basic <base64(user:pass)>`.
+        if let (Some(username), Some(password)) =
+            (self.config.username.as_ref(), self.config.password.as_ref())
+        {
+            let encoded = base64::engine::general_purpose::STANDARD
+                .encode(format!("{}:{}", username, password));
+            let basic_value = format!("Basic {}", encoded);
+            available.insert(
+                "Basic",
+                vec![("Authorization".to_string(), basic_value.clone())],
+            );
+        }
+
+        for requirement in requirements {
+            if requirement
+                .iter()
+                .all(|scheme_key| available.contains_key(scheme_key))
+            {
+                let mut combined_headers = HashMap::new();
+                for scheme_key in *requirement {
+                    if let Some(pairs) = available.get(scheme_key) {
+                        for (header_name, header_value) in pairs {
+                            combined_headers.insert(header_name.clone(), header_value.clone());
+                        }
+                    }
+                }
+                return Ok(combined_headers);
+            }
+        }
+
+        let missing = requirements
+            .iter()
+            .map(|requirement| {
+                requirement
+                    .iter()
+                    .filter(|scheme_key| !available.contains_key(*scheme_key))
+                    .copied()
+                    .collect::<Vec<_>>()
+                    .join(" AND ")
+            })
+            .collect::<Vec<_>>()
+            .join(" OR ");
+        Err(ApiError::Configuration(format!(
+            "No authentication credentials provided that satisfy the endpoint's security requirements. Please provide credentials for: {}",
+            missing
+        )))
     }
 
     /// Fetches an OAuth token, using the cached token if valid or fetching a new one.
