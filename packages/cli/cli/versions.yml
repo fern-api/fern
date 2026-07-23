@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.80.1
+  changelogEntry:
+    - summary: |
+        Preserve the base schema description on nested fields composed with `allOf`.
+        When a property merged a `$ref` (carrying a description) with an inline schema
+        adding constraints (e.g. `pattern`), the merged validation was kept but the
+        inherited description was dropped from the generated docs/SDKs.
+      type: fix
+  createdAt: "2026-07-23"
+  irVersion: 67
 - version: 5.80.0
   changelogEntry:
     - summary: |
