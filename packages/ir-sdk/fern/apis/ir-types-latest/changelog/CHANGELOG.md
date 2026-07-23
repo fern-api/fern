@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.16.0] - 2026-07-23
+
+- Add `OAuthConfiguration.authorizationCode` (`OAuthAuthorizationCode`), an additive union variant
+  modeling the OAuth 2.0 Authorization Code grant with required PKCE (RFC 7636) for public clients
+  such as generated CLIs and native apps. No client secret is used.
+  - `OAuthAuthorizationCode` carries the public `clientId` (`OAuthPublicClientId`: either a `literal`
+    value or an `environmentVariable` source), `authorizationUrl`, `tokenUrl`, optional `refreshUrl`
+    (defaults to `tokenUrl`), the loopback `redirectUri`, optional `scopes`, a required `pkce`
+    configuration, optional public `authorizationParameters`/`tokenParameters`/`refreshParameters`
+    maps, and optional `tokenHeader`/`tokenPrefix` for bearer application.
+  - `OAuthPkceConfiguration.method` is an `OAuthPkceMethod` enum that currently only permits `S256`.
+
 ## [v67.15.0] - 2026-07-21
 
 - Add `HmacSignatureVerification.notificationUrlNormalization` (optional
