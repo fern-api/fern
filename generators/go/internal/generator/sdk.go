@@ -439,6 +439,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		// removeUnusedImports drops any that end up unused.
 		f.scope.AddImport("net")
 		f.scope.AddImport("io")
+		f.scope.AddImport("sync")
 		f.scope.AddImport("time")
 	}
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
@@ -1214,12 +1215,22 @@ func (t *timeoutTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 }
 
 // idleTimeoutReadCloser enforces a maximum idle duration for a single Read call.
-// If a Read does not complete within the timeout, it returns a timeout error.
-// This approximates a socket read/write deadline without direct access to the
-// underlying connection.
+// If a Read does not complete within the timeout, it returns a timeout error and
+// closes the underlying reader to abort the in-flight I/O. This approximates a
+// socket read/write deadline without direct access to the underlying connection.
+//
+// The background reader reads into an internal buffer rather than directly into
+// the caller's slice, so a Read that has already timed out can never write into
+// a buffer the caller may have reused. Closing the underlying reader on timeout
+// unblocks and releases that goroutine instead of leaking it.
 type idleTimeoutReadCloser struct {
 	rc      io.ReadCloser
 	timeout time.Duration
+
+	buf []byte // reused across sequential Reads; abandoned after a timeout
+
+	mu     sync.Mutex
+	closed bool
 }
 
 type readResult struct {
@@ -1228,22 +1239,41 @@ type readResult struct {
 }
 
 func (r *idleTimeoutReadCloser) Read(p []byte) (int, error) {
+	if cap(r.buf) < len(p) {
+		r.buf = make([]byte, len(p))
+	}
+	buf := r.buf[:len(p)]
 	done := make(chan readResult, 1)
 	go func() {
-		n, err := r.rc.Read(p)
+		n, err := r.rc.Read(buf)
 		done <- readResult{n: n, err: err}
 	}()
 	timer := time.NewTimer(r.timeout)
 	defer timer.Stop()
 	select {
 	case res := <-done:
+		copy(p, buf[:res.n])
 		return res.n, res.err
 	case <-timer.C:
+		// Abandon the buffer so a late write from the background goroutine cannot
+		// corrupt a subsequent Read, and close the reader to unblock it.
+		r.buf = nil
+		_ = r.closeUnderlying()
 		return 0, &timeoutError{}
 	}
 }
 
 func (r *idleTimeoutReadCloser) Close() error {
+	return r.closeUnderlying()
+}
+
+func (r *idleTimeoutReadCloser) closeUnderlying() error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if r.closed {
+		return nil
+	}
+	r.closed = true
 	return r.rc.Close()
 }
 

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a potential data race in the per-phase timeout transport. On a read/write
+    timeout, the background reader could remain blocked on the underlying `Read`
+    and later write into the caller's buffer, which the caller may have already
+    reused. The reader now reads into an internal buffer and the underlying reader
+    is closed on timeout to release the goroutine.
+  type: fix
