@@ -910,7 +910,7 @@ export class WireTestGenerator {
                     writer.newLine();
                     writer.writeNode(go.codeblock("}"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock('reqBody.WriteString(`}}`)'));
+                    writer.writeNode(go.codeblock("reqBody.WriteString(`}}`)"));
                     writer.newLine();
                     writer.writeNode(
                         go.codeblock(
@@ -1039,8 +1039,7 @@ export class WireTestGenerator {
                 case "inferred": {
                     const header = scheme.tokenEndpoint.authenticatedRequestHeaders[0];
                     const headerName = header?.headerName ?? "Authorization";
-                    const valuePrefix =
-                        header?.valuePrefix ?? (headerName === "Authorization" ? "Bearer " : undefined);
+                    const valuePrefix = header?.valuePrefix ?? (headerName === "Authorization" ? "Bearer " : undefined);
                     result.set(scheme.key, { headerName, valuePrefix });
                     break;
                 }

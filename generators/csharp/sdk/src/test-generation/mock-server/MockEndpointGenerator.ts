@@ -13,9 +13,9 @@ type ObjectProperty = FernIr.ObjectProperty;
 type TypeId = FernIr.TypeId;
 type TypeReference = FernIr.TypeReference;
 
+import { isEndpointSecurity } from "../../endpoint/request/endpointAuthHeaders.js";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody.js";
 import { normalizePathSlashes } from "../../endpoint/utils/normalizePath.js";
-import { isEndpointSecurity } from "../../endpoint/request/endpointAuthHeaders.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 type AuthScheme = FernIr.AuthScheme;
@@ -322,7 +322,10 @@ export class MockEndpointGenerator extends WithGeneration {
      */
     private getEndpointSecurityAuthHeaderMatchers(endpoint: HttpEndpoint): AuthHeaderMatcher[] {
         // Map each scheme (by its IR key) to the header(s) it contributes when its credentials are present.
-        const schemeHeadersByKey = new Map<string, Array<{ headerName: string; kind: "present" | "exact"; value?: string }>>();
+        const schemeHeadersByKey = new Map<
+            string,
+            Array<{ headerName: string; kind: "present" | "exact"; value?: string }>
+        >();
         for (const scheme of this.context.ir.auth.schemes) {
             schemeHeadersByKey.set(scheme.key, this.getSchemeAuthHeaders(scheme));
         }

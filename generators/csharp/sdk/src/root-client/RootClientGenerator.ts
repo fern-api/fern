@@ -840,9 +840,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const setScheme = (key: string, headerName: string, valueExpression: string): void => {
             writer.write(`clientOptionsWithAuth.AuthHeaderSchemes["${key}"] = new `);
             writer.writeNode(this.generation.Types.Headers);
-            writer.writeTextStatement(
-                `(new Dictionary<string, string>() { { "${headerName}", ${valueExpression} } })`
-            );
+            writer.writeTextStatement(`(new Dictionary<string, string>() { { "${headerName}", ${valueExpression} } })`);
         };
 
         for (const scheme of this.context.ir.auth.schemes) {
@@ -857,8 +855,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 case "header": {
                     const headerAccess = access(this.case.camelSafe(scheme.name));
                     const headerName = getWireValue(scheme.name);
-                    const value =
-                        scheme.prefix != null ? `$"${scheme.prefix} {${headerAccess}}"` : headerAccess;
+                    const value = scheme.prefix != null ? `$"${scheme.prefix} {${headerAccess}}"` : headerAccess;
                     writer.controlFlow("if", this.csharp.codeblock(`${headerAccess} != null`));
                     setScheme(scheme.key, headerName, value);
                     writer.endControlFlow();
@@ -909,7 +906,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         "if",
                         this.csharp.codeblock(`${clientIdAccess} != null && ${clientSecretAccess} != null`)
                     );
-                    writer.write(`var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `);
+                    writer.write(
+                        `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
+                    );
                     for (const param of oauthAdditionalParams) {
                         writer.write(`${access(param)}, `);
                     }
@@ -927,7 +926,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     writer.writeTextStatement(
                         `oauthAuthHeaders["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
                     );
-                    writer.writeTextStatement(`clientOptionsWithAuth.AuthHeaderSchemes["${scheme.key}"] = oauthAuthHeaders`);
+                    writer.writeTextStatement(
+                        `clientOptionsWithAuth.AuthHeaderSchemes["${scheme.key}"] = oauthAuthHeaders`
+                    );
                     writer.endControlFlow();
                     break;
                 }

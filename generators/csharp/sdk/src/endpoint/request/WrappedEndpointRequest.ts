@@ -14,13 +14,13 @@ type TypeReference = FernIr.TypeReference;
 import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
-import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {

@@ -343,11 +343,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             // In endpoint-security mode, route the endpoint's declared auth scheme(s)
             // (see buildHeaders); the flat ToHeader() emits no auth in this mode.
             const security = endpoint.security;
-            const applyEndpointAuth =
-                isEndpointSecurity(this.context.ir) && security != null && security.length > 0;
+            const applyEndpointAuth = isEndpointSecurity(this.context.ir) && security != null && security.length > 0;
             if (applyEndpointAuth) {
                 const requirementsLiteral = security
-                    .map((requirement) => `{${Object.keys(requirement).map((key) => `"${key}"`).join(", ")}}`)
+                    .map(
+                        (requirement) =>
+                            `{${Object.keys(requirement)
+                                .map((key) => `"${key}"`)
+                                .join(", ")}}`
+                    )
                     .join(", ");
                 writer.write("authHeaders, authErr := ");
                 writer.writeNode(
@@ -928,8 +932,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         // headers. Instead, each endpoint routes to the auth scheme(s) it declares
         // via RequestOptions.AuthHeadersForEndpoint, and those headers are merged in.
         const security = endpoint.security;
-        const applyEndpointAuth =
-            isEndpointSecurity(this.context.ir) && security != null && security.length > 0;
+        const applyEndpointAuth = isEndpointSecurity(this.context.ir) && security != null && security.length > 0;
 
         return go.codeblock((writer) => {
             const baseHeaders = this.context.callMergeHeaders([
@@ -942,7 +945,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
             if (applyEndpointAuth) {
                 const requirementsLiteral = security
-                    .map((requirement) => `{${Object.keys(requirement).map((key) => `"${key}"`).join(", ")}}`)
+                    .map(
+                        (requirement) =>
+                            `{${Object.keys(requirement)
+                                .map((key) => `"${key}"`)
+                                .join(", ")}}`
+                    )
                     .join(", ");
                 writer.write("authHeaders, authErr := ");
                 writer.writeNode(

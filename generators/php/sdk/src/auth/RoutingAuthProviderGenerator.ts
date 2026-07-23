@@ -2,7 +2,6 @@ import { getWireValue } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
-import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -125,10 +124,7 @@ export class RoutingAuthProviderGenerator extends FileGenerator<PhpFile, SdkCust
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(
-            RelativeFilePath.of("Core"),
-            RelativeFilePath.of(`${RoutingAuthProviderGenerator.CLASS_NAME}.php`)
-        );
+        return join(RelativeFilePath.of("Core"), RelativeFilePath.of(`${RoutingAuthProviderGenerator.CLASS_NAME}.php`));
     }
 
     private addFields(class_: php.Class): void {
@@ -271,9 +267,9 @@ export class RoutingAuthProviderGenerator extends FileGenerator<PhpFile, SdkCust
                 writer.endControlFlow();
                 writer.writeLine("throw new \\Exception(");
                 writer.writeLine(
-                    "    \"No authentication credentials provided that satisfy the endpoint's security requirements. \""
+                    '    "No authentication credentials provided that satisfy the endpoint\'s security requirements. "'
                 );
-                writer.writeLine('    . "Please provide credentials for: " . implode(\' OR \', $requirementHints)');
+                writer.writeLine("    . \"Please provide credentials for: \" . implode(' OR ', $requirementHints)");
                 writer.writeTextStatement(")");
             })
         });
@@ -297,7 +293,9 @@ export class RoutingAuthProviderGenerator extends FileGenerator<PhpFile, SdkCust
                     writer.writeTextStatement(`$${local} = $this->${local}`);
                     writer.controlFlow("if", php.codeblock(`$${local} !== null`));
                     const value = scheme.prefix != null ? `"${scheme.prefix} {$${local}}"` : `$${local}`;
-                    writer.writeTextStatement(`$available['${scheme.key}'] = fn (): array => ['${scheme.headerName}' => ${value}]`);
+                    writer.writeTextStatement(
+                        `$available['${scheme.key}'] = fn (): array => ['${scheme.headerName}' => ${value}]`
+                    );
                     writer.endControlFlow();
                     break;
                 }
@@ -336,7 +334,9 @@ export class RoutingAuthProviderGenerator extends FileGenerator<PhpFile, SdkCust
                     const local = scheme.paramName;
                     writer.writeTextStatement(`$${local} = $this->${local}`);
                     writer.controlFlow("if", php.codeblock(`$${local} !== null`));
-                    writer.writeTextStatement(`$available['${scheme.key}'] = fn (): array => $${local}->getAuthHeaders()`);
+                    writer.writeTextStatement(
+                        `$available['${scheme.key}'] = fn (): array => $${local}->getAuthHeaders()`
+                    );
                     writer.endControlFlow();
                     break;
                 }

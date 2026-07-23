@@ -2,7 +2,6 @@ import { getWireValue } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
-import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
@@ -138,8 +137,7 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
         const method = ruby.method({
             name: "auth_headers",
             kind: ruby.MethodKind.Instance,
-            docstring:
-                "Endpoint-security applies auth per-endpoint, so no auth headers are added to every request.",
+            docstring: "Endpoint-security applies auth per-endpoint, so no auth headers are added to every request.",
             returnType: ruby.Type.hash(ruby.Type.string(), ruby.Type.string())
         });
         method.addStatement(ruby.codeblock("{}"));
@@ -247,10 +245,14 @@ export class RoutingAuthProviderGenerator extends FileGenerator<RubyFile, SdkCus
         // OR across requirements: return the first requirement whose schemes are all satisfiable.
         writer.writeLine(`${SECURITY_PARAMETER_NAME}.each do |requirement|`);
         writer.indent();
-        writer.writeLine(`next unless requirement.keys.all? { |scheme_key| ${AVAILABLE_VARIABLE_NAME}.key?(scheme_key) }`);
+        writer.writeLine(
+            `next unless requirement.keys.all? { |scheme_key| ${AVAILABLE_VARIABLE_NAME}.key?(scheme_key) }`
+        );
         writer.newLine();
         writer.writeLine("combined_headers = {}");
-        writer.writeLine(`requirement.each_key { |scheme_key| combined_headers.merge!(${AVAILABLE_VARIABLE_NAME}[scheme_key]) }`);
+        writer.writeLine(
+            `requirement.each_key { |scheme_key| combined_headers.merge!(${AVAILABLE_VARIABLE_NAME}[scheme_key]) }`
+        );
         writer.writeLine("return combined_headers");
         writer.dedent();
         writer.writeLine("end");
