@@ -39,6 +39,8 @@
     "@fern-api/generator-cli": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
+    "@fern-api/mock-utils": "workspace:*",
     "@fern-api/rust-base": "workspace:*",
     "@fern-api/rust-model": "workspace:*",
     "@fern-api/rust-sdk": "workspace:*",

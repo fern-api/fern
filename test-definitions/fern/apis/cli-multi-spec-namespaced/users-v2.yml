@@ -6,10 +6,10 @@ info:
 servers:
   - url: https://api.example.com/v2
 paths:
-  /users:
+  /accounts:
     get:
-      operationId: listUsers
-      summary: List users (v2 shape)
+      operationId: listAccounts
+      summary: List accounts (v2 renamed users to accounts)
       parameters:
         - name: pageSize
           in: query
