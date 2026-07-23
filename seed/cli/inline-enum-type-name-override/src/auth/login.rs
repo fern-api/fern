@@ -835,20 +835,28 @@ mod tests {
     }
 
     #[test]
-    fn paint_returns_plain_string_when_stderr_is_not_a_tty() {
-        // `cargo test` runs without a TTY on stderr, so `use_colors()`
-        // returns false and `paint` is a no-op — no ANSI codes in test /
-        // CI output.
-        let s = green("ok");
-        assert!(!s.contains('\x1b'), "expected no ANSI escape: {s:?}");
-        assert_eq!(s, "ok");
+    #[serial]
+    fn paint_is_a_noop_when_colors_are_disabled() {
+        // `paint` must emit no ANSI codes when colors are off. Force the
+        // no-color path explicitly via `NO_COLOR` rather than relying on
+        // stderr not being a TTY: `cargo test` captures each test's stdout
+        // but leaves stderr attached to the terminal, so in an interactive
+        // shell `stderr().is_terminal()` is true and `use_colors()` would
+        // flip on — making this test's outcome depend on how the suite was
+        // launched. `#[serial]` keeps the process-global env mutation from
+        // racing the other env-touching tests in this module.
+        let prev = std::env::var_os("NO_COLOR");
+        std::env::set_var("NO_COLOR", "1");
 
-        let s = dim("shadow");
-        assert!(!s.contains('\x1b'));
-        let s = yellow("warn");
-        assert!(!s.contains('\x1b'));
-        let s = bold("hdr");
-        assert!(!s.contains('\x1b'));
+        assert_eq!(green("ok"), "ok");
+        assert!(!dim("shadow").contains('\x1b'));
+        assert!(!yellow("warn").contains('\x1b'));
+        assert!(!bold("hdr").contains('\x1b'));
+
+        match prev {
+            Some(value) => std::env::set_var("NO_COLOR", value),
+            None => std::env::remove_var("NO_COLOR"),
+        }
     }
 
     #[test]
