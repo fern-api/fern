@@ -45,7 +45,11 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             optional: false,
             includeInitializer: true
         };
-        const serverVariableOptions = getServerVariableOptions(this.context.ir.environments, this.case);
+        const serverVariableOptions = getServerVariableOptions(
+            this.context.ir.environments,
+            this.case,
+            this.settings.serverUrlVariables
+        );
         this.createBaseUrlField(class_, serverVariableOptions.length > 0);
         this.addServerVariableFields(class_, serverVariableOptions);
         this.baseOptionsGenerator.getHttpClientField(class_, optionArgs);

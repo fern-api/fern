@@ -4589,6 +4589,20 @@
             }
           ],
           "description": "Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths."
+        },
+        "external-sitemaps": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation."
         }
       },
       "additionalProperties": false
@@ -6094,6 +6108,17 @@
             }
           ],
           "description": "Sets which layout to use for changelog pages.\n\n@default: `timeline`\n\n- `timeline` renders the searchable timeline-of-cards layout.\n- `classic` renders the legacy stacked-entries layout with a per-page table of contents."
+        },
+        "show-nav-availability-badges": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
         }
       },
       "additionalProperties": false

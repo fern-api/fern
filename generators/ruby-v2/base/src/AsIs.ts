@@ -32,6 +32,10 @@ export const AsIsFiles = {
     HttpBaseRequest: "internal/http/base_request.Template.rb",
     HttpRawClient: "internal/http/raw_client.Template.rb",
 
+    // Webhooks
+    WebhookSignature: "internal/webhook_signature.Template.rb",
+    WebhookBodyHash: "internal/webhook_body_hash.Template.rb",
+
     // JSON
     JsonRequest: "internal/json/request.Template.rb",
     JsonSerializable: "internal/json/serializable.Template.rb",
@@ -73,7 +77,10 @@ export const AsIsFiles = {
     TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb",
 
     // HTTP tests
-    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb"
+    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
+
+    // Webhook tests
+    TestWebhookBodyHash: "test/unit/internal/test_webhook_body_hash.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
@@ -121,8 +128,10 @@ const asIsTopoValue = {
     [AsIsFiles.OffsetPageIterator]: 30,
     [AsIsFiles.CustomPager]: 31,
     [AsIsFiles.IdempotencyKey]: 32,
+    [AsIsFiles.WebhookSignature]: 33,
+    [AsIsFiles.WebhookBodyHash]: 34,
     // Only constraint is that this loads after HttpBaseRequest (6), which its
     // Request class extends. Ordered last (max value) so introducing it does not
     // shift the position of any pre-existing require in the generated root file.
-    [AsIsFiles.UrlEncodedRequest]: 33
+    [AsIsFiles.UrlEncodedRequest]: 35
 };

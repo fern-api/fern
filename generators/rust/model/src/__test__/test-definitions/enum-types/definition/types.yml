@@ -12,3 +12,9 @@ types:
       - ACTIVE
       - INACTIVE
       - PENDING
+
+  FinetuneCreatedBy:
+    enum:
+      - self
+      - user
+      - api

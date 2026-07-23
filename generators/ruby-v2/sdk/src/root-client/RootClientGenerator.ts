@@ -1163,9 +1163,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     /**
      * Emits the interpolation of server URL variables (e.g. region/edge) into the base URL.
      * When any server variable is provided at construction time, the base URL(s) are rebuilt
-     * from the environment's URL template(s), falling back to each variable's default (or its
-     * first allowed value). For a single base URL, an explicitly supplied `base_url` always
-     * takes precedence and suppresses interpolation.
+     * from the SELECTED environment's URL template(s), falling back to each variable's default
+     * (or its first allowed value). A base_url/environment that is not a known environment
+     * constant (a custom URL) is never overridden; when none is given, the first templated
+     * environment's template(s) are used.
      * Returns undefined when the API declares no server variables (behavior unchanged).
      */
     private getServerVariableInterpolationStatement(options: ServerVariableOption[]): ruby.AstNode | undefined {
@@ -1177,7 +1178,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             return undefined;
         }
         const environments = config.environments;
-        const condition = options.map(({ optionName }) => `!${optionName}.nil?`).join(" || ");
+        // A single negated condition must use `unless` to satisfy rubocop's Style/NegatedIf.
+        const firstOptionName = options[0]?.optionName;
+        const guard =
+            options.length === 1 && firstOptionName != null
+                ? `unless ${firstOptionName}.nil?`
+                : `if ${options.map(({ optionName }) => `!${optionName}.nil?`).join(" || ")}`;
 
         const writeLocalDeclarations = (writer: ruby.Writer): void => {
             for (const { optionName, localName, variable } of options) {
@@ -1197,57 +1203,101 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
         };
 
+        const environmentConstantReference = (name: FernIr.NameOrString): string => {
+            return `${this.context.getRootModuleName()}::${this.context.getEnvironmentsClassReference().name}::${this.case.screamingSnakeSafe(name)}`;
+        };
+
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
-                if (templatedEnvironment?.urlTemplate == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplate != null);
+                const firstTemplate = templatedEnvironments[0]?.urlTemplate;
+                if (firstTemplate == null) {
                     return undefined;
                 }
-                const template = templatedEnvironment.urlTemplate;
                 return ruby.codeblock((writer) => {
-                    // Only rebuild the base URL from the template when the caller did not pass an
-                    // explicit base_url; an explicitly supplied base_url always takes precedence.
-                    writer.writeLine(`if base_url.nil? && (${condition})`);
+                    writer.writeLine(guard);
                     writer.indent();
                     writeLocalDeclarations(writer);
-                    writer.writeLine(`base_url = ${this.urlTemplateToRubyString(template, options)}`);
+                    // Map each environment constant to its URL template so the SELECTED
+                    // environment's template is rendered. A base_url that is not an
+                    // environment constant (a custom URL) is left untouched; when no
+                    // base_url is given, the first templated environment is used.
+                    writer.writeLine(`environment_url_templates = {`);
+                    writer.indent();
+                    templatedEnvironments.forEach((env, index) => {
+                        if (env.urlTemplate == null) {
+                            return;
+                        }
+                        const entry = `${environmentConstantReference(env.name)} => ${this.urlTemplateToRubyString(env.urlTemplate, options)}`;
+                        writer.writeLine(`${entry}${index < templatedEnvironments.length - 1 ? "," : ""}`);
+                    });
+                    writer.dedent();
+                    writer.writeLine(`}`);
+                    writer.writeLine(
+                        `base_url = base_url.nil? ? ${this.urlTemplateToRubyString(firstTemplate, options)} : environment_url_templates.fetch(base_url, base_url)`
+                    );
                     writer.dedent();
                     writer.writeLine(`end`);
                 });
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
-                if (templatedEnvironment?.urlTemplates == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
+                if (templatedEnvironments.length === 0) {
                     return undefined;
                 }
-                const templates = templatedEnvironment.urlTemplates;
-                const staticUrls = templatedEnvironment.urls;
-                const entries = environments.baseUrls.map((baseUrl) => {
-                    const key = this.case.snakeSafe(baseUrl.name);
-                    const template = templates[baseUrl.id];
-                    if (template != null) {
-                        return `${key}: ${this.urlTemplateToRubyString(template, options)}`;
-                    }
-                    const staticUrl = staticUrls[baseUrl.id];
-                    if (staticUrl == null) {
-                        throw new Error(
-                            `Base URL "${baseUrl.id}" has neither a URL template nor a static URL; ` +
-                                "cannot generate server URL variable interpolation."
-                        );
-                    }
-                    return `${key}: ${JSON.stringify(staticUrl)}`;
-                });
-                return ruby.codeblock((writer) => {
-                    writer.writeLine(`if ${condition}`);
-                    writer.indent();
-                    writeLocalDeclarations(writer);
-                    writer.writeLine(`environment = {`);
+                const entriesForEnvironment = (environment: FernIr.MultipleBaseUrlsEnvironment): string[] => {
+                    return environments.baseUrls.map((baseUrl) => {
+                        const key = this.case.snakeSafe(baseUrl.name);
+                        const template = environment.urlTemplates?.[baseUrl.id];
+                        if (template != null) {
+                            return `${key}: ${this.urlTemplateToRubyString(template, options)}`;
+                        }
+                        const staticUrl = environment.urls[baseUrl.id];
+                        if (staticUrl == null) {
+                            throw new Error(
+                                `Base URL "${baseUrl.id}" has neither a URL template nor a static URL; ` +
+                                    "cannot generate server URL variable interpolation."
+                            );
+                        }
+                        return `${key}: ${JSON.stringify(staticUrl)}`;
+                    });
+                };
+                const writeEntries = (writer: ruby.Writer, entries: string[], suffix: string): void => {
+                    writer.writeLine(`{`);
                     writer.indent();
                     entries.forEach((entry, index) => {
                         writer.writeLine(`${entry}${index < entries.length - 1 ? "," : ""}`);
                     });
                     writer.dedent();
+                    writer.writeLine(`}${suffix}`);
+                };
+                const firstTemplatedEnvironment = templatedEnvironments[0];
+                if (firstTemplatedEnvironment == null) {
+                    return undefined;
+                }
+                return ruby.codeblock((writer) => {
+                    writer.writeLine(guard);
+                    writer.indent();
+                    writeLocalDeclarations(writer);
+                    // Map each environment constant to its formatted URLs so EVERY host of
+                    // the SELECTED environment is rendered from that environment's
+                    // templates. A custom environment hash is left untouched; when no
+                    // environment is given, the first templated environment is used.
+                    writer.writeLine(`environment_url_templates = {`);
+                    writer.indent();
+                    templatedEnvironments.forEach((env, index) => {
+                        writer.write(`${environmentConstantReference(env.name)} => `);
+                        writeEntries(
+                            writer,
+                            entriesForEnvironment(env),
+                            index < templatedEnvironments.length - 1 ? "," : ""
+                        );
+                    });
+                    writer.dedent();
                     writer.writeLine(`}`);
+                    writer.writeLine(`environment = environment_url_templates.fetch(environment, environment)`);
+                    writer.write(`environment ||= `);
+                    writeEntries(writer, entriesForEnvironment(firstTemplatedEnvironment), "");
                     writer.dedent();
                     writer.writeLine(`end`);
                 });

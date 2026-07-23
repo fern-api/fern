@@ -1,0 +1,6 @@
+- summary: |
+    Add webhook signature verification support. When a webhook declares HMAC signature
+    verification in the IR, the generated SDK now emits a `WebhooksHelper` with a static
+    `verify_signature` method that validates the signature (and optional timestamp) using a
+    new stdlib-only core utility (`hmac`/`hashlib`/`base64` with constant-time comparison).
+  type: feat
