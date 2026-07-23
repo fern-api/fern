@@ -2,7 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional, Sequence
 
-import fern.ir.resources as ir_types
+import fern_python.generators.sdk.names as names
 from ..environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -16,9 +16,6 @@ from .inferred_auth_token_provider_generator import (
     InferredAuthTokenProviderGenerator,
 )
 from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
-from typing_extensions import Unpack
-
-import fern_python.generators.sdk.names as names
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -34,6 +31,9 @@ from fern_python.utils.name_resolver import (
     get_original_name,
     resolve_name,
 )
+from typing_extensions import Unpack
+
+import fern.ir.resources as ir_types
 
 
 @dataclass
