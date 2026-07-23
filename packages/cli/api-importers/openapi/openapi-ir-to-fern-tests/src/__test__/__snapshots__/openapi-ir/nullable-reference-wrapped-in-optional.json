@@ -1,0 +1,237 @@
+{
+  "title": "nullable-reference-wrapped-in-optional",
+  "description": "A reference to a nullable schema (an anyOf whose branches include `null`) used as an optional property. With wrap-references-to-nullable-in-optional enabled, the reference should be optional<nullable<...>> so that `null` remains sendable on the wire and distinct from omission.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "sessions_createTurn",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "sessions"
+        ],
+        "methodName": "createTurn"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateTurnSessionsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateTurnSessionsRequest",
+          "schema": "CreateTurnRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createTurnSessionsResponseTurnId",
+              "key": "turn_id",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreateTurnSessionsResponseTurnId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CreateTurnSessionsResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/sessions/turns",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "turn_id": {
+                  "value": {
+                    "value": "turn_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "PreviousTurnIdInput": {
+        "generatedName": "PreviousTurnIdInput",
+        "description": "Defaults to 'auto' (chain to session last turn). Use 'null' for the session's first turn.",
+        "value": {
+          "value": {
+            "description": "Defaults to 'auto' (chain to session last turn). Use 'null' for the session's first turn.",
+            "generatedName": "PreviousTurnIdInput",
+            "schemas": [
+              {
+                "generatedName": "PreviousTurnIdInputZero",
+                "values": [
+                  {
+                    "generatedName": "auto",
+                    "value": "auto",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              {
+                "schema": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "generatedName": "PreviousTurnIdInputOne",
+                "groupName": [],
+                "type": "primitive"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "groupName": [],
+        "type": "nullable"
+      },
+      "CreateTurnRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createTurnRequestInput",
+            "key": "input",
+            "schema": {
+              "generatedName": "CreateTurnRequestInput",
+              "value": {
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CreateTurnRequestInputItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "CreateTurnRequestInput",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createTurnRequestPreviousTurnId",
+            "key": "previous_turn_id",
+            "schema": {
+              "generatedName": "CreateTurnRequestPreviousTurnId",
+              "value": {
+                "generatedName": "CreateTurnRequestPreviousTurnId",
+                "schema": "PreviousTurnIdInput",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateTurnRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
