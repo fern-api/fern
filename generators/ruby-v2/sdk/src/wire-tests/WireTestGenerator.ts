@@ -561,11 +561,12 @@ export class WireTestGenerator {
         // Resolve by endpoint id, not just method+path: under endpoint-security several endpoints
         // can share the same method+path (e.g. multiple `GET /users` variants differing only by
         // auth), and location-only resolution would always pick the first, generating the wrong
-        // method call for every test. This is a no-op when method+path already uniquely identifies
-        // the endpoint.
+        // method call for every test. Gated to endpoint-security so non-endpoint-security fixtures
+        // keep byte-identical output (matching the other generators); disambiguating everywhere is
+        // a correctness fix best made separately.
         const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest, {
             skipClientInstantiation: true,
-            endpointId: endpoint.id
+            endpointId: this.context.isEndpointSecurity() ? endpoint.id : undefined
         });
         return snippetAst as ruby.AstNode;
     }
