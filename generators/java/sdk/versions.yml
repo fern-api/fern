@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.1
+  changelogEntry:
+    - summary: |
+        Fix `ConsoleLogger` dropping DEBUG-level log messages. The `ConsoleHandler` used by the
+        default logger keeps java.util.logging's default `INFO` handler level, so `FINE` records
+        (SDK debug logs, including HTTP request/response logging) were silently discarded even
+        when `LogConfig` was configured with `LogLevel.DEBUG` and `silent(false)`. The handler
+        level is now set to `ALL` so the configured `LogLevel` controls filtering.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 4.15.0
   changelogEntry:
     - summary: |

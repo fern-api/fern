@@ -317,6 +317,13 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
      */
     private getServerVariableConfig(): ServerVariableConfig {
         const empty: ServerVariableConfig = { variables: [], environments: [] };
+        // Gated behind the `serverUrlVariables` config option (default true). When
+        // disabled, no server-URL-variable options nor the construction-time base-URL
+        // template interpolation are emitted, matching the Go v1 generator's suppression
+        // and falling back to the pre-feature base-URL behavior.
+        if (this.context.customConfig.serverUrlVariables === false) {
+            return empty;
+        }
         const config = this.context.ir.environments;
         if (config == null) {
             return empty;

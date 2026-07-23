@@ -28,6 +28,7 @@ type Config struct {
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
 	DedupeUnionBaseProperties    bool
+	ServerURLVariables           bool
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
@@ -78,6 +79,7 @@ func NewConfig(
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
 	dedupeUnionBaseProperties bool,
+	serverURLVariables bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
 	omitFernHeaders bool,
@@ -113,6 +115,7 @@ func NewConfig(
 		UseReaderForBytesRequest:     useReaderForBytesRequest,
 		GettersPassByValue:           gettersPassByValue,
 		DedupeUnionBaseProperties:    dedupeUnionBaseProperties,
+		ServerURLVariables:           serverURLVariables,
 		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     omitEmptyRequestWrappers,
 		OmitFernHeaders:              omitFernHeaders,

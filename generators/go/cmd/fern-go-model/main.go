@@ -34,6 +34,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.UseReaderForBytesRequest,
 		config.GettersPassByValue,
 		config.DedupeUnionBaseProperties,
+		config.ServerURLVariables,
 		config.ExportAllRequestsAtRoot,
 		config.OmitEmptyRequestWrappers,
 		config.OmitFernHeaders,

@@ -24,6 +24,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     useDefaultRequestParameterValues: z.boolean().optional(),
     gettersPassByValue: z.boolean().optional(),
     dedupeUnionBaseProperties: z.boolean().optional(),
+    serverUrlVariables: z.boolean().optional(),
     enableWireTests: z.boolean().optional(),
     exportAllRequestsAtRoot: z.boolean().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),

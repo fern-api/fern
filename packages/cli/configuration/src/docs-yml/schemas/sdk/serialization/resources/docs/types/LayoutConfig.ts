@@ -26,6 +26,10 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         hideFeedback: core.serialization.property("hide-feedback", core.serialization.boolean().optional()),
         mobileToc: core.serialization.property("mobile-toc", core.serialization.boolean().optional()),
         changelogLayout: core.serialization.property("changelog-layout", ChangelogLayout.optional()),
+        showNavAvailabilityBadges: core.serialization.property(
+            "show-nav-availability-badges",
+            core.serialization.boolean().optional(),
+        ),
     });
 
 export declare namespace LayoutConfig {
@@ -44,5 +48,6 @@ export declare namespace LayoutConfig {
         "hide-feedback"?: boolean | null;
         "mobile-toc"?: boolean | null;
         "changelog-layout"?: ChangelogLayout.Raw | null;
+        "show-nav-availability-badges"?: boolean | null;
     }
 }
