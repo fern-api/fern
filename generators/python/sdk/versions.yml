@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.22.1
+  changelogEntry:
+    - summary: |
+        Loosen the generated `httpx-aiohttp` optional dependency constraint from an exact
+        pin (`0.1.8`) to a caret range (`^0.1.8`, i.e. `>=0.1.8,<0.2.0`). This lets the
+        aiohttp extra coexist with other packages that require a newer 0.1.x of
+        `httpx-aiohttp` (e.g. `>0.1.9`) without introducing a breaking major bump.
+      type: fix
+  createdAt: "2026-07-23"
+  irVersion: 67
 - version: 5.22.0
   changelogEntry:
     - summary: |
