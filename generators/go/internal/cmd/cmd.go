@@ -84,6 +84,7 @@ type Config struct {
 	UnionVersion                 string
 	CustomPagerName              string
 	Module                       *generator.ModuleConfig
+	Timeouts                     *generator.TimeoutsConfig
 	Writer                       *writer.Config
 }
 
@@ -262,8 +263,24 @@ func newConfig(configFilename string) (*Config, error) {
 		UnionVersion:                 customConfig.UnionVersion,
 		CustomPagerName:              customConfig.CustomPagerName,
 		Module:                       moduleConfig,
+		Timeouts:                     timeoutsConfigFromCustomConfig(customConfig),
 		Writer:                       writerConfig,
 	}, nil
+}
+
+// timeoutsConfigFromCustomConfig converts the optional, additive `timeouts`
+// block from the raw custom configuration into a *generator.TimeoutsConfig.
+// Returns nil when no `timeouts` block is present, keeping generated output
+// byte-identical to before for users who have not opted in.
+func timeoutsConfigFromCustomConfig(customConfig *customConfig) *generator.TimeoutsConfig {
+	if customConfig.Timeouts == nil {
+		return nil
+	}
+	return &generator.TimeoutsConfig{
+		Connect: customConfig.Timeouts.Connect,
+		Read:    customConfig.Timeouts.Read,
+		Write:   customConfig.Timeouts.Write,
+	}
 }
 
 // writeFiles writes the given files according to the configuration.
@@ -320,15 +337,41 @@ type customConfig struct {
 	PackageName                  string        `json:"packageName,omitempty"`
 	PackagePath                  string        `json:"packagePath,omitempty"`
 	ExportedClientName           string        `json:"exportedClientName,omitempty"`
-	UnionVersion                 string        `json:"union,omitempty"`
-	Module                       *moduleConfig `json:"module,omitempty"`
-	CustomPagerName              string        `json:"customPagerName,omitempty"`
+	UnionVersion                 string          `json:"union,omitempty"`
+	Module                       *moduleConfig   `json:"module,omitempty"`
+	CustomPagerName              string          `json:"customPagerName,omitempty"`
+	Timeouts                     *timeoutsConfig `json:"timeouts,omitempty"`
 }
 
 type moduleConfig struct {
 	Path    string            `json:"path,omitempty"`
 	Version string            `json:"version,omitempty"`
 	Imports map[string]string `json:"imports,omitempty"`
+}
+
+// timeoutsConfig is the optional, additive per-phase HTTP timeout block
+// (connect/read/write, in seconds; fractional values allowed).
+type timeoutsConfig struct {
+	Connect *float64 `json:"connect,omitempty"`
+	Read    *float64 `json:"read,omitempty"`
+	Write   *float64 `json:"write,omitempty"`
+}
+
+// validateTimeouts ensures each configured per-phase timeout is non-negative.
+func validateTimeouts(timeouts *timeoutsConfig) error {
+	if timeouts == nil {
+		return nil
+	}
+	for name, value := range map[string]*float64{
+		"connect": timeouts.Connect,
+		"read":    timeouts.Read,
+		"write":   timeouts.Write,
+	} {
+		if value != nil && *value < 0 {
+			return fmt.Errorf("timeouts.%s must be non-negative, got: %v", name, *value)
+		}
+	}
+	return nil
 }
 
 // ValidateRelativePath checks if a path is relative and valid
@@ -389,6 +432,11 @@ func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, er
 		return nil, err
 	}
 	if err := validateRelativePath(config.PackagePath); err != nil {
+		return nil, err
+	}
+
+	// Validate the optional per-phase timeouts (must be non-negative seconds).
+	if err := validateTimeouts(config.Timeouts); err != nil {
 		return nil, err
 	}
 

@@ -48,6 +48,36 @@ type Config struct {
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
+
+	// Optional, additive per-phase HTTP timeouts. When nil, no default HTTP
+	// client is injected and generated output is byte-identical to before.
+	Timeouts *TimeoutsConfig
+}
+
+// TimeoutsConfig represents optional, additive per-phase HTTP timeouts
+// (connect/read/write, in seconds; fractional values allowed). When set, the
+// generated SDK builds a default *http.Client backed by a custom transport that
+// applies these timeouts, unless the user supplies their own HTTP client. When
+// nil, generated output is unchanged.
+type TimeoutsConfig struct {
+	// Connect is the maximum duration (in seconds) to wait for a connection to
+	// be established, including TLS handshake.
+	Connect *float64
+	// Read is the maximum duration (in seconds) to wait for response headers
+	// and, additionally, the maximum idle duration between reads of the
+	// response body.
+	Read *float64
+	// Write is the maximum duration (in seconds) to wait when writing the
+	// request body.
+	Write *float64
+}
+
+// IsConfigured returns true when at least one per-phase timeout is set.
+func (t *TimeoutsConfig) IsConfigured() bool {
+	if t == nil {
+		return false
+	}
+	return t.Connect != nil || t.Read != nil || t.Write != nil
 }
 
 // ModuleConfig represents the configuration used to generate
@@ -97,6 +127,7 @@ func NewConfig(
 	unionVersion string,
 	customPagerName string,
 	moduleConfig *ModuleConfig,
+	timeouts *TimeoutsConfig,
 ) (*Config, error) {
 	uv, err := parseUnionVersion(unionVersion)
 	if err != nil {
@@ -132,6 +163,7 @@ func NewConfig(
 		UnionVersion:                 uv,
 		CustomPagerName:              customPagerName,
 		ModuleConfig:                 moduleConfig,
+		Timeouts:                     timeouts,
 	}, nil
 }
 

@@ -52,6 +52,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.UnionVersion,
 		config.CustomPagerName,
 		config.Module,
+		config.Timeouts,
 	)
 	if err != nil {
 		return nil, 0, err

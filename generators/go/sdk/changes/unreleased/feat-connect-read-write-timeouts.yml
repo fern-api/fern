@@ -1,0 +1,30 @@
+- summary: |
+    Add independent connect/read/write timeouts to the generated SDK. These are additive and
+    opt-in — when unconfigured, generated output is byte-identical to before and the existing
+    user-supplied `*http.Client` behavior is preserved.
+
+    Configure the defaults via a `timeouts` block in `generators.yml` (values are in seconds and
+    may be fractional):
+
+    ```yaml
+    config:
+      timeouts:
+        connect: 5
+        read: 30
+        write: 30
+    ```
+
+    When `timeouts` is configured and the caller has not supplied their own HTTP client, the SDK
+    builds a default `*http.Client` backed by a custom transport:
+
+    - `connect` maps cleanly to `net.Dialer.Timeout` and `http.Transport.TLSHandshakeTimeout`.
+    - `read` maps to `http.Transport.ResponseHeaderTimeout`, plus an idle read deadline on the
+      response body to approximate a full body-read timeout.
+    - `write` is an approximation: `net/http` exposes no first-class client write deadline, so the
+      SDK bounds the idle time between reads of the request body (which the transport performs
+      while writing the body to the wire) to approximate a write timeout as closely as feasible.
+
+    The same phases can be overridden per request via `option.WithConnectTimeout`,
+    `option.WithReadTimeout`, and `option.WithWriteTimeout`, which win over the configured defaults
+    for the phases they cover.
+  type: feat

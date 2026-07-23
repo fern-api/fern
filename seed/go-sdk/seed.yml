@@ -119,6 +119,12 @@ fixtures:
     - outputFolder: export-all-requests-at-root
       customConfig:
         exportAllRequestsAtRoot: true
+    - outputFolder: phase-timeouts
+      customConfig:
+        timeouts:
+          connect: 5
+          read: 30
+          write: 30
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
