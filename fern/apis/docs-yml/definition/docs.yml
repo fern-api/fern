@@ -2324,6 +2324,11 @@ types:
         type: optional<integer>
         docs: |
           The maximum number of websocket messages per connection in the playground.
+      "send-optional-defaults":
+        type: optional<boolean>
+        docs: |
+          When true, optional parameters that declare a default (or x-fern-default) are
+          pre-filled and sent from the API Explorer playground. Defaults to false.
 
   PlaygroundButtonSettings:
     properties:

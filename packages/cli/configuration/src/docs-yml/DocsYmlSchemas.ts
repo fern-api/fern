@@ -460,7 +460,8 @@ export const PlaygroundSettings = z.object({
     environments: z.array(z.string()).optional(),
     button: PlaygroundButtonSettings.optional(),
     oauth: z.boolean().optional(),
-    "limit-websocket-messages-per-connection": z.number().int().optional()
+    "limit-websocket-messages-per-connection": z.number().int().optional(),
+    "send-optional-defaults": z.boolean().optional()
 });
 
 // ===== Announcement =====
