@@ -76,6 +76,45 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("default-timeout-in-seconds")
     Optional<Integer> defaultTimeoutInSeconds();
 
+    /**
+     * Optional, additive per-phase timeouts (in seconds; fractional values allowed). When set, the granular
+     * connect/read/write values are applied to the underlying OkHttp client on top of the existing single overall
+     * timeout ({@link #defaultTimeoutInSeconds()} -> {@code callTimeout}). When unset, generated output is unchanged.
+     */
+    @JsonProperty("timeouts")
+    Optional<Timeouts> timeouts();
+
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    @JsonDeserialize(as = ImmutableTimeouts.class)
+    interface Timeouts {
+        @JsonProperty("connect")
+        Optional<Double> connect();
+
+        @JsonProperty("read")
+        Optional<Double> read();
+
+        @JsonProperty("write")
+        Optional<Double> write();
+
+        @Value.Check
+        default void validate() {
+            connect().ifPresent(value -> validateNonNegative("connect", value));
+            read().ifPresent(value -> validateNonNegative("read", value));
+            write().ifPresent(value -> validateNonNegative("write", value));
+        }
+
+        static void validateNonNegative(String name, double value) {
+            if (value < 0) {
+                throw new IllegalArgumentException("timeouts." + name + " must be non-negative, got: " + value);
+            }
+        }
+
+        static ImmutableTimeouts.Builder builder() {
+            return ImmutableTimeouts.builder();
+        }
+    }
+
     @Override
     @Value.Default
     @JsonProperty("collapse-optional-nullable")
