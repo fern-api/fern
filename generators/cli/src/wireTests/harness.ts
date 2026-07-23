@@ -166,6 +166,23 @@ struct CommandInfo {
     is_streaming: bool,
 }
 
+/// Build a \`CommandInfo\` for a single method at the given command \`chain\`.
+fn make_command(chain: Vec<String>, method: &fern_cli_sdk::openapi::discovery::RestMethod) -> CommandInfo {
+    CommandInfo {
+        chain,
+        http_method: method.http_method.to_uppercase(),
+        path: method.path.clone(),
+        has_json_body: method.request.is_some(),
+        is_binary: method.binary_request_body.is_some(),
+        is_multipart: !method.multipart_fields.is_empty(),
+        has_body_field_flags: method
+            .parameters
+            .values()
+            .any(|p| p.location.as_deref() == Some("body")),
+        is_streaming: method.streaming.is_some(),
+    }
+}
+
 /// Recursively collect one \`CommandInfo\` per method from a resource tree,
 /// prefixing every chain with \`prefix\` (root group + spec namespace).
 fn collect_commands(resources: &HashMap<String, RestResource>, prefix: &[String], out: &mut Vec<CommandInfo>) {
@@ -175,21 +192,60 @@ fn collect_commands(resources: &HashMap<String, RestResource>, prefix: &[String]
         for (method_name, method) in &resource.methods {
             let mut full = chain.clone();
             full.push(method_name.clone());
-            out.push(CommandInfo {
-                chain: full,
-                http_method: method.http_method.to_uppercase(),
-                path: method.path.clone(),
-                has_json_body: method.request.is_some(),
-                is_binary: method.binary_request_body.is_some(),
-                is_multipart: !method.multipart_fields.is_empty(),
-                has_body_field_flags: method
-                    .parameters
-                    .values()
-                    .any(|p| p.location.as_deref() == Some("body")),
-                is_streaming: method.streaming.is_some(),
-            });
+            out.push(make_command(full, method));
         }
         collect_commands(&resource.resources, &chain, out);
+    }
+}
+
+/// Collect commands for one spec, replicating the SDK's namespace-mount
+/// semantics (\`merge_into_path\` in \`openapi/app.rs\`).
+///
+/// A spec bound with \`.spec_under("<namespace>", …)\` nests under the
+/// namespace, but the SDK performs *stutter elision*: if the spec's discovery
+/// tree has a top-level resource whose name equals the (leaf) namespace
+/// segment, that resource's methods and sub-resources are hoisted directly
+/// into the namespace node — so \`<ns> <ns> <op>\` collapses to \`<ns> <op>\`.
+/// This happens whenever a spec is untagged and Fern groups every operation
+/// under a resource derived from the shared path prefix (e.g. \`v1\`) that
+/// matches the version namespace. Mirror it here so the resolved command
+/// chain matches the binary's actual command tree.
+fn collect_spec_commands(
+    resources: &HashMap<String, RestResource>,
+    root_prefix: &[String],
+    namespace: Option<&str>,
+    out: &mut Vec<CommandInfo>,
+) {
+    let segments: Vec<String> = match namespace {
+        Some(ns) => ns.split('/').filter(|s| !s.is_empty()).map(str::to_string).collect(),
+        None => Vec::new(),
+    };
+    if segments.is_empty() {
+        collect_commands(resources, root_prefix, out);
+        return;
+    }
+
+    // Prefix up to and including the namespace node.
+    let mut ns_prefix = root_prefix.to_vec();
+    ns_prefix.extend(segments.iter().cloned());
+    let leaf = segments.last().expect("segments non-empty");
+
+    // Non-matching top-level resources are ordinary children of the namespace.
+    let others: HashMap<String, RestResource> = resources
+        .iter()
+        .filter(|(name, _)| name.as_str() != leaf.as_str())
+        .map(|(k, v)| (k.clone(), v.clone()))
+        .collect();
+    collect_commands(&others, &ns_prefix, out);
+
+    // A resource matching the namespace leaf is hoisted into the namespace node.
+    if let Some(matching) = resources.get(leaf.as_str()) {
+        for (method_name, method) in &matching.methods {
+            let mut full = ns_prefix.clone();
+            full.push(method_name.clone());
+            out.push(make_command(full, method));
+        }
+        collect_commands(&matching.resources, &ns_prefix, out);
     }
 }
 
@@ -203,14 +259,11 @@ fn resolve_command(manifest: &Manifest, method: &str, path: &str) -> CommandInfo
             .unwrap_or_else(|e| panic!("failed to read baked spec {spec_path}: {e}"));
         let doc = load_openapi_spec(&contents, &manifest.binary_name)
             .unwrap_or_else(|e| panic!("failed to parse baked spec {spec_path}: {e:?}"));
-        let mut prefix: Vec<String> = Vec::new();
+        let mut root_prefix: Vec<String> = Vec::new();
         if let Some(root_group) = &manifest.root_group {
-            prefix.push(root_group.clone());
+            root_prefix.push(root_group.clone());
         }
-        if let Some(namespace) = &spec.namespace {
-            prefix.push(namespace.clone());
-        }
-        collect_commands(&doc.resources, &prefix, &mut commands);
+        collect_spec_commands(&doc.resources, &root_prefix, spec.namespace.as_deref(), &mut commands);
     }
 
     let want_method = method.to_uppercase();
