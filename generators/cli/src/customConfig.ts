@@ -56,6 +56,19 @@ export interface FernCliCustomConfig {
      * hyphens converted to underscores).
      */
     userAgentSuffixFlag?: string;
+
+    /**
+     * When true, the generator emits an automated wire-test suite alongside
+     * the CLI: `wiremock/wire-test-cases.json` (one case per endpoint
+     * example) and `tests/wire_test.rs` (a generic harness that stands up an
+     * in-process mock server, drives the compiled binary, and asserts the
+     * request/response). `seed`'s `cargo test --all-features` runs these
+     * automatically — no docker, no network.
+     *
+     * Defaults to `false` so existing generations are unaffected until a
+     * consumer opts in.
+     */
+    generateWireTests?: boolean;
 }
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
@@ -164,6 +177,14 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.userAgentSuffixFlag = obj.userAgentSuffixFlag;
+    }
+    if ("generateWireTests" in obj && obj.generateWireTests !== undefined) {
+        if (typeof obj.generateWireTests !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.generateWireTests: expected a boolean, got ${typeof obj.generateWireTests}.`
+            );
+        }
+        result.generateWireTests = obj.generateWireTests;
     }
     return result;
 }
