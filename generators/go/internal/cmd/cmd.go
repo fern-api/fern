@@ -64,6 +64,7 @@ type Config struct {
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
 	DedupeUnionBaseProperties    bool
+	ServerURLVariables           bool
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
@@ -239,6 +240,7 @@ func newConfig(configFilename string) (*Config, error) {
 		UseReaderForBytesRequest:     *customConfig.UseReaderForBytesRequest,
 		GettersPassByValue:           *customConfig.GettersPassByValue,
 		DedupeUnionBaseProperties:    *customConfig.DedupeUnionBaseProperties,
+		ServerURLVariables:           *customConfig.ServerURLVariables,
 		ExportAllRequestsAtRoot:      *customConfig.ExportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     *customConfig.OmitEmptyRequestWrappers,
 		OmitFernHeaders:              *customConfig.OmitFernHeaders,
@@ -307,6 +309,7 @@ type customConfig struct {
 	UseReaderForBytesRequest     *bool         `json:"useReaderForBytesRequest,omitempty"`
 	GettersPassByValue           *bool         `json:"gettersPassByValue,omitempty"`
 	DedupeUnionBaseProperties    *bool         `json:"dedupeUnionBaseProperties,omitempty"`
+	ServerURLVariables           *bool         `json:"serverUrlVariables,omitempty"`
 	ExportAllRequestsAtRoot      *bool         `json:"exportAllRequestsAtRoot,omitempty"`
 	OmitEmptyRequestWrappers     *bool         `json:"omitEmptyRequestWrappers,omitempty"`
 	OmitFernHeaders              *bool         `json:"omitFernHeaders,omitempty"`
@@ -525,6 +528,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.DedupeUnionBaseProperties == nil {
 		customConfig.DedupeUnionBaseProperties = gospec.Ptr(false)
+	}
+	if customConfig.ServerURLVariables == nil {
+		customConfig.ServerURLVariables = gospec.Ptr(true)
 	}
 	if customConfig.ExportAllRequestsAtRoot == nil {
 		customConfig.ExportAllRequestsAtRoot = gospec.Ptr(false)
