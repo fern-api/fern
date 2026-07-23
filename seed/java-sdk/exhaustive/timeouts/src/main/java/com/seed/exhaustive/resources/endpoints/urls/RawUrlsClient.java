@@ -47,7 +47,11 @@ public class RawUrlsClient {
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        if (requestOptions != null
+                && (requestOptions.getTimeout().isPresent()
+                        || requestOptions.getConnectTimeout().isPresent()
+                        || requestOptions.getReadTimeout().isPresent()
+                        || requestOptions.getWriteTimeout().isPresent())) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
@@ -97,7 +101,11 @@ public class RawUrlsClient {
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        if (requestOptions != null
+                && (requestOptions.getTimeout().isPresent()
+                        || requestOptions.getConnectTimeout().isPresent()
+                        || requestOptions.getReadTimeout().isPresent()
+                        || requestOptions.getWriteTimeout().isPresent())) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
@@ -147,7 +155,11 @@ public class RawUrlsClient {
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        if (requestOptions != null
+                && (requestOptions.getTimeout().isPresent()
+                        || requestOptions.getConnectTimeout().isPresent()
+                        || requestOptions.getReadTimeout().isPresent()
+                        || requestOptions.getWriteTimeout().isPresent())) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
@@ -197,7 +209,11 @@ public class RawUrlsClient {
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        if (requestOptions != null
+                && (requestOptions.getTimeout().isPresent()
+                        || requestOptions.getConnectTimeout().isPresent()
+                        || requestOptions.getReadTimeout().isPresent()
+                        || requestOptions.getWriteTimeout().isPresent())) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {

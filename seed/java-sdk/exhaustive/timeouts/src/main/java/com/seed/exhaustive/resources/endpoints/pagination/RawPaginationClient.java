@@ -83,7 +83,11 @@ public class RawPaginationClient {
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+        if (requestOptions != null
+                && (requestOptions.getTimeout().isPresent()
+                        || requestOptions.getConnectTimeout().isPresent()
+                        || requestOptions.getReadTimeout().isPresent()
+                        || requestOptions.getWriteTimeout().isPresent())) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {

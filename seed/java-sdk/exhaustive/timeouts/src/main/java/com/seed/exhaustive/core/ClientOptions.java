@@ -92,9 +92,10 @@ public final class ClientOptions {
         if (requestOptions == null) {
             return this.httpClient;
         }
-        OkHttpClient.Builder httpClientBuilder = this.httpClient
-                .newBuilder()
-                .callTimeout(requestOptions.getTimeout().get(), requestOptions.getTimeoutTimeUnit());
+        OkHttpClient.Builder httpClientBuilder = this.httpClient.newBuilder();
+        requestOptions
+                .getTimeout()
+                .ifPresent(timeout -> httpClientBuilder.callTimeout(timeout, requestOptions.getTimeoutTimeUnit()));
         requestOptions
                 .getConnectTimeout()
                 .ifPresent(timeout -> httpClientBuilder.connectTimeout(timeout, requestOptions.getTimeoutTimeUnit()));

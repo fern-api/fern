@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix per-call connect/read/write timeout overrides being ignored unless an overall `timeout`
+    was also set on the request options. The generated endpoint now applies the per-request client
+    whenever any phase timeout is present, and `httpClientWithTimeout` sets `callTimeout` only when
+    an overall timeout is provided (previously it unconditionally dereferenced the overall timeout).
+  type: fix

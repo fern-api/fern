@@ -1507,12 +1507,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         // The base client already carries the configured connect/read/write timeouts; inherit them via newBuilder()
         // and only override the overall callTimeout and any per-call phase overrides provided on the request options.
+        // Each override is applied only when present so a per-call phase timeout works without an overall timeout.
         method.addStatement(
-                        "$T.Builder $L = this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())",
+                        "$T.Builder $L = this.$L.newBuilder()",
                         OKHTTP_CLIENT_FIELD.type,
                         OKHTTP_CLIENT_FIELD.name + "Builder",
-                        OKHTTP_CLIENT_FIELD.name,
+                        OKHTTP_CLIENT_FIELD.name)
+                .addStatement(
+                        "$N.getTimeout().ifPresent(timeout -> $L.callTimeout(timeout, $N.getTimeoutTimeUnit()))",
                         REQUEST_OPTIONS_PARAMETER_NAME,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
                         REQUEST_OPTIONS_PARAMETER_NAME)
                 .addStatement(
                         "$N.getConnectTimeout().ifPresent(timeout -> $L.connectTimeout(timeout, $N.getTimeoutTimeUnit()))",
