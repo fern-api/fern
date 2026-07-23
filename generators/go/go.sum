@@ -4,8 +4,8 @@ github.com/fern-api/generator-exec-go v1.0.40 h1:5f5De4Xy3HiEjdEzp+ESPA4Pc2+Lk0U
 github.com/fern-api/generator-exec-go v1.0.40/go.mod h1:Z7V5lZnaD8PblJAynK087662md2wBNhQcAl+W6IIydw=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/hmdsefi/gograph v0.7.0 h1:4B75p7Nl1eVZe5OsfYqCAGLCQUMLwmU2OXtsfzNn8Qc=
-github.com/hmdsefi/gograph v0.7.0/go.mod h1:ZrmXi8bO0eWG86DQ4F0kinG1+2zSgZVKIbhadwSCEag=
+github.com/hmdsefi/gograph v0.7.1 h1:WKjM6r7pkK1Z6Lsn7YoJisBFHsbvmKa2rAGVN91lZiI=
+github.com/hmdsefi/gograph v0.7.1/go.mod h1:ZrmXi8bO0eWG86DQ4F0kinG1+2zSgZVKIbhadwSCEag=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
