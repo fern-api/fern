@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.51.0
+- version: 1.52.0
   changelogEntry:
     - summary: |
         Support per-endpoint auth routing. When the API's auth requirement is
@@ -14,6 +14,55 @@
         unaffected and produce byte-identical output.
       type: feat
   createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.51.0
+  changelogEntry:
+    - summary: |
+        Add body-hash binding verification for HMAC webhooks that transmit a hash of the raw request body in the notification URL.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated Go SDK now emits a `WebhooksHelper` with a
+        `VerifySignature` method that validates the signature (and optional timestamp) using a
+        new stdlib-only core utility (`crypto/hmac`/`crypto/sha*`/`encoding` with constant-time
+        comparison).
+      type: feat
+    - summary: |
+        Extend the generated `VerifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, the `requestBody`
+          parameter accepts either a raw string or a `map[string][]string`-shaped multimap of
+          POST body parameters; keys are sorted, each key's values are deduped and sorted, and
+          `key + value` pairs are concatenated with no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check. The body-hash check runs once above the candidate loop.
+        - No-throw: the verifier fails closed. Every verification-path failure (null/empty
+          inputs, a missing/malformed timestamp, a body-hash type mismatch) now returns
+          `false` rather than an error.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `NotificationUrlCandidates` helper (using
+          `net/url`) is added to the core webhook utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.50.1
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both a selected environment and server URL
+        variables (e.g. `option.WithRegion`), the generated client now renders the
+        selected environment's URL template(s) instead of always using the first
+        environment's template. Custom base URLs and environment values are left
+        untouched, and the first (default) templated environment is still used when
+        no environment is selected.
+      type: fix
+  createdAt: "2026-07-21"
   irVersion: 67
 - version: 1.50.0
   changelogEntry:

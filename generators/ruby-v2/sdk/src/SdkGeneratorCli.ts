@@ -21,6 +21,7 @@ import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientG
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
@@ -118,6 +119,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         this.generateInferredAuthProvider(context);
         this.generateOAuthProvider(context);
         this.generateRoutingAuthProvider(context);
+        this.generateWebhooksHelpers(context);
 
         if (this.shouldGenerateReadme(context)) {
             try {
@@ -198,6 +200,13 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         }
         const routingAuthProvider = new RoutingAuthProviderGenerator(context);
         context.project.addRawFiles(routingAuthProvider.generate());
+    }
+
+    private generateWebhooksHelpers(context: SdkGeneratorContext): void {
+        const webhooksHelperGenerator = new WebhooksHelperGenerator(context);
+        for (const file of webhooksHelperGenerator.generate()) {
+            context.project.addRawFiles(file);
+        }
     }
 
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {

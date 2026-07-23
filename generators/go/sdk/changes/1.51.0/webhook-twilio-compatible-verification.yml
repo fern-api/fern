@@ -1,0 +1,23 @@
+- summary: |
+    Extend the generated `VerifySignature` webhook helper with Twilio-compatible
+    verification, mirroring the TypeScript reference:
+    - Multi-value form params: when `payloadFormat.bodySort` is set, the `requestBody`
+      parameter accepts either a raw string or a `map[string][]string`-shaped multimap of
+      POST body parameters; keys are sorted, each key's values are deduped and sorted, and
+      `key + value` pairs are concatenated with no separator before signing.
+    - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+      query parameter is read from the notification URL at runtime. When present (JSON) the
+      raw body is hashed and constant-time compared and the signature is checked over the
+      URL only; when absent (classic form) the signature is checked over the URL + params
+      with no body-hash check. The body-hash check runs once above the candidate loop.
+    - No-throw: the verifier fails closed. Every verification-path failure (null/empty
+      inputs, a missing/malformed timestamp, a body-hash type mismatch) now returns
+      `false` rather than an error.
+    - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+      signature is verified against several normalized notification-URL candidates
+      (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+      constant-time match. A stdlib-only `NotificationUrlCandidates` helper (using
+      `net/url`) is added to the core webhook utility.
+    Output is unchanged for webhooks that do not configure these fields, other than the
+    no-throw behavior which applies to all generated helpers.
+  type: feat

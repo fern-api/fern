@@ -1,0 +1,7 @@
+- summary: |
+    Add webhook signature verification support. When a webhook declares HMAC signature
+    verification in the IR, the generated Go SDK now emits a `WebhooksHelper` with a
+    `VerifySignature` method that validates the signature (and optional timestamp) using a
+    new stdlib-only core utility (`crypto/hmac`/`crypto/sha*`/`encoding` with constant-time
+    comparison).
+  type: feat

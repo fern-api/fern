@@ -997,7 +997,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      */
     private writeServerVariableInterpolation(writer: Writer): void {
         const config = this.context.ir.environments;
-        const options = getServerVariableOptions(config, this.case);
+        const options = getServerVariableOptions(config, this.case, this.settings.serverUrlVariables);
         if (options.length === 0 || config == null) {
             return;
         }
@@ -1007,58 +1007,97 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             .join(" || ");
         switch (environments.type) {
             case "singleBaseUrl": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplate != null);
-                if (templatedEnvironment?.urlTemplate == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplate != null);
+                const firstTemplate = templatedEnvironments[0]?.urlTemplate;
+                if (firstTemplate == null) {
                     return;
                 }
-                writer.controlFlow(
-                    "if",
-                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsBaseUrlExplicitlySet`)
-                );
+                writer.controlFlow("if", this.csharp.codeblock(variableSetCondition));
                 this.writeServerVariableLocals(writer, options);
+                writer.controlFlow("if", this.csharp.codeblock("!clientOptions.IsBaseUrlExplicitlySet"));
                 writer.writeTextStatement(
-                    `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(templatedEnvironment.urlTemplate, options)}`
+                    `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(firstTemplate, options)}`
                 );
+                writer.endControlFlow();
+                for (const environment of templatedEnvironments) {
+                    if (environment.urlTemplate == null) {
+                        continue;
+                    }
+                    writer.controlFlow(
+                        "else if",
+                        this.csharp.codeblock((conditionWriter) => {
+                            conditionWriter.write("clientOptions.BaseUrl == ");
+                            conditionWriter.writeNode(this.Types.Environments);
+                            conditionWriter.write(`.${this.getEnvironmentConstantName(environment.name)}`);
+                        })
+                    );
+                    writer.writeTextStatement(
+                        `clientOptions.BaseUrl = ${urlTemplateToInterpolatedString(environment.urlTemplate, options)}`
+                    );
+                    writer.endControlFlow();
+                }
                 writer.endControlFlow();
                 break;
             }
             case "multipleBaseUrls": {
-                const templatedEnvironment = environments.environments.find((env) => env.urlTemplates != null);
-                if (templatedEnvironment?.urlTemplates == null) {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
+                const firstTemplatedEnvironment = templatedEnvironments[0];
+                if (firstTemplatedEnvironment == null) {
                     return;
                 }
-                const urlTemplates = templatedEnvironment.urlTemplates;
-                const staticUrls = templatedEnvironment.urls;
-                writer.controlFlow(
-                    "if",
-                    this.csharp.codeblock(`(${variableSetCondition}) && !clientOptions.IsEnvironmentExplicitlySet`)
-                );
+                const writeEnvironmentAssignment = (
+                    environment: FernIr.MultipleBaseUrlsEnvironment,
+                    assignmentWriter: Writer
+                ): void => {
+                    assignmentWriter.write("clientOptions.Environment = ");
+                    assignmentWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.Types.Environments,
+                            arguments_: environments.baseUrls.map((baseUrl) => {
+                                const template = environment.urlTemplates?.[baseUrl.id];
+                                return {
+                                    name: this.case.pascalSafe(baseUrl.name),
+                                    assignment:
+                                        template != null
+                                            ? this.csharp.codeblock(urlTemplateToInterpolatedString(template, options))
+                                            : this.csharp.codeblock(
+                                                  this.csharp.string_({ string: environment.urls[baseUrl.id] ?? "" })
+                                              )
+                                };
+                            }),
+                            multiline: true
+                        })
+                    );
+                };
+                writer.controlFlow("if", this.csharp.codeblock(variableSetCondition));
                 this.writeServerVariableLocals(writer, options);
-                writer.write("clientOptions.Environment = ");
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.Types.Environments,
-                        arguments_: environments.baseUrls.map((baseUrl) => {
-                            const template = urlTemplates[baseUrl.id];
-                            return {
-                                name: this.case.pascalSafe(baseUrl.name),
-                                assignment:
-                                    template != null
-                                        ? this.csharp.codeblock(urlTemplateToInterpolatedString(template, options))
-                                        : this.csharp.codeblock(
-                                              this.csharp.string_({ string: staticUrls[baseUrl.id] ?? "" })
-                                          )
-                            };
-                        }),
-                        multiline: true
-                    })
-                );
+                writer.controlFlow("if", this.csharp.codeblock("!clientOptions.IsEnvironmentExplicitlySet"));
+                writeEnvironmentAssignment(firstTemplatedEnvironment, writer);
+                writer.endControlFlow();
+                for (const environment of templatedEnvironments) {
+                    writer.controlFlow(
+                        "else if",
+                        this.csharp.codeblock((conditionWriter) => {
+                            conditionWriter.write("clientOptions.Environment == ");
+                            conditionWriter.writeNode(this.Types.Environments);
+                            conditionWriter.write(`.${this.getEnvironmentConstantName(environment.name)}`);
+                        })
+                    );
+                    writeEnvironmentAssignment(environment, writer);
+                    writer.endControlFlow();
+                }
                 writer.endControlFlow();
                 break;
             }
             default:
                 assertNever(environments);
         }
+    }
+
+    private getEnvironmentConstantName(environmentName: FernIr.NameOrString): string {
+        return this.settings.pascalCaseEnvironments
+            ? this.case.pascalSafe(environmentName)
+            : this.case.screamingSnakeSafe(environmentName);
     }
 
     private writeServerVariableLocals(writer: Writer, options: ServerVariableOption[]): void {

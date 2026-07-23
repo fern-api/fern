@@ -136,7 +136,8 @@ function createMockBaseContext(opts?: {
                         properties: [],
                         extends: [],
                         extraProperties: false,
-                        extendedProperties: undefined
+                        extendedProperties: undefined,
+                        deferredUnionBaseProperties: undefined
                     }),
                     referencedTypes: new Set<string>(),
                     encoding: undefined,
@@ -210,7 +211,8 @@ function createObjectGenerator(opts: {
             properties: opts.properties ?? [],
             extends: opts.extends ?? [],
             extraProperties: opts.extraProperties ?? false,
-            extendedProperties: opts.extendedProperties
+            extendedProperties: opts.extendedProperties,
+            deferredUnionBaseProperties: undefined
         },
         examples: opts.examples ?? [],
         docs: opts.docs,
@@ -797,7 +799,8 @@ describe("GeneratedObjectTypeImpl", () => {
                                 properties: [],
                                 extends: [],
                                 extraProperties: false,
-                                extendedProperties: undefined
+                                extendedProperties: undefined,
+                                deferredUnionBaseProperties: undefined
                             }),
                             referencedTypes: new Set<string>(),
                             encoding: undefined,

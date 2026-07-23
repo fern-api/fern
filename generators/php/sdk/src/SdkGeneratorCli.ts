@@ -25,6 +25,7 @@ import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPacka
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -73,6 +74,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateOauthTokenProvider(context);
         this.generateInferredAuthProvider(context);
         this.generateRoutingAuthProvider(context);
+        this.generateWebhooksHelpers(context);
         await this.generateWireTestFiles(context);
 
         if (context.config.output.snippetFilepath != null) {
@@ -209,6 +211,13 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         }
         const routingAuthProvider = new RoutingAuthProviderGenerator(context);
         context.project.addSourceFiles(routingAuthProvider.generate());
+    }
+
+    private generateWebhooksHelpers(context: SdkGeneratorContext): void {
+        const generator = new WebhooksHelperGenerator(context);
+        for (const file of generator.generate()) {
+            context.project.addSourceFiles(file);
+        }
     }
 
     private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {

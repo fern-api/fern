@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.76.5
+- version: 2.79.0
   changelogEntry:
     - summary: |
         SDKs whose API uses per-endpoint security (`auth.requirement == ENDPOINT_SECURITY`)
@@ -13,6 +13,81 @@
         `ALL`/`ANY` auth are unaffected.
       type: feat
   createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.78.0
+  changelogEntry:
+    - summary: |
+        Support webhook body-hash binding in the generated `WebhooksHelper.VerifySignature`
+        helper. When a webhook's HMAC signature configuration declares a `bodyHashBinding`
+        (as used by providers such as Twilio for JSON bodies), verification now first
+        recomputes an unkeyed hash of the raw request body and compares it, in constant time,
+        against the hash carried in the notification URL's query parameter, failing closed on
+        a missing or mismatched value before performing the existing HMAC check over the
+        verbatim notification URL. The body-hash algorithm and encoding are independent of the
+        outer HMAC's. Output is unchanged when no `bodyHashBinding` is configured.
+      type: feat
+    - summary: |
+        Add webhook signature verification. For APIs that configure HMAC webhook signature
+        verification, the C# SDK now generates a static `WebhooksHelper.VerifySignature`
+        helper (plus per-config override helpers when webhooks use distinct configs) backed
+        by a stdlib-only `WebhookSignature` core utility for HMAC computation and
+        constant-time comparison.
+      type: feat
+    - summary: |
+        Extend the generated `WebhooksHelper.VerifySignature` helper to be Twilio-compatible,
+        mirroring the TypeScript reference. When a webhook's HMAC configuration declares
+        `payloadFormat.bodySort`, `requestBody` widens to `object` and accepts either a raw
+        string or an `IReadOnlyDictionary<string, ...>` of POST body parameters whose values
+        are a string or a collection of strings; keys are sorted, per-key values are deduped
+        and sorted, and `key + value` pairs are concatenated with no separator before signing.
+        When a `bodyHashBinding` is configured, verification branches at runtime on whether the
+        body-hash query parameter is present on the notification URL: a JSON request recomputes
+        `hash(rawBody)`, constant-time compares it, and signs the URL only, while a classic
+        form request signs the URL plus the sorted/deduped params with no body-hash check.
+        When `notificationUrlNormalization` is configured, the signature is verified against
+        several normalized forms of the notification URL (standard/absent port, and legacy
+        query re-encoding), succeeding on the first constant-time match via a new stdlib-only
+        `NotificationUrlCandidates` helper on the core `WebhookSignature` utility. The verifier
+        is now a pure boolean and never throws: every failure on the verification path
+        (null/empty inputs, a missing or malformed timestamp, an unparseable URL, a missing
+        body-hash parameter on the JSON path, or an unexpected request-body type) fails closed
+        with `false`. Output is unchanged for webhooks that do not configure these fields.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.77.0
+  changelogEntry:
+    - summary: |
+        Add a `server-url-variables` configuration flag (default `true`) that controls whether server
+        URL variables declared on the API's environments are exposed as client options and
+        interpolated into the environment URL template(s) at construction time. When set to `false`,
+        those client options and the URL-template interpolation are suppressed and the generated SDK
+        falls back to the base-URL behavior from before the feature. Defaults to `true`, so existing
+        generated output is unchanged.
+      type: feat
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.6
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated `OAuthTokenProvider`. The token
+        cache is now guarded by a `SemaphoreSlim` with double-checked locking (the
+        same pattern already used by `InferredAuthTokenProvider`), so only one
+        caller refreshes the token under concurrent load and cached values are
+        published safely. The cache-hit path stays lock-free.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.76.5
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both a named environment and server URL
+        variables (e.g. `Region`), the generated client now renders the selected
+        environment's URL template(s) instead of always using the first (default)
+        environment's template. Explicitly provided custom base URLs and custom
+        environment values are never overridden.
+      type: fix
+  createdAt: "2026-07-21"
   irVersion: 67
 - version: 2.76.4
   changelogEntry:

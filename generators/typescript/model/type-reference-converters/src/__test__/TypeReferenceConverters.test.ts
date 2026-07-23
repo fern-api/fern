@@ -110,7 +110,8 @@ function createMockBaseContext(opts?: {
                         properties: [],
                         extends: [],
                         extraProperties: false,
-                        extendedProperties: undefined
+                        extendedProperties: undefined,
+                        deferredUnionBaseProperties: undefined
                     }),
                     examples: [],
                     referencedTypes: new Set<string>(),
@@ -783,7 +784,8 @@ describe("TypeReferenceToParsedTypeNodeConverter", () => {
                             properties: [],
                             extends: [],
                             extraProperties: false,
-                            extendedProperties: undefined
+                            extendedProperties: undefined,
+                            deferredUnionBaseProperties: undefined
                         })
                         // biome-ignore lint/suspicious/noExplicitAny: test mock
                     }) as any
@@ -812,7 +814,8 @@ describe("TypeReferenceToParsedTypeNodeConverter", () => {
                             properties: [],
                             extends: [],
                             extraProperties: false,
-                            extendedProperties: undefined
+                            extendedProperties: undefined,
+                            deferredUnionBaseProperties: undefined
                         })
                         // biome-ignore lint/suspicious/noExplicitAny: test mock
                     }) as any
@@ -841,7 +844,8 @@ describe("TypeReferenceToParsedTypeNodeConverter", () => {
                             properties: [],
                             extends: [],
                             extraProperties: false,
-                            extendedProperties: undefined
+                            extendedProperties: undefined,
+                            deferredUnionBaseProperties: undefined
                         })
                         // biome-ignore lint/suspicious/noExplicitAny: test mock
                     }) as any

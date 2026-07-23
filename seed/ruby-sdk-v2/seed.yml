@@ -140,6 +140,9 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+  ruby-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null

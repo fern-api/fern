@@ -184,6 +184,9 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+  php-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null

@@ -1,0 +1,8 @@
+- summary: |
+    When a client is constructed with both an environment and server URL variables
+    (e.g. `region`), the generated client now renders the SELECTED environment's URL
+    template(s) instead of always using the first environment's template. For
+    multi-host environments, every host's URL is formatted from the selected
+    environment's templates. An explicitly provided custom base URL or environment
+    is never overridden.
+  type: fix

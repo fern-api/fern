@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support webhook body-hash binding in the generated `WebhooksHelper.VerifySignature`
+    helper. When a webhook's HMAC signature configuration declares a `bodyHashBinding`
+    (as used by providers such as Twilio for JSON bodies), verification now first
+    recomputes an unkeyed hash of the raw request body and compares it, in constant time,
+    against the hash carried in the notification URL's query parameter, failing closed on
+    a missing or mismatched value before performing the existing HMAC check over the
+    verbatim notification URL. The body-hash algorithm and encoding are independent of the
+    outer HMAC's. Output is unchanged when no `bodyHashBinding` is configured.
+  type: feat

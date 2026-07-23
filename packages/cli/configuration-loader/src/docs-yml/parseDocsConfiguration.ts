@@ -553,7 +553,8 @@ function convertSettingsConfig(
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
             prioritizeCurrentProduct,
-            defaultFilterByCurrentProduct
+            defaultFilterByCurrentProduct,
+            externalSitemaps: undefined
         },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,

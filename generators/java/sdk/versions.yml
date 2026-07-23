@@ -1,4 +1,58 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding support. When a webhook's HMAC signature verification
+        declares a `bodyHashBinding` in the IR, the generated `verifySignature` helper now
+        recomputes the encoded hash of the raw request body using the binding's own
+        algorithm/encoding, extracts the configured query parameter from the notification URL,
+        and timing-safe-compares them (failing closed) before performing the existing HMAC
+        verification over the verbatim notification URL. A stdlib-only `WebhookBodyHash` core
+        utility (unkeyed digest plus read-only query-parameter extraction) is emitted alongside
+        the existing signature utility. Output is unchanged when no binding is present.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated SDK now emits a `WebhooksHelper` with a static
+        `verifySignature` method and a stdlib-only core utility for HMAC computation and
+        constant-time comparison.
+      type: feat
+    - summary: |
+        Extend the generated `verifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, a `Map<String, ?>`
+          overload accepts POST body parameters whose values are a `String` or a
+          `Collection<String>`; keys are sorted, each key's values are deduped and sorted, and
+          `key + value` pairs are concatenated with no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check.
+        - No-throw: the verifier is a pure boolean. Every throw on the verification path (null
+          or empty inputs, a missing/malformed timestamp) now returns `false`.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `notificationUrlCandidates` method is added to the
+          `WebhookSignature` core utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 4.14.6
+  changelogEntry:
+    - summary: |
+        Fixed an issue where the client builder rendered the first environment's URL
+        template instead of the selected environment's template when both a named
+        environment and server URL variables (e.g. `region`) were provided. The
+        builder now resolves the template(s) from the selected environment, falls
+        back to the first templated environment when no environment is selected, and
+        no longer overrides a custom environment or explicitly provided base URL.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 4.14.5
   changelogEntry:
     - summary: |

@@ -12,6 +12,7 @@ export const AsIsFiles = {
     TemplateCsProj: "Template.csproj",
     UsingCs: "Using.cs",
     ValueConvert: "ValueConvert.Template.cs",
+    WebhookSignature: "WebhookSignature.Template.cs",
     // Grpc
     GrpcRequestOptions: "GrpcRequestOptions.Template.cs",
     ProtoAnyMapper: "ProtoAnyMapper.Template.cs",
@@ -88,6 +89,7 @@ export const AsIsFiles = {
         TemplateTestClientCs: "test/TemplateTestClient.cs",
         TemplateTestCsProj: "test/Template.Test.csproj",
         TestCustomProps: "test/Test.Custom.props.Template",
+        WebhookSignatureTests: "test/WebhookSignatureTests.Template.cs",
         WithRawResponseTests: "test/WithRawResponseTests.Template.cs",
         RawClientTests: {
             GzipResponseTests: "test/RawClientTests/GzipResponseTests.Template.cs",
