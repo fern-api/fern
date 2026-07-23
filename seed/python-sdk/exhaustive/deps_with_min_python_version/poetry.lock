@@ -176,14 +176,14 @@ typing-extensions = {version = ">=4.2", markers = "python_version < \"3.13\""}
 
 [[package]]
 name = "annotated-types"
-version = "0.7.0"
+version = "0.8.0"
 description = "Reusable constraint types to use with typing.Annotated"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.10"
 groups = ["main", "dev"]
 files = [
-    {file = "annotated_types-0.7.0-py3-none-any.whl", hash = "sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"},
-    {file = "annotated_types-0.7.0.tar.gz", hash = "sha256:aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"},
+    {file = "annotated_types-0.8.0-py3-none-any.whl", hash = "sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0"},
+    {file = "annotated_types-0.8.0.tar.gz", hash = "sha256:13b2beaad985e05e2d6407ee4c4f35590b11f8d693a258a561055cac8f64cab7"},
 ]
 
 [[package]]
@@ -679,15 +679,15 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "httpx-aiohttp"
-version = "0.1.8"
+version = "0.1.12"
 description = "Aiohttp transport for HTTPX"
 optional = true
 python-versions = ">=3.8"
 groups = ["main"]
 markers = "extra == \"aiohttp\""
 files = [
-    {file = "httpx_aiohttp-0.1.8-py3-none-any.whl", hash = "sha256:b7bd958d1331f3759a38a0ba22ad29832cb63ca69498c17735228055bf78fa7e"},
-    {file = "httpx_aiohttp-0.1.8.tar.gz", hash = "sha256:756c5e74cdb568c3248ba63fe82bfe8bbe64b928728720f7eaac64b3cf46f308"},
+    {file = "httpx_aiohttp-0.1.12-py3-none-any.whl", hash = "sha256:5b0eac39a7f360fa7867a60bcb46bb1024eada9c01cbfecdb54dc1edb3fb7141"},
+    {file = "httpx_aiohttp-0.1.12.tar.gz", hash = "sha256:81feec51fd82c0ecfa0e9aaf1b1a6c2591260d5e2bcbeb7eb0277a78e610df2c"},
 ]
 
 [package.dependencies]
@@ -914,14 +914,14 @@ xai = ["langchain-xai"]
 
 [[package]]
 name = "langchain-core"
-version = "1.5.0"
+version = "1.5.1"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 groups = ["dev"]
 files = [
-    {file = "langchain_core-1.5.0-py3-none-any.whl", hash = "sha256:f122efee35446632b38687119fca33711abbf3b6b555e31156762298fbe78a65"},
-    {file = "langchain_core-1.5.0.tar.gz", hash = "sha256:e1fa09d55b354192c8f60dade06a55bd6add2318c822a684555b8d4a30a16143"},
+    {file = "langchain_core-1.5.1-py3-none-any.whl", hash = "sha256:c5ec8f51dd05124f950c9afd0fd8bb3f7be4e405eeb868d481b2f8ff652cb9d2"},
+    {file = "langchain_core-1.5.1.tar.gz", hash = "sha256:b0df382704c6403c1e0c9603415bce09290455d4aeeb38f350d15f78ca597483"},
 ]
 
 [package.dependencies]
@@ -1308,14 +1308,14 @@ files = [
 
 [[package]]
 name = "openai"
-version = "2.47.0"
+version = "2.48.0"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "openai-2.47.0-py3-none-any.whl", hash = "sha256:b3a1a7ad974092427ccb46d89f8852bdb67866680bcabeecc3ff5a3fdd71b15b"},
-    {file = "openai-2.47.0.tar.gz", hash = "sha256:4e205548acd4304f235b86202269912e55bc88270b15d2a051fa2b53b90343a6"},
+    {file = "openai-2.48.0-py3-none-any.whl", hash = "sha256:c98df30aaaf93c51979f64d3e7c5b76464f8be0173368266229eb8fe6bd30f2c"},
+    {file = "openai-2.48.0.tar.gz", hash = "sha256:231b1e7661dda14574986c2f71451e9d584b7fe69e0ee6480e12ed090b48fc16"},
 ]
 
 [package.dependencies]
@@ -3060,4 +3060,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "3b820decb4f69c644d4941b19234257f5b74e081bed1d0025884747e943b93d0"
+content-hash = "cb0042cc0af2b2961b818e13b41ebf7d89b0d9bec93f080da14266ddf5d90f4a"
