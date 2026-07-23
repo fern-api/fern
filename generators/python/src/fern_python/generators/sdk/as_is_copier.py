@@ -18,9 +18,7 @@ class AsIsFile(BaseModel):
     replacements: Optional[Dict[str, str]] = None
 
 
-def copy_to_project(
-    *, project: Project, test_http_client_replacements: Optional[Dict[str, str]] = None
-) -> None:
+def copy_to_project(*, project: Project, test_http_client_replacements: Optional[Dict[str, str]] = None) -> None:
     # Add more files you need to copy as is
     # This file is really to simplify the process of copying, leaving core utilities for files
     # that need to be referenced within the project, and more complex cases.

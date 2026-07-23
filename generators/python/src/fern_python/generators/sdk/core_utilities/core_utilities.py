@@ -510,7 +510,7 @@ class CoreUtilities:
 
         def _wrapped(overall: int) -> str:
             return (
-                f"assert dummy_client.last_request_kwargs[\"timeout\"] == "
+                f'assert dummy_client.last_request_kwargs["timeout"] == '
                 f"httpx.Timeout({overall}, connect={connect}, read={read}, write={write}, pool={overall})"
             )
 
