@@ -1,26 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 0.44.0
-  changelogEntry:
-    - summary: |
-        Add support for per-endpoint auth routing. When the API-level auth requirement is
-        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
-        its IR `security` field (OR across the list of requirements, AND within a requirement,
-        and no auth when `security` is empty). The `HttpClient` gains a
-        `resolve_endpoint_auth_headers` method that picks the first requirement whose schemes
-        all have credentials available and returns an error naming the missing schemes when
-        none is satisfiable. Behavior for the `ALL` and `ANY` auth requirements (the common
-        cases) is unchanged.
-      type: feat
-    - summary: |
-        In endpoint-security mode, generated wire tests now assert the exact set of auth
-        headers routed per endpoint: the declared scheme's header(s) are present (pinned to
-        their value prefix, e.g. `Bearer`/`Basic`) and every other scheme's header is absent.
-        Endpoints whose only satisfiable requirement is inferred auth (unsupported by the Rust
-        SDK) assert that the call errors before any request is made. Wire tests for all other
-        auth models are unchanged.
-      type: feat
-  createdAt: "2026-07-22"
-  irVersion: 66
 - version: 0.43.1
   changelogEntry:
     - summary: |
