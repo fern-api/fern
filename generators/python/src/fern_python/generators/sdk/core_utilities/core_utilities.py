@@ -53,6 +53,7 @@ class CoreUtilities:
         self._default_max_retries = custom_config.default_max_retries
         self._retry_status_codes = custom_config.retry_status_codes
         self._has_webhook_signature_verification = has_webhook_signature_verification
+        self._custom_config = custom_config
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -130,6 +131,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="request_options"),
             ),
             exports={"RequestOptions"} if not self._exclude_types_from_init_exports else set(),
+            string_replacements=self._get_request_options_phase_timeout_replacements(),
         )
 
         if self._generates_idempotency_key:
@@ -177,6 +179,10 @@ class CoreUtilities:
             if self._retry_status_codes == "recommended"
             else "response.status_code >= 500 or response.status_code in [429, 408, 409]"
         )
+        http_client_replacements = {
+            "return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}": f"return {retry_status_check}",
+        }
+        http_client_replacements.update(self._get_http_client_phase_timeout_replacements())
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="http_client.py",
@@ -185,9 +191,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
-            string_replacements={
-                "return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}": f"return {retry_status_check}",
-            },
+            string_replacements=http_client_replacements,
         )
 
         self._copy_file_to_project(
@@ -362,6 +366,124 @@ class CoreUtilities:
             project.add_dependency(PYDANTIC_V2_DEPENDENCY)
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
+
+    def _get_request_options_phase_timeout_replacements(self) -> Optional[dict[str, str]]:
+        """Inject per-call connect/read/write timeout fields into ``RequestOptions``.
+
+        Only applied when a ``timeouts`` block is configured, so the generated
+        ``request_options.py`` is byte-identical to before for existing users.
+        """
+        if not self._custom_config.has_phase_timeouts:
+            return None
+        docs_anchor = "        - timeout_in_seconds: int. Deprecated alias for `timeout`; both are in seconds. Prefer `timeout`.\n"
+        docs_addition = (
+            docs_anchor
+            + "\n"
+            + "        - connect_timeout: float. Per-call connect-phase timeout override, in seconds."
+            + " Wins over the configured default for the connect phase.\n"
+            + "\n"
+            + "        - read_timeout: float. Per-call read-phase timeout override, in seconds."
+            + " Wins over the configured default for the read phase.\n"
+            + "\n"
+            + "        - write_timeout: float. Per-call write-phase timeout override, in seconds."
+            + " Wins over the configured default for the write phase.\n"
+        )
+        fields_anchor = "    timeout_in_seconds: NotRequired[int]\n"
+        fields_addition = (
+            fields_anchor
+            + "    connect_timeout: NotRequired[float]\n"
+            + "    read_timeout: NotRequired[float]\n"
+            + "    write_timeout: NotRequired[float]\n"
+        )
+        return {
+            docs_anchor: docs_addition,
+            fields_anchor: fields_addition,
+        }
+
+    def _get_http_client_phase_timeout_replacements(self) -> dict[str, str]:
+        """Wire configured connect/read/write timeouts (plus per-call overrides) into
+        the generated ``http_client.py``.
+
+        Returns an empty mapping (no replacements) when no ``timeouts`` block is
+        configured, keeping the generated file byte-identical to before.
+        """
+        if not self._custom_config.has_phase_timeouts:
+            return {}
+        timeouts = self._custom_config.timeouts
+        assert timeouts is not None  # guaranteed by has_phase_timeouts
+
+        def _phase_literal(value: Optional[float]) -> str:
+            return "None" if value is None else repr(value)
+
+        connect_default = _phase_literal(timeouts.connect)
+        read_default = _phase_literal(timeouts.read)
+        write_default = _phase_literal(timeouts.write)
+
+        helpers = (
+            "def _resolve_phase_timeout(\n"
+            "    overall: typing.Optional[float],\n"
+            "    request_options: typing.Optional[RequestOptions],\n"
+            "    *,\n"
+            f"    connect_default: typing.Optional[float] = {connect_default},\n"
+            f"    read_default: typing.Optional[float] = {read_default},\n"
+            f"    write_default: typing.Optional[float] = {write_default},\n"
+            ") -> typing.Union[httpx.Timeout, float, httpx._client.UseClientDefault]:\n"
+            '    """Build the effective request timeout from the overall timeout and the\n'
+            "    configured/per-call connect/read/write phase timeouts.\n"
+            "\n"
+            "    Per-call overrides win over the configured phase defaults; the overall\n"
+            "    timeout is the all-phases fallback (and drives the ``pool`` phase). When no\n"
+            "    phase value resolves and no overall timeout is set, the httpx client default\n"
+            "    is used.\n"
+            '    """\n'
+            "    connect = connect_default\n"
+            "    read = read_default\n"
+            "    write = write_default\n"
+            "    if request_options is not None:\n"
+            '        if request_options.get("connect_timeout") is not None:\n'
+            '            connect = request_options.get("connect_timeout")\n'
+            '        if request_options.get("read_timeout") is not None:\n'
+            '            read = request_options.get("read_timeout")\n'
+            '        if request_options.get("write_timeout") is not None:\n'
+            '            write = request_options.get("write_timeout")\n'
+            "    if connect is None and read is None and write is None:\n"
+            "        return overall if overall is not None else httpx.USE_CLIENT_DEFAULT\n"
+            "    return httpx.Timeout(\n"
+            "        overall,\n"
+            "        connect=connect if connect is not None else overall,\n"
+            "        read=read if read is not None else overall,\n"
+            "        write=write if write is not None else overall,\n"
+            "        pool=overall,\n"
+            "    )\n"
+            "\n"
+            "\n"
+            "class HttpClient:"
+        )
+
+        timeout_block_anchor = (
+            "        _timeout = (\n"
+            '            request_options.get("timeout")\n'
+            '            if request_options is not None and request_options.get("timeout") is not None\n'
+            '            else request_options.get("timeout_in_seconds")\n'
+            '            if request_options is not None and request_options.get("timeout_in_seconds") is not None\n'
+            "            else self.base_timeout()\n"
+            "        )\n"
+            "        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT"
+        )
+        timeout_block_replacement = (
+            "        _timeout = (\n"
+            '            request_options.get("timeout")\n'
+            '            if request_options is not None and request_options.get("timeout") is not None\n'
+            '            else request_options.get("timeout_in_seconds")\n'
+            '            if request_options is not None and request_options.get("timeout_in_seconds") is not None\n'
+            "            else self.base_timeout()\n"
+            "        )\n"
+            "        timeout = _resolve_phase_timeout(_timeout, request_options)"
+        )
+        return {
+            "class HttpClient:": helpers,
+            timeout_block_anchor: timeout_block_replacement,
+        }
 
     @staticmethod
     def _resolve_core_utilities_path(relative_filepath: str) -> str:
