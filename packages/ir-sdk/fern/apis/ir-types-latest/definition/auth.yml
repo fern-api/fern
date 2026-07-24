@@ -101,6 +101,7 @@ types:
     union:
       clientCredentials: OAuthClientCredentials
       authorizationCode: OAuthAuthorizationCode
+      deviceCode: OAuthDeviceCode
 
   OAuthAuthorizationCode:
     docs: |
@@ -141,6 +142,53 @@ types:
       tokenParameters:
         type: optional<map<string, string>>
         docs: Additional public, literal parameters included in the authorization-code token exchange request.
+      refreshParameters:
+        type: optional<map<string, string>>
+        docs: Additional public, literal parameters included in the refresh token request.
+      tokenHeader:
+        type: optional<string>
+        docs: The header the token is applied to. Defaults to `Authorization`.
+      tokenPrefix:
+        type: optional<string>
+        docs: |
+          The prefix for the token header value. Defaults to `Bearer`.
+          An empty prefix means the raw token is sent.
+
+  OAuthDeviceCode:
+    docs: |
+      The OAuth 2.0 Device Authorization Grant (RFC 8628) for public clients such as CLIs and
+      native apps on input-constrained or browserless devices. The client requests a device code
+      and user code from the device authorization endpoint, instructs the user to approve at the
+      verification URI in a browser, and polls the token endpoint until the user approves and
+      tokens are issued, without a client secret.
+    properties:
+      clientId:
+        type: OAuthPublicClientId
+        docs: The public client ID for the CLI/native app. Public clients do not use a client secret.
+      deviceAuthorizationUrl:
+        type: string
+        docs: |
+          The absolute URL of the device authorization endpoint that issues the device code,
+          user code, and verification URI.
+      tokenUrl:
+        type: string
+        docs: |
+          The absolute URL of the token endpoint polled to exchange the device code for tokens
+          once the user has approved.
+      refreshUrl:
+        type: optional<string>
+        docs: The absolute URL used to refresh tokens. Defaults to `tokenUrl` when omitted.
+      scopes:
+        type: optional<list<string>>
+        docs: The scopes requested during device authorization.
+      deviceAuthorizationParameters:
+        type: optional<map<string, string>>
+        docs: |
+          Additional public, literal parameters included in the device authorization request
+          (e.g. `audience`, `resource`). These must not override protocol-reserved parameters.
+      tokenParameters:
+        type: optional<map<string, string>>
+        docs: Additional public, literal parameters included in the device-code token exchange (polling) request.
       refreshParameters:
         type: optional<map<string, string>>
         docs: Additional public, literal parameters included in the refresh token request.

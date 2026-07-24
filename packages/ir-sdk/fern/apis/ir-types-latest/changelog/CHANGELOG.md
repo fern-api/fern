@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     configuration, optional public `authorizationParameters`/`tokenParameters`/`refreshParameters`
     maps, and optional `tokenHeader`/`tokenPrefix` for bearer application.
   - `OAuthPkceConfiguration.method` is an `OAuthPkceMethod` enum that currently only permits `S256`.
+- Add `OAuthConfiguration.deviceCode` (`OAuthDeviceCode`), an additive union variant modeling the
+  OAuth 2.0 Device Authorization Grant (RFC 8628) for public clients such as generated CLIs and
+  native apps on input-constrained or browserless devices. No client secret is used.
+  - `OAuthDeviceCode` carries the public `clientId` (`OAuthPublicClientId`), the
+    `deviceAuthorizationUrl` (device authorization endpoint), `tokenUrl` (polled for tokens),
+    optional `refreshUrl` (defaults to `tokenUrl`), optional `scopes`, optional public
+    `deviceAuthorizationParameters`/`tokenParameters`/`refreshParameters` maps, and optional
+    `tokenHeader`/`tokenPrefix` for bearer application. PKCE does not apply to this grant.
 
 ## [v67.15.0] - 2026-07-21
 

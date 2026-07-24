@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { OAuthAuthorizationCode } from "./OAuthAuthorizationCode.js";
 import { OAuthClientCredentials } from "./OAuthClientCredentials.js";
+import { OAuthDeviceCode } from "./OAuthDeviceCode.js";
 
 export const OAuthConfiguration: core.serialization.Schema<
     serializers.OAuthConfiguration.Raw,
@@ -13,6 +14,7 @@ export const OAuthConfiguration: core.serialization.Schema<
     .union("type", {
         clientCredentials: OAuthClientCredentials,
         authorizationCode: OAuthAuthorizationCode,
+        deviceCode: OAuthDeviceCode,
     })
     .transform<FernIr.OAuthConfiguration>({
         transform: (value) => {
@@ -21,6 +23,8 @@ export const OAuthConfiguration: core.serialization.Schema<
                     return FernIr.OAuthConfiguration.clientCredentials(value);
                 case "authorizationCode":
                     return FernIr.OAuthConfiguration.authorizationCode(value);
+                case "deviceCode":
+                    return FernIr.OAuthConfiguration.deviceCode(value);
                 default:
                     return value as FernIr.OAuthConfiguration;
             }
@@ -29,7 +33,10 @@ export const OAuthConfiguration: core.serialization.Schema<
     });
 
 export declare namespace OAuthConfiguration {
-    export type Raw = OAuthConfiguration.ClientCredentials | OAuthConfiguration.AuthorizationCode;
+    export type Raw =
+        | OAuthConfiguration.ClientCredentials
+        | OAuthConfiguration.AuthorizationCode
+        | OAuthConfiguration.DeviceCode;
 
     export interface ClientCredentials extends OAuthClientCredentials.Raw {
         type: "clientCredentials";
@@ -37,5 +44,9 @@ export declare namespace OAuthConfiguration {
 
     export interface AuthorizationCode extends OAuthAuthorizationCode.Raw {
         type: "authorizationCode";
+    }
+
+    export interface DeviceCode extends OAuthDeviceCode.Raw {
+        type: "deviceCode";
     }
 }

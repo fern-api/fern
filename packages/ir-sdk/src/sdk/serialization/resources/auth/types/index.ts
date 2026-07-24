@@ -16,6 +16,7 @@ export * from "./OAuthAccessTokenResponseProperties.js";
 export * from "./OAuthAuthorizationCode.js";
 export * from "./OAuthClientCredentials.js";
 export * from "./OAuthConfiguration.js";
+export * from "./OAuthDeviceCode.js";
 export * from "./OAuthPkceConfiguration.js";
 export * from "./OAuthPkceMethod.js";
 export * from "./OAuthPublicClientId.js";
