@@ -89,7 +89,8 @@ import {
     applyOrgBoundsToVersion,
     getOrgConfig,
     setOrgCliVersion,
-    unsetOrgCliVersion
+    unsetOrgCliVersion,
+    warnIfVersionOutsideOrgBounds
 } from "./commands/org/orgConfig.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
@@ -320,6 +321,17 @@ async function tryRunCli(cliContext: CliContext) {
 
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
     if (process.env.FERN_NO_VERSION_REDIRECTION === "true") {
+        // Redirection is off (e.g. local dev builds), so we won't re-exec at the
+        // org bounds — but still surface a warning if the running version is out
+        // of range, otherwise enforcement would be silently invisible here.
+        const orgId = await getOrganization(cliContext);
+        if (orgId != null) {
+            await warnIfVersionOutsideOrgBounds({
+                cliContext,
+                orgId,
+                currentVersion: cliContext.environment.packageVersion
+            });
+        }
         return cliContext.environment.packageVersion;
     }
     const fernDirectory = await getFernDirectory();

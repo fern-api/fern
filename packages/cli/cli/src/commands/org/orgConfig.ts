@@ -454,3 +454,38 @@ export async function applyOrgBoundsToVersion({
     }
     return intendedVersion;
 }
+
+/**
+ * Warns (without changing the running version) when the current CLI is outside
+ * the org bounds while version redirection is disabled
+ * (`FERN_NO_VERSION_REDIRECTION`). This is the case for local dev builds, where
+ * the redirection layer that would normally re-exec at the bound never runs —
+ * so the enforcement banner would otherwise be invisible. Compares the running
+ * version (not the project pin) so a correctly re-exec'd child, which already
+ * runs an in-range version, does not warn. Fails open on any error.
+ */
+export async function warnIfVersionOutsideOrgBounds({
+    cliContext,
+    orgId,
+    currentVersion
+}: {
+    cliContext: CliContext;
+    orgId: string;
+    currentVersion: string;
+}): Promise<void> {
+    const bounds = await getCachedOrgCliVersionBounds({ cliContext, orgId });
+    try {
+        const { version, reason } = clampVersionToOrgBounds(currentVersion, bounds);
+        if (reason === "floor") {
+            cliContext.logger.warn(
+                `Org "${orgId}" requires Fern CLI ${chalk.yellow(`>= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not upgraded.`
+            );
+        } else if (reason === "ceiling") {
+            cliContext.logger.warn(
+                `Org "${orgId}" caps Fern CLI at ${chalk.yellow(`<= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not downgraded.`
+            );
+        }
+    } catch {
+        // version comparison failed — don't warn
+    }
+}
