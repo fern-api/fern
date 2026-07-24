@@ -112,9 +112,9 @@ Generators are processes that take your API Definition as input and output artif
 
 Fern's CLI generator produces a standalone command-line interface for your API.
 
-| Generator ID                   | Latest Version                                                                             | Changelog                                              |
-| ------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `fernapi/fern-cli-generator`   | ![CLI Generator Version](https://img.shields.io/docker/v/fernapi/fern-cli-generator)      | [Docs](https://buildwithfern.com/learn/cli-generator/get-started/overview) |
+| Generator ID                   | Latest Version                                                                             |
+| ------------------------------ | ----------------------------------------------------------------------------------------- |
+| `fernapi/fern-cli-generator`   | ![CLI Generator Version](https://img.shields.io/docker/v/fernapi/fern-cli-generator)      |
 
 ### Spec Generators
 
