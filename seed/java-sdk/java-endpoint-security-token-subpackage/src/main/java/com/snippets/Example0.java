@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient.builder()
-                .apiKey("<value>")
-                .url("https://api.fern.com")
-                .build();
+        SeedJavaEndpointSecurityTokenSubpackageClient client =
+                SeedJavaEndpointSecurityTokenSubpackageClient.withCredentials("<clientId>", "<clientSecret>")
+                        .url("https://api.fern.com")
+                        .build();
 
         client.token()
                 .getToken(GetTokenRequest.builder()

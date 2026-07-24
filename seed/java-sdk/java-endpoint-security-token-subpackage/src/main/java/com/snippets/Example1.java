@@ -4,10 +4,10 @@ import com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityToke
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient.builder()
-                .apiKey("<value>")
-                .url("https://api.fern.com")
-                .build();
+        SeedJavaEndpointSecurityTokenSubpackageClient client =
+                SeedJavaEndpointSecurityTokenSubpackageClient.withCredentials("<clientId>", "<clientSecret>")
+                        .url("https://api.fern.com")
+                        .build();
 
         client.user().getWithOAuth();
     }

@@ -29,8 +29,6 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private String apiKey = System.getenv("MY_API_KEY");
-
     private String token = null;
 
     private String clientId = System.getenv("MY_CLIENT_ID");
@@ -41,20 +39,13 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
 
     private Optional<List<String>> permissions = Optional.empty();
 
+    private String apiKey = System.getenv("MY_API_KEY");
+
     private Environment environment;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
-
-    /**
-     * Sets apiKey.
-     * Defaults to the MY_API_KEY environment variable.
-     */
-    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder apiKey(String apiKey) {
-        this.apiKey = apiKey;
-        return this;
-    }
 
     /**
      * Sets a pre-generated access token for authentication, bypassing the OAuth client credentials flow.
@@ -114,6 +105,15 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
      */
     public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder permissions(List<String> permissions) {
         this.permissions = Optional.ofNullable(permissions);
+        return this;
+    }
+
+    /**
+     * Sets apiKey.
+     * Defaults to the MY_API_KEY environment variable.
+     */
+    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder apiKey(String apiKey) {
+        this.apiKey = apiKey;
         return this;
     }
 
@@ -234,12 +234,6 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
         RoutingAuthProvider.Builder routingBuilder = RoutingAuthProvider.builder();
-        if (this.apiKey != null) {
-            routingBuilder.addAuthProvider(
-                    "ApiKey",
-                    new ApiKeyAuthProvider(() -> this.apiKey),
-                    "Please provide apiKey via .apiKey() or set MY_API_KEY environment variable");
-        }
         if (this.clientId != null && this.clientSecret != null) {
             // OAuth requires building an auth client for token fetching
             ClientOptions.Builder oauthClientOptionsBuilder =
@@ -249,6 +243,12 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
                     "OAuth",
                     new OAuthAuthProvider(() -> this.clientId, () -> this.clientSecret, oauthAuthClient),
                     "Please provide clientId and clientSecret via .clientId()/.clientSecret() or set MY_CLIENT_ID and MY_CLIENT_SECRET environment variables");
+        }
+        if (this.apiKey != null) {
+            routingBuilder.addAuthProvider(
+                    "ApiKey",
+                    new ApiKeyAuthProvider(() -> this.apiKey),
+                    "Please provide apiKey via .apiKey() or set MY_API_KEY environment variable");
         }
         builder.authProvider(routingBuilder.build());
     }
