@@ -1,6 +1,6 @@
-import { FernToken } from "@fern-api/auth";
+import { FernToken, getToken } from "@fern-api/auth";
 import { askToLogin } from "@fern-api/login";
-import { isVersionAhead } from "@fern-api/semver-utils";
+import { isValidVersion, isVersionAhead } from "@fern-api/semver-utils";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -22,7 +22,28 @@ export interface OrgCliVersionBounds {
     max?: string;
 }
 
-const SEMVER_RE = /^\d+\.\d+\.\d+$/;
+export type ClampReason = "floor" | "ceiling";
+
+/**
+ * Pure decision used by the version-redirection layer: given the version the
+ * CLI would otherwise run and the org's bounds, return the version to actually
+ * run and why it changed (if it did). Bumps up to `min` (floor) and down to
+ * `max` (ceiling); returns the intended version unchanged when it's already in
+ * range. No I/O, so it's unit-testable in isolation. Assumes the caller has
+ * validated the bounds are ordered (`min <= max`).
+ */
+export function clampVersionToOrgBounds(
+    intendedVersion: string,
+    { min, max }: OrgCliVersionBounds
+): { version: string; reason?: ClampReason } {
+    if (min != null && isVersionAhead(min, intendedVersion)) {
+        return { version: min, reason: "floor" };
+    }
+    if (max != null && isVersionAhead(intendedVersion, max)) {
+        return { version: max, reason: "ceiling" };
+    }
+    return { version: intendedVersion };
+}
 
 async function getAuthToken(cliContext: CliContext): Promise<FernToken> {
     const token: FernToken | null = await cliContext.runTask(async (context) => {
@@ -123,10 +144,12 @@ export async function setOrgCliVersion({
     org?: string;
 }): Promise<void> {
     for (const version of [min, max]) {
-        if (version != null && !SEMVER_RE.test(version)) {
-            cliContext.failAndThrow(`Invalid version "${version}". Expected semver like 5.45.0.`, undefined, {
-                code: CliError.Code.ConfigError
-            });
+        if (version != null && !isValidVersion(version)) {
+            cliContext.failAndThrow(
+                `Invalid version "${version}". Expected semver like 5.45.0 (or a prerelease like 5.45.0-rc0).`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
             return;
         }
     }
@@ -274,27 +297,27 @@ export async function fetchOrgCliVersionBounds({
     }
 }
 
-const ORG_FLOOR_FETCH_TIMEOUT_MS = 2500;
-const ORG_FLOOR_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
-const ORG_FLOOR_CACHE_FILENAME = "org-cli-floor-cache.json";
+const ORG_BOUNDS_FETCH_TIMEOUT_MS = 2500;
+const ORG_BOUNDS_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+const ORG_BOUNDS_CACHE_FILENAME = "org-cli-bounds-cache.json";
 
-interface OrgFloorCacheEntry {
+interface OrgBoundsCacheEntry {
     cliVersionMin: string | null;
     cliVersionMax: string | null;
     fetchedAt: number;
 }
 
-function getOrgFloorCachePath(): string {
+function getOrgBoundsCachePath(): string {
     const storageFolder = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
-    return path.join(homedir(), storageFolder, ORG_FLOOR_CACHE_FILENAME);
+    return path.join(homedir(), storageFolder, ORG_BOUNDS_CACHE_FILENAME);
 }
 
-async function readOrgFloorCache(orgId: string): Promise<OrgFloorCacheEntry | undefined> {
+async function readOrgBoundsCache(orgId: string): Promise<OrgBoundsCacheEntry | undefined> {
     try {
-        const raw = await readFile(getOrgFloorCachePath(), "utf-8");
-        const parsed = JSON.parse(raw) as Record<string, OrgFloorCacheEntry>;
+        const raw = await readFile(getOrgBoundsCachePath(), "utf-8");
+        const parsed = JSON.parse(raw) as Record<string, OrgBoundsCacheEntry>;
         const entry = parsed[orgId];
-        if (entry == null || Date.now() - entry.fetchedAt > ORG_FLOOR_CACHE_TTL_MS) {
+        if (entry == null || Date.now() - entry.fetchedAt > ORG_BOUNDS_CACHE_TTL_MS) {
             return undefined;
         }
         return entry;
@@ -303,12 +326,12 @@ async function readOrgFloorCache(orgId: string): Promise<OrgFloorCacheEntry | un
     }
 }
 
-async function writeOrgFloorCache(orgId: string, bounds: OrgCliVersionBounds): Promise<void> {
+async function writeOrgBoundsCache(orgId: string, bounds: OrgCliVersionBounds): Promise<void> {
     try {
-        const cachePath = getOrgFloorCachePath();
-        let existing: Record<string, OrgFloorCacheEntry> = {};
+        const cachePath = getOrgBoundsCachePath();
+        let existing: Record<string, OrgBoundsCacheEntry> = {};
         try {
-            existing = JSON.parse(await readFile(cachePath, "utf-8")) as Record<string, OrgFloorCacheEntry>;
+            existing = JSON.parse(await readFile(cachePath, "utf-8")) as Record<string, OrgBoundsCacheEntry>;
         } catch {
             // no existing cache
         }
@@ -337,17 +360,17 @@ async function getCachedOrgCliVersionBounds({
     cliContext: CliContext;
     orgId: string;
 }): Promise<OrgCliVersionBounds> {
-    if (process.env.FERN_IGNORE_ORG_VERSION_FLOOR === "true") {
+    // FERN_IGNORE_ORG_VERSION_FLOOR is the original name, kept as an alias.
+    if (process.env.FERN_IGNORE_ORG_VERSION_BOUNDS === "true" || process.env.FERN_IGNORE_ORG_VERSION_FLOOR === "true") {
         return {};
     }
 
-    const cached = await readOrgFloorCache(orgId);
+    const cached = await readOrgBoundsCache(orgId);
     if (cached != null) {
         return { min: cached.cliVersionMin ?? undefined, max: cached.cliVersionMax ?? undefined };
     }
 
     try {
-        const { getToken } = await import("@fern-api/auth");
         const token = await getToken();
         if (token == null) {
             return {};
@@ -356,9 +379,9 @@ async function getCachedOrgCliVersionBounds({
             cliContext,
             orgId,
             token: token.value,
-            timeoutMs: ORG_FLOOR_FETCH_TIMEOUT_MS
+            timeoutMs: ORG_BOUNDS_FETCH_TIMEOUT_MS
         });
-        await writeOrgFloorCache(orgId, bounds);
+        await writeOrgBoundsCache(orgId, bounds);
         return bounds;
     } catch (err) {
         cliContext.logger.debug(`Failed to resolve org CLI version bounds: ${String(err)}`);
@@ -381,20 +404,19 @@ export async function applyOrgBoundsToVersion({
     orgId: string;
     intendedVersion: string;
 }): Promise<string> {
-    const { min, max } = await getCachedOrgCliVersionBounds({ cliContext, orgId });
+    const bounds = await getCachedOrgCliVersionBounds({ cliContext, orgId });
     try {
-        if (min != null && isVersionAhead(min, intendedVersion)) {
+        const { version, reason } = clampVersionToOrgBounds(intendedVersion, bounds);
+        if (reason === "floor") {
             cliContext.logger.info(
-                `Org "${orgId}" requires Fern CLI ${chalk.green(`>= ${min}`)} — running ${chalk.green(min)}.`
+                `Org "${orgId}" requires Fern CLI ${chalk.green(`>= ${version}`)} — running ${chalk.green(version)}.`
             );
-            return min;
-        }
-        if (max != null && isVersionAhead(intendedVersion, max)) {
+        } else if (reason === "ceiling") {
             cliContext.logger.info(
-                `Org "${orgId}" caps Fern CLI at ${chalk.green(`<= ${max}`)} — running ${chalk.green(max)}.`
+                `Org "${orgId}" caps Fern CLI at ${chalk.green(`<= ${version}`)} — running ${chalk.green(version)}.`
             );
-            return max;
         }
+        return version;
     } catch {
         // version comparison failed — don't block
     }

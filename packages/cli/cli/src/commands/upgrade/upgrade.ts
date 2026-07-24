@@ -14,7 +14,7 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
-import { fetchOrgCliVersionBounds } from "../org/orgConfig.js";
+import { clampVersionToOrgBounds, fetchOrgCliVersionBounds } from "../org/orgConfig.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -560,40 +560,41 @@ async function applyOrgVersionBounds({
     }
 
     const currentVersion = cliContext.environment.packageVersion;
-    let target = resolvedTargetVersion;
 
-    // Floor: bump up to the minimum.
-    if (min != null) {
+    // With no target, a normal upgrade wouldn't run — only the floor can force
+    // one, and only when it's ahead of what's already installed.
+    if (resolvedTargetVersion == null) {
         try {
-            if (target == null) {
-                if (isVersionAhead(min, currentVersion)) {
-                    cliContext.logger.info(
-                        `Org "${orgId}" requires minimum CLI version ${chalk.green(min)}. Upgrading.`
-                    );
-                    target = min;
-                }
-            } else if (isVersionAhead(min, target)) {
+            const { version, reason } = clampVersionToOrgBounds(currentVersion, { min });
+            if (reason === "floor") {
                 cliContext.logger.info(
-                    `Org "${orgId}" requires minimum CLI version ${chalk.green(min)} (resolved ${target}).`
+                    `Org "${orgId}" requires minimum CLI version ${chalk.green(version)}. Upgrading.`
                 );
-                target = min;
+                return version;
             }
         } catch {
             // version comparison failed
         }
+        return undefined;
     }
 
-    // Ceiling: cap down to the maximum (only when it still upgrades from current).
-    if (max != null && target != null) {
-        try {
-            if (isVersionAhead(target, max) && !isVersionAhead(currentVersion, max)) {
-                cliContext.logger.info(`Org "${orgId}" caps CLI version at ${chalk.green(max)} (resolved ${target}).`);
-                target = max;
-            }
-        } catch {
-            // version comparison failed
+    // Don't write a downgrade into fern.config.json for a project already past
+    // the ceiling — the version-redirection layer enforces the cap at runtime.
+    const effectiveMax = max != null && !isVersionAhead(currentVersion, max) ? max : undefined;
+    try {
+        const { version, reason } = clampVersionToOrgBounds(resolvedTargetVersion, { min, max: effectiveMax });
+        if (reason === "floor") {
+            cliContext.logger.info(
+                `Org "${orgId}" requires minimum CLI version ${chalk.green(version)} (resolved ${resolvedTargetVersion}).`
+            );
+        } else if (reason === "ceiling") {
+            cliContext.logger.info(
+                `Org "${orgId}" caps CLI version at ${chalk.green(version)} (resolved ${resolvedTargetVersion}).`
+            );
         }
+        return version;
+    } catch {
+        // version comparison failed
+        return resolvedTargetVersion;
     }
-
-    return target;
 }
