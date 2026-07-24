@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.80.2
+  changelogEntry:
+    - summary: |
+        Support `client-default` on `api.headers` entries in generators.yml. The
+        generators.yml schema previously dropped this field, so global headers with a
+        `client-default` produced no client-side default in the generated SDKs. The
+        field now flows through to the IR (`clientDefault`), so SDKs send the value by
+        default when the caller and environment variable do not provide one.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
 - version: 5.80.1
   changelogEntry:
     - summary: |
