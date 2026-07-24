@@ -274,9 +274,7 @@ function getSiblingExampleFromRef(
 
 // Detects whether a oneOf/anyOf contains a `{ "type": "null" }` member, which
 // contributes nullability to schemas that reference the enclosing schema.
-function schemaHasNullBranch(
-    subschemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] | undefined
-): boolean {
+function schemaHasNullBranch(subschemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] | undefined): boolean {
     if (subschemas == null) {
         return false;
     }
