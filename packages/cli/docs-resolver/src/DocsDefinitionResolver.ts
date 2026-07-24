@@ -1015,7 +1015,7 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
-            settings: this.parsedDocsConfig.settings,
+            settings: this.convertDocsSettings(),
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
             agents:
@@ -2783,6 +2783,26 @@ export class DocsDefinitionResolver {
             fallback: font.fallback,
             fontVariationSettings: font.fontVariationSettings
         };
+    }
+
+    // Merges the experimental `external-sitemaps` list into `settings.search`
+    // so it is persisted through FDR and read back during Algolia reindexing.
+    // The `as` cast mirrors convertMetadata(): the published FDR SDK
+    // SearchSettingsConfig type does not yet include `externalSitemaps`, but FDR
+    // stores and serves the field at runtime.
+    private convertDocsSettings(): DocsV1Write.DocsConfig["settings"] {
+        const settings = this.parsedDocsConfig.settings;
+        const externalSitemaps = this.parsedDocsConfig.experimental?.externalSitemaps;
+        if (externalSitemaps == null || externalSitemaps.length === 0) {
+            return settings;
+        }
+        return {
+            ...settings,
+            search: {
+                ...settings?.search,
+                externalSitemaps
+            }
+        } as DocsV1Write.DocsConfig["settings"];
     }
 
     private convertJavascriptConfiguration(): DocsV1Write.JsConfig | undefined {

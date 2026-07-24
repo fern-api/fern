@@ -80,6 +80,7 @@ type fileWriter struct {
 	useReaderForBytesRequest     bool
 	gettersPassByValue           bool
 	dedupeUnionBaseProperties    bool
+	serverURLVariables           bool
 	exportAllRequestsAtRoot      bool
 	omitEmptyRequestWrappers     bool
 	omitFernHeaders              bool
@@ -147,6 +148,7 @@ func newFileWriter(
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
 	dedupeUnionBaseProperties bool,
+	serverURLVariables bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
 	omitFernHeaders bool,
@@ -198,6 +200,7 @@ func newFileWriter(
 		useReaderForBytesRequest:     useReaderForBytesRequest,
 		gettersPassByValue:           gettersPassByValue,
 		dedupeUnionBaseProperties:    dedupeUnionBaseProperties,
+		serverURLVariables:           serverURLVariables,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		omitEmptyRequestWrappers:     omitEmptyRequestWrappers,
 		omitFernHeaders:              omitFernHeaders,
@@ -455,6 +458,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
 		f.dedupeUnionBaseProperties,
+		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
 		f.omitFernHeaders,
@@ -990,6 +994,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
 		f.dedupeUnionBaseProperties,
+		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
 		f.omitFernHeaders,

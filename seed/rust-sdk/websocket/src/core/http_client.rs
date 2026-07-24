@@ -434,6 +434,7 @@ impl HttpClient {
         Ok(())
     }
 
+
     /// Fetches an OAuth token, using the cached token if valid or fetching a new one.
     async fn get_oauth_token(&self, oauth_config: &OAuthConfig) -> Result<String, ApiError> {
         let token_provider = &oauth_config.token_provider;

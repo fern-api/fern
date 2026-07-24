@@ -1,4 +1,86 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.80.1
+  changelogEntry:
+    - summary: |
+        Preserve the base schema description on nested fields composed with `allOf`.
+        When a property merged a `$ref` (carrying a description) with an inline schema
+        adding constraints (e.g. `pattern`), the merged validation was kept but the
+        inherited description was dropped from the generated docs/SDKs.
+      type: fix
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.80.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.show-nav-availability-badges` docs.yml setting. When set to true,
+        availability badges (Beta, Deprecated, etc.) render inline next to navigation items
+        in the sidebar. Defaults to false; the page-header availability badge is unaffected.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.79.0
+  changelogEntry:
+    - summary: |
+        Add an experimental `external-sitemaps` option to the `experimental` block in
+        docs.yml. It accepts a list of absolute sitemap URLs whose pages are indexed in
+        search alongside your documentation (tagged to the same domain) but flagged as
+        third-party so they rank below all first-party docs.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.78.0
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now automatically deconflicts path parameters whose names collide
+        with other request properties (query parameters, headers, or request body properties).
+        The colliding path parameter's SDK-facing name gets a `PathParam` suffix (e.g. an
+        `{idType}` path parameter colliding with an `idType` body property becomes
+        `idTypePathParam`), so such OpenAPI-compliant specs generate without requiring an
+        `x-fern-parameter-name` override. The wire format is unchanged, since path parameter
+        names never appear on the wire. Explicit `x-fern-parameter-name` overrides still take
+        precedence.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.77.0
+  changelogEntry:
+    - summary: |
+        Add an `ignore-tags` OpenAPI setting to `generators.yml`. When enabled,
+        operation-level tags are ignored when determining the SDK structure:
+        endpoints fall back to the root package (or their namespace) and method
+        names are derived from each operation's `operationId`.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: ./openapi.yml
+              settings:
+                ignore-tags: true
+        ```
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.76.0
+  changelogEntry:
+    - summary: |
+        Support webhook signature verification against multiple normalized notification URL
+        forms via `url-normalization` (port variants and legacy query encoding) on HMAC webhook
+        signatures, in both Fern Definition and OpenAPI (`x-fern-webhook-signature`).
+      type: feat
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 5.75.9
+  changelogEntry:
+    - summary: |
+        Fix multi-API environment grouping (`group-multi-api-environments`) when a spec's
+        environment URLs differ by a dot-separated host segment (e.g. `api.stage.acme.com`):
+        the per-API URL key is now derived once per spec instead of per server, so all
+        environments share a consistent set of URL keys. Grouped environments also keep
+        their original user-facing names (e.g. `Production`) instead of normalized
+        matching keys (e.g. `PRD`).
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 5.75.8
   changelogEntry:
     - summary: |

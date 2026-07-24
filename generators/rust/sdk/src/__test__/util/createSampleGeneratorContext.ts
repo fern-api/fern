@@ -50,6 +50,7 @@ export function createSampleGeneratorContext(args: CreateSampleGeneratorContextA
         getOAuthClientCredentialsScheme: () => undefined,
         getOAuthTokenEndpointPath: () => undefined,
         getOAuthTokenHttpEndpoint: () => undefined,
-        getOAuthTokenExchange: () => undefined
+        getOAuthTokenExchange: () => undefined,
+        isEndpointSecurity: () => false
     } as SdkGeneratorContext;
 }

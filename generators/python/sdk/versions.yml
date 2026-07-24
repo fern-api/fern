@@ -1,4 +1,77 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.22.1
+  changelogEntry:
+    - summary: |
+        Loosen the generated `httpx-aiohttp` optional dependency constraint from an exact
+        pin (`0.1.8`) to a caret range (`^0.1.8`, i.e. `>=0.1.8,<0.2.0`). This lets the
+        aiohttp extra coexist with other packages that require a newer 0.1.x of
+        `httpx-aiohttp` (e.g. `>0.1.9`) without introducing a breaking major bump.
+      type: fix
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.22.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+        Inferred (token-endpoint) auth is now also wired under `ENDPOINT_SECURITY` when other
+        schemes are present, and generated wire tests assert per endpoint that only the declared
+        scheme's header is sent.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.21.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding support to `verify_signature`. When a webhook's HMAC
+        signature declares a `bodyHashBinding` in the IR, the generated helper first recomputes
+        the raw request body's hash (using the binding's own algorithm/encoding), extracts the
+        configured query parameter from the notification URL, and timing-safe-compares them
+        (failing closed on a missing or mismatched hash) before performing the existing HMAC
+        verification over the verbatim notification URL. Adds stdlib-only `compute_hash` (unkeyed
+        digest) and read-only `get_webhook_query_parameter` core utilities. Output is unchanged
+        when no body-hash binding is present.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated SDK now emits a `WebhooksHelper` with a static
+        `verify_signature` method that validates the signature (and optional timestamp) using a
+        new stdlib-only core utility (`hmac`/`hashlib`/`base64` with constant-time comparison).
+      type: feat
+    - summary: |
+        Extend `verify_signature` with Twilio-compatible webhook verification. The generated
+        helper now (1) accepts either a raw string or a multi-value form map for `request_body`
+        when the IR sets `payloadFormat.bodySort`, sorting and deduping keys and per-key values
+        before signing; (2) branches at runtime on a `bodyHashBinding`: a JSON request (body-hash
+        query parameter present) recomputes and timing-safe-compares the raw-body hash and signs
+        the notification URL only, while a classic form request signs the URL plus the sorted
+        params with no body-hash check; (3) verifies against several normalized notification-URL
+        forms when `notificationUrlNormalization` is set, succeeding on the first constant-time
+        match; and (4) is a pure boolean that fails closed with `False` on invalid inputs
+        (missing parameters, malformed timestamps, unparseable URLs) rather than raising. Adds a
+        stdlib-only `notification_url_candidates` core utility (port and legacy-query-encoding
+        variants via `urllib.parse`). Output is unchanged for webhooks that do not configure these
+        fields, aside from the no-throw behavior on the verification path.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.20.2
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an `environment` and server URL
+        variables (e.g. `region`), the generated client now renders the selected
+        environment's URL template instead of always using the default (first)
+        environment's template. For example, `Client(environment=Environment.STAGING,
+        region="ie1")` now resolves to the Staging template
+        (`https://api.stage.ie1.example.com`) rather than the Production one.
+        An explicitly provided `base_url` is no longer overridden by URL variables.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
 - version: 5.20.1
   changelogEntry:
     - summary: |

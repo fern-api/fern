@@ -1,0 +1,57 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "b9fef762",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_token.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\nimport com.seed.javaEndpointSecurityTokenSubpackage.resources.token.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.token().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\nimport com.seed.javaEndpointSecurityTokenSubpackage.resources.token.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.token().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
+                "path": "/users/oauth",
+                "identifier_override": "endpoint_user.getWithOAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.user().getWithOAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.user().getWithOAuth();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
+                "path": "/users/mixed",
+                "identifier_override": "endpoint_user.getWithApiKeyOrOAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.user().getWithApiKeyOrOAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.user().getWithApiKeyOrOAuth();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
+                "path": "/users/anonymous",
+                "identifier_override": "endpoint_user.getAnonymous"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.user().getAnonymous();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.user().getAnonymous();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

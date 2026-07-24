@@ -87,9 +87,14 @@ class SeedApi:
         if region is not None or server_url_environment is not None:
             _region = region if region is not None else "us-east-1"
             _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
-            base_url = "https://api.{region}.{environment}.example.com/v1".format(
-                region=_region, environment=_server_url_environment
+            _environment_url_templates = {
+                SeedApiEnvironment.REGIONAL_API_SERVER: "https://api.{region}.{environment}.example.com/v1",
+            }
+            _url_template = _environment_url_templates.get(
+                environment, "https://api.{region}.{environment}.example.com/v1"
             )
+            if base_url is None:
+                base_url = _url_template.format(region=_region, environment=_server_url_environment)
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             headers=headers,
@@ -260,9 +265,14 @@ class AsyncSeedApi:
         if region is not None or server_url_environment is not None:
             _region = region if region is not None else "us-east-1"
             _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
-            base_url = "https://api.{region}.{environment}.example.com/v1".format(
-                region=_region, environment=_server_url_environment
+            _environment_url_templates = {
+                SeedApiEnvironment.REGIONAL_API_SERVER: "https://api.{region}.{environment}.example.com/v1",
+            }
+            _url_template = _environment_url_templates.get(
+                environment, "https://api.{region}.{environment}.example.com/v1"
             )
+            if base_url is None:
+                base_url = _url_template.format(region=_region, environment=_server_url_environment)
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             headers=headers,

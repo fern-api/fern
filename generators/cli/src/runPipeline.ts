@@ -19,6 +19,7 @@ import type { IrSummary } from "./ir.js";
 import { patchCargoLockForSdk, patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
+import { generateWireTests } from "./wireTests/index.js";
 import { writeGitignore } from "./writeGitignore.js";
 
 export type PipelineOutcome =
@@ -102,6 +103,22 @@ export async function runPipeline(args: {
         userAgentSuffixFlag: customConfig.userAgentSuffixFlag
     });
     await writeGitignore(outputDir);
+
+    // Wire tests (opt-in): emit the mock-driven integration suite after the
+    // specs + main.rs are on disk, since the harness resolves command chains
+    // by loading the same baked specs copySpecs just wrote. Requires the IR
+    // file for endpoint examples.
+    if (customConfig.generateWireTests === true && irFilepath != null) {
+        await generateWireTests({
+            outputDir,
+            binaryName,
+            irFilepath,
+            specsDir,
+            rootGroup: customConfig.rootGroup,
+            authBindings
+        });
+    }
+
     await emitReadme({
         outputDir,
         binaryName,

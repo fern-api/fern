@@ -15,7 +15,7 @@
               "examples": [
                 {
                   "path-parameters": {
-                    "idType": "idType",
+                    "idTypePathParam": "idType",
                   },
                   "request": {
                     "idType": "idType",
@@ -26,7 +26,7 @@
               ],
               "method": "PATCH",
               "pagination": undefined,
-              "path": "/Identifiers/{idType}",
+              "path": "/Identifiers/{idTypePathParam}",
               "request": {
                 "body": {
                   "properties": {
@@ -39,7 +39,7 @@
                 "headers": undefined,
                 "name": "IdentifierUpdate",
                 "path-parameters": {
-                  "idType": "string",
+                  "idTypePathParam": "string",
                 },
                 "query-parameters": undefined,
               },
@@ -58,14 +58,14 @@
   base-path: ''
   endpoints:
     updateIdentifier:
-      path: /Identifiers/{idType}
+      path: /Identifiers/{idTypePathParam}
       method: PATCH
       source:
         openapi: ../openapi.yml
       request:
         name: IdentifierUpdate
         path-parameters:
-          idType: string
+          idTypePathParam: string
         body:
           properties:
             idType: string
@@ -74,7 +74,7 @@
         content-type: application/json
       examples:
         - path-parameters:
-            idType: idType
+            idTypePathParam: idType
           request:
             idType: idType
             oldValue: oldValue

@@ -6,8 +6,9 @@ use Seed\Auth\AuthClient;
 use Seed\User\UserClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Core\RoutingAuthProvider;
 use Seed\Core\OAuthTokenProvider;
-use Exception;
+use Seed\Core\InferredAuthProvider;
 
 class SeedClient
 {
@@ -38,9 +39,9 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var OAuthTokenProvider $oauthTokenProvider
+     * @var ?RoutingAuthProvider $routingAuthProvider @phpstan-ignore-next-line Property is read in endpoint methods and passed to subclients
      */
-    private OAuthTokenProvider $oauthTokenProvider;
+    private ?RoutingAuthProvider $routingAuthProvider;
 
     /**
      * @param ?string $token The token to use for authentication.
@@ -66,50 +67,58 @@ class SeedClient
         ?string $clientSecret = null,
         ?array $options = null,
     ) {
-        $token ??= $this->getFromEnvOrThrow('MY_TOKEN', 'Please pass in token or set the environment variable MY_TOKEN.');
-        $apiKey ??= $this->getFromEnvOrThrow('MY_API_KEY', 'Please pass in apiKey or set the environment variable MY_API_KEY.');
-        $username ??= $this->getFromEnvOrThrow('MY_USERNAME', 'Please pass in username or set the environment variable MY_USERNAME.');
-        $password ??= $this->getFromEnvOrThrow('MY_PASSWORD', 'Please pass in password or set the environment variable MY_PASSWORD.');
+        $token ??= getenv('MY_TOKEN') ?: null;
+        $apiKey ??= getenv('MY_API_KEY') ?: null;
+        $username ??= getenv('MY_USERNAME') ?: null;
+        $password ??= getenv('MY_PASSWORD') ?: null;
         $defaultHeaders = [
-            'Authorization' => "Bearer $token",
-            'X-API-Key' => $apiKey,
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":" . $password);
 
         $this->options = $options ?? [];
-
-        $authRawClient = new RawClient(['headers' => []]);
-        $authClient = new AuthClient($authRawClient);
-        $this->oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
 
-        $this->options['getAuthHeaders'] = fn () =>
-            ['Authorization' => "Bearer " . $this->oauthTokenProvider->getToken()];
+        $oauthTokenProvider = null;
+        if ($clientId !== null && $clientSecret !== null) {
+            $authRawClient = new RawClient(['baseUrl' => $this->options['baseUrl'] ?? '', 'headers' => []]);
+            $authClient = new AuthClient($authRawClient);
+            $oauthTokenProvider = new OAuthTokenProvider($clientId, $clientSecret, $authClient);
+
+        }
+        $inferredAuthProvider = null;
+        if ($clientId !== null && $clientSecret !== null) {
+            $authRawClient = new RawClient(['baseUrl' => $this->options['baseUrl'] ?? '', 'headers' => []]);
+            $authClient = new AuthClient($authRawClient);
+            $inferredAuthOptions = [
+                'clientId' => $clientId,
+                'clientSecret' => $clientSecret,
+                'audience' => 'https://api.example.com',
+                'grantType' => 'client_credentials',
+            ];
+            $inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
+
+        }
+        $this->routingAuthProvider = new RoutingAuthProvider(
+            $token,
+            $apiKey,
+            $oauthTokenProvider,
+            $username,
+            $password,
+            $inferredAuthProvider,
+        );
 
         $this->client = new RawClient(
             options: $this->options,
         );
 
-        $this->auth = new AuthClient($this->client, $this->options);
-        $this->user = new UserClient($this->client, $this->options);
-    }
-
-    /**
-     * @param string $env
-     * @param string $message
-     * @return string
-     */
-    private function getFromEnvOrThrow(string $env, string $message): string
-    {
-        $value = getenv($env);
-        return $value ? (string) $value : throw new Exception($message);
+        $this->auth = new AuthClient($this->client, $this->options, $this->routingAuthProvider);
+        $this->user = new UserClient($this->client, $this->options, $this->routingAuthProvider);
     }
 }

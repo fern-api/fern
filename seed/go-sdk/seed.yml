@@ -249,12 +249,21 @@ fixtures:
         packageName: sseresumable
         module:
           path: github.com/fern-api/sse-resumable-go
+  go-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
   server-url-templating-single-url:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
   openapi-request-body-ref:
     - outputFolder: no-custom-config
       customConfig: null
@@ -334,6 +343,10 @@ fixtures:
     - outputFolder: .
       customConfig: null
   inferred-auth-explicit:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  endpoint-security-auth:
     - outputFolder: .
       customConfig:
         enableWireTests: true

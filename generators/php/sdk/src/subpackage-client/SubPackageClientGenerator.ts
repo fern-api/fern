@@ -62,6 +62,23 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             );
         }
 
+        // Under ENDPOINT_SECURITY, the shared RoutingAuthProvider is threaded down from the
+        // root client so this subclient's endpoints can route their own auth headers.
+        if (this.context.isEndpointSecurity()) {
+            class_.addField(
+                php.field({
+                    name: "$routingAuthProvider",
+                    access: "private",
+                    // Nullable so the token providers' internal auth client (whose token
+                    // endpoint is unauthenticated) can be constructed without one.
+                    type: php.Type.optional(php.Type.reference(this.context.getRoutingAuthProviderClassReference())),
+                    // Read in endpoint methods (via HttpEndpointGenerator) and passed to nested
+                    // subclients; unused only in subclients with no authenticated endpoints.
+                    docs: "@phpstan-ignore-next-line Property is read in endpoint methods and passed to subclients"
+                })
+            );
+        }
+
         const subpackages = this.getSubpackages();
         class_.addConstructor(this.getConstructorMethod({ subpackages }));
         for (const subpackage of subpackages) {
@@ -130,10 +147,23 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             );
         }
 
+        if (this.context.isEndpointSecurity()) {
+            parameters.push(
+                php.parameter({
+                    name: "routingAuthProvider",
+                    type: php.Type.optional(php.Type.reference(this.context.getRoutingAuthProviderClassReference())),
+                    initializer: php.codeblock("null")
+                })
+            );
+        }
+
         return {
             parameters,
             body: php.codeblock((writer) => {
                 writer.writeLine(`$this->client = $${this.context.rawClient.getFieldName()};`);
+                if (this.context.isEndpointSecurity()) {
+                    writer.writeLine("$this->routingAuthProvider = $routingAuthProvider;");
+                }
 
                 if (isMultiUrl) {
                     writer.writeTextStatement("$this->environment = $environment");
@@ -163,6 +193,10 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                         subClientArgs.push(php.codeblock(`$this->environment`));
                     } else {
                         subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
+                    }
+
+                    if (this.context.isEndpointSecurity()) {
+                        subClientArgs.push(php.codeblock("$this->routingAuthProvider"));
                     }
 
                     writer.writeNodeStatement(

@@ -1,0 +1,46 @@
+{
+  "binaryName": "acme-versioned",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/acme-versioned/openapi0.json",
+      "namespace": "v1"
+    },
+    {
+      "file": "cli/acme-versioned/openapi1.json",
+      "namespace": "v2"
+    }
+  ],
+  "authEnvVars": [
+    "ACME_VERSIONED_TOKEN"
+  ],
+  "authMock": null,
+  "cases": [
+    {
+      "id": "listusers",
+      "method": "GET",
+      "path": "/users",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"email\": \"email\"\n  }\n]"
+      }
+    },
+    {
+      "id": "listaccounts",
+      "method": "GET",
+      "path": "/accounts",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"profile\": {\n      \"email\": \"email\",\n      \"displayName\": \"displayName\"\n    }\n  }\n]"
+      }
+    }
+  ]
+}

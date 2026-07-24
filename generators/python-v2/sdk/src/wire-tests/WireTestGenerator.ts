@@ -1,5 +1,6 @@
 import { GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
@@ -313,6 +314,13 @@ export class WireTestGenerator {
         node.addReference(python.reference({ name: "get_client", modulePath: [".conftest"] }));
         node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
+        // Only wire up the per-endpoint auth-header assertion helper in endpoint-security
+        // mode, where each endpoint routes a distinct scheme. Registering it otherwise would
+        // create an unused import in every non-endpoint-security wire-test file.
+        if (this.isEndpointSecurity()) {
+            node.addReference(python.reference({ name: "verify_auth_headers", modulePath: [".conftest"] }));
+        }
+
         // Import ApiError from the SDK's core module for error response tests
         const modulePath = this.context.getModulePath();
         node.addReference(python.reference({ name: "ApiError", modulePath: [modulePath, "core"] }));
@@ -411,13 +419,29 @@ export class WireTestGenerator {
             // 1. The automatic token fetch request (from OAuth/inferred auth)
             // 2. The actual API call being tested
             // For all other endpoints, expect 1 request (the auth token fetch goes to a different endpoint)
+            //
+            // In endpoint-security mode every endpoint routes its own scheme, so a token
+            // fetch (POST to the token endpoint) only happens while testing the endpoints
+            // that route OAuth/inferred — filtered out here because it targets a different
+            // path/test-id. The token endpoint is unauthenticated and, when tested directly,
+            // makes exactly one request, so the doubling heuristic must not apply.
             const expectedRequestCount =
-                this.isInferredAuthTokenEndpoint(endpoint) || this.isOAuthTokenEndpoint(endpoint) ? 2 : 1;
+                !this.isEndpointSecurity() &&
+                (this.isInferredAuthTokenEndpoint(endpoint) || this.isOAuthTokenEndpoint(endpoint))
+                    ? 2
+                    : 1;
             statements.push(
                 python.codeBlock(
                     `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, ${expectedRequestCount})`
                 )
             );
+
+            // In endpoint-security mode, assert on the wire that ONLY the scheme(s)
+            // declared for this endpoint sent a header, and no other scheme leaked.
+            const authAssertion = this.buildEndpointAuthHeaderAssertion(endpoint, basePath);
+            if (authAssertion != null) {
+                statements.push(python.codeBlock(authAssertion));
+            }
 
             const method = python.method({
                 name: testName,
@@ -431,6 +455,162 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    // =============================================================================
+    // ENDPOINT-SECURITY AUTH HEADER ASSERTIONS
+    // =============================================================================
+
+    /**
+     * True when the API uses per-endpoint auth routing (ENDPOINT_SECURITY). In this
+     * mode each endpoint sends only the header(s) for its own declared security
+     * requirement, so wire tests assert per-endpoint rather than a single global header.
+     */
+    private isEndpointSecurity(): boolean {
+        return this.context.ir.auth?.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+    }
+
+    /**
+     * Builds the `verify_auth_headers(...)` assertion call for an endpoint under
+     * endpoint-security routing, or `undefined` when no assertion should be emitted
+     * (not in endpoint-security mode, or the routed requirement can't be determined).
+     *
+     * The assertion proves on the wire that:
+     *  - the header(s) for this endpoint's routed requirement ARE present, and
+     *  - every other scheme's header is ABSENT (no auth leaks across endpoints).
+     */
+    private buildEndpointAuthHeaderAssertion(endpoint: FernIr.HttpEndpoint, basePath: string): string | undefined {
+        if (!this.isEndpointSecurity()) {
+            return undefined;
+        }
+
+        const schemes = this.context.ir.auth?.schemes ?? [];
+        const schemesByKey = new Map<string, FernIr.AuthScheme>();
+        for (const scheme of schemes) {
+            schemesByKey.set(scheme.key, scheme);
+        }
+
+        // Every header name any configured scheme could send. These are the candidates
+        // for "must be absent" when an endpoint does not route through that scheme.
+        const allHeaderNames = new Set<string>();
+        for (const scheme of schemes) {
+            const expectation = this.getSchemeHeaderExpectation(scheme);
+            if (expectation != null) {
+                allHeaderNames.add(expectation.name);
+            }
+        }
+
+        const requirements = endpoint.security ?? [];
+
+        if (requirements.length === 0) {
+            // No security requirements. For a genuinely unauthenticated endpoint, assert
+            // that NO auth header is sent. If the endpoint is auth'd but somehow lacks a
+            // resolved requirement, skip rather than assert something we can't determine.
+            if (endpoint.auth) {
+                return undefined;
+            }
+            return this.renderVerifyAuthHeadersCall(endpoint.method, basePath, {}, [...allHeaderNames]);
+        }
+
+        // Mirror the SDK's RoutingAuthProvider: pick the FIRST requirement whose schemes
+        // are all known. get_client supplies credentials for every scheme, so the first
+        // requirement is always the one that routes.
+        const chosen = requirements.find((requirement) =>
+            Object.keys(requirement).every((schemeKey) => schemesByKey.has(schemeKey))
+        );
+        if (chosen == null) {
+            return undefined;
+        }
+
+        // Group the chosen requirement's schemes by the header name they emit. When a
+        // single scheme owns a header we can assert its exact value shape (e.g. "Basic .+"
+        // vs "Bearer .+"); when several schemes (AND) collide on one header (e.g. bearer +
+        // oauth + basic all use Authorization) the final value is order-dependent, so we
+        // only assert the header's presence.
+        const patternsByHeader = new Map<string, string[]>();
+        for (const schemeKey of Object.keys(chosen)) {
+            const scheme = schemesByKey.get(schemeKey);
+            if (scheme == null) {
+                continue;
+            }
+            const expectation = this.getSchemeHeaderExpectation(scheme);
+            if (expectation == null) {
+                continue;
+            }
+            const existing = patternsByHeader.get(expectation.name) ?? [];
+            existing.push(expectation.valuePattern);
+            patternsByHeader.set(expectation.name, existing);
+        }
+
+        const present: Record<string, string> = {};
+        for (const [headerName, patterns] of patternsByHeader.entries()) {
+            present[headerName] = patterns.length === 1 && patterns[0] != null ? patterns[0] : ".+";
+        }
+        const absent = [...allHeaderNames].filter((headerName) => !(headerName in present));
+
+        return this.renderVerifyAuthHeadersCall(endpoint.method, basePath, present, absent);
+    }
+
+    private renderVerifyAuthHeadersCall(
+        method: string,
+        basePath: string,
+        present: Record<string, string>,
+        absent: string[]
+    ): string {
+        const presentLiteral =
+            "{" +
+            Object.entries(present)
+                .map(([headerName, pattern]) => `"${headerName}": r"${pattern}"`)
+                .join(", ") +
+            "}";
+        const absentLiteral = "[" + absent.map((headerName) => `"${headerName}"`).join(", ") + "]";
+        return `verify_auth_headers(test_id, "${method}", "${basePath}", ${presentLiteral}, ${absentLiteral})`;
+    }
+
+    /**
+     * The header name and value-regex a scheme produces when it is the routed scheme
+     * for an endpoint. Returns `undefined` for schemes that emit no request header.
+     */
+    private getSchemeHeaderExpectation(scheme: FernIr.AuthScheme): { name: string; valuePattern: string } | undefined {
+        switch (scheme.type) {
+            case "bearer":
+                return { name: "Authorization", valuePattern: "Bearer .+" };
+            case "basic":
+                return { name: "Authorization", valuePattern: "Basic .+" };
+            case "header": {
+                const name = getWireValue(scheme.name);
+                return {
+                    name,
+                    valuePattern: scheme.prefix != null ? `${this.escapeRegex(scheme.prefix)} .+` : ".+"
+                };
+            }
+            case "oauth": {
+                const configuration = scheme.configuration;
+                const headerName = configuration.tokenHeader ?? "Authorization";
+                const prefix = configuration.tokenPrefix ?? "Bearer";
+                return { name: headerName, valuePattern: `${this.escapeRegex(prefix.trim())} .+` };
+            }
+            case "inferred": {
+                const authenticatedHeader = scheme.tokenEndpoint.authenticatedRequestHeaders[0];
+                const name = authenticatedHeader?.headerName ?? "Authorization";
+                const prefix = authenticatedHeader?.valuePrefix ?? (name === "Authorization" ? "Bearer" : undefined);
+                return {
+                    name,
+                    valuePattern:
+                        prefix != null && prefix.trim().length > 0 ? `${this.escapeRegex(prefix.trim())} .+` : ".+"
+                };
+            }
+            default:
+                assertNever(scheme);
+        }
+    }
+
+    /**
+     * Escapes regex metacharacters so a literal prefix (e.g. an auth prefix) can be
+     * embedded in a Python regex pattern passed to re.fullmatch.
+     */
+    private escapeRegex(value: string): string {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
     /**

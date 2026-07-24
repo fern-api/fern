@@ -13,7 +13,9 @@ from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.client_generator.base_client_generator import (
     ConstructorParameter as BaseClientGeneratorConstructorParameter,
 )
-from fern_python.generators.sdk.client_generator.type_utilities import is_type_reference_string
+from fern_python.generators.sdk.client_generator.type_utilities import (
+    is_type_reference_string,
+)
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
@@ -34,6 +36,10 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     # True when the underlying fern type is not a string and the value must be
     # wrapped with str(...) to satisfy the Dict[str, str] headers type.
     needs_str_conversion: bool = False
+    # True when this parameter corresponds to an auth scheme (bearer token or
+    # header auth scheme). Used to skip flat auth-header emission in endpoint
+    # security mode, where auth headers are routed per-endpoint instead.
+    is_auth: bool = False
 
 
 @dataclass
@@ -63,6 +69,9 @@ class ClientWrapperGenerator:
     BASE_CLIENT_WRAPPER_CLASS_NAME = "BaseClientWrapper"
 
     GET_HEADERS_METHOD_NAME = "get_headers"
+    GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME = "get_auth_headers_for_endpoint"
+    ASYNC_GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME = "async_get_auth_headers_for_endpoint"
+    ENDPOINT_SECURITY_PARAMETER_NAME = "security"
     GET_BASE_URL_METHOD_NAME = "get_base_url"
     GET_TIMEOUT_METHOD_NAME = "get_timeout"
     GET_MAX_RETRIES_METHOD_NAME = "get_max_retries"
@@ -84,7 +93,8 @@ class ClientWrapperGenerator:
     LOGGING_MEMBER_NAME = "_logging"
 
     STRING_OR_SUPPLIER_TYPE_HINT = AST.TypeHint.union(
-        AST.TypeHint.str_(), AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
+        AST.TypeHint.str_(),
+        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
     )
 
     HEADERS_CONSTRUCTOR_PARAMETER_NAME = "headers"
@@ -195,7 +205,9 @@ class ClientWrapperGenerator:
             ),
         )
 
-    def _get_stream_reconnection_enabled_constructor_parameter(self) -> ConstructorParameter:
+    def _get_stream_reconnection_enabled_constructor_parameter(
+        self,
+    ) -> ConstructorParameter:
         return ConstructorParameter(
             constructor_parameter_name=ClientWrapperGenerator.STREAM_RECONNECTION_ENABLED_PARAMETER_NAME,
             type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
@@ -209,7 +221,9 @@ class ClientWrapperGenerator:
             ),
         )
 
-    def _get_max_stream_reconnection_attempts_constructor_parameter(self) -> ConstructorParameter:
+    def _get_max_stream_reconnection_attempts_constructor_parameter(
+        self,
+    ) -> ConstructorParameter:
         return ConstructorParameter(
             constructor_parameter_name=ClientWrapperGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_PARAMETER_NAME,
             type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
@@ -297,14 +311,39 @@ class ClientWrapperGenerator:
             )
         )
 
+        if self.is_endpoint_security():
+            class_declaration.add_method(
+                AST.FunctionDeclaration(
+                    name=ClientWrapperGenerator.GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME,
+                    signature=AST.FunctionSignature(
+                        named_parameters=[
+                            AST.NamedFunctionParameter(
+                                name=ClientWrapperGenerator.ENDPOINT_SECURITY_PARAMETER_NAME,
+                                type_hint=self._get_endpoint_security_type_hint(),
+                            )
+                        ],
+                        return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()),
+                    ),
+                    body=AST.CodeWriter(self._get_write_auth_headers_for_endpoint_body(is_async=False)),
+                )
+            )
+
         for constructor_param in constructor_parameters:
             if constructor_param.getter_method is not None:
                 class_declaration.add_method(constructor_param.getter_method)
 
         return class_declaration
 
+    def _get_endpoint_security_type_hint(self) -> AST.TypeHint:
+        return AST.TypeHint.optional(
+            AST.TypeHint.list(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.list(AST.TypeHint.str_())))
+        )
+
     def _create_sync_client_wrapper_class_declaration(
-        self, *, constructor_parameters: typing.List[ConstructorParameter], literal_headers: typing.List[LiteralHeader]
+        self,
+        *,
+        constructor_parameters: typing.List[ConstructorParameter],
+        literal_headers: typing.List[LiteralHeader],
     ) -> AST.ClassDeclaration:
         named_parameters = self._get_named_parameters(
             constructor_parameters=constructor_parameters,
@@ -342,7 +381,10 @@ class ClientWrapperGenerator:
     ASYNC_GET_HEADERS_METHOD_NAME = "async_get_headers"
 
     def _create_async_client_wrapper_class_declaration(
-        self, *, constructor_parameters: typing.List[ConstructorParameter], literal_headers: typing.List[LiteralHeader]
+        self,
+        *,
+        constructor_parameters: typing.List[ConstructorParameter],
+        literal_headers: typing.List[LiteralHeader],
     ) -> AST.ClassDeclaration:
         named_parameters = self._get_named_parameters(
             constructor_parameters=constructor_parameters,
@@ -354,7 +396,10 @@ class ClientWrapperGenerator:
             AST.NamedFunctionParameter(
                 name=ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
                 type_hint=AST.TypeHint.optional(
-                    AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.awaitable(AST.TypeHint.str_()))
+                    AST.TypeHint.callable(
+                        parameters=[],
+                        return_type=AST.TypeHint.awaitable(AST.TypeHint.str_()),
+                    )
                 ),
                 initializer=AST.Expression(AST.TypeHint.none()),
             )
@@ -411,24 +456,202 @@ class ClientWrapperGenerator:
             )
         )
 
+        if self.is_endpoint_security():
+            class_declaration.add_method(
+                AST.FunctionDeclaration(
+                    name=ClientWrapperGenerator.ASYNC_GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME,
+                    signature=AST.FunctionSignature(
+                        named_parameters=[
+                            AST.NamedFunctionParameter(
+                                name=ClientWrapperGenerator.ENDPOINT_SECURITY_PARAMETER_NAME,
+                                type_hint=self._get_endpoint_security_type_hint(),
+                            )
+                        ],
+                        return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()),
+                    ),
+                    body=AST.CodeWriter(self._get_write_auth_headers_for_endpoint_body(is_async=True)),
+                    is_async=True,
+                )
+            )
+
         return class_declaration
 
     def _get_write_async_get_headers_body(self) -> CodeWriterFunction:
         def _write_async_get_headers_body(writer: AST.NodeWriter) -> None:
             writer.write_line("headers = self.get_headers()")
-            writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
-            with writer.indent():
-                writer.write_line(f"token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
-                writer.write_line('headers["Authorization"] = f"Bearer {token}"')
-            if self._has_inferred_auth():
-                writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
+            # In endpoint-security mode, auth headers are routed per-endpoint, so the
+            # async base headers must not inject any auth headers either.
+            emit_flat_auth = not self.is_endpoint_security()
+            if emit_flat_auth:
+                writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
                 with writer.indent():
-                    writer.write_line(
-                        f"headers.update(await self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME}())"
-                    )
+                    writer.write_line(f"token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
+                    writer.write_line('headers["Authorization"] = f"Bearer {token}"')
+                if self._has_inferred_auth():
+                    writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
+                    with writer.indent():
+                        writer.write_line(
+                            f"headers.update(await self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME}())"
+                        )
             writer.write_line("return headers")
 
         return _write_async_get_headers_body
+
+    def _get_write_auth_headers_for_endpoint_body(self, *, is_async: bool) -> CodeWriterFunction:
+        """Generate the body of (async_)get_auth_headers_for_endpoint.
+
+        Mirrors the TypeScript RoutingAuthProvider: given the endpoint's static
+        security requirements, build only the auth headers for the FIRST requirement
+        whose schemes ALL have credentials available (OR across the list, AND within
+        a requirement). If none is satisfiable, raise naming the missing schemes.
+        """
+        security_param = ClientWrapperGenerator.ENDPOINT_SECURITY_PARAMETER_NAME
+        available_var = "available_auth_headers"
+
+        bearer_auth_scheme = self._get_bearer_auth_scheme()
+        oauth_scheme = self._get_oauth_scheme()
+        header_auth_schemes = self._get_header_auth_schemes()
+        basic_auth_scheme = self._get_basic_auth_scheme()
+        inferred_auth_scheme = self._get_inferred_auth_scheme()
+
+        # The scheme keys that resolve to a bearer token (Authorization: Bearer <token>).
+        # Both an explicit bearer scheme and an OAuth scheme share the client wrapper's
+        # single token slot (_get_token / _async_token).
+        token_scheme_keys: List[str] = []
+        if bearer_auth_scheme is not None and self._has_bearer_scheme():
+            token_scheme_keys.append(bearer_auth_scheme.key)
+        if oauth_scheme is not None:
+            token_scheme_keys.append(oauth_scheme.key)
+
+        def _write_auth_headers_for_endpoint_body(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"if not {security_param}:")
+            with writer.indent():
+                writer.write_line("return {}")
+
+            writer.write(f"{available_var}: ")
+            writer.write_node(
+                AST.TypeHint.dict(
+                    AST.TypeHint.str_(),
+                    AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()),
+                )
+            )
+            writer.write_line(" = {}")
+
+            # Bearer / OAuth token schemes
+            if len(token_scheme_keys) > 0 and bearer_auth_scheme is not None:
+                token_getter = names.get_token_getter_name(bearer_auth_scheme)
+                if is_async:
+                    # Forward-declare so both branches (async token -> str, sync getter ->
+                    # str | None) unify to Optional[str]; otherwise mypy infers `str` from the
+                    # first assignment and rejects the else branch.
+                    writer.write_line("_token: typing.Optional[str]")
+                    writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
+                    with writer.indent():
+                        writer.write_line(f"_token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
+                    writer.write_line("else:")
+                    with writer.indent():
+                        writer.write_line(f"_token = self.{token_getter}()")
+                else:
+                    writer.write_line(f"_token = self.{token_getter}()")
+                writer.write_line("if _token is not None:")
+                with writer.indent():
+                    for key in token_scheme_keys:
+                        writer.write_line(
+                            f'{available_var}["{key}"] = {{"{ClientWrapperGenerator.AUTHORIZATION_HEADER}": f"{ClientWrapperGenerator.BEARER_AUTH_PREFIX} {{_token}}"}}'
+                        )
+
+            # Header auth schemes (e.g. X-API-Key)
+            for header_auth_scheme in header_auth_schemes:
+                member = names.get_auth_scheme_header_private_member_name(header_auth_scheme)
+                header_key = get_wire_value(header_auth_scheme.name)
+                writer.write_line(f"if self.{member} is not None:")
+                with writer.indent():
+                    if header_auth_scheme.prefix is not None:
+                        value = f'f"{header_auth_scheme.prefix} {{self.{member}}}"'
+                    else:
+                        value = f"self.{member}"
+                    writer.write_line(f'{available_var}["{header_auth_scheme.key}"] = {{"{header_key}": {value}}}')
+
+            # Basic auth
+            if basic_auth_scheme is not None:
+                username_omitted = basic_auth_scheme.username_omit is True
+                password_omitted = basic_auth_scheme.password_omit is True
+                if not (username_omitted and password_omitted):
+                    conditions: List[str] = []
+                    if not username_omitted:
+                        writer.write_line(f"_username = self.{names.get_username_getter_name(basic_auth_scheme)}()")
+                        conditions.append("_username is not None")
+                    if not password_omitted:
+                        writer.write_line(f"_password = self.{names.get_password_getter_name(basic_auth_scheme)}()")
+                        conditions.append("_password is not None")
+                    username_arg = AST.Expression('""') if username_omitted else AST.Expression("_username")
+                    password_arg = AST.Expression('""') if password_omitted else AST.Expression("_password")
+                    writer.write_line(f"if {' and '.join(conditions)}:")
+                    with writer.indent():
+                        writer.write(
+                            f'{available_var}["{basic_auth_scheme.key}"] = {{"{ClientWrapperGenerator.AUTHORIZATION_HEADER}": '
+                        )
+                        writer.write_node(
+                            AST.ClassInstantiation(
+                                class_=httpx.HttpX.BASIC_AUTH,
+                                args=[username_arg, password_arg],
+                            )
+                        )
+                        writer.write("._auth_header}")
+                        writer.write_newline_if_last_line_not()
+
+            # Inferred auth
+            if inferred_auth_scheme is not None:
+                if is_async:
+                    writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
+                    with writer.indent():
+                        writer.write_line(
+                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(await self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME}())'
+                        )
+                    writer.write_line(f"elif self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
+                    with writer.indent():
+                        writer.write_line(
+                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
+                        )
+                else:
+                    writer.write_line(f"if self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
+                    with writer.indent():
+                        writer.write_line(
+                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
+                        )
+
+            # OR across requirements: pick the first fully-satisfiable requirement.
+            writer.write_line(f"for requirement in {security_param}:")
+            with writer.indent():
+                writer.write_line(f"if all(scheme_key in {available_var} for scheme_key in requirement):")
+                with writer.indent():
+                    writer.write("combined_headers: ")
+                    writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
+                    writer.write_line(" = {}")
+                    writer.write_line("for scheme_key in requirement:")
+                    with writer.indent():
+                        writer.write_line(f"combined_headers.update({available_var}[scheme_key])")
+                    writer.write_line("return combined_headers")
+
+            # No requirement satisfiable: raise naming the missing schemes.
+            writer.write_line(
+                f'_missing_hints = " OR ".join(" AND ".join(scheme_key for scheme_key in requirement if scheme_key not in {available_var}) for requirement in {security_param})'
+            )
+            writer.write_line("raise ValueError(")
+            with writer.indent():
+                writer.write_line(
+                    '"No authentication credentials provided that satisfy the endpoint\'s security requirements. "'
+                )
+                writer.write_line('"Please provide credentials for: " + _missing_hints')
+            writer.write_line(")")
+
+        return _write_auth_headers_for_endpoint_body
+
+    def _has_bearer_scheme(self) -> bool:
+        for scheme in self._context.ir.auth.schemes:
+            if scheme.get_as_union().type == "bearer":
+                return True
+        return False
 
     def _get_write_async_client_wrapper_constructor_body(
         self,
@@ -438,7 +661,9 @@ class ClientWrapperGenerator:
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
 
-        def _write_async_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
+        def _write_async_client_wrapper_constructor_body(
+            writer: AST.NodeWriter,
+        ) -> None:
             # Avoid repeating parameters by tracking names
             seen_param_names = set()
             param_assignments = []
@@ -494,7 +719,9 @@ class ClientWrapperGenerator:
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
 
-        def _write_derived_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
+        def _write_derived_client_wrapper_constructor_body(
+            writer: AST.NodeWriter,
+        ) -> None:
             # Avoid repeating parameters by tracking names
             seen_param_names = set()
             param_assignments = []
@@ -533,7 +760,10 @@ class ClientWrapperGenerator:
         return _write_derived_client_wrapper_constructor_body
 
     def _get_named_parameters(
-        self, *, constructor_parameters: List[ConstructorParameter], literal_headers: List[LiteralHeader]
+        self,
+        *,
+        constructor_parameters: List[ConstructorParameter],
+        literal_headers: List[LiteralHeader],
     ) -> typing.List[AST.NamedFunctionParameter]:
         return [
             AST.NamedFunctionParameter(
@@ -623,8 +853,12 @@ class ClientWrapperGenerator:
             writer.write_line("**(self.get_custom_headers() or {}),")
             writer.write_line("}")
             writer.write_newline_if_last_line_not()
+            # In endpoint-security mode, auth headers are routed per-endpoint via
+            # get_auth_headers_for_endpoint, so the flat get_headers() must not emit
+            # any auth headers (it is applied as base_headers to every request).
+            emit_flat_auth = not self.is_endpoint_security()
             basic_auth_scheme = self._get_basic_auth_scheme()
-            if basic_auth_scheme is not None:
+            if basic_auth_scheme is not None and emit_flat_auth:
                 username_omitted = basic_auth_scheme.username_omit is True
                 password_omitted = basic_auth_scheme.password_omit is True
 
@@ -690,6 +924,8 @@ class ClientWrapperGenerator:
             for param in constructor_parameters:
                 if param.is_basic:
                     continue
+                if param.is_auth and not emit_flat_auth:
+                    continue
                 if param.header_key is not None:
                     if param.header_prefix is not None:
                         if param.getter_method is not None:
@@ -746,7 +982,7 @@ class ClientWrapperGenerator:
                     f'headers["{literal_header.header_key}"] = self.{private_member_name} if self.{private_member_name} is not None else "{self._context.get_literal_header_value(literal_header.header)}"'
                 )
                 writer.write_line()
-            if self._has_inferred_auth():
+            if self._has_inferred_auth() and emit_flat_auth:
                 writer.write_line(f"if self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
                 with writer.indent():
                     writer.write_line(f"headers.update(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())")
@@ -755,7 +991,10 @@ class ClientWrapperGenerator:
         return _write_get_headers_body
 
     def _get_write_constructor_body(
-        self, *, constructor_parameters: List[ConstructorParameter], literal_headers: List[LiteralHeader]
+        self,
+        *,
+        constructor_parameters: List[ConstructorParameter],
+        literal_headers: List[LiteralHeader],
     ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             params_empty = True
@@ -898,6 +1137,7 @@ class ClientWrapperGenerator:
                     environment_variable=(
                         header_auth_scheme.header_env_var if header_auth_scheme.header_env_var is not None else None
                     ),
+                    is_auth=True,
                 )
             )
 
@@ -1080,6 +1320,7 @@ class ClientWrapperGenerator:
                     ),
                     header_key=ClientWrapperGenerator.AUTHORIZATION_HEADER,
                     header_prefix=ClientWrapperGenerator.BEARER_AUTH_PREFIX,
+                    is_auth=True,
                     environment_variable=(
                         bearer_auth_scheme.token_env_var if bearer_auth_scheme.token_env_var is not None else None
                     ),
@@ -1176,6 +1417,24 @@ class ClientWrapperGenerator:
                         ),
                     ),
                 )
+        return None
+
+    def is_endpoint_security(self) -> bool:
+        """Whether the API applies auth per-endpoint (each endpoint declares its own schemes)."""
+        return self._context.ir.auth.requirement == ir_types.AuthSchemesRequirement.ENDPOINT_SECURITY
+
+    def _get_oauth_scheme(self) -> Optional[ir_types.OAuthScheme]:
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "oauth":
+                return scheme_as_union
+        return None
+
+    def _get_inferred_auth_scheme(self) -> Optional[ir_types.InferredAuthScheme]:
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "inferred":
+                return scheme_as_union
         return None
 
     def _has_oauth(self) -> bool:

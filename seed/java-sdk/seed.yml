@@ -206,6 +206,9 @@ fixtures:
         enable-wire-tests: true
         offset-semantics: "item-index"
       outputFolder: item-index-semantics
+  java-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   pagination-custom:
     - customConfig:
         custom-pager-name: "FernCustomPaginator"

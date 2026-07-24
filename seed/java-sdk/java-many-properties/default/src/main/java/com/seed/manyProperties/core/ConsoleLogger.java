@@ -23,6 +23,7 @@ public final class ConsoleLogger implements ILogger {
                     return record.getLevel() + " - " + record.getMessage() + System.lineSeparator();
                 }
             });
+            handler.setLevel(Level.ALL);
             logger.addHandler(handler);
             logger.setUseParentHandlers(false);
             logger.setLevel(Level.ALL);

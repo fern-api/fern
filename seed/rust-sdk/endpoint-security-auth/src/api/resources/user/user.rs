@@ -32,6 +32,17 @@ impl UserClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
+        let endpoint_auth_headers = self
+            .http_client
+            .resolve_endpoint_auth_headers(&options, &[&["Bearer"] as &[&str]])
+            .await?;
+        let options = {
+            let mut o = options.unwrap_or_default();
+            for (header_key, header_value) in endpoint_auth_headers {
+                o.additional_headers.insert(header_key, header_value);
+            }
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "users", None, None, options)
             .await
@@ -56,6 +67,17 @@ impl UserClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
+        let endpoint_auth_headers = self
+            .http_client
+            .resolve_endpoint_auth_headers(&options, &[&["ApiKey"] as &[&str]])
+            .await?;
+        let options = {
+            let mut o = options.unwrap_or_default();
+            for (header_key, header_value) in endpoint_auth_headers {
+                o.additional_headers.insert(header_key, header_value);
+            }
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "users", None, None, options)
             .await
@@ -80,6 +102,17 @@ impl UserClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
+        let endpoint_auth_headers = self
+            .http_client
+            .resolve_endpoint_auth_headers(&options, &[&["OAuth"] as &[&str]])
+            .await?;
+        let options = {
+            let mut o = options.unwrap_or_default();
+            for (header_key, header_value) in endpoint_auth_headers {
+                o.additional_headers.insert(header_key, header_value);
+            }
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "users", None, None, options)
             .await
@@ -104,6 +137,17 @@ impl UserClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
+        let endpoint_auth_headers = self
+            .http_client
+            .resolve_endpoint_auth_headers(&options, &[&["Basic"] as &[&str]])
+            .await?;
+        let options = {
+            let mut o = options.unwrap_or_default();
+            for (header_key, header_value) in endpoint_auth_headers {
+                o.additional_headers.insert(header_key, header_value);
+            }
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "users", None, None, options)
             .await
@@ -128,6 +172,17 @@ impl UserClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
+        let endpoint_auth_headers = self
+            .http_client
+            .resolve_endpoint_auth_headers(&options, &[&["InferredAuth"] as &[&str]])
+            .await?;
+        let options = {
+            let mut o = options.unwrap_or_default();
+            for (header_key, header_value) in endpoint_auth_headers {
+                o.additional_headers.insert(header_key, header_value);
+            }
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "users", None, None, options)
             .await
@@ -152,6 +207,26 @@ impl UserClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
+        let endpoint_auth_headers = self
+            .http_client
+            .resolve_endpoint_auth_headers(
+                &options,
+                &[
+                    &["Bearer"] as &[&str],
+                    &["ApiKey"] as &[&str],
+                    &["OAuth"] as &[&str],
+                    &["Basic"] as &[&str],
+                    &["InferredAuth"] as &[&str],
+                ],
+            )
+            .await?;
+        let options = {
+            let mut o = options.unwrap_or_default();
+            for (header_key, header_value) in endpoint_auth_headers {
+                o.additional_headers.insert(header_key, header_value);
+            }
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "users", None, None, options)
             .await
@@ -176,6 +251,20 @@ impl UserClient {
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
+        let endpoint_auth_headers = self
+            .http_client
+            .resolve_endpoint_auth_headers(
+                &options,
+                &[&["Bearer", "ApiKey", "OAuth", "Basic", "InferredAuth"] as &[&str]],
+            )
+            .await?;
+        let options = {
+            let mut o = options.unwrap_or_default();
+            for (header_key, header_value) in endpoint_auth_headers {
+                o.additional_headers.insert(header_key, header_value);
+            }
+            Some(o)
+        };
         self.http_client
             .execute_request(Method::GET, "users", None, None, options)
             .await

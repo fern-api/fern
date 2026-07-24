@@ -12,6 +12,8 @@ public partial class OAuthTokenProvider
 
     private DateTime? _expiresAt;
 
+    private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+
     private string _clientId;
 
     private string _clientSecret;
@@ -39,21 +41,32 @@ public partial class OAuthTokenProvider
     {
         if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
         {
-            var tokenResponse = await _client
-                .GetTokenWithClientCredentialsAsync(
-                    new GetTokenRequest
-                    {
-                        Cid = _clientId,
-                        Csr = _clientSecret,
-                        EntityId = _entityId,
-                        Scp = _scp,
-                    }
-                )
-                .ConfigureAwait(false);
-            _accessToken = tokenResponse.AccessToken;
-            _expiresAt = DateTime
-                .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
-                .AddMinutes(-BufferInMinutes);
+            await _lock.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
+                {
+                    var tokenResponse = await _client
+                        .GetTokenWithClientCredentialsAsync(
+                            new GetTokenRequest
+                            {
+                                Cid = _clientId,
+                                Csr = _clientSecret,
+                                EntityId = _entityId,
+                                Scp = _scp,
+                            }
+                        )
+                        .ConfigureAwait(false);
+                    _accessToken = tokenResponse.AccessToken;
+                    _expiresAt = DateTime
+                        .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
+                        .AddMinutes(-BufferInMinutes);
+                }
+            }
+            finally
+            {
+                _lock.Release();
+            }
         }
         return $"Bearer {_accessToken}";
     }

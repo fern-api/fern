@@ -165,6 +165,10 @@ fixtures:
         pydantic_config:
           enum_type: "python_enums"
       outputFolder: real-enum
+  endpoint-security-auth:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
@@ -424,6 +428,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  python-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config

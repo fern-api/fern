@@ -1,0 +1,15 @@
+- summary: |
+    Extend `verify_signature` with Twilio-compatible webhook verification. The generated
+    helper now (1) accepts either a raw string or a multi-value form map for `request_body`
+    when the IR sets `payloadFormat.bodySort`, sorting and deduping keys and per-key values
+    before signing; (2) branches at runtime on a `bodyHashBinding`: a JSON request (body-hash
+    query parameter present) recomputes and timing-safe-compares the raw-body hash and signs
+    the notification URL only, while a classic form request signs the URL plus the sorted
+    params with no body-hash check; (3) verifies against several normalized notification-URL
+    forms when `notificationUrlNormalization` is set, succeeding on the first constant-time
+    match; and (4) is a pure boolean that fails closed with `False` on invalid inputs
+    (missing parameters, malformed timestamps, unparseable URLs) rather than raising. Adds a
+    stdlib-only `notification_url_candidates` core utility (port and legacy-query-encoding
+    variants via `urllib.parse`). Output is unchanged for webhooks that do not configure these
+    fields, aside from the no-throw behavior on the verification path.
+  type: feat

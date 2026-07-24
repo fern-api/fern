@@ -307,7 +307,8 @@ export const LayoutConfig = z.object({
     "hide-nav-links": z.boolean().optional(),
     "hide-feedback": z.boolean().optional(),
     "mobile-toc": z.boolean().optional(),
-    "changelog-layout": ChangelogLayout.optional()
+    "changelog-layout": ChangelogLayout.optional(),
+    "show-nav-availability-badges": z.boolean().optional()
 });
 
 // ===== Settings =====
@@ -625,7 +626,8 @@ export const ExperimentalConfig = z.object({
     "ai-examples": z.boolean().optional(),
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
-    "basepath-aware": z.boolean().optional()
+    "basepath-aware": z.boolean().optional(),
+    "external-sitemaps": z.array(z.string()).optional()
 });
 
 // ===== Library schemas =====

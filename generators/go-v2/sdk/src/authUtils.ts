@@ -14,6 +14,15 @@ export function getClientAccessPath(service: FernIr.HttpService, caseConverter: 
 /**
  * Gets the OAuth client credentials scheme from the IR auth configuration.
  */
+/**
+ * Whether the API applies auth per-endpoint (each endpoint declares its own
+ * schemes) rather than flatly on every request. In this mode auth headers are
+ * routed per-endpoint via RequestOptions.AuthHeadersForEndpoint.
+ */
+export function isEndpointSecurity(ir: FernIr.IntermediateRepresentation): boolean {
+    return ir.auth != null && ir.auth.requirement === "ENDPOINT_SECURITY";
+}
+
 export function getOAuthClientCredentialsScheme(ir: FernIr.IntermediateRepresentation): FernIr.OAuthScheme | undefined {
     if (ir.auth == null) {
         return undefined;

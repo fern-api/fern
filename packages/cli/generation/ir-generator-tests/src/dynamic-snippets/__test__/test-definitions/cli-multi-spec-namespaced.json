@@ -549,7 +549,7 @@
             },
             "examples": null
         },
-        "endpoint_v2.listUsers": {
+        "endpoint_v2.listAccounts": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -574,22 +574,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "listUsers",
+                    "originalName": "listAccounts",
                     "camelCase": {
-                        "unsafeName": "listUsers",
-                        "safeName": "listUsers"
+                        "unsafeName": "listAccounts",
+                        "safeName": "listAccounts"
                     },
                     "snakeCase": {
-                        "unsafeName": "list_users",
-                        "safeName": "list_users"
+                        "unsafeName": "list_accounts",
+                        "safeName": "list_accounts"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "LIST_USERS",
-                        "safeName": "LIST_USERS"
+                        "unsafeName": "LIST_ACCOUNTS",
+                        "safeName": "LIST_ACCOUNTS"
                     },
                     "pascalCase": {
-                        "unsafeName": "ListUsers",
-                        "safeName": "ListUsers"
+                        "unsafeName": "ListAccounts",
+                        "safeName": "ListAccounts"
                     }
                 },
                 "fernFilepath": {
@@ -640,28 +640,28 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/accounts"
             },
             "request": {
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ListUsersRequest",
+                        "originalName": "ListAccountsRequest",
                         "camelCase": {
-                            "unsafeName": "listUsersRequest",
-                            "safeName": "listUsersRequest"
+                            "unsafeName": "listAccountsRequest",
+                            "safeName": "listAccountsRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "list_users_request",
-                            "safeName": "list_users_request"
+                            "unsafeName": "list_accounts_request",
+                            "safeName": "list_accounts_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "LIST_USERS_REQUEST",
-                            "safeName": "LIST_USERS_REQUEST"
+                            "unsafeName": "LIST_ACCOUNTS_REQUEST",
+                            "safeName": "LIST_ACCOUNTS_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ListUsersRequest",
-                            "safeName": "ListUsersRequest"
+                            "unsafeName": "ListAccountsRequest",
+                            "safeName": "ListAccountsRequest"
                         }
                     },
                     "fernFilepath": {

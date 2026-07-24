@@ -135,4 +135,17 @@ describe("validateCustomConfig", () => {
             userAgentSuffixFlag: "user-agent-suffix"
         });
     });
+
+    it("accepts generateWireTests true/false", () => {
+        expect(validateCustomConfig({ generateWireTests: true })).toEqual({ generateWireTests: true });
+        expect(validateCustomConfig({ generateWireTests: false })).toEqual({ generateWireTests: false });
+    });
+
+    it("ignores generateWireTests explicitly set to undefined", () => {
+        expect(validateCustomConfig({ generateWireTests: undefined })).toEqual({});
+    });
+
+    it("throws on non-boolean generateWireTests", () => {
+        expect(() => validateCustomConfig({ generateWireTests: "yes" })).toThrow(/expected a boolean, got string/);
+    });
 });
