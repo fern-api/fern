@@ -395,7 +395,7 @@ async fn run_case(id: &str) {
         args.push(serde_json::to_string(&case.body).expect("body serialize"));
     }
 
-    let mut cmd = tokio::process::Command::new(env!("CARGO_BIN_EXE_query-parameters-api"));
+    let mut cmd = tokio::process::Command::new(env!("CARGO_BIN_EXE_versioned-store"));
     cmd.args(&args);
     // Dummy credentials so auth-gated endpoints don't bail on a missing secret.
     for var in &manifest.auth_env_vars {
@@ -444,6 +444,6 @@ async fn run_case(id: &str) {
 }
 
 #[tokio::test]
-async fn wire_search() {
-    run_case("search").await;
+async fn wire_list() {
+    run_case("list").await;
 }
