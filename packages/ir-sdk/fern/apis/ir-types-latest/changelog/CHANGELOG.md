@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.16.0] - 2026-07-24
+
+- Add `WebSocketChannel.apiPlayground` (optional `boolean`) controlling whether a WebSocket
+  channel is shown in the API playground. This mirrors `HttpEndpoint.apiPlayground` and is
+  populated from the `x-fern-explorer` extension in AsyncAPI specs (global default, overridable
+  per channel).
+
 ## [v67.15.0] - 2026-07-21
 
 - Add `HmacSignatureVerification.notificationUrlNormalization` (optional
