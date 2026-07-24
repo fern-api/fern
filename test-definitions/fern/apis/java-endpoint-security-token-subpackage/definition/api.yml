@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../../../../api-yml.schema.json
+
+imports:
+  token: token.yml
+
+name: java-endpoint-security-token-subpackage
+
+# Regression fixture for the endpoint-security RoutingAuthProvider setup: the OAuth
+# token endpoint is grouped under a subpackage named `token` (NOT `auth`). Previously
+# the Java generator located the OAuth auth client by scanning for a subpackage named
+# `auth`, which returned null here and threw a NullPointerException during generation.
+auth:
+  endpoint-security: {}
+
+auth-schemes:
+  ApiKey:
+    header: X-API-Key
+    type: string
+    env: MY_API_KEY
+  OAuth:
+    scheme: oauth
+    type: client-credentials
+    client-id-env: MY_CLIENT_ID
+    client-secret-env: MY_CLIENT_SECRET
+    get-token:
+      endpoint: token.getToken
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
