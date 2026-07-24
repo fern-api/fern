@@ -4,6 +4,7 @@ import { isValidVersion, isVersionAhead } from "@fern-api/semver-utils";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, readFile, writeFile } from "fs/promises";
+import latestVersion, { VersionNotFoundError } from "latest-version";
 import { homedir } from "os";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -127,6 +128,32 @@ export async function getOrgConfig({
     });
 }
 
+const FERN_CLI_PACKAGE_NAME = "fern-api";
+
+/**
+ * Verifies `version` is an actual published release of the Fern CLI on npm, not
+ * just a well-formed semver. A floor/ceiling set to a version that doesn't
+ * exist would make every project in the org fail to re-exec (npx can't download
+ * it), so we reject it up front. Fails open on registry/network errors — we
+ * only block when npm explicitly reports the version is missing.
+ */
+async function assertCliVersionIsPublished(cliContext: CliContext, version: string): Promise<void> {
+    try {
+        await latestVersion(FERN_CLI_PACKAGE_NAME, { version });
+    } catch (err) {
+        if (err instanceof VersionNotFoundError) {
+            cliContext.failAndThrow(
+                `Fern CLI version "${version}" was not found on npm. Set a published version — see https://www.npmjs.com/package/${FERN_CLI_PACKAGE_NAME}?activeTab=versions.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+            return;
+        }
+        // Couldn't reach the registry — can't prove the version is invalid, so don't block.
+        cliContext.logger.debug(`Could not verify Fern CLI version "${version}" exists on npm: ${String(err)}`);
+    }
+}
+
 /**
  * Sets the org-level CLI version bounds. Pass `min` and/or `max`; passing both
  * with the same value pins to an exact version. Only the supplied bounds are
@@ -158,6 +185,11 @@ export async function setOrgCliVersion({
             code: CliError.Code.ConfigError
         });
         return;
+    }
+    for (const version of [min, max]) {
+        if (version != null) {
+            await assertCliVersionIsPublished(cliContext, version);
+        }
     }
 
     const token = await getAuthToken(cliContext);

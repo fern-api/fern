@@ -9,5 +9,7 @@
     fetched with a tight timeout, and fail open, so they never block a build
     when the registry is unreachable or the user is unauthenticated. Set
     `FERN_IGNORE_ORG_VERSION_BOUNDS=true` to bypass. `fern upgrade` also keeps
-    the project within the bounds.
+    the project within the bounds. `fern org set` rejects a version that isn't a
+    published release of the CLI on npm, so an org can't be pinned to a
+    nonexistent version.
   type: feat
