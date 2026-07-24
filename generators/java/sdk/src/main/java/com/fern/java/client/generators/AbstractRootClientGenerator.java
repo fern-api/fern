@@ -566,12 +566,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             if (hasCustomHeaders) {
                 generatorContext.getIr().getHeaders().forEach(httpHeader -> {
-                    authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
-                            .key(AuthSchemeKey.of(NameUtils.getWireValue(httpHeader.getName())))
-                            .name(httpHeader.getName())
-                            .valueType(httpHeader.getValueType())
-                            .docs(httpHeader.getDocs())
-                            .build());
+                    authSchemeHandler.visitNonAuthHeader(
+                            HeaderAuthScheme.builder()
+                                    .key(AuthSchemeKey.of(NameUtils.getWireValue(httpHeader.getName())))
+                                    .name(httpHeader.getName())
+                                    .valueType(httpHeader.getValueType())
+                                    .headerEnvVar(httpHeader.getEnv().map(EnvironmentVariable::of))
+                                    .docs(httpHeader.getDocs())
+                                    .build(),
+                            httpHeader.getClientDefault());
                 });
             }
 
@@ -2568,17 +2571,26 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {
-            return visitHeaderBase(header, false);
+            return visitNonAuthHeader(header, Optional.empty());
+        }
+
+        public Void visitNonAuthHeader(HeaderAuthScheme header, Optional<Literal> clientDefault) {
+            return visitHeaderBase(header, false, clientDefault);
         }
 
         public Void visitHeaderBase(HeaderAuthScheme header, Boolean respectMandatoryAuth) {
+            return visitHeaderBase(header, respectMandatoryAuth, Optional.empty());
+        }
+
+        public Void visitHeaderBase(
+                HeaderAuthScheme header, Boolean respectMandatoryAuth, Optional<Literal> clientDefault) {
             String fieldName =
                     NameUtils.getName(header.getName()).getCamelCase().getSafeName();
             // Never not create a setter or a null check if it's a literal
             if ((respectMandatoryAuth && isMandatory)
                     || !(header.getValueType().isContainer()
                             && header.getValueType().getContainer().get().isLiteral())) {
-                createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty());
+                createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty(), Optional.empty(), clientDefault);
                 boolean skipValidation = generatorContext.isEndpointSecurity() && respectMandatoryAuth;
                 if (!skipValidation
                         && ((respectMandatoryAuth && isMandatory)
@@ -2676,6 +2688,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 Optional<EnvironmentVariable> environmentVariable,
                 Optional<Literal> literal,
                 Optional<TypeName> customType) {
+            createSetter(fieldName, environmentVariable, literal, customType, Optional.empty());
+        }
+
+        private void createSetter(
+                String fieldName,
+                Optional<EnvironmentVariable> environmentVariable,
+                Optional<Literal> literal,
+                Optional<TypeName> customType,
+                Optional<Literal> clientDefault) {
             // Skip if already created to prevent duplicate fields/methods
             if (createdFields.contains(fieldName)) {
                 return;
@@ -2684,8 +2705,21 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             TypeName fieldType = customType.orElse(ClassName.get(String.class));
             FieldSpec.Builder field = FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
+            Optional<String> clientDefaultValue = clientDefault.map(AbstractRootClientGenerator::literalToString);
             if (environmentVariable.isPresent()) {
-                field.initializer("System.getenv($S)", environmentVariable.get().get());
+                if (clientDefaultValue.isPresent()) {
+                    // Fall back to the client default when the environment variable is not set.
+                    field.initializer(
+                            "$T.ofNullable(System.getenv($S)).orElse($S)",
+                            Optional.class,
+                            environmentVariable.get().get(),
+                            clientDefaultValue.get());
+                } else {
+                    field.initializer(
+                            "System.getenv($S)", environmentVariable.get().get());
+                }
+            } else if (clientDefaultValue.isPresent()) {
+                field.initializer("$S", clientDefaultValue.get());
             } else if (literal.isPresent()) {
                 literal.get().visit(new Literal.Visitor<Void>() {
                     @Override
@@ -2938,5 +2972,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         public Void _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown auth scheme");
         }
+    }
+
+    private static String literalToString(Literal literal) {
+        return literal.visit(new Literal.Visitor<String>() {
+            @Override
+            public String visitString(String string) {
+                return string;
+            }
+
+            @Override
+            public String visitBoolean(boolean boolean_) {
+                return Boolean.toString(boolean_);
+            }
+
+            @Override
+            public String _visitUnknown(Object unknownType) {
+                return null;
+            }
+        });
     }
 }
