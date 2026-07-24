@@ -146,6 +146,14 @@ fixtures:
     - customConfig:
         generateWireTests: true
       outputFolder: with-wire-tests
+  # Namespace stutter-elision guard. The spec is grouped under `v1` and mounted
+  # under namespace `v1`, so the CLI hoists it to `<bin> v1 list`. The wire test
+  # drives that command; it fails at `cargo test` if the harness's
+  # merge_into_path mirror (collect_spec_commands) regresses to `v1 v1 list`.
+  cli-namespace-stutter:
+    - customConfig:
+        generateWireTests: true
+      outputFolder: with-wire-tests
 
 # Alpha-quality coverage: the SDK template only handles happy-path
 # OpenAPI specs. Seed iterates every test-definition by default; fixtures

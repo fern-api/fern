@@ -208,6 +208,20 @@ describe("renderWireTestHarness", () => {
         expect(rust).toContain("match_header_regex(h.name.as_str()");
     });
 
+    it("mirrors the SDK's namespace stutter-elision when resolving command chains", () => {
+        const rust = renderWireTestHarness({ binaryName: "acme-cli", cases: [searchCase] });
+        // The harness must replicate `merge_into_path`'s stutter elision so a
+        // spec whose top-level resource name equals its namespace (e.g. an
+        // untagged `v1` spec grouped under path prefix `v1`) resolves to
+        // `<bin> v1 <op>` and not the double `<bin> v1 v1 <op>` that clap
+        // rejects with "unrecognized subcommand".
+        expect(rust).toContain("fn collect_spec_commands(");
+        expect(rust).toContain("collect_spec_commands(&doc.resources, &root_prefix, spec.namespace.as_deref()");
+        // A top-level resource matching the namespace leaf is hoisted into the
+        // namespace node rather than nested a second time.
+        expect(rust).toContain("resources.get(leaf.as_str())");
+    });
+
     it("rejects a case id that is not a safe Rust identifier", () => {
         const badCase: WireTestCase = { ...searchCase, id: "bad-id" };
         expect(() => renderWireTestHarness({ binaryName: "acme-cli", cases: [badCase] })).toThrow(/Rust identifier/);
