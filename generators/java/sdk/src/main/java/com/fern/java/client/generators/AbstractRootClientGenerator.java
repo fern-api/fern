@@ -345,6 +345,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .addStatement("return $T.builder()", builderName)
                             .build());
         } else {
+            // Under endpoint-security the builder is not staged (auth is optional per-endpoint), so
+            // there is no _CredentialsAuth withCredentials(...) factory. Generated snippets/README
+            // for OAuth still reference `withCredentials(clientId, clientSecret)`, so provide it as a
+            // convenience that pre-sets the OAuth credentials on the standard builder.
+            if (hasOAuthClientCredentials && generatorContext.isEndpointSecurity()) {
+                result.getClientImpl()
+                        .addMethod(MethodSpec.methodBuilder("withCredentials")
+                                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                                .addJavadoc("Creates a client builder pre-configured with OAuth client credentials.\n")
+                                .addJavadoc("@param clientId The OAuth client ID\n")
+                                .addJavadoc("@param clientSecret The OAuth client secret\n")
+                                .addJavadoc("@return A builder configured with the provided OAuth credentials")
+                                .addParameter(String.class, "clientId")
+                                .addParameter(String.class, "clientSecret")
+                                .returns(builderName)
+                                .addStatement("return builder().clientId(clientId).clientSecret(clientSecret)")
+                                .build());
+            }
             result.getClientImpl()
                     .addMethod(MethodSpec.methodBuilder("builder")
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)

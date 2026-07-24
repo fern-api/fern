@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -72,7 +73,8 @@ public final class OAuthAuthProvider implements AuthProvider {
             throw new RuntimeException(AUTH_CONFIG_ERROR_MESSAGE);
         }
         // Create a temporary token supplier to fetch the token
-        OAuthTokenSupplier tokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, this.authClient);
+        OAuthTokenSupplier tokenSupplier =
+                new OAuthTokenSupplier(clientId, clientSecret, Optional.empty(), Optional.empty(), this.authClient);
         // The token supplier's get() method handles fetching and returns the full auth header value
         String authHeader = tokenSupplier.get();
         // Extract just the token part (remove 'Bearer ' prefix)

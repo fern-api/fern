@@ -9,11 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -23,11 +26,22 @@ public final class GetTokenRequest {
 
     private final String clientSecret;
 
+    private final Optional<String> state;
+
+    private final Optional<List<String>> permissions;
+
     private final Map<String, Object> additionalProperties;
 
-    private GetTokenRequest(String clientId, String clientSecret, Map<String, Object> additionalProperties) {
+    private GetTokenRequest(
+            String clientId,
+            String clientSecret,
+            Optional<String> state,
+            Optional<List<String>> permissions,
+            Map<String, Object> additionalProperties) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.state = state;
+        this.permissions = permissions;
         this.additionalProperties = additionalProperties;
     }
 
@@ -51,6 +65,16 @@ public final class GetTokenRequest {
         return "client_credentials";
     }
 
+    @JsonProperty("state")
+    public Optional<String> getState() {
+        return state;
+    }
+
+    @JsonProperty("permissions")
+    public Optional<List<String>> getPermissions() {
+        return permissions;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -63,12 +87,15 @@ public final class GetTokenRequest {
     }
 
     private boolean equalTo(GetTokenRequest other) {
-        return clientId.equals(other.clientId) && clientSecret.equals(other.clientSecret);
+        return clientId.equals(other.clientId)
+                && clientSecret.equals(other.clientSecret)
+                && state.equals(other.state)
+                && permissions.equals(other.permissions);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.clientId, this.clientSecret);
+        return Objects.hash(this.clientId, this.clientSecret, this.state, this.permissions);
     }
 
     @java.lang.Override
@@ -96,6 +123,14 @@ public final class GetTokenRequest {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage state(Optional<String> state);
+
+        _FinalStage state(String state);
+
+        _FinalStage permissions(Optional<List<String>> permissions);
+
+        _FinalStage permissions(List<String> permissions);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -103,6 +138,10 @@ public final class GetTokenRequest {
         private String clientId;
 
         private String clientSecret;
+
+        private Optional<List<String>> permissions = Optional.empty();
+
+        private Optional<String> state = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -113,6 +152,8 @@ public final class GetTokenRequest {
         public Builder from(GetTokenRequest other) {
             clientId(other.getClientId());
             clientSecret(other.getClientSecret());
+            state(other.getState());
+            permissions(other.getPermissions());
             return this;
         }
 
@@ -131,8 +172,34 @@ public final class GetTokenRequest {
         }
 
         @java.lang.Override
+        public _FinalStage permissions(List<String> permissions) {
+            this.permissions = Optional.ofNullable(permissions);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "permissions", nulls = Nulls.SKIP)
+        public _FinalStage permissions(Optional<List<String>> permissions) {
+            this.permissions = permissions;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage state(String state) {
+            this.state = Optional.ofNullable(state);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "state", nulls = Nulls.SKIP)
+        public _FinalStage state(Optional<String> state) {
+            this.state = state;
+            return this;
+        }
+
+        @java.lang.Override
         public GetTokenRequest build() {
-            return new GetTokenRequest(clientId, clientSecret, additionalProperties);
+            return new GetTokenRequest(clientId, clientSecret, state, permissions, additionalProperties);
         }
 
         @java.lang.Override
