@@ -25,4 +25,10 @@ service:
             client_secret: string
             audience: literal<"https://api.example.com">
             grant_type: literal<"client_credentials">
+            # Non-literal custom token-request properties: these become extra
+            # constructor parameters on the generated OAuthTokenSupplier, so the
+            # OAuthAuthProvider must pass matching args (regression: it previously
+            # emitted a fixed 3-arg call and failed to compile).
+            state: optional<string>
+            permissions: optional<list<string>>
       response: TokenResponse

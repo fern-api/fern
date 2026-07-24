@@ -11,6 +11,7 @@ import com.seed.javaEndpointSecurityTokenSubpackage.core.OAuthAuthProvider;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.RoutingAuthProvider;
 import com.seed.javaEndpointSecurityTokenSubpackage.resources.token.TokenClient;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
@@ -35,6 +36,10 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
     private String clientId = System.getenv("MY_CLIENT_ID");
 
     private String clientSecret = System.getenv("MY_CLIENT_SECRET");
+
+    private Optional<String> state = Optional.empty();
+
+    private Optional<List<String>> permissions = Optional.empty();
 
     private Environment environment;
 
@@ -77,6 +82,38 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
      */
     public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
+        return this;
+    }
+
+    /**
+     * Sets state
+     */
+    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder state(Optional<String> state) {
+        this.state = state;
+        return this;
+    }
+
+    /**
+     * Sets state
+     */
+    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder state(String state) {
+        this.state = Optional.ofNullable(state);
+        return this;
+    }
+
+    /**
+     * Sets permissions
+     */
+    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder permissions(Optional<List<String>> permissions) {
+        this.permissions = permissions;
+        return this;
+    }
+
+    /**
+     * Sets permissions
+     */
+    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder permissions(List<String> permissions) {
+        this.permissions = Optional.ofNullable(permissions);
         return this;
     }
 
