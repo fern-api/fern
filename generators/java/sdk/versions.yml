@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.2
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` when generating an SDK with `auth: endpoint-security` whose
+        OAuth (or inferred-auth) token endpoint is grouped under a subpackage not named `auth`.
+        The `RoutingAuthProvider` setup previously located the auth client by scanning for a
+        subpackage literally named `auth`, yielding `null` (and an NPE) when the token endpoint
+        lived in a differently-named group (e.g. `token`). It now resolves the client from the
+        token endpoint's actual subpackage, falling back to the core `AuthClient` when the token
+        endpoint sits at the API root.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
 - version: 4.15.1
   changelogEntry:
     - summary: |
