@@ -1,0 +1,6 @@
+- summary: |
+    Harden server URL variable (region/edge) interpolation: an explicitly provided
+    `baseUrl`/`environment` now takes precedence over server-variable interpolation and
+    is no longer overwritten, and static URL template text is escaped so an
+    author-controlled template cannot inject code into the generated template literal.
+  type: fix

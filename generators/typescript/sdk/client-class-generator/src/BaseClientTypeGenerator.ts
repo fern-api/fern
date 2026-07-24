@@ -316,7 +316,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
                     return `                [${environmentsEnum}.${environmentName}, ${literal}],`;
                 });
                 const section = `    let baseUrl = ${OPTIONS_PARAMETER_NAME}?.baseUrl;
-    if (${condition}) {
+    if (baseUrl == null && (${condition})) {
 ${localDeclarations}
         if (baseUrl == null) {
             const _environmentUrls = new Map<unknown, string>([
@@ -357,7 +357,7 @@ ${getUrlEntries(env, "                        ").join("\n")}
                 ],`;
                 });
                 const section = `    let environment = ${OPTIONS_PARAMETER_NAME}?.environment;
-    if (${condition}) {
+    if (environment == null && (${condition})) {
 ${localDeclarations}
         if (environment == null) {
             environment = {

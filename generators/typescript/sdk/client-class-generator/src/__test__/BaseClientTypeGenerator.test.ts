@@ -1567,5 +1567,52 @@ describe("BaseClientTypeGenerator", () => {
                 "baseUrl = _environmentUrls.get(options?.environment) ?? `https://api.${_region}.example.com`;"
             );
         });
+
+        it("does not overwrite an explicitly provided baseUrl (single base URL)", () => {
+            const normalizeFunction = getNormalizeFunction(createSingleBaseUrlIR());
+            // An explicit baseUrl takes precedence over server-variable interpolation.
+            expect(normalizeFunction).toContain("if (baseUrl == null && (options?.region != null))");
+        });
+
+        it("does not overwrite an explicitly provided environment (multiple base URLs)", () => {
+            const normalizeFunction = getNormalizeFunction(createMultipleBaseUrlsIR());
+            // An explicit environment takes precedence over server-variable interpolation.
+            expect(normalizeFunction).toContain("if (environment == null && (");
+        });
+
+        it("escapes template-literal metacharacters in the URL template", () => {
+            const region = createServerVariable({
+                id: "region",
+                name: "region",
+                default: "us-east-1",
+                values: ["us-east-1"]
+            });
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "Default",
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        {
+                            id: "Default",
+                            name: casingsGenerator.generateName("Default"),
+                            url: "https://api.example.com",
+                            // A hostile template containing a backtick and a `${` opener must not
+                            // be able to break out of the generated template literal.
+                            urlTemplate: "https://api.{region}.example.com/`+process.env+`${evil}",
+                            urlVariables: [region],
+                            audiences: undefined,
+                            defaultUrl: undefined,
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            const normalizeFunction = getNormalizeFunction(ir);
+            // The intended variable is still interpolated...
+            expect(normalizeFunction).toContain("${_region}");
+            // ...but the injected backtick and `${` are escaped so no code is injected.
+            expect(normalizeFunction).toContain("\\`+process.env+\\`\\${evil}");
+            expect(normalizeFunction).not.toContain("`+process.env+`${evil}");
+        });
     });
 });
