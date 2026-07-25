@@ -10,6 +10,7 @@ export * from "./valid-changelog-slug/index.js";
 export * from "./valid-docs-endpoints/index.js";
 export * from "./valid-file-types/index.js";
 export * from "./valid-frontmatter/index.js";
+export * from "./valid-llms-txt/index.js";
 export * from "./valid-markdown/index.js";
 export * from "./valid-markdown-file-reference/index.js";
 export * from "./valid-markdown-link/index.js";

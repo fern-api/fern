@@ -18,10 +18,18 @@ import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js"
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
+import { ValidLlmsTxtRule } from "./rules/valid-llms-txt/index.js";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidationViolation } from "./ValidationViolation.js";
+
+/**
+ * Rules that check links resolve against the published navigation. They share the
+ * `check.rules.broken-links` config and the `--broken-links` flag, so they are gated
+ * together: excluded by default and re-included when broken-link checking is enabled.
+ */
+export const BROKEN_LINK_RULE_NAMES: readonly string[] = [ValidMarkdownLinks.name, ValidLlmsTxtRule.name];
 
 function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride {
     switch (severity) {
@@ -73,8 +81,8 @@ export async function validateDocsWorkspace(
     excludeRules?: string[]
 ): Promise<ValidationViolation[]> {
     // In the future we'll do something more sophisticated that lets you pick and choose which rules to run.
-    // For right now, the only use case is to check for broken links, so only expose a choice to run that rule.
-    const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules(excludeRules);
+    // For right now, the only use case is to check for broken links, so only expose a choice to run those rules.
+    const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks, ValidLlmsTxtRule] : getAllRules(excludeRules);
     return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces });
 }
 
@@ -95,12 +103,18 @@ export async function runRulesOnDocsWorkspace({
     const startMemory = process.memoryUsage();
     const rules = [...selectedRules];
     const severityOverrides = buildSeverityOverrides(workspace.config.check);
-    const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
-    // Some CLI paths still exclude `valid-markdown-links` unless broken-link checking is enabled.
-    // Include it here when docs.yml configures `check.rules.broken-links` so that config takes effect
-    // until those CLI args are removed.
-    if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
-        rules.push(ValidMarkdownLinks);
+    const brokenLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
+    // Some CLI paths still exclude the broken-link rules unless broken-link checking is enabled.
+    // When docs.yml configures `check.rules.broken-links`, apply that severity to both link-check
+    // rules and re-include either one a CLI arg excluded, so the config takes effect until those
+    // CLI args are removed.
+    if (brokenLinksOverride != null) {
+        severityOverrides.set(ValidLlmsTxtRule.name, brokenLinksOverride);
+        for (const rule of [ValidMarkdownLinks, ValidLlmsTxtRule]) {
+            if (rules.find((r) => r.name === rule.name) == null) {
+                rules.push(rule);
+            }
+        }
     }
     context.logger.debug(`Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`);
     context.logger.debug(
