@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix AUTO versioning saturating a CPU core on large repos. When the previous generation SHA
+    recorded in `replay.lock` is unreachable, `AutoVersionStep` re-anchors its diff baseline by
+    walking first-parent history; that `git log --first-parent` walk was unbounded, so on a repo
+    with a large history it traversed everything synchronously and pegged the CPU. The walk is
+    now bounded to the most recent 200 first-parent commits via git's own `--max-count` (the JS
+    early-break did not stop git's traversal) plus a wall-clock timeout, degrading to the
+    metadata/git-tags fallback rather than hanging.
+  type: fix

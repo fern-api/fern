@@ -26,6 +26,19 @@ import { BaseStep } from "./BaseStep";
 const COMMIT_MARKER = "[fern-autoversion]";
 const FERN_TRAILER = "\n\n🌿 Generated with Fern";
 
+// Upper bound on the first-parent history walk used to re-anchor the autoversion baseline when
+// the recorded replay.lock SHA is unreachable. The walk only needs the *most recent* prior
+// [fern-generated] commit, which sits at (or within a handful of commits of) HEAD in a normal SDK
+// repo, so a modest cap reliably finds it. Bounding git itself is what matters: `git log` produces
+// its entire output before Node reads a byte, so the JS-side early break does NOT stop traversal —
+// on a large repo (huge history + thousands of branches) the unbounded walk pegged a CPU core.
+// Matches @fern-api/replay's detectPatchesViaCommitScan cap. See FSE-50.
+const HISTORY_WALK_MAX_COMMITS = 200;
+
+// Defense-in-depth wall-clock cap on the git subprocess: even bounded, a pathological repo/filesystem
+// should degrade to the metadata/git-tags fallback rather than block the (synchronous) event loop.
+const GIT_HISTORY_WALK_TIMEOUT_MS = 30_000;
+
 type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
 
 /**
@@ -747,17 +760,28 @@ export class AutoVersionStep extends BaseStep {
      * Walks first-parent history from the current generation commit and returns the most
      * recent prior [fern-generated] commit — the reachable equivalent of replay.lock's
      * recorded baseline. Mirrors @fern-api/replay's `findPreviousGenerationFromHistory`.
+     *
+     * The walk is bounded to the most recent HISTORY_WALK_MAX_COMMITS first-parent commits (via
+     * git's own `--max-count`, not just the JS break below) and time-bounded, so an unreachable
+     * SHA on a large repo can no longer trigger a full-history traversal that pegs the CPU. If no
+     * [fern-generated] commit is found within the window, returns null and the caller falls back
+     * to metadata/git-tags — the same path taken when no baseline is reachable at all.
      */
     private findPreviousGenerationFromHistory(currentGenerationSha: string): string | null {
         const start = this.commitExists(currentGenerationSha) ? currentGenerationSha : "HEAD";
         let log: string;
         try {
-            log = execFileSync("git", ["log", "--first-parent", "--format=%H%x00%s", start], {
-                cwd: this.outputDir,
-                encoding: "utf-8",
-                stdio: "pipe",
-                maxBuffer: 64 * 1024 * 1024
-            });
+            log = execFileSync(
+                "git",
+                ["log", "--first-parent", `--max-count=${HISTORY_WALK_MAX_COMMITS}`, "--format=%H%x00%s", start],
+                {
+                    cwd: this.outputDir,
+                    encoding: "utf-8",
+                    stdio: "pipe",
+                    maxBuffer: 64 * 1024 * 1024,
+                    timeout: GIT_HISTORY_WALK_TIMEOUT_MS
+                }
+            );
         } catch (error) {
             this.logger.debug(`AutoVersionStep: git log history walk failed (${String(error)}); no baseline derived.`);
             return null;
