@@ -6,6 +6,7 @@ import (
 	"path"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/fern-api/fern-go/internal/ast"
 	"github.com/fern-api/fern-go/internal/fern/ir"
@@ -429,8 +430,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	sdkVersion string,
 	environmentsConfig *common.EnvironmentsConfig,
 	inferredParams []inferredAuthParam,
+	timeouts *TimeoutsConfig,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
+	if timeouts.IsConfigured() {
+		// The custom-transport runtime and per-call timeout fields require these
+		// packages. They are only referenced when a `timeouts` block is set;
+		// removeUnusedImports drops any that end up unused.
+		f.scope.AddImport("net")
+		f.scope.AddImport("io")
+		f.scope.AddImport("sync")
+		f.scope.AddImport("time")
+	}
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
 	f.P("type RequestOption interface {")
 	f.P("applyRequestOptions(*RequestOptions)")
@@ -475,6 +486,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("MaxStreamReconnectAttempts uint")
 	f.P("DisableStreamReconnection bool")
 	f.P("DisableRetries bool")
+	if timeouts.IsConfigured() {
+		f.P("// ConnectTimeout bounds the time spent establishing a connection")
+		f.P("// (including TLS handshake). Zero means no per-call override.")
+		f.P("ConnectTimeout time.Duration")
+		f.P("// ReadTimeout bounds the time spent waiting for response headers and")
+		f.P("// the idle time between reads of the response body. Zero means no")
+		f.P("// per-call override.")
+		f.P("ReadTimeout time.Duration")
+		f.P("// WriteTimeout bounds the time spent writing the request body. Zero")
+		f.P("// means no per-call override.")
+		f.P("WriteTimeout time.Duration")
+	}
 	if hasOAuth || hasInferred {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -570,6 +593,19 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("for _, opt := range opts {")
 	f.P("opt.applyRequestOptions(options)")
 	f.P("}")
+	if timeouts.IsConfigured() {
+		// When per-phase timeouts are configured and the user has not supplied
+		// their own HTTP client, build a default *http.Client backed by a custom
+		// transport. Per-call overrides (ConnectTimeout/ReadTimeout/WriteTimeout)
+		// take precedence over the configured defaults for the phases they cover.
+		f.P("if options.HTTPClient == nil {")
+		f.P("options.HTTPClient = newTimeoutHTTPClient(")
+		f.P("resolveTimeout(options.ConnectTimeout, ", timeoutLiteral(timeouts.Connect), "),")
+		f.P("resolveTimeout(options.ReadTimeout, ", timeoutLiteral(timeouts.Read), "),")
+		f.P("resolveTimeout(options.WriteTimeout, ", timeoutLiteral(timeouts.Write), "),")
+		f.P(")")
+		f.P("}")
+	}
 	f.P("return options")
 	f.P("}")
 	f.P()
@@ -583,7 +619,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig))
+		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+			return err
+		}
+		f.writeTimeoutOptionStructsAndRuntime(timeouts)
+		return nil
 	}
 
 	// Generate the ToHeader method.
@@ -750,6 +790,8 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
 		return err
 	}
+
+	f.writeTimeoutOptionStructsAndRuntime(timeouts)
 
 	return nil
 }
@@ -1261,6 +1303,190 @@ func (f *fileWriter) writeMarkerOptionStruct(typeName string, boolField string, 
 	}
 }
 
+// timeoutLiteral renders a configured per-phase timeout (in seconds, fractional
+// allowed) as a Go time.Duration expression. A nil value renders as 0, meaning
+// "unset" — resolveTimeout then leaves that phase unbounded.
+func timeoutLiteral(seconds *float64) string {
+	if seconds == nil {
+		return "0"
+	}
+	// Convert seconds to nanoseconds to preserve fractional precision, and emit
+	// a time.Duration literal (nanoseconds is time.Duration's base unit).
+	nanos := int64(*seconds * float64(time.Second))
+	return fmt.Sprintf("time.Duration(%d)", nanos)
+}
+
+// writeTimeoutOptionStructsAndRuntime emits the per-call timeout option structs
+// and the custom-transport runtime into core/request_option.go, but only when a
+// `timeouts` block is configured. When unset, nothing is emitted so generated
+// output is byte-identical to before.
+func (f *fileWriter) writeTimeoutOptionStructsAndRuntime(timeouts *TimeoutsConfig) {
+	if !timeouts.IsConfigured() {
+		return
+	}
+	// Per-call option structs. These live in core alongside the other options and
+	// carry a time.Duration onto RequestOptions.
+	_ = f.writeOptionStruct("ConnectTimeout", "time.Duration", true, false)
+	_ = f.writeOptionStruct("ReadTimeout", "time.Duration", true, false)
+	_ = f.writeOptionStruct("WriteTimeout", "time.Duration", true, false)
+
+	f.P(timeoutRuntime)
+	f.P()
+}
+
+// timeoutRuntime is the static runtime that backs the per-phase timeout feature.
+// It is emitted verbatim into core/request_option.go only when a `timeouts`
+// block is configured.
+//
+// Mapping:
+//   - connect -> net.Dialer.Timeout (+ Transport.TLSHandshakeTimeout). Clean.
+//   - read    -> Transport.ResponseHeaderTimeout, plus an idle read deadline on
+//     the response body to approximate a full body-read timeout.
+//   - write   -> net/http has no first-class client write timeout; we apply an
+//     idle deadline to the request body reads (which the transport performs
+//     while writing the body to the wire) to approximate it as closely as
+//     feasible.
+const timeoutRuntime = `// resolveTimeout returns the per-call override when non-zero, otherwise the
+// configured default. A zero result means the phase is unbounded.
+func resolveTimeout(override, fallback time.Duration) time.Duration {
+	if override > 0 {
+		return override
+	}
+	return fallback
+}
+
+// newTimeoutHTTPClient builds an *http.Client backed by a custom transport that
+// applies independent connect/read/write timeouts. Any phase with a zero
+// duration is left unbounded.
+//
+// The write timeout is an approximation: net/http exposes no first-class client
+// write deadline, so we bound the idle time between reads of the request body
+// (which the transport performs while writing the body to the wire). Likewise,
+// the read timeout combines Transport.ResponseHeaderTimeout with an idle
+// deadline between reads of the response body to approximate a full body-read
+// timeout.
+func newTimeoutHTTPClient(connect, read, write time.Duration) HTTPClient {
+	dialer := &net.Dialer{
+		Timeout: connect,
+	}
+	base := &http.Transport{
+		Proxy:                 http.ProxyFromEnvironment,
+		DialContext:           dialer.DialContext,
+		ForceAttemptHTTP2:     true,
+		MaxIdleConns:          100,
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   connect,
+		ResponseHeaderTimeout: read,
+		ExpectContinueTimeout: time.Second,
+	}
+	return &http.Client{
+		Transport: &timeoutTransport{
+			base:  base,
+			read:  read,
+			write: write,
+		},
+	}
+}
+
+// timeoutTransport wraps an *http.Transport to approximate per-phase read/write
+// timeouts that net/http does not expose natively.
+type timeoutTransport struct {
+	base  *http.Transport
+	read  time.Duration
+	write time.Duration
+}
+
+func (t *timeoutTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	if t.write > 0 && req.Body != nil {
+		req.Body = &idleTimeoutReadCloser{
+			rc:      req.Body,
+			timeout: t.write,
+		}
+	}
+	resp, err := t.base.RoundTrip(req)
+	if err != nil {
+		return nil, err
+	}
+	if t.read > 0 && resp.Body != nil {
+		resp.Body = &idleTimeoutReadCloser{
+			rc:      resp.Body,
+			timeout: t.read,
+		}
+	}
+	return resp, nil
+}
+
+// idleTimeoutReadCloser enforces a maximum idle duration for a single Read call.
+// If a Read does not complete within the timeout, it returns a timeout error and
+// closes the underlying reader to abort the in-flight I/O. This approximates a
+// socket read/write deadline without direct access to the underlying connection.
+//
+// The background reader reads into an internal buffer rather than directly into
+// the caller's slice, so a Read that has already timed out can never write into
+// a buffer the caller may have reused. Closing the underlying reader on timeout
+// unblocks and releases that goroutine instead of leaking it.
+type idleTimeoutReadCloser struct {
+	rc      io.ReadCloser
+	timeout time.Duration
+
+	buf []byte // reused across sequential Reads; abandoned after a timeout
+
+	mu     sync.Mutex
+	closed bool
+}
+
+type readResult struct {
+	n   int
+	err error
+}
+
+func (r *idleTimeoutReadCloser) Read(p []byte) (int, error) {
+	if cap(r.buf) < len(p) {
+		r.buf = make([]byte, len(p))
+	}
+	buf := r.buf[:len(p)]
+	done := make(chan readResult, 1)
+	go func() {
+		n, err := r.rc.Read(buf)
+		done <- readResult{n: n, err: err}
+	}()
+	timer := time.NewTimer(r.timeout)
+	defer timer.Stop()
+	select {
+	case res := <-done:
+		copy(p, buf[:res.n])
+		return res.n, res.err
+	case <-timer.C:
+		// Abandon the buffer so a late write from the background goroutine cannot
+		// corrupt a subsequent Read, and close the reader to unblock it.
+		r.buf = nil
+		_ = r.closeUnderlying()
+		return 0, &timeoutError{}
+	}
+}
+
+func (r *idleTimeoutReadCloser) Close() error {
+	return r.closeUnderlying()
+}
+
+func (r *idleTimeoutReadCloser) closeUnderlying() error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if r.closed {
+		return nil
+	}
+	r.closed = true
+	return r.rc.Close()
+}
+
+// timeoutError implements net.Error so callers can detect a timeout via the
+// standard Timeout() method.
+type timeoutError struct{}
+
+func (e *timeoutError) Error() string   { return "fern: i/o timeout" }
+func (e *timeoutError) Timeout() bool    { return true }
+func (e *timeoutError) Temporary() bool  { return true }`
+
 type GeneratedAuth struct {
 	Option          ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
 	EnvironmentVars []string // e.g. ACME_API_KEY
@@ -1308,6 +1534,7 @@ func (f *fileWriter) WriteRequestOptions(
 	headers []*ir.HttpHeader,
 	environmentsConfig *common.EnvironmentsConfig,
 	inferredParams []inferredAuthParam,
+	timeouts *TimeoutsConfig,
 ) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
@@ -1404,6 +1631,37 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("return &core.WithoutRetriesOption{}")
 	f.P("}")
 	f.P()
+
+	// Generate the per-call timeout options, but only when a `timeouts` block is
+	// configured so that generated output is byte-identical to before otherwise.
+	if timeouts.IsConfigured() {
+		timePackage := f.scope.AddImport("time")
+		f.P("// WithConnectTimeout overrides, for this request, the maximum duration to")
+		f.P("// wait for a connection to be established (including TLS handshake).")
+		f.P("func WithConnectTimeout(timeout ", timePackage, ".Duration) *core.ConnectTimeoutOption {")
+		f.P("return &core.ConnectTimeoutOption{")
+		f.P("ConnectTimeout: timeout,")
+		f.P("}")
+		f.P("}")
+		f.P()
+		f.P("// WithReadTimeout overrides, for this request, the maximum duration to")
+		f.P("// wait for response headers and between reads of the response body.")
+		f.P("func WithReadTimeout(timeout ", timePackage, ".Duration) *core.ReadTimeoutOption {")
+		f.P("return &core.ReadTimeoutOption{")
+		f.P("ReadTimeout: timeout,")
+		f.P("}")
+		f.P("}")
+		f.P()
+		f.P("// WithWriteTimeout overrides, for this request, the maximum duration to")
+		f.P("// wait when writing the request body. This is an approximation; see the")
+		f.P("// package documentation for details.")
+		f.P("func WithWriteTimeout(timeout ", timePackage, ".Duration) *core.WriteTimeoutOption {")
+		f.P("return &core.WriteTimeoutOption{")
+		f.P("WriteTimeout: timeout,")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
 
 	// Generate the WithEnvironment option for multi-URL environments.
 	if isMultipleBaseUrlsEnvironment(environmentsConfig) {

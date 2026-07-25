@@ -441,6 +441,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.Version,
 			ir.Environments,
 			inferredParams,
+			g.config.Timeouts,
 		); err != nil {
 			return nil, err
 		}
@@ -508,7 +509,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments, inferredParams)
+		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments, inferredParams, g.config.Timeouts)
 		if err != nil {
 			return nil, err
 		}
