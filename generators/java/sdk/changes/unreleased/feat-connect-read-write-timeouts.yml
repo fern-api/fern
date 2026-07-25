@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add independent connect/read/write timeouts to the generated SDK, mapping onto OkHttp's
+    per-phase `connectTimeout`/`readTimeout`/`writeTimeout`. These are additive and opt-in — when
+    unconfigured, generated output is unchanged and the existing single overall timeout
+    (`default-timeout-in-seconds` -> `callTimeout`) is preserved.
+
+    Configure the defaults via a `timeouts` block in `generators.yml` (values are in seconds and
+    may be fractional):
+
+    ```yaml
+    config:
+      timeouts:
+        connect: 5
+        read: 30
+        write: 30
+    ```
+
+    When `timeouts` is configured, the same phases can be overridden per client and per request:
+    `ClientOptions.Builder` gains `connectTimeout`/`readTimeout`/`writeTimeout` setters, and
+    `RequestOptions`/`IdempotentRequestOptions` gain per-call `connectTimeout`/`readTimeout`/
+    `writeTimeout` overrides that win over the configured defaults for the phases they cover while
+    the overall timeout remains the fallback.
+  type: feat

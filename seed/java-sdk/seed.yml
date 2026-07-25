@@ -59,6 +59,13 @@ fixtures:
         enable-wire-tests: true
       outputFolder: no-custom-config
     - customConfig:
+        inline-path-parameters: true
+        timeouts:
+          connect: 5
+          read: 30
+          write: 30
+      outputFolder: timeouts
+    - customConfig:
         package-layout: flat
         use-default-request-parameter-values: true
       outputFolder: flat-package-layout

@@ -218,6 +218,15 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .returns(builderClassName)
                 .build());
 
+        // Per-call connect/read/write timeout overrides. Only emitted when the generator is configured with a
+        // `timeouts` block so that output is unchanged for existing users.
+        if (clientGeneratorContext.getCustomConfig().timeouts().isPresent()) {
+            addPerPhaseTimeoutField(
+                    "getConnectTimeout", "connectTimeout", requestOptionsTypeSpec, builderTypeSpec, fields);
+            addPerPhaseTimeoutField("getReadTimeout", "readTimeout", requestOptionsTypeSpec, builderTypeSpec, fields);
+            addPerPhaseTimeoutField("getWriteTimeout", "writeTimeout", requestOptionsTypeSpec, builderTypeSpec, fields);
+        }
+
         addHeaderBuilder(builderTypeSpec);
         addHeaderSupplierBuilder(builderTypeSpec);
         addQueryParameterBuilder(builderTypeSpec);
@@ -326,6 +335,32 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .addStatement("return $N", field.name)
                 .returns(field.type)
+                .build());
+    }
+
+    private void addPerPhaseTimeoutField(
+            String getterFunctionName,
+            String fieldName,
+            TypeSpec.Builder requestOptionsTypeSpec,
+            TypeSpec.Builder builderTypeSpec,
+            List<RequestOption> fields) {
+        FieldSpec.Builder fieldSpecBuilder = FieldSpec.builder(
+                ParameterizedTypeName.get(ClassName.get(Optional.class), TypeName.get(Integer.class)),
+                fieldName,
+                Modifier.PRIVATE);
+        createRequestOptionField(
+                getterFunctionName,
+                fieldSpecBuilder,
+                CodeBlock.of("$T.empty()", Optional.class),
+                requestOptionsTypeSpec,
+                builderTypeSpec,
+                fields);
+        builderTypeSpec.addMethod(MethodSpec.methodBuilder(fieldName)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(Integer.class, fieldName)
+                .addStatement("this.$L = Optional.of($L)", fieldName, fieldName)
+                .addStatement("return this")
+                .returns(builderClassName)
                 .build());
     }
 

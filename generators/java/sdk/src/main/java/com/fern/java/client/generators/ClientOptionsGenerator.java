@@ -31,6 +31,7 @@ import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.JavaSdkCustomConfig;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.NameUtils;
@@ -518,51 +519,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         if (headersFromIdempotentRequestOptions.isPresent()) {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
 
-            MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(
-                            clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
-                            REQUEST_OPTIONS_PARAMETER_NAME)
-                    .returns(OKHTTP_CLIENT_FIELD.type)
-                    .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
-                    .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
-                    .endControlFlow()
-                    .addStatement(
-                            "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())"
-                                    + ".connectTimeout(0, $T.SECONDS)"
-                                    + ".writeTimeout(0, $T.SECONDS)"
-                                    + ".readTimeout(0, $T.SECONDS).build()",
-                            OKHTTP_CLIENT_FIELD.name,
-                            REQUEST_OPTIONS_PARAMETER_NAME,
-                            REQUEST_OPTIONS_PARAMETER_NAME,
-                            TimeUnit.class,
-                            TimeUnit.class,
-                            TimeUnit.class)
-                    .build();
-            clientOptionsBuilder.addMethod(httpClientWithTimeoutGetter);
+            clientOptionsBuilder.addMethod(buildHttpClientWithTimeoutMethod(
+                    clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName()));
         }
 
         TypeName requestOptionsClassName =
                 clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName();
-        MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(requestOptionsClassName, REQUEST_OPTIONS_PARAMETER_NAME)
-                .returns(OKHTTP_CLIENT_FIELD.type)
-                .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
-                .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
-                .endControlFlow()
-                .addStatement(
-                        "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())"
-                                + ".connectTimeout(0, $T.SECONDS)"
-                                + ".writeTimeout(0, $T.SECONDS)"
-                                + ".readTimeout(0, $T.SECONDS).build()",
-                        OKHTTP_CLIENT_FIELD.name,
-                        REQUEST_OPTIONS_PARAMETER_NAME,
-                        REQUEST_OPTIONS_PARAMETER_NAME,
-                        TimeUnit.class,
-                        TimeUnit.class,
-                        TimeUnit.class)
-                .build();
+        MethodSpec httpClientWithTimeoutGetter = buildHttpClientWithTimeoutMethod(requestOptionsClassName);
 
         MethodSpec maxRetriesGetter = createGetter(MAX_RETRIES_FIELD);
         MethodSpec initialRetryDelayMillisGetter = createGetter(INITIAL_RETRY_DELAY_MILLIS_FIELD);
@@ -809,6 +772,29 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("$T.empty()", Optional.class)
                         .build());
 
+        // Per-phase connect/read/write timeout builder fields. Only emitted when a `timeouts` block is configured so
+        // that generated output is unchanged for existing users.
+        if (getTimeouts().isPresent()) {
+            builder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                            "connectTimeout",
+                            Modifier.PRIVATE)
+                    .initializer("$T.empty()", Optional.class)
+                    .build());
+            builder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                            "readTimeout",
+                            Modifier.PRIVATE)
+                    .initializer("$T.empty()", Optional.class)
+                    .build());
+            builder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                            "writeTimeout",
+                            Modifier.PRIVATE)
+                    .initializer("$T.empty()", Optional.class)
+                    .build());
+        }
+
         // Only add webSocketFactory field to builder if WebSocket channels are present
         if (webSocketFactoryField != null) {
             builder.addField(FieldSpec.builder(webSocketFactoryField.type, webSocketFactoryField.name, Modifier.PRIVATE)
@@ -911,6 +897,34 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("return this")
                         .build());
+
+        // Per-phase connect/read/write timeout builder setters. Only emitted when a `timeouts` block is configured.
+        if (getTimeouts().isPresent()) {
+            builder.addMethod(MethodSpec.methodBuilder("connectTimeout")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc("Override the connect timeout in seconds.")
+                    .returns(builderClassName)
+                    .addParameter(TypeName.INT, "connectTimeout")
+                    .addStatement("this.$L = $T.of($L)", "connectTimeout", Optional.class, "connectTimeout")
+                    .addStatement("return this")
+                    .build());
+            builder.addMethod(MethodSpec.methodBuilder("readTimeout")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc("Override the read timeout in seconds.")
+                    .returns(builderClassName)
+                    .addParameter(TypeName.INT, "readTimeout")
+                    .addStatement("this.$L = $T.of($L)", "readTimeout", Optional.class, "readTimeout")
+                    .addStatement("return this")
+                    .build());
+            builder.addMethod(MethodSpec.methodBuilder("writeTimeout")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc("Override the write timeout in seconds.")
+                    .returns(builderClassName)
+                    .addParameter(TypeName.INT, "writeTimeout")
+                    .addStatement("this.$L = $T.of($L)", "writeTimeout", Optional.class, "writeTimeout")
+                    .addStatement("return this")
+                    .build());
+        }
 
         // Add addInterceptor method when custom-interceptors is enabled
         if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
@@ -1362,32 +1376,22 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addCode("\n")
                 .beginControlFlow("if (this.$L != null)", OKHTTP_CLIENT_FIELD.name)
                 .addStatement(
-                        "$L.ifPresent($L -> $L.callTimeout($L, $T.SECONDS)"
-                                + ".connectTimeout(0, $T.SECONDS)"
-                                + ".writeTimeout(0, $T.SECONDS)"
-                                + ".readTimeout(0, $T.SECONDS))",
+                        "$L.ifPresent($L -> $L)",
                         TIMEOUT_FIELD.name,
                         TIMEOUT_FIELD.name,
-                        OKHTTP_CLIENT_FIELD.name + "Builder",
-                        TIMEOUT_FIELD.name,
-                        TimeUnit.class,
-                        TimeUnit.class,
-                        TimeUnit.class,
-                        TimeUnit.class)
+                        perPhaseTimeoutSuffix(CodeBlock.of(
+                                "$L.callTimeout($L, $T.SECONDS)",
+                                OKHTTP_CLIENT_FIELD.name + "Builder",
+                                TIMEOUT_FIELD.name,
+                                TimeUnit.class)))
                 .endControlFlow()
                 .beginControlFlow("else")
-                .addCode(
-                        "$L.callTimeout(this.$L.orElse($L), $T.SECONDS)"
-                                + ".connectTimeout(0, $T.SECONDS)"
-                                + ".writeTimeout(0, $T.SECONDS)"
-                                + ".readTimeout(0, $T.SECONDS)",
+                .addCode(perPhaseTimeoutSuffix(CodeBlock.of(
+                        "$L.callTimeout(this.$L.orElse($L), $T.SECONDS)",
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         TIMEOUT_FIELD.name,
                         getDefaultTimeoutInSeconds(),
-                        TimeUnit.class,
-                        TimeUnit.class,
-                        TimeUnit.class,
-                        TimeUnit.class)
+                        TimeUnit.class)))
                 .addCode(
                         ".addInterceptor(new $T(this.$L, this.$L, this.$L, this.$L));\n",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
@@ -1413,6 +1417,26 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         clientGeneratorContext.getPoetClassNameFactory().getResponseDecompressionInterceptorClassName())
                 .addCode("\n");
+
+        // Apply per-phase timeout overrides set on the builder, winning over the configured `timeouts` defaults.
+        if (getTimeouts().isPresent()) {
+            builder.addStatement(
+                            "this.$L.ifPresent(timeout -> $L.connectTimeout(timeout, $T.SECONDS))",
+                            "connectTimeout",
+                            OKHTTP_CLIENT_FIELD.name + "Builder",
+                            TimeUnit.class)
+                    .addStatement(
+                            "this.$L.ifPresent(timeout -> $L.readTimeout(timeout, $T.SECONDS))",
+                            "readTimeout",
+                            OKHTTP_CLIENT_FIELD.name + "Builder",
+                            TimeUnit.class)
+                    .addStatement(
+                            "this.$L.ifPresent(timeout -> $L.writeTimeout(timeout, $T.SECONDS))",
+                            "writeTimeout",
+                            OKHTTP_CLIENT_FIELD.name + "Builder",
+                            TimeUnit.class)
+                    .addCode("\n");
+        }
 
         // Apply custom interceptors when custom-interceptors is enabled
         if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
@@ -1451,6 +1475,106 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .getCustomConfig()
                 .defaultTimeoutInSeconds()
                 .orElse(60);
+    }
+
+    private Optional<JavaSdkCustomConfig.Timeouts> getTimeouts() {
+        return clientGeneratorContext.getCustomConfig().timeouts();
+    }
+
+    /**
+     * Builds the {@code httpClientWithTimeout(requestOptions)} method used to derive a per-request OkHttp client. When
+     * no {@code timeouts} config is present, the generated body is byte-identical to the historical single
+     * overall-timeout behavior. When {@code timeouts} is configured, the base per-phase timeouts are inherited from the
+     * underlying client and any per-call connect/read/write override wins for the phase it covers.
+     */
+    private MethodSpec buildHttpClientWithTimeoutMethod(TypeName requestOptionsType) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder("httpClientWithTimeout")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(requestOptionsType, REQUEST_OPTIONS_PARAMETER_NAME)
+                .returns(OKHTTP_CLIENT_FIELD.type)
+                .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
+                .endControlFlow();
+
+        if (getTimeouts().isEmpty()) {
+            return method.addStatement(
+                            "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())"
+                                    + ".connectTimeout(0, $T.SECONDS)"
+                                    + ".writeTimeout(0, $T.SECONDS)"
+                                    + ".readTimeout(0, $T.SECONDS).build()",
+                            OKHTTP_CLIENT_FIELD.name,
+                            REQUEST_OPTIONS_PARAMETER_NAME,
+                            REQUEST_OPTIONS_PARAMETER_NAME,
+                            TimeUnit.class,
+                            TimeUnit.class,
+                            TimeUnit.class)
+                    .build();
+        }
+
+        // The base client already carries the configured connect/read/write timeouts; inherit them via newBuilder()
+        // and only override the overall callTimeout and any per-call phase overrides provided on the request options.
+        // Each override is applied only when present so a per-call phase timeout works without an overall timeout.
+        method.addStatement(
+                        "$T.Builder $L = this.$L.newBuilder()",
+                        OKHTTP_CLIENT_FIELD.type,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        OKHTTP_CLIENT_FIELD.name)
+                .addStatement(
+                        "$N.getTimeout().ifPresent(timeout -> $L.callTimeout(timeout, $N.getTimeoutTimeUnit()))",
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement(
+                        "$N.getConnectTimeout().ifPresent(timeout -> $L.connectTimeout(timeout, $N.getTimeoutTimeUnit()))",
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement(
+                        "$N.getReadTimeout().ifPresent(timeout -> $L.readTimeout(timeout, $N.getTimeoutTimeUnit()))",
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement(
+                        "$N.getWriteTimeout().ifPresent(timeout -> $L.writeTimeout(timeout, $N.getTimeoutTimeUnit()))",
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement("return $L.build()", OKHTTP_CLIENT_FIELD.name + "Builder");
+        return method.build();
+    }
+
+    private static long toMillis(double seconds) {
+        return Math.round(seconds * 1000);
+    }
+
+    /**
+     * Builds the {@code .connectTimeout(...).writeTimeout(...).readTimeout(...)} suffix applied to the base OkHttp
+     * client. When no {@code timeouts} config is present, this preserves the historical behavior of disabling the three
+     * per-phase timeouts (0 seconds) so that generated output is byte-identical. When {@code timeouts} is configured,
+     * each present phase is emitted in milliseconds; absent phases stay at 0 (disabled). These coexist with the overall
+     * {@code callTimeout} that is applied separately.
+     */
+    private CodeBlock perPhaseTimeoutSuffix(CodeBlock prefix) {
+        Optional<JavaSdkCustomConfig.Timeouts> timeouts = getTimeouts();
+        if (timeouts.isEmpty()) {
+            return CodeBlock.of(
+                    "$L.connectTimeout(0, $T.SECONDS).writeTimeout(0, $T.SECONDS).readTimeout(0, $T.SECONDS)",
+                    prefix,
+                    TimeUnit.class,
+                    TimeUnit.class,
+                    TimeUnit.class);
+        }
+        JavaSdkCustomConfig.Timeouts value = timeouts.get();
+        return CodeBlock.of(
+                "$L.connectTimeout($L, $T.MILLISECONDS).writeTimeout($L, $T.MILLISECONDS)"
+                        + ".readTimeout($L, $T.MILLISECONDS)",
+                prefix,
+                value.connect().map(ClientOptionsGenerator::toMillis).orElse(0L),
+                TimeUnit.class,
+                value.write().map(ClientOptionsGenerator::toMillis).orElse(0L),
+                TimeUnit.class,
+                value.read().map(ClientOptionsGenerator::toMillis).orElse(0L),
+                TimeUnit.class);
     }
 
     private int getDefaultMaxRetries() {

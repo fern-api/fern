@@ -1,0 +1,18 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "inline-path-parameters": true,
+    "timeouts": {
+      "connect": 5,
+      "read": 30,
+      "write": 30
+    }
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.1"
+}

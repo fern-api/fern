@@ -158,6 +158,21 @@ public abstract class AbstractHttpResponseParserGenerator {
         ClassName retryInterceptorClassName =
                 clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
         ClassName maxRetriesOverrideClassName = retryInterceptorClassName.nestedClass("MaxRetriesOverride");
+        String requestOptionsParam = AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME;
+        // When phase timeouts are configured, a per-call connect/read/write override must trigger the per-request
+        // client even without an overall timeout override. Otherwise preserve the historical overall-only condition.
+        CodeBlock timeoutOverrideCondition =
+                clientGeneratorContext.getCustomConfig().timeouts().isPresent()
+                        ? CodeBlock.of(
+                                "$L != null && ($L.getTimeout().isPresent() || $L.getConnectTimeout().isPresent()"
+                                        + " || $L.getReadTimeout().isPresent() || $L.getWriteTimeout().isPresent())",
+                                requestOptionsParam,
+                                requestOptionsParam,
+                                requestOptionsParam,
+                                requestOptionsParam,
+                                requestOptionsParam)
+                        : CodeBlock.of(
+                                "$L != null && $L.getTimeout().isPresent()", requestOptionsParam, requestOptionsParam);
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
                 .addStatement(
@@ -166,10 +181,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         variables.getDefaultedClientName(),
                         clientOptionsField,
                         generatedClientOptions.httpClient())
-                .beginControlFlow(
-                        "if ($L != null && $L.getTimeout().isPresent())",
-                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME,
-                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                .beginControlFlow("if ($L)", timeoutOverrideCondition)
                 // Set the client's callTimeout if requestOptions overrides it has one
                 .addStatement(
                         "$L = $N.$N($L)",
