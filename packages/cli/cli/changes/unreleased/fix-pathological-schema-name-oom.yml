@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Guard OpenAPI ingestion against pathologically long schema names. Some
+    generators emit schema keys that are entire serialized type expressions
+    (hundreds of KB); these names were propagated into every nested subschema's
+    generated name and repeatedly processed, ballooning memory and crashing docs
+    builds with "JavaScript heap out of memory". Such names are now capped to a
+    bounded, deterministic identifier at ingestion. Normal specs are unaffected
+    and produce identical output.
+  type: fix

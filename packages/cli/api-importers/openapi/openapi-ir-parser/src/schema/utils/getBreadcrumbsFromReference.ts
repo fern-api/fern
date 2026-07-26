@@ -1,3 +1,5 @@
+import { capBreadcrumbToken } from "@fern-api/core-utils";
+
 export interface Strategy {
     isApplicable: (refUnderProcessing: string[]) => boolean;
     applyStrategy: (refUnderProcessing: string[]) => { refUnderProcessing: string[]; newBreadcrumbs: string[] };
@@ -9,7 +11,7 @@ export const STARTS_WITH_COMPONENTS_SCHEMAS: Strategy = {
     isApplicable: (refUnderProcessing: string[]) =>
         refUnderProcessing[0] === "#" && refUnderProcessing[1] === "components" && refUnderProcessing[2] === "schemas",
     applyStrategy: (refUnderProcessing: string[]) => {
-        const newBreadcrumbs = [refUnderProcessing[3] ?? ""];
+        const newBreadcrumbs = [capBreadcrumbToken(refUnderProcessing[3] ?? "")];
 
         return {
             refUnderProcessing: refUnderProcessing.slice(4),
@@ -24,7 +26,7 @@ export const STARTS_WITH_COMPONENTS_RESPONSES: Strategy = {
     isApplicable: (breadcrumbs: string[]) =>
         breadcrumbs[0] === "#" && breadcrumbs[1] === "components" && breadcrumbs[2] === "responses",
     applyStrategy: (refUnderProcessing: string[]) => {
-        const newBreadcrumbs = [refUnderProcessing[3] ?? ""];
+        const newBreadcrumbs = [capBreadcrumbToken(refUnderProcessing[3] ?? "")];
 
         refUnderProcessing = refUnderProcessing.slice(4);
 
@@ -43,7 +45,7 @@ export const STARTS_WITH_COMPONENTS_PARAMETERS: Strategy = {
         refUnderProcessing[1] === "components" &&
         refUnderProcessing[2] === "parameters",
     applyStrategy: (refUnderProcessing: string[]) => {
-        const newBreadcrumbs = [refUnderProcessing[3] ?? ""];
+        const newBreadcrumbs = [capBreadcrumbToken(refUnderProcessing[3] ?? "")];
 
         refUnderProcessing = refUnderProcessing.slice(4);
 
@@ -63,7 +65,7 @@ export const EXTRACT_PROPERTY: Strategy = {
     // then the second breadcrumb will be a user-defined value that we want to extract
     isApplicable: (refUnderProcessing: string[]) => refUnderProcessing[0] === "properties",
     applyStrategy: (refUnderProcessing: string[]) => {
-        const newBreadcrumbs = [refUnderProcessing[1] ?? ""];
+        const newBreadcrumbs = [capBreadcrumbToken(refUnderProcessing[1] ?? "")];
 
         return {
             refUnderProcessing: refUnderProcessing.slice(2),

@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { assertNever, isNonNullish } from "@fern-api/core-utils";
+import { assertNever, capBreadcrumbToken, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
     EndpointExample,
@@ -210,14 +210,25 @@ export function generateIr({
                                 false,
                                 false,
                                 context,
-                                [key],
+                                [capBreadcrumbToken(key)],
                                 source,
                                 schemaNamespace ?? namespace
                             )
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, false, context, [key], source, schemaNamespace ?? namespace)];
+                return [
+                    key,
+                    convertSchema(
+                        schema,
+                        false,
+                        false,
+                        context,
+                        [capBreadcrumbToken(key)],
+                        source,
+                        schemaNamespace ?? namespace
+                    )
+                ];
             })
             .filter((entry) => entry.length > 0)
     );

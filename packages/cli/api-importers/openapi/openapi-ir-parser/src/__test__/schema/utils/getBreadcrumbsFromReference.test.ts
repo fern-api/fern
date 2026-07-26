@@ -121,4 +121,13 @@ describe("it can find the relevant breadcrumbs and exclude openapi keywords", ()
         const breadcrumbs = getBreadcrumbsFromReference(reference);
         expect(breadcrumbs).toEqual(["CombinedSchema", "combinedField"]);
     });
+
+    test("caps a pathologically long schema name so it does not propagate through breadcrumbs", () => {
+        const longName = "A".repeat(300_000);
+        const breadcrumbs = getBreadcrumbsFromReference(`#/components/schemas/${longName}`);
+        expect(breadcrumbs).toHaveLength(1);
+        expect(breadcrumbs[0]?.length).toBeLessThan(1024);
+        // Deterministic: the same reference always yields the same capped breadcrumb.
+        expect(getBreadcrumbsFromReference(`#/components/schemas/${longName}`)).toEqual(breadcrumbs);
+    });
 });
