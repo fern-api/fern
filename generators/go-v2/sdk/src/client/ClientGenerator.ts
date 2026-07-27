@@ -601,13 +601,22 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     });
                 }
             }
-            // After env fallback, apply clientDefault if present and type is plain string
-            if (header.clientDefault != null && isPlainStringType(header.valueType)) {
-                this.writeClientDefaultConditional({
-                    writer,
-                    propertyReference: this.getOptionsPropertyReference(header.name),
-                    clientDefault: header.clientDefault
-                });
+            // After env fallback, apply clientDefault if present
+            if (header.clientDefault != null) {
+                if (isTypeReferencePointer(header.valueType, this.context.ir.types)) {
+                    this.writeOptionalClientDefaultConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        clientDefault: header.clientDefault,
+                        localVariableName: `${this.context.getParameterName(header.name)}Default`
+                    });
+                } else if (isPlainStringType(header.valueType)) {
+                    this.writeClientDefaultConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        clientDefault: header.clientDefault
+                    });
+                }
             }
         }
     }
@@ -1334,6 +1343,30 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.write(" = ");
         writer.writeNode(this.context.getLiteralValue(clientDefault));
         writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private writeOptionalClientDefaultConditional({
+        writer,
+        propertyReference,
+        clientDefault,
+        localVariableName
+    }: {
+        writer: go.Writer;
+        propertyReference: go.Selector;
+        clientDefault: FernIr.Literal;
+        localVariableName: string;
+    }): void {
+        writer.write("if ");
+        writer.writeNode(propertyReference);
+        writer.writeLine(" == nil {");
+        writer.indent();
+        writer.write(`${localVariableName} := `);
+        writer.writeNode(this.context.getLiteralValue(clientDefault));
+        writer.newLine();
+        writer.writeNode(propertyReference);
+        writer.writeLine(` = &${localVariableName}`);
         writer.dedent();
         writer.writeLine("}");
     }

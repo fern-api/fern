@@ -704,25 +704,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			continue
 		}
-		if header.ClientDefault != nil {
-			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
-			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
-			if header.Env != nil {
-				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
-				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
-				f.P("}")
-			}
-			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			if valueTypeFormat.IsOptional {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-			} else {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-			}
-			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
-			f.P("}")
-			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
-			continue
-		}
+		// Headers with an env var and/or client default are resolved into the
+		// client-level options at construction time, so ToHeader only emits
+		// values that are explicitly set on the options. Setting the resolved
+		// fallback here would clobber the client-level value on every request,
+		// since empty per-request options win the header merge.
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		if valueTypeFormat.IsOptional {
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
