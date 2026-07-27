@@ -8,6 +8,7 @@ export {
 export { deduplicateExamples } from "./codegen-utils/deduplicateExamples.js";
 export { generateInlineAliasModule, generateInlinePropertiesModule } from "./codegen-utils/generateInlineModule.js";
 export { getExampleEndpointCalls, getExampleEndpointCallsForTests } from "./codegen-utils/getExampleEndpointCalls.js";
+export { getOAuthWrapperPropertyName } from "./codegen-utils/getOAuthWrapperPropertyName.js";
 export {
     getParameterNameForPositionalPathParameter,
     getParameterNameForPropertyPathParameter,

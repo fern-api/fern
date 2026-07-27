@@ -1,6 +1,11 @@
 import { getOriginalName } from "@fern-api/base-generator";
 import type { FernIr } from "@fern-fern/ir-sdk";
-import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
+import {
+    type ExportedFilePath,
+    getOAuthWrapperPropertyName,
+    getPropertyKey,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
 import type { FileContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
@@ -43,6 +48,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
+    private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
@@ -50,6 +56,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
+        this.shouldUseWrapper = init.shouldUseWrapper;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -59,7 +66,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
      * e.g., "OAuth" -> "oauth", "magical_auth" -> "magicalAuth"
      */
     public getWrapperPropertyName(): string {
-        return toCamelCase(this.authScheme.key);
+        return getOAuthWrapperPropertyName(this.authScheme.key);
     }
 
     public getFilePath(): ExportedFilePath {
@@ -775,7 +782,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
      * body (which only reads `clientId`/`clientSecret`) is unchanged.
      */
     private getCanCreateParameterType(context: FileContext): string {
-        if (this.keepIfWrapper("x") === "") {
+        if (!this.shouldUseWrapper) {
             // Single-scheme: options are top-level; keep the existing (byte-identical) type.
             return `Partial<${CLASS_NAME}.ClientCredentials & BaseClientOptions>`;
         }
@@ -792,6 +799,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         // Wrapper case: unify ClientCredentials + TokenOverride into an all-optional
         // wrapper shape so the parameter is a supertype of the collapsed
         // NormalizedClientOptions wrapper property.
+        //
+        // The `WRAPPER_PROPERTY`, `CLIENT_ID_PARAM`, `CLIENT_SECRET_PARAM`, and `TOKEN_PARAM`
+        // identifiers below are emitted verbatim into the generated file: this type is only
+        // valid because those module-level consts are unconditionally emitted in the wrapper
+        // branch (see `getConstants` / `keepIfWrapper`). The single-scheme branch returns
+        // early above, so it never references the wrapper-only consts.
         return `Partial<BaseClientOptions> & { [WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]?: ${supplierType}; [CLIENT_SECRET_PARAM]?: ${supplierType}; [TOKEN_PARAM]?: ${supplierType} } }`;
     }
 

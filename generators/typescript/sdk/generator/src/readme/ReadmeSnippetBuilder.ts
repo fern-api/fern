@@ -3,7 +3,7 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
+import { getOAuthWrapperPropertyName, getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { readFileSync } from "fs";
 import { template } from "lodash-es";
@@ -591,10 +591,10 @@ const data = await response.json();
         if (!requiresNestedAuth) {
             return undefined;
         }
-        // Mirror OAuthAuthProviderGenerator.getWrapperPropertyName (the source of
-        // truth for WRAPPER_PROPERTY) so the README nests under the exact key the
-        // auth provider reads.
-        return toCamelCase(oauthScheme.key);
+        // Use the shared helper that OAuthAuthProviderGenerator.getWrapperPropertyName
+        // also calls (the source of truth for WRAPPER_PROPERTY), so the README nests
+        // under the exact key the auth provider reads and the two cannot drift.
+        return getOAuthWrapperPropertyName(oauthScheme.key);
     }
 
     private buildCustomFetcherSnippets(): string[] | false {
