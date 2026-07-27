@@ -21,6 +21,7 @@ import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
@@ -29,6 +30,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.endpoint.PaginationPathUtils;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
+import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
@@ -411,11 +413,25 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
         List<BuilderSetter> required = new ArrayList<>();
         for (String wireValue : requiredWireValuesInOrder) {
+            // Setters are matched to required properties by wire value. Token request bodies are a single object
+            // whose property wire names are unique, so at most one setter matches each required wire value.
+            BuilderSetter match = null;
             for (BuilderSetter setter : setters) {
                 if (wireValue.equals(setter.wireValue)) {
-                    required.add(setter);
+                    match = setter;
+                    break;
                 }
             }
+            if (match == null) {
+                // The request type's staged builder has a required stage for this property, but the supplier emitted
+                // no setter for it. Emitting the builder anyway would produce Java that fails to compile (a required
+                // stage is never satisfied), so fail generation loudly instead. In the normal OAuth flow every
+                // required non-literal property is emitted, so this only triggers on genuinely unsupported shapes.
+                throw new RuntimeException("OAuth token supplier is missing a setter for required token-request "
+                        + "property with wire value '" + wireValue + "'. The generated staged builder would not "
+                        + "compile. This token-request shape is not supported.");
+            }
+            required.add(match);
         }
         List<BuilderSetter> ordered = new ArrayList<>(required);
         for (BuilderSetter setter : setters) {
@@ -483,7 +499,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             if (isLiteralType(valueType)) {
                 continue;
             }
-            if (isRequiredBuilderProperty(valueType)) {
+            if (isRequiredBuilderProperty(property)) {
                 requiredWireValues.add(NameUtils.getWireValue(property.getName()));
             }
         }
@@ -508,24 +524,33 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Mirrors {@code BuilderGenerator.isRequired}: a property yields a required builder stage unless it resolves to an
-     * optional, nullable, or collection (list/set/map) type. We reuse the POET type mapper so the classification tracks
-     * whatever the request type's builder actually emitted (e.g. optional&lt;T&gt; -&gt; Optional&lt;T&gt;, nullable
-     * -&gt; OptionalNullable&lt;T&gt;).
+     * Whether {@code property} becomes a required (staged) builder property on the request type's builder. This must
+     * agree exactly with the staged builder emitted by {@code BuilderGenerator}, so it delegates to the shared source
+     * of truth {@link EnrichedObjectProperty#isRequiredForBuilder(EnrichedObjectProperty, ClassName)}. Delegating
+     * (rather than re-implementing the type checks) also correctly handles nullable and aliased-optional properties,
+     * which under {@code use-nullable-annotation} resolve to a raw {@code ClassName} yet are optional in the builder.
      */
-    private boolean isRequiredBuilderProperty(TypeReference valueType) {
-        TypeName poetTypeName = clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
-        if (poetTypeName instanceof ParameterizedTypeName) {
-            ClassName rawType = ((ParameterizedTypeName) poetTypeName).rawType;
-            ClassName optionalNullableClassName =
-                    clientGeneratorContext.getPoetClassNameFactory().getOptionalNullableClassName();
-            return !rawType.equals(ClassName.get(Optional.class))
-                    && !rawType.equals(optionalNullableClassName)
-                    && !rawType.equals(ClassName.get(java.util.Map.class))
-                    && !rawType.equals(ClassName.get(List.class))
-                    && !rawType.equals(ClassName.get(java.util.Set.class));
-        }
-        return true;
+    private boolean isRequiredBuilderProperty(ObjectProperty property) {
+        TypeName poetTypeName =
+                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, property.getValueType());
+        Optional<TypeDeclaration> typeDeclaration = property.getValueType()
+                .getNamed()
+                .map(NamedType::getTypeId)
+                .map(clientGeneratorContext::getTypeDeclaration);
+        EnrichedObjectProperty enrichedObjectProperty = EnrichedObjectProperty.of(
+                property,
+                clientGeneratorContext.getType(),
+                typeDeclaration,
+                clientGeneratorContext.getPoetClassNameFactory().getNullableNonemptyFilterClassName(),
+                false,
+                false,
+                clientGeneratorContext.getCustomConfig().wrappedAliases(),
+                poetTypeName,
+                false,
+                clientGeneratorContext.getCustomConfig().useNullableAnnotation());
+        return EnrichedObjectProperty.isRequiredForBuilder(
+                enrichedObjectProperty,
+                clientGeneratorContext.getPoetClassNameFactory().getNullableClassName());
     }
 
     private boolean isLiteralType(TypeReference valueType) {

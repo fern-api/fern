@@ -19,8 +19,12 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import javax.lang.model.element.Modifier;
 import org.immutables.value.Value;
 
@@ -264,6 +268,32 @@ public interface EnrichedObjectProperty {
 
     static boolean isNullable(TypeReference reference) {
         return reference.isContainer() && reference.getContainer().get().isNullable();
+    }
+
+    /**
+     * Single source of truth for whether an enriched property becomes a required (staged) builder property. Both
+     * {@code BuilderGenerator} (which emits the staged builder) and consumers that need to reproduce the builder's
+     * stage ordering (e.g. the OAuth token supplier generator) must call this so they can never disagree.
+     *
+     * <p>A property is required unless it is nullable, an alias of a nullable, or resolves to an optional/collection
+     * (Optional, OptionalNullable, List, Set, Map) poet type. The {@code nullableClassName} is used to derive the
+     * generator's {@code OptionalNullable} class name (it lives in the same package).
+     */
+    static boolean isRequiredForBuilder(EnrichedObjectProperty property, ClassName nullableClassName) {
+        if (property.nullable() || property.aliasOfNullable()) {
+            return false;
+        }
+        TypeName poetTypeName = property.poetTypeName();
+        if (poetTypeName instanceof ParameterizedTypeName) {
+            ClassName rawType = ((ParameterizedTypeName) poetTypeName).rawType;
+            ClassName optionalNullableClassName = ClassName.get(nullableClassName.packageName(), "OptionalNullable");
+            return !rawType.equals(ClassName.get(Optional.class))
+                    && !rawType.equals(optionalNullableClassName)
+                    && !rawType.equals(ClassName.get(Map.class))
+                    && !rawType.equals(ClassName.get(List.class))
+                    && !rawType.equals(ClassName.get(Set.class));
+        }
+        return true;
     }
 
     static boolean isDateTimeRfc2822(TypeReference reference) {

@@ -1243,21 +1243,10 @@ public final class BuilderGenerator {
     }
 
     private boolean isRequired(EnrichedObjectPropertyWithField enrichedObjectProperty) {
-        if (enrichedObjectProperty.enrichedObjectProperty.nullable()
-                || enrichedObjectProperty.enrichedObjectProperty.aliasOfNullable()) {
-            return false;
-        }
-
-        TypeName poetTypeName = enrichedObjectProperty.enrichedObjectProperty.poetTypeName();
-        if (poetTypeName instanceof ParameterizedTypeName) {
-            ParameterizedTypeName poetParameterizedTypeName = (ParameterizedTypeName) poetTypeName;
-            return !isEqual(poetParameterizedTypeName, ClassName.get(Optional.class))
-                    && !isOptionalNullable(poetParameterizedTypeName)
-                    && !isEqual(poetParameterizedTypeName, ClassName.get(Map.class))
-                    && !isEqual(poetParameterizedTypeName, ClassName.get(List.class))
-                    && !isEqual(poetParameterizedTypeName, ClassName.get(Set.class));
-        }
-        return true;
+        // Source of truth for staged-builder required-property detection. Kept in EnrichedObjectProperty so other
+        // generators (e.g. OAuthTokenSupplierGenerator) reproduce the exact same ordering without drifting.
+        return EnrichedObjectProperty.isRequiredForBuilder(
+                enrichedObjectProperty.enrichedObjectProperty, nullableClassName);
     }
 
     @SuppressWarnings("checkstyle:ParameterName")
