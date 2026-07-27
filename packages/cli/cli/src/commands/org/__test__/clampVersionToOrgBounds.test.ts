@@ -65,14 +65,14 @@ describe("clampVersionToOrgBounds", () => {
         it("bumps a lower version up to the pin", () => {
             expect(clampVersionToOrgBounds("5.40.0", { min: "5.45.0", max: "5.45.0" })).toEqual({
                 version: "5.45.0",
-                reason: "floor"
+                reason: "pin"
             });
         });
 
         it("caps a higher version down to the pin", () => {
             expect(clampVersionToOrgBounds("5.50.0", { min: "5.45.0", max: "5.45.0" })).toEqual({
                 version: "5.45.0",
-                reason: "ceiling"
+                reason: "pin"
             });
         });
 

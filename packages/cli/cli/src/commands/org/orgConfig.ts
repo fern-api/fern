@@ -23,7 +23,7 @@ export interface OrgCliVersionBounds {
     max?: string;
 }
 
-export type ClampReason = "floor" | "ceiling";
+export type ClampReason = "floor" | "ceiling" | "pin";
 
 /**
  * Pure decision used by the version-redirection layer: given the version the
@@ -37,11 +37,15 @@ export function clampVersionToOrgBounds(
     intendedVersion: string,
     { min, max }: OrgCliVersionBounds
 ): { version: string; reason?: ClampReason } {
+    // An exact pin (min === max) reports a single "pin" reason regardless of
+    // which side the intended version fell on, so callers can show "pins to X"
+    // rather than a confusing ">= X" / "<= X".
+    const isPinned = min != null && max != null && min === max;
     if (min != null && isVersionAhead(min, intendedVersion)) {
-        return { version: min, reason: "floor" };
+        return { version: min, reason: isPinned ? "pin" : "floor" };
     }
     if (max != null && isVersionAhead(intendedVersion, max)) {
-        return { version: max, reason: "ceiling" };
+        return { version: max, reason: isPinned ? "pin" : "ceiling" };
     }
     return { version: intendedVersion };
 }
@@ -485,7 +489,11 @@ export async function applyOrgBoundsToVersion({
     intendedVersion: string;
 }): Promise<string> {
     const { version, reason } = await resolveClampedVersionForOrg({ cliContext, orgId, version: intendedVersion });
-    if (reason === "floor") {
+    if (reason === "pin") {
+        cliContext.logger.info(
+            `Org "${orgId}" pins Fern CLI to ${chalk.green(version)} — running ${chalk.green(version)}.`
+        );
+    } else if (reason === "floor") {
         cliContext.logger.info(
             `Org "${orgId}" requires Fern CLI ${chalk.green(`>= ${version}`)} — running ${chalk.green(version)}.`
         );
@@ -516,7 +524,11 @@ export async function warnIfVersionOutsideOrgBounds({
     currentVersion: string;
 }): Promise<void> {
     const { version, reason } = await resolveClampedVersionForOrg({ cliContext, orgId, version: currentVersion });
-    if (reason === "floor") {
+    if (reason === "pin") {
+        cliContext.logger.warn(
+            `Org "${orgId}" pins Fern CLI to ${chalk.yellow(version)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not changed.`
+        );
+    } else if (reason === "floor") {
         cliContext.logger.warn(
             `Org "${orgId}" requires Fern CLI ${chalk.yellow(`>= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not upgraded.`
         );
