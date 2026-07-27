@@ -1442,3 +1442,74 @@ describe("overlap prevention: mixed simple and complex expressions", () => {
         expect(result).toContain("/>");
     });
 });
+
+describe("markdown image titles", () => {
+    it("should resolve the path of an image with a title", () => {
+        const page = 'This is a test page with an image ![image](path/to/image.png "My title")';
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toBe(
+            'This is a test page with an image ![image](/Volume/git/fern/my/docs/folder/path/to/image.png "My title")'
+        );
+    });
+
+    it("should replace an image with a title with its file ID, preserving the title", () => {
+        const page = '![image](path/to/image.png "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "titled-image-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:titled-image-id "My title")');
+    });
+
+    it("should support single-quoted and parenthesized titles", () => {
+        const page = ["![a](path/to/a.png 'single')", "![b](path/to/b.png (parens))"].join("\n");
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/a.png"), "a-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/b.png"), "b-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain("![a](file:a-id 'single')");
+        expect(result).toContain("![b](file:b-id (parens))");
+    });
+
+    it("should preserve the title alongside an anchor", () => {
+        const page = '![image](path/to/image.png#anchor "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "anchored-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:anchored-id#anchor "My title")');
+    });
+
+    it("should leave external images with titles untouched", () => {
+        const page = '![image](https://example.com/image.png "My title")';
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toBe('![image](https://example.com/image.png "My title")');
+    });
+
+    it("should handle titles with the streaming parser for large files", () => {
+        const originalEnv = process.env.FERN_DOCS_LARGE_FILE_BYTES;
+        process.env.FERN_DOCS_LARGE_FILE_BYTES = "10";
+        try {
+            const page = '![image](path/to/image.png "My title")';
+            const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+            expect(parseResult.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+            const fileIds = new Map([
+                [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "streamed-id"]
+            ]);
+            const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+            expect(result.trim()).toBe('![image](file:streamed-id "My title")');
+        } finally {
+            if (originalEnv !== undefined) {
+                process.env.FERN_DOCS_LARGE_FILE_BYTES = originalEnv;
+            } else {
+                delete process.env.FERN_DOCS_LARGE_FILE_BYTES;
+            }
+        }
+    });
+});

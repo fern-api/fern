@@ -170,7 +170,7 @@ function parseMarkdownImage(
 
     const urlEnd = i - 1;
     const url = content.slice(urlStart, urlEnd).trim();
-    const rawSrc = trimAnchor(url);
+    const rawSrc = trimAnchor(splitDestinationAndTitle(url));
     const src = rawSrc != null ? unescapeMarkdownUrl(rawSrc) : undefined;
     const resolvedPath = resolvePath(src, metadata);
 
@@ -187,6 +187,38 @@ function parseMarkdownImage(
     }
 
     return null;
+}
+
+/**
+ * Returns the destination of a markdown link/image, dropping the optional title
+ * that may follow it: `path/img.png "My title"` -> `path/img.png`.
+ */
+function splitDestinationAndTitle(url: string): string {
+    let i = 0;
+
+    if (url.startsWith("<")) {
+        while (i < url.length && url[i] !== ">") {
+            i += url[i] === "\\" ? 2 : 1;
+        }
+        return url.slice(0, Math.min(i + 1, url.length));
+    }
+
+    while (i < url.length && !/\s/.test(url[i] as string)) {
+        i += url[i] === "\\" ? 2 : 1;
+    }
+
+    const title = url.slice(i).trim();
+    if (title.length === 0) {
+        return url.slice(0, i);
+    }
+
+    const isTitle =
+        title.length >= 2 &&
+        ((title.startsWith('"') && title.endsWith('"')) ||
+            (title.startsWith("'") && title.endsWith("'")) ||
+            (title.startsWith("(") && title.endsWith(")")));
+
+    return isTitle ? url.slice(0, i) : url;
 }
 
 function parseMarkdownLink(
