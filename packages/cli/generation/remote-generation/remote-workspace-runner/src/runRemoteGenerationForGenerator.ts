@@ -123,8 +123,16 @@ export async function runRemoteGenerationForGenerator({
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
 
+    // For local-file-system output, `generatorsYml.getPackageName` always returns
+    // undefined, so fall back to the generator `config` (e.g. `package_name`,
+    // `packageJson.name`) — the same resolution `--local` generation uses. The
+    // fallback is scoped to downloadFiles so publish/github flows keep their
+    // server-driven version resolution.
     const packageName =
-        generatorsYml.getPackageName({ generatorInvocation }) ?? getPackageNameFromGeneratorConfig(generatorInvocation);
+        generatorsYml.getPackageName({ generatorInvocation }) ??
+        (generatorInvocation.outputMode.type === "downloadFiles"
+            ? getPackageNameFromGeneratorConfig(generatorInvocation)
+            : undefined);
 
     /** Sugar to substitute templated env vars in a standard way */
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
