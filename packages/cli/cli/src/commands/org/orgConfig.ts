@@ -406,14 +406,36 @@ async function resolveClampedVersionForOrg({
     cliContext: CliContext;
     orgId: string;
     version: string;
-}): Promise<{ version: string; reason?: ClampReason }> {
+}): Promise<{ version: string; reason?: ClampReason; bounds: OrgCliVersionBounds }> {
     const bounds = await getOrgCliVersionBounds({ cliContext, orgId });
     try {
-        return clampVersionToOrgBounds(version, bounds);
+        return { ...clampVersionToOrgBounds(version, bounds), bounds };
     } catch {
         // version comparison failed — fail open, don't clamp
-        return { version };
+        return { version, bounds };
     }
+}
+
+/**
+ * Human-readable description of an org's bounds, e.g. `Org "acme" pins Fern CLI
+ * to 5.45.0` or `Org "acme" requires Fern CLI between 5.40.0 and 5.50.0`. A
+ * range (both min and max set) always shows both ends, regardless of which one
+ * the version was clamped to. `color` colorizes the version numbers.
+ */
+function describeOrgBounds(orgId: string, { min, max }: OrgCliVersionBounds, color: (s: string) => string): string {
+    if (min != null && max != null && min === max) {
+        return `Org "${orgId}" pins Fern CLI to ${color(min)}`;
+    }
+    if (min != null && max != null) {
+        return `Org "${orgId}" requires Fern CLI between ${color(min)} and ${color(max)}`;
+    }
+    if (min != null) {
+        return `Org "${orgId}" requires Fern CLI ${color(`>= ${min}`)}`;
+    }
+    if (max != null) {
+        return `Org "${orgId}" caps Fern CLI at ${color(`<= ${max}`)}`;
+    }
+    return `Org "${orgId}"`;
 }
 
 /**
@@ -431,19 +453,13 @@ export async function applyOrgBoundsToVersion({
     orgId: string;
     intendedVersion: string;
 }): Promise<string> {
-    const { version, reason } = await resolveClampedVersionForOrg({ cliContext, orgId, version: intendedVersion });
-    if (reason === "pin") {
-        cliContext.logger.info(
-            `Org "${orgId}" pins Fern CLI to ${chalk.green(version)} — running ${chalk.green(version)}.`
-        );
-    } else if (reason === "floor") {
-        cliContext.logger.info(
-            `Org "${orgId}" requires Fern CLI ${chalk.green(`>= ${version}`)} — running ${chalk.green(version)}.`
-        );
-    } else if (reason === "ceiling") {
-        cliContext.logger.info(
-            `Org "${orgId}" caps Fern CLI at ${chalk.green(`<= ${version}`)} — running ${chalk.green(version)}.`
-        );
+    const { version, reason, bounds } = await resolveClampedVersionForOrg({
+        cliContext,
+        orgId,
+        version: intendedVersion
+    });
+    if (reason != null) {
+        cliContext.logger.info(`${describeOrgBounds(orgId, bounds, chalk.green)} — running ${chalk.green(version)}.`);
     }
     return version;
 }
@@ -466,18 +482,12 @@ export async function warnIfVersionOutsideOrgBounds({
     orgId: string;
     currentVersion: string;
 }): Promise<void> {
-    const { version, reason } = await resolveClampedVersionForOrg({ cliContext, orgId, version: currentVersion });
-    if (reason === "pin") {
+    const { reason, bounds } = await resolveClampedVersionForOrg({ cliContext, orgId, version: currentVersion });
+    if (reason != null) {
+        const suffix =
+            reason === "ceiling" ? "was not downgraded" : reason === "floor" ? "was not upgraded" : "was not changed";
         cliContext.logger.warn(
-            `Org "${orgId}" pins Fern CLI to ${chalk.yellow(version)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not changed.`
-        );
-    } else if (reason === "floor") {
-        cliContext.logger.warn(
-            `Org "${orgId}" requires Fern CLI ${chalk.yellow(`>= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not upgraded.`
-        );
-    } else if (reason === "ceiling") {
-        cliContext.logger.warn(
-            `Org "${orgId}" caps Fern CLI at ${chalk.yellow(`<= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not downgraded.`
+            `${describeOrgBounds(orgId, bounds, chalk.yellow)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it ${suffix}.`
         );
     }
 }
