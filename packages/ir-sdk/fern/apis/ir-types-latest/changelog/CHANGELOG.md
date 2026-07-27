@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.16.0] - 2026-07-27
+
+- Add `nuget` variant to `PublishTarget` (`NugetPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the C# SDK's package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way npm/pypi/maven/
+  crates/go targets already do, so the C# generator can stamp the SDK name/version into the
+  generated `Version.cs` and the structured `User-Agent` header.
+
 ## [v67.15.0] - 2026-07-21
 
 - Add `HmacSignatureVerification.notificationUrlNormalization` (optional
