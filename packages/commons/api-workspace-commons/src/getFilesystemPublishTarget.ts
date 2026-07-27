@@ -146,6 +146,26 @@ export function getFilesystemPublishTarget({
             );
         }
         return undefined;
+    } else if (generatorInvocation.language === "csharp") {
+        // Only populate the nuget publish target when the user explicitly
+        // passed `--version`. C# SDKs generate a `Version.cs` constant from
+        // this value; without an explicit version there is nothing to stamp.
+        if (userProvidedVersion != null) {
+            const csharpPackageName =
+                packageName ??
+                (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
+                    ? (generatorInvocation.raw.config as { ["package-id"]?: unknown })["package-id"]
+                    : undefined);
+            const publishTarget = PublishTarget.nuget({
+                version: userProvidedVersion,
+                packageName: typeof csharpPackageName === "string" ? csharpPackageName : undefined
+            });
+            context.logger.debug(
+                `Created NugetPublishTarget: version ${userProvidedVersion} package name: ${String(csharpPackageName)}`
+            );
+            return publishTarget;
+        }
+        return undefined;
     }
     return undefined;
 }

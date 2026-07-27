@@ -80,6 +80,30 @@ describe("getPublishConfig — local-file-system output on the cloud generation 
         }
     });
 
+    it("threads the nuget package identity for csharp when --version is passed", () => {
+        const publishConfig = getPublishConfig({
+            generatorInvocation: buildLocalFileSystemInvocation({
+                name: "fernapi/fern-csharp-sdk",
+                language: "csharp",
+                config: { "package-id": "twilio-core" }
+            }),
+            version: "0.0.1",
+            userProvidedVersion: "0.0.1",
+            packageName: undefined,
+            selfHosted: false,
+            context: mockContext
+        });
+
+        expect(publishConfig?.type).toBe("filesystem");
+        if (publishConfig?.type === "filesystem") {
+            expect(publishConfig.publishTarget?.type).toBe("nuget");
+            if (publishConfig.publishTarget?.type === "nuget") {
+                expect(publishConfig.publishTarget.packageName).toBe("twilio-core");
+                expect(publishConfig.publishTarget.version).toBe("0.0.1");
+            }
+        }
+    });
+
     it("still returns a filesystem publishing config without a target when no identity is available", () => {
         const publishConfig = getPublishConfig({
             generatorInvocation: buildLocalFileSystemInvocation({

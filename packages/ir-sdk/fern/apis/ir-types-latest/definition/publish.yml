@@ -42,6 +42,7 @@ types:
       pypi: PypiPublishTarget
       crates: CratesPublishTarget
       go: GoPublishTarget
+      nuget: NugetPublishTarget
 
   PostmanPublishTarget:
     properties:
@@ -77,3 +78,8 @@ types:
     properties:
       version: optional<string>
       modulePath: optional<string>
+
+  NugetPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>

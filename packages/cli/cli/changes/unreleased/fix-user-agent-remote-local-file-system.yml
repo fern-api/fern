@@ -6,3 +6,10 @@
     names configured via generator `config` (e.g. `package_name`, `packageJson.name`) are
     now also resolved on the cloud generation path.
   type: fix
+- summary: |
+    `local-file-system` output now threads the C# SDK's package identity (from the generator's
+    `package-id` config) and the user-provided `--version` into the IR via a new `nuget`
+    filesystem publish target, matching the existing npm/pypi/maven/crates/go behavior. This
+    enables the C# generator to stamp the SDK name/version into `Version.cs` and the structured
+    `User-Agent` header.
+  type: fix
