@@ -17,6 +17,7 @@ service:
             maybe_file_list: optional<list<file>>
             maybe_integer: optional<integer>
             optional_list_of_strings: optional<list<string>>
+            nullable_list_of_strings: nullable<list<string>>
             list_of_objects: list<MyObject>
             optional_metadata: optional<unknown>
             optional_object_type: optional<ObjectType>

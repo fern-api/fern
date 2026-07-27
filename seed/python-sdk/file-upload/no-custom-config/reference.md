@@ -124,6 +124,14 @@ client.service.post(...)
 <dl>
 <dd>
 
+**nullable_list_of_strings:** `typing.Optional[typing.List[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **optional_metadata:** `typing.Optional[typing.Any]` 
     
 </dd>

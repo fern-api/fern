@@ -47,6 +47,7 @@ class RawServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+        nullable_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
@@ -83,6 +84,8 @@ class RawServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
+        nullable_list_of_strings : typing.Optional[typing.Sequence[str]]
+
         optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
@@ -104,6 +107,9 @@ class RawServiceClient:
                 "maybe_integer": maybe_integer,
                 "optional_list_of_strings": jsonable_encoder(optional_list_of_strings)
                 if optional_list_of_strings is not OMIT
+                else OMIT,
+                "nullable_list_of_strings": jsonable_encoder(nullable_list_of_strings)
+                if nullable_list_of_strings is not OMIT
                 else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
                 "optional_metadata": json.dumps(jsonable_encoder(optional_metadata))
@@ -838,6 +844,7 @@ class AsyncRawServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+        nullable_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
@@ -874,6 +881,8 @@ class AsyncRawServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
+        nullable_list_of_strings : typing.Optional[typing.Sequence[str]]
+
         optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
@@ -895,6 +904,9 @@ class AsyncRawServiceClient:
                 "maybe_integer": maybe_integer,
                 "optional_list_of_strings": jsonable_encoder(optional_list_of_strings)
                 if optional_list_of_strings is not OMIT
+                else OMIT,
+                "nullable_list_of_strings": jsonable_encoder(nullable_list_of_strings)
+                if nullable_list_of_strings is not OMIT
                 else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
                 "optional_metadata": json.dumps(jsonable_encoder(optional_metadata))
