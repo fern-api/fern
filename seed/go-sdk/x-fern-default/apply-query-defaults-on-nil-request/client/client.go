@@ -21,10 +21,6 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	if options.APIVersion == nil {
-		apiVersionDefault := "2024-02-08"
-		options.APIVersion = &apiVersionDefault
-	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,

@@ -75,6 +75,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/internal/query_defaults_on_nil.go_
+	queryDefaultsOnNilFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -704,14 +707,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			continue
 		}
-		// Headers with an env var and/or client default are resolved into the
-		// client-level options at construction time, so ToHeader only emits
-		// values that are explicitly set on the options. Setting the resolved
-		// fallback here would clobber the client-level value on every request,
-		// since empty per-request options win the header merge. Construction-time
-		// resolution only covers optional, string, and boolean header types, so
-		// other types keep the request-time client default fallback.
-		if header.ClientDefault != nil && !isClientDefaultResolvedAtConstruction(header.ValueType, valueTypeFormat) {
+		if header.ClientDefault != nil {
 			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
 			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
 			if header.Env != nil {
@@ -720,7 +716,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				f.P("}")
 			}
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			if valueTypeFormat.IsOptional {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+			} else {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			}
 			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
 			f.P("}")
 			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
@@ -4741,21 +4741,6 @@ func isStringType(valueType *ir.TypeReference) bool {
 	}
 	primitive := maybePrimitive(valueType)
 	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
-}
-
-// isClientDefaultResolvedAtConstruction returns true if a header's client
-// default is applied to the client-level options at construction time (by the
-// v2 client generator), which covers optional (pointer) types plus plain
-// string and boolean primitives. For those types, ToHeader must not re-apply
-// the fallback, or it would clobber the client-level value on every request.
-func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat) bool {
-	if valueTypeFormat.IsOptional {
-		return true
-	}
-	if valueType.Primitive == nil {
-		return false
-	}
-	return valueType.Primitive.V1 == common.PrimitiveTypeV1String || valueType.Primitive.V1 == common.PrimitiveTypeV1Boolean
 }
 
 // isPrimitiveInteger returns true if the given primitive type is an integer.

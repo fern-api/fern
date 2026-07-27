@@ -10,6 +10,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     importPath: relativePathSchema.optional(),
 
     alwaysSendRequiredProperties: z.boolean().optional(),
+    applyQueryDefaultsOnNilRequest: z.boolean().optional(),
     clientConstructorName: z.string().optional(),
     clientName: z.string().optional(),
     enableExplicitNull: z.boolean().optional(),
