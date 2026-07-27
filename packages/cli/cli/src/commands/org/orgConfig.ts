@@ -139,15 +139,17 @@ export async function getOrgConfig({
             context.logger.info(`No org-level CLI config set for "${orgId}".`);
             return;
         }
-        if (data.cliVersionMin != null && data.cliVersionMin === data.cliVersionMax) {
-            context.logger.info(`cli-version (pinned): ${data.cliVersionMin}`);
-            return;
-        }
-        if (data.cliVersionMin != null) {
-            context.logger.info(`cli-version-min: ${data.cliVersionMin}`);
-        }
-        if (data.cliVersionMax != null) {
-            context.logger.info(`cli-version-max: ${data.cliVersionMax}`);
+        const { cliVersionMin, cliVersionMax } = data;
+        if (cliVersionMin != null && cliVersionMin === cliVersionMax) {
+            context.logger.info(`Fern CLI pinned to ${chalk.green(cliVersionMin)}`);
+        } else if (cliVersionMin != null && cliVersionMax != null) {
+            context.logger.info(
+                `Fern CLI must be between ${chalk.green(cliVersionMin)} and ${chalk.green(cliVersionMax)}`
+            );
+        } else if (cliVersionMin != null) {
+            context.logger.info(`Fern CLI must be at least ${chalk.green(cliVersionMin)}`);
+        } else if (cliVersionMax != null) {
+            context.logger.info(`Fern CLI must be at most ${chalk.green(cliVersionMax)}`);
         }
     });
 }
@@ -197,7 +199,7 @@ export async function setOrgCliVersion({
     for (const version of [min, max]) {
         if (version != null && !isValidVersion(version)) {
             cliContext.failAndThrow(
-                `Invalid version "${version}". Expected semver like 5.45.0 (or a prerelease like 5.45.0-rc0).`,
+                `"${version}" isn't a valid version. Pass an exact published version like 5.45.0 (or a prerelease like 5.45.0-rc0) — see https://www.npmjs.com/package/${FERN_CLI_PACKAGE_NAME}?activeTab=versions.`,
                 undefined,
                 { code: CliError.Code.ConfigError }
             );

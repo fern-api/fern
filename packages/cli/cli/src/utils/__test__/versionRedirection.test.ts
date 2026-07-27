@@ -34,7 +34,7 @@ describe("getInvokedCommandName", () => {
 describe("isVersionRedirectionExempt", () => {
     it("exempts the org command family", () => {
         expect(isVersionRedirectionExempt(argv("org", "get"))).toBe(true);
-        expect(isVersionRedirectionExempt(argv("org", "unset", "cli-version-min"))).toBe(true);
+        expect(isVersionRedirectionExempt(argv("org", "unset", "cli-version", "--min"))).toBe(true);
         expect(isVersionRedirectionExempt(argv("--log-level", "debug", "org", "set", "cli-version", "5.40.0"))).toBe(
             true
         );
