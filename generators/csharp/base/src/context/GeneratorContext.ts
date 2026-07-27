@@ -8,7 +8,7 @@ import {
     getOriginalName
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
+import { ast, CsharpConfigSchema, Generation, getFilesystemNugetPublishTarget } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -117,6 +117,16 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
      * Lazily-initialized map from parent typeId to the set of its direct inline child typeIds.
      */
     private _inlineTypeChildrenMap?: Map<TypeId, Set<TypeId>>;
+
+    /**
+     * The SDK version to stamp into generated code (`Version.cs`, `.csproj`,
+     * dynamic snippets). Prefers the version from the generator output mode
+     * (github/publish) and falls back to the nuget filesystem publish target
+     * carried by the IR for local-file-system output.
+     */
+    public get sdkVersion(): string | undefined {
+        return this.version ?? getFilesystemNugetPublishTarget(this.ir)?.version;
+    }
 
     /** Provides access to C# code generation utilities */
     public get csharp(): Generation["csharp"] {

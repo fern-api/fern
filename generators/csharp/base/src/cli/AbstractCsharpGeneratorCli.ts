@@ -27,7 +27,7 @@ export abstract class AbstractCsharpGeneratorCli extends AbstractGeneratorCli<
     protected async generateMetadata(context: GeneratorContext): Promise<void> {
         const metadata = {
             ...context.ir.generationMetadata,
-            sdkVersion: context.version
+            sdkVersion: context.sdkVersion
         };
         const content = JSON.stringify(metadata, null, 2);
         context.project.addRawFiles(
