@@ -1,14 +1,14 @@
 import { FernToken, getToken } from "@fern-api/auth";
+import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { askToLogin } from "@fern-api/login";
 import { isValidVersion, isVersionAhead } from "@fern-api/semver-utils";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import latestVersion, { VersionNotFoundError } from "latest-version";
 import { homedir } from "os";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
-import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/themeOrigin.js";
 
 interface OrgConfigResponse {
@@ -63,11 +63,48 @@ async function resolveOrgId(cliContext: CliContext, orgOverride?: string): Promi
     if (orgOverride != null) {
         return orgOverride;
     }
-    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-        commandLineApiWorkspace: undefined,
-        defaultToAllApiWorkspaces: true
-    });
-    return project.config.organization;
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
+        return cliContext.failAndThrow(
+            `Directory "${FERN_DIRECTORY}" not found. Run from a Fern project or pass --org.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const projectConfig = await cliContext.runTask((context) =>
+        loadProjectConfig({ directory: fernDirectory, context })
+    );
+    return projectConfig.organization;
+}
+
+/**
+ * Issues a request to the org-config endpoint and returns the response, failing
+ * the task with a clear message on a network error or non-2xx status. Shared by
+ * the `get`/`set`/`unset` commands so the fetch + error handling lives in one
+ * place. `actionLabel` is interpolated into the error (e.g. "get org config").
+ */
+async function orgConfigRequest(
+    context: TaskContext,
+    orgId: string,
+    init: RequestInit,
+    actionLabel: string
+): Promise<Response> {
+    let res: Response;
+    try {
+        res = await fetch(`${FDR_ORIGIN}/v2/registry/org-config/${orgId}`, init);
+    } catch (err) {
+        return context.failAndThrow(`Failed to reach FDR: ${describeFetchError(err)}`, undefined, {
+            code: CliError.Code.NetworkError
+        });
+    }
+    if (!res.ok) {
+        const body = await res.text();
+        const detail = parseErrorDetail(body) ?? body;
+        return context.failAndThrow(`Failed to ${actionLabel}: HTTP ${res.status} — ${detail}`, undefined, {
+            code: CliError.Code.NetworkError
+        });
+    }
+    return res;
 }
 
 export async function getOrgConfig({
@@ -83,26 +120,12 @@ export async function getOrgConfig({
     const orgId = await resolveOrgId(cliContext, org);
 
     await cliContext.runTask(async (context) => {
-        let res: Response;
-        try {
-            res = await fetch(`${FDR_ORIGIN}/v2/registry/org-config/${orgId}`, {
-                headers: { Authorization: `Bearer ${token.value}` }
-            });
-        } catch (err) {
-            context.failAndThrow(`Failed to reach FDR: ${describeFetchError(err)}`, undefined, {
-                code: CliError.Code.NetworkError
-            });
-            return;
-        }
-
-        if (!res.ok) {
-            const body = await res.text();
-            const detail = parseErrorDetail(body) ?? body;
-            context.failAndThrow(`Failed to get org config: HTTP ${res.status} — ${detail}`, undefined, {
-                code: CliError.Code.NetworkError
-            });
-            return;
-        }
+        const res = await orgConfigRequest(
+            context,
+            orgId,
+            { headers: { Authorization: `Bearer ${token.value}` } },
+            "get org config"
+        );
 
         const data = (await res.json()) as OrgConfigResponse;
 
@@ -204,31 +227,19 @@ export async function setOrgCliVersion({
     }
 
     await cliContext.runTask(async (context) => {
-        let res: Response;
-        try {
-            res = await fetch(`${FDR_ORIGIN}/v2/registry/org-config/${orgId}`, {
+        await orgConfigRequest(
+            context,
+            orgId,
+            {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token.value}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(requestBody)
-            });
-        } catch (err) {
-            context.failAndThrow(`Failed to reach FDR: ${describeFetchError(err)}`, undefined, {
-                code: CliError.Code.NetworkError
-            });
-            return;
-        }
-
-        if (!res.ok) {
-            const body = await res.text();
-            const detail = parseErrorDetail(body) ?? body;
-            context.failAndThrow(`Failed to set org config: HTTP ${res.status} — ${detail}`, undefined, {
-                code: CliError.Code.NetworkError
-            });
-            return;
-        }
+            },
+            "set org config"
+        );
 
         if (min != null && max != null && min === max) {
             context.logger.info(`Pinned CLI version to ${chalk.green(min)} for org "${orgId}".`);
@@ -258,39 +269,18 @@ export async function unsetOrgCliVersion({
     const orgId = await resolveOrgId(cliContext, org);
 
     await cliContext.runTask(async (context) => {
-        let res: Response;
-        try {
-            if (field === "all") {
-                res = await fetch(`${FDR_ORIGIN}/v2/registry/org-config/${orgId}`, {
-                    method: "DELETE",
-                    headers: { Authorization: `Bearer ${token.value}` }
-                });
-            } else {
-                const requestBody = field === "min" ? { cliVersionMin: null } : { cliVersionMax: null };
-                res = await fetch(`${FDR_ORIGIN}/v2/registry/org-config/${orgId}`, {
-                    method: "PUT",
-                    headers: {
-                        Authorization: `Bearer ${token.value}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-            }
-        } catch (err) {
-            context.failAndThrow(`Failed to reach FDR: ${describeFetchError(err)}`, undefined, {
-                code: CliError.Code.NetworkError
-            });
-            return;
-        }
-
-        if (!res.ok) {
-            const body = await res.text();
-            const detail = parseErrorDetail(body) ?? body;
-            context.failAndThrow(`Failed to unset org config: HTTP ${res.status} — ${detail}`, undefined, {
-                code: CliError.Code.NetworkError
-            });
-            return;
-        }
+        const init: RequestInit =
+            field === "all"
+                ? { method: "DELETE", headers: { Authorization: `Bearer ${token.value}` } }
+                : {
+                      method: "PUT",
+                      headers: {
+                          Authorization: `Bearer ${token.value}`,
+                          "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify(field === "min" ? { cliVersionMin: null } : { cliVersionMax: null })
+                  };
+        await orgConfigRequest(context, orgId, init, "unset org config");
 
         const label = field === "min" ? "minimum" : field === "max" ? "maximum" : "minimum and maximum";
         context.logger.info(`Removed ${label} CLI version for org "${orgId}".`);
@@ -298,8 +288,20 @@ export async function unsetOrgCliVersion({
 }
 
 /**
- * Fetches the org-level CLI version bounds (min/max). Returns empty bounds if
- * none are set or the endpoint is unreachable (silently falls back).
+ * Result of a bounds fetch. `ok: true` means the endpoint answered
+ * successfully (the org may still have no bounds set, i.e. empty `bounds`);
+ * `ok: false` means the fetch failed (network error, timeout, non-2xx). Callers
+ * must distinguish these: an empty *successful* result is cacheable, but a
+ * failure must not be persisted or it would disable enforcement for the whole
+ * cache TTL.
+ */
+export type OrgCliVersionBoundsResult = { ok: true; bounds: OrgCliVersionBounds } | { ok: false };
+
+/**
+ * Fetches the org-level CLI version bounds (min/max). Returns a discriminated
+ * result so callers can tell "successfully fetched, none set" apart from "fetch
+ * failed" — the two used to be indistinguishable ({}), which let a single
+ * timeout poison the cache with empty bounds.
  */
 export async function fetchOrgCliVersionBounds({
     cliContext,
@@ -311,7 +313,7 @@ export async function fetchOrgCliVersionBounds({
     orgId: string;
     token: string;
     timeoutMs?: number;
-}): Promise<OrgCliVersionBounds> {
+}): Promise<OrgCliVersionBoundsResult> {
     try {
         const res = await fetch(`${FDR_ORIGIN}/v2/registry/org-config/${orgId}`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -319,13 +321,13 @@ export async function fetchOrgCliVersionBounds({
         });
         if (!res.ok) {
             cliContext.logger.debug(`Failed to fetch org config: HTTP ${res.status}`);
-            return {};
+            return { ok: false };
         }
         const data = (await res.json()) as OrgConfigResponse;
-        return { min: data.cliVersionMin, max: data.cliVersionMax };
+        return { ok: true, bounds: { min: data.cliVersionMin, max: data.cliVersionMax } };
     } catch (err) {
         cliContext.logger.debug(`Failed to fetch org config: ${describeFetchError(err)}`);
-        return {};
+        return { ok: false };
     }
 }
 
@@ -407,14 +409,20 @@ async function getCachedOrgCliVersionBounds({
         if (token == null) {
             return {};
         }
-        const bounds = await fetchOrgCliVersionBounds({
+        const result = await fetchOrgCliVersionBounds({
             cliContext,
             orgId,
             token: token.value,
             timeoutMs: ORG_BOUNDS_FETCH_TIMEOUT_MS
         });
-        await writeOrgBoundsCache(orgId, bounds);
-        return bounds;
+        // Only persist a confirmed response. A failed fetch falls open for this
+        // invocation without caching, so a transient blip doesn't disable
+        // enforcement for the whole TTL.
+        if (!result.ok) {
+            return {};
+        }
+        await writeOrgBoundsCache(orgId, result.bounds);
+        return result.bounds;
     } catch (err) {
         cliContext.logger.debug(`Failed to resolve org CLI version bounds: ${String(err)}`);
         return {};

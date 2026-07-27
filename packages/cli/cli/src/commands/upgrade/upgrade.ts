@@ -375,24 +375,24 @@ export async function upgrade({
         }
     }
 
+    if (resolvedTargetVersion == null) {
+        // Every "no upgrade available" path above returns, so this is
+        // unreachable in practice — it narrows the type for the rest of the
+        // function (and for applyOrgVersionBounds below).
+        cliContext.logger.info("No upgrade available.");
+        return;
+    }
+
     // Apply org-level CLI version bounds (floor/ceiling), if set
     if (!isLocalDev) {
         try {
-            const boundsResult = await applyOrgVersionBounds({
+            resolvedTargetVersion = await applyOrgVersionBounds({
                 cliContext,
                 resolvedTargetVersion
             });
-            if (boundsResult != null) {
-                resolvedTargetVersion = boundsResult;
-            }
         } catch {
             // Silently ignore org config failures (e.g. network errors, missing auth)
         }
-    }
-
-    if (resolvedTargetVersion == null) {
-        cliContext.logger.info("No upgrade available.");
-        return;
     }
 
     // Early return if already at target version
@@ -531,8 +531,8 @@ async function applyOrgVersionBounds({
     resolvedTargetVersion
 }: {
     cliContext: CliContext;
-    resolvedTargetVersion: string | undefined;
-}): Promise<string | undefined> {
+    resolvedTargetVersion: string;
+}): Promise<string> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return resolvedTargetVersion;
@@ -554,29 +554,16 @@ async function applyOrgVersionBounds({
         return resolvedTargetVersion;
     }
 
-    const { min, max } = await fetchOrgCliVersionBounds({ cliContext, orgId, token: token.value });
+    const result = await fetchOrgCliVersionBounds({ cliContext, orgId, token: token.value });
+    if (!result.ok) {
+        return resolvedTargetVersion;
+    }
+    const { min, max } = result.bounds;
     if (min == null && max == null) {
         return resolvedTargetVersion;
     }
 
     const currentVersion = cliContext.environment.packageVersion;
-
-    // With no target, a normal upgrade wouldn't run — only the floor can force
-    // one, and only when it's ahead of what's already installed.
-    if (resolvedTargetVersion == null) {
-        try {
-            const { version, reason } = clampVersionToOrgBounds(currentVersion, { min });
-            if (reason === "floor") {
-                cliContext.logger.info(
-                    `Org "${orgId}" requires minimum CLI version ${chalk.green(version)}. Upgrading.`
-                );
-                return version;
-            }
-        } catch {
-            // version comparison failed
-        }
-        return undefined;
-    }
 
     // Don't write a downgrade into fern.config.json for a project already past
     // the ceiling — the version-redirection layer enforces the cap at runtime.
