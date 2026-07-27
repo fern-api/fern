@@ -1697,6 +1697,7 @@
                                 "id": "region",
                                 "name": "region",
                                 "default": "us-east-1",
+                                "required": null,
                                 "values": [
                                     "us-east-1",
                                     "us-west-2",
@@ -1707,6 +1708,7 @@
                                 "id": "environment",
                                 "name": "environment",
                                 "default": "prod",
+                                "required": null,
                                 "values": [
                                     "prod",
                                     "staging",
@@ -1719,6 +1721,7 @@
                                 "id": "region",
                                 "name": "region",
                                 "default": "us-east-1",
+                                "required": null,
                                 "values": [
                                     "us-east-1",
                                     "us-west-2",

@@ -50,6 +50,12 @@ types:
       default:
         type: optional<string>
         docs: The default value for this variable.
+      required:
+        type: optional<boolean>
+        docs: |
+          Whether this variable must be supplied when constructing a client.
+          When true, generators emit it as a required constructor input and never
+          fall back to the default (the default is preserved but unreferenced).
       values:
         type: optional<list<string>>
         docs: If present, the allowed values for this variable (from OpenAPI enum).

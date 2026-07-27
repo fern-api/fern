@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add support for the `x-fern-require-server-var` OpenAPI extension. When set to `true` on a
+    server URL variable, the variable is marked required in the IR (`ServerVariable.required`)
+    so generators can emit it as a required client-constructor input instead of silently falling
+    back to its placeholder default. The variable's `default` is still preserved in the IR.
+  type: feat
