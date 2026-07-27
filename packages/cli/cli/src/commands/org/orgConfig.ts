@@ -445,6 +445,29 @@ async function getCachedOrgCliVersionBounds({
 }
 
 /**
+ * Fetches the org's cached bounds and clamps `version` into them, failing open
+ * to `{ version }` (no reason) on any error. Shared by the redirection and
+ * warn-only paths below.
+ */
+async function resolveClampedVersionForOrg({
+    cliContext,
+    orgId,
+    version
+}: {
+    cliContext: CliContext;
+    orgId: string;
+    version: string;
+}): Promise<{ version: string; reason?: ClampReason }> {
+    const bounds = await getCachedOrgCliVersionBounds({ cliContext, orgId });
+    try {
+        return clampVersionToOrgBounds(version, bounds);
+    } catch {
+        // version comparison failed — fail open, don't clamp
+        return { version };
+    }
+}
+
+/**
  * Clamps the version the CLI would otherwise run into the org-level bounds:
  * bumps up to `min` (floor) and down to `max` (ceiling). Used by the
  * version-redirection layer so every command runs within the org's allowed
@@ -459,23 +482,17 @@ export async function applyOrgBoundsToVersion({
     orgId: string;
     intendedVersion: string;
 }): Promise<string> {
-    const bounds = await getCachedOrgCliVersionBounds({ cliContext, orgId });
-    try {
-        const { version, reason } = clampVersionToOrgBounds(intendedVersion, bounds);
-        if (reason === "floor") {
-            cliContext.logger.info(
-                `Org "${orgId}" requires Fern CLI ${chalk.green(`>= ${version}`)} — running ${chalk.green(version)}.`
-            );
-        } else if (reason === "ceiling") {
-            cliContext.logger.info(
-                `Org "${orgId}" caps Fern CLI at ${chalk.green(`<= ${version}`)} — running ${chalk.green(version)}.`
-            );
-        }
-        return version;
-    } catch {
-        // version comparison failed — don't block
+    const { version, reason } = await resolveClampedVersionForOrg({ cliContext, orgId, version: intendedVersion });
+    if (reason === "floor") {
+        cliContext.logger.info(
+            `Org "${orgId}" requires Fern CLI ${chalk.green(`>= ${version}`)} — running ${chalk.green(version)}.`
+        );
+    } else if (reason === "ceiling") {
+        cliContext.logger.info(
+            `Org "${orgId}" caps Fern CLI at ${chalk.green(`<= ${version}`)} — running ${chalk.green(version)}.`
+        );
     }
-    return intendedVersion;
+    return version;
 }
 
 /**
@@ -496,19 +513,14 @@ export async function warnIfVersionOutsideOrgBounds({
     orgId: string;
     currentVersion: string;
 }): Promise<void> {
-    const bounds = await getCachedOrgCliVersionBounds({ cliContext, orgId });
-    try {
-        const { version, reason } = clampVersionToOrgBounds(currentVersion, bounds);
-        if (reason === "floor") {
-            cliContext.logger.warn(
-                `Org "${orgId}" requires Fern CLI ${chalk.yellow(`>= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not upgraded.`
-            );
-        } else if (reason === "ceiling") {
-            cliContext.logger.warn(
-                `Org "${orgId}" caps Fern CLI at ${chalk.yellow(`<= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not downgraded.`
-            );
-        }
-    } catch {
-        // version comparison failed — don't warn
+    const { version, reason } = await resolveClampedVersionForOrg({ cliContext, orgId, version: currentVersion });
+    if (reason === "floor") {
+        cliContext.logger.warn(
+            `Org "${orgId}" requires Fern CLI ${chalk.yellow(`>= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not upgraded.`
+        );
+    } else if (reason === "ceiling") {
+        cliContext.logger.warn(
+            `Org "${orgId}" caps Fern CLI at ${chalk.yellow(`<= ${version}`)}, but this CLI is ${chalk.yellow(currentVersion)}. Version redirection is disabled, so it was not downgraded.`
+        );
     }
 }

@@ -1,17 +1,9 @@
 - summary: |
-    Add `fern org set/get/unset` commands for org-level CLI version bounds: a
-    minimum ("floor") via `cli-version-min`, a maximum ("ceiling") via
-    `cli-version-max`, or an exact pin via `cli-version` (sets both). When an
-    org sets bounds, the CLI enforces them at the version-redirection layer:
-    every command runs within the allowed range automatically — bumped up to
-    the floor or capped down to the ceiling — downloading that version via
-    `npx` just like a pinned version. Bounds are cached on disk with a 24h TTL,
-    fetched with a tight timeout, and fail open, so they never block a build
-    when the registry is unreachable or the user is unauthenticated — this is a
-    consistency nudge, not a security control: an unauthenticated context (e.g.
-    CI without `FERN_TOKEN`) is not enforced, and `FERN_IGNORE_ORG_VERSION_BOUNDS=true`
-    (or the legacy alias `FERN_IGNORE_ORG_VERSION_FLOOR=true`) bypasses it. `fern upgrade` also keeps
-    the project within the bounds. `fern org set` rejects a version that isn't a
-    published release of the CLI on npm, so an org can't be pinned to a
-    nonexistent version.
+    Add `fern org set/get/unset` for org-level CLI version bounds — a floor
+    (`cli-version-min`), ceiling (`cli-version-max`), or exact pin
+    (`cli-version`). The CLI enforces bounds at the version-redirection layer,
+    running every command within range (downloaded via `npx`). Bounds are
+    cached on disk (24h TTL) and fail open, so they never block a build; this
+    is a consistency nudge, not a security control (unauthenticated contexts
+    are not enforced, and `FERN_IGNORE_ORG_VERSION_BOUNDS=true` bypasses it).
   type: feat
