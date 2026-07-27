@@ -3,7 +3,8 @@
     pin an exact version (`fern org set cli-version 5.45.0`) or set a range
     (`--min`/`--max`). The CLI enforces bounds at the version-redirection layer,
     running every command within range (downloaded via `npx`). Bounds are
-    cached on disk (24h TTL) and fail open, so they never block a build; this
-    is a consistency nudge, not a security control (unauthenticated contexts
-    are not enforced, and `FERN_IGNORE_ORG_VERSION_BOUNDS=true` bypasses it).
+    fetched from FDR per command and fail open, so they never block a build;
+    this is a consistency nudge, not a security control (unauthenticated
+    contexts are not enforced, and `FERN_IGNORE_ORG_VERSION_BOUNDS=true`
+    bypasses it).
   type: feat

@@ -4,10 +4,7 @@ import { askToLogin } from "@fern-api/login";
 import { isValidVersion, isVersionAhead } from "@fern-api/semver-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
-import { mkdir, readFile, writeFile } from "fs/promises";
 import latestVersion, { VersionNotFoundError } from "latest-version";
-import { homedir } from "os";
-import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/themeOrigin.js";
 
@@ -301,9 +298,8 @@ export async function unsetOrgCliVersion({
  * Result of a bounds fetch. `ok: true` means the endpoint answered
  * successfully (the org may still have no bounds set, i.e. empty `bounds`);
  * `ok: false` means the fetch failed (network error, timeout, non-2xx). Callers
- * must distinguish these: an empty *successful* result is cacheable, but a
- * failure must not be persisted or it would disable enforcement for the whole
- * cache TTL.
+ * must distinguish these: a failed fetch fails open (no clamping) rather than
+ * being treated as "no bounds".
  */
 export type OrgCliVersionBoundsResult = { ok: true; bounds: OrgCliVersionBounds } | { ok: false };
 
@@ -315,8 +311,8 @@ function sanitizeBound(version: string | undefined): string | undefined {
 /**
  * Fetches the org-level CLI version bounds (min/max). Returns a discriminated
  * result so callers can tell "successfully fetched, none set" apart from "fetch
- * failed" — the two used to be indistinguishable ({}), which let a single
- * timeout poison the cache with empty bounds.
+ * failed" — the two used to be indistinguishable ({}), which let a transient
+ * failure be misread as "no bounds".
  */
 export async function fetchOrgCliVersionBounds({
     cliContext,
@@ -341,7 +337,7 @@ export async function fetchOrgCliVersionBounds({
         const data = (await res.json()) as OrgConfigResponse;
         // FDR is the source of truth, but validate its response before trusting
         // it in version comparisons — a malformed bound is dropped rather than
-        // fed into isVersionAhead (still a successful, cacheable response).
+        // fed into isVersionAhead (still a successful response).
         return {
             ok: true,
             bounds: { min: sanitizeBound(data.cliVersionMin), max: sanitizeBound(data.cliVersionMax) }
@@ -353,62 +349,14 @@ export async function fetchOrgCliVersionBounds({
 }
 
 export const ORG_BOUNDS_FETCH_TIMEOUT_MS = 2500;
-const ORG_BOUNDS_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
-const ORG_BOUNDS_CACHE_FILENAME = "org-cli-bounds-cache.json";
-
-interface OrgBoundsCacheEntry {
-    cliVersionMin: string | null;
-    cliVersionMax: string | null;
-    fetchedAt: number;
-}
-
-function getOrgBoundsCachePath(): string {
-    const storageFolder = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
-    return path.join(homedir(), storageFolder, ORG_BOUNDS_CACHE_FILENAME);
-}
-
-async function readOrgBoundsCache(orgId: string): Promise<OrgBoundsCacheEntry | undefined> {
-    try {
-        const raw = await readFile(getOrgBoundsCachePath(), "utf-8");
-        const parsed = JSON.parse(raw) as Record<string, OrgBoundsCacheEntry>;
-        const entry = parsed[orgId];
-        if (entry == null || Date.now() - entry.fetchedAt > ORG_BOUNDS_CACHE_TTL_MS) {
-            return undefined;
-        }
-        return entry;
-    } catch {
-        return undefined;
-    }
-}
-
-async function writeOrgBoundsCache(orgId: string, bounds: OrgCliVersionBounds): Promise<void> {
-    try {
-        const cachePath = getOrgBoundsCachePath();
-        let existing: Record<string, OrgBoundsCacheEntry> = {};
-        try {
-            existing = JSON.parse(await readFile(cachePath, "utf-8")) as Record<string, OrgBoundsCacheEntry>;
-        } catch {
-            // no existing cache
-        }
-        existing[orgId] = {
-            cliVersionMin: bounds.min ?? null,
-            cliVersionMax: bounds.max ?? null,
-            fetchedAt: Date.now()
-        };
-        await mkdir(path.dirname(cachePath), { recursive: true });
-        await writeFile(cachePath, JSON.stringify(existing), "utf-8");
-    } catch {
-        // caching is best-effort; ignore write failures
-    }
-}
 
 /**
  * Resolves the org-level CLI version bounds for use in the version-redirection
- * path. Reads a disk cache first (short TTL) and only hits FDR on a cache miss,
- * using a tight timeout. Fails open (returns empty bounds) on any error —
- * missing auth, network failure, timeout — so the floor never blocks a command.
+ * path by fetching directly from FDR on every command, using a tight timeout.
+ * Fails open (returns empty bounds) on any error — missing auth, network
+ * failure, timeout — so the bounds never block a command.
  */
-async function getCachedOrgCliVersionBounds({
+async function getOrgCliVersionBounds({
     cliContext,
     orgId
 }: {
@@ -418,11 +366,6 @@ async function getCachedOrgCliVersionBounds({
     // FERN_IGNORE_ORG_VERSION_FLOOR is the original name, kept as an alias.
     if (process.env.FERN_IGNORE_ORG_VERSION_BOUNDS === "true" || process.env.FERN_IGNORE_ORG_VERSION_FLOOR === "true") {
         return {};
-    }
-
-    const cached = await readOrgBoundsCache(orgId);
-    if (cached != null) {
-        return { min: cached.cliVersionMin ?? undefined, max: cached.cliVersionMax ?? undefined };
     }
 
     try {
@@ -436,13 +379,11 @@ async function getCachedOrgCliVersionBounds({
             token: token.value,
             timeoutMs: ORG_BOUNDS_FETCH_TIMEOUT_MS
         });
-        // Only persist a confirmed response. A failed fetch falls open for this
-        // invocation without caching, so a transient blip doesn't disable
-        // enforcement for the whole TTL.
+        // A failed fetch falls open (empty bounds) so a transient blip never
+        // blocks a command.
         if (!result.ok) {
             return {};
         }
-        await writeOrgBoundsCache(orgId, result.bounds);
         return result.bounds;
     } catch (err) {
         cliContext.logger.debug(`Failed to resolve org CLI version bounds: ${String(err)}`);
@@ -451,7 +392,7 @@ async function getCachedOrgCliVersionBounds({
 }
 
 /**
- * Fetches the org's cached bounds and clamps `version` into them, failing open
+ * Fetches the org's bounds and clamps `version` into them, failing open
  * to `{ version }` (no reason) on any error. Shared by the redirection and
  * warn-only paths below.
  */
@@ -464,7 +405,7 @@ async function resolveClampedVersionForOrg({
     orgId: string;
     version: string;
 }): Promise<{ version: string; reason?: ClampReason }> {
-    const bounds = await getCachedOrgCliVersionBounds({ cliContext, orgId });
+    const bounds = await getOrgCliVersionBounds({ cliContext, orgId });
     try {
         return clampVersionToOrgBounds(version, bounds);
     } catch {

@@ -31,13 +31,13 @@ describe("fetchOrgCliVersionBounds", () => {
         expect(result).toEqual({ ok: true, bounds: { min: "5.40.0", max: "5.50.0" } });
     });
 
-    it("returns ok with empty bounds when the org has none set (cacheable)", async () => {
+    it("returns ok with empty bounds when the org has none set", async () => {
         mockFetchResolves({ json: async () => ({}) });
         const result = await fetchOrgCliVersionBounds({ cliContext, orgId: "acme", token: "t" });
         expect(result).toEqual({ ok: true, bounds: { min: undefined, max: undefined } });
     });
 
-    it("returns not-ok on an HTTP error (must not be cached)", async () => {
+    it("returns not-ok on an HTTP error (fails open)", async () => {
         mockFetchResolves({ ok: false, status: 500 });
         const result = await fetchOrgCliVersionBounds({ cliContext, orgId: "acme", token: "t" });
         expect(result).toEqual({ ok: false });

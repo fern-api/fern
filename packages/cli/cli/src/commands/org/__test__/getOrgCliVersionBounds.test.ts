@@ -1,12 +1,10 @@
 import { getToken } from "@fern-api/auth";
-import { mkdir, readFile, writeFile } from "fs/promises";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { applyOrgBoundsToVersion } from "../orgConfig.js";
 
 vi.mock("@fern-api/auth", () => ({ getToken: vi.fn() }));
-vi.mock("fs/promises", () => ({ mkdir: vi.fn(), readFile: vi.fn(), writeFile: vi.fn() }));
 
 // Only logger.info/debug are exercised (test mock).
 const cliContext = { logger: { info: vi.fn(), debug: vi.fn() } } as unknown as CliContext;
@@ -18,19 +16,9 @@ function stubFetch(response: Partial<Response>): void {
     vi.stubGlobal("fetch", fetchMock);
 }
 
-function cachedEntry(bounds: { min?: string; max?: string }, ageMs: number): string {
-    return JSON.stringify({
-        acme: { cliVersionMin: bounds.min ?? null, cliVersionMax: bounds.max ?? null, fetchedAt: Date.now() - ageMs }
-    });
-}
-
-describe("getCachedOrgCliVersionBounds (via applyOrgBoundsToVersion)", () => {
+describe("getOrgCliVersionBounds (via applyOrgBoundsToVersion)", () => {
     beforeEach(() => {
         vi.mocked(getToken).mockResolvedValue({ type: "organization", value: "tok" });
-        // Cache miss on read so every call reaches the fetch path unless overridden.
-        vi.mocked(readFile).mockRejectedValue(new Error("ENOENT"));
-        vi.mocked(mkdir).mockResolvedValue(undefined);
-        vi.mocked(writeFile).mockResolvedValue(undefined);
         delete process.env.FERN_IGNORE_ORG_VERSION_BOUNDS;
         delete process.env.FERN_IGNORE_ORG_VERSION_FLOOR;
     });
@@ -40,25 +28,22 @@ describe("getCachedOrgCliVersionBounds (via applyOrgBoundsToVersion)", () => {
         vi.clearAllMocks();
     });
 
-    it("does not write the cache when the fetch fails (no poisoning)", async () => {
+    it("fails open (does not clamp) when the fetch fails", async () => {
         stubFetch({ ok: false, status: 500 });
         const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
         expect(version).toBe("5.40.0");
-        expect(writeFile).not.toHaveBeenCalled();
     });
 
-    it("writes the cache and clamps on a successful response", async () => {
+    it("clamps to the floor on a successful response", async () => {
         stubFetch({ json: async () => ({ cliVersionMin: "5.45.0" }) });
         const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
         expect(version).toBe("5.45.0");
-        expect(writeFile).toHaveBeenCalledTimes(1);
     });
 
-    it("caches a successful empty response (no bounds set)", async () => {
+    it("leaves the version unchanged on a successful empty response (no bounds set)", async () => {
         stubFetch({ json: async () => ({}) });
         const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
         expect(version).toBe("5.40.0");
-        expect(writeFile).toHaveBeenCalledTimes(1);
     });
 
     it("drops a malformed bound from FDR rather than using it", async () => {
@@ -67,20 +52,11 @@ describe("getCachedOrgCliVersionBounds (via applyOrgBoundsToVersion)", () => {
         expect(version).toBe("5.40.0");
     });
 
-    it("uses a fresh cache entry without fetching", async () => {
-        stubFetch({});
-        vi.mocked(readFile).mockResolvedValue(cachedEntry({ min: "5.50.0" }, 60_000));
-        const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
-        expect(version).toBe("5.50.0");
-        expect(fetchMock).not.toHaveBeenCalled();
-    });
-
-    it("re-fetches when the cache entry is past its TTL", async () => {
-        stubFetch({ json: async () => ({ cliVersionMin: "5.60.0" }) });
-        vi.mocked(readFile).mockResolvedValue(cachedEntry({ min: "5.50.0" }, 25 * 60 * 60 * 1000));
-        const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
-        expect(version).toBe("5.60.0");
-        expect(fetchMock).toHaveBeenCalledTimes(1);
+    it("fetches from FDR on every invocation (no cache)", async () => {
+        stubFetch({ json: async () => ({ cliVersionMin: "5.45.0" }) });
+        await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
+        await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
+        expect(fetchMock).toHaveBeenCalledTimes(2);
     });
 
     it.each([
