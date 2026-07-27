@@ -1,0 +1,7 @@
+- summary: |
+    SDKs generated to `local-file-system` output now stamp the package name and version
+    from the IR's `nuget` filesystem publish target (populated by the Fern CLI when
+    `--version` is passed) into `Version.cs`, the `.csproj` `<Version>` property, and the
+    structured `User-Agent` header. Previously local-file-system output always produced
+    `Version.Current = "0.0.0"` and used the root namespace as the User-Agent identity.
+  type: fix

@@ -8,6 +8,10 @@ export {
     type TRelativeFilePath
 } from "./context/common.js";
 export { Generation } from "./context/generation-info.js";
+export {
+    getFilesystemNugetPublishTarget,
+    type FilesystemNugetPublishTarget
+} from "./context/filesystem-nuget-publish-target.js";
 export * from "./context/index.js";
 export { NameRegistry } from "./context/name-registry.js";
 export { CSharp } from "./csharp.js";
