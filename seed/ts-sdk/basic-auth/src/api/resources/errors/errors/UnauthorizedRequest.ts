@@ -5,6 +5,8 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedBasicAuth from "../../../index.js";
 
 export class UnauthorizedRequest extends errors.SeedBasicAuthError {
+    public declare readonly body: SeedBasicAuth.UnauthorizedRequestErrorBody;
+
     constructor(body: SeedBasicAuth.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
