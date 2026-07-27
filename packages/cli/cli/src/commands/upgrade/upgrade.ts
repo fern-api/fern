@@ -15,7 +15,7 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
-import { clampVersionToOrgBounds, fetchOrgCliVersionBounds } from "../org/orgConfig.js";
+import { clampVersionToOrgBounds, fetchOrgCliVersionBounds, ORG_BOUNDS_FETCH_TIMEOUT_MS } from "../org/orgConfig.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -554,7 +554,12 @@ async function applyOrgVersionBounds({
         return resolvedTargetVersion;
     }
 
-    const result = await fetchOrgCliVersionBounds({ cliContext, orgId, token: token.value });
+    const result = await fetchOrgCliVersionBounds({
+        cliContext,
+        orgId,
+        token: token.value,
+        timeoutMs: ORG_BOUNDS_FETCH_TIMEOUT_MS
+    });
     if (!result.ok) {
         return resolvedTargetVersion;
     }

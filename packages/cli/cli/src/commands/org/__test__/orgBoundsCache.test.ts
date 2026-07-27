@@ -11,17 +11,28 @@ vi.mock("fs/promises", () => ({ mkdir: vi.fn(), readFile: vi.fn(), writeFile: vi
 // Only logger.info/debug are exercised (test mock).
 const cliContext = { logger: { info: vi.fn(), debug: vi.fn() } } as unknown as CliContext;
 
+let fetchMock: ReturnType<typeof vi.fn>;
+
 function stubFetch(response: Partial<Response>): void {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({}), ...response }));
+    fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({}), ...response });
+    vi.stubGlobal("fetch", fetchMock);
+}
+
+function cachedEntry(bounds: { min?: string; max?: string }, ageMs: number): string {
+    return JSON.stringify({
+        acme: { cliVersionMin: bounds.min ?? null, cliVersionMax: bounds.max ?? null, fetchedAt: Date.now() - ageMs }
+    });
 }
 
 describe("getCachedOrgCliVersionBounds (via applyOrgBoundsToVersion)", () => {
     beforeEach(() => {
         vi.mocked(getToken).mockResolvedValue({ type: "organization", value: "tok" });
-        // Cache miss on read so every call reaches the fetch path.
+        // Cache miss on read so every call reaches the fetch path unless overridden.
         vi.mocked(readFile).mockRejectedValue(new Error("ENOENT"));
         vi.mocked(mkdir).mockResolvedValue(undefined);
         vi.mocked(writeFile).mockResolvedValue(undefined);
+        delete process.env.FERN_IGNORE_ORG_VERSION_BOUNDS;
+        delete process.env.FERN_IGNORE_ORG_VERSION_FLOOR;
     });
 
     afterEach(() => {
@@ -54,5 +65,32 @@ describe("getCachedOrgCliVersionBounds (via applyOrgBoundsToVersion)", () => {
         stubFetch({ json: async () => ({ cliVersionMin: "not-a-version" }) });
         const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
         expect(version).toBe("5.40.0");
+    });
+
+    it("uses a fresh cache entry without fetching", async () => {
+        stubFetch({});
+        vi.mocked(readFile).mockResolvedValue(cachedEntry({ min: "5.50.0" }, 60_000));
+        const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
+        expect(version).toBe("5.50.0");
+        expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it("re-fetches when the cache entry is past its TTL", async () => {
+        stubFetch({ json: async () => ({ cliVersionMin: "5.60.0" }) });
+        vi.mocked(readFile).mockResolvedValue(cachedEntry({ min: "5.50.0" }, 25 * 60 * 60 * 1000));
+        const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
+        expect(version).toBe("5.60.0");
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+
+    it.each([
+        "FERN_IGNORE_ORG_VERSION_BOUNDS",
+        "FERN_IGNORE_ORG_VERSION_FLOOR"
+    ])("bypasses enforcement entirely when %s=true", async (envVar) => {
+        stubFetch({ json: async () => ({ cliVersionMin: "5.90.0" }) });
+        process.env[envVar] = "true";
+        const version = await applyOrgBoundsToVersion({ cliContext, orgId: "acme", intendedVersion: "5.40.0" });
+        expect(version).toBe("5.40.0");
+        expect(fetchMock).not.toHaveBeenCalled();
     });
 });

@@ -218,6 +218,10 @@ export async function setOrgCliVersion({
     const token = await getAuthToken(cliContext);
     const orgId = await resolveOrgId(cliContext, org);
 
+    // Only the check for min/max supplied together is done here. Ordering
+    // against the *already-stored* bound (e.g. setting a ceiling below an
+    // existing floor via a separate command) is enforced by FDR, which merges
+    // the update into the existing config and rejects an out-of-order pair.
     const requestBody: { cliVersionMin?: string; cliVersionMax?: string } = {};
     if (min != null) {
         requestBody.cliVersionMin = min;
@@ -342,7 +346,7 @@ export async function fetchOrgCliVersionBounds({
     }
 }
 
-const ORG_BOUNDS_FETCH_TIMEOUT_MS = 2500;
+export const ORG_BOUNDS_FETCH_TIMEOUT_MS = 2500;
 const ORG_BOUNDS_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 const ORG_BOUNDS_CACHE_FILENAME = "org-cli-bounds-cache.json";
 
