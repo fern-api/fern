@@ -1,0 +1,296 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "payments/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "BadRequestError": {
+            "docs": "Bad request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "PaymentsError",
+          },
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listPayments": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "BadRequestError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      {
+                        "amount": 1,
+                        "id": "id",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/payments",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "list<Payment>",
+              },
+              "source": {
+                "openapi": "../payments-api.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../payments-api.yml",
+          },
+        },
+        "types": {
+          "Payment": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "amount": "optional<integer>",
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../payments-api.yml",
+            },
+          },
+          "PaymentsError": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "detail": "optional<string>",
+              "title": "string",
+              "type": "string",
+            },
+            "source": {
+              "openapi": "../payments-api.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "errors:
+  BadRequestError:
+    status-code: 400
+    type: PaymentsError
+    docs: Bad request
+    examples:
+      - value:
+          type: type
+          title: title
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listPayments:
+      path: /payments
+      method: GET
+      source:
+        openapi: ../payments-api.yml
+      response:
+        docs: OK
+        type: list<Payment>
+        status-code: 200
+      errors:
+        - BadRequestError
+      examples:
+        - response:
+            body:
+              - id: id
+                amount: 1
+  source:
+    openapi: ../payments-api.yml
+types:
+  Payment:
+    properties:
+      id: optional<string>
+      amount: optional<integer>
+    source:
+      openapi: ../payments-api.yml
+  PaymentsError:
+    properties:
+      type: string
+      title: string
+      detail: optional<string>
+    source:
+      openapi: ../payments-api.yml
+",
+    },
+    "users/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "BadRequestError": {
+            "docs": "Bad request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": 1,
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "UsersError",
+          },
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listUsers": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "BadRequestError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      {
+                        "id": "id",
+                        "name": "name",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/users",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "list<User>",
+              },
+              "source": {
+                "openapi": "../users-api.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../users-api.yml",
+          },
+        },
+        "types": {
+          "User": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../users-api.yml",
+            },
+          },
+          "UsersError": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "code": "integer",
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "../users-api.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "errors:
+  BadRequestError:
+    status-code: 400
+    type: UsersError
+    docs: Bad request
+    examples:
+      - value:
+          code: 1
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listUsers:
+      path: /users
+      method: GET
+      source:
+        openapi: ../users-api.yml
+      response:
+        docs: OK
+        type: list<User>
+        status-code: 200
+      errors:
+        - BadRequestError
+      examples:
+        - response:
+            body:
+              - id: id
+                name: name
+  source:
+    openapi: ../users-api.yml
+types:
+  User:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../users-api.yml
+  UsersError:
+    properties:
+      code: integer
+      message: optional<string>
+    source:
+      openapi: ../users-api.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Default",
+      "display-name": "Users API",
+      "environments": {
+        "Default": "https://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Users API
+environments:
+  Default: https://api.example.com
+default-environment: Default
+",
+  },
+  "specVersion": "1.0.0",
+}

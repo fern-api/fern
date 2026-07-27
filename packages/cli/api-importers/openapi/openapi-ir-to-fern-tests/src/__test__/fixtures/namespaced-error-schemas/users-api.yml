@@ -1,0 +1,43 @@
+openapi: 3.0.1
+info:
+  title: Users API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersError'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    UsersError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: integer
+        message:
+          type: string

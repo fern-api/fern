@@ -1,0 +1,8 @@
+- summary: |
+    Scope OpenAPI error schema consistency checks per namespace. Previously, if two
+    endpoints in different namespaces declared different body schemas for the same
+    HTTP status code, every error with that status code was generated with an
+    `unknown` body type across the entire workspace. Error schemas are now only
+    required to be consistent within their own namespace, so namespaced APIs keep
+    typed error bodies.
+  type: fix
