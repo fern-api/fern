@@ -415,6 +415,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         );
 
         const canCreateReturnType = "boolean";
+        const canCreateParameterType = this.getCanCreateParameterType(context);
 
         const clientIdSupplierStatements = this.generateClientIdSupplierStatements(oauthConfig.clientIdEnvVar, context);
         const clientSecretSupplierStatements = this.generateClientSecretSupplierStatements(
@@ -443,7 +444,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 parameters: [
                     {
                         name: "options?",
-                        type: `Partial<${CLASS_NAME}.ClientCredentials & BaseClientOptions>`
+                        type: canCreateParameterType
                     }
                 ]
             },
@@ -752,6 +753,46 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return `if (!tokenResponse.ok) {
                 throw new ${errorType}({ body: tokenResponse.error });
             }`;
+    }
+
+    /**
+     * The parameter type for the static `canCreate` method.
+     *
+     * In the single-scheme case (no wrapper) the options are top-level, so
+     * `Partial<ClientCredentials & BaseClientOptions>` is both correct and the
+     * type the runtime body indexes into.
+     *
+     * In the wrapper case (multi-scheme / endpoint-security), `canCreate` must
+     * satisfy `AnyAuthProvider.InstantiatableAuthProvider`'s contract of
+     * `(opts: NormalizedClientOptions) => boolean`. `NormalizedClientOptions`
+     * derives the wrapper property through `AtLeastOneOf`/`UnionToIntersection`,
+     * which can collapse it to the `TokenOverride` shape (`{ token?: ... }`) that
+     * lacks `clientId`/`clientSecret`. Under strict-mode function-parameter
+     * contravariance, a narrow `Partial<ClientCredentials & BaseClientOptions>`
+     * parameter is therefore not assignable to the contract. We widen the
+     * wrapper property to an all-optional shape that unifies the client-credentials
+     * and token-override members so the assignment type-checks while the runtime
+     * body (which only reads `clientId`/`clientSecret`) is unchanged.
+     */
+    private getCanCreateParameterType(context: FileContext): string {
+        if (this.keepIfWrapper("x") === "") {
+            // Single-scheme: options are top-level; keep the existing (byte-identical) type.
+            return `Partial<${CLASS_NAME}.ClientCredentials & BaseClientOptions>`;
+        }
+
+        // Use the same supplier type the emitted ClientCredentials/TokenOverride use
+        // (Supplier | EndpointSupplier), so the parameter is a supertype of the
+        // wrapper property in NormalizedClientOptions regardless of endpoint metadata.
+        const supplierType = getTextOfTsNode(
+            context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            )
+        );
+
+        // Wrapper case: unify ClientCredentials + TokenOverride into an all-optional
+        // wrapper shape so the parameter is a supertype of the collapsed
+        // NormalizedClientOptions wrapper property.
+        return `Partial<BaseClientOptions> & { [WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]?: ${supplierType}; [CLIENT_SECRET_PARAM]?: ${supplierType}; [TOKEN_PARAM]?: ${supplierType} } }`;
     }
 
     private generateCanCreateStatements(

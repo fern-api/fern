@@ -3,7 +3,7 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { readFileSync } from "fs";
 import { template } from "lodash-es";
@@ -529,6 +529,27 @@ const data = await response.json();
             return undefined;
         }
 
+        // When OAuth is combined with another scheme (ANY) or scoped per-endpoint
+        // (ENDPOINT_SECURITY), the generated client options nest OAuth credentials
+        // under a wrapper property (e.g. `oauth`). Emitting top-level `clientId`/
+        // `clientSecret` in that case would document a shape the auth provider does
+        // not read, so the client would never authenticate. Mirror the same signal
+        // used by the auth-provider and wire-test generators.
+        const wrapperPropertyName = this.getOAuthWrapperPropertyName(oauthScheme);
+
+        const clientCredentialsBody =
+            wrapperPropertyName != null
+                ? `    ${wrapperPropertyName}: {\n` +
+                  `        clientId: "YOUR_CLIENT_ID",\n` +
+                  `        clientSecret: "YOUR_CLIENT_SECRET",\n` +
+                  `    },\n`
+                : `    clientId: "YOUR_CLIENT_ID",\n` + `    clientSecret: "YOUR_CLIENT_SECRET",\n`;
+
+        const tokenOverrideBody =
+            wrapperPropertyName != null
+                ? `    ${wrapperPropertyName}: {\n` + `        token: "my-pre-generated-bearer-token",\n` + `    },\n`
+                : `    token: "my-pre-generated-bearer-token",\n`;
+
         return (
             "The SDK supports OAuth authentication with two options:\n\n" +
             "**Option 1: OAuth Client Credentials Flow**\n\n" +
@@ -536,8 +557,7 @@ const data = await response.json();
             "```typescript\n" +
             `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
             `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
-            `    clientId: "YOUR_CLIENT_ID",\n` +
-            `    clientSecret: "YOUR_CLIENT_SECRET",\n` +
+            clientCredentialsBody +
             `    ...\n` +
             `});\n` +
             "```\n\n" +
@@ -546,11 +566,35 @@ const data = await response.json();
             "```typescript\n" +
             `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
             `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
-            `    token: "my-pre-generated-bearer-token",\n` +
+            tokenOverrideBody +
             `    ...\n` +
             `});\n` +
             "```"
         );
+    }
+
+    /**
+     * Returns the wrapper property name under which OAuth credentials must be nested
+     * (e.g. `oauth`), or `undefined` when credentials are top-level (single-scheme).
+     *
+     * OAuth credentials are nested when the auth requirement is ANY (multiple schemes)
+     * or ENDPOINT_SECURITY (per-endpoint auth) — the same condition the auth-provider
+     * and wire-test generators use to switch on the wrapper.
+     */
+    private getOAuthWrapperPropertyName(oauthScheme: FernIr.AuthScheme.Oauth): string | undefined {
+        const requiresNestedAuth = FernIr.AuthSchemesRequirement._visit(this.context.ir.auth.requirement, {
+            any: () => true,
+            all: () => false,
+            endpointSecurity: () => true,
+            _other: () => false
+        });
+        if (!requiresNestedAuth) {
+            return undefined;
+        }
+        // Mirror OAuthAuthProviderGenerator.getWrapperPropertyName (the source of
+        // truth for WRAPPER_PROPERTY) so the README nests under the exact key the
+        // auth provider reads.
+        return toCamelCase(oauthScheme.key);
     }
 
     private buildCustomFetcherSnippets(): string[] | false {

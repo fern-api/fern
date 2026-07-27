@@ -113,11 +113,13 @@ function createMockFileContext(overrides?: {
     packageName?: string;
     namespaceExport?: string;
     authSchemes?: FernIr.AuthScheme[];
+    authRequirement?: FernIr.AuthSchemesRequirement;
 }): FileContext {
     const services = overrides?.services ?? {};
     const subpackages = overrides?.subpackages ?? {};
     const readmeConfig = overrides?.readmeConfig;
     const authSchemes = overrides?.authSchemes ?? [];
+    const authRequirement = overrides?.authRequirement ?? "ALL";
 
     return {
         case: new CaseConverter({ generationLanguage: "typescript", keywords: undefined, smartCasing: false }),
@@ -130,7 +132,7 @@ function createMockFileContext(overrides?: {
             readmeConfig,
             auth: {
                 schemes: authSchemes,
-                requirement: "ALL",
+                requirement: authRequirement,
                 docs: undefined
             }
         },
@@ -1078,6 +1080,45 @@ describe("ReadmeSnippetBuilder", () => {
             expect(description).toContain("clientSecret");
             expect(description).toContain("MySDKClient");
             expect(description).toContain("@acme/sdk");
+            // Single-scheme (ALL requirement) => credentials are top-level, not nested.
+            expect(description).not.toContain("oauth: {");
+        });
+
+        it("nests credentials under the OAuth wrapper when auth requirement is ANY", () => {
+            const endpoint = createEndpoint("ep1", "createUser");
+            const service = createService("svc1", createFernFilepath([]), [endpoint]);
+            const endpointSnippet = createEndpointSnippet("ep1", "POST", "await client.createUser();");
+
+            const context = createMockFileContext({
+                services: { svc1: service },
+                packageName: "@acme/sdk",
+                authRequirement: "ANY",
+                authSchemes: [
+                    FernIr.AuthScheme.oauth({
+                        key: "OAuth",
+                        configuration: {
+                            type: "clientCredentials"
+                        } as FernIr.OAuthConfiguration
+                        // biome-ignore lint/suspicious/noExplicitAny: IR mock
+                    } as any)
+                ]
+            });
+            const builder = new ReadmeSnippetBuilder({
+                context,
+                endpointSnippets: [endpointSnippet],
+                fileResponseType: "stream",
+                allowCustomFetcher: true,
+                generateSubpackageExports: false
+            });
+
+            const description = builder.buildAuthenticationDescription();
+            assert(description != null);
+            // Wrapper property matches OAuthAuthProvider's WRAPPER_PROPERTY ("oauth").
+            expect(description).toContain("oauth: {");
+            expect(description).toContain('clientId: "YOUR_CLIENT_ID"');
+            expect(description).toContain('clientSecret: "YOUR_CLIENT_SECRET"');
+            // Token override is also nested under the wrapper.
+            expect(description).toContain('token: "my-pre-generated-bearer-token"');
         });
 
         it("returns undefined when no OAuth scheme exists", () => {

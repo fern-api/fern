@@ -62,8 +62,10 @@ Use this when you want the SDK to automatically handle OAuth token retrieval and
 import { SeedAnyAuthClient } from "@fern/any-auth";
 
 const client = new SeedAnyAuthClient({
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
+    oauth: {
+        clientId: "YOUR_CLIENT_ID",
+        clientSecret: "YOUR_CLIENT_SECRET",
+    },
     ...
 });
 ```
@@ -76,7 +78,9 @@ Use this when you already have a valid bearer token and want to skip the OAuth f
 import { SeedAnyAuthClient } from "@fern/any-auth";
 
 const client = new SeedAnyAuthClient({
-    token: "my-pre-generated-bearer-token",
+    oauth: {
+        token: "my-pre-generated-bearer-token",
+    },
     ...
 });
 ```

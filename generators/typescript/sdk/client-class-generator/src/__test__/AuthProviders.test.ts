@@ -838,4 +838,107 @@ export type BaseClientOptions = {
             expect(diagnostics.some((d) => d.includes("nonsense"))).toBe(true);
         });
     });
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Regression: strict-mode `OAuthAuthProvider.canCreate` assignability.
+    //
+    // Under multi-scheme `auth: any` combining OAuth (WITHOUT env vars, so nested
+    // clientId/clientSecret are REQUIRED) with another scheme, `NormalizedClientOptions`
+    // collapses the OAuth wrapper property to the token-override shape ({ token? })
+    // via AtLeastOneOf / UnionToIntersection. The generated
+    // `OAuthAuthProvider.canCreate` is passed to `AnyAuthProvider.createInstance`,
+    // whose contract is `(opts: NormalizedClientOptions) => boolean`. If canCreate's
+    // parameter is the narrow `Partial<ClientCredentials & BaseClientOptions>`, strict
+    // function-parameter contravariance rejects the assignment (BaseClient.ts TS2322).
+    //
+    // These tests pin the parameter type emitted in the wrapper case so the provider
+    // stays assignable to the InstantiatableAuthProvider contract.
+    // ──────────────────────────────────────────────────────────────────────────
+    describe("wrapper-case OAuth canCreate satisfies AnyAuthProvider contract", () => {
+        // Reconstructs the emitted types for `auth: any: [OAuth (no env vars), ApiKey]`
+        // where the OAuth wrapper key is `oauth` and nested clientId/clientSecret are
+        // REQUIRED (no env var fallback).
+        const CONTRACT_SOURCE = `
+type Supplier<T> = T | Promise<T> | (() => T | Promise<T>);
+
+type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
+type AtLeastOneOf<T extends readonly any[]> = {
+    [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;
+}[number];
+
+export type BaseClientOptions = { environment: Supplier<string> };
+
+const WRAPPER_PROPERTY = "oauth" as const;
+const CLIENT_ID_PARAM = "clientId" as const;
+const CLIENT_SECRET_PARAM = "clientSecret" as const;
+const TOKEN_PARAM = "token" as const;
+
+// OAuth with REQUIRED nested creds (no env var fallback).
+type OAuthClientCredentials = {
+    [WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]: Supplier<string>; [CLIENT_SECRET_PARAM]: Supplier<string> };
+};
+type OAuthTokenOverride = { [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: Supplier<string> } };
+type OAuthAuthOptions = OAuthClientCredentials | OAuthTokenOverride;
+type HeaderAuthOptions = { apiKeyAuth?: { apiKey?: Supplier<string> } };
+
+type AnyAuthOptions = AtLeastOneOf<[OAuthAuthOptions, HeaderAuthOptions]>;
+export type NormalizedClientOptions = BaseClientOptions & AnyAuthOptions & { logging: unknown };
+
+export type InstantiatableAuthProvider = {
+    canCreate: (opts: NormalizedClientOptions) => boolean;
+};
+`;
+
+        function diagnosticsForCanCreateType(canCreateParamType: string): string[] {
+            const project = new Project({
+                useInMemoryFileSystem: true,
+                compilerOptions: {
+                    strict: true,
+                    noEmit: true,
+                    skipLibCheck: true,
+                    target: ts.ScriptTarget.ES2020,
+                    lib: ["lib.es2020.d.ts"]
+                }
+            });
+            project.createSourceFile("contract.ts", CONTRACT_SOURCE);
+            project.createSourceFile(
+                "usage.ts",
+                [
+                    `import type { InstantiatableAuthProvider, BaseClientOptions } from "./contract";`,
+                    `const WRAPPER_PROPERTY = "oauth" as const;`,
+                    `const CLIENT_ID_PARAM = "clientId" as const;`,
+                    `const CLIENT_SECRET_PARAM = "clientSecret" as const;`,
+                    `const TOKEN_PARAM = "token" as const;`,
+                    `type Supplier<T> = T | Promise<T> | (() => T | Promise<T>);`,
+                    `const OAuthAuthProviderClass = {`,
+                    `    canCreate(options?: ${canCreateParamType}): boolean {`,
+                    `        return options?.[WRAPPER_PROPERTY]?.[CLIENT_ID_PARAM] != null && options?.[WRAPPER_PROPERTY]?.[CLIENT_SECRET_PARAM] != null;`,
+                    `    }`,
+                    `};`,
+                    `const list: InstantiatableAuthProvider[] = [OAuthAuthProviderClass];`
+                ].join("\n")
+            );
+            return project.getPreEmitDiagnostics().map((d) => {
+                const message = d.getMessageText();
+                return typeof message === "string" ? message : message.getMessageText();
+            });
+        }
+
+        it("the OLD narrow parameter type fails the contract (documents the bug)", () => {
+            // Partial<ClientCredentials & BaseClientOptions> with required nested creds.
+            const diagnostics = diagnosticsForCanCreateType(
+                `Partial<{ [WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]: Supplier<string>; [CLIENT_SECRET_PARAM]: Supplier<string> } } & BaseClientOptions>`
+            );
+            expect(diagnostics.length).toBeGreaterThan(0);
+            expect(diagnostics.some((d) => d.includes("InstantiatableAuthProvider"))).toBe(true);
+        });
+
+        it("the widened parameter type (as generated) satisfies the contract", () => {
+            // Matches OAuthAuthProviderGenerator.getCanCreateParameterType() wrapper output.
+            const diagnostics = diagnosticsForCanCreateType(
+                `Partial<BaseClientOptions> & { [WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]?: Supplier<string>; [CLIENT_SECRET_PARAM]?: Supplier<string>; [TOKEN_PARAM]?: Supplier<string> } }`
+            );
+            expect(diagnostics).toEqual([]);
+        });
+    });
 });
