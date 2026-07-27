@@ -12,5 +12,5 @@ export function dirname(filepath: string): string {
     if (lastSlashIndex === 0) {
         return "/";
     }
-    return filepath.slice(0, lastSlashIndex);
+    return trimmed.slice(0, lastSlashIndex);
 }
