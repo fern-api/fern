@@ -30,6 +30,17 @@ public class SeedJavaEndpointSecurityTokenSubpackageClient {
         return this.userClient.get();
     }
 
+    /**
+     * Creates a client builder pre-configured with OAuth client credentials.
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured with the provided OAuth credentials
+     */
+    public static SeedJavaEndpointSecurityTokenSubpackageClientBuilder withCredentials(
+            String clientId, String clientSecret) {
+        return builder().clientId(clientId).clientSecret(clientSecret);
+    }
+
     public static SeedJavaEndpointSecurityTokenSubpackageClientBuilder builder() {
         return new SeedJavaEndpointSecurityTokenSubpackageClientBuilder();
     }

@@ -118,6 +118,16 @@ export function isPlainStringType(typeRef: FernIr.TypeReference): boolean {
     return false;
 }
 
+/**
+ * Returns true if the given type reference is a non-optional, non-nullable boolean primitive.
+ */
+export function isPlainBooleanType(typeRef: FernIr.TypeReference): boolean {
+    if (typeRef.type === "primitive") {
+        return typeRef.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
+    }
+    return false;
+}
+
 export function isTypeReferencePointer(
     typeRef: FernIr.TypeReference | undefined,
     irTypes: Record<string, FernIr.TypeDeclaration>,

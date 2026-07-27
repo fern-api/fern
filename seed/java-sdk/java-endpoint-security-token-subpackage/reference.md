@@ -18,6 +18,12 @@ client.token().getToken(
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
+        .state("state")
+        .permissions(
+            Optional.of(
+                Arrays.asList("permissions", "permissions")
+            )
+        )
         .build()
 );
 ```
@@ -59,6 +65,22 @@ client.token().getToken(
 <dd>
 
 **grantType:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `Optional<List<String>>` 
     
 </dd>
 </dl>
