@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.79.2
+  changelogEntry:
+    - summary: |
+        SDKs generated to `local-file-system` output now stamp the package name and version
+        from the IR's `nuget` filesystem publish target (populated by the Fern CLI when
+        `--version` is passed) into `Version.cs`, the `.csproj` `<Version>` property, and the
+        structured `User-Agent` header. Previously local-file-system output always produced
+        `Version.Current = "0.0.0"` and used the root namespace as the User-Agent identity.
+      type: fix
+    - summary: |
+        The `X-Fern-SDK-Name` platform header now uses the package identity (the configured
+        `package-id`, or the nuget filesystem publish target's package name) instead of the root
+        namespace, matching the SDK name reported in the `User-Agent` header. SDKs without a
+        configured package id keep sending the root namespace.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
 - version: 2.79.1
   changelogEntry:
     - summary: |
