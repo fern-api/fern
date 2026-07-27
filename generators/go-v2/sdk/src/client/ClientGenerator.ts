@@ -12,6 +12,7 @@ import {
     getRequestPropertyFieldName,
     getRequestPropertyValueType,
     isGrantTypeRequestProperty,
+    isPlainBooleanType,
     isPlainStringType,
     isRequestPropertyPointer,
     isTypeReferenceLiteral,
@@ -610,7 +611,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                         clientDefault: header.clientDefault,
                         localVariableName: `${this.context.getParameterName(header.name)}Default`
                     });
-                } else if (isPlainStringType(header.valueType)) {
+                } else if (isPlainStringType(header.valueType) || isPlainBooleanType(header.valueType)) {
                     this.writeClientDefaultConditional({
                         writer,
                         propertyReference: this.getOptionsPropertyReference(header.name),
@@ -1335,9 +1336,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         propertyReference: go.Selector;
         clientDefault: FernIr.Literal;
     }): void {
+        const zeroValue = clientDefault.type === "boolean" ? "false" : '""';
         writer.write("if ");
         writer.writeNode(propertyReference);
-        writer.writeLine(' == "" {');
+        writer.writeLine(` == ${zeroValue} {`);
         writer.indent();
         writer.writeNode(propertyReference);
         writer.write(" = ");
