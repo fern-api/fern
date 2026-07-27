@@ -1,7 +1,6 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
 import { getToken } from "@fern-api/auth";
 import { mkdir, readFile, writeFile } from "fs/promises";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { applyOrgBoundsToVersion } from "../orgConfig.js";
