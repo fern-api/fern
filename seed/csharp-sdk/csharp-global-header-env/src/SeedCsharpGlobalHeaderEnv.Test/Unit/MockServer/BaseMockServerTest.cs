@@ -24,6 +24,9 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedCsharpGlobalHeaderEnvClient(
+            "USERNAME",
+            "PASSWORD",
+            "TOKEN",
             "VERSION",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
