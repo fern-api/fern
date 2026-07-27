@@ -247,6 +247,8 @@ export async function setOrgCliVersion({
 
         if (min != null && max != null && min === max) {
             context.logger.info(`Pinned CLI version to ${chalk.green(min)} for org "${orgId}".`);
+        } else if (min != null && max != null) {
+            context.logger.info(`Set CLI version range to ${chalk.green(`${min} – ${max}`)} for org "${orgId}".`);
         } else if (min != null) {
             context.logger.info(`Set minimum CLI version to ${chalk.green(min)} for org "${orgId}".`);
         } else if (max != null) {

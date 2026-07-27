@@ -3796,36 +3796,53 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
 function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("org", "Manage org-level configuration", (yargs) => {
         yargs.command(
-            "set <key> <value>",
+            "set",
             "Set an org-level config value (admin only)",
-            (y) =>
-                y
-                    .positional("key", {
-                        type: "string",
-                        demandOption: true,
-                        choices: ["cli-version", "cli-version-min", "cli-version-max"],
-                        description:
-                            "cli-version pins an exact version; cli-version-min sets a floor; cli-version-max sets a ceiling"
-                    })
-                    .positional("value", { type: "string", demandOption: true })
-                    .option("org", { type: "string", description: "Override org ID" }),
-            async (argv) => {
-                cliContext.instrumentPostHogEvent({ command: "fern org set" });
-                switch (argv.key) {
-                    case "cli-version":
-                        await setOrgCliVersion({ cliContext, min: argv.value, max: argv.value, org: argv.org });
-                        break;
-                    case "cli-version-min":
-                        await setOrgCliVersion({ cliContext, min: argv.value, org: argv.org });
-                        break;
-                    case "cli-version-max":
-                        await setOrgCliVersion({ cliContext, max: argv.value, org: argv.org });
-                        break;
-                    default:
-                        cliContext.failAndThrow(
-                            `Unknown config key "${argv.key}". Supported: cli-version, cli-version-min, cli-version-max`
-                        );
-                }
+            (setYargs) =>
+                setYargs
+                    .command(
+                        "cli-version [version]",
+                        "Set the org's Fern CLI version policy: pin an exact version, or set a min/max range",
+                        (y) =>
+                            y
+                                .positional("version", {
+                                    type: "string",
+                                    description: "Pin to an exact version (sets both the floor and ceiling)"
+                                })
+                                .option("min", {
+                                    type: "string",
+                                    description: "Minimum allowed CLI version (floor)"
+                                })
+                                .option("max", {
+                                    type: "string",
+                                    description: "Maximum allowed CLI version (ceiling)"
+                                })
+                                .option("org", { type: "string", description: "Override org ID" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org set cli-version" });
+                            const { version, min, max } = argv;
+                            if (version != null && (min != null || max != null)) {
+                                cliContext.failAndThrow(
+                                    "Pass either an exact version to pin (e.g. `fern org set cli-version 5.45.0`) or --min/--max to set a range, not both."
+                                );
+                                return;
+                            }
+                            if (version == null && min == null && max == null) {
+                                cliContext.failAndThrow(
+                                    "Nothing to set. Pass a version to pin (e.g. `fern org set cli-version 5.45.0`) or --min/--max to set a range."
+                                );
+                                return;
+                            }
+                            if (version != null) {
+                                await setOrgCliVersion({ cliContext, min: version, max: version, org: argv.org });
+                            } else {
+                                await setOrgCliVersion({ cliContext, min, max, org: argv.org });
+                            }
+                        }
+                    )
+                    .demandCommand(1, "Specify what to set, e.g. `fern org set cli-version 5.45.0`."),
+            () => {
+                /* handled by subcommand */
             }
         );
 
@@ -3843,35 +3860,27 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         );
 
         yargs.command(
-            "unset <key>",
+            "unset",
             "Remove an org-level config value (admin only)",
-            (y) =>
-                y
-                    .positional("key", {
-                        type: "string",
-                        demandOption: true,
-                        choices: ["cli-version", "cli-version-min", "cli-version-max"],
-                        description:
-                            "cli-version clears both bounds; cli-version-min clears the floor; cli-version-max clears the ceiling"
-                    })
-                    .option("org", { type: "string", description: "Override org ID" }),
-            async (argv) => {
-                cliContext.instrumentPostHogEvent({ command: "fern org unset" });
-                switch (argv.key) {
-                    case "cli-version":
-                        await unsetOrgCliVersion({ cliContext, org: argv.org, field: "all" });
-                        break;
-                    case "cli-version-min":
-                        await unsetOrgCliVersion({ cliContext, org: argv.org, field: "min" });
-                        break;
-                    case "cli-version-max":
-                        await unsetOrgCliVersion({ cliContext, org: argv.org, field: "max" });
-                        break;
-                    default:
-                        cliContext.failAndThrow(
-                            `Unknown config key "${argv.key}". Supported: cli-version, cli-version-min, cli-version-max`
-                        );
-                }
+            (unsetYargs) =>
+                unsetYargs
+                    .command(
+                        "cli-version",
+                        "Clear the org's Fern CLI version policy (both bounds by default, or --min/--max for one end)",
+                        (y) =>
+                            y
+                                .option("min", { type: "boolean", description: "Clear only the floor" })
+                                .option("max", { type: "boolean", description: "Clear only the ceiling" })
+                                .option("org", { type: "string", description: "Override org ID" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org unset cli-version" });
+                            const field = argv.min && !argv.max ? "min" : argv.max && !argv.min ? "max" : "all";
+                            await unsetOrgCliVersion({ cliContext, org: argv.org, field });
+                        }
+                    )
+                    .demandCommand(1, "Specify what to unset, e.g. `fern org unset cli-version`."),
+            () => {
+                /* handled by subcommand */
             }
         );
 

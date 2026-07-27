@@ -1,7 +1,7 @@
 - summary: |
-    Add `fern org set/get/unset` for org-level CLI version bounds — a floor
-    (`cli-version-min`), ceiling (`cli-version-max`), or exact pin
-    (`cli-version`). The CLI enforces bounds at the version-redirection layer,
+    Add `fern org set/get/unset cli-version` for org-level CLI version bounds:
+    pin an exact version (`fern org set cli-version 5.45.0`) or set a range
+    (`--min`/`--max`). The CLI enforces bounds at the version-redirection layer,
     running every command within range (downloaded via `npx`). Bounds are
     cached on disk (24h TTL) and fail open, so they never block a build; this
     is a consistency nudge, not a security control (unauthenticated contexts
