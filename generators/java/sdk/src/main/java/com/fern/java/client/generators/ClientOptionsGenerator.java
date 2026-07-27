@@ -208,8 +208,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static final String SDK_VERSION_METHOD_NAME = "getSdkVersion";
 
     /**
-     * Returns the {@code {coordinate}/} prefix of an (already RFC-compliant) User-Agent value, i.e. everything up to and
-     * including the {@code /} that precedes the version segment. Used to reconstruct the User-Agent at runtime as
+     * Returns the {@code {coordinate}/} prefix of an (already RFC-compliant) User-Agent value, i.e. everything up to
+     * and including the {@code /} that precedes the version segment. Used to reconstruct the User-Agent at runtime as
      * {@code {coordinate}/ + getSdkVersion()} when runtime version resolution is enabled.
      */
     private static String userAgentCoordinatePrefix(String rfcCompliantUserAgent) {
@@ -227,8 +227,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return MethodSpec.methodBuilder(SDK_VERSION_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(String.class)
-                .addStatement(
-                        "$T version = $T.class.getPackage().getImplementationVersion()", String.class, className)
+                .addStatement("$T version = $T.class.getPackage().getImplementationVersion()", String.class, className)
                 .addStatement("return version != null ? version : $S", fallbackVersion)
                 .build();
     }
@@ -392,11 +391,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .getPlatformHeaders()
                     .getUserAgent()
                     .map(userAgent -> userAgent.getHeader());
-            String sdkVersionHeaderName = generatorContext
-                    .getIr()
-                    .getSdkConfig()
-                    .getPlatformHeaders()
-                    .getSdkVersion();
+            String sdkVersionHeaderName =
+                    generatorContext.getIr().getSdkConfig().getPlatformHeaders().getSdkVersion();
             // When runtime-version is on, the SDK version is read from the jar manifest at runtime
             // via getSdkVersion(); this literal is only its fallback (used when the manifest attribute
             // is absent, e.g. running from unpackaged classes). Prefer the discrete SDK-version header
@@ -424,8 +420,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             .toString());
                 } else if (isUserAgentHeader) {
                     if (runtimeVersion) {
-                        String coordinatePrefix =
-                                userAgentCoordinatePrefix(toRfcCompliantUserAgent(entry.getValue()));
+                        String coordinatePrefix = userAgentCoordinatePrefix(toRfcCompliantUserAgent(entry.getValue()));
                         referencesRuntimeVersion = true;
                         putStatements.append(CodeBlock.of(
                                         "put($S, $S + $L());",
@@ -434,9 +429,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         SDK_VERSION_METHOD_NAME)
                                 .toString());
                     } else {
-                        putStatements.append(CodeBlock.of(
-                                        "put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
-                                .toString());
+                        putStatements.append(
+                                CodeBlock.of("put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
+                                        .toString());
                     }
                 } else if (isSdkVersionHeader) {
                     referencesRuntimeVersion = true;

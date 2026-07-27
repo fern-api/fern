@@ -800,9 +800,7 @@ class ClientWrapperGenerator:
             # importlib.metadata (see the `_sdk_version` block emitted below) instead of
             # baking the generation-time literal, so the reported version tracks the
             # actually-installed package version. Requires a known distribution name.
-            runtime_version_active = (
-                self._context.custom_config.runtime_version and project._project_config is not None
-            )
+            runtime_version_active = self._context.custom_config.runtime_version and project._project_config is not None
 
             # When include_platform_headers is enabled we emit a single structured
             # `User-Agent` (`{sdkName}/{version} ({os}; {arch}) Python/{version}`)
@@ -838,9 +836,7 @@ class ClientWrapperGenerator:
                     writer.write_line("")
                 if emit_structured_user_agent:
                     if runtime_version_active and project._project_config is not None:
-                        writer.write_line(
-                            f'_user_agent = "{project._project_config.package_name}/" + _sdk_version'
-                        )
+                        writer.write_line(f'_user_agent = "{project._project_config.package_name}/" + _sdk_version')
                     else:
                         writer.write_line(f'_user_agent = "{user_agent_prefix}"')
                     writer.write_line("_os = platform.system().lower()")
