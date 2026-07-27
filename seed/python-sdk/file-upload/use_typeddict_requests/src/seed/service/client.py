@@ -50,7 +50,6 @@ class ServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        nullable_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
@@ -87,8 +86,6 @@ class ServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        nullable_list_of_strings : typing.Optional[typing.Sequence[str]]
-
         optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
@@ -115,7 +112,6 @@ class ServiceClient:
             maybe_file_list=maybe_file_list,
             maybe_integer=maybe_integer,
             optional_list_of_strings=optional_list_of_strings,
-            nullable_list_of_strings=nullable_list_of_strings,
             optional_metadata=optional_metadata,
             optional_object_type=optional_object_type,
             optional_id=optional_id,
@@ -579,7 +575,6 @@ class AsyncServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        nullable_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
@@ -616,8 +611,6 @@ class AsyncServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        nullable_list_of_strings : typing.Optional[typing.Sequence[str]]
-
         optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
@@ -644,7 +637,6 @@ class AsyncServiceClient:
             maybe_file_list=maybe_file_list,
             maybe_integer=maybe_integer,
             optional_list_of_strings=optional_list_of_strings,
-            nullable_list_of_strings=nullable_list_of_strings,
             optional_metadata=optional_metadata,
             optional_object_type=optional_object_type,
             optional_id=optional_id,
