@@ -190,19 +190,24 @@ function parseMarkdownImage(
 }
 
 /**
- * Returns the destination of a markdown link/image, dropping the optional title
- * that may follow it: `path/img.png "My title"` -> `path/img.png`.
+ * Returns the leading destination of a markdown link/image, dropping the optional
+ * title that may follow it: `path/img.png "My title"` -> `path/img.png`. The result
+ * is always a prefix of `url`, so callers can recover the title by slicing.
  */
 function splitDestinationAndTitle(url: string): string {
-    let i = 0;
-
     if (url.startsWith("<")) {
+        let i = 1;
         while (i < url.length && url[i] !== ">") {
             i += url[i] === "\\" ? 2 : 1;
         }
-        return url.slice(0, Math.min(i + 1, url.length));
+        // an unterminated `<` is not a delimited destination, so fall back to
+        // splitting on whitespace below
+        if (i < url.length) {
+            return url.slice(0, i + 1);
+        }
     }
 
+    let i = 0;
     while (i < url.length && !/\s/.test(url[i] as string)) {
         i += url[i] === "\\" ? 2 : 1;
     }
@@ -804,8 +809,10 @@ export function replaceImagePathsAndUrls(
                 }
                 const urlEnd = j - 1;
                 const href = content.slice(urlStart, urlEnd).trim();
-                const trimmedHref = trimAnchor(href) ?? href;
-                const hrefAnchor = trimmedHref !== href ? href.slice(trimmedHref.length) : "";
+                const destination = splitDestinationAndTitle(href);
+                const hrefTitle = href.slice(destination.length);
+                const trimmedHref = trimAnchor(destination) ?? destination;
+                const hrefAnchor = trimmedHref !== destination ? destination.slice(trimmedHref.length) : "";
                 const replacedHref = getReplacedHref({
                     href: trimmedHref,
                     markdownFilesToPathName,
@@ -815,7 +822,7 @@ export function replaceImagePathsAndUrls(
                     edits.push({
                         start: urlStart,
                         end: urlEnd,
-                        replacement: replacedHref.slug + hrefAnchor
+                        replacement: replacedHref.slug + hrefAnchor + hrefTitle
                     });
                 }
                 i = j;

@@ -5,7 +5,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
-import { afterEach, beforeEach } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 
 import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths.js";
 
@@ -1493,23 +1493,56 @@ describe("markdown image titles", () => {
     });
 
     it("should handle titles with the streaming parser for large files", () => {
-        const originalEnv = process.env.FERN_DOCS_LARGE_FILE_BYTES;
-        process.env.FERN_DOCS_LARGE_FILE_BYTES = "10";
-        try {
-            const page = '![image](path/to/image.png "My title")';
-            const parseResult = parseImagePaths(page, PATHS, CONTEXT);
-            expect(parseResult.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
-            const fileIds = new Map([
-                [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "streamed-id"]
-            ]);
-            const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
-            expect(result.trim()).toBe('![image](file:streamed-id "My title")');
-        } finally {
-            if (originalEnv !== undefined) {
-                process.env.FERN_DOCS_LARGE_FILE_BYTES = originalEnv;
-            } else {
-                delete process.env.FERN_DOCS_LARGE_FILE_BYTES;
-            }
-        }
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const logSpy = vi.spyOn(console, "debug").mockImplementation(() => undefined);
+
+        const page = '![image](path/to/image.png "My title")';
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+        const logged = logSpy.mock.calls.flat().join("\n");
+        logSpy.mockRestore();
+
+        // guards against silently exercising the mdast path instead
+        expect(logged).toContain("Using streaming parser for large file");
+        expect(parseResult.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
+
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "streamed-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result.trim()).toBe('![image](file:streamed-id "My title")');
+
+        vi.unstubAllEnvs();
+    });
+
+    it("should not swallow the title when the destination has an unterminated angle bracket", () => {
+        vi.stubEnv("FERN_DOCS_LARGE_FILE_BYTES", "10");
+        const result = parseImagePaths('![image](<path/to/image.png "My title")', PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/<path/to/image.png"]);
+        expect(result.markdown.trim()).toBe('![image](/Volume/git/fern/my/docs/folder/<path/to/image.png "My title")');
+        vi.unstubAllEnvs();
+    });
+
+    it("should rewrite a relative markdown link that specifies a title", () => {
+        const page = '[other page](./other.mdx "My title")';
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result.trim()).toBe('[other page](/docs/other "My title")');
+    });
+
+    it("should rewrite a relative markdown link with both an anchor and a title", () => {
+        const page = "[other page](./other.mdx#section 'My title')";
+        const result = replaceImagePathsAndUrls(
+            page,
+            new Map(),
+            { [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/other.mdx")]: "docs/other" },
+            PATHS,
+            CONTEXT
+        );
+        expect(result.trim()).toBe("[other page](/docs/other#section 'My title')");
     });
 });
