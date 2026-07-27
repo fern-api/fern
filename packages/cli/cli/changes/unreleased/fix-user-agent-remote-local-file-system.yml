@@ -1,0 +1,8 @@
+- summary: |
+    `fern generate` (cloud generation) with `local-file-system` output now threads the
+    package name and version into the IR the same way `fern generate --local` does. This
+    fixes generated SDKs missing the `User-Agent` and `X-Fern-SDK-Name`/`X-Fern-SDK-Version`
+    headers when generating to the local filesystem without the `--local` flag. Package
+    names configured via generator `config` (e.g. `package_name`, `packageJson.name`) are
+    now also resolved on the cloud generation path.
+  type: fix

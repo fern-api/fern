@@ -3,6 +3,7 @@ import {
     computeSemanticVersion,
     detectCiProvider,
     detectInvocationSource,
+    getFilesystemPublishTarget,
     getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
@@ -659,124 +660,13 @@ export function getPublishConfig({
     }
 
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
-        let publishTarget: PublishTarget | undefined = undefined;
-        if (generatorInvocation.language === "python") {
-            publishTarget = PublishTarget.pypi({
-                version: effectiveVersion,
-                packageName
-            });
-            context.logger.debug(`Created PyPiPublishTarget: version ${effectiveVersion} package name: ${packageName}`);
-        } else if (generatorInvocation.language === "typescript") {
-            // Only populate the npm publish target when the user explicitly passed
-            // `--version`. We intentionally do NOT thread auto-computed versions or
-            // package names on their own — doing so would cause unrelated behavior
-            // changes (e.g. auto-bumping a version from the npm registry) for users
-            // who rely on managing `package.json` themselves.
-            if (effectiveUserProvidedVersion != null) {
-                const tsPackageName =
-                    packageName ??
-                    (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
-                        ? (generatorInvocation.raw.config as { packageJson?: { name?: string } }).packageJson?.name
-                        : undefined);
-                publishTarget = PublishTarget.npm({
-                    version: effectiveUserProvidedVersion,
-                    packageName: tsPackageName,
-                    tokenEnvironmentVariable: ""
-                });
-                context.logger.debug(
-                    `Created NpmPublishTarget: version ${effectiveUserProvidedVersion} package name: ${tsPackageName}`
-                );
-            }
-        } else if (generatorInvocation.language === "rust") {
-            // Use Crates publish target for Rust (Cargo/crates.io)
-            publishTarget = PublishTarget.crates({
-                version: effectiveVersion,
-                packageName
-            });
-            context.logger.debug(
-                `Created CratesPublishTarget: version ${effectiveVersion} package name: ${packageName}`
-            );
-        } else if (generatorInvocation.language === "go") {
-            // Only populate the go publish target when the user explicitly passed
-            // `--version`. We intentionally do NOT thread auto-computed versions
-            // here — Go SDKs do not ship a version file managed by the generator
-            // (module versions are set via git tags), so the only reason to
-            // populate this is when the user asked us to stamp the SDK with a
-            // specific version (e.g. for the `X-Fern-SDK-Version` header).
-            if (effectiveUserProvidedVersion != null) {
-                const goModulePath = (() => {
-                    const config = generatorInvocation.raw?.config;
-                    if (typeof config !== "object" || config === null) {
-                        return undefined;
-                    }
-                    const module = (config as { module?: { path?: unknown } }).module;
-                    if (module == null || typeof module.path !== "string") {
-                        return undefined;
-                    }
-                    return module.path;
-                })();
-                publishTarget = PublishTarget.go({
-                    version: effectiveUserProvidedVersion,
-                    modulePath: goModulePath
-                });
-                context.logger.debug(
-                    `Created GoPublishTarget: version ${effectiveUserProvidedVersion} module path: ${goModulePath}`
-                );
-            }
-        } else if (generatorInvocation.language === "java") {
-            const config = generatorInvocation.raw?.config;
-
-            interface JavaGeneratorConfig {
-                group?: unknown;
-                artifact?: unknown;
-                "package-prefix"?: unknown;
-                [key: string]: unknown;
-            }
-
-            // Support both styles: package-prefix/package_name and group/artifact
-            const mavenCoordinate = (() => {
-                if (!config || typeof config !== "object" || config === null) {
-                    return undefined;
-                }
-
-                const configObj = config as JavaGeneratorConfig;
-
-                if (typeof configObj.group === "string" && typeof configObj.artifact === "string") {
-                    return {
-                        groupId: configObj.group,
-                        artifactId: configObj.artifact
-                    };
-                } else if (typeof configObj["package-prefix"] === "string" && packageName) {
-                    return {
-                        groupId: configObj["package-prefix"],
-                        artifactId: packageName
-                    };
-                } else if (typeof configObj["package-prefix"] === "string" && !packageName) {
-                    context.logger.warn("Java generator has package-prefix configured but packageName is missing");
-                }
-
-                return undefined;
-            })();
-
-            const coordinate = mavenCoordinate ? `${mavenCoordinate.groupId}:${mavenCoordinate.artifactId}` : undefined;
-
-            if (coordinate) {
-                const mavenVersion = effectiveVersion ?? "0.0.0";
-                publishTarget = PublishTarget.maven({
-                    coordinate,
-                    version: mavenVersion,
-                    usernameEnvironmentVariable: "MAVEN_USERNAME",
-                    passwordEnvironmentVariable: "MAVEN_PASSWORD",
-                    mavenUrlEnvironmentVariable: "MAVEN_PUBLISH_REGISTRY_URL"
-                });
-                context.logger.debug(`Created MavenPublishTarget: coordinate ${coordinate} version ${mavenVersion}`);
-            } else if (config && typeof config === "object") {
-                context.logger.debug(
-                    "Java generator config provided but could not construct Maven coordinate. " +
-                        "Expected either 'group' and 'artifact' or 'package-prefix' with packageName."
-                );
-            }
-        }
+        const publishTarget = getFilesystemPublishTarget({
+            generatorInvocation,
+            version: effectiveVersion,
+            userProvidedVersion: effectiveUserProvidedVersion,
+            packageName,
+            context
+        });
 
         return FernIr.PublishingConfig.filesystem({
             generateFullProject: generateTests || org?.selfHostedSdKs || false,
