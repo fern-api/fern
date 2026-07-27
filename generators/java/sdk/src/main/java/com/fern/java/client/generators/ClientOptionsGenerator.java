@@ -205,6 +205,34 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
 
+    private static final String SDK_VERSION_METHOD_NAME = "getSdkVersion";
+
+    /**
+     * Returns the {@code {coordinate}/} prefix of an (already RFC-compliant) User-Agent value, i.e. everything up to and
+     * including the {@code /} that precedes the version segment. Used to reconstruct the User-Agent at runtime as
+     * {@code {coordinate}/ + getSdkVersion()} when runtime version resolution is enabled.
+     */
+    private static String userAgentCoordinatePrefix(String rfcCompliantUserAgent) {
+        int lastSlash = rfcCompliantUserAgent.lastIndexOf('/');
+        return lastSlash >= 0 ? rfcCompliantUserAgent.substring(0, lastSlash + 1) : rfcCompliantUserAgent + "/";
+    }
+
+    /**
+     * Builds a static helper that resolves the SDK version from the jar manifest's {@code Implementation-Version}
+     * attribute at runtime, falling back to the generation-time version when the attribute is absent (e.g. the classes
+     * are not loaded from a packaged jar). Emitted only when {@code runtime-version} is enabled and a version header is
+     * actually written.
+     */
+    private MethodSpec buildSdkVersionMethod(String fallbackVersion) {
+        return MethodSpec.methodBuilder(SDK_VERSION_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addStatement(
+                        "$T version = $T.class.getPackage().getImplementationVersion()", String.class, className)
+                .addStatement("return version != null ? version : $S", fallbackVersion)
+                .build();
+    }
+
     /**
      * Normalizes a {@code User-Agent} product token so it stays within the RFC 7230 token grammar. The Maven coordinate
      * is {@code groupId:artifactId}, but a colon is not a valid token character, so it is replaced with a dot (e.g.
@@ -219,14 +247,26 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
      * {@code {sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}}. The os, arch, and runtime-version
      * segments are resolved at runtime via {@link System#getProperty(String)} rather than baked in at generation time;
      * each is omitted (never emitted as a literal {@code null}) when it cannot be determined.
+     *
+     * <p>When {@code runtimeVersion} is true the {@code {sdkName}/{sdkVersion}} prefix is assembled as
+     * {@code {sdkName}/ + getSdkVersion()} so the version segment is resolved from the jar manifest at runtime rather
+     * than baked in.
      */
-    private static MethodSpec buildUserAgentMethod(String baseUserAgent) {
+    private static MethodSpec buildUserAgentMethod(String baseUserAgent, boolean runtimeVersion) {
         String rfcCompliantUserAgent = toRfcCompliantUserAgent(baseUserAgent);
-        return MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-                .returns(String.class)
-                .addStatement("$T userAgent = $S", String.class, rfcCompliantUserAgent)
-                .addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
+                .returns(String.class);
+        if (runtimeVersion) {
+            builder.addStatement(
+                    "$T userAgent = $S + $L()",
+                    String.class,
+                    userAgentCoordinatePrefix(rfcCompliantUserAgent),
+                    SDK_VERSION_METHOD_NAME);
+        } else {
+            builder.addStatement("$T userAgent = $S", String.class, rfcCompliantUserAgent);
+        }
+        return builder.addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
                 .addStatement("$T arch = $T.getProperty($S)", String.class, System.class, "os.arch")
                 .beginControlFlow(
                         "if (arch != null && (arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S)))",
@@ -337,6 +377,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         String platformHeadersPutString = "";
         Optional<MethodSpec> userAgentMethod = Optional.empty();
+        Optional<MethodSpec> sdkVersionMethod = Optional.empty();
         if (!clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
             Map<String, String> platformHeaderEntries = getPlatformHeadersEntries(
                     generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
@@ -344,28 +385,70 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     generatorContext.getIr());
             boolean includePlatformHeaders =
                     clientGeneratorContext.getCustomConfig().includePlatformHeaders();
+            boolean runtimeVersion = clientGeneratorContext.getCustomConfig().runtimeVersion();
             Optional<String> userAgentHeaderName = generatorContext
                     .getIr()
                     .getSdkConfig()
                     .getPlatformHeaders()
                     .getUserAgent()
                     .map(userAgent -> userAgent.getHeader());
+            String sdkVersionHeaderName = generatorContext
+                    .getIr()
+                    .getSdkConfig()
+                    .getPlatformHeaders()
+                    .getSdkVersion();
+            // When runtime-version is on, the SDK version is read from the jar manifest at runtime
+            // via getSdkVersion(); this literal is only its fallback (used when the manifest attribute
+            // is absent, e.g. running from unpackaged classes). Prefer the discrete SDK-version header
+            // value, else the version segment of the User-Agent value.
+            String fallbackVersion = platformHeaderEntries.get(sdkVersionHeaderName);
+            if (fallbackVersion == null && userAgentHeaderName.isPresent()) {
+                String userAgentValue = platformHeaderEntries.get(userAgentHeaderName.get());
+                if (userAgentValue != null) {
+                    int lastSlash = userAgentValue.lastIndexOf('/');
+                    fallbackVersion = lastSlash >= 0 ? userAgentValue.substring(lastSlash + 1) : userAgentValue;
+                }
+            }
             StringBuilder putStatements = new StringBuilder();
+            boolean referencesRuntimeVersion = false;
             for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
                 boolean isUserAgentHeader = userAgentHeaderName.isPresent()
                         && userAgentHeaderName.get().equals(entry.getKey());
+                boolean isSdkVersionHeader = runtimeVersion && entry.getKey().equals(sdkVersionHeaderName);
                 if (isUserAgentHeader && includePlatformHeaders) {
-                    userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue()));
+                    userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue(), runtimeVersion));
+                    if (runtimeVersion) {
+                        referencesRuntimeVersion = true;
+                    }
                     putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), USER_AGENT_METHOD_NAME)
                             .toString());
                 } else if (isUserAgentHeader) {
-                    putStatements.append(
-                            CodeBlock.of("put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
-                                    .toString());
+                    if (runtimeVersion) {
+                        String coordinatePrefix =
+                                userAgentCoordinatePrefix(toRfcCompliantUserAgent(entry.getValue()));
+                        referencesRuntimeVersion = true;
+                        putStatements.append(CodeBlock.of(
+                                        "put($S, $S + $L());",
+                                        entry.getKey(),
+                                        coordinatePrefix,
+                                        SDK_VERSION_METHOD_NAME)
+                                .toString());
+                    } else {
+                        putStatements.append(CodeBlock.of(
+                                        "put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
+                                .toString());
+                    }
+                } else if (isSdkVersionHeader) {
+                    referencesRuntimeVersion = true;
+                    putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), SDK_VERSION_METHOD_NAME)
+                            .toString());
                 } else {
                     putStatements.append(CodeBlock.of("put($S, $S);", entry.getKey(), entry.getValue())
                             .toString());
                 }
+            }
+            if (referencesRuntimeVersion) {
+                sdkVersionMethod = Optional.of(buildSdkVersionMethod(fallbackVersion == null ? "" : fallbackVersion));
             }
             platformHeadersPutString = putStatements.toString();
         }
@@ -498,6 +581,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         if (userAgentMethod.isPresent()) {
             clientOptionsBuilder.addMethod(userAgentMethod.get());
+        }
+
+        if (sdkVersionMethod.isPresent()) {
+            clientOptionsBuilder.addMethod(sdkVersionMethod.get());
         }
 
         addApiVersionField(clientOptionsBuilder);
