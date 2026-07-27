@@ -113,6 +113,7 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
+import { isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -186,9 +187,10 @@ async function runCli() {
             process.chdir(cwd);
         }
 
-        // During completion, skip version redirection to avoid a slow network
-        // round-trip that blocks every TAB press.
-        if (isCompletion) {
+        // Skip version redirection for shell completion (avoids a slow network
+        // round-trip on every TAB press) and for commands that are exempt from
+        // it (see VERSION_REDIRECTION_EXEMPT_COMMANDS).
+        if (isCompletion || isVersionRedirectionExempt(process.argv)) {
             await tryRunCli(cliContext);
         } else {
             const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
