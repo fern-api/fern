@@ -1,0 +1,6 @@
+- summary: |
+    Enum coercion now matches values against the enum's actual members instead of
+    always symbolizing the input, and normalizes case-insensitive matches to the
+    canonical wire format. For example, passing `status: "closed"` to an enum with
+    member `CLOSED` now serializes as `"CLOSED"` instead of being sent as-is.
+  type: fix

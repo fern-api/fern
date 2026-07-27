@@ -12,6 +12,16 @@ describe <%= gem_namespace %>::Internal::Types::Enum do
 
       finalize!
     end
+
+    module StringEnum
+      extend <%= gem_namespace %>::Internal::Types::Enum
+
+      ACTIVE = "ACTIVE"
+      CLOSED = "CLOSED"
+      GROUP_BY_PROFILE = "GROUP_BY_PROFILE"
+
+      finalize!
+    end
   end
 
   describe "#values" do
@@ -27,6 +37,19 @@ describe <%= gem_namespace %>::Internal::Types::Enum do
 
     it "coerces a string version of a member" do
       assert_equal :foo, EnumTest::ExampleEnum.coerce("foo")
+    end
+
+    it "coerces an existing string member" do
+      assert_equal "CLOSED", EnumTest::StringEnum.coerce("CLOSED")
+    end
+
+    it "normalizes casing to the wire format" do
+      assert_equal "CLOSED", EnumTest::StringEnum.coerce("closed")
+      assert_equal "GROUP_BY_PROFILE", EnumTest::StringEnum.coerce("group_by_profile")
+    end
+
+    it "coerces a symbol to the string member" do
+      assert_equal "CLOSED", EnumTest::StringEnum.coerce(:closed)
     end
 
     it "returns the value if not a member with strictness off" do

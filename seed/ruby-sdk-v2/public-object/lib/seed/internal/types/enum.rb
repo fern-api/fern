@@ -30,9 +30,15 @@ module Seed
         end
 
         def coerce(value, strict: strict?)
-          coerced_value = Utils.coerce(Symbol, value)
+          return value if values.include?(value)
 
-          return coerced_value if values.include?(coerced_value)
+          if value.is_a?(::String) || value.is_a?(::Symbol)
+            candidate = value.to_s
+            match = values.find do |member|
+              (member.is_a?(::String) || member.is_a?(::Symbol)) && member.to_s.casecmp?(candidate)
+            end
+            return match unless match.nil?
+          end
 
           raise Errors::TypeError, "`#{value}` not in enum #{self}" if strict
 
