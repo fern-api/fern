@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.80.4
+  changelogEntry:
+    - summary: |
+        `fern generate` (cloud generation) with `local-file-system` output now threads the
+        package name and version into the IR the same way `fern generate --local` does. This
+        fixes generated SDKs missing the `User-Agent` and `X-Fern-SDK-Name`/`X-Fern-SDK-Version`
+        headers when generating to the local filesystem without the `--local` flag. Package
+        names configured via generator `config` (e.g. `package_name`, `packageJson.name`) are
+        now also resolved on the cloud generation path.
+      type: fix
+    - summary: |
+        `local-file-system` output now threads the C# SDK's package identity (from the generator's
+        `package-id` config) and the user-provided `--version` into the IR via a new `nuget`
+        filesystem publish target, matching the existing npm/pypi/maven/crates/go behavior. This
+        enables the C# generator to stamp the SDK name/version into `Version.cs` and the structured
+        `User-Agent` header.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
 - version: 5.80.3
   changelogEntry:
     - summary: |
