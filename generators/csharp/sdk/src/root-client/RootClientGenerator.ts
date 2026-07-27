@@ -408,7 +408,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             });
             platformHeaderEntries.push({
                 key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                value: this.csharp.codeblock(`"${this.namespaces.root}"`)
+                // Use the package identity (NuGet package id or nuget filesystem
+                // publish target) so the SDK-name header matches the `User-Agent`;
+                // falls back to the root namespace when neither is configured.
+                value: this.csharp.codeblock(`"${this.generation.names.project.packageId}"`)
             });
             platformHeaderEntries.push({
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
