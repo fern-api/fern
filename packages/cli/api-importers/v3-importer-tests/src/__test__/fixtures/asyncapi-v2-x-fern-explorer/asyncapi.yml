@@ -1,0 +1,36 @@
+asyncapi: 2.6.0
+info:
+  title: Test x-fern-explorer extension for AsyncAPI v2
+  version: 1.0.0
+
+x-fern-explorer: false
+
+servers:
+  production:
+    url: wss://api.example.com
+    protocol: wss
+
+channels:
+  /plants/monitor:
+    x-fern-explorer: true
+    subscribe:
+      operationId: monitorPlants
+      message:
+        payload:
+          type: object
+          properties:
+            plantId:
+              type: string
+            moisture:
+              type: number
+  /plants/updates:
+    subscribe:
+      operationId: plantUpdates
+      message:
+        payload:
+          type: object
+          properties:
+            plantId:
+              type: string
+            status:
+              type: string

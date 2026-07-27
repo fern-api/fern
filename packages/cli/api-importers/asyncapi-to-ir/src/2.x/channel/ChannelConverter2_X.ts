@@ -16,6 +16,7 @@ import { AbstractServerConverter } from "../../converters/AbstractServerConverte
 import { ParameterConverter } from "../../converters/ParameterConverter.js";
 import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address.js";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
+import { FernExplorerExtension } from "../../extensions/x-fern-explorer.js";
 import { SdkMethodNameExtension } from "../../extensions/x-fern-sdk-method-name.js";
 import { AsyncAPIV2 } from "../index.js";
 
@@ -107,6 +108,18 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
         const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
 
+        const globalExplorer = new FernExplorerExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            node: this.context.spec as object
+        }).convert();
+        const channelExplorer = new FernExplorerExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            node: this.channel as object
+        }).convert();
+        const apiPlayground = channelExplorer ?? globalExplorer;
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(groupName),
@@ -132,7 +145,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                         baseUrl,
                         asyncApiVersion: "v2"
                     })
-                }
+                },
+                apiPlayground
             },
             audiences,
             inlinedTypes: this.inlinedTypes
