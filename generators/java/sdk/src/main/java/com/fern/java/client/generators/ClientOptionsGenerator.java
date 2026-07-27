@@ -194,15 +194,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
      * GitHub output mode, which would otherwise take precedence and leak into {@code X-Fern-SDK-Name}.
      */
     private static Optional<SdkCoordinate> resolveFromGithubOutputMode(GeneratorConfig generatorConfig) {
-        return generatorConfig
-                .getOutput()
-                .getMode()
-                .getGithub()
-                .flatMap(githubOutputMode -> githubOutputMode
-                        .getPublishInfo()
-                        .flatMap(GithubPublishInfo::getMaven)
-                        .map(maven -> new SdkCoordinate(
-                                maven.getCoordinate(), Optional.of(githubOutputMode.getVersion()))));
+        return generatorConfig.getOutput().getMode().getGithub().flatMap(githubOutputMode -> githubOutputMode
+                .getPublishInfo()
+                .flatMap(GithubPublishInfo::getMaven)
+                .map(maven -> new SdkCoordinate(maven.getCoordinate(), Optional.of(githubOutputMode.getVersion()))));
     }
 
     /**
@@ -223,8 +218,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static Optional<SdkCoordinate> resolveFromIrPublishConfig(IntermediateRepresentation ir) {
         return ir.getPublishConfig()
                 .flatMap(ClientOptionsGenerator::extractMavenTarget)
-                .flatMap(mavenTarget ->
-                        mavenTarget.getCoordinate().map(coordinate -> new SdkCoordinate(coordinate, mavenTarget.getVersion())));
+                .flatMap(mavenTarget -> mavenTarget
+                        .getCoordinate()
+                        .map(coordinate -> new SdkCoordinate(coordinate, mavenTarget.getVersion())));
     }
 
     /** A resolved {@code X-Fern-SDK-Name} coordinate together with an optional {@code X-Fern-SDK-Version}. */
