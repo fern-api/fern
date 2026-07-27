@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.79.1
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `client-default` value. The constructor
+        initializes the header from the explicit argument, then the environment
+        variable, then the client default. Previously the client default was only
+        applied on the header-dictionary path and was dropped entirely under
+        `any`-composed multi-scheme auth and endpoint-level security.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
 - version: 2.79.0
   changelogEntry:
     - summary: |

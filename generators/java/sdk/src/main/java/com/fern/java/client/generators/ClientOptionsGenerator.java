@@ -596,6 +596,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(endpointMetadataClassName, "endpointMetadata")
                     .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
+                    // A client may be constructed without an auth provider — e.g. the internal client
+                    // the OAuth/inferred auth provider uses to fetch a token from the (unauthenticated)
+                    // token endpoint. Return no auth headers in that case instead of throwing an NPE.
+                    .beginControlFlow("if (this.$L == null)", authProviderField.name)
+                    .addStatement("return new $T<>()", ClassName.get("java.util", "HashMap"))
+                    .endControlFlow()
                     .addStatement("return this.$L.getAuthHeaders(endpointMetadata)", authProviderField.name)
                     .build();
             clientOptionsBuilder.addMethod(getAuthHeadersMethod);

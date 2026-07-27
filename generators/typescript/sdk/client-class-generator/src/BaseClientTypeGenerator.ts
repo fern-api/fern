@@ -661,80 +661,14 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
 
                     let value: ts.Expression;
                     if (literalValue != null) {
-                        if (typeof literalValue === "boolean") {
-                            const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse();
-                            value = ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createParenthesizedExpression(
-                                        ts.factory.createBinaryExpression(
-                                            ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier(headerName)
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                            booleanLiteral
-                                        )
-                                    ),
-                                    ts.factory.createIdentifier("toString")
-                                ),
-                                undefined,
-                                []
-                            );
-                        } else {
-                            value = ts.factory.createBinaryExpression(
-                                ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                    ts.factory.createIdentifier(headerName)
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                ts.factory.createStringLiteral(literalValue.toString())
-                            );
-                        }
+                        value = this.buildRootHeaderValue({ headerName, envVar: undefined, fallback: literalValue });
                     } else {
                         const clientDefaultVal = getClientDefaultValue(header.clientDefault);
-                        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
-                            if (typeof clientDefaultVal === "boolean") {
-                                const booleanLiteral = clientDefaultVal
-                                    ? ts.factory.createTrue()
-                                    : ts.factory.createFalse();
-                                value = ts.factory.createCallExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createParenthesizedExpression(
-                                            ts.factory.createBinaryExpression(
-                                                ts.factory.createPropertyAccessChain(
-                                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                    ts.factory.createIdentifier(headerName)
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                                booleanLiteral
-                                            )
-                                        ),
-                                        ts.factory.createIdentifier("toString")
-                                    ),
-                                    undefined,
-                                    []
-                                );
-                            } else {
-                                value = ts.factory.createBinaryExpression(
-                                    ts.factory.createPropertyAccessChain(
-                                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier(headerName)
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                    ts.factory.createStringLiteral(clientDefaultVal.toString())
-                                );
-                            }
-                        } else {
-                            value = ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                ts.factory.createIdentifier(this.getOptionKeyForHeader(header, context))
-                            );
-                        }
+                        const fallback =
+                            clientDefaultVal != null && !typeContainsNullable(header.valueType, context)
+                                ? clientDefaultVal
+                                : undefined;
+                        value = this.buildRootHeaderValue({ headerName, envVar: header.env, fallback });
                     }
 
                     return {
@@ -774,6 +708,74 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
         }
 
         return headers;
+    }
+
+    /**
+     * Builds the value expression for a root (global) header, coalescing in
+     * precedence order: the client option, then the environment variable
+     * fallback (when the header declares an `env`), then the client default.
+     */
+    private buildRootHeaderValue({
+        headerName,
+        envVar,
+        fallback
+    }: {
+        headerName: string;
+        envVar: string | undefined;
+        fallback: string | boolean | undefined;
+    }): ts.Expression {
+        const operands: ts.Expression[] = [
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(headerName)
+            )
+        ];
+
+        if (envVar != null) {
+            operands.push(
+                ts.factory.createElementAccessChain(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("process"),
+                        ts.factory.createIdentifier("env")
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createStringLiteral(envVar)
+                )
+            );
+        }
+
+        let wrapWithToString = false;
+        if (fallback != null) {
+            if (typeof fallback === "boolean") {
+                wrapWithToString = true;
+                operands.push(fallback ? ts.factory.createTrue() : ts.factory.createFalse());
+            } else {
+                operands.push(ts.factory.createStringLiteral(fallback.toString()));
+            }
+        }
+
+        const first = operands[0];
+        if (operands.length === 1 && first != null) {
+            return first;
+        }
+
+        const coalesced = operands.reduce((left, right) =>
+            ts.factory.createBinaryExpression(left, ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken), right)
+        );
+
+        if (wrapWithToString) {
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createParenthesizedExpression(coalesced),
+                    ts.factory.createIdentifier("toString")
+                ),
+                undefined,
+                []
+            );
+        }
+
+        return coalesced;
     }
 
     private getOptionKeyForHeader(header: FernIr.HttpHeader, context: FileContext): string {

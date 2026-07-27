@@ -29,6 +29,10 @@ func NewClient(opts ...option.RequestOption) *Client {
 			options.Version = &value
 		}
 	}
+	if options.Version == nil {
+		versionDefault := "2024-01-01"
+		options.Version = &versionDefault
+	}
 	return &Client{
 		Service: service.NewClient(options),
 		options: options,

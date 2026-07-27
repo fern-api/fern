@@ -478,6 +478,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
 
                     for (const param of optionalParameters) {
+                        const clientDefaultLiteral =
+                            param.isGlobalHeader && param.clientDefault != null
+                                ? this.getHeaderFallback(param)
+                                : undefined;
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
                             if (anyAuthMultiScheme || endpointSecurity || (param.isGlobalHeader && param.isOptional)) {
@@ -485,7 +489,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 // missing — the caller may be authenticating with another scheme.
                                 innerWriter.write(`${target} ??= Environment.GetEnvironmentVariable(`);
                                 innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
-                                innerWriter.writeTextStatement(")");
+                                if (clientDefaultLiteral != null) {
+                                    innerWriter.writeTextStatement(`) ?? ${clientDefaultLiteral}`);
+                                } else {
+                                    innerWriter.writeTextStatement(")");
+                                }
                             } else {
                                 innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
                                 innerWriter.indent();
@@ -497,6 +505,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 innerWriter.dedent();
                                 innerWriter.writeLine(");");
                             }
+                        } else if (clientDefaultLiteral != null && (anyAuthMultiScheme || endpointSecurity)) {
+                            // Header dictionary entries apply the client default inline elsewhere,
+                            // but the `any`-composed multi-scheme and endpoint-security paths write
+                            // headers conditionally, so the default must be applied here.
+                            innerWriter.writeTextStatement(`${paramAccess(param)} ??= ${clientDefaultLiteral}`);
                         }
                     }
 

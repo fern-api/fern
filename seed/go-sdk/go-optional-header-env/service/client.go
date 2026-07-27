@@ -28,6 +28,10 @@ func NewClient(options *core.RequestOptions) *Client {
 			options.Version = &value
 		}
 	}
+	if options.Version == nil {
+		versionDefault := "2024-01-01"
+		options.Version = &versionDefault
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,

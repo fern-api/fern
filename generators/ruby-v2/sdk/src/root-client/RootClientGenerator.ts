@@ -751,18 +751,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getAuthenticationParameters(): ruby.KeywordParameter[] {
         const parameters: ruby.KeywordParameter[] = [];
 
+        // Under endpoint-security, auth is resolved per-endpoint, so a caller may use only one
+        // scheme (e.g. pure OAuth) and must be able to omit the others. A credential without an
+        // env-var default therefore defaults to nil instead of being a required keyword argument;
+        // otherwise a pure-OAuth user cannot construct the client without also passing an API key.
+        const isEndpointSecurity = this.context.isEndpointSecurity();
+        const credentialInitializer = (envVar: string | undefined) => {
+            if (envVar != null) {
+                return ruby.codeblock((writer) => {
+                    writer.write(`ENV.fetch("${envVar}", nil)`);
+                });
+            }
+            return isEndpointSecurity ? ruby.nilValue() : undefined;
+        };
+
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer": {
                     const param = ruby.parameters.keyword({
                         name: TOKEN_PARAMETER_NAME,
                         type: ruby.Type.string(),
-                        initializer:
-                            scheme.tokenEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.tokenEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                        initializer: credentialInitializer(scheme.tokenEnvVar),
                         docs: undefined
                     });
                     parameters.push(param);
@@ -772,12 +781,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     const param = ruby.parameters.keyword({
                         name: this.case.snakeSafe(scheme.name),
                         type: ruby.Type.string(),
-                        initializer:
-                            scheme.headerEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.headerEnvVar}", nil)`);
-                                  })
-                                : undefined,
+                        initializer: credentialInitializer(scheme.headerEnvVar),
                         docs: undefined
                     });
                     parameters.push(param);
@@ -791,12 +795,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const usernameParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.username),
                             type: ruby.Type.string(),
-                            initializer:
-                                scheme.usernameEnvVar != null
-                                    ? ruby.codeblock((writer) => {
-                                          writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                      })
-                                    : undefined,
+                            initializer: credentialInitializer(scheme.usernameEnvVar),
                             docs: undefined
                         });
                         parameters.push(usernameParam);
@@ -805,12 +804,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordParam = ruby.parameters.keyword({
                             name: this.case.snakeSafe(scheme.password),
                             type: ruby.Type.string(),
-                            initializer:
-                                scheme.passwordEnvVar != null
-                                    ? ruby.codeblock((writer) => {
-                                          writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                      })
-                                    : undefined,
+                            initializer: credentialInitializer(scheme.passwordEnvVar),
                             docs: undefined
                         });
                         parameters.push(passwordParam);
@@ -840,11 +834,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     parameters.push(
                         ruby.parameters.keyword({
                             name: "client_id",
-                            type: clientIdEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
-                            initializer:
-                                clientIdEnvVar != null
-                                    ? ruby.codeblock(`ENV.fetch("${clientIdEnvVar}", nil)`)
-                                    : undefined,
+                            type:
+                                clientIdEnvVar != null || isEndpointSecurity
+                                    ? ruby.Type.nilable(ruby.Type.string())
+                                    : ruby.Type.string(),
+                            initializer: credentialInitializer(clientIdEnvVar),
                             docs: undefined
                         })
                     );
@@ -852,11 +846,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         ruby.parameters.keyword({
                             name: "client_secret",
                             type:
-                                clientSecretEnvVar != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
-                            initializer:
-                                clientSecretEnvVar != null
-                                    ? ruby.codeblock(`ENV.fetch("${clientSecretEnvVar}", nil)`)
-                                    : undefined,
+                                clientSecretEnvVar != null || isEndpointSecurity
+                                    ? ruby.Type.nilable(ruby.Type.string())
+                                    : ruby.Type.string(),
+                            initializer: credentialInitializer(clientSecretEnvVar),
                             docs: undefined
                         })
                     );
@@ -865,8 +858,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         parameters.push(
                             ruby.parameters.keyword({
                                 name: additionalName,
-                                type: ruby.Type.string(),
-                                initializer: undefined,
+                                type: isEndpointSecurity ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                                initializer: isEndpointSecurity ? ruby.nilValue() : undefined,
                                 docs: undefined
                             })
                         );

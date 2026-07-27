@@ -126,6 +126,9 @@ public final class ClientOptions {
     }
 
     public Map<String, String> getAuthHeaders(EndpointMetadata endpointMetadata) {
+        if (this.authProvider == null) {
+            return new HashMap<>();
+        }
         return this.authProvider.getAuthHeaders(endpointMetadata);
     }
 

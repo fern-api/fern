@@ -8,6 +8,8 @@ import com.seed.javaEndpointSecurityTokenSubpackage.resources.token.requests.Get
 import com.seed.javaEndpointSecurityTokenSubpackage.resources.token.types.TokenResponse;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class OAuthTokenSupplier implements Supplier<String> {
@@ -17,6 +19,10 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private final String clientSecret;
 
+    private final Optional<String> state;
+
+    private final Optional<List<String>> permissions;
+
     private final TokenClient authClient;
 
     private final Object tokenLock = new Object();
@@ -25,9 +31,16 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private volatile Instant expiresAt;
 
-    public OAuthTokenSupplier(String clientId, String clientSecret, TokenClient authClient) {
+    public OAuthTokenSupplier(
+            String clientId,
+            String clientSecret,
+            Optional<String> state,
+            Optional<List<String>> permissions,
+            TokenClient authClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.state = state;
+        this.permissions = permissions;
         this.authClient = authClient;
         this.expiresAt = Instant.now();
     }
@@ -36,6 +49,8 @@ public final class OAuthTokenSupplier implements Supplier<String> {
         GetTokenRequest getTokenRequest = GetTokenRequest.builder()
                 .clientId(clientId)
                 .clientSecret(clientSecret)
+                .state(state)
+                .permissions(permissions)
                 .build();
         return authClient.getToken(getTokenRequest);
     }

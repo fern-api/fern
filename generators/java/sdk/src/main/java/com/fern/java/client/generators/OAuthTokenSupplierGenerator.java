@@ -106,57 +106,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getCamelCase()
                 .getSafeName();
 
-        List<OAuthTokenSupplierProperty> customPropertiesWithNames = new ArrayList<>();
-        // The scopes request property (if mapped) is a required property on the token request and
-        // must be set on the staged builder, ordered before the remaining custom properties.
-        if (requestProperties.getScopes().isPresent()
-                && !isLiteralProperty(requestProperties.getScopes().get())) {
-            String scopesPropName = NameUtils.toName(requestProperties
-                            .getScopes()
-                            .get()
-                            .getProperty()
-                            .visit(new RequestPropertyToNameVisitor())
-                            .getName())
-                    .getCamelCase()
-                    .getSafeName();
-            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
-                    scopesPropName,
-                    getPropertyTypeName(requestProperties.getScopes().get())));
-        }
-        if (requestProperties.getCustomProperties().isPresent()) {
-            for (RequestProperty customProp :
-                    requestProperties.getCustomProperties().get()) {
-                // Skip literal properties - they are hardcoded in the request class
-                if (isLiteralProperty(customProp)) {
-                    continue;
-                }
-                String propName = NameUtils.toName(customProp
-                                .getProperty()
-                                .visit(new RequestPropertyToNameVisitor())
-                                .getName())
-                        .getCamelCase()
-                        .getSafeName();
-                // A non-literal grant_type property is always sent with the
-                // "client_credentials" value rather than surfaced as a
-                // user-supplied option: the client credentials flow requires
-                // grant_type=client_credentials (RFC 6749 §4.4.2).
-                if (isGrantTypeProperty(customProp)) {
-                    customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
-                            propName, getPropertyTypeName(customProp), CLIENT_CREDENTIALS_GRANT_TYPE));
-                    continue;
-                }
-                customPropertiesWithNames.add(
-                        new OAuthTokenSupplierProperty(propName, getPropertyTypeName(customProp)));
-            }
-        }
-
-        for (var header : httpEndpoint.getHeaders()) {
-            String headerName =
-                    NameUtils.getName(header.getName()).getCamelCase().getSafeName();
-            TypeName headerType =
-                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, header.getValueType());
-            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(headerName, headerType));
-        }
+        List<OAuthTokenSupplierProperty> customPropertiesWithNames =
+                computeCustomProperties(clientGeneratorContext, clientCredentials);
 
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         // todo: handle other response types
@@ -460,7 +411,86 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         return typeString.equals("java.lang.Long") || typeString.equals("Long") || typeString.equals("long");
     }
 
-    private TypeName getPropertyTypeName(RequestProperty requestProperty) {
+    /**
+     * Computes the ordered list of custom token-request properties that become extra constructor parameters on the
+     * generated {@code OAuthTokenSupplier} (inserted after clientId/clientSecret and before authClient). Shared with
+     * {@code OAuthAuthProviderGenerator} so the two never drift — the auth provider must pass a matching argument for
+     * each of these when it builds a token supplier.
+     */
+    public static List<OAuthTokenSupplierProperty> computeCustomProperties(
+            ClientGeneratorContext clientGeneratorContext, OAuthClientCredentials clientCredentials) {
+        EndpointReference tokenEndpointReference =
+                clientCredentials.getTokenEndpoint().getEndpointReference();
+        HttpService httpService =
+                clientGeneratorContext.getIr().getServices().get(tokenEndpointReference.getServiceId());
+        EndpointId endpointId = tokenEndpointReference.getEndpointId();
+        HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
+                .filter(it -> it.getId().equals(endpointId))
+                .findFirst()
+                .orElseThrow();
+        OAuthAccessTokenRequestProperties requestProperties =
+                clientCredentials.getTokenEndpoint().getRequestProperties();
+
+        List<OAuthTokenSupplierProperty> customPropertiesWithNames = new ArrayList<>();
+        // The scopes request property (if mapped) is a required property on the token request and
+        // must be set on the staged builder, ordered before the remaining custom properties.
+        if (requestProperties.getScopes().isPresent()
+                && !isLiteralProperty(requestProperties.getScopes().get())) {
+            String scopesPropName = NameUtils.toName(requestProperties
+                            .getScopes()
+                            .get()
+                            .getProperty()
+                            .visit(new RequestPropertyToNameVisitor())
+                            .getName())
+                    .getCamelCase()
+                    .getSafeName();
+            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                    scopesPropName,
+                    getPropertyTypeName(
+                            clientGeneratorContext,
+                            requestProperties.getScopes().get())));
+        }
+        if (requestProperties.getCustomProperties().isPresent()) {
+            for (RequestProperty customProp :
+                    requestProperties.getCustomProperties().get()) {
+                // Skip literal properties - they are hardcoded in the request class
+                if (isLiteralProperty(customProp)) {
+                    continue;
+                }
+                String propName = NameUtils.toName(customProp
+                                .getProperty()
+                                .visit(new RequestPropertyToNameVisitor())
+                                .getName())
+                        .getCamelCase()
+                        .getSafeName();
+                // A non-literal grant_type property is always sent with the
+                // "client_credentials" value rather than surfaced as a
+                // user-supplied option: the client credentials flow requires
+                // grant_type=client_credentials (RFC 6749 §4.4.2).
+                if (isGrantTypeProperty(customProp)) {
+                    customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                            propName,
+                            getPropertyTypeName(clientGeneratorContext, customProp),
+                            CLIENT_CREDENTIALS_GRANT_TYPE));
+                    continue;
+                }
+                customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
+                        propName, getPropertyTypeName(clientGeneratorContext, customProp)));
+            }
+        }
+
+        for (var header : httpEndpoint.getHeaders()) {
+            String headerName =
+                    NameUtils.getName(header.getName()).getCamelCase().getSafeName();
+            TypeName headerType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, header.getValueType());
+            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(headerName, headerType));
+        }
+        return customPropertiesWithNames;
+    }
+
+    private static TypeName getPropertyTypeName(
+            ClientGeneratorContext clientGeneratorContext, RequestProperty requestProperty) {
         TypeReference valueType = requestProperty
                 .getProperty()
                 .visit(new RequestPropertyValue.Visitor<TypeReference>() {
@@ -483,7 +513,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /** A get-token request property carried through to the token supplier, with its resolved Java type. */
-    private static final class OAuthTokenSupplierProperty {
+    public static final class OAuthTokenSupplierProperty {
         private final String name;
         private final TypeName type;
         private final String hardcodedStringValue;
@@ -497,6 +527,18 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             this.type = type;
             this.hardcodedStringValue = hardcodedStringValue;
         }
+
+        public TypeName getType() {
+            return type;
+        }
+
+        /**
+         * A hardcoded property (e.g. grant_type) is written directly into the token request and is NOT a constructor
+         * parameter, so it must be skipped when matching constructor arguments.
+         */
+        public boolean isHardcoded() {
+            return hardcodedStringValue != null;
+        }
     }
 
     public static boolean isGrantTypeProperty(RequestProperty requestProperty) {
@@ -506,7 +548,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getWireValue());
     }
 
-    private boolean isLiteralProperty(RequestProperty requestProperty) {
+    private static boolean isLiteralProperty(RequestProperty requestProperty) {
         TypeReference valueType = requestProperty
                 .getProperty()
                 .visit(new RequestPropertyValue.Visitor<TypeReference>() {

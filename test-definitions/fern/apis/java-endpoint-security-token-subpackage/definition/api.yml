@@ -13,10 +13,9 @@ auth:
   endpoint-security: {}
 
 auth-schemes:
-  ApiKey:
-    header: X-API-Key
-    type: string
-    env: MY_API_KEY
+  # OAuth is declared first so the generated client-instantiation snippets/README use the OAuth
+  # path (Client.withCredentials(...)) — this reproduces the endpoint-security withCredentials
+  # compile bug. The snippet generator picks the first-declared scheme for the client snippet.
   OAuth:
     scheme: oauth
     type: client-credentials
@@ -27,3 +26,7 @@ auth-schemes:
       response-properties:
         access-token: $response.access_token
         expires-in: $response.expires_in
+  ApiKey:
+    header: X-API-Key
+    type: string
+    env: MY_API_KEY
