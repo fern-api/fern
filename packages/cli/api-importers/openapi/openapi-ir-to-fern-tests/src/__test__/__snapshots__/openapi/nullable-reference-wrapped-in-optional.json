@@ -1,0 +1,184 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "PreviousTurnIdInput": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": "Defaults to 'auto' (chain to session last turn). Use 'null' for the session's first turn.",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "PreviousTurnIdInputZero",
+              {
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            ],
+          },
+          "PreviousTurnIdInputZero": {
+            "enum": [
+              "auto",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  PreviousTurnIdInputZero:
+    enum:
+      - auto
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  PreviousTurnIdInput:
+    discriminated: false
+    docs: >-
+      Defaults to 'auto' (chain to session last turn). Use 'null' for the
+      session's first turn.
+    union:
+      - PreviousTurnIdInputZero
+      - type: string
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "sessions.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createTurn": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "turn_id": "turn_id",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/sessions/turns",
+              "request": {
+                "body": {
+                  "properties": {
+                    "input": "optional<list<string>>",
+                    "previous_turn_id": "optional<nullable<root.PreviousTurnIdInput>>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateTurnRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Successful Response",
+                "status-code": 200,
+                "type": "CreateTurnSessionsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "CreateTurnSessionsResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "turn_id": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+types:
+  CreateTurnSessionsResponse:
+    properties:
+      turn_id: string
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createTurn:
+      path: /sessions/turns
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: CreateTurnRequest
+        body:
+          properties:
+            input: optional<list<string>>
+            previous_turn_id: optional<nullable<root.PreviousTurnIdInput>>
+        content-type: application/json
+      response:
+        docs: Successful Response
+        type: CreateTurnSessionsResponse
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              turn_id: turn_id
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "nullable-reference-wrapped-in-optional",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: nullable-reference-wrapped-in-optional
+",
+  },
+  "specVersion": undefined,
+}

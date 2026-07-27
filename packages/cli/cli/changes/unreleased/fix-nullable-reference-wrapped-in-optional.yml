@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve nullability when a reference to a nullable schema is wrapped in optional.
+    With `wrap-references-to-nullable-in-optional` enabled, a reference to a nullable
+    schema (e.g. an `anyOf` whose branches include `null`) was lowered to `optional<T>`,
+    dropping the `null` branch. It is now lowered to `optional<nullable<T>>`, so `null`
+    remains sendable on the wire and distinct from omission (matching how inline nullable
+    schemas are already handled).
+  type: fix

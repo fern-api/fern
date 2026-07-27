@@ -493,7 +493,7 @@ export function buildReferenceTypeReference({
 
     let type = typeWithPrefix;
     if (resolvedSchema.type === "nullable") {
-        type = context.options.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
+        type = context.options.wrapReferencesToNullableInOptional ? `optional<nullable<${type}>>` : `nullable<${type}>`;
     }
     if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
         type = `optional<${type}>`;

@@ -1,0 +1,53 @@
+openapi: 3.1.0
+info:
+  title: nullable-reference-wrapped-in-optional
+  description: >-
+    A reference to a nullable schema (an anyOf whose branches include `null`)
+    used as an optional property. With wrap-references-to-nullable-in-optional
+    enabled, the reference should be optional<nullable<...>> so that `null`
+    remains sendable on the wire and distinct from omission.
+  version: ""
+paths:
+  /sessions/turns:
+    post:
+      operationId: sessions_createTurn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTurnRequest"
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  turn_id:
+                    type: string
+                required:
+                  - turn_id
+      x-fern-sdk-group-name: sessions
+      x-fern-sdk-method-name: createTurn
+components:
+  schemas:
+    PreviousTurnIdInput:
+      anyOf:
+        - type: string
+          enum:
+            - auto
+        - type: string
+          minLength: 1
+        - type: "null"
+      default: auto
+      description: Defaults to 'auto' (chain to session last turn). Use 'null' for the session's first turn.
+    CreateTurnRequest:
+      type: object
+      properties:
+        input:
+          type: array
+          items:
+            type: string
+        previous_turn_id:
+          $ref: "#/components/schemas/PreviousTurnIdInput"
