@@ -297,6 +297,11 @@ export async function unsetOrgCliVersion({
  */
 export type OrgCliVersionBoundsResult = { ok: true; bounds: OrgCliVersionBounds } | { ok: false };
 
+/** Passes through a well-formed version bound, dropping anything malformed. */
+function sanitizeBound(version: string | undefined): string | undefined {
+    return version != null && isValidVersion(version) ? version : undefined;
+}
+
 /**
  * Fetches the org-level CLI version bounds (min/max). Returns a discriminated
  * result so callers can tell "successfully fetched, none set" apart from "fetch
@@ -324,7 +329,13 @@ export async function fetchOrgCliVersionBounds({
             return { ok: false };
         }
         const data = (await res.json()) as OrgConfigResponse;
-        return { ok: true, bounds: { min: data.cliVersionMin, max: data.cliVersionMax } };
+        // FDR is the source of truth, but validate its response before trusting
+        // it in version comparisons — a malformed bound is dropped rather than
+        // fed into isVersionAhead (still a successful, cacheable response).
+        return {
+            ok: true,
+            bounds: { min: sanitizeBound(data.cliVersionMin), max: sanitizeBound(data.cliVersionMax) }
+        };
     } catch (err) {
         cliContext.logger.debug(`Failed to fetch org config: ${describeFetchError(err)}`);
         return { ok: false };

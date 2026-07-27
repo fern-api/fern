@@ -1,3 +1,4 @@
+import { getToken } from "@fern-api/auth";
 import { runMigrations } from "@fern-api/cli-migrations";
 import {
     FERN_DIRECTORY,
@@ -519,12 +520,12 @@ export async function upgrade({
 }
 
 /**
- * Clamps the resolved upgrade target into the org-level CLI version bounds.
- * Bumps up to the floor (`min`) and caps down to the ceiling (`max`). Silently
- * falls back if the org config endpoint is unreachable. The ceiling cap is only
- * applied when it still produces an upgrade ahead of the current version — if
- * the project already runs past the ceiling, the version-redirection layer
- * enforces the cap at runtime instead.
+ * Clamps the resolved upgrade target into the org-level CLI version bounds
+ * before it's written to `fern.config.json`: bumps up to the floor (`min`) and
+ * caps down to the ceiling (`max`). The persisted version is never allowed to
+ * exceed the ceiling, even for a project already running past it, so the pinned
+ * version can't drift further out of policy. Silently falls back if the org
+ * config endpoint is unreachable.
  */
 async function applyOrgVersionBounds({
     cliContext,
@@ -548,7 +549,6 @@ async function applyOrgVersionBounds({
         return resolvedTargetVersion;
     }
 
-    const { getToken } = await import("@fern-api/auth");
     const token = await getToken();
     if (token == null) {
         return resolvedTargetVersion;
@@ -563,13 +563,8 @@ async function applyOrgVersionBounds({
         return resolvedTargetVersion;
     }
 
-    const currentVersion = cliContext.environment.packageVersion;
-
-    // Don't write a downgrade into fern.config.json for a project already past
-    // the ceiling — the version-redirection layer enforces the cap at runtime.
-    const effectiveMax = max != null && !isVersionAhead(currentVersion, max) ? max : undefined;
     try {
-        const { version, reason } = clampVersionToOrgBounds(resolvedTargetVersion, { min, max: effectiveMax });
+        const { version, reason } = clampVersionToOrgBounds(resolvedTargetVersion, { min, max });
         if (reason === "floor") {
             cliContext.logger.info(
                 `Org "${orgId}" requires minimum CLI version ${chalk.green(version)} (resolved ${resolvedTargetVersion}).`
