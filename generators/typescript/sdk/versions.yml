@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.84.0
+  changelogEntry:
+    - summary: |
+        Generated error classes now redeclare the `body` property with the error's
+        typed body (e.g. `public declare readonly body: MyErrorBody;`) instead of
+        inheriting `body?: unknown` from the base API error class. This makes
+        `err.body.<field>` type-check in catch blocks without casting when the
+        error has a declared body schema.
+      type: feat
+  createdAt: "2026-07-27"
+  irVersion: 67
 - version: 3.83.2
   changelogEntry:
     - summary: |
