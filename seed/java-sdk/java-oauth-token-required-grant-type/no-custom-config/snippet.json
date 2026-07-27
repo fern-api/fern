@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "a06dd2f9",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOauthTokenRequiredGrantType.SeedJavaOauthTokenRequiredGrantTypeClient;\nimport com.seed.javaOauthTokenRequiredGrantType.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOauthTokenRequiredGrantTypeClient client = SeedJavaOauthTokenRequiredGrantTypeClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .grantType(\"client_credentials\")\n                .clientId(\"my_oauth_app_123\")\n                .clientSecret(\"sk_live_abcdef123456789\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOauthTokenRequiredGrantType.SeedJavaOauthTokenRequiredGrantTypeClient;\nimport com.seed.javaOauthTokenRequiredGrantType.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOauthTokenRequiredGrantTypeClient client = SeedJavaOauthTokenRequiredGrantTypeClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .grantType(\"client_credentials\")\n                .clientId(\"my_oauth_app_123\")\n                .clientSecret(\"sk_live_abcdef123456789\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

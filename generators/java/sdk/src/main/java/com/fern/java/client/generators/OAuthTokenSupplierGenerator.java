@@ -4,9 +4,14 @@ import com.fern.ir.model.auth.OAuthAccessTokenRequestProperties;
 import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.ir.model.commons.EndpointId;
 import com.fern.ir.model.commons.EndpointReference;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
 import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.HttpResponseBody;
 import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.http.JsonResponseBody;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.http.RequestProperty;
@@ -17,8 +22,11 @@ import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
+import com.fern.java.RequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.generators.endpoint.PaginationPathUtils;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -105,6 +113,16 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .getName())
                 .getCamelCase()
                 .getSafeName();
+        String clientIdWireValue = requestProperties
+                .getClientId()
+                .getProperty()
+                .visit(new RequestPropertyToNameVisitor())
+                .getWireValue();
+        String clientSecretWireValue = requestProperties
+                .getClientSecret()
+                .getProperty()
+                .visit(new RequestPropertyToNameVisitor())
+                .getWireValue();
 
         List<OAuthTokenSupplierProperty> customPropertiesWithNames =
                 computeCustomProperties(clientGeneratorContext, clientCredentials);
@@ -276,6 +294,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         fetchTokenRequestType,
                         clientIdPropertyName,
                         clientSecretPropertyName,
+                        clientIdWireValue,
+                        clientSecretWireValue,
                         customPropertiesWithNames,
                         httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
@@ -325,23 +345,42 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             TypeName fetchTokenRequestType,
             String clientIdPropertyName,
             String clientSecretPropertyName,
+            String clientIdWireValue,
+            String clientSecretWireValue,
             List<OAuthTokenSupplierProperty> customPropertiesWithNames,
             HttpEndpoint httpEndpoint) {
-        // Required properties (clientId/clientSecret) must come first for staged builders,
-        // followed by optional custom properties (like scope) which are in _FinalStage
-        CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
-                .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType)
-                .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
-                .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
-
+        // Collect every builder setter the supplier needs to call, tagged with the token-request
+        // property's wire value so we can order them to match the generated request type's builder.
+        List<BuilderSetter> setters = new ArrayList<>();
+        setters.add(BuilderSetter.reference(clientIdWireValue, clientIdPropertyName, CLIENT_ID_FIELD_NAME));
+        setters.add(BuilderSetter.reference(clientSecretWireValue, clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME));
         for (OAuthTokenSupplierProperty customProp : customPropertiesWithNames) {
             if (customProp.hardcodedStringValue != null) {
-                requestBuilderCode.add(".$L($S)", customProp.name, customProp.hardcodedStringValue);
+                setters.add(
+                        BuilderSetter.literal(customProp.wireValue, customProp.name, customProp.hardcodedStringValue));
                 continue;
             }
-            requestBuilderCode.add(".$L($L)", customProp.name, customProp.name);
+            setters.add(BuilderSetter.reference(customProp.wireValue, customProp.name, customProp.name));
         }
 
+        // When the token-request type has a required field, Java codegen (BuilderGenerator) emits a
+        // staged builder: builder() -> <firstRequired>Stage -> ... -> _FinalStage. Each required stage
+        // exposes ONLY its own setter, so the supplier must call the required setters first, in the
+        // request-type property declaration order, before any optional setter. Otherwise javac fails
+        // with "cannot find symbol" on the setter that isn't available on the current stage.
+        List<String> requiredWireValuesInOrder = getRequiredBuilderPropertyWireValuesInOrder(httpEndpoint);
+
+        List<BuilderSetter> orderedSetters = orderSettersForBuilder(setters, requiredWireValuesInOrder);
+
+        CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
+                .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType);
+        for (BuilderSetter setter : orderedSetters) {
+            if (setter.isLiteral) {
+                requestBuilderCode.add(".$L($S)", setter.methodName, setter.argument);
+            } else {
+                requestBuilderCode.add(".$L($L)", setter.methodName, setter.argument);
+            }
+        }
         requestBuilderCode.add(".build()");
 
         return MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
@@ -356,6 +395,167 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                 .getUnsafeName(),
                         GET_TOKEN_REQUEST_NAME)
                 .build();
+    }
+
+    /**
+     * Orders the token-request builder setters to match the staged builder emitted by {@code BuilderGenerator}:
+     * required-field setters first, in the request-type property declaration order, then the remaining (optional)
+     * setters in their original order. When the request type has no required field the builder is unstaged and every
+     * setter is available immediately, so the original order is preserved (keeping output byte-identical for those
+     * cases). Setters whose wire value is unknown are treated as optional and kept in place.
+     */
+    private static List<BuilderSetter> orderSettersForBuilder(
+            List<BuilderSetter> setters, List<String> requiredWireValuesInOrder) {
+        if (requiredWireValuesInOrder.isEmpty()) {
+            return setters;
+        }
+        List<BuilderSetter> required = new ArrayList<>();
+        for (String wireValue : requiredWireValuesInOrder) {
+            for (BuilderSetter setter : setters) {
+                if (wireValue.equals(setter.wireValue)) {
+                    required.add(setter);
+                }
+            }
+        }
+        List<BuilderSetter> ordered = new ArrayList<>(required);
+        for (BuilderSetter setter : setters) {
+            if (!required.contains(setter)) {
+                ordered.add(setter);
+            }
+        }
+        return ordered;
+    }
+
+    /**
+     * Returns the wire values of the token-request properties that {@code BuilderGenerator} turns into required builder
+     * stages, in declaration order. Literal properties are skipped (they are baked into the request type and are not
+     * builder setters). A property is required using the same rule as {@code BuilderGenerator.isRequired}: it is not
+     * optional/nullable and not a collection (list/set/map).
+     */
+    private List<String> getRequiredBuilderPropertyWireValuesInOrder(HttpEndpoint httpEndpoint) {
+        if (httpEndpoint.getRequestBody().isEmpty()) {
+            return List.of();
+        }
+        List<ObjectProperty> properties = httpEndpoint
+                .getRequestBody()
+                .get()
+                .visit(new HttpRequestBody.Visitor<List<ObjectProperty>>() {
+                    @Override
+                    public List<ObjectProperty> visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                        List<ObjectProperty> resolved = new ArrayList<>();
+                        for (var extended : inlinedRequestBody.getExtends()) {
+                            resolveExtendedObjectProperties(extended, resolved);
+                        }
+                        resolved.addAll(RequestBodyUtils.convertToObjectProperties(inlinedRequestBody));
+                        return resolved;
+                    }
+
+                    @Override
+                    public List<ObjectProperty> visitReference(HttpRequestBodyReference reference) {
+                        return reference
+                                .getRequestBodyType()
+                                .visit(new PaginationPathUtils.TypeReferenceResolver(clientGeneratorContext))
+                                .map(TypeDeclaration::getShape)
+                                .flatMap(shape -> shape.getObject())
+                                .map(OAuthTokenSupplierGenerator.this::resolveObjectProperties)
+                                .orElseGet(List::of);
+                    }
+
+                    @Override
+                    public List<ObjectProperty> visitFileUpload(FileUploadRequest fileUpload) {
+                        return RequestBodyUtils.convertToObjectProperties(fileUpload);
+                    }
+
+                    @Override
+                    public List<ObjectProperty> visitBytes(BytesRequest bytes) {
+                        return List.of();
+                    }
+
+                    @Override
+                    public List<ObjectProperty> _visitUnknown(Object unknownType) {
+                        return List.of();
+                    }
+                });
+
+        List<String> requiredWireValues = new ArrayList<>();
+        for (ObjectProperty property : properties) {
+            TypeReference valueType = property.getValueType();
+            if (isLiteralType(valueType)) {
+                continue;
+            }
+            if (isRequiredBuilderProperty(valueType)) {
+                requiredWireValues.add(NameUtils.getWireValue(property.getName()));
+            }
+        }
+        return requiredWireValues;
+    }
+
+    private void resolveExtendedObjectProperties(
+            com.fern.ir.model.types.DeclaredTypeName extended, List<ObjectProperty> accumulator) {
+        var typeDeclaration = clientGeneratorContext.getIr().getTypes().get(extended.getTypeId());
+        if (typeDeclaration == null) {
+            return;
+        }
+        typeDeclaration.getShape().getObject().ifPresent(object -> accumulator.addAll(resolveObjectProperties(object)));
+    }
+
+    private List<ObjectProperty> resolveObjectProperties(
+            com.fern.ir.model.types.ObjectTypeDeclaration objectDeclaration) {
+        List<ObjectProperty> resolved = new ArrayList<>();
+        objectDeclaration.getExtendedProperties().stream().flatMap(List::stream).forEach(resolved::add);
+        resolved.addAll(objectDeclaration.getProperties());
+        return resolved;
+    }
+
+    /**
+     * Mirrors {@code BuilderGenerator.isRequired}: a property yields a required builder stage unless it resolves to an
+     * optional, nullable, or collection (list/set/map) type. We reuse the POET type mapper so the classification tracks
+     * whatever the request type's builder actually emitted (e.g. optional&lt;T&gt; -&gt; Optional&lt;T&gt;, nullable
+     * -&gt; OptionalNullable&lt;T&gt;).
+     */
+    private boolean isRequiredBuilderProperty(TypeReference valueType) {
+        TypeName poetTypeName = clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
+        if (poetTypeName instanceof ParameterizedTypeName) {
+            ClassName rawType = ((ParameterizedTypeName) poetTypeName).rawType;
+            ClassName optionalNullableClassName =
+                    clientGeneratorContext.getPoetClassNameFactory().getOptionalNullableClassName();
+            return !rawType.equals(ClassName.get(Optional.class))
+                    && !rawType.equals(optionalNullableClassName)
+                    && !rawType.equals(ClassName.get(java.util.Map.class))
+                    && !rawType.equals(ClassName.get(List.class))
+                    && !rawType.equals(ClassName.get(java.util.Set.class));
+        }
+        return true;
+    }
+
+    private boolean isLiteralType(TypeReference valueType) {
+        if (valueType != null && valueType.isContainer()) {
+            return valueType.getContainer().get().isLiteral();
+        }
+        return false;
+    }
+
+    /** A single builder setter call the token supplier will emit, tagged with its token-request wire value. */
+    private static final class BuilderSetter {
+        private final String wireValue;
+        private final String methodName;
+        private final String argument;
+        private final boolean isLiteral;
+
+        private BuilderSetter(String wireValue, String methodName, String argument, boolean isLiteral) {
+            this.wireValue = wireValue;
+            this.methodName = methodName;
+            this.argument = argument;
+            this.isLiteral = isLiteral;
+        }
+
+        private static BuilderSetter reference(String wireValue, String methodName, String argument) {
+            return new BuilderSetter(wireValue, methodName, argument, false);
+        }
+
+        private static BuilderSetter literal(String wireValue, String methodName, String literalValue) {
+            return new BuilderSetter(wireValue, methodName, literalValue, true);
+        }
     }
 
     private TypeName getFetchTokenRequestType(HttpEndpoint httpEndpoint, HttpService httpService) {
@@ -444,11 +644,19 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                             .getName())
                     .getCamelCase()
                     .getSafeName();
+            String scopesWireValue = requestProperties
+                    .getScopes()
+                    .get()
+                    .getProperty()
+                    .visit(new RequestPropertyToNameVisitor())
+                    .getWireValue();
             customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
                     scopesPropName,
                     getPropertyTypeName(
                             clientGeneratorContext,
-                            requestProperties.getScopes().get())));
+                            requestProperties.getScopes().get()),
+                    null,
+                    scopesWireValue));
         }
         if (requestProperties.getCustomProperties().isPresent()) {
             for (RequestProperty customProp :
@@ -463,6 +671,10 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                 .getName())
                         .getCamelCase()
                         .getSafeName();
+                String propWireValue = customProp
+                        .getProperty()
+                        .visit(new RequestPropertyToNameVisitor())
+                        .getWireValue();
                 // A non-literal grant_type property is always sent with the
                 // "client_credentials" value rather than surfaced as a
                 // user-supplied option: the client credentials flow requires
@@ -471,20 +683,23 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                     customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
                             propName,
                             getPropertyTypeName(clientGeneratorContext, customProp),
-                            CLIENT_CREDENTIALS_GRANT_TYPE));
+                            CLIENT_CREDENTIALS_GRANT_TYPE,
+                            propWireValue));
                     continue;
                 }
                 customPropertiesWithNames.add(new OAuthTokenSupplierProperty(
-                        propName, getPropertyTypeName(clientGeneratorContext, customProp)));
+                        propName, getPropertyTypeName(clientGeneratorContext, customProp), null, propWireValue));
             }
         }
 
         for (var header : httpEndpoint.getHeaders()) {
             String headerName =
                     NameUtils.getName(header.getName()).getCamelCase().getSafeName();
+            String headerWireValue = NameUtils.getWireValue(header.getName());
             TypeName headerType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(false, header.getValueType());
-            customPropertiesWithNames.add(new OAuthTokenSupplierProperty(headerName, headerType));
+            customPropertiesWithNames.add(
+                    new OAuthTokenSupplierProperty(headerName, headerType, null, headerWireValue));
         }
         return customPropertiesWithNames;
     }
@@ -517,15 +732,21 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         private final String name;
         private final TypeName type;
         private final String hardcodedStringValue;
+        private final String wireValue;
 
         private OAuthTokenSupplierProperty(String name, TypeName type) {
-            this(name, type, null);
+            this(name, type, null, null);
         }
 
         private OAuthTokenSupplierProperty(String name, TypeName type, String hardcodedStringValue) {
+            this(name, type, hardcodedStringValue, null);
+        }
+
+        private OAuthTokenSupplierProperty(String name, TypeName type, String hardcodedStringValue, String wireValue) {
             this.name = name;
             this.type = type;
             this.hardcodedStringValue = hardcodedStringValue;
+            this.wireValue = wireValue;
         }
 
         public TypeName getType() {

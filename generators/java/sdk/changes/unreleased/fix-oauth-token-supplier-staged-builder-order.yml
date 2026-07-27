@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated `OAuthTokenSupplier.java` failing to compile when the OAuth token-exchange
+    request type has a required field that forces a staged builder. Java codegen emits a staged
+    builder (`builder() -> <firstRequired>Stage -> ... -> _FinalStage`) whenever a request has a
+    required field, and each required stage exposes only its own setter. The token supplier
+    previously emitted a hardcoded flat order (`clientId`, `clientSecret`, then custom
+    properties), so when a required field such as a plain-string `grant_type` came first in the
+    request type, the supplier called `.clientId(...)` on the `grantType` stage and javac failed
+    with `cannot find symbol`. The supplier now orders its builder setter calls to match the
+    generated request type's staged builder: required-field setters first, in the request-type
+    property declaration order, then the optional setters. Required detection mirrors
+    `BuilderGenerator` (optional/nullable/collection types are not required) and literal
+    properties are skipped. Output is unchanged for token requests whose required order already
+    matched (e.g. required `client_id`/`client_secret`).
+  type: fix
