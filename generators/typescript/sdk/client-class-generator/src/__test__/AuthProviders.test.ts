@@ -484,6 +484,25 @@ describe("BearerAuthProviderGenerator", () => {
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
+        it("generates bearer auth provider that skips the auth header when optionalAuth is enabled", () => {
+            const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
+            const ir = createMinimalIR({ authSchemes: [authScheme] });
+            const generator = new BearerAuthProviderGenerator({
+                ir,
+                authScheme: authScheme as AnyScheme,
+                neverThrowErrors: false,
+                isAuthMandatory: false,
+                shouldUseWrapper: false,
+                optionalAuth: true
+            });
+            const project = new Project({ useInMemoryFileSystem: true });
+            const context = createMockGeneratorContext(project, "BearerAuthProvider.ts");
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).not.toContain("AUTH_CONFIG_ERROR_MESSAGE,");
+            expect(text).toMatchSnapshot();
+        });
+
         it("generates bearer auth provider with env var + neverThrowErrors", () => {
             const authScheme = createAuthScheme("bearer", createBearerAuthScheme({ tokenEnvVar: "PLANT_API_TOKEN" }));
             const ir = createMinimalIR({ authSchemes: [authScheme] });
@@ -883,9 +902,14 @@ describe("AuthProvidersGenerator optionalAuth", () => {
         expect(output).toContain("[TOKEN_PARAM]?:");
     });
 
-    it("produces the same optional token whether via optionalAuth or non-mandatory auth", () => {
-        const viaOptionalAuth = renderBearer({ isAuthMandatory: true, optionalAuth: true });
-        const viaNonMandatory = renderBearer({ isAuthMandatory: false, optionalAuth: false });
-        expect(viaOptionalAuth).toBe(viaNonMandatory);
+    it("sends the request unauthenticated instead of throwing when optionalAuth is on", () => {
+        const output = renderBearer({ isAuthMandatory: true, optionalAuth: true });
+        expect(output).toContain("return { headers: {} };");
+        expect(output).not.toContain("AUTH_CONFIG_ERROR_MESSAGE,");
+    });
+
+    it("still throws on a missing token when auth is non-mandatory but optionalAuth is off", () => {
+        const output = renderBearer({ isAuthMandatory: false, optionalAuth: false });
+        expect(output).toContain("AUTH_CONFIG_ERROR_MESSAGE,");
     });
 });

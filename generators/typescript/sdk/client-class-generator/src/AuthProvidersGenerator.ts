@@ -61,7 +61,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         authScheme,
                         neverThrowErrors,
                         isAuthMandatory,
-                        shouldUseWrapper
+                        shouldUseWrapper,
+                        optionalAuth
                     });
                 case "bearer":
                     return new BearerAuthProviderGenerator({
@@ -69,7 +70,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         authScheme,
                         neverThrowErrors,
                         isAuthMandatory,
-                        shouldUseWrapper
+                        shouldUseWrapper,
+                        optionalAuth
                     });
                 case "header":
                     return new HeaderAuthProviderGenerator({
@@ -77,7 +79,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         authScheme,
                         neverThrowErrors,
                         isAuthMandatory,
-                        shouldUseWrapper
+                        shouldUseWrapper,
+                        optionalAuth
                     });
                 case "oauth":
                     return new OAuthAuthProviderGenerator({
