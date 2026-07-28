@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Speed up `fern docs dev` startup for large API references by keeping background
+    validation off the initial rendering path and avoiding an unused workspace conversion.
+  type: fix

@@ -167,6 +167,11 @@ export interface DocsDefinitionResolverArgs {
      * the extra parsing work where translated API references aren't needed.
      */
     buildTranslatedApiDefinitions?: boolean;
+    /**
+     * Whether the API registration callback consumes a converted Fern workspace.
+     * Local preview registration only consumes the generated IR.
+     */
+    includeApiWorkspaceInRegistration?: boolean;
 }
 
 export class DocsDefinitionResolver {
@@ -180,6 +185,7 @@ export class DocsDefinitionResolver {
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
     private buildTranslatedApiDefinitions: boolean;
+    private includeApiWorkspaceInRegistration: boolean;
     private markdownFilesToPathName: Record<AbsoluteFilePath, string> = {} as Record<AbsoluteFilePath, string>;
 
     constructor({
@@ -192,7 +198,8 @@ export class DocsDefinitionResolver {
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
         targetAudiences,
-        buildTranslatedApiDefinitions = false
+        buildTranslatedApiDefinitions = false,
+        includeApiWorkspaceInRegistration = true
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -204,6 +211,7 @@ export class DocsDefinitionResolver {
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
+        this.includeApiWorkspaceInRegistration = includeApiWorkspaceInRegistration;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -1754,6 +1762,7 @@ export class DocsDefinitionResolver {
 
         let ir: IntermediateRepresentation | undefined = undefined;
         let workspace: FernWorkspace | undefined = undefined;
+        let apiWorkspace: AbstractAPIWorkspace<unknown> | undefined = undefined;
         let openapiWorkspace: OSSWorkspace | undefined = undefined;
         let openapiError: unknown = undefined;
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
@@ -1807,7 +1816,8 @@ export class DocsDefinitionResolver {
             if (this.apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
-            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+            apiWorkspace = this.getFernWorkspaceForApiSection(item);
+            workspace = await apiWorkspace.toFernWorkspace(
                 { context: this.taskContext },
                 {
                     enableUniqueErrorsPerEndpoint: true,
@@ -1833,12 +1843,13 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
-        } else {
+        } else if (this.includeApiWorkspaceInRegistration) {
             // When using the v3 parser (ir != null), we still need to load the workspace
             // for dynamic snippet generation and AI example enhancement, which require
             // access to generators.yml configuration and source file paths.
             try {
-                workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                apiWorkspace = this.getFernWorkspaceForApiSection(item);
+                workspace = await apiWorkspace.toFernWorkspace(
                     { context: this.taskContext },
                     {
                         enableUniqueErrorsPerEndpoint: true,
@@ -1854,6 +1865,8 @@ export class DocsDefinitionResolver {
                     `Could not load workspace: ${error}. Dynamic snippets and AI examples may not be available.`
                 );
             }
+        } else {
+            apiWorkspace = openapiWorkspace;
         }
 
         // Apply environment variable substitution to the IR if enabled in docs.yml settings
@@ -1888,7 +1901,8 @@ export class DocsDefinitionResolver {
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
-        const apiNameForRegistration = item.apiName ?? workspace?.workspaceName ?? openapiWorkspace?.workspaceName;
+        const apiNameForRegistration =
+            item.apiName ?? workspace?.workspaceName ?? apiWorkspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
         // Use a temporary API definition ID for building the navigation tree.
         // The real ID will be assigned after markdownFilesToPathName is available,
@@ -1920,7 +1934,8 @@ export class DocsDefinitionResolver {
             hideChildren,
             parentAvailability ?? item.availability,
             openApiTags,
-            graphqlData.namespacesByOperationId
+            graphqlData.namespacesByOperationId,
+            workspace == null ? apiWorkspace?.changelog?.files.map((file) => file.absoluteFilepath) : undefined
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
