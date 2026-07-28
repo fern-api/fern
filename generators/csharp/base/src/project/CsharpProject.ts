@@ -1109,8 +1109,8 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
 
     private getPropertyGroups(): string[] {
         const result: string[] = [];
-        if (this.context.version != null) {
-            result.push(`<Version>${this.context.version}</Version>`);
+        if (this.context.sdkVersion != null) {
+            result.push(`<Version>${this.context.sdkVersion}</Version>`);
             result.push("<AssemblyVersion>$(Version)</AssemblyVersion>");
             result.push("<FileVersion>$(Version)</FileVersion>");
         }

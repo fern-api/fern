@@ -5,6 +5,7 @@ export * from "./GithubPublish.js";
 export * from "./GoPublishTarget.js";
 export * from "./MavenPublishTarget.js";
 export * from "./NpmPublishTarget.js";
+export * from "./NugetPublishTarget.js";
 export * from "./PostmanPublishTarget.js";
 export * from "./PublishingConfig.js";
 export * from "./PublishTarget.js";

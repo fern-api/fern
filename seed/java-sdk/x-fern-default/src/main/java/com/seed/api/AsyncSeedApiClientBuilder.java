@@ -24,7 +24,7 @@ public class AsyncSeedApiClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private String apiVersion = null;
+    private String apiVersion = "2024-02-08";
 
     private Environment environment;
 

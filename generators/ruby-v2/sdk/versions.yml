@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.20.1
+  changelogEntry:
+    - summary: |
+        Fix the generated client constructor requiring every auth credential under
+        `auth: endpoint-security`. A credential without a configured environment variable (e.g. an
+        apiKey header) was emitted as a required keyword argument, so a caller authenticating with a
+        single scheme (such as pure OAuth) could not construct the client without also passing the
+        other schemes' credentials. Under endpoint-security every credential now defaults to `nil`,
+        matching the per-endpoint auth model. Behavior outside endpoint-security is unchanged.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
 - version: 1.20.0
   changelogEntry:
     - summary: |

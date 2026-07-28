@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated wire tests asserting OAuth authentication on endpoints that do not require it under
+    `auth: endpoint-security`. The wire-test generator applied the OAuth token flow (enqueue a token
+    response and assert `Authorization: Bearer ...`) to every test method based on an API-level check,
+    so a test for an `auth: []` (no-auth) endpoint enqueued a token and asserted a bearer header the
+    SDK correctly never sends — failing at runtime. Under endpoint-security the OAuth flow is now
+    applied per endpoint (only to endpoints that require auth); global-auth behavior is unchanged.
+  type: fix

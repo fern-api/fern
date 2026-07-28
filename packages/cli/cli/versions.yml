@@ -1,4 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.80.5
+  changelogEntry:
+    - summary: |
+        Fix markdown images that specify a title (e.g. `![alt](./image.png "Title")`) failing to render.
+        The title was treated as part of the image path, so the image was never swapped for its uploaded
+        file reference.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.80.4
+  changelogEntry:
+    - summary: |
+        `fern generate` (cloud generation) with `local-file-system` output now threads the
+        package name and version into the IR the same way `fern generate --local` does. This
+        fixes generated SDKs missing the `User-Agent` and `X-Fern-SDK-Name`/`X-Fern-SDK-Version`
+        headers when generating to the local filesystem without the `--local` flag. Package
+        names configured via generator `config` (e.g. `package_name`, `packageJson.name`) are
+        now also resolved on the cloud generation path.
+      type: fix
+    - summary: |
+        `local-file-system` output now threads the C# SDK's package identity (from the generator's
+        `package-id` config) and the user-provided `--version` into the IR via a new `nuget`
+        filesystem publish target, matching the existing npm/pypi/maven/crates/go behavior. This
+        enables the C# generator to stamp the SDK name/version into `Version.cs` and the structured
+        `User-Agent` header.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 5.80.3
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.53. Under `--version AUTO`, a purely additive Go
+        change (inserting a new field into a struct) is no longer misclassified as a breaking
+        MAJOR bump. The generated `explicitFields` bit-constant reindexing that a field
+        insertion produces is now stripped before AI diff analysis, so real additions stay
+        MINOR and real removals stay MAJOR.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 5.80.2
+  changelogEntry:
+    - summary: |
+        Support `client-default` on `api.headers` entries in generators.yml. The
+        generators.yml schema previously dropped this field, so global headers with a
+        `client-default` produced no client-side default in the generated SDKs. The
+        field now flows through to the IR (`clientDefault`), so SDKs send the value by
+        default when the caller and environment variable do not provide one.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
 - version: 5.80.1
   changelogEntry:
     - summary: |
