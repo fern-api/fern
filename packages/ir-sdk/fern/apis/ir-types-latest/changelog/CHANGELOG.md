@@ -12,9 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   such as generated CLIs and native apps. No client secret is used.
   - `OAuthAuthorizationCode` carries the public `clientId` (`OAuthPublicClientId`: either a `literal`
     value or an `environmentVariable` source), `authorizationUrl`, `tokenUrl`, optional `refreshUrl`
-    (defaults to `tokenUrl`), the loopback `redirectUri`, optional `scopes`, a required `pkce`
-    configuration, optional public `authorizationParameters`/`tokenParameters`/`refreshParameters`
+    (defaults to `tokenUrl`), an optional loopback `redirectUri`, optional `scopes`, a required
+    `pkce` configuration, optional public `authorizationParameters`/`tokenParameters`/`refreshParameters`
     maps, and optional `tokenHeader`/`tokenPrefix` for bearer application.
+  - `redirectUri` is optional: when set, the CLI binds and sends that exact loopback host/port/path;
+    when omitted, the CLI uses a loopback redirect on an ephemeral (OS-assigned) port with the
+    `/callback` path (RFC 8252 §7.3).
   - `OAuthPkceConfiguration.method` is an `OAuthPkceMethod` enum that currently only permits `S256`.
 - Add `OAuthConfiguration.deviceCode` (`OAuthDeviceCode`), an additive union variant modeling the
   OAuth 2.0 Device Authorization Grant (RFC 8628) for public clients such as generated CLIs and

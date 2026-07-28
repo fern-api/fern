@@ -14,7 +14,7 @@ export const OAuthAuthorizationCode: core.serialization.ObjectSchema<
     authorizationUrl: core.serialization.string(),
     tokenUrl: core.serialization.string(),
     refreshUrl: core.serialization.string().optional(),
-    redirectUri: core.serialization.string(),
+    redirectUri: core.serialization.string().optional(),
     scopes: core.serialization.list(core.serialization.string()).optional(),
     pkce: OAuthPkceConfiguration,
     authorizationParameters: core.serialization
@@ -32,7 +32,7 @@ export declare namespace OAuthAuthorizationCode {
         authorizationUrl: string;
         tokenUrl: string;
         refreshUrl?: string | null;
-        redirectUri: string;
+        redirectUri?: string | null;
         scopes?: string[] | null;
         pkce: OAuthPkceConfiguration.Raw;
         authorizationParameters?: Record<string, string> | null;

@@ -18,11 +18,18 @@ export interface OAuthAuthorizationCode {
     /** The absolute URL used to refresh tokens. Defaults to `tokenUrl` when omitted. */
     refreshUrl: string | undefined;
     /**
-     * The loopback redirect (callback) URI registered with the authorization server
-     * (e.g. http://127.0.0.1:8484/callback). The same URI is used for the authorization
-     * request and the token exchange.
+     * The loopback redirect (callback) URI for the authorization-code callback.
+     *
+     * When set, the CLI binds this exact host, port, and path, and sends this exact URI in
+     * both the authorization request and the token exchange. Use this when the authorization
+     * server requires an exact pre-registered redirect URI (including port). Must be a loopback
+     * address (e.g. http://127.0.0.1:8484/callback or http://localhost:8484/callback).
+     *
+     * When omitted, the CLI uses a loopback redirect on an ephemeral (OS-assigned) port with
+     * the path `/callback` (i.e. http://127.0.0.1:<random-port>/callback), per RFC 8252 §7.3.
+     * This requires the authorization server to allow arbitrary loopback ports for the client.
      */
-    redirectUri: string;
+    redirectUri: string | undefined;
     /** The scopes requested during authorization. */
     scopes: string[] | undefined;
     /** The PKCE configuration. PKCE is required for this flow. */
