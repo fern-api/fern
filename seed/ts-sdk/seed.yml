@@ -396,6 +396,10 @@ fixtures:
     - outputFolder: always-send-auth
       customConfig:
         alwaysSendAuth: true
+    - outputFolder: always-send-auth-optional-auth
+      customConfig:
+        alwaysSendAuth: true
+        optional-auth: true
   single-url-environment-default:
     - outputFolder: no-custom-config
       customConfig: null
