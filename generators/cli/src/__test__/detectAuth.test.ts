@@ -424,7 +424,12 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
 
     it("emits a root PkceLoginFlow for the authorization-code flow", () => {
         const [binding, ...rest] = detectAuthBindings({
-            auth: auth(authorizationCode({ scopes: ["openid", "offline_access"], redirectUri: "http://127.0.0.1:8484/callback" })),
+            auth: auth(
+                authorizationCode({
+                    scopes: ["openid", "offline_access"],
+                    redirectUri: "http://127.0.0.1:8484/callback"
+                })
+            ),
             binaryName: "acme"
         });
         expect(rest).toEqual([]);
@@ -450,14 +455,19 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
 
     it("skips the authorization-code flow when the client ID is an environment variable (unsupported)", () => {
         const bindings = detectAuthBindings({
-            auth: auth(authorizationCode({ clientId: FernIr.OAuthPublicClientId.environmentVariable("ACME_CLIENT_ID") })),
+            auth: auth(
+                authorizationCode({ clientId: FernIr.OAuthPublicClientId.environmentVariable("ACME_CLIENT_ID") })
+            ),
             binaryName: "acme"
         });
         expect(bindings).toEqual([]);
     });
 
     it("emits a root DeviceCodeLoginFlow for the device-code flow", () => {
-        const [binding, ...rest] = detectAuthBindings({ auth: auth(deviceCode({ scopes: ["openid"] })), binaryName: "acme" });
+        const [binding, ...rest] = detectAuthBindings({
+            auth: auth(deviceCode({ scopes: ["openid"] })),
+            binaryName: "acme"
+        });
         expect(rest).toEqual([]);
         expect(binding?.placement).toBe("root");
         expect(binding?.authTypeImport).toBe("DeviceCodeLoginFlow");
