@@ -193,8 +193,9 @@ types:
       client-id:
         type: optional<string>
         docs: >-
-          The public client ID (literal). Public clients do not use a client secret. As an
-          alternative, set `client-id-env` to read the client ID from an environment variable.
+          The public client ID (literal). Public clients do not use a client secret. Required for
+          the authorization-code and device-code flows (an environment-variable client ID via
+          `client-id-env` is not yet supported for these flows).
       authorization-url:
         type: optional<string>
         docs: The authorization (consent) endpoint URL. Required for the authorization-code flow.
@@ -210,9 +211,10 @@ types:
       redirect-uri:
         type: optional<string>
         docs: >-
-          The loopback redirect (callback) URI for the authorization-code flow. When omitted, an
-          ephemeral loopback port is used with the `/callback` path (RFC 8252 §7.3). Must be a
-          loopback address (http://127.0.0.1 or http://localhost) when set.
+          The loopback redirect (callback) URI for the authorization-code flow. Only the port is
+          honored — the generated CLI always binds `127.0.0.1` and serves `/callback` — so when set
+          this must be exactly `http://127.0.0.1:<port>/callback`. Omit it to use an ephemeral
+          (OS-assigned) port per RFC 8252 §7.3.
       pkce:
         type: optional<OAuthPkceSchema>
         docs: PKCE configuration for the authorization-code flow. PKCE is always applied for that flow.

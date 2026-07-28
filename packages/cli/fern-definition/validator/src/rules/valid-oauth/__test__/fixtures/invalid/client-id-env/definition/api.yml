@@ -1,0 +1,11 @@
+name: client-id-env
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: authorization-code
+    client-id-env: MY_CLIENT_ID
+    authorization-url: https://auth.example.com/authorize
+    token-url: https://auth.example.com/token
+    pkce:
+      method: S256

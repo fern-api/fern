@@ -96,10 +96,20 @@ export const ValidOauthRule: Rule = {
 function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
-    if (oauth["client-id"] == null && oauth["client-id-env"] == null) {
+    // Public client ID. The generated CLI currently only supports a literal `client-id` for these
+    // flows (public client IDs are not secret), so reject an env-var-only config loudly here rather
+    // than silently emitting a CLI with no `auth login` for the scheme.
+    const hasLiteralClientId = oauth["client-id"] != null;
+    const hasEnvClientId = oauth["client-id-env"] != null;
+    if (!hasLiteralClientId && !hasEnvClientId) {
         violations.push({
             severity: "fatal",
-            message: `OAuth ${oauth.type} flow requires a public client ID: set \`client-id\` or \`client-id-env\`.`
+            message: `OAuth ${oauth.type} flow requires a public client ID: set \`client-id\`.`
+        });
+    } else if (!hasLiteralClientId && hasEnvClientId) {
+        violations.push({
+            severity: "fatal",
+            message: `OAuth ${oauth.type} flow does not support an environment-variable client ID (\`client-id-env\`) yet; set a literal \`client-id\` instead (public client IDs are not secret).`
         });
     }
 
@@ -127,21 +137,38 @@ function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViol
     }
 
     const redirectUri = oauth["redirect-uri"];
-    if (redirectUri != null && !isLoopbackRedirectUri(redirectUri)) {
-        violations.push({
-            severity: "fatal",
-            message: `OAuth redirect-uri '${redirectUri}' must be a loopback address (http://127.0.0.1 or http://localhost).`
-        });
+    if (redirectUri != null) {
+        const redirectUriError = validateRedirectUri(redirectUri);
+        if (redirectUriError != null) {
+            violations.push({ severity: "fatal", message: redirectUriError });
+        }
     }
 
     return violations;
 }
 
-function isLoopbackRedirectUri(redirectUri: string): boolean {
+/**
+ * The generated CLI honors only the *port* of a configured `redirect-uri`; it binds the loopback
+ * interface and always serves `http://127.0.0.1:<port>/callback`. So a config that pins a different
+ * host (e.g. `localhost`) or path would silently produce a `redirect_uri_mismatch` at login time.
+ * Reject those here so the mismatch surfaces at `fern check`. Omitting `redirect-uri` entirely uses
+ * an ephemeral port and skips this check.
+ */
+function validateRedirectUri(redirectUri: string): string | undefined {
+    let parsed: URL;
     try {
-        const parsed = new URL(redirectUri);
-        return parsed.protocol === "http:" && (parsed.hostname === "127.0.0.1" || parsed.hostname === "localhost");
+        parsed = new URL(redirectUri);
     } catch {
-        return false;
+        return `OAuth redirect-uri '${redirectUri}' is not a valid URL. Use http://127.0.0.1:<port>/callback, or omit it for an ephemeral port.`;
     }
+    if (parsed.protocol !== "http:" || parsed.hostname !== "127.0.0.1") {
+        return `OAuth redirect-uri '${redirectUri}' must use host 127.0.0.1 over http — the generated CLI binds 127.0.0.1 and sends that exact host, so 'localhost' or any other host is not honored. Use e.g. http://127.0.0.1:8484/callback.`;
+    }
+    if (parsed.pathname !== "/callback") {
+        return `OAuth redirect-uri '${redirectUri}' must use the path /callback — the generated CLI serves the callback at /callback. Use e.g. http://127.0.0.1:8484/callback.`;
+    }
+    if (parsed.port === "") {
+        return `OAuth redirect-uri '${redirectUri}' must include a port to pin (e.g. http://127.0.0.1:8484/callback), or omit redirect-uri entirely to use an ephemeral port.`;
+    }
+    return undefined;
 }

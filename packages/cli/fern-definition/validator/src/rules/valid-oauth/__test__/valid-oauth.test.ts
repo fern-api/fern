@@ -203,6 +203,49 @@ describe("valid-oauth", () => {
             })
         ).not.toThrow();
     });
+
+    it("valid-authorization-code", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("authorization-code")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("invalid-redirect-uri-host", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("redirect-uri-host")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations.some((violation) => violation.message.includes("must use host 127.0.0.1"))).toBe(true);
+    });
+
+    it("invalid-client-id-env", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("client-id-env")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(
+            violations.some((violation) => violation.message.includes("environment-variable client ID"))
+        ).toBe(true);
+    });
 });
 
 // validateOAuthRuleViolations ensures all of the expected rule violations match,
