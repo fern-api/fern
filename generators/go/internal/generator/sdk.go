@@ -75,6 +75,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/internal/query_defaults_on_nil.go_
+	queryDefaultsOnNilFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.

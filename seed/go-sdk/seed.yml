@@ -377,6 +377,12 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  x-fern-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: apply-query-defaults-on-nil-request
+      customConfig:
+        applyQueryDefaultsOnNilRequest: true
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:
