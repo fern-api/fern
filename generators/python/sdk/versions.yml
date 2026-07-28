@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.22.2
+  changelogEntry:
+    - summary: |
+        Fix multipart form list-of-primitive body properties being sent as a single
+        JSON-encoded field instead of repeated form fields. A property such as
+        `Optional[List[str]]` was serialized as `json.dumps(jsonable_encoder(value))`,
+        producing one field whose value was the whole JSON array (e.g.
+        `keyterms=["a","b"]`); servers that validate each item then rejected it. Such
+        properties are now passed through `jsonable_encoder` and handed directly to
+        httpx's `data=`, emitting repeated fields (`keyterms=a`, `keyterms=b`). Lists of
+        objects, maps, and other complex types remain JSON-encoded as before.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
 - version: 5.22.1
   changelogEntry:
     - summary: |
