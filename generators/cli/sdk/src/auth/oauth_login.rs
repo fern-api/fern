@@ -1211,6 +1211,92 @@ mod tests {
         assert!(!p.has_credentials());
     }
 
+    // ---------- Login-flow → request-time provider wiring ----------
+    //
+    // These verify the two behaviors ElevenLabs asked for, tied to the *new* public-client
+    // login flows: the flow's `build_auth_provider` must produce a provider that
+    //   1. injects `Authorization: Bearer <token>` on requests, and
+    //   2. automatically refreshes an expired token against the flow's configured `token_url`.
+    // `CliApp::login_flow` registers exactly this provider, so this is the request-time path a
+    // generated CLI runs after `auth login`.
+
+    #[tokio::test(flavor = "multi_thread")]
+    #[serial]
+    async fn pkce_login_flow_provider_injects_bearer() {
+        let mock = Arc::new(MockKeyringStore::new());
+        let bundle = TokenBundle::from_token_response("pkce-acc", Some("r"), Some(3600));
+        mock.set("my-cli", "OAuth2", &bundle.to_keyring_value().unwrap())
+            .unwrap();
+        set_active_store(mock);
+
+        let flow = PkceLoginFlow::new("OAuth2")
+            .client_id("public-client")
+            .authorization_url("https://auth.example.com/authorize")
+            .token_url("https://auth.example.com/token");
+        let provider = flow
+            .build_auth_provider("my-cli")
+            .expect("PKCE flow must register a request-time auth provider");
+
+        let req = provider
+            .apply(
+                reqwest::Client::new().get("https://example.com"),
+                &EndpointAuthMetadata::unspecified(),
+            )
+            .unwrap()
+            .build()
+            .unwrap();
+        let auth = req.headers().get("authorization").unwrap().to_str().unwrap();
+        assert_eq!(auth, "Bearer pkce-acc");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    #[serial]
+    async fn device_code_login_flow_provider_refreshes_via_token_url() {
+        let server = MockServer::start().await;
+        let mock = Arc::new(MockKeyringStore::new());
+        let mut expired = TokenBundle::from_token_response("old", Some("ref-1"), Some(3600));
+        expired.expires_at = Some(0); // forcibly expired
+        mock.set("my-cli", "OAuth2", &expired.to_keyring_value().unwrap())
+            .unwrap();
+        set_active_store(mock.clone());
+
+        Mock::given(method("POST"))
+            .and(path("/token"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
+                "access_token": "device-refreshed-acc",
+                "refresh_token": "ref-2",
+                "expires_in": 3600
+            })))
+            .expect(1)
+            .mount(&server)
+            .await;
+
+        let flow = DeviceCodeLoginFlow::new("OAuth2")
+            .client_id("public-client")
+            .device_authorization_url("https://auth.example.com/device/code")
+            .token_url(&format!("{}/token", server.uri()));
+        let provider = flow
+            .build_auth_provider("my-cli")
+            .expect("device-code flow must register a request-time auth provider");
+
+        let req = provider
+            .apply(
+                reqwest::Client::new().get("https://example.com"),
+                &EndpointAuthMetadata::unspecified(),
+            )
+            .unwrap()
+            .build()
+            .unwrap();
+        let auth = req.headers().get("authorization").unwrap().to_str().unwrap();
+        assert_eq!(auth, "Bearer device-refreshed-acc");
+
+        // The refreshed tokens were persisted for the next invocation.
+        let stored: TokenBundle =
+            serde_json::from_str(&mock.get("my-cli", "OAuth2").unwrap().unwrap()).unwrap();
+        assert_eq!(stored.access_token, "device-refreshed-acc");
+        assert_eq!(stored.refresh_token.as_deref(), Some("ref-2"));
+    }
+
     // ---------- PKCE ----------
 
     #[test]
