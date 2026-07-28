@@ -147,23 +147,87 @@ types:
         type: optional<string>
         docs: Commonly used for setting the `Authorization` scheme, but could be used for other things.
 
+  OAuthFlowTypeSchema:
+    enum:
+      - name: ClientCredentials
+        value: client-credentials
+      - name: AuthorizationCode
+        value: authorization-code
+      - name: DeviceCode
+        value: device-code
+
+  OAuthPkceSchema:
+    docs: PKCE (RFC 7636) configuration for the authorization-code flow.
+    properties:
+      method:
+        type: optional<string>
+        docs: The PKCE code challenge method. Only 'S256' is supported. Defaults to 'S256'.
+
   OAuthSchemeSchema:
     extends:
       - commons.WithDocsSchema
     properties:
       scheme: literal<"oauth">
-      type: literal<"client-credentials">
+      type:
+        type: OAuthFlowTypeSchema
+        docs: The OAuth flow. Defaults to 'client-credentials'.
       scopes: optional<list<AuthScope>>
-      client-id-env: optional<string>
-      client-secret-env: optional<string>
       token-prefix:
         type: optional<string>
         docs: Sets the token header value prefix. Defaults to 'Bearer'
       token-header:
         type: optional<string>
         docs: Sets the token header key name. Defaults to 'Authorization'
-      get-token: OAuthGetTokenEndpointSchema
+      # --- client-credentials flow ---
+      client-id-env:
+        type: optional<string>
+        docs: >-
+          The environment variable holding the client ID. Used by the client-credentials flow and,
+          for the public-client flows, as an alternative to a literal `client-id`.
+      client-secret-env: optional<string>
+      get-token:
+        type: optional<OAuthGetTokenEndpointSchema>
+        docs: The token endpoint for the client-credentials flow. Required for that flow.
       refresh-token: optional<OAuthRefreshTokenEndpointSchema>
+      # --- authorization-code (PKCE) and device-code (public client) flows ---
+      client-id:
+        type: optional<string>
+        docs: >-
+          The public client ID (literal). Public clients do not use a client secret. As an
+          alternative, set `client-id-env` to read the client ID from an environment variable.
+      authorization-url:
+        type: optional<string>
+        docs: The authorization (consent) endpoint URL. Required for the authorization-code flow.
+      device-authorization-url:
+        type: optional<string>
+        docs: The device authorization endpoint URL. Required for the device-code flow.
+      token-url:
+        type: optional<string>
+        docs: The token endpoint URL. Required for the authorization-code and device-code flows.
+      refresh-url:
+        type: optional<string>
+        docs: The token refresh endpoint URL. Defaults to `token-url` when omitted.
+      redirect-uri:
+        type: optional<string>
+        docs: >-
+          The loopback redirect (callback) URI for the authorization-code flow. When omitted, an
+          ephemeral loopback port is used with the `/callback` path (RFC 8252 §7.3). Must be a
+          loopback address (http://127.0.0.1 or http://localhost) when set.
+      pkce:
+        type: optional<OAuthPkceSchema>
+        docs: PKCE configuration for the authorization-code flow. PKCE is always applied for that flow.
+      authorization-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters appended to the authorization request (e.g. `audience`).
+      device-authorization-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters included in the device authorization request.
+      token-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters included in the token exchange request.
+      refresh-parameters:
+        type: optional<map<string, string>>
+        docs: Additional literal parameters included in the refresh request.
 
   OAuthGetTokenEndpointSchema:
     properties:

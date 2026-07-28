@@ -378,3 +378,96 @@ describe("joinUrl", () => {
         expect(joinUrl("https://api.example.com/v1", "/token")).toBe("https://api.example.com/v1/token");
     });
 });
+
+describe("detectAuthBindings — public-client OAuth login flows", () => {
+    const authorizationCode = (overrides: {
+        clientId?: FernIr.OAuthPublicClientId;
+        redirectUri?: string;
+        scopes?: string[];
+    }): FernIr.AuthScheme =>
+        FernIr.AuthScheme.oauth({
+            key: "MyOAuth",
+            docs: undefined,
+            configuration: FernIr.OAuthConfiguration.authorizationCode({
+                clientId: overrides.clientId ?? FernIr.OAuthPublicClientId.literal("public-client-id"),
+                authorizationUrl: "https://auth.example.com/authorize",
+                tokenUrl: "https://auth.example.com/token",
+                refreshUrl: undefined,
+                redirectUri: overrides.redirectUri,
+                scopes: overrides.scopes,
+                pkce: { method: FernIr.OAuthPkceMethod.S256 },
+                authorizationParameters: undefined,
+                tokenParameters: undefined,
+                refreshParameters: undefined,
+                tokenHeader: undefined,
+                tokenPrefix: undefined
+            })
+        });
+
+    const deviceCode = (overrides: { scopes?: string[] }): FernIr.AuthScheme =>
+        FernIr.AuthScheme.oauth({
+            key: "MyOAuth",
+            docs: undefined,
+            configuration: FernIr.OAuthConfiguration.deviceCode({
+                clientId: FernIr.OAuthPublicClientId.literal("public-client-id"),
+                deviceAuthorizationUrl: "https://auth.example.com/device/code",
+                tokenUrl: "https://auth.example.com/token",
+                refreshUrl: undefined,
+                scopes: overrides.scopes,
+                deviceAuthorizationParameters: undefined,
+                tokenParameters: undefined,
+                refreshParameters: undefined,
+                tokenHeader: undefined,
+                tokenPrefix: undefined
+            })
+        });
+
+    it("emits a root PkceLoginFlow for the authorization-code flow", () => {
+        const [binding, ...rest] = detectAuthBindings({
+            auth: auth(authorizationCode({ scopes: ["openid", "offline_access"], redirectUri: "http://127.0.0.1:8484/callback" })),
+            binaryName: "acme"
+        });
+        expect(rest).toEqual([]);
+        expect(binding?.placement).toBe("root");
+        expect(binding?.authTypeImport).toBe("PkceLoginFlow");
+        expect(binding?.kind).toBe("oauth-authorization-code");
+        expect(binding?.envVars).toEqual([]);
+        expect(binding?.rustCall).toBe(
+            '.login_flow(PkceLoginFlow::new("MyOAuth")' +
+                '.client_id("public-client-id")' +
+                '.authorization_url("https://auth.example.com/authorize")' +
+                '.token_url("https://auth.example.com/token")' +
+                '.scopes(["openid", "offline_access"])' +
+                ".redirect_port(8484))"
+        );
+    });
+
+    it("omits redirect_port when no redirect-uri is configured (ephemeral)", () => {
+        const [binding] = detectAuthBindings({ auth: auth(authorizationCode({})), binaryName: "acme" });
+        expect(binding?.rustCall).not.toContain("redirect_port");
+        expect(binding?.rustCall).toContain('PkceLoginFlow::new("MyOAuth")');
+    });
+
+    it("skips the authorization-code flow when the client ID is an environment variable (unsupported)", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(authorizationCode({ clientId: FernIr.OAuthPublicClientId.environmentVariable("ACME_CLIENT_ID") })),
+            binaryName: "acme"
+        });
+        expect(bindings).toEqual([]);
+    });
+
+    it("emits a root DeviceCodeLoginFlow for the device-code flow", () => {
+        const [binding, ...rest] = detectAuthBindings({ auth: auth(deviceCode({ scopes: ["openid"] })), binaryName: "acme" });
+        expect(rest).toEqual([]);
+        expect(binding?.placement).toBe("root");
+        expect(binding?.authTypeImport).toBe("DeviceCodeLoginFlow");
+        expect(binding?.kind).toBe("oauth-device-code");
+        expect(binding?.rustCall).toBe(
+            '.login_flow(DeviceCodeLoginFlow::new("MyOAuth")' +
+                '.client_id("public-client-id")' +
+                '.device_authorization_url("https://auth.example.com/device/code")' +
+                '.token_url("https://auth.example.com/token")' +
+                '.scopes(["openid"]))'
+        );
+    });
+});

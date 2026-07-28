@@ -4,14 +4,39 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     scheme: "oauth";
-    type: "client-credentials";
+    /** The OAuth flow. Defaults to 'client-credentials'. */
+    type: FernDefinition.OAuthFlowTypeSchema;
     scopes?: FernDefinition.AuthScope[];
-    "client-id-env"?: string;
-    "client-secret-env"?: string;
     /** Sets the token header value prefix. Defaults to 'Bearer' */
     "token-prefix"?: string;
     /** Sets the token header key name. Defaults to 'Authorization' */
     "token-header"?: string;
-    "get-token": FernDefinition.OAuthGetTokenEndpointSchema;
+    /** The environment variable holding the client ID. Used by the client-credentials flow and, for the public-client flows, as an alternative to a literal `client-id`. */
+    "client-id-env"?: string;
+    "client-secret-env"?: string;
+    /** The token endpoint for the client-credentials flow. Required for that flow. */
+    "get-token"?: FernDefinition.OAuthGetTokenEndpointSchema;
     "refresh-token"?: FernDefinition.OAuthRefreshTokenEndpointSchema;
+    /** The public client ID (literal). Public clients do not use a client secret. As an alternative, set `client-id-env` to read the client ID from an environment variable. */
+    "client-id"?: string;
+    /** The authorization (consent) endpoint URL. Required for the authorization-code flow. */
+    "authorization-url"?: string;
+    /** The device authorization endpoint URL. Required for the device-code flow. */
+    "device-authorization-url"?: string;
+    /** The token endpoint URL. Required for the authorization-code and device-code flows. */
+    "token-url"?: string;
+    /** The token refresh endpoint URL. Defaults to `token-url` when omitted. */
+    "refresh-url"?: string;
+    /** The loopback redirect (callback) URI for the authorization-code flow. When omitted, an ephemeral loopback port is used with the `/callback` path (RFC 8252 §7.3). Must be a loopback address (http://127.0.0.1 or http://localhost) when set. */
+    "redirect-uri"?: string;
+    /** PKCE configuration for the authorization-code flow. PKCE is always applied for that flow. */
+    pkce?: FernDefinition.OAuthPkceSchema;
+    /** Additional literal parameters appended to the authorization request (e.g. `audience`). */
+    "authorization-parameters"?: Record<string, string>;
+    /** Additional literal parameters included in the device authorization request. */
+    "device-authorization-parameters"?: Record<string, string>;
+    /** Additional literal parameters included in the token exchange request. */
+    "token-parameters"?: Record<string, string>;
+    /** Additional literal parameters included in the refresh request. */
+    "refresh-parameters"?: Record<string, string>;
 }

@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support declaring OAuth public-client login flows in `auth-schemes`: `type: authorization-code`
+    (Authorization Code + PKCE, browser login) and `type: device-code` (RFC 8628). These lower to
+    the new `OAuthConfiguration.authorizationCode` / `deviceCode` IR variants for public clients
+    (no client secret), carrying the public client id, authorization/device/token URLs, scopes, an
+    optional loopback `redirect-uri`, and PKCE. The `valid-oauth` rule enforces the per-flow
+    required fields and that a set `redirect-uri` is a loopback address. Existing
+    `client-credentials` OAuth configurations are unchanged.
+  type: feat

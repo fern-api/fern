@@ -22,7 +22,7 @@ export interface DetectedAuthBinding {
     /** Environment variables that add optional auth request properties when set. */
     optionalEnvVars?: string[];
     /** Auth kind for documentation purposes. */
-    kind: "bearer" | "header" | "basic" | "oauth-client-credentials";
+    kind: "bearer" | "header" | "basic" | "oauth-client-credentials" | "oauth-authorization-code" | "oauth-device-code";
     /**
      * For `oauth-client-credentials`, the resolved token-endpoint contract the
      * generated CLI actually calls at runtime. Consumed by the wire-test
@@ -196,14 +196,19 @@ function bindingForScheme(args: {
                 kind: "basic"
             };
         },
-        // OAuth: the IR only models the client-credentials flow. Lower it
-        // to the SDK's `OAuth2Auth` builder, resolving the token URL from
-        // the IR (token endpoint reference + default environment). Any
-        // other/unknown configuration is skipped.
+        // OAuth: lower each configuration variant to the matching SDK builder.
+        //   - client-credentials → `OAuth2Auth` (token exchange, resolved from the IR).
+        //   - authorization-code (PKCE) → `PkceLoginFlow` via `.login_flow(...)`, a public-client
+        //     browser login. `CliApp::login_flow` also registers the request-time
+        //     `OAuth2KeyringProvider` automatically, so no separate `.auth(...)` is needed.
+        //   - device-code → `DeviceCodeLoginFlow` via `.login_flow(...)`, same auto-provider wiring.
         oauth: (oauth) =>
             visitDiscriminatedUnion(oauth.configuration)._visit<DetectedAuthBinding | null>({
                 clientCredentials: (clientCredentials) =>
                     clientCredentialsBinding({ key: oauth.key, clientCredentials, envPrefix, services, environments }),
+                authorizationCode: (authorizationCode) =>
+                    authorizationCodeBinding({ key: oauth.key, authorizationCode }),
+                deviceCode: (deviceCode) => deviceCodeBinding({ key: oauth.key, deviceCode }),
                 _other: () => null
             }),
         inferred: () => null,
@@ -328,6 +333,116 @@ function clientCredentialsBinding(args: {
                 responseProperties.expiresIn != null ? responsePropertyPath(responseProperties.expiresIn) : null
         }
     };
+}
+
+/**
+ * Authorization Code + PKCE (public client). Emits a `PkceLoginFlow` registered via
+ * `CliApp::login_flow(...)`, which also wires the request-time `OAuth2KeyringProvider` so
+ * authenticated requests send `Authorization: Bearer <token>` with refresh-on-expiry.
+ *
+ * The SDK builder currently consumes `client_id`, `authorization_url`, `token_url`, `scopes`,
+ * and a fixed `redirect_port`. The IR's `refreshUrl`, extra parameter maps, and
+ * `tokenHeader`/`tokenPrefix` are not yet consumable by the builder and are intentionally not
+ * emitted; an environment-variable client ID is likewise unsupported for now (skip).
+ */
+function authorizationCodeBinding(args: {
+    key: string;
+    authorizationCode: FernIr.OAuthAuthorizationCode;
+}): DetectedAuthBinding | null {
+    const { key, authorizationCode } = args;
+    const clientId = literalPublicClientId(authorizationCode.clientId);
+    if (clientId == null) {
+        return null;
+    }
+
+    let rustCall = `.login_flow(PkceLoginFlow::new(${rustString(key)})`;
+    rustCall += `.client_id(${rustString(clientId)})`;
+    rustCall += `.authorization_url(${rustString(authorizationCode.authorizationUrl)})`;
+    rustCall += `.token_url(${rustString(authorizationCode.tokenUrl)})`;
+    const scopes = authorizationCode.scopes ?? [];
+    if (scopes.length > 0) {
+        rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
+    }
+    // When `redirectUri` pins a loopback port, honor it; otherwise the flow uses the SDK's
+    // default loopback port. Host/path are fixed to 127.0.0.1 + /callback by the runtime.
+    const redirectPort = loopbackRedirectPort(authorizationCode.redirectUri);
+    if (redirectPort != null) {
+        rustCall += `.redirect_port(${redirectPort})`;
+    }
+    rustCall += ")";
+
+    return {
+        schemeName: key,
+        rustCall,
+        placement: "root",
+        authTypeImport: "PkceLoginFlow",
+        envVars: [],
+        kind: "oauth-authorization-code"
+    };
+}
+
+/**
+ * Device Authorization Grant (RFC 8628, public client). Emits a `DeviceCodeLoginFlow` registered
+ * via `CliApp::login_flow(...)` (same auto-wired request-time provider as PKCE). Same builder
+ * limitations as {@link authorizationCodeBinding} for refresh/params/token application.
+ */
+function deviceCodeBinding(args: { key: string; deviceCode: FernIr.OAuthDeviceCode }): DetectedAuthBinding | null {
+    const { key, deviceCode } = args;
+    const clientId = literalPublicClientId(deviceCode.clientId);
+    if (clientId == null) {
+        return null;
+    }
+
+    let rustCall = `.login_flow(DeviceCodeLoginFlow::new(${rustString(key)})`;
+    rustCall += `.client_id(${rustString(clientId)})`;
+    rustCall += `.device_authorization_url(${rustString(deviceCode.deviceAuthorizationUrl)})`;
+    rustCall += `.token_url(${rustString(deviceCode.tokenUrl)})`;
+    const scopes = deviceCode.scopes ?? [];
+    if (scopes.length > 0) {
+        rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
+    }
+    rustCall += ")";
+
+    return {
+        schemeName: key,
+        rustCall,
+        placement: "root",
+        authTypeImport: "DeviceCodeLoginFlow",
+        envVars: [],
+        kind: "oauth-device-code"
+    };
+}
+
+/**
+ * Resolves a public client ID to its literal string. Environment-variable client IDs are not yet
+ * supported by the login-flow builders and yield `undefined` (the caller skips the binding).
+ */
+function literalPublicClientId(clientId: FernIr.OAuthPublicClientId): string | undefined {
+    return visitDiscriminatedUnion(clientId)._visit<string | undefined>({
+        literal: (literal) => literal.value,
+        environmentVariable: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Extracts the port from a loopback redirect URI (e.g. `http://127.0.0.1:8484/callback` → 8484).
+ * Returns undefined when the URI is absent, unparseable, or omits a port (ephemeral).
+ */
+function loopbackRedirectPort(redirectUri: string | undefined): number | undefined {
+    if (redirectUri == null) {
+        return undefined;
+    }
+    try {
+        const parsed = new URL(redirectUri);
+        if (parsed.port === "") {
+            return undefined;
+        }
+        const port = Number(parsed.port);
+        return Number.isInteger(port) && port > 0 && port < 65536 ? port : undefined;
+    } catch {
+        return undefined;
+    }
 }
 
 interface ResolvedOAuthEndpoint {
