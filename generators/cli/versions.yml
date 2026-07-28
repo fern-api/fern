@@ -7,8 +7,11 @@
         registered via `CliApp::login_flow(...)` so `<bin> auth login` runs the browser / device
         flow, tokens are stored in the OS keyring, and requests get `Authorization: Bearer <token>`
         with refresh-on-expiry. A configured loopback `redirectUri` pins the callback port;
-        omitting it uses the SDK's loopback default. Environment-variable client IDs and the IR's
-        refresh-url / extra-parameter / token-header fields are not yet consumed and are skipped.
+        omitting it uses the SDK's loopback default. Extra literal parameter maps
+        (`authorizationParameters` / `tokenParameters` / `refreshParameters` /
+        `deviceAuthorizationParameters` — e.g. an Auth0 `audience`) are appended to the respective
+        requests, with protocol-reserved keys skipped. Environment-variable client IDs and the IR's
+        `refreshUrl` / `tokenHeader` / `tokenPrefix` fields are not yet consumed and are skipped.
       type: feat
   createdAt: "2026-07-28"
   irVersion: 67

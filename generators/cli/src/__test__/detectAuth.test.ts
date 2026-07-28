@@ -384,6 +384,8 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         clientId?: FernIr.OAuthPublicClientId;
         redirectUri?: string;
         scopes?: string[];
+        authorizationParameters?: Record<string, string>;
+        tokenParameters?: Record<string, string>;
     }): FernIr.AuthScheme =>
         FernIr.AuthScheme.oauth({
             key: "MyOAuth",
@@ -396,8 +398,8 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
                 redirectUri: overrides.redirectUri,
                 scopes: overrides.scopes,
                 pkce: { method: FernIr.OAuthPkceMethod.S256 },
-                authorizationParameters: undefined,
-                tokenParameters: undefined,
+                authorizationParameters: overrides.authorizationParameters,
+                tokenParameters: overrides.tokenParameters,
                 refreshParameters: undefined,
                 tokenHeader: undefined,
                 tokenPrefix: undefined
@@ -451,6 +453,30 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         const [binding] = detectAuthBindings({ auth: auth(authorizationCode({})), binaryName: "acme" });
         expect(binding?.rustCall).not.toContain("redirect_port");
         expect(binding?.rustCall).toContain('PkceLoginFlow::new("MyOAuth")');
+    });
+
+    it("emits no param setters when no extra params are configured (byte-identical output)", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(authorizationCode({ scopes: ["openid"] })),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).not.toContain("authorization_params");
+        expect(binding?.rustCall).not.toContain("token_params");
+        expect(binding?.rustCall).not.toContain("refresh_params");
+    });
+
+    it("emits authorization_params and token_params (e.g. Auth0 audience) when configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    authorizationParameters: { audience: "https://api.acme.io" },
+                    tokenParameters: { audience: "https://api.acme.io" }
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain('.authorization_params([("audience", "https://api.acme.io")])');
+        expect(binding?.rustCall).toContain('.token_params([("audience", "https://api.acme.io")])');
     });
 
     it("skips the authorization-code flow when the client ID is an environment variable (unsupported)", () => {

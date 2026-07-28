@@ -29,7 +29,7 @@ use std::sync::{Arc, OnceLock};
 use std::time::Duration;
 
 use secrecy::{ExposeSecret, SecretString};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 use crate::auth::keyring_store::active_store;
 use crate::auth::login::{LoginContext, LoginFlow};
@@ -62,18 +62,21 @@ fn default_interval() -> u64 {
     5
 }
 
-#[derive(Serialize)]
-struct DeviceAuthForm<'a> {
-    client_id: &'a str,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    scope: Option<String>,
-}
+/// Extra literal OAuth parameters (e.g. `audience`, `resource`) appended to an
+/// authorization, token, device-authorization, or refresh request. Sourced from
+/// the IR's `authorizationParameters` / `tokenParameters` / `refreshParameters`
+/// maps, which are optional — an empty list is a no-op.
+type ExtraParams = Vec<(String, String)>;
 
-#[derive(Serialize)]
-struct DeviceTokenForm<'a> {
-    grant_type: &'static str,
-    client_id: &'a str,
-    device_code: &'a str,
+/// Append `extra` params to a form, skipping any protocol-reserved keys the flow
+/// controls itself, so user config can't clobber the handshake (RFC 6749).
+fn extend_with_extra(form: &mut Vec<(String, String)>, extra: &ExtraParams, reserved: &[&str]) {
+    for (key, value) in extra {
+        if reserved.iter().any(|r| *r == key.as_str()) {
+            continue;
+        }
+        form.push((key.clone(), value.clone()));
+    }
 }
 
 /// Device-code login flow.
@@ -88,6 +91,9 @@ pub struct DeviceCodeLoginFlow {
     token_url: String,
     scopes: Vec<String>,
     token_paste_url: Option<String>,
+    device_authorization_params: ExtraParams,
+    token_params: ExtraParams,
+    refresh_params: ExtraParams,
 }
 
 impl DeviceCodeLoginFlow {
@@ -99,6 +105,9 @@ impl DeviceCodeLoginFlow {
             token_url: String::new(),
             scopes: Vec::new(),
             token_paste_url: None,
+            device_authorization_params: Vec::new(),
+            token_params: Vec::new(),
+            refresh_params: Vec::new(),
         }
     }
 
@@ -124,6 +133,36 @@ impl DeviceCodeLoginFlow {
     }
     pub fn token_paste_url(mut self, v: impl Into<String>) -> Self {
         self.token_paste_url = Some(v.into());
+        self
+    }
+    /// Extra literal parameters included in the device authorization request (e.g. `audience`).
+    pub fn device_authorization_params<I, K, V>(mut self, params: I) -> Self
+    where
+        I: IntoIterator<Item = (K, V)>,
+        K: Into<String>,
+        V: Into<String>,
+    {
+        self.device_authorization_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self
+    }
+    /// Extra literal parameters included in the device-code token exchange (polling) request.
+    pub fn token_params<I, K, V>(mut self, params: I) -> Self
+    where
+        I: IntoIterator<Item = (K, V)>,
+        K: Into<String>,
+        V: Into<String>,
+    {
+        self.token_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self
+    }
+    /// Extra literal parameters included in the refresh token request.
+    pub fn refresh_params<I, K, V>(mut self, params: I) -> Self
+    where
+        I: IntoIterator<Item = (K, V)>,
+        K: Into<String>,
+        V: Into<String>,
+    {
+        self.refresh_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
         self
     }
 
@@ -180,19 +219,20 @@ impl LoginFlow for DeviceCodeLoginFlow {
                 &self.token_url,
                 scope.as_deref(),
                 ctx.no_browser,
+                &self.device_authorization_params,
+                &self.token_params,
             ))
         })
     }
     fn build_auth_provider(&self, cli_name: &str) -> Option<DynAuthProvider> {
-        Some(Arc::new(OAuth2KeyringProvider::new(
-            &self.scheme,
-            cli_name,
-            &self.token_url,
-            &self.client_id,
-        )))
+        Some(Arc::new(
+            OAuth2KeyringProvider::new(&self.scheme, cli_name, &self.token_url, &self.client_id)
+                .with_refresh_params(self.refresh_params.clone()),
+        ))
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn run_device_code(
     cli_name: &str,
     scheme: &str,
@@ -201,16 +241,20 @@ async fn run_device_code(
     token_url: &str,
     scope: Option<&str>,
     no_browser: bool,
+    device_authorization_params: &ExtraParams,
+    token_params: &ExtraParams,
 ) -> Result<(), CliError> {
     use std::io::Write;
 
     let http = token_http_client()?;
 
     // 1. Request device + user codes.
-    let device_form = DeviceAuthForm {
-        client_id,
-        scope: scope.map(str::to_string),
-    };
+    let mut device_form: Vec<(String, String)> =
+        vec![("client_id".to_string(), client_id.to_string())];
+    if let Some(s) = scope {
+        device_form.push(("scope".to_string(), s.to_string()));
+    }
+    extend_with_extra(&mut device_form, device_authorization_params, &["client_id", "scope"]);
     let resp = http
         .post(device_auth_url)
         .form(&device_form)
@@ -254,11 +298,15 @@ async fn run_device_code(
     }
 
     // 3. Poll the token endpoint.
-    let token_form = DeviceTokenForm {
-        grant_type: "urn:ietf:params:oauth:grant-type:device_code",
-        client_id,
-        device_code: &device.device_code,
-    };
+    let mut token_form: Vec<(String, String)> = vec![
+        (
+            "grant_type".to_string(),
+            "urn:ietf:params:oauth:grant-type:device_code".to_string(),
+        ),
+        ("client_id".to_string(), client_id.to_string()),
+        ("device_code".to_string(), device.device_code.clone()),
+    ];
+    extend_with_extra(&mut token_form, token_params, &["grant_type", "client_id", "device_code"]);
     // Floor the poll interval at 1 second. RFC 8628 §3.5 mandates a
     // minimum of 5s in production, but tests deliberately use interval=0
     // for speed. A 1s floor keeps tests fast while preventing any
@@ -386,6 +434,9 @@ pub struct PkceLoginFlow {
     scopes: Vec<String>,
     redirect_port: u16,
     token_paste_url: Option<String>,
+    authorization_params: ExtraParams,
+    token_params: ExtraParams,
+    refresh_params: ExtraParams,
 }
 
 impl PkceLoginFlow {
@@ -398,6 +449,9 @@ impl PkceLoginFlow {
             scopes: Vec::new(),
             redirect_port: DEFAULT_REDIRECT_PORT,
             token_paste_url: None,
+            authorization_params: Vec::new(),
+            token_params: Vec::new(),
+            refresh_params: Vec::new(),
         }
     }
 
@@ -427,6 +481,36 @@ impl PkceLoginFlow {
     }
     pub fn token_paste_url(mut self, v: impl Into<String>) -> Self {
         self.token_paste_url = Some(v.into());
+        self
+    }
+    /// Extra literal parameters appended to the authorization request (e.g. `audience`).
+    pub fn authorization_params<I, K, V>(mut self, params: I) -> Self
+    where
+        I: IntoIterator<Item = (K, V)>,
+        K: Into<String>,
+        V: Into<String>,
+    {
+        self.authorization_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self
+    }
+    /// Extra literal parameters included in the authorization-code token exchange.
+    pub fn token_params<I, K, V>(mut self, params: I) -> Self
+    where
+        I: IntoIterator<Item = (K, V)>,
+        K: Into<String>,
+        V: Into<String>,
+    {
+        self.token_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
+        self
+    }
+    /// Extra literal parameters included in the refresh token request.
+    pub fn refresh_params<I, K, V>(mut self, params: I) -> Self
+    where
+        I: IntoIterator<Item = (K, V)>,
+        K: Into<String>,
+        V: Into<String>,
+    {
+        self.refresh_params = params.into_iter().map(|(k, v)| (k.into(), v.into())).collect();
         self
     }
 
@@ -470,6 +554,22 @@ impl PkceLoginFlow {
         if !scopes.is_empty() {
             pairs.append_pair("scope", &scopes);
         }
+        // Extra literal params (e.g. Auth0 `audience`), skipping protocol-reserved keys.
+        const RESERVED: &[&str] = &[
+            "response_type",
+            "client_id",
+            "redirect_uri",
+            "state",
+            "code_challenge",
+            "code_challenge_method",
+            "scope",
+        ];
+        for (key, value) in &self.authorization_params {
+            if RESERVED.contains(&key.as_str()) {
+                continue;
+            }
+            pairs.append_pair(key, value);
+        }
         let query = pairs.finish();
         let sep = if self.authorization_url.contains('?') {
             '&'
@@ -499,22 +599,11 @@ impl LoginFlow for PkceLoginFlow {
         })
     }
     fn build_auth_provider(&self, cli_name: &str) -> Option<DynAuthProvider> {
-        Some(Arc::new(OAuth2KeyringProvider::new(
-            &self.scheme,
-            cli_name,
-            &self.token_url,
-            &self.client_id,
-        )))
+        Some(Arc::new(
+            OAuth2KeyringProvider::new(&self.scheme, cli_name, &self.token_url, &self.client_id)
+                .with_refresh_params(self.refresh_params.clone()),
+        ))
     }
-}
-
-#[derive(Serialize)]
-struct PkceTokenForm<'a> {
-    grant_type: &'static str,
-    code: &'a str,
-    code_verifier: &'a str,
-    client_id: &'a str,
-    redirect_uri: &'a str,
 }
 
 async fn run_pkce(flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliError> {
@@ -567,13 +656,19 @@ async fn run_pkce(flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliError
 
     // Exchange the code.
     let http = token_http_client()?;
-    let form = PkceTokenForm {
-        grant_type: "authorization_code",
-        code: &code,
-        code_verifier: &verifier,
-        client_id: &flow.client_id,
-        redirect_uri: &flow.redirect_uri(),
-    };
+    let redirect_uri = flow.redirect_uri();
+    let mut form: Vec<(String, String)> = vec![
+        ("grant_type".to_string(), "authorization_code".to_string()),
+        ("code".to_string(), code.clone()),
+        ("code_verifier".to_string(), verifier.clone()),
+        ("client_id".to_string(), flow.client_id.clone()),
+        ("redirect_uri".to_string(), redirect_uri),
+    ];
+    extend_with_extra(
+        &mut form,
+        &flow.token_params,
+        &["grant_type", "code", "code_verifier", "client_id", "redirect_uri"],
+    );
     let resp = http
         .post(&flow.token_url)
         .form(&form)
@@ -767,6 +862,7 @@ pub struct OAuth2KeyringProvider {
     cli_name: String,
     token_url: String,
     client_id: String,
+    refresh_params: ExtraParams,
     cached: OnceLock<Result<SecretString, String>>,
 }
 
@@ -792,8 +888,16 @@ impl OAuth2KeyringProvider {
             cli_name: cli_name.to_string(),
             token_url: token_url.to_string(),
             client_id: client_id.to_string(),
+            refresh_params: Vec::new(),
             cached: OnceLock::new(),
         }
+    }
+
+    /// Attach extra literal parameters (e.g. `audience`) to the refresh-token request.
+    /// Defaults to none, so existing callers are unaffected.
+    pub fn with_refresh_params(mut self, params: ExtraParams) -> Self {
+        self.refresh_params = params;
+        self
     }
 
     fn resolve(&self) -> Result<SecretString, CliError> {
@@ -835,11 +939,12 @@ impl OAuth2KeyringProvider {
 
         // Refresh via token_url. RFC 6749 §6.
         let http = token_http_client()?;
-        let form = [
-            ("grant_type", "refresh_token"),
-            ("client_id", self.client_id.as_str()),
-            ("refresh_token", refresh),
+        let mut form: Vec<(String, String)> = vec![
+            ("grant_type".to_string(), "refresh_token".to_string()),
+            ("client_id".to_string(), self.client_id.clone()),
+            ("refresh_token".to_string(), refresh.to_string()),
         ];
+        extend_with_extra(&mut form, &self.refresh_params, &["grant_type", "client_id", "refresh_token"]);
         let resp = http
             .post(&self.token_url)
             .form(&form)
@@ -1295,6 +1400,51 @@ mod tests {
             serde_json::from_str(&mock.get("my-cli", "OAuth2").unwrap().unwrap()).unwrap();
         assert_eq!(stored.access_token, "device-refreshed-acc");
         assert_eq!(stored.refresh_token.as_deref(), Some("ref-2"));
+    }
+
+    // ---------- Extra params (audience) passthrough ----------
+
+    #[test]
+    fn pkce_authorize_url_appends_extra_authorization_params() {
+        let f = PkceLoginFlow::new("OAuth2")
+            .client_id("id")
+            .authorization_url("https://auth.example.com/authorize")
+            .token_url("https://auth.example.com/token")
+            .authorization_params([("audience", "https://api.acme.io")]);
+        let url = f.build_authorize_url("state123", "challenge123");
+        assert!(
+            url.contains("audience=https%3A%2F%2Fapi.acme.io"),
+            "audience missing from authorize URL: {url}"
+        );
+    }
+
+    #[test]
+    fn pkce_authorize_url_ignores_reserved_param_override() {
+        // A user must not be able to clobber protocol-reserved keys via extra params.
+        let f = PkceLoginFlow::new("OAuth2")
+            .client_id("real-id")
+            .authorization_url("https://auth.example.com/authorize")
+            .token_url("https://auth.example.com/token")
+            .authorization_params([("client_id", "attacker"), ("audience", "https://api.acme.io")]);
+        let url = f.build_authorize_url("s", "c");
+        assert!(url.contains("client_id=real-id"), "reserved client_id was overridden: {url}");
+        assert!(!url.contains("client_id=attacker"), "attacker client_id leaked: {url}");
+        assert!(url.contains("audience=https%3A%2F%2Fapi.acme.io"));
+    }
+
+    #[test]
+    fn extend_with_extra_appends_and_skips_reserved() {
+        // Shared helper used to build the token / device-authorization / refresh request bodies.
+        let extra: ExtraParams = vec![
+            ("audience".to_string(), "https://api.acme.io".to_string()),
+            ("grant_type".to_string(), "attacker".to_string()), // reserved — must be dropped
+        ];
+        let mut form: Vec<(String, String)> = vec![("grant_type".to_string(), "refresh_token".to_string())];
+        extend_with_extra(&mut form, &extra, &["grant_type", "client_id", "refresh_token"]);
+        assert!(form.contains(&("audience".to_string(), "https://api.acme.io".to_string())));
+        // The reserved `grant_type` was not clobbered or duplicated.
+        assert_eq!(form.iter().filter(|(k, _)| k == "grant_type").count(), 1);
+        assert!(form.iter().all(|(_, v)| v != "attacker"));
     }
 
     // ---------- PKCE ----------

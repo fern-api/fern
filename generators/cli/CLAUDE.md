@@ -33,10 +33,13 @@ The interactive public-client flows are also emitted:
 `PkceLoginFlow` and `configuration.deviceCode` (RFC 8628) to a
 `DeviceCodeLoginFlow`, each registered via `CliApp::login_flow(...)` (which
 also wires the request-time `OAuth2KeyringProvider`). Only the fields the
-SDK builders currently consume are emitted (client id, authorization /
-device / token URLs, scopes, and a loopback redirect port); the IR's
-`refreshUrl`, extra parameter maps, and `tokenHeader`/`tokenPrefix`, plus
-environment-variable client IDs, are not yet consumable and are skipped.
+SDK builders consume are emitted: client id, authorization / device / token
+URLs, scopes, a loopback redirect port, and the extra literal parameter maps
+(`authorizationParameters` / `deviceAuthorizationParameters` / `tokenParameters`
+/ `refreshParameters` — e.g. an Auth0 `audience`), which are appended to the
+authorize/token/refresh requests with protocol-reserved keys skipped. Still not
+consumed and therefore skipped: the IR's `refreshUrl`, `tokenHeader`/`tokenPrefix`,
+and environment-variable client IDs.
 
 We deserialize through `@fern-fern/ir-sdk`'s `IrSerialization`, so
 downstream code consumes typed `FernIr.IntermediateRepresentation` /

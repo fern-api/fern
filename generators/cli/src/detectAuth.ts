@@ -369,6 +369,11 @@ function authorizationCodeBinding(args: {
     if (redirectPort != null) {
         rustCall += `.redirect_port(${redirectPort})`;
     }
+    // Extra literal params (e.g. Auth0 `audience`). Optional — emitted only when present, so a
+    // config without them produces byte-identical output.
+    rustCall += renderParams("authorization_params", authorizationCode.authorizationParameters);
+    rustCall += renderParams("token_params", authorizationCode.tokenParameters);
+    rustCall += renderParams("refresh_params", authorizationCode.refreshParameters);
     rustCall += ")";
 
     return {
@@ -401,6 +406,9 @@ function deviceCodeBinding(args: { key: string; deviceCode: FernIr.OAuthDeviceCo
     if (scopes.length > 0) {
         rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
     }
+    rustCall += renderParams("device_authorization_params", deviceCode.deviceAuthorizationParameters);
+    rustCall += renderParams("token_params", deviceCode.tokenParameters);
+    rustCall += renderParams("refresh_params", deviceCode.refreshParameters);
     rustCall += ")";
 
     return {
@@ -423,6 +431,24 @@ function literalPublicClientId(clientId: FernIr.OAuthPublicClientId): string | u
         environmentVariable: () => undefined,
         _other: () => undefined
     });
+}
+
+/**
+ * Renders an optional literal-parameter map as a Rust builder call, e.g.
+ * `.token_params([("audience", "https://api.example.com")])`. Returns an empty string when the
+ * map is absent or empty, so a config without extra params produces byte-identical output. Keys
+ * are sorted for deterministic output.
+ */
+function renderParams(setter: string, params: Record<string, string> | undefined): string {
+    if (params == null) {
+        return "";
+    }
+    const entries = Object.entries(params).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+    if (entries.length === 0) {
+        return "";
+    }
+    const pairs = entries.map(([key, value]) => `(${rustString(key)}, ${rustString(value)})`).join(", ");
+    return `.${setter}([${pairs}])`;
 }
 
 /**
