@@ -894,7 +894,7 @@ class ClientWrapperGenerator:
                 username_omitted = basic_auth_scheme.username_omit is True
                 password_omitted = basic_auth_scheme.password_omit is True
 
-                if not self._context.ir.sdk_config.is_auth_mandatory:
+                if not self._context.ir.sdk_config.is_auth_mandatory or self._context.custom_config.optional_auth:
                     # Build condition and args based on which fields are omitted vs present
                     conditions = []
                     if not username_omitted:
@@ -1154,7 +1154,7 @@ class ClientWrapperGenerator:
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 header_auth_scheme.value_type
             )
-            if self._has_oauth() and not type_hint.is_optional:
+            if (self._has_oauth() or self._context.custom_config.optional_auth) and not type_hint.is_optional:
                 type_hint = AST.TypeHint.optional(type_hint)
             parameters.append(
                 ConstructorParameter(
@@ -1178,7 +1178,11 @@ class ClientWrapperGenerator:
         # present (auth: any), make the credentials optional so users can authenticate
         # with either OAuth or basic auth alone.
         basic_auth_scheme = self._get_basic_auth_scheme()
-        basic_auth_is_required = self._context.ir.sdk_config.is_auth_mandatory and not self._has_oauth()
+        basic_auth_is_required = (
+            self._context.ir.sdk_config.is_auth_mandatory
+            and not self._has_oauth()
+            and not self._context.custom_config.optional_auth
+        )
         if basic_auth_scheme is not None:
             username_omitted = basic_auth_scheme.username_omit is True
             password_omitted = basic_auth_scheme.password_omit is True
@@ -1319,7 +1323,11 @@ class ClientWrapperGenerator:
             # For OAuth flows, the OAuthTokenProvider needs to create a SyncClientWrapper without a token
             # to fetch the initial token. For plain bearer auth, use the is_auth_mandatory flag.
             # This matches TypeScript's behavior where the auth client doesn't require a token.
-            is_token_optional = self._has_oauth() or not self._context.ir.sdk_config.is_auth_mandatory
+            is_token_optional = (
+                self._has_oauth()
+                or not self._context.ir.sdk_config.is_auth_mandatory
+                or self._context.custom_config.optional_auth
+            )
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,

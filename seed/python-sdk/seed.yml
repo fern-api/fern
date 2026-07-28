@@ -408,6 +408,10 @@ fixtures:
   query-parameters-openapi-as-objects:
     - customConfig: null
       outputFolder: no-custom-config
+  simple-api:
+    - customConfig:
+        optional-auth: true
+      outputFolder: optional-auth
   simple-fhir:
     - customConfig:
         use_inheritance_for_extended_models: false
