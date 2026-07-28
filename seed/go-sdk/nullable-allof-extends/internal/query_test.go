@@ -373,6 +373,8 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 	})
 
 	t.Run("nil input returns empty values", func(t *testing.T) {
+		defer setApplyQueryDefaultsOnNilRequest(false)()
+
 		defaults := map[string]any{
 			"name": "default-name",
 			"age":  25,
