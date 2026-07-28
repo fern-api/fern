@@ -10,6 +10,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     importPath: relativePathSchema.optional(),
 
     alwaysSendRequiredProperties: z.boolean().optional(),
+    applyQueryDefaultsOnNilRequest: z.boolean().optional(),
     clientConstructorName: z.string().optional(),
     clientName: z.string().optional(),
     enableExplicitNull: z.boolean().optional(),
@@ -24,6 +25,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     useDefaultRequestParameterValues: z.boolean().optional(),
     gettersPassByValue: z.boolean().optional(),
     dedupeUnionBaseProperties: z.boolean().optional(),
+    serverUrlVariables: z.boolean().optional(),
     enableWireTests: z.boolean().optional(),
     exportAllRequestsAtRoot: z.boolean().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),

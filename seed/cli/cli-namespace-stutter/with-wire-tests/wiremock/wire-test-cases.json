@@ -1,0 +1,27 @@
+{
+  "binaryName": "versioned-store",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/versioned-store/openapi0.json",
+      "namespace": "v1"
+    }
+  ],
+  "authEnvVars": [],
+  "authMock": null,
+  "cases": [
+    {
+      "id": "list",
+      "method": "GET",
+      "path": "/items",
+      "params": {},
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]"
+      }
+    }
+  ]
+}

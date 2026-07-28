@@ -51,6 +51,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
         | {
               prioritizeCurrentProduct: boolean | undefined;
               defaultFilterByCurrentProduct: boolean | undefined;
+              externalSitemaps: string[] | undefined;
           }
         | undefined;
 }

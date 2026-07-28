@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=../../../../../fern.schema.json
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+      expires_in: integer
+      refresh_token: optional<string>
+
+# This service lives in the `token` subpackage (file name `token.yml`), so the OAuth
+# token endpoint referenced by `token.getToken` is NOT under an `auth` subpackage.
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        body:
+          properties:
+            client_id: string
+            client_secret: string
+            audience: literal<"https://api.example.com">
+            grant_type: literal<"client_credentials">
+            # Non-literal custom token-request properties: these become extra
+            # constructor parameters on the generated OAuthTokenSupplier, so the
+            # OAuthAuthProvider must pass matching args (regression: it previously
+            # emitted a fixed 3-arg call and failed to compile).
+            state: optional<string>
+            permissions: optional<list<string>>
+      response: TokenResponse

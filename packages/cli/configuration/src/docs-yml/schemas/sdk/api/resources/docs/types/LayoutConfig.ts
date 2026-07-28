@@ -105,4 +105,10 @@ export interface LayoutConfig {
      * - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
      */
     changelogLayout?: FernDocsConfig.ChangelogLayout;
+    /**
+     * If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)
+     * are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
+     * availability badge is unaffected by this setting.
+     */
+    showNavAvailabilityBadges?: boolean;
 }

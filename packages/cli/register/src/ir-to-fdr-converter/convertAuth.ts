@@ -58,8 +58,20 @@ function convertAuthScheme({
                 description: scheme.docs
             };
         case "oauth": {
+            // FDR only models the client-credentials playground flow. The authorization-code
+            // (PKCE) flow is a public-client browser login handled by generated CLIs, not the
+            // docs playground, so it is surfaced to FDR as a plain bearer scheme.
+            const configuration = scheme.configuration;
+            if (configuration.type !== "clientCredentials") {
+                return {
+                    type: "bearerAuth",
+                    tokenName: "token",
+                    description: scheme.docs
+                };
+            }
+
             const tokenPath =
-                scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
+                configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
                     ?.map((p) => getOriginalName(p.name))
                     .join(".") || "$.body.access_token";
 
@@ -71,11 +83,11 @@ function convertAuthScheme({
                           value: {
                               type: "referencedEndpoint",
                               endpointId: FdrCjsSdk.EndpointId(
-                                  scheme.configuration.tokenEndpoint.endpointReference.endpointId
+                                  configuration.tokenEndpoint.endpointReference.endpointId
                               ),
                               accessTokenLocator: tokenPath,
-                              headerName: scheme.configuration.tokenHeader,
-                              tokenPrefix: scheme.configuration.tokenPrefix,
+                              headerName: configuration.tokenHeader,
+                              tokenPrefix: configuration.tokenPrefix,
                               description: scheme.docs
                           }
                       }

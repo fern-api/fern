@@ -158,6 +158,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     )
                 );
 
+                this.writeEndpointAuthHeaders({ writer, endpoint });
+
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
                     queryParameterCodeBlock.code.write(writer);
@@ -222,6 +224,53 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
             })
         });
+    }
+
+    /**
+     * Under ENDPOINT_SECURITY, computes this endpoint's routed auth headers from the shared
+     * RoutingAuthProvider and merges them into the request options so only the schemes this
+     * endpoint declares are applied. Emits nothing for other auth requirements (auth is
+     * applied flatly there) or for endpoints that declare no security requirements.
+     */
+    private writeEndpointAuthHeaders({
+        writer,
+        endpoint
+    }: {
+        writer: php.Writer;
+        endpoint: FernIr.HttpEndpoint;
+    }): void {
+        if (!this.context.isEndpointSecurity()) {
+            return;
+        }
+        const security = endpoint.security;
+        if (security == null || security.length === 0) {
+            return;
+        }
+        const optionsName = this.context.getRequestOptionsName();
+        const headersOption = this.context.getHeadersOptionName();
+        writer.write(`$${optionsName}['${headersOption}'] = array_merge(`);
+        // Null-safe: the token providers' internal auth client has no routing provider, but
+        // its (unauthenticated) endpoints never declare security so this path is not reached
+        // for them. `?? []` keeps PHPStan happy for the nullable subclient field.
+        writer.writeLine(
+            `$this->routingAuthProvider?->getAuthHeaders(${this.getEndpointSecurityLiteral(security)}) ?? [], `
+        );
+        writer.writeTextStatement(`$${optionsName}['${headersOption}'] ?? [])`);
+    }
+
+    /**
+     * Renders an endpoint's static security requirements as a PHP array literal:
+     * an OR-list of AND-maps of scheme key to its (unused-at-runtime) scopes.
+     */
+    private getEndpointSecurityLiteral(security: Record<string, string[]>[]): string {
+        const requirements = security.map((requirement) => {
+            const entries = Object.entries(requirement).map(([schemeKey, scopes]) => {
+                const scopeLiteral = scopes.map((scope) => `'${scope.replace(/'/g, "\\'")}'`).join(", ");
+                return `'${schemeKey}' => [${scopeLiteral}]`;
+            });
+            return `[${entries.join(", ")}]`;
+        });
+        return `[${requirements.join(", ")}]`;
     }
 
     /**

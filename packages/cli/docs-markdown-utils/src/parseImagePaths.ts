@@ -170,7 +170,7 @@ function parseMarkdownImage(
 
     const urlEnd = i - 1;
     const url = content.slice(urlStart, urlEnd).trim();
-    const rawSrc = trimAnchor(url);
+    const rawSrc = trimAnchor(splitDestinationAndTitle(url));
     const src = rawSrc != null ? unescapeMarkdownUrl(rawSrc) : undefined;
     const resolvedPath = resolvePath(src, metadata);
 
@@ -187,6 +187,43 @@ function parseMarkdownImage(
     }
 
     return null;
+}
+
+/**
+ * Returns the leading destination of a markdown link/image, dropping the optional
+ * title that may follow it: `path/img.png "My title"` -> `path/img.png`. The result
+ * is always a prefix of `url`, so callers can recover the title by slicing.
+ */
+function splitDestinationAndTitle(url: string): string {
+    if (url.startsWith("<")) {
+        let i = 1;
+        while (i < url.length && url[i] !== ">") {
+            i += url[i] === "\\" ? 2 : 1;
+        }
+        // an unterminated `<` is not a delimited destination, so fall back to
+        // splitting on whitespace below
+        if (i < url.length) {
+            return url.slice(0, i + 1);
+        }
+    }
+
+    let i = 0;
+    while (i < url.length && !/\s/.test(url[i] as string)) {
+        i += url[i] === "\\" ? 2 : 1;
+    }
+
+    const title = url.slice(i).trim();
+    if (title.length === 0) {
+        return url.slice(0, i);
+    }
+
+    const isTitle =
+        title.length >= 2 &&
+        ((title.startsWith('"') && title.endsWith('"')) ||
+            (title.startsWith("'") && title.endsWith("'")) ||
+            (title.startsWith("(") && title.endsWith(")")));
+
+    return isTitle ? url.slice(0, i) : url;
 }
 
 function parseMarkdownLink(
@@ -772,8 +809,10 @@ export function replaceImagePathsAndUrls(
                 }
                 const urlEnd = j - 1;
                 const href = content.slice(urlStart, urlEnd).trim();
-                const trimmedHref = trimAnchor(href) ?? href;
-                const hrefAnchor = trimmedHref !== href ? href.slice(trimmedHref.length) : "";
+                const destination = splitDestinationAndTitle(href);
+                const hrefTitle = href.slice(destination.length);
+                const trimmedHref = trimAnchor(destination) ?? destination;
+                const hrefAnchor = trimmedHref !== destination ? destination.slice(trimmedHref.length) : "";
                 const replacedHref = getReplacedHref({
                     href: trimmedHref,
                     markdownFilesToPathName,
@@ -783,7 +822,7 @@ export function replaceImagePathsAndUrls(
                     edits.push({
                         start: urlStart,
                         end: urlEnd,
-                        replacement: replacedHref.slug + hrefAnchor
+                        replacement: replacedHref.slug + hrefAnchor + hrefTitle
                     });
                 }
                 i = j;

@@ -198,6 +198,48 @@ describe("getAvailableFixtures", () => {
             expect(result).toEqual(["alias", "python-special"]);
         });
     });
+
+    describe("cli prefix (hyphen-boundary matching)", () => {
+        it("scopes cli-* fixtures to the cli generator", () => {
+            const generator = createGenerator("cli");
+            const allFixtures = ["alias", "cli-reserved-keywords", "cli-multi-spec", "java-special"];
+
+            const result = getAvailableFixturesFromList(generator, allFixtures, false);
+
+            expect(result).toEqual(["alias", "cli-reserved-keywords", "cli-multi-spec"]);
+            expect(result).not.toContain("java-special");
+        });
+
+        it("hides cli-* fixtures from non-cli generators", () => {
+            const generator = createGenerator("swift-sdk");
+            const allFixtures = ["alias", "cli-reserved-keywords", "cli-multi-spec"];
+
+            const result = getAvailableFixturesFromList(generator, allFixtures, false);
+
+            expect(result).toEqual(["alias"]);
+            expect(result).not.toContain("cli-reserved-keywords");
+            expect(result).not.toContain("cli-multi-spec");
+        });
+
+        it("does not scope client-side-params (no hyphen boundary after 'cli')", () => {
+            // `client-side-params` starts with the substring "cli" but is a
+            // generic fixture — hyphen-boundary matching must keep it available
+            // to every generator, not scope it to the cli generator.
+            const swiftGenerator = createGenerator("swift-sdk");
+            const cliGenerator = createGenerator("cli");
+            const allFixtures = ["alias", "client-side-params", "cli-reserved-keywords"];
+
+            expect(getAvailableFixturesFromList(swiftGenerator, allFixtures, false)).toEqual([
+                "alias",
+                "client-side-params"
+            ]);
+            expect(getAvailableFixturesFromList(cliGenerator, allFixtures, false)).toEqual([
+                "alias",
+                "client-side-params",
+                "cli-reserved-keywords"
+            ]);
+        });
+    });
 });
 
 describe("splitFixturesIntoGroups", () => {

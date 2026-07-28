@@ -626,7 +626,21 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         if (this.ir.sdkConfig.idempotencyKeyGeneration != null) {
             files.push(AsIsFiles.IdempotencyKey);
         }
+        if (this.hasHmacWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
+        }
         return files;
+    }
+
+    private hasHmacWebhookSignatureVerification(): boolean {
+        for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (webhook.signatureVerification?.type === "hmac") {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private getCoreStreamAsIsFiles(): string[] {
@@ -668,8 +682,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.RawClientTest,
             ...this.getCoreStreamTestAsIsFiles(),
             ...this.getCorePagerTestAsIsFiles(),
-            ...this.getCoreSerializationTestAsIsFiles()
+            ...this.getCoreSerializationTestAsIsFiles(),
+            ...this.getCoreWebhookTestAsIsFiles()
         ];
+    }
+
+    private getCoreWebhookTestAsIsFiles(): string[] {
+        return this.hasHmacWebhookSignatureVerification() ? [AsIsFiles.WebhookSignatureTest] : [];
     }
 
     private getCoreStreamTestAsIsFiles(): string[] {
@@ -842,5 +861,23 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             }
         }
         return undefined;
+    }
+
+    /**
+     * Whether the API routes auth per-endpoint: each endpoint declares its own set of
+     * required auth schemes (via `HttpEndpoint.security`) rather than applying every
+     * configured scheme's credentials flatly to every request. When true, the flat
+     * auth-header wiring is suppressed and a RoutingAuthProvider selects the schemes
+     * for each endpoint at call time.
+     */
+    public isEndpointSecurity(): boolean {
+        return this.ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+    }
+
+    public getRoutingAuthProviderClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "RoutingAuthProvider",
+            namespace: this.getCoreNamespace()
+        });
     }
 }

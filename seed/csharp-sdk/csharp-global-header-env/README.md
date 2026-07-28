@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedCsharpGlobalHeaderEnv;
 
-var client = new SeedCsharpGlobalHeaderEnvClient("VERSION");
+var client = new SeedCsharpGlobalHeaderEnvClient("USERNAME", "PASSWORD", "TOKEN", "VERSION");
 await client.Service.GetWithApiVersionAsync();
 ```
 

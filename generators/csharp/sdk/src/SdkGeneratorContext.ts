@@ -149,6 +149,14 @@ export class SdkGeneratorContext extends GeneratorContext {
         );
     }
 
+    public hasWebhookSignatureVerification(): boolean {
+        return Object.values(this.ir.webhookGroups).some((webhookGroup) =>
+            webhookGroup.some(
+                (webhook) => webhook.signatureVerification != null && webhook.signatureVerification.type === "hmac"
+            )
+        );
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.Constants, AsIsFiles.Extensions, AsIsFiles.ValueConvert];
         // JSON stuff
@@ -205,6 +213,10 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.IdempotencyHeaderExtensions);
         }
 
+        if (this.hasWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
+        }
+
         if (this.settings.includeExceptionHandler) {
             files.push(AsIsFiles.ExceptionHandler);
         }
@@ -255,6 +267,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
+        }
+        if (this.hasWebhookSignatureVerification()) {
+            files.push(AsIsFiles.Test.WebhookSignatureTests);
         }
         if (this.hasWebSocketEndpoints) {
             Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));

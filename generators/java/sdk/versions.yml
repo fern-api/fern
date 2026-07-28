@@ -1,4 +1,120 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.4
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `env` and `client-default` values. The
+        builder initializes the header from the environment variable when set,
+        otherwise the client default, and an explicitly provided value still takes
+        precedence. Previously a global header was only sent when the caller set it
+        explicitly.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.3
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` thrown at runtime on every OAuth (or inferred-auth) authenticated
+        request under `auth: endpoint-security`. To fetch a token, the OAuth auth provider builds an
+        internal client for the (unauthenticated) token endpoint whose `ClientOptions` has no auth
+        provider; `ClientOptions.getAuthHeaders(...)` then dereferenced the null provider and threw. It
+        now returns no auth headers when no auth provider is configured, so token fetching (and therefore
+        all OAuth-authenticated calls) works.
+      type: fix
+    - summary: |
+        Fix generated code failing to compile under `auth: endpoint-security` when the OAuth token
+        endpoint declares custom request properties (scopes, custom body properties, or headers). The
+        generated `OAuthTokenSupplier` constructor takes an extra parameter for each such property, but
+        the `OAuthAuthProvider` always called it with a fixed three arguments
+        (`clientId, clientSecret, authClient`), producing a "constructor cannot be applied to given
+        types" error. `OAuthAuthProvider` now passes a matching argument for every extra property
+        (`Optional.empty()` for optional properties), sharing the property computation with the token
+        supplier generator so the two cannot drift.
+      type: fix
+    - summary: |
+        Fix generated OAuth code snippets and README failing to compile under `auth: endpoint-security`.
+        The snippet/README examples instantiate the client with `Client.withCredentials(clientId,
+        clientSecret)`, but under endpoint-security the client builder is not staged, so that factory was
+        never generated — producing "cannot find symbol: method withCredentials" errors across the
+        generated example files. The client now generates a `withCredentials(clientId, clientSecret)`
+        convenience factory under endpoint-security that returns the standard builder pre-configured with
+        the OAuth credentials.
+      type: fix
+    - summary: |
+        Fix generated wire tests asserting OAuth authentication on endpoints that do not require it under
+        `auth: endpoint-security`. The wire-test generator applied the OAuth token flow (enqueue a token
+        response and assert `Authorization: Bearer ...`) to every test method based on an API-level check,
+        so a test for an `auth: []` (no-auth) endpoint enqueued a token and asserted a bearer header the
+        SDK correctly never sends — failing at runtime. Under endpoint-security the OAuth flow is now
+        applied per endpoint (only to endpoints that require auth); global-auth behavior is unchanged.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.2
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` when generating an SDK with `auth: endpoint-security` whose
+        OAuth (or inferred-auth) token endpoint is grouped under a subpackage not named `auth`.
+        The `RoutingAuthProvider` setup previously located the auth client by scanning for a
+        subpackage literally named `auth`, yielding `null` (and an NPE) when the token endpoint
+        lived in a differently-named group (e.g. `token`). It now resolves the client from the
+        token endpoint's actual subpackage, falling back to the core `AuthClient` when the token
+        endpoint sits at the API root.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.1
+  changelogEntry:
+    - summary: |
+        Fix `ConsoleLogger` dropping DEBUG-level log messages. The `ConsoleHandler` used by the
+        default logger keeps java.util.logging's default `INFO` handler level, so `FINE` records
+        (SDK debug logs, including HTTP request/response logging) were silently discarded even
+        when `LogConfig` was configured with `LogLevel.DEBUG` and `silent(false)`. The handler
+        level is now set to `ALL` so the configured `LogLevel` controls filtering.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 4.15.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding support. When a webhook's HMAC signature verification
+        declares a `bodyHashBinding` in the IR, the generated `verifySignature` helper now
+        recomputes the encoded hash of the raw request body using the binding's own
+        algorithm/encoding, extracts the configured query parameter from the notification URL,
+        and timing-safe-compares them (failing closed) before performing the existing HMAC
+        verification over the verbatim notification URL. A stdlib-only `WebhookBodyHash` core
+        utility (unkeyed digest plus read-only query-parameter extraction) is emitted alongside
+        the existing signature utility. Output is unchanged when no binding is present.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated SDK now emits a `WebhooksHelper` with a static
+        `verifySignature` method and a stdlib-only core utility for HMAC computation and
+        constant-time comparison.
+      type: feat
+    - summary: |
+        Extend the generated `verifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, a `Map<String, ?>`
+          overload accepts POST body parameters whose values are a `String` or a
+          `Collection<String>`; keys are sorted, each key's values are deduped and sorted, and
+          `key + value` pairs are concatenated with no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check.
+        - No-throw: the verifier is a pure boolean. Every throw on the verification path (null
+          or empty inputs, a missing/malformed timestamp) now returns `false`.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `notificationUrlCandidates` method is added to the
+          `WebhookSignature` core utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 4.14.6
   changelogEntry:
     - summary: |

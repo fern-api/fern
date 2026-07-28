@@ -1,4 +1,87 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.54.0
+  changelogEntry:
+    - summary: |
+        Add the `applyQueryDefaultsOnNilRequest` option, which applies query parameter defaults
+        when a request is `nil`. `internal.QueryValuesWithDefaults` returns early for a `nil`
+        request, so defaults declared via `x-fern-default` are silently dropped and the request is
+        sent without them. When the option is enabled, a `nil` request behaves like a zero-value
+        request struct, which matters most for paginated endpoints whose response shape depends on
+        a defaulted query parameter. The option defaults to `false` to preserve today's behavior.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 1.53.1
+  changelogEntry:
+    - summary: |
+        Client-level global header options (e.g. `option.WithVersion(...)` passed
+        to the root client constructor) are no longer clobbered by env-var or
+        `client-default` resolution on every request. Env and client-default
+        fallbacks are now resolved once at client construction, and per-request
+        options only override the header when explicitly set. Precedence is:
+        request-level option > client-level option > env var > client default.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 1.53.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 1.52.0
+  changelogEntry:
+    - summary: |
+        Add a `serverUrlVariables` generator config option (default true) that lets consumers opt out of
+        generated server URL variable options and templated base-URL interpolation. When disabled, the
+        generator no longer emits the per-variable client options nor the construction-time base-URL
+        template interpolation, falling back to the pre-feature base-URL behavior.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 1.51.0
+  changelogEntry:
+    - summary: |
+        Add body-hash binding verification for HMAC webhooks that transmit a hash of the raw request body in the notification URL.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated Go SDK now emits a `WebhooksHelper` with a
+        `VerifySignature` method that validates the signature (and optional timestamp) using a
+        new stdlib-only core utility (`crypto/hmac`/`crypto/sha*`/`encoding` with constant-time
+        comparison).
+      type: feat
+    - summary: |
+        Extend the generated `VerifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, the `requestBody`
+          parameter accepts either a raw string or a `map[string][]string`-shaped multimap of
+          POST body parameters; keys are sorted, each key's values are deduped and sorted, and
+          `key + value` pairs are concatenated with no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check. The body-hash check runs once above the candidate loop.
+        - No-throw: the verifier fails closed. Every verification-path failure (null/empty
+          inputs, a missing/malformed timestamp, a body-hash type mismatch) now returns
+          `false` rather than an error.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `NotificationUrlCandidates` helper (using
+          `net/url`) is added to the core webhook utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 1.50.1
   changelogEntry:
     - summary: |

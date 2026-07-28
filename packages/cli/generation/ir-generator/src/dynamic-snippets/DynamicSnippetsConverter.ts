@@ -928,6 +928,12 @@ export class DynamicSnippetsConverter {
 
     private getOAuthCustomProperties(scheme: OAuthScheme): DynamicSnippets.NamedParameter[] {
         const parameters: DynamicSnippets.NamedParameter[] = [];
+        // Only the client-credentials flow has a token-request contract whose custom properties
+        // become snippet parameters. The authorization-code (PKCE) flow is a browser login with
+        // no such request-time inputs.
+        if (scheme.configuration.type !== "clientCredentials") {
+            return parameters;
+        }
         const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
         for (const customProperty of customProperties) {
             if (isExcludedOAuthProperty(customProperty.property.valueType)) {
@@ -954,6 +960,9 @@ export class DynamicSnippetsConverter {
 
     private getOAuthCustomPropertyValues(scheme: OAuthScheme): Record<string, unknown> {
         const values: Record<string, unknown> = {};
+        if (scheme.configuration.type !== "clientCredentials") {
+            return values;
+        }
         const customProperties = scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? [];
         for (const customProperty of customProperties) {
             if (isExcludedOAuthProperty(customProperty.property.valueType)) {

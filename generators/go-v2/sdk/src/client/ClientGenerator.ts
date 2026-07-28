@@ -12,6 +12,7 @@ import {
     getRequestPropertyFieldName,
     getRequestPropertyValueType,
     isGrantTypeRequestProperty,
+    isPlainBooleanType,
     isPlainStringType,
     isRequestPropertyPointer,
     isTypeReferenceLiteral,
@@ -317,6 +318,13 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
      */
     private getServerVariableConfig(): ServerVariableConfig {
         const empty: ServerVariableConfig = { variables: [], environments: [] };
+        // Gated behind the `serverUrlVariables` config option (default true). When
+        // disabled, no server-URL-variable options nor the construction-time base-URL
+        // template interpolation are emitted, matching the Go v1 generator's suppression
+        // and falling back to the pre-feature base-URL behavior.
+        if (this.context.customConfig.serverUrlVariables === false) {
+            return empty;
+        }
         const config = this.context.ir.environments;
         if (config == null) {
             return empty;
@@ -594,13 +602,22 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     });
                 }
             }
-            // After env fallback, apply clientDefault if present and type is plain string
-            if (header.clientDefault != null && isPlainStringType(header.valueType)) {
-                this.writeClientDefaultConditional({
-                    writer,
-                    propertyReference: this.getOptionsPropertyReference(header.name),
-                    clientDefault: header.clientDefault
-                });
+            // After env fallback, apply clientDefault if present
+            if (header.clientDefault != null) {
+                if (isTypeReferencePointer(header.valueType, this.context.ir.types)) {
+                    this.writeOptionalClientDefaultConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        clientDefault: header.clientDefault,
+                        localVariableName: `${this.context.getParameterName(header.name)}Default`
+                    });
+                } else if (isPlainStringType(header.valueType) || isPlainBooleanType(header.valueType)) {
+                    this.writeClientDefaultConditional({
+                        writer,
+                        propertyReference: this.getOptionsPropertyReference(header.name),
+                        clientDefault: header.clientDefault
+                    });
+                }
             }
         }
     }
@@ -1319,14 +1336,39 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         propertyReference: go.Selector;
         clientDefault: FernIr.Literal;
     }): void {
+        const zeroValue = clientDefault.type === "boolean" ? "false" : '""';
         writer.write("if ");
         writer.writeNode(propertyReference);
-        writer.writeLine(' == "" {');
+        writer.writeLine(` == ${zeroValue} {`);
         writer.indent();
         writer.writeNode(propertyReference);
         writer.write(" = ");
         writer.writeNode(this.context.getLiteralValue(clientDefault));
         writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private writeOptionalClientDefaultConditional({
+        writer,
+        propertyReference,
+        clientDefault,
+        localVariableName
+    }: {
+        writer: go.Writer;
+        propertyReference: go.Selector;
+        clientDefault: FernIr.Literal;
+        localVariableName: string;
+    }): void {
+        writer.write("if ");
+        writer.writeNode(propertyReference);
+        writer.writeLine(" == nil {");
+        writer.indent();
+        writer.write(`${localVariableName} := `);
+        writer.writeNode(this.context.getLiteralValue(clientDefault));
+        writer.newLine();
+        writer.writeNode(propertyReference);
+        writer.writeLine(` = &${localVariableName}`);
         writer.dedent();
         writer.writeLine("}");
     }

@@ -234,7 +234,19 @@ module <%= gem_namespace %>
 
           @auth_provider.auth_headers
         end
+<% if (endpointSecurity) { %>
+        # Resolves the auth headers for a single endpoint given its declared security
+        # requirements. Under endpoint-security each endpoint applies only the schemes it
+        # declares, so it delegates to the routing auth provider with its own `security`.
+        # Returns an empty hash when no auth provider is configured.
+        # @param security [Array, nil] The endpoint's security requirements.
+        # @return [Hash] The auth headers to send for this endpoint.
+        def auth_headers_for_endpoint(security:)
+          return {} if @auth_provider.nil?
 
+          @auth_provider.auth_headers_for_endpoint(security: security)
+        end
+<% } %>
         # @param url [URI::Generic] The url to the resource.
         # @param method [String] The HTTP method to use.
         # @param headers [Hash] The headers for the request.

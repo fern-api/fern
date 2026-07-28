@@ -100,6 +100,7 @@ export interface APIDefinitionSettings {
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
     disambiguateRequestNames: boolean | undefined;
+    ignoreTags: boolean | undefined;
 }
 
 export interface GitSource {

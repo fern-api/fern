@@ -345,6 +345,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .addStatement("return $T.builder()", builderName)
                             .build());
         } else {
+            // Under endpoint-security the builder is not staged (auth is optional per-endpoint), so
+            // there is no _CredentialsAuth withCredentials(...) factory. Generated snippets/README
+            // for OAuth still reference `withCredentials(clientId, clientSecret)`, so provide it as a
+            // convenience that pre-sets the OAuth credentials on the standard builder.
+            if (hasOAuthClientCredentials && generatorContext.isEndpointSecurity()) {
+                result.getClientImpl()
+                        .addMethod(MethodSpec.methodBuilder("withCredentials")
+                                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                                .addJavadoc("Creates a client builder pre-configured with OAuth client credentials.\n")
+                                .addJavadoc("@param clientId The OAuth client ID\n")
+                                .addJavadoc("@param clientSecret The OAuth client secret\n")
+                                .addJavadoc("@return A builder configured with the provided OAuth credentials")
+                                .addParameter(String.class, "clientId")
+                                .addParameter(String.class, "clientSecret")
+                                .returns(builderName)
+                                .addStatement("return builder().clientId(clientId).clientSecret(clientSecret)")
+                                .build());
+            }
             result.getClientImpl()
                     .addMethod(MethodSpec.methodBuilder("builder")
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -548,12 +566,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             if (hasCustomHeaders) {
                 generatorContext.getIr().getHeaders().forEach(httpHeader -> {
-                    authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
-                            .key(AuthSchemeKey.of(NameUtils.getWireValue(httpHeader.getName())))
-                            .name(httpHeader.getName())
-                            .valueType(httpHeader.getValueType())
-                            .docs(httpHeader.getDocs())
-                            .build());
+                    authSchemeHandler.visitNonAuthHeader(
+                            HeaderAuthScheme.builder()
+                                    .key(AuthSchemeKey.of(NameUtils.getWireValue(httpHeader.getName())))
+                                    .name(httpHeader.getName())
+                                    .valueType(httpHeader.getValueType())
+                                    .headerEnvVar(httpHeader.getEnv().map(EnvironmentVariable::of))
+                                    .docs(httpHeader.getDocs())
+                                    .build(),
+                            httpHeader.getClientDefault());
                 });
             }
 
@@ -1315,6 +1336,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             final boolean isInferredAuth;
             final boolean fieldNameOmitted;
             final boolean secondaryFieldNameOmitted;
+            // For OAuth/InferredAuth: the client class of the subpackage that owns the token
+            // endpoint, resolved from the token endpoint's subpackage id. Used to build the auth
+            // client in the RoutingAuthProvider setup. Null for schemes that don't need it.
+            ClassName tokenEndpointAuthClientClassName;
 
             AuthProviderInfo(
                     String schemeKey,
@@ -1682,7 +1707,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 String envVarHint =
                         "Please provide the required credentials for " + schemeKey + " when initializing the client";
                 // Store info for InferredAuth - requires auth client and token supplier
-                authProviderInfos.add(new AuthProviderInfo(
+                AuthProviderInfo inferredInfo = new AuthProviderInfo(
                         schemeKey,
                         "InferredAuthProvider",
                         credentialPropertyNames.isEmpty() ? "clientId" : credentialPropertyNames.get(0),
@@ -1690,7 +1715,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         envVarHint,
                         false,
                         false,
-                        true));
+                        true);
+                // Resolve the auth client from the token endpoint's actual subpackage (not a
+                // hardcoded "auth" subpackage, which may not exist).
+                inferredInfo.tokenEndpointAuthClientClassName = authClientClassName;
+                authProviderInfos.add(inferredInfo);
             } else if (configureAuthMethod != null) {
                 String condition = requiredCredentialPropertyNames.stream()
                         .map(name -> "this." + name + " != null")
@@ -1925,7 +1954,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .append(clientSecretEnvVar)
                                     .append(" environment variables");
                         }
-                        authProviderInfos.add(new AuthProviderInfo(
+                        AuthProviderInfo oauthInfo = new AuthProviderInfo(
                                 "OAuth",
                                 "OAuthAuthProvider",
                                 "clientId",
@@ -1933,7 +1962,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 envVarHint.toString(),
                                 false,
                                 true,
-                                false));
+                                false);
+                        // Resolve the auth client from the token endpoint's actual subpackage (not
+                        // a hardcoded "auth" subpackage, which may not exist).
+                        oauthInfo.tokenEndpointAuthClientClassName = authClientClassName;
+                        authProviderInfos.add(oauthInfo);
                     } else if (configureAuthMethod != null) {
                         // Token override is always enabled - check for token first
                         configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
@@ -2538,17 +2571,26 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {
-            return visitHeaderBase(header, false);
+            return visitNonAuthHeader(header, Optional.empty());
+        }
+
+        public Void visitNonAuthHeader(HeaderAuthScheme header, Optional<Literal> clientDefault) {
+            return visitHeaderBase(header, false, clientDefault);
         }
 
         public Void visitHeaderBase(HeaderAuthScheme header, Boolean respectMandatoryAuth) {
+            return visitHeaderBase(header, respectMandatoryAuth, Optional.empty());
+        }
+
+        public Void visitHeaderBase(
+                HeaderAuthScheme header, Boolean respectMandatoryAuth, Optional<Literal> clientDefault) {
             String fieldName =
                     NameUtils.getName(header.getName()).getCamelCase().getSafeName();
             // Never not create a setter or a null check if it's a literal
             if ((respectMandatoryAuth && isMandatory)
                     || !(header.getValueType().isContainer()
                             && header.getValueType().getContainer().get().isLiteral())) {
-                createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty());
+                createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty(), Optional.empty(), clientDefault);
                 boolean skipValidation = generatorContext.isEndpointSecurity() && respectMandatoryAuth;
                 if (!skipValidation
                         && ((respectMandatoryAuth && isMandatory)
@@ -2646,6 +2688,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 Optional<EnvironmentVariable> environmentVariable,
                 Optional<Literal> literal,
                 Optional<TypeName> customType) {
+            createSetter(fieldName, environmentVariable, literal, customType, Optional.empty());
+        }
+
+        private void createSetter(
+                String fieldName,
+                Optional<EnvironmentVariable> environmentVariable,
+                Optional<Literal> literal,
+                Optional<TypeName> customType,
+                Optional<Literal> clientDefault) {
             // Skip if already created to prevent duplicate fields/methods
             if (createdFields.contains(fieldName)) {
                 return;
@@ -2654,8 +2705,21 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             TypeName fieldType = customType.orElse(ClassName.get(String.class));
             FieldSpec.Builder field = FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
+            Optional<String> clientDefaultValue = clientDefault.map(AbstractRootClientGenerator::literalToString);
             if (environmentVariable.isPresent()) {
-                field.initializer("System.getenv($S)", environmentVariable.get().get());
+                if (clientDefaultValue.isPresent()) {
+                    // Fall back to the client default when the environment variable is not set.
+                    field.initializer(
+                            "$T.ofNullable(System.getenv($S)).orElse($S)",
+                            Optional.class,
+                            environmentVariable.get().get(),
+                            clientDefaultValue.get());
+                } else {
+                    field.initializer(
+                            "System.getenv($S)", environmentVariable.get().get());
+                }
+            } else if (clientDefaultValue.isPresent()) {
+                field.initializer("$S", clientDefaultValue.get());
             } else if (literal.isPresent()) {
                 literal.get().visit(new Literal.Visitor<Void>() {
                     @Override
@@ -2822,10 +2886,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 } else if (info.isOAuth) {
                     // OAuth requires creating an auth client and using OAuthAuthProvider
                     ClassName clientOptionsClassName = generatedClientOptions.getClassName();
-                    ClassName authClientClassName =
-                            clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("AuthClient");
-                    // Get the actual auth client class - it's in the auth subpackage
-                    // We need to build the auth client from scratch to avoid circular dependency
+                    // Use the auth client for the subpackage that owns the token endpoint, resolved
+                    // when the AuthProviderInfo was built. Fall back to the core AuthClient if
+                    // absent (e.g. token endpoint at the API root).
+                    ClassName oauthAuthClientClassName = info.tokenEndpointAuthClientClassName != null
+                            ? info.tokenEndpointAuthClientClassName
+                            : clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("AuthClient");
                     this.configureAuthMethod
                             .beginControlFlow(
                                     "if (this.$L != null && this.$L != null)", info.fieldName, info.secondaryFieldName)
@@ -2837,43 +2903,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     ENVIRONMENT_FIELD_NAME)
                             .addStatement(
                                     "$T oauthAuthClient = new $T(oauthClientOptionsBuilder.build())",
-                                    generatedOAuthTokenSupplier
-                                            .map(s -> {
-                                                // Get the AuthClient class from the token supplier's imports
-                                                return clientGeneratorContext
-                                                        .getPoetClassNameFactory()
-                                                        .getClientClassName(
-                                                                clientGeneratorContext
-                                                                        .getIr()
-                                                                        .getSubpackages()
-                                                                        .values()
-                                                                        .stream()
-                                                                        .filter(sp -> NameUtils.toName(sp.getName())
-                                                                                .getCamelCase()
-                                                                                .getSafeName()
-                                                                                .equalsIgnoreCase("auth"))
-                                                                        .findFirst()
-                                                                        .orElse(null));
-                                            })
-                                            .orElse(authClientClassName),
-                                    generatedOAuthTokenSupplier
-                                            .map(s -> {
-                                                return clientGeneratorContext
-                                                        .getPoetClassNameFactory()
-                                                        .getClientClassName(
-                                                                clientGeneratorContext
-                                                                        .getIr()
-                                                                        .getSubpackages()
-                                                                        .values()
-                                                                        .stream()
-                                                                        .filter(sp -> NameUtils.toName(sp.getName())
-                                                                                .getCamelCase()
-                                                                                .getSafeName()
-                                                                                .equalsIgnoreCase("auth"))
-                                                                        .findFirst()
-                                                                        .orElse(null));
-                                            })
-                                            .orElse(authClientClassName))
+                                    oauthAuthClientClassName,
+                                    oauthAuthClientClassName)
                             .addStatement(
                                     "routingBuilder.addAuthProvider($S, new $T(() -> this.$L, () -> this.$L, oauthAuthClient), $S)",
                                     info.schemeKey,
@@ -2890,15 +2921,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .orElse(clientGeneratorContext
                                     .getPoetClassNameFactory()
                                     .getCoreClassName("InferredAuthTokenSupplier"));
-                    ClassName authClientClassName = clientGeneratorContext
-                            .getPoetClassNameFactory()
-                            .getClientClassName(clientGeneratorContext.getIr().getSubpackages().values().stream()
-                                    .filter(sp -> NameUtils.toName(sp.getName())
-                                            .getCamelCase()
-                                            .getSafeName()
-                                            .equalsIgnoreCase("auth"))
-                                    .findFirst()
-                                    .orElse(null));
+                    // Use the auth client for the subpackage that owns the token endpoint, resolved
+                    // when the AuthProviderInfo was built. Fall back to the core AuthClient if
+                    // absent (e.g. token endpoint at the API root).
+                    ClassName authClientClassName = info.tokenEndpointAuthClientClassName != null
+                            ? info.tokenEndpointAuthClientClassName
+                            : clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("AuthClient");
                     this.configureAuthMethod
                             .beginControlFlow(
                                     "if (this.$L != null && this.$L != null)", info.fieldName, info.secondaryFieldName)
@@ -2944,5 +2972,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         public Void _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown auth scheme");
         }
+    }
+
+    private static String literalToString(Literal literal) {
+        return literal.visit(new Literal.Visitor<String>() {
+            @Override
+            public String visitString(String string) {
+                return string;
+            }
+
+            @Override
+            public String visitBoolean(boolean boolean_) {
+                return Boolean.toString(boolean_);
+            }
+
+            @Override
+            public String _visitUnknown(Object unknownType) {
+                return null;
+            }
+        });
     }
 }

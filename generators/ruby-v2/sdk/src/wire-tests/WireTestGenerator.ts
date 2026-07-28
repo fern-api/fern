@@ -1,4 +1,5 @@
 import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
@@ -16,6 +17,30 @@ interface EndpointTestCase {
     exampleIndex: number;
     testId: string;
 }
+
+/**
+ * The header(s) a single auth scheme contributes to a request when its credentials
+ * are supplied. `exact` schemes (bearer/header/basic) produce a deterministic value;
+ * `present` schemes (oauth/inferred) resolve their value from a live token endpoint at
+ * runtime, so only presence can be asserted.
+ */
+interface SchemeAuthHeader {
+    headerName: string;
+    kind: "exact" | "present";
+    value?: string;
+}
+
+/**
+ * A per-endpoint assertion about one auth header:
+ * - `exact`: header must be present with exactly this value.
+ * - `present`: header must be present with any value.
+ * - `absent`: header must NOT be present (proves the SDK did not send a scheme the
+ *   endpoint does not declare).
+ */
+type AuthHeaderMatcher =
+    | { headerName: string; kind: "exact"; value: string }
+    | { headerName: string; kind: "present" }
+    | { headerName: string; kind: "absent" };
 
 /**
  * Generates WireMock-based integration tests for Ruby SDK.
@@ -238,7 +263,20 @@ export class WireTestGenerator {
             }
         }
 
-        return authParams;
+        // Dedupe by keyword name (the text before the first ":"), keeping the first
+        // occurrence. Under endpoint-security an API can declare OAuth *and* inferred
+        // auth that both derive `client_id`/`client_secret` from the same token endpoint;
+        // without deduping we would emit duplicate keyword arguments and produce invalid
+        // Ruby. This is a no-op when there are no collisions.
+        const seenKeywords = new Set<string>();
+        return authParams.filter((param) => {
+            const keyword = param.slice(0, param.indexOf(":"));
+            if (seenKeywords.has(keyword)) {
+                return false;
+            }
+            seenKeywords.add(keyword);
+            return true;
+        });
     }
 
     /**
@@ -365,16 +403,23 @@ export class WireTestGenerator {
             lines.push(`      expected: 1`);
             lines.push(`    )`);
 
-            // Verify Authorization header when basic auth is configured
-            const expectedAuthHeader = this.buildExpectedAuthorizationHeader();
-            if (expectedAuthHeader != null) {
-                lines.push(``);
-                lines.push(`    verify_authorization_header(`);
-                lines.push(`      test_id: test_id,`);
-                lines.push(`      method: "${endpoint.method}",`);
-                lines.push(`      url_path: "${basePath}",`);
-                lines.push(`      expected_value: "${expectedAuthHeader}"`);
-                lines.push(`    )`);
+            if (this.context.isEndpointSecurity()) {
+                // Per-endpoint security: the SDK routes only the auth scheme(s) this endpoint
+                // declares, so assert the routed scheme's header(s) are present (and every other
+                // scheme's header is absent) rather than asserting a single global auth header.
+                lines.push(...this.buildEndpointSecurityAuthAssertion(endpoint, basePath));
+            } else {
+                // Verify Authorization header when basic auth is configured
+                const expectedAuthHeader = this.buildExpectedAuthorizationHeader();
+                if (expectedAuthHeader != null) {
+                    lines.push(``);
+                    lines.push(`    verify_authorization_header(`);
+                    lines.push(`      test_id: test_id,`);
+                    lines.push(`      method: "${endpoint.method}",`);
+                    lines.push(`      url_path: "${basePath}",`);
+                    lines.push(`      expected_value: "${expectedAuthHeader}"`);
+                    lines.push(`    )`);
+                }
             }
 
             lines.push("  end");
@@ -513,8 +558,15 @@ export class WireTestGenerator {
         };
 
         const snippetRequest = convertDynamicEndpointSnippetRequest(exampleWithTestId);
+        // Resolve by endpoint id, not just method+path: under endpoint-security several endpoints
+        // can share the same method+path (e.g. multiple `GET /users` variants differing only by
+        // auth), and location-only resolution would always pick the first, generating the wrong
+        // method call for every test. Gated to endpoint-security so non-endpoint-security fixtures
+        // keep byte-identical output (matching the other generators); disambiguating everywhere is
+        // a correctness fix best made separately.
         const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest, {
-            skipClientInstantiation: true
+            skipClientInstantiation: true,
+            endpointId: this.context.isEndpointSecurity() ? endpoint.id : undefined
         });
         return snippetAst as ruby.AstNode;
     }
@@ -564,6 +616,161 @@ export class WireTestGenerator {
             out[key] = mapping;
         }
         return out;
+    }
+
+    /**
+     * Builds the `verify_auth_headers(...)` assertion lines for an endpoint under
+     * endpoint-security. Emits nothing when there are no auth headers in play.
+     */
+    private buildEndpointSecurityAuthAssertion(endpoint: FernIr.HttpEndpoint, basePath: string): string[] {
+        const matchers = this.getEndpointSecurityAuthHeaderMatchers(endpoint);
+        if (matchers.length === 0) {
+            return [];
+        }
+
+        const lines: string[] = [];
+        lines.push("");
+        lines.push("    verify_auth_headers(");
+        lines.push("      test_id: test_id,");
+        lines.push(`      method: "${endpoint.method}",`);
+        lines.push(`      url_path: "${basePath}",`);
+        lines.push("      matchers: [");
+        matchers.forEach((matcher, index) => {
+            const suffix = index < matchers.length - 1 ? "," : "";
+            lines.push(`        ${this.renderAuthHeaderMatcher(matcher)}${suffix}`);
+        });
+        lines.push("      ]");
+        lines.push("    )");
+        return lines;
+    }
+
+    private renderAuthHeaderMatcher(matcher: AuthHeaderMatcher): string {
+        const name = JSON.stringify(matcher.headerName);
+        switch (matcher.kind) {
+            case "exact":
+                return `{ name: ${name}, kind: "exact", value: ${JSON.stringify(matcher.value)} }`;
+            case "present":
+                return `{ name: ${name}, kind: "present" }`;
+            case "absent":
+                return `{ name: ${name}, kind: "absent" }`;
+            default:
+                return assertNever(matcher);
+        }
+    }
+
+    /**
+     * Computes the per-endpoint auth-header assertions for an endpoint under
+     * endpoint-security.
+     *
+     * The wire-test client is constructed with credentials for every auth scheme, so every
+     * scheme is "available". `auth_headers_for_endpoint` then routes headers by selecting the
+     * FIRST of the endpoint's security requirements whose schemes are all available (OR across
+     * requirements, AND within one) and merging that requirement's schemes' headers (last write
+     * wins per header name). This mirrors that routing to determine exactly which auth headers the
+     * SDK will send, then asserts:
+     * - the routed header(s) are present (exact value for static schemes; presence-only for
+     *   schemes whose value is resolved at runtime, i.e. oauth/inferred), and
+     * - every other auth header the API could emit is absent.
+     *
+     * When the endpoint declares no security (unauthenticated), no requirement wins and every
+     * auth header the API could emit is asserted absent.
+     */
+    private getEndpointSecurityAuthHeaderMatchers(endpoint: FernIr.HttpEndpoint): AuthHeaderMatcher[] {
+        // Map each scheme (by its IR key) to the header(s) it contributes when credentials are present.
+        const schemeHeadersByKey = new Map<string, SchemeAuthHeader[]>();
+        for (const scheme of this.context.ir.auth.schemes) {
+            schemeHeadersByKey.set(scheme.key, this.getSchemeAuthHeaders(scheme));
+        }
+
+        // The universe of auth header names the API could emit; anything not routed to this
+        // endpoint must be asserted absent. Preserves scheme order for deterministic output.
+        const universe: string[] = [];
+        for (const headers of schemeHeadersByKey.values()) {
+            for (const header of headers) {
+                if (!universe.includes(header.headerName)) {
+                    universe.push(header.headerName);
+                }
+            }
+        }
+
+        // The wire-test client supplies every scheme's credentials, so treat all schemes as available.
+        const availableKeys = new Set(schemeHeadersByKey.keys());
+        const requirements = endpoint.security ?? [];
+        const winningRequirement = requirements.find((requirement) =>
+            Object.keys(requirement).every((schemeKey) => availableKeys.has(schemeKey))
+        );
+
+        // Build the effective header map for the winning requirement (last write wins per header name).
+        const effective = new Map<string, { kind: "exact" | "present"; value?: string }>();
+        if (winningRequirement != null) {
+            for (const schemeKey of Object.keys(winningRequirement)) {
+                for (const header of schemeHeadersByKey.get(schemeKey) ?? []) {
+                    effective.set(header.headerName, { kind: header.kind, value: header.value });
+                }
+            }
+        }
+
+        const matchers: AuthHeaderMatcher[] = [];
+        for (const [headerName, matcher] of effective) {
+            if (matcher.kind === "exact" && matcher.value != null) {
+                matchers.push({ headerName, kind: "exact", value: matcher.value });
+            } else {
+                matchers.push({ headerName, kind: "present" });
+            }
+        }
+        for (const headerName of universe) {
+            if (!effective.has(headerName)) {
+                matchers.push({ headerName, kind: "absent" });
+            }
+        }
+        return matchers;
+    }
+
+    /**
+     * Returns the auth header(s) a scheme contributes when its credentials are present, using the
+     * same placeholder credential values `buildAuthParamsForSetup` constructs the client with.
+     * Static schemes (bearer/header/basic) yield an exact expected value; oauth/inferred yield
+     * presence-only because their header values are resolved from a live token endpoint at runtime.
+     */
+    private getSchemeAuthHeaders(scheme: FernIr.AuthScheme): SchemeAuthHeader[] {
+        switch (scheme.type) {
+            case "bearer":
+                // Setup constructs the client with `<token param>: "<token>"`.
+                return [{ headerName: "Authorization", kind: "exact", value: "Bearer <token>" }];
+            case "header": {
+                if (scheme.name == null) {
+                    return [];
+                }
+                const headerName = getWireValue(scheme.name);
+                // Setup constructs the client with `<param>: "test-api-key"`.
+                const value = scheme.prefix != null ? `${scheme.prefix} test-api-key` : "test-api-key";
+                return [{ headerName, kind: "exact", value }];
+            }
+            case "basic": {
+                const authHeader = this.buildExpectedAuthorizationHeader();
+                if (authHeader == null) {
+                    return [];
+                }
+                return [{ headerName: "Authorization", kind: "exact", value: authHeader }];
+            }
+            case "oauth":
+                // OAuth writes Authorization with a token fetched from the token endpoint at runtime.
+                return [{ headerName: "Authorization", kind: "present" }];
+            case "inferred": {
+                // Inferred auth writes its authenticated request header(s) with a runtime-resolved value.
+                const inferred = this.context.getInferredAuth();
+                const authenticatedHeaders = inferred?.tokenEndpoint.authenticatedRequestHeaders ?? [];
+                if (authenticatedHeaders.length === 0) {
+                    return [{ headerName: "Authorization", kind: "present" }];
+                }
+                return authenticatedHeaders.map((header) => ({
+                    headerName: header.headerName,
+                    kind: "present" as const
+                }));
+            }
+            default:
+                return assertNever(scheme);
+        }
     }
 
     /**

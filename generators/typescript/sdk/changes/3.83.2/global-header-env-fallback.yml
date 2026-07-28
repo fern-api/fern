@@ -1,0 +1,5 @@
+- summary: |
+    Global headers declared with an `env` now fall back to that environment
+    variable at runtime. The resolution order for a global header is the
+    explicit option, then the environment variable, then the client default.
+  type: fix

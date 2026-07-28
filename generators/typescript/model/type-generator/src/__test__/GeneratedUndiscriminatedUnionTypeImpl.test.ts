@@ -79,7 +79,8 @@ function createMockBaseContext(opts?: {
                             properties: [],
                             extends: [],
                             extraProperties: false,
-                            extendedProperties: undefined
+                            extendedProperties: undefined,
+                            deferredUnionBaseProperties: undefined
                         }),
                         referencedTypes: new Set<string>(),
                         encoding: undefined,
@@ -273,7 +274,8 @@ describe("GeneratedUndiscriminatedUnionTypeImpl", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 referencedTypes: new Set<string>(),
                 encoding: undefined,
@@ -328,7 +330,8 @@ describe("GeneratedUndiscriminatedUnionTypeImpl", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 }),
                 referencedTypes: new Set<string>(),
                 encoding: undefined,

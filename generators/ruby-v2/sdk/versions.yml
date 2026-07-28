@@ -1,4 +1,74 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.20.1
+  changelogEntry:
+    - summary: |
+        Fix the generated client constructor requiring every auth credential under
+        `auth: endpoint-security`. A credential without a configured environment variable (e.g. an
+        apiKey header) was emitted as a required keyword argument, so a caller authenticating with a
+        single scheme (such as pure OAuth) could not construct the client without also passing the
+        other schemes' credentials. Under endpoint-security every credential now defaults to `nil`,
+        matching the per-endpoint auth model. Behavior outside endpoint-security is unchanged.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 1.20.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 1.19.0
+  changelogEntry:
+    - summary: |
+        Add webhook body-hash binding verification before HMAC signature checks.
+      type: feat
+    - summary: |
+        Fix generated `verify_signature` webhook helper raising instead of returning `false`
+        when `signature_header` or `signature_key` is an empty string. An empty key was passed
+        to `OpenSSL::HMAC.digest`, which raises on OpenSSL 3.x; the input guard now fails
+        closed on empty (not just nil) signature header and key, matching the never-raise
+        contract.
+      type: fix
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generator now emits a `WebhooksHelper` (plus named
+        `<WebhookName>WebhooksHelper` overrides for distinct configs) exposing a static
+        `verify_signature` method, backed by a stdlib-only `Internal::WebhookSignature`
+        core utility (HMAC via OpenSSL, constant-time comparison). Supports timestamp
+        tolerance checks, signature prefixes, configurable payload components/delimiter,
+        and alphabetical body sorting. Asymmetric verification is not emitted.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.18.2
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated `OAuthProvider` and
+        `InferredAuthProvider`. The token cache is now guarded by a `Mutex` with
+        double-checked locking, so only one thread refreshes the token under
+        concurrent load (e.g. multi-threaded servers like Puma or Sidekiq). The
+        cache-hit path stays lock-free.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.18.1
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both an environment and server URL variables
+        (e.g. `region`), the generated client now renders the SELECTED environment's URL
+        template(s) instead of always using the first environment's template. For
+        multi-host environments, every host's URL is formatted from the selected
+        environment's templates. An explicitly provided custom base URL or environment
+        is never overridden.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
 - version: 1.18.0
   changelogEntry:
     - summary: |
