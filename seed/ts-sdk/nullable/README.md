@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedNullableClient } from "@fern/nullable";
 
-const client = new SeedNullableClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedNullableClient({ baseUrl: "YOUR_BASE_URL" });
 await client.nullable.createUser({
     username: "username",
     tags: ["tags", "tags"],

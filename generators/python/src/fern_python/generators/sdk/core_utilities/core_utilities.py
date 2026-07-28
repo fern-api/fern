@@ -29,6 +29,8 @@ class CoreUtilities:
         has_custom_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
+        has_webhook_signature_verification: bool = False,
+        generates_idempotency_key: bool = False,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -38,6 +40,7 @@ class CoreUtilities:
         self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
         self._has_standard_paginated_endpoints = has_standard_paginated_endpoints
         self._has_custom_paginated_endpoints = has_custom_paginated_endpoints
+        self._generates_idempotency_key = generates_idempotency_key
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
@@ -49,6 +52,7 @@ class CoreUtilities:
         self._datetime_milliseconds = custom_config.datetime_milliseconds
         self._default_max_retries = custom_config.default_max_retries
         self._retry_status_codes = custom_config.retry_status_codes
+        self._has_webhook_signature_verification = has_webhook_signature_verification
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -128,6 +132,17 @@ class CoreUtilities:
             exports={"RequestOptions"} if not self._exclude_types_from_init_exports else set(),
         )
 
+        if self._generates_idempotency_key:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="idempotency.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="idempotency"),
+                ),
+                exports={"generate_idempotency_key"} if not self._exclude_types_from_init_exports else set(),
+            )
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="file.py",
@@ -194,6 +209,17 @@ class CoreUtilities:
             ),
             exports=set(),
         )
+
+        if self._has_webhook_signature_verification:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="webhook_signature.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="webhook_signature"),
+                ),
+                exports=set(),
+            )
 
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
         utilities_path = (
@@ -615,6 +641,24 @@ class CoreUtilities:
                 ),
                 args=[headers],
             )
+        )
+
+    def get_reference_to_keepalive_socket_options(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "http_client"),
+                named_import="get_keepalive_socket_options",
+            ),
+        )
+
+    def get_reference_to_generate_idempotency_key(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "idempotency"),
+                named_import="generate_idempotency_key",
+            ),
         )
 
     def jsonable_encoder(self, obj: AST.Expression) -> AST.Expression:

@@ -2,4 +2,17 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.path.send_(id: "123")
+client.inlined.send_(
+  prompt: "You are a helpful assistant",
+  context: "You're super wise",
+  query: "What is the weather today",
+  temperature: 10.1,
+  stream: false,
+  aliased_context: "You're super wise",
+  maybe_context: "You're super wise",
+  object_with_literal: {
+    nested_literal: {
+      my_literal: "How super cool"
+    }
+  }
+)

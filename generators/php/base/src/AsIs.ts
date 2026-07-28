@@ -10,6 +10,7 @@ export enum AsIsFiles {
     BaseApiRequest = "Client/BaseApiRequest.Template.php",
     HttpMethod = "Client/HttpMethod.Template.php",
     RawClient = "Client/RawClient.Template.php",
+    IdempotencyKey = "Client/IdempotencyKey.Template.php",
     RetryDecoratingClient = "Client/RetryDecoratingClient.Template.php",
     HttpClientBuilder = "Client/HttpClientBuilder.Template.php",
     RawClientTest = "Client/RawClientTest.Template.php",
@@ -20,6 +21,7 @@ export enum AsIsFiles {
     SseStream = "Client/SseStream.Template.php",
     SseEvent = "Client/SseEvent.Template.php",
     JsonStream = "Client/JsonStream.Template.php",
+    UrlEncodedApiRequest = "Client/UrlEncodedApiRequest.Template.php",
     TextStream = "Client/TextStream.Template.php",
 
     // Core/Json files.
@@ -76,6 +78,8 @@ export enum AsIsFiles {
     Constant = "Types/Constant.Template.php",
     Date = "Types/Date.Template.php",
     Union = "Types/Union.Template.php",
+    WebhookSignature = "WebhookSignature.Template.php",
+    WebhookSignatureTest = "WebhookSignatureTest.Template.php",
 
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better

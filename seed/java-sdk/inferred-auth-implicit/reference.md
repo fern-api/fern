@@ -52,7 +52,7 @@ client.auth().getTokenWithClientCredentials(
 <dl>
 <dd>
 
-**clientSecret:** `String` 
+**clientSecret:** `Optional<String>` 
     
 </dd>
 </dl>

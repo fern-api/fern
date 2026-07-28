@@ -21,10 +21,18 @@ thing: the literal bytes baked into `main.rs` via `include_str!`. We do
 **not** walk `info.title` or `components.securitySchemes` — those are
 either redundant with or strictly less rich than the IR.
 
+OAuth **client-credentials** is driven entirely from the IR's `oauth`
+auth scheme (`configuration.clientCredentials`), matching the SDK
+generators. The generator lowers the token and refresh endpoint contracts,
+including methods, request locations and paths, custom values, response
+paths, scopes, token application, and environment URLs, into structured
+runtime descriptors. Interactive flows (PKCE, device-code) are not modeled
+by the IR and are not emitted.
+
 We deserialize through `@fern-fern/ir-sdk`'s `IrSerialization`, so
 downstream code consumes typed `FernIr.IntermediateRepresentation` /
-`FernIr.AuthScheme` values directly (with `_visit` for exhaustive
-dispatch). No hand-rolled IR types live in this generator.
+`FernIr.AuthScheme` values directly (with `visitDiscriminatedUnion` for
+exhaustive dispatch). No hand-rolled IR types live in this generator.
 
 ## Architecture
 
@@ -86,8 +94,9 @@ the path the patched Cargo.toml references).
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName` and `customCommands` (unified flag controlling types/SDK/glue generation). |
-| [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, and two-field basic go to root (typed builders like `BasicAuth`) so `auth status` enumerates them; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`. |
+| [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` via `visitDiscriminatedUnion` and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, OAuth, and two-field basic go to root; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
+| [`src/wireTests/`](src/wireTests/) | Opt-in (`customConfig.generateWireTests`) mock-driven integration suite. `manifest.ts` reuses `@fern-api/mock-utils` `convertToWireMock` to derive one naming-independent case per endpoint example (`{method, path, params, body, response}`) and emits `wiremock/wire-test-cases.json`. `harness.ts` renders the generic `tests/wire_test.rs`. `generateWireTests.ts` wires them together after `copySpecs`. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
 | [`./sdk/`](./sdk/) | Hand-authored Rust SDK — the bulk of the CLI's runtime behavior. Edit this when you need to extend what `CliApp` can do. |
@@ -114,7 +123,7 @@ The derived name flows through:
 ## Auth detection
 
 Each scheme in the IR's `auth.schemes` is visited via
-`FernIr.AuthScheme._visit` and produces a binding **only if the SDK's
+`visitDiscriminatedUnion` and produces a binding **only if the SDK's
 `provider_for_binding` supports it**:
 
 | IR variant | Emitted call | Env var source |
@@ -123,7 +132,8 @@ Each scheme in the IR's `auth.schemes` is visited via
 | `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
 | `basic` (both halves bound) | `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))` at root, so `auth status` enumerates it [FER-11474] | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}` |
 | `basic` (`usernameOmit`/`passwordOmit`) | `.auth_provider("<key>", BasicAuthProvider::…)` — stays binding-level; no root path for `BasicAuthProvider` | the bound half's env var; omitted half is a literal `""` |
-| `oauth`, `inferred`, `_other` | Skipped — the SDK has no runtime provider yet | — |
+| `oauth` (`clientCredentials`) | `.auth(OAuth2Auth::new("<key>").client_id_env(...).client_secret_env(...).token_endpoint(OAuth2Endpoint::new(...))...)` at root, with structured token/refresh request and response mappings | `scheme.clientId/clientSecretEnvVar` plus deterministic env vars for custom request properties; optional properties are omitted when unset |
+| `oauth` (other config), `inferred`, `_other` | Skipped — no IR-modeled runtime provider | — |
 
 Env-var names come from the IR first because that's where the user's
 `generators.yml`-declared values end up after Fern resolves them. The
@@ -158,6 +168,55 @@ docker run --rm \
   -v $(pwd)/seed/cli/query-parameters-openapi/no-custom-config:/workspace \
   -w /workspace --entrypoint sh fernapi/cli-seed:latest \
   -c 'cargo build --locked --all-features --tests'
+```
+
+### Wire tests (opt-in)
+
+Setting `customConfig.generateWireTests: true` makes the generator emit a
+mock-driven integration suite into the output:
+
+- `wiremock/wire-test-cases.json` — a declarative manifest, one case per
+  endpoint example, built from `@fern-api/mock-utils` `convertToWireMock`
+  (the same engine the SDK wire tests use). Each case is **naming
+  independent**: it carries `{method, path, params, body, response}`, not a
+  CLI command chain.
+- `tests/wire_test.rs` — a generic harness. Per case it starts an in-process
+  `wiremock::MockServer`, resolves the CLI command chain by loading the same
+  baked OpenAPI spec the binary runs on (via `fern_cli_sdk::openapi::
+  load_openapi_spec` — so it never reproduces the CLI's command-naming
+  rules), drives the compiled binary (`--base-url` + `--params` + `--json`),
+  and asserts the call succeeded and the mock saw exactly one matching request
+  (`Mock::expect(1)`), mirroring the SDK wire tests' `is_ok()` +
+  `verify_request_count` model. For non-streaming endpoints whose stdout parses
+  to the same JSON kind as the mocked body it additionally requires a byte-exact
+  render; streaming/NDJSON responses re-shape the payload, so there it only
+  requires the call to produce output.
+
+**OAuth:** for client-credentials CLIs the manifest carries an `authMock` (token
+endpoint method/path + a synthesized `{access_token, expires_in}` body at the
+paths the CLI reads). The harness mounts it on every server so the token
+exchange — which honors `--base-url` — succeeds before the business request.
+The token/refresh endpoints themselves are excluded from the case list (the CLI
+consumes them internally and never exposes them as commands).
+
+**Body-modality skips:** the harness reads each endpoint's `RestMethod` and
+skips (logging why, test still passes) the ones the generic `--params`/`--json`
+driver can't feed: binary/file uploads (`--file`/`--audio`/…), multipart bodies,
+and bodies the CLI flattened into per-field flags (which reject a whole-body
+`--json`). This mirrors the SDK generator skipping endpoints it can't synthesize
+a call for. Known remaining gap: endpoints whose IR example omits a required
+body property fail the CLI's client-side schema validation — a data-quality
+signal, not a harness bug.
+
+No docker, no `RUN_WIRE_TESTS` gate — `wiremock` is already a `[dev-dependencies]`
+entry in `sdk/Cargo.toml`, so `seed`'s `cargo test --all-features` compiles and
+runs the suite automatically. The `query-parameters-openapi:with-wire-tests`
+seed variant exercises this end to end.
+
+```bash
+# Regenerate the wire-test seed fixture and run the emitted suite locally.
+pnpm seed test --generator cli --fixture query-parameters-openapi --skip-scripts
+cd seed/cli/query-parameters-openapi/with-wire-tests && cargo test --all-features
 ```
 
 ## Common tasks

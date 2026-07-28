@@ -1,0 +1,35 @@
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response with nullable properties.
+    properties:
+      access_token: optional<string>
+      expires_in: optional<integer>
+      refresh_token: optional<string>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    CreateOauth2Token:
+      path: /v2/token
+      method: POST
+      request:
+        name: CreateOauth2TokenRequest
+        content-type: application/x-www-form-urlencoded
+        body:
+          properties:
+            client_id: string
+            client_secret: string
+            grant_type: optional<string>
+      response: TokenResponse
+      examples:
+        - request:
+            client_id: "my_oauth_app_123"
+            client_secret: "sk_live_abcdef123456789"
+            grant_type: "client_credentials"
+          response:
+            body:
+              access_token: "access_token"
+              expires_in: 3600
+              refresh_token: "refresh_token"

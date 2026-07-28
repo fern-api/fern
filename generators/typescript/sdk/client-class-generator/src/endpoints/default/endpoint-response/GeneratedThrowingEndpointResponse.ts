@@ -710,9 +710,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     public getNamesOfThrownExceptions(context: FileContext): string[] {
-        return this.endpoint.errors.map((error) =>
-            getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression())
-        );
+        return [
+            ...this.endpoint.errors.map((error) =>
+                getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression())
+            ),
+            getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()),
+            getTextOfTsNode(context.timeoutSdkError.getReferenceToTimeoutSdkError().getExpression())
+        ];
     }
 
     public getReturnType(context: FileContext): ts.TypeNode {

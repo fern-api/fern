@@ -35,6 +35,24 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.User{
+//	    ID: "id",
+//	    Email: "email",
+//	    Password: "password",
+//	    Profile: &fern.UserProfile{
+//	        Name: "name",
+//	        Verification: &fern.UserProfileVerification{
+//	            Verified: "verified",
+//	        },
+//	        Ssn: "ssn",
+//	    },
+//	}
+//	client.CreateUser(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.User,

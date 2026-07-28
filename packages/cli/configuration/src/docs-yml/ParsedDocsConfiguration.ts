@@ -51,6 +51,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
         | {
               prioritizeCurrentProduct: boolean | undefined;
               defaultFilterByCurrentProduct: boolean | undefined;
+              externalSitemaps: string[] | undefined;
           }
         | undefined;
 }
@@ -129,8 +130,14 @@ export interface AbsoluteJsFileConfig {
     strategy?: CjsFdrSdk.docs.v1.commons.JsScriptStrategy;
 }
 
+// Extends the published FDR remote-script shape with `disableSri` until the
+// generated @fern-api/fdr-sdk type carries the field natively.
+export type ParsedJsRemoteConfig = CjsFdrSdk.docs.v1.commons.JsRemoteConfig & {
+    disableSri?: boolean;
+};
+
 export interface JavascriptConfig {
-    remote?: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[];
+    remote?: ParsedJsRemoteConfig[];
     files: AbsoluteJsFileConfig[];
 }
 
@@ -526,17 +533,31 @@ export type ParsedApiReferenceLayoutItem =
     | DocsNavigationItem.Link;
 
 /**
+ * Parsed configuration for the source location of a library documentation source.
+ * A `git` input is generated remotely; a `path` input points at a local checkout
+ * and is generated with `fern docs md generate --local`.
+ */
+export type ParsedLibraryInputConfiguration =
+    | {
+          type: "git";
+          /** GitHub URL to the repository containing the library source code */
+          git: string;
+          /** Optional path within the repository to the library source */
+          subpath: string | undefined;
+      }
+    | {
+          type: "path";
+          /** Path (relative to docs.yml) to a local checkout of the library source */
+          path: string;
+      };
+
+/**
  * Parsed configuration for a library documentation source.
  * Used by `fern docs md generate` to generate MDX files from library source code.
  */
 export interface ParsedLibraryConfiguration {
     /** Configuration for the library source location */
-    input: {
-        /** GitHub URL to the repository containing the library source code */
-        git: string;
-        /** Optional path within the repository to the library source */
-        subpath: string | undefined;
-    };
+    input: ParsedLibraryInputConfiguration;
     /** Configuration for the library documentation output */
     output: {
         /** The output directory where MDX files will be generated */

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { isNonFastForwardError, pushSignedCommit } from "../pipeline/github/pushSignedCommit.js";
+import { isNonFastForwardError, pushSignedCommit, resolveCommitAuthor } from "../pipeline/github/pushSignedCommit.js";
 
 interface MockedRepository {
     getHeadSha: ReturnType<typeof vi.fn>;
@@ -435,6 +435,30 @@ describe("pushSignedCommit", () => {
         ).rejects.toBe(boom);
 
         expect(octokit.git.deleteRef).toHaveBeenCalled();
+    });
+});
+
+describe("resolveCommitAuthor", () => {
+    const fernBot = { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" };
+
+    it("returns the explicit author when provided", () => {
+        const author = { name: "custom", email: "custom@example.com" };
+        expect(resolveCommitAuthor("ghp_abc123", author)).toBe(author);
+        expect(resolveCommitAuthor("ghs_abc123", author)).toBe(author);
+    });
+
+    it("pins the Fern bot identity for classic PATs", () => {
+        expect(resolveCommitAuthor("ghp_abc123", undefined)).toEqual(fernBot);
+    });
+
+    it("pins the Fern bot identity for fine-grained PATs", () => {
+        expect(resolveCommitAuthor("github_pat_abc123", undefined)).toEqual(fernBot);
+    });
+
+    it("returns undefined for signing-capable tokens", () => {
+        expect(resolveCommitAuthor("ghs_installation", undefined)).toBeUndefined();
+        expect(resolveCommitAuthor("gho_oauth", undefined)).toBeUndefined();
+        expect(resolveCommitAuthor("unknown-token", undefined)).toBeUndefined();
     });
 });
 

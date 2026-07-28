@@ -6,12 +6,14 @@ import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
+import { getServerVariableOptions, urlTemplateToTemplateLiteral } from "./serverVariables.js";
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
         generateIdempotentRequestOptions: boolean;
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
+        includePlatformHeaders: boolean;
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
@@ -25,6 +27,7 @@ export class BaseClientTypeGenerator {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
+    private readonly includePlatformHeaders: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly caseConverter: CaseConverter;
@@ -33,6 +36,7 @@ export class BaseClientTypeGenerator {
         generateIdempotentRequestOptions,
         ir,
         omitFernHeaders,
+        includePlatformHeaders,
         retainOriginalCasing,
         parameterNaming,
         caseConverter
@@ -40,6 +44,7 @@ export class BaseClientTypeGenerator {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
+        this.includePlatformHeaders = includePlatformHeaders;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
         this.caseConverter = caseConverter;
@@ -184,7 +189,22 @@ export type BaseClientOptions = {
                 );
             }
 
-            if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
+            // When includePlatformHeaders is enabled we emit a single structured
+            // User-Agent (`{sdkName}/{version} ({os}; {arch}) {runtime}/{version}`)
+            // that consolidates the platform + runtime information. This supersedes
+            // the default `{package}/{version}` User-Agent, and the discrete
+            // X-Fern-Runtime / X-Fern-Runtime-Version headers are dropped.
+            const useRichUserAgent = this.includePlatformHeaders && context.npmPackage != null;
+
+            if (useRichUserAgent && context.npmPackage != null) {
+                fernHeaderEntries.push([
+                    "User-Agent",
+                    context.coreUtilities.runtime.userAgent._invoke(
+                        ts.factory.createStringLiteral(context.npmPackage.packageName),
+                        ts.factory.createStringLiteral(context.npmPackage.version)
+                    )
+                ]);
+            } else if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
                 fernHeaderEntries.push([
                     this.ir.sdkConfig.platformHeaders.userAgent.header,
                     ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
@@ -196,10 +216,12 @@ export type BaseClientOptions = {
                 ]);
             }
 
-            fernHeaderEntries.push(
-                ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
-                ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
-            );
+            if (!useRichUserAgent) {
+                fernHeaderEntries.push(
+                    ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
+                    ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
+                );
+            }
         }
 
         const rootHeaders = this.getRootHeaders(context);
@@ -234,12 +256,13 @@ export type BaseClientOptions = {
         }
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
+        const serverVariableInterpolation = this.getServerVariableInterpolation(context);
 
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
-): NormalizedClientOptions<T> {${headersSection}    return {
-        ...options,${rootPathParamDefaults}
+): NormalizedClientOptions<T> {${headersSection}${serverVariableInterpolation.section}    return {
+        ...options,${rootPathParamDefaults}${serverVariableInterpolation.returnFields}
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}
@@ -247,6 +270,113 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
 }`;
 
         context.sourceFile.addStatements(functionCode);
+    }
+
+    /**
+     * Generates the interpolation of server URL variables (e.g. region/edge) into the base URL.
+     * When the API declares server variables, each is exposed as a client option; if any is
+     * provided the base URL is rebuilt from the environment's URL template(s) using those values.
+     * Returns empty strings when the API declares no server variables, leaving output unchanged.
+     */
+    private getServerVariableInterpolation(context: FileContext): { section: string; returnFields: string } {
+        const empty = { section: "", returnFields: "" };
+        const options = getServerVariableOptions(this.ir, this.caseConverter);
+        if (options.length === 0) {
+            return empty;
+        }
+        const config = this.ir.environments;
+        if (config == null) {
+            return empty;
+        }
+        const environments = config.environments;
+
+        const condition = options
+            .map(({ optionName }) => `${OPTIONS_PARAMETER_NAME}?.${getPropertyKey(optionName)} != null`)
+            .join(" || ");
+        const localDeclarations = options
+            .map(({ optionName, localName, variable }) => {
+                const fallback = variable.default != null ? JSON.stringify(variable.default) : '""';
+                return `        const ${localName} = ${OPTIONS_PARAMETER_NAME}?.${getPropertyKey(optionName)} ?? ${fallback};`;
+            })
+            .join("\n");
+        const environmentsEnum = getTextOfTsNode(context.environments.getReferenceToEnvironmentsEnum().getExpression());
+
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const templatedEnvironments = environments.environments.flatMap((env) =>
+                    env.urlTemplate != null ? [{ env, urlTemplate: env.urlTemplate }] : []
+                );
+                const firstTemplate = templatedEnvironments[0]?.urlTemplate;
+                if (firstTemplate == null) {
+                    return empty;
+                }
+                const entries = templatedEnvironments.map(({ env, urlTemplate }) => {
+                    const environmentName = this.caseConverter.pascalUnsafe(env.name);
+                    const literal = urlTemplateToTemplateLiteral(urlTemplate, options);
+                    return `                [${environmentsEnum}.${environmentName}, ${literal}],`;
+                });
+                const section = `    let baseUrl = ${OPTIONS_PARAMETER_NAME}?.baseUrl;
+    if (${condition}) {
+${localDeclarations}
+        if (baseUrl == null) {
+            const _environmentUrls = new Map<unknown, string>([
+${entries.join("\n")}
+            ]);
+            baseUrl = _environmentUrls.get(${OPTIONS_PARAMETER_NAME}?.environment) ?? ${urlTemplateToTemplateLiteral(firstTemplate, options)};
+        }
+    }
+
+`;
+                return { section, returnFields: "\n        baseUrl," };
+            }
+            case "multipleBaseUrls": {
+                const templatedEnvironments = environments.environments.filter((env) => env.urlTemplates != null);
+                const firstTemplatedEnvironment = templatedEnvironments[0];
+                if (firstTemplatedEnvironment == null) {
+                    return empty;
+                }
+                const environmentUrlsType = getTextOfTsNode(
+                    context.environments.getReferenceToEnvironmentUrls().getTypeNode()
+                );
+                const getUrlEntries = (env: FernIr.MultipleBaseUrlsEnvironment, indent: string): string[] =>
+                    environments.baseUrls.map((baseUrl) => {
+                        const propertyKey = getPropertyKey(this.caseConverter.camelUnsafe(baseUrl.name));
+                        const template = env.urlTemplates?.[baseUrl.id];
+                        if (template != null) {
+                            return `${indent}${propertyKey}: ${urlTemplateToTemplateLiteral(template, options)},`;
+                        }
+                        return `${indent}${propertyKey}: ${JSON.stringify(env.urls[baseUrl.id] ?? "")},`;
+                    });
+                const entries = templatedEnvironments.map((env) => {
+                    const environmentName = this.caseConverter.pascalUnsafe(env.name);
+                    return `                [
+                    ${environmentsEnum}.${environmentName},
+                    {
+${getUrlEntries(env, "                        ").join("\n")}
+                    },
+                ],`;
+                });
+                const section = `    let environment = ${OPTIONS_PARAMETER_NAME}?.environment;
+    if (${condition}) {
+${localDeclarations}
+        if (environment == null) {
+            environment = {
+${getUrlEntries(firstTemplatedEnvironment, "                ").join("\n")}
+            };
+        } else {
+            const _environmentUrls = new Map<unknown, ${environmentUrlsType}>([
+${entries.join("\n")}
+            ]);
+            environment = _environmentUrls.get(environment) ?? environment;
+        }
+    }
+
+`;
+                return { section, returnFields: "\n        environment," };
+            }
+            default:
+                assertNever(environments);
+        }
     }
 
     private getRootPathParameterDefaults(): string {
@@ -531,80 +661,14 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
 
                     let value: ts.Expression;
                     if (literalValue != null) {
-                        if (typeof literalValue === "boolean") {
-                            const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse();
-                            value = ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createParenthesizedExpression(
-                                        ts.factory.createBinaryExpression(
-                                            ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier(headerName)
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                            booleanLiteral
-                                        )
-                                    ),
-                                    ts.factory.createIdentifier("toString")
-                                ),
-                                undefined,
-                                []
-                            );
-                        } else {
-                            value = ts.factory.createBinaryExpression(
-                                ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                    ts.factory.createIdentifier(headerName)
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                ts.factory.createStringLiteral(literalValue.toString())
-                            );
-                        }
+                        value = this.buildRootHeaderValue({ headerName, envVar: undefined, fallback: literalValue });
                     } else {
                         const clientDefaultVal = getClientDefaultValue(header.clientDefault);
-                        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
-                            if (typeof clientDefaultVal === "boolean") {
-                                const booleanLiteral = clientDefaultVal
-                                    ? ts.factory.createTrue()
-                                    : ts.factory.createFalse();
-                                value = ts.factory.createCallExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createParenthesizedExpression(
-                                            ts.factory.createBinaryExpression(
-                                                ts.factory.createPropertyAccessChain(
-                                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                    ts.factory.createIdentifier(headerName)
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                                booleanLiteral
-                                            )
-                                        ),
-                                        ts.factory.createIdentifier("toString")
-                                    ),
-                                    undefined,
-                                    []
-                                );
-                            } else {
-                                value = ts.factory.createBinaryExpression(
-                                    ts.factory.createPropertyAccessChain(
-                                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier(headerName)
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                    ts.factory.createStringLiteral(clientDefaultVal.toString())
-                                );
-                            }
-                        } else {
-                            value = ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                ts.factory.createIdentifier(this.getOptionKeyForHeader(header, context))
-                            );
-                        }
+                        const fallback =
+                            clientDefaultVal != null && !typeContainsNullable(header.valueType, context)
+                                ? clientDefaultVal
+                                : undefined;
+                        value = this.buildRootHeaderValue({ headerName, envVar: header.env, fallback });
                     }
 
                     return {
@@ -644,6 +708,74 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
         }
 
         return headers;
+    }
+
+    /**
+     * Builds the value expression for a root (global) header, coalescing in
+     * precedence order: the client option, then the environment variable
+     * fallback (when the header declares an `env`), then the client default.
+     */
+    private buildRootHeaderValue({
+        headerName,
+        envVar,
+        fallback
+    }: {
+        headerName: string;
+        envVar: string | undefined;
+        fallback: string | boolean | undefined;
+    }): ts.Expression {
+        const operands: ts.Expression[] = [
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(headerName)
+            )
+        ];
+
+        if (envVar != null) {
+            operands.push(
+                ts.factory.createElementAccessChain(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("process"),
+                        ts.factory.createIdentifier("env")
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createStringLiteral(envVar)
+                )
+            );
+        }
+
+        let wrapWithToString = false;
+        if (fallback != null) {
+            if (typeof fallback === "boolean") {
+                wrapWithToString = true;
+                operands.push(fallback ? ts.factory.createTrue() : ts.factory.createFalse());
+            } else {
+                operands.push(ts.factory.createStringLiteral(fallback.toString()));
+            }
+        }
+
+        const first = operands[0];
+        if (operands.length === 1 && first != null) {
+            return first;
+        }
+
+        const coalesced = operands.reduce((left, right) =>
+            ts.factory.createBinaryExpression(left, ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken), right)
+        );
+
+        if (wrapWithToString) {
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createParenthesizedExpression(coalesced),
+                    ts.factory.createIdentifier("toString")
+                ),
+                undefined,
+                []
+            );
+        }
+
+        return coalesced;
     }
 
     private getOptionKeyForHeader(header: FernIr.HttpHeader, context: FileContext): string {

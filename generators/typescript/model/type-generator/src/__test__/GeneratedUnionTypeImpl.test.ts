@@ -96,6 +96,7 @@ function createUnionDeclaration(opts: {
 }): FernIr.UnionTypeDeclaration {
     return {
         discriminant: createNameAndWireValueFromName(opts.discriminantName, opts.discriminantWireValue),
+        inheritedBaseProperties: undefined,
         types: opts.types,
         baseProperties: opts.baseProperties ?? [],
         extends: opts.extends ?? [],
@@ -157,7 +158,8 @@ function createMockBaseContext(opts?: {
                         properties: [],
                         extends: [],
                         extraProperties: false,
-                        extendedProperties: undefined
+                        extendedProperties: undefined,
+                        deferredUnionBaseProperties: undefined
                     }),
                     referencedTypes: new Set<string>(),
                     encoding: undefined,

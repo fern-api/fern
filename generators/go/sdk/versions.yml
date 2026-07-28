@@ -1,4 +1,276 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.54.0
+  changelogEntry:
+    - summary: |
+        Add the `applyQueryDefaultsOnNilRequest` option, which applies query parameter defaults
+        when a request is `nil`. `internal.QueryValuesWithDefaults` returns early for a `nil`
+        request, so defaults declared via `x-fern-default` are silently dropped and the request is
+        sent without them. When the option is enabled, a `nil` request behaves like a zero-value
+        request struct, which matters most for paginated endpoints whose response shape depends on
+        a defaulted query parameter. The option defaults to `false` to preserve today's behavior.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 1.53.1
+  changelogEntry:
+    - summary: |
+        Client-level global header options (e.g. `option.WithVersion(...)` passed
+        to the root client constructor) are no longer clobbered by env-var or
+        `client-default` resolution on every request. Env and client-default
+        fallbacks are now resolved once at client construction, and per-request
+        options only override the header when explicitly set. Precedence is:
+        request-level option > client-level option > env var > client default.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 1.53.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 1.52.0
+  changelogEntry:
+    - summary: |
+        Add a `serverUrlVariables` generator config option (default true) that lets consumers opt out of
+        generated server URL variable options and templated base-URL interpolation. When disabled, the
+        generator no longer emits the per-variable client options nor the construction-time base-URL
+        template interpolation, falling back to the pre-feature base-URL behavior.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 1.51.0
+  changelogEntry:
+    - summary: |
+        Add body-hash binding verification for HMAC webhooks that transmit a hash of the raw request body in the notification URL.
+      type: feat
+    - summary: |
+        Add webhook signature verification support. When a webhook declares HMAC signature
+        verification in the IR, the generated Go SDK now emits a `WebhooksHelper` with a
+        `VerifySignature` method that validates the signature (and optional timestamp) using a
+        new stdlib-only core utility (`crypto/hmac`/`crypto/sha*`/`encoding` with constant-time
+        comparison).
+      type: feat
+    - summary: |
+        Extend the generated `VerifySignature` webhook helper with Twilio-compatible
+        verification, mirroring the TypeScript reference:
+        - Multi-value form params: when `payloadFormat.bodySort` is set, the `requestBody`
+          parameter accepts either a raw string or a `map[string][]string`-shaped multimap of
+          POST body parameters; keys are sorted, each key's values are deduped and sorted, and
+          `key + value` pairs are concatenated with no separator before signing.
+        - Runtime body-hash branch: when a `bodyHashBinding` is configured, the configured
+          query parameter is read from the notification URL at runtime. When present (JSON) the
+          raw body is hashed and constant-time compared and the signature is checked over the
+          URL only; when absent (classic form) the signature is checked over the URL + params
+          with no body-hash check. The body-hash check runs once above the candidate loop.
+        - No-throw: the verifier fails closed. Every verification-path failure (null/empty
+          inputs, a missing/malformed timestamp, a body-hash type mismatch) now returns
+          `false` rather than an error.
+        - URL any-match normalization: when `notificationUrlNormalization` is configured, the
+          signature is verified against several normalized notification-URL candidates
+          (standard-port/no-port variants and legacy query re-encoding), accepting on the first
+          constant-time match. A stdlib-only `NotificationUrlCandidates` helper (using
+          `net/url`) is added to the core webhook utility.
+        Output is unchanged for webhooks that do not configure these fields, other than the
+        no-throw behavior which applies to all generated helpers.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 1.50.1
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both a selected environment and server URL
+        variables (e.g. `option.WithRegion`), the generated client now renders the
+        selected environment's URL template(s) instead of always using the first
+        environment's template. Custom base URLs and environment values are left
+        untouched, and the first (default) templated environment is still used when
+        no environment is selected.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 1.50.0
+  changelogEntry:
+    - summary: |
+        Client endpoint methods now include a usage example in their godoc comment,
+        so IDEs surface a code snippet on hover.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 1.49.7
+  changelogEntry:
+    - summary: |
+        Materialize optional and nullable literal query/header parameters in generated
+        snippets and wire tests so they are set on the request and serialized on the wire.
+        Previously a direct optional literal (e.g. PKCE's `code_challenge_method=S256`) was
+        treated as a no-op and left unset, so it was never sent even though the generated
+        WireMock stub asserted it, causing generated wire tests to fail immediately after
+        generation. Required literals remain hardcoded in the request implementation.
+      type: fix
+  createdAt: "2026-07-17"
+  irVersion: 67
+- version: 1.49.6
+  changelogEntry:
+    - summary: |
+        Consume the discriminated-union base-property dedupe decision from the IR
+        (`UnionTypeDeclaration.inheritedBaseProperties`) as the language-agnostic structural core,
+        instead of computing that core in the generator. Go still applies a thin local
+        render-equivalence widening on top (list/set both render `[]T`, optional/nullable both render
+        `*T`, and `getters-pass-by-value` strips the leading `*`), so the set of deduped fields — and
+        therefore the generated output — is unchanged from before. The delegating-getter emission, the
+        local literal filter, and the opt-in `dedupeUnionBaseProperties` flag (default off) all remain.
+        The same widening is applied in the Go dynamic-snippets generator, so the model and snippets
+        dedupe an identical set (removing the prior drift between them). Moves the generator to IR v67,
+        where the `inheritedBaseProperties` fact is available.
+      type: chore
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 1.49.5
+  changelogEntry:
+    - summary: |
+        Make the smart-casing digit/word boundary behavior opt-in via the new
+        `smart-casing-digit-word-boundary` option in `generators.yml`. By default, snake_case
+        names keep a digit run fused to the following word (`conversations_v2configuration`),
+        restoring pre-1.47.4 output. When enabled, the word boundary after the digit run is
+        preserved (`conversations_v2_configuration`).
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.4
+  changelogEntry:
+    - summary: |
+        OAuth client credentials token requests now send `grant_type: "client_credentials"`
+        when the token endpoint declares a non-literal `grant_type` request property.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.3
+  changelogEntry:
+    - summary: |
+        Fix a generator compile error introduced by two concurrent changes: the optional
+        global-header env fallback now uses `isTypeReferencePointer` (which also covers
+        `nullable` and aliased optional headers) instead of the removed
+        `isTypeReferenceOptional` export.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.2
+  changelogEntry:
+    - summary: |
+        Fix a compile error when a global header is `optional` and has an `env` fallback.
+        The generated env-fallback code compared and assigned the pointer-typed options
+        field as a plain `string` (e.g. `options.Version == ""`). Optional header fields
+        are now nil-checked and assigned via a pointer
+        (`if options.Version == nil { if value := os.Getenv("MY_API_VERSION"); value != "" { options.Version = &value } }`).
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.1
+  changelogEntry:
+    - summary: |
+        Fix compile errors in the generated OAuth and inferred auth token fetching code when
+        the token endpoint's response properties are optional or nullable (generated as
+        pointer types in Go), or when `expires_in` is an int64. Also ensure required nullable
+        inferred-auth credentials are included in token requests as pointers.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 1.49.0
+  changelogEntry:
+    - summary: |
+        Add automatic idempotency-key generation, driven by the centralized
+        `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+        UUIDv4 idempotency-key header (default `Idempotency-Key`) to requests whose HTTP method is
+        listed in the IR (default `POST`/`PUT`). A caller-supplied key in request options still takes
+        precedence.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 1.48.0
+  changelogEntry:
+    - summary: |
+        Support server URL variables (region/edge routing). When an API's environments
+        declare URL templates with variables (e.g. `https://api.{region}.example.com`),
+        the generated client now exposes each variable as an optional functional option
+        (`WithRegion`, etc.). A variable whose name collides with a reserved client
+        option is prefixed with `ServerURL` (e.g. `environment` becomes
+        `WithServerURLEnvironment`). Setting any variable rebuilds the base URL(s) at
+        construction time by interpolating the templates, falling back to each
+        variable's default when unset.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 1.47.4
+  changelogEntry:
+    - summary: |
+        Fix smart-casing snake_case names dropping the word boundary after a number.
+        Names like `ConversationsV2Configuration` now produce the snake_case
+        `conversations_v2_configuration` instead of `conversations_v2configuration`,
+        matching the camelCase and pascalCase variants.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 1.47.3
+  changelogEntry:
+    - summary: |
+        Decompress gzip-encoded error responses before decoding them when retry attempts
+        are exhausted.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 1.47.2
+  changelogEntry:
+    - summary: |
+        Normalize the architecture label in the structured `User-Agent` (emitted when
+        `includePlatformHeaders` is enabled) so the 64-bit x86 aliases (`x64`,
+        `amd64`, `x86_64`) all report as the canonical `x86_64`, keeping the value
+        consistent across generators.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.47.1
+  changelogEntry:
+    - summary: |
+        Decompress gzip-encoded response bodies when the `Accept-Encoding` header is set
+        explicitly on the request. Go's `net/http` only performs transparent gzip
+        decompression when it adds the `Accept-Encoding` header itself, so responses to
+        requests with a spec-defined `Accept-Encoding: gzip` header were previously
+        returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.47.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients for better runtime/platform observability. When enabled, the header
+        takes the form `{sdkName}/{sdkVersion} ({os}; {arch}) Go/{version}`, where the
+        operating system (`runtime.GOOS`), architecture (`runtime.GOARCH`), and Go
+        runtime version (`runtime.Version()`) are all resolved at runtime; unknown
+        components are omitted rather than reported as empty. This behavior is gated
+        behind a new `includePlatformHeaders` config option and is disabled by
+        default, so existing generated output is unchanged. When enabled it is still
+        subject to `omitFernHeaders` and is omitted when that is set.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 1.46.5
+  changelogEntry:
+    - summary: |
+        Honor the OAuth client-credentials token endpoint's declared request content-type
+        instead of unconditionally forcing `application/x-www-form-urlencoded`. Token
+        endpoints that consume `application/json` now send `Content-Type: application/json`,
+        while form-urlencoded remains the default when the spec does not declare a content-type
+        (per RFC 6749 §4.4.2). Previously a JSON token endpoint received an HTTP 415 that
+        surfaced as a generic 401.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
 - version: 1.46.4
   changelogEntry:
     - summary: |

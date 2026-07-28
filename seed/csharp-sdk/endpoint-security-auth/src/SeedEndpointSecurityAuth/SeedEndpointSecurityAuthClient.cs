@@ -16,30 +16,12 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
         ClientOptions? clientOptions = null
     )
     {
-        token ??= GetFromEnvironmentOrThrow(
-            "MY_TOKEN",
-            "Please pass in token or set the environment variable MY_TOKEN."
-        );
-        apiKey ??= GetFromEnvironmentOrThrow(
-            "MY_API_KEY",
-            "Please pass in apiKey or set the environment variable MY_API_KEY."
-        );
-        clientId ??= GetFromEnvironmentOrThrow(
-            "MY_CLIENT_ID",
-            "Please pass in clientId or set the environment variable MY_CLIENT_ID."
-        );
-        clientSecret ??= GetFromEnvironmentOrThrow(
-            "MY_CLIENT_SECRET",
-            "Please pass in clientSecret or set the environment variable MY_CLIENT_SECRET."
-        );
-        username ??= GetFromEnvironmentOrThrow(
-            "MY_USERNAME",
-            "Please pass in username or set the environment variable MY_USERNAME."
-        );
-        password ??= GetFromEnvironmentOrThrow(
-            "MY_PASSWORD",
-            "Please pass in password or set the environment variable MY_PASSWORD."
-        );
+        token ??= Environment.GetEnvironmentVariable("MY_TOKEN");
+        apiKey ??= Environment.GetEnvironmentVariable("MY_API_KEY");
+        clientId ??= Environment.GetEnvironmentVariable("MY_CLIENT_ID");
+        clientSecret ??= Environment.GetEnvironmentVariable("MY_CLIENT_SECRET");
+        username ??= Environment.GetEnvironmentVariable("MY_USERNAME");
+        password ??= Environment.GetEnvironmentVariable("MY_PASSWORD");
         clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
@@ -58,33 +40,60 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
             }
         }
         var clientOptionsWithAuth = clientOptions.Clone();
-        var authHeaders = new Headers(
-            new Dictionary<string, string>()
-            {
-                { "Authorization", $"Bearer {token}" },
-                { "X-API-Key", apiKey },
-            }
-        );
-        foreach (var header in authHeaders)
+        if (token != null)
         {
-            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+            clientOptionsWithAuth.AuthHeaderSchemes["Bearer"] = new Headers(
+                new Dictionary<string, string>() { { "Authorization", $"Bearer {token}" } }
+            );
+        }
+        if (apiKey != null)
+        {
+            clientOptionsWithAuth.AuthHeaderSchemes["ApiKey"] = new Headers(
+                new Dictionary<string, string>() { { "X-API-Key", apiKey } }
+            );
+        }
+        if (clientId != null && clientSecret != null)
+        {
+            var tokenProvider = new OAuthTokenProvider(
+                clientId,
+                clientSecret,
+                new AuthClient(new RawClient(clientOptions))
+            );
+            var oauthAuthHeaders = new Headers();
+            oauthAuthHeaders["Authorization"] =
+                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                    await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+                );
+            clientOptionsWithAuth.AuthHeaderSchemes["OAuth"] = oauthAuthHeaders;
         }
         if (username != null && password != null)
         {
-            clientOptionsWithAuth.Headers["Authorization"] =
-                $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"))}";
-        }
-        var inferredAuthProvider = new InferredAuthTokenProvider(
-            clientId,
-            clientSecret,
-            new AuthClient(new RawClient(clientOptions))
-        );
-        clientOptionsWithAuth.Headers["Authorization"] =
-            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
-                    .First()
-                    .Value
+            clientOptionsWithAuth.AuthHeaderSchemes["Basic"] = new Headers(
+                new Dictionary<string, string>()
+                {
+                    {
+                        "Authorization",
+                        $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"))}"
+                    },
+                }
             );
+        }
+        if (clientId != null && clientSecret != null)
+        {
+            var inferredAuthProvider = new InferredAuthTokenProvider(
+                clientId,
+                clientSecret,
+                new AuthClient(new RawClient(clientOptions))
+            );
+            var inferredAuthHeaders = new Headers();
+            inferredAuthHeaders["Authorization"] =
+                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                    (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
+                        .First()
+                        .Value
+                );
+            clientOptionsWithAuth.AuthHeaderSchemes["InferredAuth"] = inferredAuthHeaders;
+        }
         _client = new RawClient(clientOptionsWithAuth);
         Auth = new AuthClient(_client);
         User = new UserClient(_client);
@@ -93,9 +102,4 @@ public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthC
     public IAuthClient Auth { get; }
 
     public IUserClient User { get; }
-
-    private static string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
-    }
 }

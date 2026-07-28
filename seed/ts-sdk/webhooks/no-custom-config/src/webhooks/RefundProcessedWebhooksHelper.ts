@@ -6,17 +6,17 @@ import * as core from "../core/index.js";
  * Verify an asymmetric webhook signature.
  *
  * Extract the signature from the "x-refund-signature" header and pass it as the signatureHeader parameter.
- * The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.
- * When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.
+ * The requestBody parameter accepts either a raw string or a Record<string, string | string[]> of POST body parameters.
+ * When a Record is provided, keys are sorted and each key's values are deduped and sorted, then concatenated as key-value pairs before signing.
  */
 export class RefundProcessedWebhooksHelper {
     public static async verifySignature(
-        requestBody: string | Record<string, string>,
+        requestBody: string | Record<string, string | string[]>,
         signatureHeader: string,
         publicKey: string,
     ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null || publicKey == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
+            return false;
         }
 
         const bodyString =
@@ -24,7 +24,14 @@ export class RefundProcessedWebhooksHelper {
                 ? requestBody
                 : Object.keys(requestBody)
                       .sort()
-                      .map((key) => key + requestBody[key])
+                      .map((key) => {
+                          const value = requestBody[key];
+                          const values = Array.isArray(value) ? value : [value];
+                          return Array.from(new Set(values))
+                              .sort()
+                              .map((v) => key + v)
+                              .join("");
+                      })
                       .join("");
         const payload = bodyString;
 

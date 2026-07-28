@@ -23,6 +23,9 @@ export class SeedLiteralUserAgentClient {
     /**
      * @param {SeedLiteralUserAgentClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedLiteralUserAgentError}
+     * @throws {@link errors.SeedLiteralUserAgentTimeoutError}
+     *
      * @example
      *     await client.ping()
      */

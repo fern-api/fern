@@ -17,6 +17,9 @@ export const AsIsFiles = {
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
     ErrorsType: "internal/errors/type_error.Template.rb",
 
+    // Idempotency
+    IdempotencyKey: "internal/idempotency_key.Template.rb",
+
     // Iterator classes
     ItemIterator: "internal/iterators/item_iterator.Template.rb",
     CursorItemIterator: "internal/iterators/cursor_item_iterator.Template.rb",
@@ -29,9 +32,16 @@ export const AsIsFiles = {
     HttpBaseRequest: "internal/http/base_request.Template.rb",
     HttpRawClient: "internal/http/raw_client.Template.rb",
 
+    // Webhooks
+    WebhookSignature: "internal/webhook_signature.Template.rb",
+    WebhookBodyHash: "internal/webhook_body_hash.Template.rb",
+
     // JSON
     JsonRequest: "internal/json/request.Template.rb",
     JsonSerializable: "internal/json/serializable.Template.rb",
+
+    // URL-encoded forms
+    UrlEncodedRequest: "internal/url_encoded/request.Template.rb",
 
     // Multipart
     MultipartEncoder: "internal/multipart/multipart_encoder.Template.rb",
@@ -67,7 +77,10 @@ export const AsIsFiles = {
     TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb",
 
     // HTTP tests
-    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb"
+    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
+
+    // Webhook tests
+    TestWebhookBodyHash: "test/unit/internal/test_webhook_body_hash.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
@@ -113,5 +126,12 @@ const asIsTopoValue = {
     [AsIsFiles.OffsetItemIterator]: 28,
     [AsIsFiles.CursorPageIterator]: 29,
     [AsIsFiles.OffsetPageIterator]: 30,
-    [AsIsFiles.CustomPager]: 31
+    [AsIsFiles.CustomPager]: 31,
+    [AsIsFiles.IdempotencyKey]: 32,
+    [AsIsFiles.WebhookSignature]: 33,
+    [AsIsFiles.WebhookBodyHash]: 34,
+    // Only constraint is that this loads after HttpBaseRequest (6), which its
+    // Request class extends. Ordered last (max value) so introducing it does not
+    // shift the position of any pre-existing require in the generated root file.
+    [AsIsFiles.UrlEncodedRequest]: 35
 };

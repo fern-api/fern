@@ -11,7 +11,9 @@ module Seed
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_literal/0.0.1",
-          "X-Fern-Language" => "Ruby"
+          "X-Fern-Language" => "Ruby",
+          "X-API-Version" => "02-02-2024",
+          "X-API-Enable-Audit-Logging" => "true"
         },
         max_retries: max_retries
       )

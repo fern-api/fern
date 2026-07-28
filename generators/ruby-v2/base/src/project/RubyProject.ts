@@ -208,8 +208,10 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
-                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes
+                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
+                    endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY"
                 })
             );
         }
@@ -221,16 +223,20 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         rootFolderName,
         customPagerClassName,
         omitFernHeaders,
+        includePlatformHeaders,
         maxRetries,
-        retryStatusCodes
+        retryStatusCodes,
+        endpointSecurity
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
+        includePlatformHeaders?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
+        endpointSecurity?: boolean;
     }): Promise<File> {
         let rendered = replaceTemplate({
             contents: (await readFile(getAsIsFilepath(filename))).toString(),
@@ -239,7 +245,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 rootFolderName,
                 customPagerClassName,
                 omitFernHeaders,
-                maxRetries
+                includePlatformHeaders,
+                maxRetries,
+                endpointSecurity
             })
         });
 
@@ -299,13 +307,17 @@ function getTemplateVariables({
     rootFolderName,
     customPagerClassName,
     omitFernHeaders,
-    maxRetries
+    includePlatformHeaders,
+    maxRetries,
+    endpointSecurity
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
+    includePlatformHeaders?: boolean;
     maxRetries?: number;
+    endpointSecurity?: boolean;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -315,7 +327,11 @@ function getTemplateVariables({
         rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
         omitFernHeaders: omitFernHeaders ?? false,
-        defaultMaxRetries: maxRetries ?? 2
+        includePlatformHeaders: includePlatformHeaders ?? false,
+        defaultMaxRetries: maxRetries ?? 2,
+        // Emits the RawClient#auth_headers_for_endpoint delegator only for
+        // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
+        endpointSecurity: endpointSecurity ?? false
     };
 }
 

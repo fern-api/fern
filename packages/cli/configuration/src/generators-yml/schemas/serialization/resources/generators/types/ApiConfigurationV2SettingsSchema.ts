@@ -9,8 +9,15 @@ import { OpenApiSettingsSchema } from "./OpenApiSettingsSchema.js";
 export const ApiConfigurationV2SettingsSchema: core.serialization.ObjectSchema<
     serializers.ApiConfigurationV2SettingsSchema.Raw,
     GeneratorsYml.ApiConfigurationV2SettingsSchema
-> = core.serialization.object({}).extend(OpenApiSettingsSchema).extend(AsyncApiSettingsSchema);
+> = core.serialization
+    .object({
+        "auto-generate-idempotency-key": core.serialization.unknown().optional()
+    })
+    .extend(OpenApiSettingsSchema)
+    .extend(AsyncApiSettingsSchema);
 
 export declare namespace ApiConfigurationV2SettingsSchema {
-    export interface Raw extends OpenApiSettingsSchema.Raw, AsyncApiSettingsSchema.Raw {}
+    export interface Raw extends OpenApiSettingsSchema.Raw, AsyncApiSettingsSchema.Raw {
+        "auto-generate-idempotency-key"?: unknown | null;
+    }
 }

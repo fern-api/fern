@@ -10,8 +10,10 @@ import {
     doesPypiVersionExist,
     doesRubyGemsVersionExist,
     doesVersionExistOnRegistry,
+    getIdempotencyKeyGenerationFromGeneratorConfig,
     getPackageNameFromGeneratorConfig,
-    getRegistryName
+    getRegistryName,
+    resolveIdempotencyKeyGeneration
 } from "../checkVersionExists.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────
@@ -883,6 +885,14 @@ describe("getPackageNameFromGeneratorConfig", () => {
         expect(getPackageNameFromGeneratorConfig(invocation)).toBe("github.com/acme/go-sdk");
     });
 
+    it("returns packageName from config for PHP (camelCase key)", () => {
+        const invocation = {
+            raw: { config: { packageName: "twilio-core" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("twilio-core");
+    });
+
     it("prefers output.package-name over config.package_name", () => {
         const invocation = {
             raw: {
@@ -908,5 +918,97 @@ describe("getPackageNameFromGeneratorConfig", () => {
             // biome-ignore lint/suspicious/noExplicitAny: test stub
         } as any;
         expect(getPackageNameFromGeneratorConfig(invocation)).toBeUndefined();
+    });
+});
+
+describe("resolveIdempotencyKeyGeneration", () => {
+    it("returns undefined when disabled/absent", () => {
+        expect(resolveIdempotencyKeyGeneration(undefined)).toBeUndefined();
+        expect(resolveIdempotencyKeyGeneration(false)).toBeUndefined();
+        expect(resolveIdempotencyKeyGeneration("nonsense")).toBeUndefined();
+    });
+
+    it("applies defaults for the boolean shorthand", () => {
+        expect(resolveIdempotencyKeyGeneration(true)).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST", "PUT"]
+        });
+    });
+
+    it("honors a custom header name and methods, defaulting each independently", () => {
+        expect(resolveIdempotencyKeyGeneration({ "header-name": "X-Idempotency-Key" })).toEqual({
+            headerName: "X-Idempotency-Key",
+            methods: ["POST", "PUT"]
+        });
+        expect(resolveIdempotencyKeyGeneration({ methods: ["post", "patch"] })).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST", "PATCH"]
+        });
+    });
+
+    it("falls back to default methods when the provided list is empty or invalid", () => {
+        expect(resolveIdempotencyKeyGeneration({ methods: [] })).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST", "PUT"]
+        });
+        expect(resolveIdempotencyKeyGeneration({ methods: ["BOGUS"] })).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST", "PUT"]
+        });
+    });
+});
+
+describe("getIdempotencyKeyGenerationFromGeneratorConfig", () => {
+    it("resolves the effective (stamped) config, applied from a global default", () => {
+        const invocation = {
+            idempotencyKeyGenerationConfig: true
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getIdempotencyKeyGenerationFromGeneratorConfig(invocation)).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST", "PUT"]
+        });
+    });
+
+    it("prefers the stamped effective config over the raw per-generator config", () => {
+        const invocation = {
+            idempotencyKeyGenerationConfig: { "header-name": "X-From-Override" },
+            raw: { config: { "auto-generate-idempotency-key": true } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getIdempotencyKeyGenerationFromGeneratorConfig(invocation)).toEqual({
+            headerName: "X-From-Override",
+            methods: ["POST", "PUT"]
+        });
+    });
+
+    it("falls back to reading the raw per-generator config when nothing is stamped", () => {
+        const invocation = {
+            raw: { config: { "auto-generate-idempotency-key": { methods: ["POST"] } } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getIdempotencyKeyGenerationFromGeneratorConfig(invocation)).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST"]
+        });
+    });
+
+    it("falls back to the resolved config for synthetic invocations without a raw block", () => {
+        const invocation = {
+            config: { "auto-generate-idempotency-key": true }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getIdempotencyKeyGenerationFromGeneratorConfig(invocation)).toEqual({
+            headerName: "Idempotency-Key",
+            methods: ["POST", "PUT"]
+        });
+    });
+
+    it("returns undefined when neither stamped nor raw config is present", () => {
+        const invocation = {
+            raw: { config: {} }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getIdempotencyKeyGenerationFromGeneratorConfig(invocation)).toBeUndefined();
     });
 });

@@ -27,6 +27,9 @@ export class HomepageClient {
     /**
      * @param {HomepageClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
+     *
      * @example
      *     await client.homepage.getHomepageProblems()
      */
@@ -89,6 +92,9 @@ export class HomepageClient {
     /**
      * @param {SeedTrace.ProblemId[]} request
      * @param {HomepageClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedTraceError}
+     * @throws {@link errors.SeedTraceTimeoutError}
      *
      * @example
      *     await client.homepage.setHomepageProblems(["string", "string"])

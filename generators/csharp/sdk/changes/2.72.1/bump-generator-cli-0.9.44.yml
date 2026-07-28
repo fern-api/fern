@@ -1,0 +1,7 @@
+- summary: |
+    Bump the bundled `@fern-api/generator-cli` to 0.9.44 so every local-only commit
+    is signed when pushing to GitHub, not just HEAD. Replay branches contain multiple
+    commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only the HEAD
+    commit was recreated via the GitHub API and signed, leaving earlier commits on
+    the PR unverified.
+  type: chore

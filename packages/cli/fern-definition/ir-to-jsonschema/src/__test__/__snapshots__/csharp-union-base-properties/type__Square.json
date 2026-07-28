@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "createdAt": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "side": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "id",
+    "side"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

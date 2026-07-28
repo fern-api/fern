@@ -1,4 +1,198 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.84.0
+  changelogEntry:
+    - summary: |
+        Generated error classes now redeclare the `body` property with the error's
+        typed body (e.g. `public declare readonly body: MyErrorBody;`) instead of
+        inheriting `body?: unknown` from the base API error class. This makes
+        `err.body.<field>` type-check in catch blocks without casting when the
+        error has a declared body schema.
+      type: feat
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 3.83.2
+  changelogEntry:
+    - summary: |
+        Global headers declared with an `env` now fall back to that environment
+        variable at runtime. The resolution order for a global header is the
+        explicit option, then the environment variable, then the client default.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 3.83.1
+  changelogEntry:
+    - summary: |
+        Scope the passthrough `client.fetch()` auth headers to the configured base URL.
+        Auth headers are now only attached when the resolved request URL has the same
+        origin as the configured base URL (or environment), so passing an absolute
+        cross-origin URL into the passthrough fetch escape hatch no longer leaks the
+        SDK's credentials to an unrelated host. Relative paths and same-origin absolute
+        URLs are unaffected. Passthrough debug logs now redact credentials in the
+        request URL, matching the main fetcher.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add support for webhook body-hash binding in the generated `verifySignature` helper.
+        When a webhook's signature declares a body-hash binding, the helper now hashes the raw
+        request body and compares it to the hash transmitted separately as a query parameter on
+        the notification URL (e.g. Twilio's `bodySHA256`) before verifying the HMAC signature.
+        Both checks must pass. The body-hash algorithm and encoding are independent of the outer
+        HMAC's.
+      type: feat
+    - summary: |
+        Webhook signature helpers now support multi-value form parameters (with per-key
+        dedup + sort), branch at runtime on the body-hash query parameter to verify either
+        classic form-encoded or JSON requests, verify against normalized notification-URL
+        variants (port / legacy query encoding) when configured, and return `false` instead
+        of throwing on missing/invalid inputs.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 3.82.3
+  changelogEntry:
+    - summary: |
+        Fix server URL variable interpolation to render the selected environment's URL
+        template instead of always using the first environment's template. When a client
+        is constructed with both an `environment` and server URL variable values (e.g.
+        `region`), the base URL is now built from the selected environment's template(s);
+        for multi-host environments every host's template is formatted. An explicitly
+        provided `baseUrl` or custom environment value is no longer overridden.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 3.82.2
+  changelogEntry:
+    - summary: |
+        Generated endpoint JSDoc now documents all thrown error paths: in addition to
+        the errors declared in the API definition, each method's `@throws` annotations
+        include the base API error class (thrown for any undeclared HTTP error status
+        code) and the timeout error class (thrown when the request times out).
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 3.82.1
+  changelogEntry:
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the token
+        endpoint models `grant_type` as a plain (non-literal) string. Previously the
+        generated `OAuthAuthProvider` omitted `grant_type` entirely, so token requests
+        against OpenAPI-imported specs (where `grant_type` is an optional string rather
+        than a literal) failed. A required non-literal `grant_type` is no longer surfaced
+        as a user-supplied client-credentials option; it is synthesized automatically.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 3.82.0
+  changelogEntry:
+    - summary: |
+        Add automatic idempotency-key generation, driven by the centralized
+        `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+        UUIDv4 idempotency-key header (default `Idempotency-Key`) to requests whose HTTP method is
+        listed in the IR (default `POST`/`PUT`). A caller-supplied key in request options still takes
+        precedence.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.81.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (e.g. region/edge routing). Server variables
+        defined on the API's environments are now exposed as optional string options on the
+        client constructor and interpolated into the base URL(s) at request time. Reserved
+        option names are de-collided by prefixing with `serverUrl` (e.g. a variable named
+        `environment` is exposed as `serverUrlEnvironment`).
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.80.2
+  changelogEntry:
+    - summary: |
+        Fix compile errors in the generated `OAuthAuthProvider` when the serde layer is
+        disabled: the token endpoint method is now called with the same camelCase name
+        that the generated client exposes (previously the original casing, e.g.
+        `CreateOauth2Token`, was used). Also guard against optional `access_token`
+        response properties so the token refresh path satisfies its `Promise<string>`
+        return type instead of `string | undefined`.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 3.80.1
+  changelogEntry:
+    - summary: |
+        Make the structured `User-Agent` (emitted when `includePlatformHeaders` is
+        enabled) comply with the RFC 7230 token grammar. The npm package name is now
+        percent-encoded in the product token so the `@` and `/` of a scoped package
+        are escaped (e.g. `@dummy/sdk/0.0.1` becomes `%40dummy%2Fsdk/0.0.1`); the
+        original name can be recovered by URL-decoding. The architecture label is also
+        normalized so the 64-bit x86 aliases (`x64`, `amd64`, `x86_64`) all report as
+        the canonical `x86_64`.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header of the form
+        `{sdkName}/{version} ({os}; {arch}) {runtime}/{runtimeVersion}`, matching the
+        Twilio helper-library shape. This is gated behind the `includePlatformHeaders`
+        config option and is disabled by default, so existing generated output is
+        unchanged. When enabled, the platform + runtime information is consolidated
+        into the `User-Agent` and the discrete `X-Fern-Runtime` / `X-Fern-Runtime-Version`
+        headers are omitted. The platform group and runtime segment are dropped
+        gracefully in environments where they cannot be determined (e.g. browsers),
+        and the header remains subject to `omitFernHeaders`.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 3.79.2
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `.github/workflows/ci.yml` publish job now runs on a pinned Node LTS
+        (`node-version: "lts/Krypton"`) and calls `npm publish` directly instead
+        of `npx -y npm@latest publish`. Relying on `npm@latest` pulled whatever
+        npm release was newest at publish time, so a broken npm release could
+        break publishing. The pinned Node LTS bundles an npm that supports OIDC
+        trusted publishing. The `npx semver` invocation used for backport
+        detection is also pinned to `semver@7.8.1`.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 3.79.1
+  changelogEntry:
+    - summary: |
+        Generated snippets now use `baseUrl` instead of `environment` when
+        no environments are defined in the API spec, matching the actual
+        constructor parameter users should provide.
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
+- version: 3.79.0
+  changelogEntry:
+    - summary: |
+        Add a `defaultTimeout` custom config option, expressed in milliseconds, which is idiomatic for
+        JavaScript/TypeScript (`setTimeout`, `AbortSignal.timeout(ms)`). Use `"infinity"` to disable the
+        timeout. The seconds-based `defaultTimeoutInSeconds` and `timeoutInSeconds` keys are now
+        deprecated but continue to work: their values are converted to milliseconds (× 1000). Precedence
+        is `defaultTimeout` > `defaultTimeoutInSeconds` > `timeoutInSeconds`. Generated SDK output is
+        unchanged for existing configs.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 67
+- version: 3.78.2
+  changelogEntry:
+    - summary: |
+        Fix a regression where `| undefined` was dropped from the value type of generated
+        `Record` types backed by optional map values (e.g. optional `additionalProperties`).
+        Optional map values now correctly generate `Record<string, T | undefined>` with
+        serialization `record(string(), T.optional())`, while `unknown`/`any` map values
+        keep the redundant `| undefined` stripped (`Record<string, unknown>`).
+      type: fix
+  createdAt: "2026-07-07"
+  irVersion: 67
 - version: 3.78.1
   changelogEntry:
     - summary: |

@@ -52,6 +52,16 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnListOfPrimitives(
+     *     [
+     *         'string',
+     *         'string',
+     *     ],
+     * );
+     * ```
+     *
      * @param array<string> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -99,6 +109,20 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnListOfObjects(
+     *     [
+     *         new ObjectWithRequiredField([
+     *             'string' => 'string',
+     *         ]),
+     *         new ObjectWithRequiredField([
+     *             'string' => 'string',
+     *         ]),
+     *     ],
+     * );
+     * ```
+     *
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -146,6 +170,15 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnSetOfPrimitives(
+     *     [
+     *         'string',
+     *     ],
+     * );
+     * ```
+     *
      * @param array<string> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -193,6 +226,17 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnSetOfObjects(
+     *     [
+     *         new ObjectWithRequiredField([
+     *             'string' => 'string',
+     *         ]),
+     *     ],
+     * );
+     * ```
+     *
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -240,6 +284,15 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnMapPrimToPrim(
+     *     [
+     *         'string' => 'string',
+     *     ],
+     * );
+     * ```
+     *
      * @param array<string, string> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -287,6 +340,17 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnMapOfPrimToObject(
+     *     [
+     *         'string' => new ObjectWithRequiredField([
+     *             'string' => 'string',
+     *         ]),
+     *     ],
+     * );
+     * ```
+     *
      * @param array<string, ObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
@@ -334,6 +398,15 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+     *     [
+     *         'string' => 1.1,
+     *     ],
+     * );
+     * ```
+     *
      * @param array<string, (
      *    float
      *   |bool
@@ -391,6 +464,15 @@ class ContainerClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->endpoints->container->getAndReturnOptional(
+     *     new ObjectWithRequiredField([
+     *         'string' => 'string',
+     *     ]),
+     * );
+     * ```
+     *
      * @param ?ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,

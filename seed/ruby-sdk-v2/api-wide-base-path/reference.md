@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">post</a>(path_param, service_param, endpoint_param, resource_param) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">post</a>(path_param:, service_param:, endpoint_param:, resource_param:) -> </code></summary>
 <dl>
 <dd>
 

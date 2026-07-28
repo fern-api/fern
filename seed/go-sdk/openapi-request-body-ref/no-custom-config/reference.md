@@ -14,16 +14,15 @@
 
 ```go
 request := &fern.UpdateVendorBody{
-        VendorID: "vendor_id",
-        Body: &fern.UpdateVendorRequest{
-            Name: "name",
-        },
-    }
-client.Vendor.UpdateVendor(
-        context.TODO(),
-        request,
-    )
+    VendorID: "vendor_id",
+    Body: &fern.UpdateVendorRequest{
+        Name: "name",
+    },
 }
+client.Vendor.UpdateVendor(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -72,13 +71,12 @@ client.Vendor.UpdateVendor(
 
 ```go
 request := &fern.CreateVendorRequest{
-        Name: "name",
-    }
-client.Vendor.CreateVendor(
-        context.TODO(),
-        request,
-    )
+    Name: "name",
 }
+client.Vendor.CreateVendor(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -136,18 +134,17 @@ client.Vendor.CreateVendor(
 
 ```go
 request := &fern.CreateCatalogImageBody{
-        ImageFile: strings.NewReader(
-            "",
-        ),
-        Request: &fern.CreateCatalogImageRequest{
-            CatalogObjectID: "catalog_object_id",
-        },
-    }
-client.Catalog.CreateCatalogImage(
-        context.TODO(),
-        request,
-    )
+    ImageFile: strings.NewReader(
+        "",
+    ),
+    Request: &fern.CreateCatalogImageRequest{
+        CatalogObjectID: "catalog_object_id",
+    },
 }
+client.Catalog.CreateCatalogImage(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -173,13 +170,12 @@ client.Catalog.CreateCatalogImage(
 
 ```go
 request := &fern.GetCatalogImageRequest{
-        ImageID: "image_id",
-    }
-client.Catalog.GetCatalogImage(
-        context.TODO(),
-        request,
-    )
+    ImageID: "image_id",
 }
+client.Catalog.GetCatalogImage(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -221,13 +217,12 @@ client.Catalog.GetCatalogImage(
 
 ```go
 request := &fern.UpdateTeamMemberRequest{
-        TeamMemberID: "team_member_id",
-    }
-client.TeamMember.UpdateTeamMember(
-        context.TODO(),
-        request,
-    )
+    TeamMemberID: "team_member_id",
 }
+client.TeamMember.UpdateTeamMember(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

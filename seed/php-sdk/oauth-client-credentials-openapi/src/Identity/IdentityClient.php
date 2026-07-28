@@ -50,6 +50,16 @@ class IdentityClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->identity->getToken(
+     *     new GetTokenIdentityRequest([
+     *         'username' => 'username',
+     *         'password' => 'password',
+     *     ]),
+     * );
+     * ```
+     *
      * @param GetTokenIdentityRequest $request
      * @param ?array{
      *   baseUrl?: string,

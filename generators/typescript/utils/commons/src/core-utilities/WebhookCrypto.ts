@@ -6,6 +6,15 @@ export interface WebhookCrypto {
     computeHmacSignature: {
         _invoke: (args: ts.Expression) => ts.Expression;
     };
+    computeHash: {
+        _invoke: (args: ts.Expression) => ts.Expression;
+    };
+    getWebhookQueryParameter: {
+        _invoke: (url: ts.Expression, name: ts.Expression) => ts.Expression;
+    };
+    notificationUrlCandidates: {
+        _invoke: (url: ts.Expression, options: ts.Expression) => ts.Expression;
+    };
     verifyAsymmetricSignature: {
         _invoke: (args: ts.Expression) => ts.Expression;
     };
@@ -37,6 +46,40 @@ export class WebhookCryptoImpl extends CoreUtility implements WebhookCrypto {
                     return ts.factory.createAwaitExpression(
                         ts.factory.createCallExpression(computeHmacSignature.getExpression(), undefined, [args])
                     );
+                }
+        )
+    };
+
+    public readonly computeHash = {
+        _invoke: this.withExportedName("computeHash", (computeHash) => (args: ts.Expression): ts.Expression => {
+            return ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(computeHash.getExpression(), undefined, [args])
+            );
+        })
+    };
+
+    public readonly getWebhookQueryParameter = {
+        _invoke: this.withExportedName(
+            "getWebhookQueryParameter",
+            (getWebhookQueryParameter) =>
+                (url: ts.Expression, name: ts.Expression): ts.Expression => {
+                    return ts.factory.createCallExpression(getWebhookQueryParameter.getExpression(), undefined, [
+                        url,
+                        name
+                    ]);
+                }
+        )
+    };
+
+    public readonly notificationUrlCandidates = {
+        _invoke: this.withExportedName(
+            "notificationUrlCandidates",
+            (notificationUrlCandidates) =>
+                (url: ts.Expression, options: ts.Expression): ts.Expression => {
+                    return ts.factory.createCallExpression(notificationUrlCandidates.getExpression(), undefined, [
+                        url,
+                        options
+                    ]);
                 }
         )
     };

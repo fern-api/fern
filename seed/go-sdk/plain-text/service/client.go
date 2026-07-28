@@ -33,6 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Service.GetText(
+//	    context.TODO(),
+//	)
 func (c *Client) GetText(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -47,6 +52,11 @@ func (c *Client) GetText(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetCsv(
+//	    context.TODO(),
+//	)
 func (c *Client) GetCsv(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -61,6 +71,11 @@ func (c *Client) GetCsv(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Service.GetXML(
+//	    context.TODO(),
+//	)
 func (c *Client) GetXML(
 	ctx context.Context,
 	opts ...option.RequestOption,

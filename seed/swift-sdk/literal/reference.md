@@ -57,6 +57,55 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.headers.<a href="/Sources/Resources/Headers/HeadersClient.swift">sendLiteralsOnly</a>(requestOptions: RequestOptions?) -> SendResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Literal
+
+private func main() async throws {
+    let client = LiteralClient()
+
+    _ = try await client.headers.sendLiteralsOnly()
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inlined
 <details><summary><code>client.inlined.<a href="/Sources/Resources/Inlined/InlinedClient.swift">send</a>(request: Requests.SendLiteralsInlinedRequest, requestOptions: RequestOptions?) -> SendResponse</code></summary>
 <dl>

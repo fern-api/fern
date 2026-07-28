@@ -5,6 +5,110 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.17.0] - 2026-07-28
+
+- Add `OAuthConfiguration.authorizationCode` (`OAuthAuthorizationCode`), an additive union variant
+  modeling the OAuth 2.0 Authorization Code grant with required PKCE (RFC 7636) for public clients
+  such as generated CLIs and native apps. No client secret is used.
+  - `OAuthAuthorizationCode` carries the public `clientId` (`OAuthPublicClientId`: either a `literal`
+    value or an `environmentVariable` source), `authorizationUrl`, `tokenUrl`, optional `refreshUrl`
+    (defaults to `tokenUrl`), an optional loopback `redirectUri`, optional `scopes`, a required
+    `pkce` configuration, optional public `authorizationParameters`/`tokenParameters`/`refreshParameters`
+    maps, and optional `tokenHeader`/`tokenPrefix` for bearer application.
+  - `redirectUri` is optional: when set, the CLI binds and sends that exact loopback host/port/path;
+    when omitted, the CLI uses a loopback redirect on an ephemeral (OS-assigned) port with the
+    `/callback` path (RFC 8252 §7.3).
+  - `OAuthPkceConfiguration.method` is an `OAuthPkceMethod` enum that currently only permits `S256`.
+- Add `OAuthConfiguration.deviceCode` (`OAuthDeviceCode`), an additive union variant modeling the
+  OAuth 2.0 Device Authorization Grant (RFC 8628) for public clients such as generated CLIs and
+  native apps on input-constrained or browserless devices. No client secret is used.
+  - `OAuthDeviceCode` carries the public `clientId` (`OAuthPublicClientId`), the
+    `deviceAuthorizationUrl` (device authorization endpoint), `tokenUrl` (polled for tokens),
+    optional `refreshUrl` (defaults to `tokenUrl`), optional `scopes`, optional public
+    `deviceAuthorizationParameters`/`tokenParameters`/`refreshParameters` maps, and optional
+    `tokenHeader`/`tokenPrefix` for bearer application. PKCE does not apply to this grant.
+
+## [v67.16.0] - 2026-07-27
+
+- Add `nuget` variant to `PublishTarget` (`NugetPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the C# SDK's package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way npm/pypi/maven/
+  crates/go targets already do, so the C# generator can stamp the SDK name/version into the
+  generated `Version.cs` and the structured `User-Agent` header.
+
+## [v67.15.0] - 2026-07-21
+
+- Add `HmacSignatureVerification.notificationUrlNormalization` (optional
+  `WebhookNotificationUrlNormalization`) for webhook schemes that must verify the signature
+  against several normalized forms of the notification URL and accept the request if any
+  candidate matches (for example, Twilio, whose backend is inconsistent about the URL's port
+  and query-string encoding).
+  - `WebhookNotificationUrlNormalization` carries `portVariants` (try the URL with the
+    scheme's standard port and with no port) and `legacyQueryEncoding` (additionally try each
+    port variant with the query string re-encoded using legacy form-encoding).
+
+## [v67.14.0] - 2026-07-15
+
+- Add `CasingsConfig.smartCasingDigitWordBoundary` (`optional<boolean>`): when smart casing
+  is enabled, opts snake_case into preserving the word boundary after a digit run
+  (`ConversationsV2Configuration` → `conversations_v2_configuration`). Defaults to false,
+  preserving the previous behavior (`conversations_v2configuration`). Driven by the
+  `smart-casing-digit-word-boundary` flag in `generators.yml`.
+
+## [v67.13.0] - 2026-07-15
+
+- Add `HmacSignatureVerification.bodyHashBinding` (optional `WebhookBodyHashBinding`)
+  for webhook schemes that do not include the raw body in the signed payload directly,
+  but instead transmit a hash of the body separately (for example, Twilio's `bodySHA256`
+  query parameter for JSON bodies). When present, signature verification must also
+  recompute the encoded hash of the raw body and compare it to the transmitted value.
+  - `WebhookBodyHashBinding` carries `algorithm` (`WebhookBodyHashAlgorithm`: `SHA256`,
+    `SHA1`, `SHA384`, `SHA512`), `encoding` (`WebhookSignatureEncoding`), and `location`
+    (`WebhookBodyHashLocation`). The hash algorithm/encoding are independent of the outer
+    HMAC's.
+  - `WebhookBodyHashLocation` is a union; the `queryParameter` variant
+    (`WebhookBodyHashQueryParameterLocation` with a `name`) describes a hash carried as a
+    query parameter on the notification URL.
+
+## [v67.12.0] - 2026-07-13
+
+- Add discriminated-union base-property dedupe facts, computed once during IR
+  generation so every generator reads one source of truth instead of re-deriving
+  the decision.
+  - `UnionTypeDeclaration.inheritedBaseProperties` (`optional<list<NameAndWireValue>>`):
+    base properties that *every* `samePropertiesAsObject` variant redeclares with a
+    structurally-equal type (resolving `extends` and alias chains). For
+    envelope-dropping generators (e.g. Go).
+  - `ObjectTypeDeclaration.deferredUnionBaseProperties`
+    (`optional<list<NameAndWireValue>>`): for an object used *exclusively* as a union
+    variant, the properties every owning union also declares as a base property with a
+    structurally-equal type. For leaf-dropping generators (e.g. C#).
+  - Mirrored on the dynamic IR: `DiscriminatedUnionType.inheritedBaseProperties` and
+    `ObjectType.deferredUnionBaseProperties` for snippet generators.
+  These facts are computed regardless of any generator flag; the opt-in gating stays
+  in each generator.
+
+## [v67.11.0] - 2026-07-08
+
+- Add `SdkConfig.idempotencyKeyGeneration` (optional `IdempotencyKeyGeneration`).
+  When present, generators auto-generate an idempotency key header on retry-unsafe
+  (POST/PUT) requests unless the caller supplies one; absent disables the feature
+  (the default). It is configured once via the `auto-generate-idempotency-key`
+  generator config key and read identically by every generator, so the behavior is
+  consistent across languages instead of being re-derived per generator. Carries
+  `headerName` (defaults to `Idempotency-Key`) and `methods` (the eligible HTTP
+  methods, defaulting to `POST` and `PUT`), so the method-gating is centralized in
+  the IR rather than hard-coded per generator.
+
+## [v67.10.2] - 2026-07-07
+
+- Docs: Clarify `HttpEndpoint.globalParameters` semantics — it is now the fully
+  resolved set of global parameters that apply to the endpoint, computed at
+  IR-generation time (explicit opt-ins ∪ matching `apply: auto` parameters, with
+  body-location parameters gated on the request-body schema containing the dotted
+  target path). Generators should consume it as a membership check rather than
+  re-deriving applicability from `apply` modes.
+
 ## [v67.10.1] - 2026-07-02
 
 - Docs: Clarify `GlobalParameter.name` semantics — `wireValue` is the canonical

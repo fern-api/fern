@@ -13,11 +13,53 @@ impl HeadersClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_literal::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LiteralClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .headers
+    ///         .send(
+    ///             &SendLiteralsInHeadersRequest {
+    ///                 query: "What is the weather today".to_string(),
+    ///             },
+    ///             Some(
+    ///                 RequestOptions::new()
+    ///                     .additional_header("X-Endpoint-Version", "02-12-2024")
+    ///                     .additional_header("X-Async", "true"),
+    ///             ),
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn send(
         &self,
         request: &SendLiteralsInHeadersRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
+        let options = {
+            let mut o = options.unwrap_or_default();
+            o.additional_headers
+                .entry("X-API-Version".to_string())
+                .or_insert_with(|| "02-02-2024".to_string());
+            o.additional_headers
+                .entry("X-API-Enable-Audit-Logging".to_string())
+                .or_insert_with(|| "true".to_string());
+            o.additional_headers
+                .entry("X-Endpoint-Version".to_string())
+                .or_insert_with(|| "02-12-2024".to_string());
+            o.additional_headers
+                .entry("X-Async".to_string())
+                .or_insert_with(|| "true".to_string());
+            Some(o)
+        };
         self.http_client
             .execute_request(
                 Method::POST,
@@ -26,6 +68,45 @@ impl HeadersClient {
                 None,
                 options,
             )
+            .await
+    }
+
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_literal::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = LiteralClient::new(config).expect("Failed to build client");
+    ///     client.headers.send_literals_only(None).await;
+    /// }
+    /// ```
+    pub async fn send_literals_only(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<SendResponse, ApiError> {
+        let options = {
+            let mut o = options.unwrap_or_default();
+            o.additional_headers
+                .entry("X-API-Version".to_string())
+                .or_insert_with(|| "02-02-2024".to_string());
+            o.additional_headers
+                .entry("X-API-Enable-Audit-Logging".to_string())
+                .or_insert_with(|| "true".to_string());
+            o.additional_headers
+                .entry("X-Endpoint-Version".to_string())
+                .or_insert_with(|| "02-12-2024".to_string());
+            o.additional_headers
+                .entry("X-Async".to_string())
+                .or_insert_with(|| "true".to_string());
+            Some(o)
+        };
+        self.http_client
+            .execute_request(Method::POST, "headers/literals-only", None, None, options)
             .await
     }
 }

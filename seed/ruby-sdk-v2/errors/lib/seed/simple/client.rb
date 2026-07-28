@@ -18,6 +18,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.simple.foo_without_endpoint_error(bar: "bar")
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_without_endpoint_error(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -50,6 +53,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.simple.foo(bar: "bar")
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -81,6 +87,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.simple.foo_with_examples(bar: "hello")
       #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_with_examples(request_options: {}, **params)

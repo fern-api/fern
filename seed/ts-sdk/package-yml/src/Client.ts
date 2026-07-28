@@ -32,6 +32,9 @@ export class SeedPackageYmlClient {
      * @param {SeedPackageYml.EchoRequest} request
      * @param {SeedPackageYmlClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedPackageYmlError}
+     * @throws {@link errors.SeedPackageYmlTimeoutError}
+     *
      * @example
      *     await client.echo({
      *         name: "Hello world!",

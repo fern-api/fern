@@ -311,8 +311,16 @@ export class WireMock {
         const shouldAddBodyPattern = streamConditionProperty != null && isSseResponse;
 
         // Build auth header matchers for endpoints that require authentication.
+        //
+        // In ENDPOINT_SECURITY mode the SDK routes a *different* auth scheme per
+        // endpoint (only the declared scheme's header is sent), so the aggregate
+        // "require every scheme's header" matchers below would be wrong — a
+        // Bearer-only endpoint sends no X-API-Key, etc. Skip the stub-level auth
+        // matchers entirely in that mode; per-endpoint header enforcement is done
+        // explicitly in the generated wire tests (verify_auth_headers).
+        const isEndpointSecurity = ir.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
         const authHeaders: Record<string, { matches?: string; equalTo?: string }> = {};
-        if (endpoint.auth) {
+        if (endpoint.auth && !isEndpointSecurity) {
             for (const scheme of ir.auth.schemes) {
                 switch (scheme.type) {
                     case "basic": {

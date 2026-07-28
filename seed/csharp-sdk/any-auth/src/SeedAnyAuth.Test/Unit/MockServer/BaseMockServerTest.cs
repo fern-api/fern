@@ -14,6 +14,35 @@ public class BaseMockServerTest
 
     protected RequestOptions RequestOptions { get; set; } = new();
 
+    private void MockOAuthEndpoint()
+    {
+        const string requestJson = """
+            {
+              "client_id": "client_id",
+              "client_secret": "client_secret",
+              "audience": "https://api.example.com",
+              "grant_type": "client_credentials"
+            }
+            """;
+
+        const string mockResponse = """
+            {
+              "access_token": "access_token",
+              "expires_in": 1,
+              "refresh_token": "refresh_token"
+            }
+            """;
+
+        Server
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/token").UsingPost())
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+    }
+
     private void MockInferredAuthEndpoint()
     {
         const string requestJson = """
@@ -67,6 +96,7 @@ public class BaseMockServerTest
             "PASSWORD",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
+        MockOAuthEndpoint();
         MockInferredAuthEndpoint();
     }
 

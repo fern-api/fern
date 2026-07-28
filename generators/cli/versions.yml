@@ -1,4 +1,148 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.28.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing with "unrecognized subcommand" for specs
+        mounted under a namespace whose leaf matches a top-level resource name. The
+        wire-test harness now mirrors the SDK's `merge_into_path` stutter elision, so
+        an untagged spec grouped under its version path prefix (e.g. `v1`) resolves to
+        `<bin> v1 <op>` instead of the double `<bin> v1 v1 <op>` that clap rejects.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 0.28.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.44.0 updates.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 0.27.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `generateWireTests` config flag. When enabled, the generator
+        emits an automated wire-test suite alongside the CLI: `wiremock/wire-test-cases.json`
+        (one case per endpoint example, derived from the IR) and `tests/wire_test.rs`
+        (a generic harness). Each test stands up an in-process mock server, drives the
+        compiled CLI binary against it (`--base-url` + `--params` + `--json`), and
+        asserts the CLI issued the expected request and rendered the mocked response.
+        The suite runs under a plain `cargo test` — no docker, no network. Defaults to
+        off so existing generations are unaffected.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 0.26.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.43.1 updates.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 0.26.0
+  changelogEntry:
+    - summary: |
+        Generate OAuth client-credentials authentication from the full Fern IR
+        contract, including custom token and refresh requests, response mappings,
+        scopes, token headers and prefixes, environment URLs, expiry-aware caching,
+        and refresh fallback.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 0.25.0
+  changelogEntry:
+    - summary: |
+        The generated CLI now sends a `User-Agent` header identifying itself by its
+        own binary name and version (e.g. `mycli-cli/1.4.0`) instead of the shared
+        `fern-cli-sdk` crate name. This lets each CLI's traffic be tracked
+        distinctly on the API backend. The product token is normalized to end with
+        `-cli` so it unambiguously denotes CLI traffic (a binary named `mycli`
+        reports `mycli-cli`; one already named `mycli-cli` is left unchanged).
+
+        A tool built on top of the CLI can voluntarily tag its traffic, either with
+        the `--user-agent-suffix` flag or the `<NAME>_USER_AGENT_SUFFIX` environment
+        variable (the flag takes precedence). The token is appended to (rather than
+        replacing) the CLI's own identity — e.g. `mycli-cli/1.4.0 partner-app/3.1`.
+
+        The name of this suffix flag (and its derived environment variable) is
+        configurable at generation time via the new `userAgentSuffixFlag` custom
+        config. It defaults to `--user-agent-suffix` / `<NAME>_USER_AGENT_SUFFIX`;
+        setting `userAgentSuffixFlag: via` instead exposes `--via` and `<NAME>_VIA`,
+        giving API owners branding control over the consumer suffix knob.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 0.24.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.43.0 updates.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 0.23.4
+  changelogEntry:
+    - summary: |
+        Re-export `std::collections::{HashMap, HashSet}` from the embedded SDK
+        crate's `prelude`. The Rust SDK generator emits `use crate::prelude::*;`
+        in files that reference `HashMap`/`HashSet` by bare name — most notably
+        `error.rs`, whose error-body fields can resolve to
+        `Vec<HashMap<String, serde_json::Value>>`. The CLI generator previously
+        overwrote the standalone SDK prelude with only the types-crate re-export,
+        dropping the std re-export, so the generated `<binary>-sdk` crate failed
+        to compile with `cannot find type HashMap in this scope`. The embedded
+        prelude now mirrors the standalone SDK prelude for std collections.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 0.23.3
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.42.2 updates.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 0.23.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.42.1 updates.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 67
+- version: 0.23.1
+  changelogEntry:
+    - summary: |
+        Pin the npm toolchain used by the generated publish workflow. The
+        `publish` and `publish-launcher` jobs in `.github/workflows/ci.yml` now
+        run on a pinned Node LTS (`node-version: "lts/Krypton"`) and call
+        `npm publish` directly instead of `npx -y npm@latest publish`. Relying on
+        `npm@latest` pulled whatever npm release was newest at publish time, so a
+        broken npm release could break publishing. The pinned Node LTS bundles an
+        npm that supports OIDC trusted publishing.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 0.23.0
+  changelogEntry:
+    - summary: |
+        Remove the current-working-directory sandbox on output paths. `--output`
+        and `--output-dir` now write wherever they are pointed — including
+        absolute paths and locations outside the current directory — instead of
+        failing with "resolves to ... which is outside the current directory".
+        Control-character rejection and the `O_NOFOLLOW` refusal of a
+        final-component symlink are retained; `--output` still requires its parent
+        directory to exist.
+      type: feat
+  createdAt: "2026-07-09"
+  irVersion: 67
+- version: 0.22.1
+  changelogEntry:
+    - summary: |
+        Fix aarch64-unknown-linux-musl build failure in generated CI workflow.
+        The emitted workflow now sets CARGO_TARGET_*_LINKER=musl-gcc and
+        CC=musl-gcc for musl targets so the Rust linker finds musl-gcc
+        instead of falling back to the system cc (which links against glibc).
+      type: fix
+  createdAt: "2026-07-08"
+  irVersion: 67
 - version: 0.22.0
   changelogEntry:
     - summary: |

@@ -10,6 +10,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.ping
+    #
     # @return [String]
     def ping(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
@@ -38,7 +41,8 @@ module Seed
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "X-Fern-Language" => "Ruby"
+          "X-Fern-Language" => "Ruby",
+          "user-agent" => "my-sdk"
         },
         max_retries: max_retries
       )

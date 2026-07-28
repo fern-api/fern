@@ -385,7 +385,7 @@ async function convertJsConfig(
     js: docsYml.RawSchemas.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<docsYml.JavascriptConfig> {
-    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
+    const remote: docsYml.ParsedJsRemoteConfig[] = [];
     const files: docsYml.AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -401,7 +401,8 @@ async function convertJsConfig(
         } else if (isRemoteJsConfig(config)) {
             remote.push({
                 strategy: config.strategy,
-                url: CjsFdrSdk.Url(config.url)
+                url: CjsFdrSdk.Url(config.url),
+                disableSri: config.disableSri
             });
         } else if (isFileJsConfig(config)) {
             files.push({
@@ -552,7 +553,8 @@ function convertSettingsConfig(
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
             prioritizeCurrentProduct,
-            defaultFilterByCurrentProduct
+            defaultFilterByCurrentProduct,
+            externalSitemaps: undefined
         },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,
@@ -664,6 +666,10 @@ function convertLayoutConfig(
         // fern-platform companion PR. Part of the `as unknown as` cast below
         // until the published FDR SDK adds `changelogLayout`.
         changelogLayout: layout.changelogLayout,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when true the sidebar renders inline availability badges. Part of the
+        // `as unknown as` cast below until the published FDR SDK adds the field.
+        showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
@@ -1644,17 +1650,11 @@ function parseLibrariesConfiguration(
     }
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
-        if (!isGitLibraryInput(config.input)) {
-            throw new CliError({
-                message: `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`,
-                code: CliError.Code.ConfigError
-            });
-        }
+        const input: docsYml.ParsedLibraryInputConfiguration = isGitLibraryInput(config.input)
+            ? { type: "git", git: config.input.git, subpath: config.input.subpath }
+            : { type: "path", path: config.input.path };
         result[name] = {
-            input: {
-                git: config.input.git,
-                subpath: config.input.subpath
-            },
+            input,
             output: {
                 path: config.output.path
             },

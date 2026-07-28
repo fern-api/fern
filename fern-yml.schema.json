@@ -1745,6 +1745,12 @@
             },
             "basepath-aware": {
               "type": "boolean"
+            },
+            "external-sitemaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           "additionalProperties": false
@@ -1846,6 +1852,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -1892,6 +1901,9 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "mask-pii": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -2875,6 +2887,9 @@
                 "timeline",
                 "classic"
               ]
+            },
+            "show-nav-availability-badges": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -3068,6 +3083,9 @@
                         "afterInteractive",
                         "lazyOnload"
                       ]
+                    },
+                    "disable-sri": {
+                      "type": "boolean"
                     }
                   },
                   "required": [
@@ -3121,6 +3139,9 @@
                           "afterInteractive",
                           "lazyOnload"
                         ]
+                      },
+                      "disable-sri": {
+                        "type": "boolean"
                       }
                     },
                     "required": [
@@ -3998,6 +4019,9 @@
                       },
                       "disambiguate-request-names": {
                         "type": "boolean"
+                      },
+                      "ignore-tags": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -4574,6 +4598,9 @@
                           "type": "boolean"
                         },
                         "disambiguate-request-names": {
+                          "type": "boolean"
+                        },
+                        "ignore-tags": {
                           "type": "boolean"
                         }
                       },

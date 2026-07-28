@@ -16,6 +16,7 @@
       },
       "shape": {
         "baseProperties": [],
+        "inheritedBaseProperties": [],
         "discriminant": "type",
         "extends": [],
         "types": [

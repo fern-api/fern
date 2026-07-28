@@ -28,6 +28,22 @@ pub fn resolve_base_url_override(
     Ok(base_url_flag.or(base_url_env_var))
 }
 
+/// Resolve the consumer-supplied `User-Agent` suffix from the suffix
+/// flag (`--user-agent-suffix` by default, or the configured
+/// `userAgentSuffixFlag` name). The clap arg id is stable
+/// (`"user-agent-suffix"`) regardless of the flag's long name, so this
+/// lookup is name-independent. Returns the flag value if present, else
+/// `None` — in which case [`crate::http::HttpConfig`] falls back to the
+/// derived `<NAME>_*` env var. Keeping the env fallback in `HttpConfig`
+/// means the flag simply takes precedence when both are set.
+pub fn resolve_user_agent_suffix_override(matches: &clap::ArgMatches) -> Option<String> {
+    matches
+        .try_get_one::<String>("user-agent-suffix")
+        .ok()
+        .flatten()
+        .cloned()
+}
+
 /// True when raw args contain the `--schema` flag.
 ///
 /// `--schema` is the agent-facing machine-readable counterpart to `--help`:

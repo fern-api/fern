@@ -13,6 +13,30 @@ impl FilesClient {
         })
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_api::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ApiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .files
+    ///         .upload(
+    ///             &FilesUploadRequest {
+    ///                 name: "name".to_string(),
+    ///                 parent_id: "parent_id".to_string(),
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
     pub async fn upload(
         &self,
         request: &FilesUploadRequest,

@@ -26,6 +26,9 @@ export class ClientsClient {
      * @param {SeedApi.ClientRequest} request
      * @param {ClientsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.clients.create({
      *         client: {

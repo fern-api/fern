@@ -34,6 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	client.Union.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,
@@ -50,6 +56,18 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &unions.Shape{
+//	    Circle: &unions.Circle{
+//	        Radius: 1.1,
+//	    },
+//	    ID: "id",
+//	}
+//	client.Union.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *unions.Shape,

@@ -17,7 +17,7 @@ export declare namespace SdkClientClassGenerator {
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
         requireDefaultEnvironment: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeout: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
@@ -56,7 +56,7 @@ export class SdkClientClassGenerator {
     private readonly allowCustomFetcher: boolean;
     private readonly generateWebSocketClients: boolean;
     private readonly requireDefaultEnvironment: boolean;
-    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly defaultTimeout: number | "infinity" | undefined;
     private readonly npmPackage: NpmPackage | undefined;
     private readonly includeContentHeadersOnFileDownloadResponse: boolean;
     private readonly includeSerdeLayer: boolean;
@@ -84,7 +84,7 @@ export class SdkClientClassGenerator {
         allowCustomFetcher,
         generateWebSocketClients,
         requireDefaultEnvironment,
-        defaultTimeoutInSeconds,
+        defaultTimeout,
         npmPackage,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
@@ -111,7 +111,7 @@ export class SdkClientClassGenerator {
         this.allowCustomFetcher = allowCustomFetcher;
         this.generateWebSocketClients = generateWebSocketClients;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
-        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.defaultTimeout = defaultTimeout;
         this.npmPackage = npmPackage;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -151,7 +151,7 @@ export class SdkClientClassGenerator {
             allowCustomFetcher: this.allowCustomFetcher,
             generateWebSocketClients: this.generateWebSocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
-            defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+            defaultTimeout: this.defaultTimeout,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,

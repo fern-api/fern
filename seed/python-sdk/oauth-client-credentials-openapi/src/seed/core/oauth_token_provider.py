@@ -34,8 +34,6 @@ class OAuthTokenProvider:
     def _refresh(self) -> str:
         token_response = self._auth_client.get_token(username=self._client_id, password=self._client_secret)
         self._access_token = token_response.access_token
-        if token_response.refresh_token is None:
-            raise RuntimeError("Access token not present in OAuth response")
         self._refresh_token = token_response.refresh_token
         self._expires_at = self._get_expires_at(
             expires_in_seconds=token_response.expires_in, buffer_in_minutes=self.BUFFER_IN_MINUTES
@@ -69,8 +67,6 @@ class AsyncOAuthTokenProvider:
     async def _refresh(self) -> str:
         token_response = await self._auth_client.get_token(username=self._client_id, password=self._client_secret)
         self._access_token = token_response.access_token
-        if token_response.refresh_token is None:
-            raise RuntimeError("Access token not present in OAuth response")
         self._refresh_token = token_response.refresh_token
         self._expires_at = self._get_expires_at(
             expires_in_seconds=token_response.expires_in, buffer_in_minutes=self.BUFFER_IN_MINUTES

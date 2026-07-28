@@ -21,6 +21,9 @@ module Seed
         # @option params [String] :ids
         # @option params [String] :tags
         #
+        # @example
+        #   client.folder_a.service.get_direct_thread
+        #
         # @return [Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)

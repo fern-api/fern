@@ -3,7 +3,7 @@ import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { BaseClientContext, FileContext } from "@fern-typescript/contexts";
-import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
+import { endpointUtils, getServerVariableOptions } from "@fern-typescript/sdk-client-class-generator";
 import {
     type InterfaceDeclarationStructure,
     type OptionalKind,
@@ -202,6 +202,23 @@ export class BaseClientContextImpl implements BaseClientContext {
             hasQuestionToken: true,
             docs: ["Specify a custom URL to connect the client to."]
         });
+
+        for (const { variable, optionName } of getServerVariableOptions(this.intermediateRepresentation, this.case)) {
+            const docs: string[] = [];
+            if (variable.values != null && variable.values.length > 0) {
+                docs.push(`The ${optionName} to route requests to. Allowed values: ${variable.values.join(", ")}.`);
+            }
+            if (variable.default != null) {
+                docs.push(`Defaults to "${variable.default}".`);
+            }
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(optionName),
+                type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)),
+                hasQuestionToken: true,
+                docs: docs.length > 0 ? [docs.join(" ")] : undefined
+            });
+        }
 
         for (const variable of this.intermediateRepresentation.variables) {
             const variableType = context.type.getReferenceToType(variable.type);

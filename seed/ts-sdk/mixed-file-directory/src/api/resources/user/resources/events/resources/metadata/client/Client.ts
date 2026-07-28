@@ -27,6 +27,9 @@ export class MetadataClient {
      * @param {SeedMixedFileDirectory.user.events.GetEventMetadataRequest} request
      * @param {MetadataClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedMixedFileDirectoryError}
+     * @throws {@link errors.SeedMixedFileDirectoryTimeoutError}
+     *
      * @example
      *     await client.user.events.metadata.getMetadata({
      *         id: "id"

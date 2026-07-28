@@ -26,6 +26,9 @@ export class TypesClient {
      * @param {string} id
      * @param {TypesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
+     *
      * @example
      *     await client.types.get("date-example")
      *
@@ -77,6 +80,9 @@ export class TypesClient {
     /**
      * @param {SeedUnions.UnionWithTime} request
      * @param {TypesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedUnionsError}
+     * @throws {@link errors.SeedUnionsTimeoutError}
      *
      * @example
      *     await client.types.update({

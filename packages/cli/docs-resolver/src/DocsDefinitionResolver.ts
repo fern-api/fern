@@ -67,9 +67,16 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
 }
 
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.AIChatConfig includes the maskPii field.
+type AIChatConfigWithMaskPii = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
+    maskPii?: boolean;
+};
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
@@ -757,7 +764,7 @@ export class DocsDefinitionResolver {
                     [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
                         const relativeFilePath = this.toRelativeFilepath(filePath);
                         const contents = (await readFile(filePath)).toString();
-                        return [relativeFilePath, contents];
+                        return [relativeFilePath, await this.bundleJsFileContents(filePath, contents)];
                     })
                 )
             );
@@ -782,13 +789,13 @@ export class DocsDefinitionResolver {
         if (this._parsedDocsConfig.header != null) {
             const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.header);
             const contents = (await readFile(this._parsedDocsConfig.header)).toString();
-            jsFiles[relativeFilePath] = contents;
+            jsFiles[relativeFilePath] = await this.bundleJsFileContents(this._parsedDocsConfig.header, contents);
             this.taskContext.logger.debug(`Added custom header component: ${relativeFilePath}`);
         }
         if (this._parsedDocsConfig.footer != null) {
             const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.footer);
             const contents = (await readFile(this._parsedDocsConfig.footer)).toString();
-            jsFiles[relativeFilePath] = contents;
+            jsFiles[relativeFilePath] = await this.bundleJsFileContents(this._parsedDocsConfig.footer, contents);
             this.taskContext.logger.debug(`Added custom footer component: ${relativeFilePath}`);
         }
 
@@ -964,8 +971,9 @@ export class DocsDefinitionResolver {
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
-                          }))
-                      } as DocsV1Write.DocsConfig["aiChatConfig"])
+                          })),
+                          maskPii: this.parsedDocsConfig.aiChatConfig.maskPii
+                      } as AIChatConfigWithMaskPii as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
@@ -1007,7 +1015,7 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
-            settings: this.parsedDocsConfig.settings,
+            settings: this.convertDocsSettings(),
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
             agents:
@@ -1100,6 +1108,27 @@ export class DocsDefinitionResolver {
             footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined
         };
         return config;
+    }
+
+    /**
+     * Bundles a custom component file with rolldown when it imports third-party
+     * libraries, so the uploaded source is self-contained. Returns the original
+     * contents when no bundling is needed.
+     */
+    private async bundleJsFileContents(absoluteFilePath: AbsoluteFilePath, contents: string): Promise<string> {
+        try {
+            const bundled = await maybeBundleMdxComponent({
+                absoluteFilePath,
+                contents,
+                context: this.taskContext
+            });
+            return bundled ?? contents;
+        } catch (error) {
+            throw new CliError({
+                message: `Failed to bundle third-party imports in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                code: CliError.Code.ParseError
+            });
+        }
     }
 
     private getFernWorkspaceForApiSection(
@@ -2754,6 +2783,26 @@ export class DocsDefinitionResolver {
             fallback: font.fallback,
             fontVariationSettings: font.fontVariationSettings
         };
+    }
+
+    // Merges the experimental `external-sitemaps` list into `settings.search`
+    // so it is persisted through FDR and read back during Algolia reindexing.
+    // The `as` cast mirrors convertMetadata(): the published FDR SDK
+    // SearchSettingsConfig type does not yet include `externalSitemaps`, but FDR
+    // stores and serves the field at runtime.
+    private convertDocsSettings(): DocsV1Write.DocsConfig["settings"] {
+        const settings = this.parsedDocsConfig.settings;
+        const externalSitemaps = this.parsedDocsConfig.experimental?.externalSitemaps;
+        if (externalSitemaps == null || externalSitemaps.length === 0) {
+            return settings;
+        }
+        return {
+            ...settings,
+            search: {
+                ...settings?.search,
+                externalSitemaps
+            }
+        } as DocsV1Write.DocsConfig["settings"];
     }
 
     private convertJavascriptConfiguration(): DocsV1Write.JsConfig | undefined {

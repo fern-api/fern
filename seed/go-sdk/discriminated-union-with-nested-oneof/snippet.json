@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/ast",
+                "method": "POST",
+                "identifier_override": "endpoint_.createAst"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/discriminated-union-with-nested-oneof/fern\"\n\tfernclient \"github.com/discriminated-union-with-nested-oneof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateAst(\n\tcontext.TODO(),\n\t\u0026fern.AstNode{\n\t\tLlm: \u0026fern.AstNodeLlm{\n\t\t\tModel: \"model\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

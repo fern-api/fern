@@ -34,6 +34,18 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.SendEnumInlinedRequest{
+//	    Operand: fern.OperandGreaterThan,
+//	    OperandOrColor: &fern.ColorOrOperand{
+//	        Color: fern.ColorRed,
+//	    },
+//	}
+//	client.InlinedRequest.Send(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Send(
 	ctx context.Context,
 	request *fern.SendEnumInlinedRequest,

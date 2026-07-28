@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: Server URL Templating API (single base URL)
+  version: 0.0.0
+paths:
+  /users:
+    get:
+      operationId: getUsers
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
+                      email: email
+      summary: Get all users
+  /users/{userId}:
+    get:
+      operationId: getUser
+      tags:
+        - ''
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: userId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    email: email
+      summary: Get a user by ID
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+        email:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - name
+  securitySchemes: {}
+servers:
+  - url: https://api.us-east-1.prod.example.com/v1
+    description: Regional API server

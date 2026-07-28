@@ -446,4 +446,74 @@ describe("copySpecs", () => {
         expect(main).toContain("use fern_cli_sdk::auth::{BearerAuth};");
         expect(main).not.toContain("AuthCredentialSource");
     });
+
+    it("emits .user_agent_suffix_flag(...) when configured", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            userAgentSuffixFlag: "via"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.user_agent_suffix_flag("via")');
+    });
+
+    it("omits .user_agent_suffix_flag(...) by default (SDK applies the default name)", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], globalParamBindings: [], specsDir });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".user_agent_suffix_flag");
+    });
+
+    it("rejects an unsafe userAgentSuffixFlag (injection attempt)", async () => {
+        const specsDir = path.join(tmpDir, "specs");
+        await mkdir(specsDir, { recursive: true });
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
+        await writeFile(
+            path.join(specsDir, "specs-manifest.json"),
+            JSON.stringify({
+                specs: [{ type: "openapi", specPath: path.join(specsDir, "openapi0.json") }]
+            } satisfies RawSpecsManifest)
+        );
+        const outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+
+        await expect(
+            copySpecs({
+                outputDir,
+                binaryName: BIN,
+                authBindings: [],
+                globalParamBindings: [],
+                specsDir,
+                userAgentSuffixFlag: 'via"); panic!("'
+            })
+        ).rejects.toThrow(/Unsafe userAgentSuffixFlag/);
+    });
 });

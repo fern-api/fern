@@ -1,4 +1,314 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.79.2
+  changelogEntry:
+    - summary: |
+        SDKs generated to `local-file-system` output now stamp the package name and version
+        from the IR's `nuget` filesystem publish target (populated by the Fern CLI when
+        `--version` is passed) into `Version.cs`, the `.csproj` `<Version>` property, and the
+        structured `User-Agent` header. Previously local-file-system output always produced
+        `Version.Current = "0.0.0"` and used the root namespace as the User-Agent identity.
+      type: fix
+    - summary: |
+        The `X-Fern-SDK-Name` platform header now uses the package identity (the configured
+        `package-id`, or the nuget filesystem publish target's package name) instead of the root
+        namespace, matching the SDK name reported in the `User-Agent` header. SDKs without a
+        configured package id keep sending the root namespace.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 2.79.1
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `client-default` value. The constructor
+        initializes the header from the explicit argument, then the environment
+        variable, then the client default. Previously the client default was only
+        applied on the header-dictionary path and was dropped entirely under
+        `any`-composed multi-scheme auth and endpoint-level security.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 2.79.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 2.78.0
+  changelogEntry:
+    - summary: |
+        Support webhook body-hash binding in the generated `WebhooksHelper.VerifySignature`
+        helper. When a webhook's HMAC signature configuration declares a `bodyHashBinding`
+        (as used by providers such as Twilio for JSON bodies), verification now first
+        recomputes an unkeyed hash of the raw request body and compares it, in constant time,
+        against the hash carried in the notification URL's query parameter, failing closed on
+        a missing or mismatched value before performing the existing HMAC check over the
+        verbatim notification URL. The body-hash algorithm and encoding are independent of the
+        outer HMAC's. Output is unchanged when no `bodyHashBinding` is configured.
+      type: feat
+    - summary: |
+        Add webhook signature verification. For APIs that configure HMAC webhook signature
+        verification, the C# SDK now generates a static `WebhooksHelper.VerifySignature`
+        helper (plus per-config override helpers when webhooks use distinct configs) backed
+        by a stdlib-only `WebhookSignature` core utility for HMAC computation and
+        constant-time comparison.
+      type: feat
+    - summary: |
+        Extend the generated `WebhooksHelper.VerifySignature` helper to be Twilio-compatible,
+        mirroring the TypeScript reference. When a webhook's HMAC configuration declares
+        `payloadFormat.bodySort`, `requestBody` widens to `object` and accepts either a raw
+        string or an `IReadOnlyDictionary<string, ...>` of POST body parameters whose values
+        are a string or a collection of strings; keys are sorted, per-key values are deduped
+        and sorted, and `key + value` pairs are concatenated with no separator before signing.
+        When a `bodyHashBinding` is configured, verification branches at runtime on whether the
+        body-hash query parameter is present on the notification URL: a JSON request recomputes
+        `hash(rawBody)`, constant-time compares it, and signs the URL only, while a classic
+        form request signs the URL plus the sorted/deduped params with no body-hash check.
+        When `notificationUrlNormalization` is configured, the signature is verified against
+        several normalized forms of the notification URL (standard/absent port, and legacy
+        query re-encoding), succeeding on the first constant-time match via a new stdlib-only
+        `NotificationUrlCandidates` helper on the core `WebhookSignature` utility. The verifier
+        is now a pure boolean and never throws: every failure on the verification path
+        (null/empty inputs, a missing or malformed timestamp, an unparseable URL, a missing
+        body-hash parameter on the JSON path, or an unexpected request-body type) fails closed
+        with `false`. Output is unchanged for webhooks that do not configure these fields.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.77.0
+  changelogEntry:
+    - summary: |
+        Add a `server-url-variables` configuration flag (default `true`) that controls whether server
+        URL variables declared on the API's environments are exposed as client options and
+        interpolated into the environment URL template(s) at construction time. When set to `false`,
+        those client options and the URL-template interpolation are suppressed and the generated SDK
+        falls back to the base-URL behavior from before the feature. Defaults to `true`, so existing
+        generated output is unchanged.
+      type: feat
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.6
+  changelogEntry:
+    - summary: |
+        Fix a thread-safety bug in the generated `OAuthTokenProvider`. The token
+        cache is now guarded by a `SemaphoreSlim` with double-checked locking (the
+        same pattern already used by `InferredAuthTokenProvider`), so only one
+        caller refreshes the token under concurrent load and cached values are
+        published safely. The cache-hit path stays lock-free.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 2.76.5
+  changelogEntry:
+    - summary: |
+        When a client is constructed with both a named environment and server URL
+        variables (e.g. `Region`), the generated client now renders the selected
+        environment's URL template(s) instead of always using the first (default)
+        environment's template. Explicitly provided custom base URLs and custom
+        environment values are never overridden.
+      type: fix
+  createdAt: "2026-07-21"
+  irVersion: 67
+- version: 2.76.4
+  changelogEntry:
+    - summary: |
+        Global API headers configured with an `env` fallback (e.g. `X-Twilio-Version` with
+        `env: TWILIO_VERSION`) now fall back to the environment variable in the root client
+        constructor when the parameter is not passed explicitly. Optional headers never throw
+        when both the parameter and the environment variable are missing.
+      type: fix
+  createdAt: "2026-07-20"
+  irVersion: 67
+- version: 2.76.3
+  changelogEntry:
+    - summary: |
+        The README "Environments" usage example now passes the client options via the
+        `clientOptions:` named argument so the generated snippet compiles. The root
+        client constructor's first positional parameter is the auth token string, so
+        the previous `new Client(new ClientOptions { ... })` snippet passed
+        `ClientOptions` where a `string?` token was expected.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.2
+  changelogEntry:
+    - summary: |
+        A generated nested type whose name matches the SDK's root namespace segment now emits 
+        `global::`-qualified references. Previously such a nested type shadowed the namespace 
+        root within its enclosing type's body, so references like `Acme.Api.SomeType` resolved to the
+        nested type and failed to compile. The `global::` qualifier is applied
+        only to references written inside the enclosing type where the shadow is visible, so
+        unrelated references to the same root segment elsewhere in the SDK are left
+        unqualified.
+      type: fix
+  createdAt: "2026-07-16"
+  irVersion: 67
+- version: 2.76.1
+  changelogEntry:
+    - summary: |
+        Endpoints without a request wrapper (no request object, a request that is just
+        a body, or a bytes request) now send service- and endpoint-level headers whose
+        types are literals (e.g. `Accept-Encoding: literal<"gzip">`). Previously these
+        headers were silently dropped because there was no request object to carry them.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 67
+- version: 2.76.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `dedupe-union-base-properties` configuration flag (default off) that stops
+        duplicating a discriminated union's base properties on its `samePropertiesAsObject` variant
+        leaves. The decision is read from the IR fact
+        `ObjectTypeDeclaration.deferredUnionBaseProperties` (computed once in the IR with structural
+        type equality and an exclusive-variant guard), so the generator never re-derives it. When
+        enabled, the union envelope owns the shared base properties, the variant leaf class and its
+        example initializers omit them, and the union's JSON reader strips union-owned properties
+        before deserializing a variant. Off by default, so existing generated output is unchanged; the
+        default is expected to flip in a future major version with a migration.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 67
+- version: 2.75.2
+  changelogEntry:
+    - summary: |
+        Fix a compile error in the generated `OAuthTokenProvider` when the token endpoint's
+        `expires-in` response property is optional. The provider now null-checks the value
+        before computing the token expiry instead of passing a nullable number to
+        `DateTime.AddSeconds`.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 2.75.1
+  changelogEntry:
+    - summary: |
+        Wire OAuth client-credentials authentication into the root client when the OAuth
+        scheme is not the first scheme in the API's auth configuration (e.g.
+        `auth: any` with basic auth listed before OAuth). Previously the OAuth token
+        provider was only generated when OAuth was the first auth scheme, so the root
+        client silently fell back to the other schemes and never used the OAuth
+        credentials. When both an OAuth and an inferred auth scheme are present, the
+        provider-based scheme that appears first in the auth configuration is used.
+      type: fix
+    - summary: |
+        Send `grant_type: "client_credentials"` in the OAuth token request when the
+        token endpoint's `grant_type` property is a non-literal string. Previously the
+        property was omitted (when optional) or surfaced as a required constructor
+        parameter (when required), so token endpoints that require `grant_type`
+        rejected the request.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 2.75.0
+  changelogEntry:
+    - summary: |
+        Add support for auto-generating an `Idempotency-Key` header on generated SDK
+        clients, driven by the IR. When `sdkConfig.idempotencyKeyGeneration` is present
+        (configured once via the `auto-generate-idempotency-key` generator config key
+        and resolved by the CLI), the SDK attaches an idempotency-key request header
+        whose value is a freshly generated UUIDv4 (`System.Guid.NewGuid().ToString()`)
+        at request time. The wire header name and the eligible HTTP methods come from
+        the IR, so behavior is consistent across every generator. A caller-provided
+        value always wins: a declared idempotency header or a header supplied through
+        request-options takes precedence, and the generated UUID is only a fallback.
+        The header is only injected on the eligible methods. Disabled by default, so
+        existing generated output is unchanged.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.74.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL variables (region/edge routing). When an API's servers
+        declare URL variables (e.g. `https://api.{region}.example.com`), each variable is
+        now exposed as an optional string property on `ClientOptions` (idiomatic PascalCase,
+        e.g. `Region`). Variable names that collide with an existing client option are
+        prefixed with `ServerUrl` (e.g. an `environment` variable becomes `ServerUrlEnvironment`).
+        When set at construction time, the values are interpolated into the environment base
+        URL(s), falling back to each variable's default otherwise. Explicit `BaseUrl` or
+        `Environment` options take precedence, and interpolation fails clearly when a required
+        variable has neither a client option nor a default.
+      type: feat
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.73.2
+  changelogEntry:
+    - summary: |
+        Enable automatic response decompression on the default HttpClient. The default client
+        is now created with an HttpClientHandler configured with AutomaticDecompression
+        (DecompressionMethods.All on .NET 5+, GZip | Deflate on older targets), so responses
+        with a Content-Encoding of gzip or deflate are decompressed transparently — including
+        when an Accept-Encoding request header is set explicitly by the API spec. User-supplied
+        HttpClients provided via ClientOptions are not modified.
+      type: fix
+  createdAt: "2026-07-14"
+  irVersion: 66
+- version: 2.73.1
+  changelogEntry:
+    - summary: |
+        Make the structured `User-Agent` (emitted when `includePlatformHeaders` is
+        enabled) comply with the RFC 7230 token grammar. The runtime token is now
+        `dotnet` instead of `.NET`, since a leading dot is not a valid token
+        character (e.g. `dotnet/8.0.4`). The architecture label is also normalized so
+        the 64-bit x86 aliases (`x64`, `amd64`, `x86_64`) all report as the canonical
+        `x86_64`.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 2.73.0
+  changelogEntry:
+    - summary: |
+        Add opt-in support for a structured `User-Agent` header on generated SDK
+        clients of the form `{sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}`
+        (e.g. `my-sdk/1.2.0 (linux; x64) .NET/8.0.4`). The OS, architecture, and
+        runtime version are resolved at runtime via
+        `System.Runtime.InteropServices.RuntimeInformation` and `System.Environment`.
+        This is gated behind a new `include-platform-headers` config option and is
+        disabled by default, so existing generated output is unchanged. When enabled
+        it remains subject to the `omit-fern-headers` config option.
+      type: feat
+  createdAt: "2026-07-10"
+  irVersion: 66
+- version: 2.72.2
+  changelogEntry:
+    - summary: |
+        Make each scheme's credentials optional under `any`-composed auth. Previously,
+        with a multi-scheme `auth: any: [...]` config the generated client treated OAuth
+        (and other) credentials as unconditionally required at construction, so a caller
+        who only wanted API-key auth could not instantiate the client. Credentials now
+        fall back to environment variables without throwing, and the OAuth/inferred token
+        provider and auth headers are only set up when that scheme's credentials are present.
+      type: fix
+  createdAt: "2026-07-09"
+  irVersion: 66
+- version: 2.72.1
+  changelogEntry:
+    - summary: |
+        Bump the bundled `@fern-api/generator-cli` to 0.9.44 so every local-only commit
+        is signed when pushing to GitHub, not just HEAD. Replay branches contain multiple
+        commits (e.g. `[fern-generated]` + `[fern-replay]`); previously only the HEAD
+        commit was recreated via the GitHub API and signed, leaving earlier commits on
+        the PR unverified.
+      type: chore
+  createdAt: "2026-07-07"
+  irVersion: 66
+- version: 2.72.0
+  changelogEntry:
+    - summary: |
+        Add a `default-timeout-in-milliseconds` config option to the C# SDK generator
+        for expressing the default network timeout in milliseconds (mapping to .NET's
+        `TimeSpan`). The generated `ClientOptions.Timeout` is now computed from
+        milliseconds (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`).
+        The `default-timeout-in-seconds` option is now deprecated but remains fully
+        backwards compatible: when only the seconds key is set, it is converted to
+        milliseconds. The new key takes precedence when both are set.
+      type: feat
+  createdAt: "2026-07-07"
+  irVersion: 66
 - version: 2.71.2
   changelogEntry:
     - summary: |

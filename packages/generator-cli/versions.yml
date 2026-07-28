@@ -1,4 +1,107 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.53
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` reporting an additive Go change as a breaking MAJOR bump. The Go SDK
+        assigns each struct property a single-bit `explicitFields` constant at its positional index,
+        so inserting a new field shifts every following constant's bit index by one. That reindexing
+        churn is a mechanical artifact (the bit is set and read within the same generated version; the
+        wire format is name-based JSON), but the AI diff analyzer read the shifted bit positions as a
+        serialization-compatibility break. The diff-cleaning pass now strips `explicitFields`
+        bit-constant reindexing pairs before analysis, while preserving genuinely new fields and
+        removed-field deletions so real additions stay MINOR and real removals stay MAJOR.
+      type: fix
+  createdAt: "2026-07-24"
+- version: 0.9.52
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.19.2.
+      type: chore
+  createdAt: "2026-07-16"
+- version: 0.9.51
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` producing a false "changed"/"removed" changelog entry (e.g.
+        claiming the `User-Agent` header is no longer sent) when several version-bearing
+        lines bump together. Unified diffs group all deletions before all additions, so the
+        diff-cleaning pass left interleaved version-only deletions behind after stripping the
+        magic-version additions; the AI then read those orphan deletions as removals. Version
+        change pairs are now matched across the whole diff section regardless of layout.
+      type: fix
+    - summary: |
+        Fix `--version AUTO` dropping the `/vN` Go module suffix from the
+        `X-Fern-SDK-Name` header value and README install/import samples. The suffix
+        retrofit now covers non-import module-path string literals and Markdown docs
+        in addition to imports and `go.mod`, while leaving the composite `User-Agent`
+        value and web URLs (e.g. `pkg.go.dev`) untouched.
+      type: fix
+  createdAt: "2026-07-16"
+- version: 0.9.50
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.19.1.
+      type: chore
+  createdAt: "2026-07-15"
+- version: 0.9.49
+  changelogEntry:
+    - summary: |
+        Pin the Fern bot identity as author/committer on API-created commits when the
+        GitHub token is a personal access token (`ghp_`/`github_pat_`). PATs cannot
+        auto-sign commits, so omitting the identity fields (the 0.9.40 behavior)
+        attributed self-hosted push/PR commits to the PAT owner, breaking CI filters
+        that key off the `fern-api[bot]` committer. Signing-capable tokens (App
+        installation, OAuth) are unchanged and keep the "Verified" signature.
+      type: fix
+  createdAt: "2026-07-15"
+- version: 0.9.48
+  changelogEntry:
+    - summary: |
+        Explicitly versioned generations (`--version X.Y.Z`) now record a version-only entry in
+        `changelog.md`, and existing changelog entries are always preserved: GithubStep prepends
+        new entries instead of only creating a fresh file, and the GitHub push/PR flows restore a
+        tracked `changelog.md` that the generated output would otherwise delete.
+      type: fix
+  createdAt: "2026-07-14"
+- version: 0.9.47
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` dropping the `/vN` Go module suffix from the
+        `X-Fern-SDK-Name` header value and README install/import samples. The suffix
+        retrofit now covers non-import module-path string literals and Markdown docs
+        in addition to imports and `go.mod`, while leaving the composite `User-Agent`
+        value and web URLs (e.g. `pkg.go.dev`) untouched.
+      type: fix
+  createdAt: "2026-07-14"
+- version: 0.9.46
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning shipping the `0.0.0-fern-placeholder` version when the previous
+        generation SHA recorded in `replay.lock` is unreachable. Signed-commit pushes recreate
+        the `[fern-generated]` commit with a new remote SHA, so the recorded SHA can be absent
+        from the next clone; `AutoVersionStep` now treats it as a hint, re-anchors the diff
+        baseline on the most recent reachable `[fern-generated]` commit, and always rewrites the
+        magic placeholder instead of crashing on a bad git object.
+      type: fix
+  createdAt: "2026-07-10"
+- version: 0.9.45
+  changelogEntry:
+    - summary: |
+        Fix the broken "See full changelog" link in generated PR bodies. The link pointed at
+        `blob/<sha>/changelog.md`, but that file was never committed in the self-hosted (non-replay)
+        generation path, so the link 404'd. GithubStep now guarantees `changelog.md` lands in the
+        committed tree it pushes, and only emits the link when the file is actually tracked at the
+        pushed head SHA.
+      type: fix
+    - summary: |
+        Fix Go SDKs being flagged as a breaking change (spurious major version bump) on no-op
+        regenerations under `--version AUTO`. The freshly generated code carries the magic placeholder
+        version (major 0, no `/vN` module-path suffix) while the previously published SDK has `/vN` on
+        its module directive and every import. Because git groups all deletions before all additions in
+        an import block, the diff cleaner only stripped the first import's suffix churn and leaked the
+        rest to the AI diff analyzer, which misclassified the regeneration as breaking. The cleaner now
+        removes all Go module-path `/vN` suffix-only churn regardless of diff layout.
+      type: fix
+  createdAt: "2026-07-08"
 - version: 0.9.44
   changelogEntry:
     - summary: |

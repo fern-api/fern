@@ -26,13 +26,17 @@ export class AuthClient {
      * @param {SeedOauthClientCredentials.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
+     *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
      *         cid: "cid",
      *         csr: "csr",
      *         scp: "scp",
      *         entity_id: "entity_id",
-     *         scope: "scope"
+     *         scope: "scope",
+     *         permissions: ["permissions", "permissions"]
      *     })
      */
     public getTokenWithClientCredentials(
@@ -89,6 +93,9 @@ export class AuthClient {
     /**
      * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedOauthClientCredentialsError}
+     * @throws {@link errors.SeedOauthClientCredentialsTimeoutError}
      *
      * @example
      *     await client.auth.refreshToken({

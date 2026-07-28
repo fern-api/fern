@@ -21,6 +21,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
+      # @example
+      #   client.nullable_optional.get_user(user_id: "userId")
+      #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def get_user(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -53,6 +56,22 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.nullable_optional.create_user(
+      #     username: "username",
+      #     email: "email",
+      #     phone: "phone",
+      #     address: {
+      #       street: "street",
+      #       city: "city",
+      #       state: "state",
+      #       zip_code: "zipCode",
+      #       country: "country",
+      #       building_id: "buildingId",
+      #       tenant_id: "tenantId"
+      #     }
+      #   )
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def create_user(request_options: {}, **params)
@@ -88,6 +107,23 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
+      #
+      # @example
+      #   client.nullable_optional.update_user(
+      #     user_id: "userId",
+      #     username: "username",
+      #     email: "email",
+      #     phone: "phone",
+      #     address: {
+      #       street: "street",
+      #       city: "city",
+      #       state: "state",
+      #       zip_code: "zipCode",
+      #       country: "country",
+      #       building_id: "buildingId",
+      #       tenant_id: "tenantId"
+      #     }
+      #   )
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def update_user(request_options: {}, **params)
@@ -126,6 +162,14 @@ module Seed
       # @option params [Integer, nil] :offset
       # @option params [Boolean, nil] :include_deleted
       # @option params [String, nil] :sort_by
+      #
+      # @example
+      #   client.nullable_optional.list_users(
+      #     limit: 1,
+      #     offset: 1,
+      #     include_deleted: true,
+      #     sort_by: "sortBy"
+      #   )
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
@@ -169,6 +213,14 @@ module Seed
       # @option params [String, nil] :role
       # @option params [Boolean, nil] :is_active
       #
+      # @example
+      #   client.nullable_optional.search_users(
+      #     query: "query",
+      #     department: "department",
+      #     role: "role",
+      #     is_active: true
+      #   )
+      #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -207,6 +259,36 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.nullable_optional.create_complex_profile(
+      #     id: "id",
+      #     nullable_role: "ADMIN",
+      #     optional_role: "ADMIN",
+      #     optional_nullable_role: "ADMIN",
+      #     nullable_status: "active",
+      #     optional_status: "active",
+      #     optional_nullable_status: "active",
+      #     nullable_array: %w[nullableArray nullableArray],
+      #     optional_array: %w[optionalArray optionalArray],
+      #     optional_nullable_array: %w[optionalNullableArray optionalNullableArray],
+      #     nullable_list_of_nullables: %w[nullableListOfNullables nullableListOfNullables],
+      #     nullable_map_of_nullables: {
+      #       nullableMapOfNullables: {
+      #         street: "street",
+      #         city: "city",
+      #         state: "state",
+      #         zip_code: "zipCode",
+      #         country: "country",
+      #         building_id: "buildingId",
+      #         tenant_id: "tenantId"
+      #       }
+      #     },
+      #     nullable_list_of_unions: [],
+      #     optional_map_of_enums: {
+      #       optionalMapOfEnums: "ADMIN"
+      #     }
+      #   )
+      #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def create_complex_profile(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -242,6 +324,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :profile_id
       #
+      # @example
+      #   client.nullable_optional.get_complex_profile(profile_id: "profileId")
+      #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def get_complex_profile(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -275,6 +360,14 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :profile_id
+      #
+      # @example
+      #   client.nullable_optional.update_complex_profile(
+      #     profile_id: "profileId",
+      #     nullable_role: "ADMIN",
+      #     nullable_status: "active",
+      #     nullable_array: %w[nullableArray nullableArray]
+      #   )
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def update_complex_profile(request_options: {}, **params)
@@ -314,6 +407,35 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.nullable_optional.test_deserialization(
+      #     required_string: "requiredString",
+      #     nullable_string: "nullableString",
+      #     optional_string: "optionalString",
+      #     optional_nullable_string: "optionalNullableString",
+      #     nullable_enum: "ADMIN",
+      #     optional_enum: "active",
+      #     nullable_list: %w[nullableList nullableList],
+      #     nullable_map: {
+      #       nullableMap: 1
+      #     },
+      #     nullable_object: {
+      #       street: "street",
+      #       city: "city",
+      #       state: "state",
+      #       zip_code: "zipCode",
+      #       country: "country",
+      #       building_id: "buildingId",
+      #       tenant_id: "tenantId"
+      #     },
+      #     optional_object: {
+      #       id: "id",
+      #       name: "name",
+      #       domain: "domain",
+      #       employee_count: 1
+      #     }
+      #   )
+      #
       # @return [Seed::NullableOptional::Types::DeserializationTestResponse]
       def test_deserialization(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -350,6 +472,13 @@ module Seed
       # @option params [Seed::NullableOptional::Types::UserRole, nil] :role
       # @option params [Seed::NullableOptional::Types::UserStatus, nil] :status
       # @option params [Seed::NullableOptional::Types::UserRole, nil] :secondary_role
+      #
+      # @example
+      #   client.nullable_optional.filter_by_role(
+      #     role: "ADMIN",
+      #     status: "active",
+      #     secondary_role: "ADMIN"
+      #   )
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
@@ -389,6 +518,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
+      # @example
+      #   client.nullable_optional.get_notification_settings(user_id: "userId")
+      #
       # @return [Seed::NullableOptional::Types::NotificationMethod, nil]
       def get_notification_settings(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -420,6 +552,14 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
+      #
+      # @example
+      #   client.nullable_optional.update_tags(
+      #     user_id: "userId",
+      #     tags: %w[tags tags],
+      #     categories: %w[categories categories],
+      #     labels: %w[labels labels]
+      #   )
       #
       # @return [Array[String]]
       def update_tags(request_options: {}, **params)
@@ -456,6 +596,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.nullable_optional.get_search_results(
+      #     query: "query",
+      #     filters: {
+      #       filters: "filters"
+      #     },
+      #     include_types: %w[includeTypes includeTypes]
+      #   )
       #
       # @return [Array[Seed::NullableOptional::Types::SearchResult], nil]
       def get_search_results(request_options: {}, **params)

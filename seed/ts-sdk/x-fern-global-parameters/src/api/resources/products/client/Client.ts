@@ -26,6 +26,9 @@ export class ProductsClient {
      * @param {SeedApi.SearchProductsRequest} request
      * @param {ProductsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
+     *
      * @example
      *     await client.products.search({
      *         regionId: "regionId"
@@ -85,6 +88,9 @@ export class ProductsClient {
     /**
      * @param {SeedApi.GetProductsRequest} request
      * @param {ProductsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.SeedApiError}
+     * @throws {@link errors.SeedApiTimeoutError}
      *
      * @example
      *     await client.products.get({

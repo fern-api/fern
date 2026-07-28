@@ -951,6 +951,7 @@ export class SubClientGenerator {
         // Only apply to execute_request and execute_stream_request (we have _with_base_url variants for these).
         const urlMethodName = this.getEndpointUrlMethodName(endpoint);
         const supportsBaseUrlOverride = executeMethod === "execute_request" || executeMethod === "execute_stream_request";
+        const literalHeadersPrelude = this.buildLiteralHeadersPrelude(endpoint);
         let body: string;
 
         if (urlMethodName && supportsBaseUrlOverride) {
@@ -958,11 +959,11 @@ export class SubClientGenerator {
             const baseUrlResolution =
                 `let base_url = self.http_client.config().environment.as_ref()\n` +
                 `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
-            body = `${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
+            body = `${literalHeadersPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
             base_url,${executeArgs}
         ).await`;
         } else {
-            body = `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
+            body = `${literalHeadersPrelude}self.http_client.${executeMethod}${typeParameter}(${executeArgs}
         ).await`;
         }
 
@@ -974,14 +975,122 @@ export class SubClientGenerator {
             returnType: returnType.toString(),
             isAsync: true,
             body,
-            docs: endpoint.docs
-                ? rust.docComment({
-                      summary: endpoint.docs,
-                      parameters: this.extractParameterDocs(params, endpoint),
-                      returns: this.getReturnTypeDescription(endpoint)
-                  })
-                : undefined
+            docs: this.buildEndpointDocs(endpoint, params)
         };
+    }
+
+    private buildEndpointDocs(
+        endpoint: FernIr.HttpEndpoint,
+        params: EndpointParameter[]
+    ): rust.DocComment | undefined {
+        const snippet = this.context.getEndpointSnippet(endpoint.id);
+        const examples = snippet != null ? [snippet] : undefined;
+        if (endpoint.docs) {
+            return rust.docComment({
+                summary: endpoint.docs,
+                parameters: this.extractParameterDocs(params, endpoint),
+                returns: this.getReturnTypeDescription(endpoint),
+                examples
+            });
+        }
+        if (examples != null) {
+            return rust.docComment({ examples });
+        }
+        return undefined;
+    }
+
+    /**
+     * Builds a prelude that merges service- and endpoint-level literal headers
+     * (e.g. `Accept-Encoding: literal<"gzip">`) into the request options, and — in
+     * endpoint-security mode — the auth headers routed for this endpoint's declared
+     * `security` requirements. Caller-supplied literal headers take precedence over the
+     * literal defaults; routed auth headers are authoritative.
+     */
+    private buildLiteralHeadersPrelude(endpoint: FernIr.HttpEndpoint): string {
+        const literalHeaders: { wireValue: string; value: string }[] = [];
+        for (const header of [...(this.context.ir.headers ?? []), ...(this.service?.headers ?? []), ...(endpoint.headers ?? [])]) {
+            const value = this.getLiteralHeaderValue(header.valueType);
+            if (value != null) {
+                literalHeaders.push({ wireValue: getWireValue(header.name), value });
+            }
+        }
+        const authRequirements = this.getEndpointSecurityRequirements(endpoint);
+        const needsAuthRouting = authRequirements != null && authRequirements.length > 0;
+        if (literalHeaders.length === 0 && !needsAuthRouting) {
+            return "";
+        }
+        const literalInserts = literalHeaders
+            .map(
+                ({ wireValue, value }) =>
+                    `            o.additional_headers.entry(${JSON.stringify(wireValue)}.to_string()).or_insert_with(|| ${JSON.stringify(value)}.to_string());\n`
+            )
+            .join("");
+        let prelude = "";
+        if (needsAuthRouting) {
+            const requirementsLiteral =
+                "&[" +
+                authRequirements
+                    .map(
+                        (group) =>
+                            "&[" + group.map((schemeKey) => JSON.stringify(schemeKey)).join(", ") + "] as &[&str]"
+                    )
+                    .join(", ") +
+                "]";
+            prelude +=
+                `let endpoint_auth_headers = self\n` +
+                `            .http_client\n` +
+                `            .resolve_endpoint_auth_headers(&options, ${requirementsLiteral})\n` +
+                `            .await?;\n        `;
+        }
+        prelude += `let options = {\n` + `            let mut o = options.unwrap_or_default();\n` + literalInserts;
+        if (needsAuthRouting) {
+            prelude +=
+                `            for (header_key, header_value) in endpoint_auth_headers {\n` +
+                `                o.additional_headers.insert(header_key, header_value);\n` +
+                `            }\n`;
+        }
+        prelude += `            Some(o)\n` + `        };\n        `;
+        return prelude;
+    }
+
+    /**
+     * Returns this endpoint's auth requirements as an OR-list of AND-groups of auth scheme
+     * keys, or undefined when per-endpoint auth routing does not apply (not endpoint-security
+     * mode, or the endpoint declares no security → no auth).
+     */
+    private getEndpointSecurityRequirements(endpoint: FernIr.HttpEndpoint): string[][] | undefined {
+        if (!this.context.isEndpointSecurity()) {
+            return undefined;
+        }
+        if (endpoint.security == null) {
+            return undefined;
+        }
+        return endpoint.security.map((requirement) => Object.keys(requirement));
+    }
+
+    private getLiteralHeaderValue(typeReference: FernIr.TypeReference): string | undefined {
+        if (typeReference.type === "container") {
+            const container = typeReference.container;
+            switch (container.type) {
+                case "literal": {
+                    const literal = container.literal;
+                    return literal.type === "string" ? literal.string : String(literal.boolean);
+                }
+                case "optional":
+                    return this.getLiteralHeaderValue(container.optional);
+                case "nullable":
+                    return this.getLiteralHeaderValue(container.nullable);
+                default:
+                    return undefined;
+            }
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.context.ir.types[typeReference.typeId];
+            if (typeDeclaration != null && typeDeclaration.shape.type === "alias") {
+                return this.getLiteralHeaderValue(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return undefined;
     }
 
     private buildMethodParameters(params: EndpointParameter[], _endpoint: FernIr.HttpEndpoint): string[] {

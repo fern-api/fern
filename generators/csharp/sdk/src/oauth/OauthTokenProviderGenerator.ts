@@ -1,4 +1,4 @@
-import { GeneratorError } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -32,11 +32,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     private bufferInMinutesField: ast.Field;
     private accessTokenField: ast.Field;
     private expiresAtField: ast.Field | undefined;
+    private lockField: ast.Field;
     private clientIdField: ast.Field;
     private clientSecretField: ast.Field;
     private expiresIn: ResponseProperty | undefined;
     private requestType: ast.ClassReference;
     private additionalRequestFields = new Map<string, ast.Field>();
+    private grantTypePropertyName: string | undefined;
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
@@ -91,6 +93,17 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                       type: this.Value.dateTime.asOptional()
                   });
 
+        this.lockField = this.cls.addField({
+            origin: this.cls.explicit("_lock"),
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.csharp.classReference({
+                name: "SemaphoreSlim",
+                namespace: "System.Threading"
+            }),
+            initializer: this.csharp.codeblock("new SemaphoreSlim(1, 1)")
+        });
+
         this.clientIdField = this.cls.addField({
             origin: this.cls.explicit("_clientId"),
             access: ast.Access.Private,
@@ -110,6 +123,12 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         // properties as required constructor parameters.
         for (const customProperty of this.scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
             if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
+            if (isGrantTypeProperty(customProperty)) {
+                this.grantTypePropertyName = this.model.getPropertyNameFor(
+                    this.case.resolveNameAndWireValue(customProperty.property.name)
+                );
                 continue;
             }
             const typeRef = this.context.csharpTypeMapper.convert({
@@ -193,17 +212,22 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     private getAccessTokenBody(): ast.CodeBlock {
         const tokenEndpoint = this.scheme.configuration.tokenEndpoint;
 
+        const staleCheck = (writer: ast.Writer) => {
+            writer.write(`${this.accessTokenField.name} == null`);
+            // check expiresIn if present in the IR
+            if (this.expiresIn != null && this.expiresAtField != null) {
+                writer.write(`|| DateTime.UtcNow >= ${this.expiresAtField.name}`);
+            }
+        };
+
         return this.csharp.codeblock((writer) => {
-            writer.controlFlow(
-                "if",
-                this.csharp.codeblock((writer) => {
-                    writer.write(`${this.accessTokenField.name} == null`);
-                    // check expiresIn if present in the IR
-                    if (this.expiresIn != null && this.expiresAtField != null) {
-                        writer.write(`|| DateTime.UtcNow >= ${this.expiresAtField.name}`);
-                    }
-                })
-            );
+            writer.controlFlow("if", this.csharp.codeblock(staleCheck));
+
+            writer.writeTextStatement(`await ${this.lockField.name}.WaitAsync().ConfigureAwait(false)`);
+            writer.writeLine("try");
+            writer.pushScope();
+
+            writer.controlFlow("if", this.csharp.codeblock(staleCheck));
 
             writer.writeNodeStatement(
                 this.csharp.codeblock((writer) => {
@@ -225,6 +249,16 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                                             name: this.request.secret,
                                             assignment: this.csharp.codeblock(this.clientSecretField.name)
                                         },
+                                        ...(this.grantTypePropertyName != null
+                                            ? [
+                                                  {
+                                                      name: this.grantTypePropertyName,
+                                                      assignment: this.csharp.codeblock(
+                                                          `"${CLIENT_CREDENTIALS_GRANT_TYPE}"`
+                                                      )
+                                                  }
+                                              ]
+                                            : []),
                                         ...this.additionalRequestFields.entries().map(([name, field]) => {
                                             return {
                                                 name,
@@ -247,13 +281,31 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             );
 
             if (this.expiresIn != null && this.expiresAtField != null) {
-                writer.writeTextStatement(
-                    `${this.expiresAtField.name} = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
-                        this.expiresIn.property,
-                        this.expiresIn.propertyPath?.map((val) => val.name) ?? []
-                    )}).AddMinutes(-${this.bufferInMinutesField.name})`
-                );
+                const expiresInAccessor = `tokenResponse.${this.dotAccess(
+                    this.expiresIn.property,
+                    this.expiresIn.propertyPath?.map((val) => val.name) ?? []
+                )}`;
+                const expiresInType = this.context.csharpTypeMapper.convert({
+                    reference: this.expiresIn.property.valueType
+                });
+                if (expiresInType.isOptional) {
+                    writer.writeTextStatement(
+                        `${this.expiresAtField.name} = ${expiresInAccessor} is { } expiresIn ? DateTime.UtcNow.AddSeconds(expiresIn).AddMinutes(-${this.bufferInMinutesField.name}) : null`
+                    );
+                } else {
+                    writer.writeTextStatement(
+                        `${this.expiresAtField.name} = DateTime.UtcNow.AddSeconds(${expiresInAccessor}).AddMinutes(-${this.bufferInMinutesField.name})`
+                    );
+                }
             }
+
+            writer.endControlFlow();
+
+            writer.popScope();
+            writer.writeLine("finally");
+            writer.pushScope();
+            writer.writeTextStatement(`${this.lockField.name}.Release()`);
+            writer.popScope();
 
             writer.endControlFlow();
 
@@ -369,4 +421,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
  */
 function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
     return typeReference.type === "container" && typeReference.container.type === "literal";
+}
+
+const GRANT_TYPE_WIRE_VALUE = "grant_type";
+const CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
+
+/**
+ * The client-credentials grant type is synthesized in the token request
+ * rather than surfaced as a constructor parameter.
+ */
+function isGrantTypeProperty(requestProperty: FernIr.RequestProperty): boolean {
+    return getOriginalName(requestProperty.property.name) === GRANT_TYPE_WIRE_VALUE;
 }

@@ -1,3 +1,4 @@
+import { getToken } from "@fern-api/auth";
 import { runMigrations } from "@fern-api/cli-migrations";
 import {
     FERN_DIRECTORY,
@@ -14,6 +15,7 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
+import { clampVersionToOrgBounds, fetchOrgCliVersionBounds, ORG_BOUNDS_FETCH_TIMEOUT_MS } from "../org/orgConfig.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -374,6 +376,26 @@ export async function upgrade({
         }
     }
 
+    if (resolvedTargetVersion == null) {
+        // Every "no upgrade available" path above returns, so this is
+        // unreachable in practice — it narrows the type for the rest of the
+        // function (and for applyOrgVersionBounds below).
+        cliContext.logger.info("No upgrade available.");
+        return;
+    }
+
+    // Apply org-level CLI version bounds (floor/ceiling), if set
+    if (!isLocalDev) {
+        try {
+            resolvedTargetVersion = await applyOrgVersionBounds({
+                cliContext,
+                resolvedTargetVersion
+            });
+        } catch {
+            // Silently ignore org config failures (e.g. network errors, missing auth)
+        }
+    }
+
     // Early return if already at target version
     if (cliContext.environment.packageVersion === resolvedTargetVersion || isLocalDev) {
         // We're at the target version - load config and run migrations
@@ -494,5 +516,72 @@ export async function upgrade({
             }
         }
         throw error;
+    }
+}
+
+/**
+ * Clamps the resolved upgrade target into the org-level CLI version bounds
+ * before it's written to `fern.config.json`: bumps up to the floor (`min`) and
+ * caps down to the ceiling (`max`). The persisted version is never allowed to
+ * exceed the ceiling, even for a project already running past it, so the pinned
+ * version can't drift further out of policy. Silently falls back if the org
+ * config endpoint is unreachable.
+ */
+async function applyOrgVersionBounds({
+    cliContext,
+    resolvedTargetVersion
+}: {
+    cliContext: CliContext;
+    resolvedTargetVersion: string;
+}): Promise<string> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
+        return resolvedTargetVersion;
+    }
+
+    let orgId: string;
+    try {
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
+        orgId = projectConfig.organization;
+    } catch {
+        return resolvedTargetVersion;
+    }
+
+    const token = await getToken();
+    if (token == null) {
+        return resolvedTargetVersion;
+    }
+
+    const result = await fetchOrgCliVersionBounds({
+        cliContext,
+        orgId,
+        token: token.value,
+        timeoutMs: ORG_BOUNDS_FETCH_TIMEOUT_MS
+    });
+    if (!result.ok) {
+        return resolvedTargetVersion;
+    }
+    const { min, max } = result.bounds;
+    if (min == null && max == null) {
+        return resolvedTargetVersion;
+    }
+
+    try {
+        const { version, reason } = clampVersionToOrgBounds(resolvedTargetVersion, { min, max });
+        if (reason === "floor") {
+            cliContext.logger.info(
+                `Org "${orgId}" requires minimum CLI version ${chalk.green(version)} (resolved ${resolvedTargetVersion}).`
+            );
+        } else if (reason === "ceiling") {
+            cliContext.logger.info(
+                `Org "${orgId}" caps CLI version at ${chalk.green(version)} (resolved ${resolvedTargetVersion}).`
+            );
+        }
+        return version;
+    } catch {
+        // version comparison failed
+        return resolvedTargetVersion;
     }
 }

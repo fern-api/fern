@@ -58,6 +58,9 @@ class EnumClient {
      * @param {SeedExhaustive.types.WeatherReport} request
      * @param {EnumClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.SeedExhaustiveError}
+     * @throws {@link errors.SeedExhaustiveTimeoutError}
+     *
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */

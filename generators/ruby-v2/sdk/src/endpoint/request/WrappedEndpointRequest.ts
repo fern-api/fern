@@ -4,6 +4,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
@@ -155,12 +156,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
             this.endpoint.requestBody.type === "reference" &&
             this.endpoint.requestBody.requestBodyType.type === "named"
         ) {
-            const bodyTypeReference = this.context.getReferenceToTypeId(
-                this.endpoint.requestBody.requestBodyType.typeId
-            );
-            const typeDeclaration = this.context.getTypeDeclarationOrThrow(
-                this.endpoint.requestBody.requestBodyType.typeId
-            );
+            const resolvedTypeId = this.resolveNamedTypeId(this.endpoint.requestBody.requestBodyType.typeId);
+            const bodyTypeReference = this.context.getReferenceToTypeId(resolvedTypeId);
+            const typeDeclaration = this.context.getTypeDeclarationOrThrow(resolvedTypeId);
             // Enums and aliases are modules, not classes, so they don't have a .new() method
             const isModule = typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias";
 
@@ -244,7 +242,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        return "json";
+        return isUrlEncodedRequestBody(this.endpoint.requestBody) ? "urlencoded" : "json";
     }
 
     private getPathParameterNames(): string[] {

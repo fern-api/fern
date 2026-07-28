@@ -203,7 +203,8 @@ describe("GeneratedQueryParams", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
 
@@ -244,7 +245,8 @@ describe("GeneratedQueryParams", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
 
@@ -286,7 +288,8 @@ describe("GeneratedQueryParams", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
 
@@ -328,7 +331,8 @@ describe("GeneratedQueryParams", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
 
@@ -429,7 +433,8 @@ describe("GeneratedQueryParams", () => {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             });
 

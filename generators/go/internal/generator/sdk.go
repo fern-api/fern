@@ -17,6 +17,10 @@ import (
 // goLanguageHeader is the identifier used for the X-Fern-Language platform header.
 const goLanguageHeader = "Go"
 
+// platformUserAgentFunc is the name of the generated helper that builds the
+// structured User-Agent header value when includePlatformHeaders is enabled.
+const platformUserAgentFunc = "platformUserAgent"
+
 var (
 	//go:embed sdk/core/api_error.go
 	apiErrorFile string
@@ -71,6 +75,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/internal/query_defaults_on_nil.go_
+	queryDefaultsOnNilFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -300,6 +307,119 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 	return nil
 }
 
+// serverURLVariable pairs an IR server URL variable with the idiomatic Go
+// client-option name it is exposed under (e.g. the variable "region" is exposed
+// as the "Region" option, and a variable named "environment" is exposed as
+// "ServerURLEnvironment" to avoid colliding with the reserved Environment option).
+type serverURLVariable struct {
+	variable *common.ServerVariable
+	// optionName is the exported Go identifier used for the RequestOptions field,
+	// the option struct, and the With<Name> helper (e.g. "Region").
+	optionName string
+	// paramName is the unexported parameter name used by the With<Name> helper
+	// (e.g. "region").
+	paramName string
+}
+
+// reservedRequestOptionNames are the RequestOptions field names that a server
+// URL variable must not shadow. A variable whose idiomatic name collides with
+// one of these is exposed under a "ServerURL"-prefixed name instead.
+var reservedRequestOptionNames = map[string]struct{}{
+	"BaseURL":                    {},
+	"Environment":                {},
+	"HTTPClient":                 {},
+	"HTTPHeader":                 {},
+	"BodyProperties":             {},
+	"QueryParameters":            {},
+	"MaxAttempts":                {},
+	"MaxBufSize":                 {},
+	"MaxStreamReconnectAttempts": {},
+	"DisableStreamReconnection":  {},
+	"DisableRetries":             {},
+}
+
+// serverURLVariablesFromConfig returns the server URL variables declared on the
+// API's environments, paired with the client-option name each is exposed under.
+// Variables are de-duplicated by id (taken from the first environment that
+// declares them) and de-collided against reserved RequestOptions field names.
+//
+// When enabled is false (i.e. the serverUrlVariables generator config option is
+// disabled), this returns an empty slice so that no server-URL-variable client
+// options nor the construction-time base-URL template interpolation are emitted,
+// falling back to the pre-feature base-URL behavior.
+func serverURLVariablesFromConfig(enabled bool, environmentsConfig *common.EnvironmentsConfig) []*serverURLVariable {
+	if !enabled {
+		return nil
+	}
+	variables := collectServerURLVariables(environmentsConfig)
+	result := make([]*serverURLVariable, 0, len(variables))
+	for _, variable := range variables {
+		if variable == nil || variable.Name == nil {
+			continue
+		}
+		optionName := variable.Name.PascalCase.UnsafeName
+		paramName := variable.Name.CamelCase.SafeName
+		if _, ok := reservedRequestOptionNames[optionName]; ok {
+			optionName = "ServerURL" + variable.Name.PascalCase.UnsafeName
+			paramName = "serverURL" + variable.Name.PascalCase.UnsafeName
+		}
+		result = append(result, &serverURLVariable{
+			variable:   variable,
+			optionName: optionName,
+			paramName:  paramName,
+		})
+	}
+	return result
+}
+
+// collectServerURLVariables extracts the server URL variables from the first
+// environment that declares them, handling both single- and multiple-base-URL
+// environments and de-duplicating by id.
+func collectServerURLVariables(environmentsConfig *common.EnvironmentsConfig) []*common.ServerVariable {
+	if environmentsConfig == nil || environmentsConfig.Environments == nil {
+		return nil
+	}
+	seen := make(map[string]struct{})
+	var result []*common.ServerVariable
+	add := func(variables []*common.ServerVariable) {
+		for _, variable := range variables {
+			if variable == nil {
+				continue
+			}
+			if _, ok := seen[variable.Id]; ok {
+				continue
+			}
+			seen[variable.Id] = struct{}{}
+			result = append(result, variable)
+		}
+	}
+	if single := environmentsConfig.Environments.SingleBaseUrl; single != nil {
+		for _, environment := range single.Environments {
+			if len(environment.UrlVariables) > 0 {
+				add(environment.UrlVariables)
+				break
+			}
+		}
+	}
+	if multiple := environmentsConfig.Environments.MultipleBaseUrls; multiple != nil {
+		for _, environment := range multiple.Environments {
+			if len(environment.UrlVariables) > 0 {
+				// Preserve a deterministic order across base URLs.
+				baseURLIds := make([]string, 0, len(environment.UrlVariables))
+				for baseURLId := range environment.UrlVariables {
+					baseURLIds = append(baseURLIds, baseURLId)
+				}
+				sort.Strings(baseURLIds)
+				for _, baseURLId := range baseURLIds {
+					add(environment.UrlVariables[baseURLId])
+				}
+				break
+			}
+		}
+	}
+	return result
+}
+
 // WriteRequestOptionsDefinition writes the RequestOption interface and
 // *RequestOptions type. These types are always deposited in the core
 // package to prevent import cycles in the generated SDK.
@@ -323,6 +443,13 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	// Check if OAuth or inferred auth is configured
 	hasOAuth := getOAuthClientCredentials(auth) != nil
 	hasInferred := getInferredAuthScheme(auth) != nil
+
+	// In endpoint-security mode, auth is applied per-endpoint (each endpoint
+	// declares its own schemes) rather than flatly on every request. The flat
+	// ToHeader() therefore emits no auth headers; routing happens in
+	// AuthHeadersForEndpoint, which the endpoint code calls with the endpoint's
+	// static security requirements.
+	endpointSecurity := isEndpointSecurity(auth)
 
 	// Generate TokenGetter type if OAuth or inferred auth is configured
 	if hasOAuth || hasInferred {
@@ -424,6 +551,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 		)
 	}
+	// Generate a field for each server URL variable (e.g. region), used to
+	// interpolate the environment's URL template(s) at client construction.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
+		f.P(serverURLVariable.optionName, " string")
+	}
 	f.P("}")
 	f.P()
 
@@ -454,7 +586,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig))
 	}
 
 	// Generate the ToHeader method.
@@ -463,6 +595,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("func (r *RequestOptions) ToHeader() http.Header {")
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
+		if endpointSecurity {
+			// Auth headers are routed per-endpoint via AuthHeadersForEndpoint.
+			break
+		}
 		if authScheme.Bearer != nil {
 			name := authScheme.Bearer.Token.PascalCase.UnsafeName
 			f.P("if r.", name, ` != "" {`)
@@ -571,7 +707,14 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			continue
 		}
-		if header.ClientDefault != nil {
+		// Headers with an env var and/or client default are resolved into the
+		// client-level options at construction time, so ToHeader only emits
+		// values that are explicitly set on the options. Setting the resolved
+		// fallback here would clobber the client-level value on every request,
+		// since empty per-request options win the header merge. Construction-time
+		// resolution only covers optional, string, and boolean header types, so
+		// other types keep the request-time client default fallback.
+		if header.ClientDefault != nil && !isClientDefaultResolvedAtConstruction(header.ValueType, valueTypeFormat) {
 			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
 			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
 			if header.Env != nil {
@@ -580,11 +723,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				f.P("}")
 			}
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			if valueTypeFormat.IsOptional {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-			} else {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-			}
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
 			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
 			f.P("}")
 			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
@@ -603,17 +742,208 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	if endpointSecurity {
+		f.writeAuthHeadersForEndpoint(auth)
+		f.P()
+	}
+
 	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
 		return err
 	}
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
 		return err
 	}
 
 	return nil
+}
+
+// writeAuthHeadersForEndpoint generates the AuthHeadersForEndpoint method on
+// *RequestOptions, used in endpoint-security mode. Given an endpoint's static
+// security requirements ([][]string, where the outer slice is OR'd and each
+// inner slice of scheme keys is AND'd), it returns only the auth headers for
+// the first requirement whose schemes all have credentials available. If none
+// is satisfiable, it returns an error naming the missing schemes. This mirrors
+// the TypeScript RoutingAuthProvider and the Python get_auth_headers_for_endpoint.
+func (f *fileWriter) writeAuthHeadersForEndpoint(auth *ir.ApiAuth) {
+	// Bearer and OAuth schemes share the single token slot: a resolved token
+	// is applied as "Authorization: Bearer <token>" for whichever of those keys
+	// the endpoint declares.
+	var (
+		bearerScheme    *ir.BearerAuthScheme
+		basicScheme     *ir.BasicAuthScheme
+		inferredScheme  *ir.InferredAuthScheme
+		headerSchemes   []*ir.HeaderAuthScheme
+		tokenSchemeKeys []string
+	)
+	for _, authScheme := range auth.Schemes {
+		switch {
+		case authScheme.Bearer != nil:
+			bearerScheme = authScheme.Bearer
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Bearer.Key)
+		case authScheme.Oauth != nil:
+			tokenSchemeKeys = append(tokenSchemeKeys, authScheme.Oauth.Key)
+		case authScheme.Basic != nil:
+			basicScheme = authScheme.Basic
+		case authScheme.Header != nil:
+			if shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
+				headerSchemes = append(headerSchemes, authScheme.Header)
+			}
+		case authScheme.Inferred != nil:
+			inferredScheme = authScheme.Inferred
+		}
+	}
+
+	f.P("// AuthHeadersForEndpoint returns the auth headers to apply for an endpoint,")
+	f.P("// given the endpoint's static security requirements. It routes to the first")
+	f.P("// requirement whose schemes all have credentials available (OR across the")
+	f.P("// list, AND within a requirement).")
+	f.P("func (r *RequestOptions) AuthHeadersForEndpoint(security [][]string) (http.Header, error) {")
+	f.P("if len(security) == 0 {")
+	f.P("return make(http.Header), nil")
+	f.P("}")
+	f.P("availableAuthHeaders := make(map[string]http.Header)")
+
+	// Bearer / OAuth token schemes.
+	if len(tokenSchemeKeys) > 0 {
+		if bearerScheme != nil {
+			name := bearerScheme.Token.PascalCase.UnsafeName
+			f.P("token := r.", name)
+			f.P("if token == \"\" && r.", name, "Func != nil {")
+			f.P("if value, err := r.", name, "Func(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		} else {
+			// OAuth without an explicit bearer scheme: the token is either provided
+			// directly or fetched via the configured token getter.
+			f.P("token := r.Token")
+			f.P("if token == \"\" && r.tokenGetter != nil {")
+			f.P("if value, err := r.tokenGetter(); err == nil {")
+			f.P("token = value")
+			f.P("}")
+			f.P("}")
+		}
+		f.P("if token != \"\" {")
+		f.P("tokenHeaders := make(http.Header)")
+		f.P(`tokenHeaders.Set("Authorization", "Bearer " + token)`)
+		for _, key := range tokenSchemeKeys {
+			f.P(`availableAuthHeaders["`, key, `"] = tokenHeaders`)
+		}
+		f.P("}")
+	}
+
+	// Header auth schemes (e.g. X-API-Key).
+	for _, header := range headerSchemes {
+		var prefix string
+		if header.Prefix != nil {
+			prefix = *header.Prefix + " "
+		}
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
+		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+		f.P("headerValues := make(http.Header)")
+		f.P(`headerValues.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+		f.P(`availableAuthHeaders["`, header.Key, `"] = headerValues`)
+		f.P("}")
+	}
+
+	// Basic auth.
+	if basicScheme != nil {
+		usernameOmitted := isBasicAuthUsernameOmitted(basicScheme)
+		passwordOmitted := isBasicAuthPasswordOmitted(basicScheme)
+		username := basicScheme.Username.PascalCase.UnsafeName
+		password := basicScheme.Password.PascalCase.UnsafeName
+		var (
+			condition   string
+			usernameArg string
+			passwordArg string
+		)
+		switch {
+		case usernameOmitted && passwordOmitted:
+			// Both omitted — no basic credentials to apply.
+		case usernameOmitted:
+			condition = "r." + password + ` != ""`
+			usernameArg = `""`
+			passwordArg = "r." + password
+		case passwordOmitted:
+			condition = "r." + username + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = `""`
+		default:
+			condition = "r." + username + ` != "" || r.` + password + ` != ""`
+			usernameArg = "r." + username
+			passwordArg = "r." + password
+		}
+		if condition != "" {
+			f.P("if ", condition, " {")
+			f.P("basicHeaders := make(http.Header)")
+			f.P(`basicHeaders.Set("Authorization", "Basic " + base64.StdEncoding.EncodeToString([]byte(`, usernameArg, ` + ":" + `, passwordArg, `)))`)
+			f.P(`availableAuthHeaders["`, basicScheme.Key, `"] = basicHeaders`)
+			f.P("}")
+		}
+	}
+
+	// Inferred auth: fetch the token and apply the configured authenticated
+	// request headers.
+	if inferredScheme != nil && inferredScheme.TokenEndpoint != nil {
+		f.P("if r.tokenGetter != nil {")
+		f.P("if inferredToken, err := r.tokenGetter(); err == nil && inferredToken != \"\" {")
+		f.P("inferredHeaders := make(http.Header)")
+		for _, authHeader := range inferredScheme.TokenEndpoint.AuthenticatedRequestHeaders {
+			if authHeader.ValuePrefix != nil {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, %q + inferredToken)`, authHeader.HeaderName, *authHeader.ValuePrefix))
+			} else {
+				f.P(fmt.Sprintf(`inferredHeaders.Set(%q, inferredToken)`, authHeader.HeaderName))
+			}
+		}
+		f.P(`availableAuthHeaders["`, inferredScheme.Key, `"] = inferredHeaders`)
+		f.P("}")
+		f.P("}")
+	}
+
+	// OR across requirements: pick the first fully-satisfiable requirement and
+	// combine the headers of its schemes.
+	f.P("for _, requirement := range security {")
+	f.P("satisfied := true")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("satisfied = false")
+	f.P("break")
+	f.P("}")
+	f.P("}")
+	f.P("if !satisfied {")
+	f.P("continue")
+	f.P("}")
+	f.P("combined := make(http.Header)")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("for name, values := range availableAuthHeaders[schemeKey] {")
+	f.P("for _, value := range values {")
+	f.P("combined.Set(name, value)")
+	f.P("}")
+	f.P("}")
+	f.P("}")
+	f.P("return combined, nil")
+	f.P("}")
+
+	// No requirement satisfiable: report the missing schemes.
+	f.P("missing := make([]string, 0, len(security))")
+	f.P("for _, requirement := range security {")
+	f.P("var missingSchemes []string")
+	f.P("for _, schemeKey := range requirement {")
+	f.P("if _, ok := availableAuthHeaders[schemeKey]; !ok {")
+	f.P("missingSchemes = append(missingSchemes, schemeKey)")
+	f.P("}")
+	f.P("}")
+	f.P(`missing = append(missing, strings.Join(missingSchemes, " AND "))`)
+	f.P("}")
+	f.P("return nil, fmt.Errorf(")
+	f.P(`"no authentication credentials provided that satisfy the endpoint's security requirements; please provide credentials for: %s",`)
+	f.P(`strings.Join(missing, " OR "),`)
+	f.P(")")
+	f.P("}")
 }
 
 // writePlatformHeaders generates the platform headers.
@@ -635,12 +965,56 @@ func (f *fileWriter) writePlatformHeaders(
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
-			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
+			if f.includePlatformHeaders {
+				// Consolidate runtime/platform observability into a single structured
+				// User-Agent header, computed at runtime.
+				f.P(fmt.Sprintf("headers.Set(%q, %s(%q))", sdkConfig.PlatformHeaders.UserAgent.Header(), platformUserAgentFunc, sdkConfig.PlatformHeaders.UserAgent.Value))
+			} else {
+				f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
+			}
 		}
 		f.P("return headers")
 		f.P("}")
+		if f.includePlatformHeaders && sdkConfig.PlatformHeaders.UserAgent != nil {
+			f.writePlatformUserAgentFunc()
+		}
 	}
 	return nil
+}
+
+// writePlatformUserAgentFunc generates a helper that augments the base
+// User-Agent value with the operating system, architecture, and Go runtime
+// version, all resolved at runtime. Unknown components are omitted rather than
+// reported as empty, and it never panics.
+func (f *fileWriter) writePlatformUserAgentFunc() {
+	fmtPackage := f.scope.AddImport("fmt")
+	runtimePackage := f.scope.AddImport("runtime")
+	stringsPackage := f.scope.AddImport("strings")
+	f.P()
+	f.P("// ", platformUserAgentFunc, " builds a structured User-Agent header value of the form")
+	f.P("// \"{base} ({os}; {arch}) Go/{version}\". The operating system, architecture, and")
+	f.P("// Go runtime version are resolved at runtime; unknown components are omitted.")
+	f.P("func ", platformUserAgentFunc, "(base string) string {")
+	f.P("var b ", stringsPackage, ".Builder")
+	f.P("b.WriteString(base)")
+	f.P("goos, goarch := ", runtimePackage, ".GOOS, ", runtimePackage, ".GOARCH")
+	f.P("if goarch == \"x64\" || goarch == \"amd64\" || goarch == \"x86_64\" {")
+	f.P("goarch = \"x86_64\"")
+	f.P("}")
+	f.P("switch {")
+	f.P("case goos != \"\" && goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s; %s)\", goos, goarch))")
+	f.P("case goos != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goos))")
+	f.P("case goarch != \"\":")
+	f.P("b.WriteString(", fmtPackage, ".Sprintf(\" (%s)\", goarch))")
+	f.P("}")
+	f.P("b.WriteString(\" Go\")")
+	f.P("if version := ", stringsPackage, ".TrimPrefix(", runtimePackage, ".Version(), \"go\"); version != \"\" {")
+	f.P("b.WriteString(\"/\" + version)")
+	f.P("}")
+	f.P("return b.String()")
+	f.P("}")
 }
 
 func (f *fileWriter) writeRequestOptionStructs(
@@ -649,6 +1023,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	asIdempotentRequestOption bool,
 	isMultiURL bool,
 	inferredParams []inferredAuthParam,
+	serverURLVariables []*serverURLVariable,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -679,6 +1054,12 @@ func (f *fileWriter) writeRequestOptionStructs(
 
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	for _, serverURLVariable := range serverURLVariables {
+		if err := f.writeOptionStruct(serverURLVariable.optionName, "string", true, asIdempotentRequestOption); err != nil {
 			return err
 		}
 	}
@@ -1039,6 +1420,24 @@ func (f *fileWriter) WriteRequestOptions(
 		f.P("func WithEnvironment(environment ", f.scope.AddImport(rootImportPath), ".Environment) *core.EnvironmentOption {")
 		f.P("return &core.EnvironmentOption{")
 		f.P("Environment: environment,")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate a functional option for each server URL variable (e.g. region).
+	// Setting one rebuilds the base URL(s) from the environment's URL template(s)
+	// at client construction time.
+	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
+		originalName := serverURLVariable.variable.Id
+		if serverURLVariable.variable.Name != nil {
+			originalName = serverURLVariable.variable.Name.OriginalName
+		}
+		f.P("// With", serverURLVariable.optionName, " sets the \"", originalName, "\" server URL variable, which is")
+		f.P("// substituted into the base URL template(s) at construction time.")
+		f.P("func With", serverURLVariable.optionName, "(", serverURLVariable.paramName, " string) *core.", serverURLVariable.optionName, "Option {")
+		f.P("return &core.", serverURLVariable.optionName, "Option{")
+		f.P(serverURLVariable.optionName, ": ", serverURLVariable.paramName, ",")
 		f.P("}")
 		f.P("}")
 		f.P()
@@ -4347,6 +4746,21 @@ func isStringType(valueType *ir.TypeReference) bool {
 	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
 }
 
+// isClientDefaultResolvedAtConstruction returns true if a header's client
+// default is applied to the client-level options at construction time (by the
+// v2 client generator), which covers optional (pointer) types plus plain
+// string and boolean primitives. For those types, ToHeader must not re-apply
+// the fallback, or it would clobber the client-level value on every request.
+func isClientDefaultResolvedAtConstruction(valueType *ir.TypeReference, valueTypeFormat *valueTypeFormat) bool {
+	if valueTypeFormat.IsOptional {
+		return true
+	}
+	if valueType.Primitive == nil {
+		return false
+	}
+	return valueType.Primitive.V1 == common.PrimitiveTypeV1String || valueType.Primitive.V1 == common.PrimitiveTypeV1Boolean
+}
+
 // isPrimitiveInteger returns true if the given primitive type is an integer.
 func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
 	return primitive.V1 == common.PrimitiveTypeV1Integer || primitive.V1 == common.PrimitiveTypeV1Uint || primitive.V1 == common.PrimitiveTypeV1Uint64 || primitive.V1 == common.PrimitiveTypeV1Long
@@ -4469,6 +4883,12 @@ func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
 		}
 	}
 	return nil
+}
+
+// isEndpointSecurity returns true when the API applies auth per-endpoint (each
+// endpoint declares its own schemes) rather than flatly on every request.
+func isEndpointSecurity(auth *ir.ApiAuth) bool {
+	return auth != nil && string(auth.Requirement) == "ENDPOINT_SECURITY"
 }
 
 // hasBearerAuth returns true if the auth configuration has a bearer auth scheme.

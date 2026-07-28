@@ -150,8 +150,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{SERDE_ERROR_IMPORT\}\}/g, "");
         }
 
-        // Conditionally include base64 import in http_client
-        if (this.context.usesBase64()) {
+        // Conditionally include base64 import in http_client (base64 method, or basic
+        // auth encoding in per-endpoint auth routing).
+        if (this.context.usesBase64() || (this.context.isEndpointSecurity() && this.context.hasBasicAuthScheme())) {
             content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "use base64::Engine;\n");
         } else {
             content = content.replace(/\{\{BASE64_IMPORT\}\}/g, "");
@@ -685,6 +686,13 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{QUERY_BUILDER_BIGINT_TESTS\}\}/g, "");
         }
 
+        // Per-endpoint auth routing (endpoint-security mode). In the default (ALL/ANY)
+        // case these expand to the original flat auth body and an empty routing method,
+        // so output is byte-identical. The API-key placeholders inside the flat body are
+        // resolved by the replacements below.
+        content = content.replace(/\{\{APPLY_AUTH_HEADERS_BODY\}\}/g, this.generateApplyAuthHeadersBody());
+        content = content.replace(/\{\{ENDPOINT_AUTH_ROUTING_METHOD\}\}/g, this.generateEndpointAuthRoutingMethod());
+
         // Replace API key header name from IR auth schemes
         content = content.replace(/\{\{API_KEY_HEADER\}\}/g, this.context.getApiKeyHeaderName());
 
@@ -701,6 +709,220 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         }
 
         return content;
+    }
+
+    /**
+     * The body of `HttpClient::apply_auth_headers`. In the default (ALL/ANY) case this is
+     * the flat auth application (API key + bearer/OAuth token) that applies all configured
+     * credentials to every request. In endpoint-security mode auth is resolved per-endpoint
+     * (see {@link generateEndpointAuthRoutingMethod}) and injected as request headers, so the
+     * flat application is a no-op here.
+     */
+    private generateApplyAuthHeadersBody(): string {
+        if (this.context.isEndpointSecurity()) {
+            return `        // In endpoint-security mode, authentication is resolved per-endpoint via
+        // resolve_endpoint_auth_headers and injected as request headers, so no
+        // client-wide auth headers are applied here.
+        let _ = (request, options);
+        Ok(())`;
+        }
+        return `        let headers = request.headers_mut();
+
+        // Apply API key (request options override config)
+        let api_key = options
+            .as_ref()
+            .and_then(|opts| opts.api_key.as_ref())
+            .or(self.config.api_key.as_ref());
+
+        if let Some(key) = api_key {
+            let header_value = {{API_KEY_VALUE_EXPR}};
+            headers.insert("{{API_KEY_HEADER}}", header_value.parse().map_err(|_| ApiError::InvalidHeader)?);
+        }
+
+        // Apply bearer token - priority: request options > OAuth > config
+        let token = if let Some(opts) = options.as_ref() {
+            if opts.token.is_some() {
+                opts.token.clone()
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+
+        let token = match token {
+            Some(t) => Some(t),
+            None => {
+                // Try OAuth token provider if configured
+                if let Some(oauth_config) = &self.oauth_config {
+                    Some(self.get_oauth_token(oauth_config).await?)
+                } else {
+                    // Fall back to static token from config
+                    self.config.token.clone()
+                }
+            }
+        };
+
+        if let Some(token) = token {
+            let auth_value = format!("Bearer {}", token);
+            headers.insert(
+                "Authorization",
+                auth_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
+        }
+
+        Ok(())`;
+    }
+
+    /**
+     * Generates `HttpClient::resolve_endpoint_auth_headers` for endpoint-security mode, or an
+     * empty string otherwise (so the default output is unchanged).
+     *
+     * The method takes an OR-list of AND-groups of auth scheme keys (the endpoint's declared
+     * `security`) and returns the headers for the first group whose schemes all have
+     * credentials available. An empty requirement list means no auth. If no group is
+     * satisfiable it returns an error naming the missing schemes (joined with ` AND `/` OR `).
+     */
+    private generateEndpointAuthRoutingMethod(): string {
+        if (!this.context.isEndpointSecurity()) {
+            return "";
+        }
+
+        const { tokenSchemeKeys, apiKeySchemes, basicSchemeKeys } = this.context.getEndpointAuthRoutingSchemes();
+        const sections: string[] = [];
+
+        if (tokenSchemeKeys.length > 0) {
+            const inserts = tokenSchemeKeys
+                .map(
+                    (key) =>
+                        `                available.insert(${JSON.stringify(key)}, vec![("Authorization".to_string(), auth_value.clone())]);`
+                )
+                .join("\n");
+            sections.push(
+                `        // Bearer / OAuth token schemes both resolve to \`Authorization: Bearer <token>\`.
+        let token = if let Some(opts) = options.as_ref() {
+            if opts.token.is_some() {
+                opts.token.clone()
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+        let token = match token {
+            Some(t) => Some(t),
+            None => {
+                if let Some(oauth_config) = &self.oauth_config {
+                    Some(self.get_oauth_token(oauth_config).await?)
+                } else {
+                    self.config.token.clone()
+                }
+            }
+        };
+        if let Some(token) = token {
+            let auth_value = format!("Bearer {}", token);
+${inserts}
+        }`
+            );
+        }
+
+        for (const scheme of apiKeySchemes) {
+            const valueExpr =
+                scheme.prefix != null
+                    ? `format!(${JSON.stringify(`${scheme.prefix} {}`)}, key)`
+                    : "key.to_string()";
+            sections.push(
+                `        // Header (API key) scheme ${JSON.stringify(scheme.key)}.
+        {
+            let api_key = options
+                .as_ref()
+                .and_then(|opts| opts.api_key.as_ref())
+                .or(self.config.api_key.as_ref());
+            if let Some(key) = api_key {
+                let header_value = ${valueExpr};
+                available.insert(${JSON.stringify(scheme.key)}, vec![(${JSON.stringify(scheme.headerName)}.to_string(), header_value)]);
+            }
+        }`
+            );
+        }
+
+        if (basicSchemeKeys.length > 0) {
+            const inserts = basicSchemeKeys
+                .map(
+                    (key) =>
+                        `                available.insert(${JSON.stringify(key)}, vec![("Authorization".to_string(), basic_value.clone())]);`
+                )
+                .join("\n");
+            sections.push(
+                `        // Basic auth schemes resolve to \`Authorization: Basic <base64(user:pass)>\`.
+        if let (Some(username), Some(password)) =
+            (self.config.username.as_ref(), self.config.password.as_ref())
+        {
+            let encoded =
+                base64::engine::general_purpose::STANDARD.encode(format!("{}:{}", username, password));
+            let basic_value = format!("Basic {}", encoded);
+${inserts}
+        }`
+            );
+        }
+
+        // Inferred auth schemes are not supported by the Rust SDK, so they contribute no
+        // available credentials; a requirement naming only inferred schemes is unsatisfiable.
+
+        const availableSections = sections.length > 0 ? `\n${sections.join("\n\n")}\n` : "";
+
+        return `
+    /// Resolves the authentication headers to apply for an endpoint, given the endpoint's
+    /// declared security requirements. \`requirements\` is an OR-list of AND-groups of auth
+    /// scheme keys: the first group whose schemes all have credentials available is applied.
+    /// An empty \`requirements\` means the endpoint requires no auth. If no group is
+    /// satisfiable, an error naming the missing schemes is returned.
+    pub(crate) async fn resolve_endpoint_auth_headers(
+        &self,
+        options: &Option<RequestOptions>,
+        requirements: &[&[&str]],
+    ) -> Result<HashMap<String, String>, ApiError> {
+        if requirements.is_empty() {
+            return Ok(HashMap::new());
+        }
+
+        let mut available: HashMap<&str, Vec<(String, String)>> = HashMap::new();
+${availableSections}
+        for requirement in requirements {
+            if requirement
+                .iter()
+                .all(|scheme_key| available.contains_key(scheme_key))
+            {
+                let mut combined_headers = HashMap::new();
+                for scheme_key in *requirement {
+                    if let Some(pairs) = available.get(scheme_key) {
+                        for (header_name, header_value) in pairs {
+                            combined_headers.insert(header_name.clone(), header_value.clone());
+                        }
+                    }
+                }
+                return Ok(combined_headers);
+            }
+        }
+
+        let missing = requirements
+            .iter()
+            .map(|requirement| {
+                requirement
+                    .iter()
+                    .filter(|scheme_key| !available.contains_key(*scheme_key))
+                    .copied()
+                    .collect::<Vec<_>>()
+                    .join(" AND ")
+            })
+            .collect::<Vec<_>>()
+            .join(" OR ");
+        Err(ApiError::Configuration(format!(
+            "No authentication credentials provided that satisfy the endpoint's security requirements. Please provide credentials for: {}",
+            missing
+        )))
+    }
+`;
     }
 
     private generatePublishWorkflow(): string {

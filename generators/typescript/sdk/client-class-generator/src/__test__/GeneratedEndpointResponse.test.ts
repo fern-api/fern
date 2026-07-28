@@ -124,7 +124,8 @@ function createMockContext(): any {
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             })
         },
@@ -227,6 +228,11 @@ function createMockContext(): any {
                     ])
             })
         },
+        timeoutSdkError: {
+            getReferenceToTimeoutSdkError: () => ({
+                getExpression: () => ts.factory.createIdentifier("MyOrgTimeoutError")
+            })
+        },
         sdkErrorSchema: {
             getGeneratedSdkErrorSchema: () => ({
                 deserializeBody: (_context: unknown, { referenceToBody }: { referenceToBody: ts.Expression }) =>
@@ -275,6 +281,9 @@ function createMockContext(): any {
             })
         },
         genericAPISdkError: {
+            getReferenceToGenericAPISdkError: () => ({
+                getExpression: () => ts.factory.createIdentifier("MyOrgError")
+            }),
             getGeneratedGenericAPISdkError: () => ({
                 build: (
                     _context: unknown,
@@ -416,7 +425,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
         it("returns empty array when no errors", () => {
             const instance = createInstance();
             const context = createMockContext();
-            expect(instance.getNamesOfThrownExceptions(context)).toEqual([]);
+            expect(instance.getNamesOfThrownExceptions(context)).toEqual(["MyOrgError", "MyOrgTimeoutError"]);
         });
 
         it("returns error names when errors are defined", () => {
@@ -425,7 +434,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
             });
             const context = createMockContext();
             const names = instance.getNamesOfThrownExceptions(context);
-            expect(names).toEqual(["BadRequestError", "NotFoundError"]);
+            expect(names).toEqual(["BadRequestError", "NotFoundError", "MyOrgError", "MyOrgTimeoutError"]);
         });
     });
 

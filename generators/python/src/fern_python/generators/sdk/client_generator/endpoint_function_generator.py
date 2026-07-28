@@ -44,9 +44,18 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-from fern_python.generators.sdk.names import get_root_path_parameter_member_name, get_variable_member_name
+from fern_python.generators.sdk.names import (
+    get_root_path_parameter_member_name,
+    get_variable_member_name,
+)
 from fern_python.snippet import SnippetWriter
-from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
+from fern_python.utils.name_resolver import (
+    get_name_from_wire_value,
+    get_original_name,
+    get_wire_value,
+    resolve_name,
+    resolve_name_preserving_underscores,
+)
 
 import fern.ir.resources as ir_types
 
@@ -378,7 +387,7 @@ class EndpointFunctionGenerator:
 
     def _get_stream_func_return_type(self) -> AST.TypeHint:
         underlying_type = self._get_response_body_underlying_type(
-            response_body=self._endpoint.response.body if self._endpoint.response is not None else None,
+            response_body=(self._endpoint.response.body if self._endpoint.response is not None else None),
             is_async=self._is_async,
         )
         underlying_type_wrapped = (
@@ -998,7 +1007,10 @@ class EndpointFunctionGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
+        return (
+            ".".join([resolve_name_preserving_underscores(component).snake_case.safe_name for component in components])
+            + "."
+        )
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
@@ -1191,7 +1203,10 @@ class EndpointFunctionGenerator:
             # Check if this is custom pagination
             is_custom_pagination = self.pagination is not None and self.pagination.get_as_union().type == "custom"
             return self._context.core_utilities.get_paginator_type(
-                underlying_type_hint, type_hint, is_async=is_async, is_custom=is_custom_pagination
+                underlying_type_hint,
+                type_hint,
+                is_async=is_async,
+                is_custom=is_custom_pagination,
             )
 
         # Handle streaming case
@@ -1428,6 +1443,19 @@ class EndpointFunctionGenerator:
     ) -> Optional[AST.Expression]:
         headers: List[Tuple[str, AST.Expression]] = []
 
+        # In endpoint-security mode, compute this endpoint's routed auth headers and
+        # merge them into the request headers (the flat get_headers() no longer emits
+        # any auth). Returns the name of a variable holding the computed headers.
+        endpoint_auth_headers_var = self._write_endpoint_auth_headers_var(
+            endpoint=endpoint, parent_writer=parent_writer
+        )
+
+        idempotency_key_generation = self._context.ir.sdk_config.idempotency_key_generation
+        auto_generate_idempotency_key = (
+            idempotency_key_generation is not None and endpoint.method in idempotency_key_generation.methods
+        )
+        wrapped_declared_idempotency_key = False
+
         ir_headers = service.headers + endpoint.headers
         if endpoint.idempotent:
             ir_headers += idempotency_headers
@@ -1454,18 +1482,43 @@ class EndpointFunctionGenerator:
                     )
                 )
             else:
+                wire_value = get_wire_value(header.name)
                 param_name = get_parameter_name(get_name_from_wire_value(header.name))
                 if self._is_enum_type_with_value(header.value_type, allow_optional=True):
-                    expr = AST.Expression(f"{param_name}.value if {param_name} is not None else None")
+                    provided_value = f"{param_name}.value"
                 else:
-                    expr = AST.Expression(f"str({param_name}) if {param_name} is not None else None")
-                headers.append((get_wire_value(header.name), expr))
+                    provided_value = f"str({param_name})"
+                if (
+                    auto_generate_idempotency_key
+                    and idempotency_key_generation is not None
+                    and wire_value.lower() == idempotency_key_generation.header_name.lower()
+                ):
+                    # Caller-supplied value wins; the generated UUID is the fallback.
+                    expr = self._get_idempotency_key_header_value(provided_value=provided_value, param_name=param_name)
+                    wrapped_declared_idempotency_key = True
+                else:
+                    expr = AST.Expression(f"{provided_value} if {param_name} is not None else None")
+                headers.append((wire_value, expr))
 
-        if len(headers) == 0:
+        if (
+            auto_generate_idempotency_key
+            and idempotency_key_generation is not None
+            and not wrapped_declared_idempotency_key
+        ):
+            headers.append(
+                (
+                    idempotency_key_generation.header_name,
+                    self._generate_idempotency_key_expression(),
+                )
+            )
+
+        if len(headers) == 0 and endpoint_auth_headers_var is None:
             return None
 
         def write_headers_dict(writer: AST.NodeWriter) -> None:
             writer.write("{")
+            if endpoint_auth_headers_var is not None:
+                writer.write(f"**{endpoint_auth_headers_var}, ")
             for _, (header_key, header_value) in enumerate(headers):
                 writer.write(f'"{header_key}": ')
                 writer.write_node(header_value)
@@ -1480,6 +1533,56 @@ class EndpointFunctionGenerator:
             return AST.Expression(request_headers_var)
         else:
             return AST.Expression(AST.CodeWriter(write_headers_dict))
+
+    def _generate_idempotency_key_expression(self) -> AST.Expression:
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
+
+        def write(writer: NodeWriter) -> None:
+            writer.write_reference(generate_reference)
+            writer.write("()")
+
+        return AST.Expression(AST.CodeWriter(write))
+
+    def _get_idempotency_key_header_value(self, *, provided_value: str, param_name: str) -> AST.Expression:
+        generate_reference = self._context.core_utilities.get_reference_to_generate_idempotency_key()
+
+        def write(writer: NodeWriter) -> None:
+            writer.write(f"{provided_value} if {param_name} is not None else ")
+            writer.write_reference(generate_reference)
+            writer.write("()")
+
+        return AST.Expression(AST.CodeWriter(write))
+
+    def _write_endpoint_auth_headers_var(
+        self, *, endpoint: ir_types.HttpEndpoint, parent_writer: AST.NodeWriter
+    ) -> Optional[str]:
+        if self._context.ir.auth.requirement != ir_types.AuthSchemesRequirement.ENDPOINT_SECURITY:
+            return None
+
+        variable_name = "_endpoint_auth_headers"
+        security_literal = self._get_endpoint_security_literal(endpoint)
+        method_name = (
+            ClientWrapperGenerator.ASYNC_GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME
+            if self._is_async
+            else ClientWrapperGenerator.GET_AUTH_HEADERS_FOR_ENDPOINT_METHOD_NAME
+        )
+        call = f"self.{self._client_wrapper_member_name}.{method_name}(security={security_literal})"
+        if self._is_async:
+            call = f"await {call}"
+        parent_writer.write_line(f"{variable_name} = {call}")
+        return variable_name
+
+    def _get_endpoint_security_literal(self, endpoint: ir_types.HttpEndpoint) -> str:
+        if endpoint.security is None:
+            return "None"
+        requirement_literals: List[str] = []
+        for requirement in endpoint.security:
+            scheme_literals: List[str] = []
+            for scheme_key, scopes in requirement.items():
+                scopes_literal = "[" + ", ".join(f'"{scope}"' for scope in scopes) + "]"
+                scheme_literals.append(f'"{scheme_key}": {scopes_literal}')
+            requirement_literals.append("{" + ", ".join(scheme_literals) + "}")
+        return "[" + ", ".join(requirement_literals) + "]"
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
@@ -1569,7 +1672,10 @@ class EndpointFunctionGenerator:
             (
                 get_wire_value(query_parameter.name),
                 (
-                    self._wrap_with_comma_join(self._get_query_parameter_reference(query_parameter), query_parameter)
+                    self._wrap_with_comma_join(
+                        self._get_query_parameter_reference(query_parameter),
+                        query_parameter,
+                    )
                     if self._should_comma_join_query_parameter(query_parameter)
                     else self._get_query_parameter_reference(query_parameter)
                 ),
@@ -1605,7 +1711,12 @@ class EndpointFunctionGenerator:
     ) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference,
-            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME, ir_types.PrimitiveTypeV1.DATE_TIME_RFC_2822]),
+            expected=set(
+                [
+                    ir_types.PrimitiveTypeV1.DATE_TIME,
+                    ir_types.PrimitiveTypeV1.DATE_TIME_RFC_2822,
+                ]
+            ),
             allow_optional=allow_optional,
             allow_enum=False,
         )
@@ -2342,7 +2453,10 @@ class EndpointFunctionSnippetGenerator:
 
     def _is_header_literal(self, header_wire_value: str, disqualify_optionals: bool) -> bool:
         param = next(
-            filter(lambda h: get_wire_value(h.name) == header_wire_value, self.endpoint.headers),
+            filter(
+                lambda h: get_wire_value(h.name) == header_wire_value,
+                self.endpoint.headers,
+            ),
             None,
         )
         if param is not None:
@@ -2418,10 +2532,14 @@ def unwrap_optional_type(
     return type_reference
 
 
-def filter_variable_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
+def filter_variable_path_parameters(
+    path_parameters: List[ir_types.PathParameter],
+) -> List[ir_types.PathParameter]:
     return [param for param in path_parameters if param.variable is None]
 
 
-def filter_root_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
+def filter_root_path_parameters(
+    path_parameters: List[ir_types.PathParameter],
+) -> List[ir_types.PathParameter]:
     """Filter out root-level path parameters; they're hoisted to the client constructor."""
     return [param for param in path_parameters if param.location != ir_types.PathParameterLocation.ROOT]

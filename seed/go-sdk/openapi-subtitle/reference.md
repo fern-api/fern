@@ -27,9 +27,8 @@ Returns a paginated list of all plants currently in the store inventory.
 
 ```go
 client.ListPlants(
-        context.TODO(),
-    )
-}
+    context.TODO(),
+)
 ```
 </dd>
 </dl>
@@ -69,13 +68,12 @@ Retrieve details about a specific plant by its unique identifier.
 
 ```go
 request := &fern.GetPlantRequest{
-        PlantID: "plantId",
-    }
-client.GetPlant(
-        context.TODO(),
-        request,
-    )
+    PlantID: "plantId",
 }
+client.GetPlant(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

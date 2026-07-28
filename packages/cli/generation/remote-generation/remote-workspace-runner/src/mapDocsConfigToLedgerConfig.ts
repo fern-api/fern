@@ -174,7 +174,7 @@ function mapJsFiles(js: DocsConfig["js"], fileIdToPath: Map<string, string> | un
         files.push({ path, strategy: file.strategy });
     }
     return {
-        remote: js.remote?.map((r) => ({ url: r.url, strategy: r.strategy })),
+        remote: js.remote?.map((r) => ({ url: r.url, strategy: r.strategy, disableSri: r.disableSri })),
         files,
         inline: js.inline
     };

@@ -22,6 +22,12 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :filename
         #
+        # @example
+        #   client.file.service.get_file(
+        #     filename: "file.txt",
+        #     x_file_api_version: "0.0.2"
+        #   )
+        #
         # @return [Seed::Types::Types::File]
         def get_file(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)

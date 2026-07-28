@@ -17,6 +17,8 @@ export declare namespace Comment {
     interface Args {
         /* The preface docs of the comment, if any */
         docs?: string;
+        /* A usage code example rendered as a fenced code block, if any */
+        codeExample?: string;
     }
 
     interface Tag {
@@ -33,12 +35,14 @@ export declare namespace Comment {
 
 export class Comment extends AstNode {
     public readonly docs: string | undefined;
+    public readonly codeExample: string | undefined;
 
     private tags: Comment.Tag[] = [];
 
-    constructor({ docs }: Comment.Args = {}) {
+    constructor({ docs, codeExample }: Comment.Args = {}) {
         super();
         this.docs = docs;
+        this.codeExample = codeExample;
     }
 
     public addTag(tag: Comment.Tag): void {
@@ -54,6 +58,17 @@ export class Comment extends AstNode {
             this.docs.split("\n").forEach((line) => {
                 writer.writeLine(` * ${line}`);
             });
+            if (this.codeExample != null || this.tags.length > 0) {
+                writer.writeLine(" *");
+            }
+        }
+        if (this.codeExample != null) {
+            writer.writeLine(" * Example:");
+            writer.writeLine(" * ```php");
+            this.codeExample.split("\n").forEach((line) => {
+                writer.writeLine(` * ${this.escapeDocs(line)}`.trimEnd());
+            });
+            writer.writeLine(" * ```");
             if (this.tags.length > 0) {
                 writer.writeLine(" *");
             }
@@ -62,6 +77,10 @@ export class Comment extends AstNode {
             this.writeTag({ writer, tag });
         }
         writer.writeLine(" */");
+    }
+
+    private escapeDocs(line: string): string {
+        return line.replaceAll("*/", "*\\/");
     }
 
     private writeTag({ writer, tag }: { writer: Writer; tag: Comment.Tag }): void {

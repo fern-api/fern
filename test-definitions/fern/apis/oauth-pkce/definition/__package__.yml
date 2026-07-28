@@ -1,0 +1,7 @@
+types:
+  AuthorizeResponse:
+    properties:
+      code:
+        type: string
+      state:
+        type: optional<string>

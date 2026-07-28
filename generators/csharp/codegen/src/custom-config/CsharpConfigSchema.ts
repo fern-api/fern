@@ -42,6 +42,11 @@ export const CsharpConfigSchema = z.object({
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
     "use-undiscriminated-unions": z.boolean().optional(),
+    // When true, a discriminated union's base properties are owned solely by the union envelope:
+    // `samePropertiesAsObject` variant leaves that duplicate them (per the IR's
+    // deferredUnionBaseProperties fact) stop re-declaring them. Off by default so existing generated
+    // output is unchanged; opt in to drop the duplicated leaf fields.
+    "dedupe-union-base-properties": z.boolean().optional(),
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 
@@ -98,7 +103,17 @@ export const CsharpConfigSchema = z.object({
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
+    // When true, emits the platform observability headers `X-Fern-Runtime`,
+    // `X-Fern-Runtime-Version`, and `X-Fern-Platform` on generated SDK requests.
+    // Off by default so existing generated output is unchanged. Still subject to
+    // `omit-fern-headers`.
+    "include-platform-headers": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
+    // When true (default), server URL variables declared on the API's environments (e.g. region)
+    // are exposed as ClientOptions properties and interpolated into the environment URL template(s)
+    // at construction time. When false, these client options and the URL-template interpolation are
+    // suppressed and the SDK falls back to the pre-feature base-URL behavior.
+    "server-url-variables": z.boolean().optional(),
     // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
     // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is
     // unset (e.g. SDKs imported from OpenAPI). Off by default to preserve the
@@ -127,7 +142,13 @@ export const CsharpConfigSchema = z.object({
         .union([z.number().positive(), z.literal("infinity")])
         .optional()
         .describe(
-            "The default timeout for network requests, in seconds. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+            "(Deprecated) The default timeout for network requests, in seconds. Use `default-timeout-in-milliseconds` instead. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+        ),
+    "default-timeout-in-milliseconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "The default timeout for network requests, in milliseconds. Set to `infinity` to disable the default timeout. Takes precedence over the deprecated `default-timeout-in-seconds`. SDK users can still override this per-request via request options."
         )
 });
 

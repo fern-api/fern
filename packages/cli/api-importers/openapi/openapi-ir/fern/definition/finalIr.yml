@@ -248,6 +248,8 @@ types:
       signaturePrefix: optional<string>
       payloadFormat: optional<WebhookPayloadFormat>
       timestamp: optional<WebhookTimestamp>
+      bodyHashBinding: optional<WebhookBodyHashBinding>
+      notificationUrlNormalization: optional<WebhookNotificationUrlNormalization>
 
   AsymmetricWebhookSignatureVerification:
     properties:
@@ -297,6 +299,11 @@ types:
     enum:
       - alphabetical
 
+  WebhookNotificationUrlNormalization:
+    properties:
+      portVariants: boolean
+      legacyQueryEncoding: boolean
+
   WebhookPayloadComponent:
     enum:
       - body
@@ -305,6 +312,28 @@ types:
         value: notification-url
       - name: messageId
         value: message-id
+
+  WebhookBodyHashBinding:
+    properties:
+      algorithm: WebhookBodyHashAlgorithm
+      encoding: optional<WebhookSignatureEncoding>
+      location: WebhookBodyHashLocation
+
+  WebhookBodyHashAlgorithm:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookBodyHashLocation:
+    discriminant: type
+    union:
+      queryParameter: WebhookBodyHashQueryParameterLocation
+
+  WebhookBodyHashQueryParameterLocation:
+    properties:
+      name: string
 
   AsymmetricAlgorithm:
     enum:

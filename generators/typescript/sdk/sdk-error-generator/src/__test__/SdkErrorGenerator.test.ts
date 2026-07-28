@@ -210,6 +210,15 @@ describe("GeneratedSdkErrorClassImpl", () => {
             expect(optionalContext.sourceFile.getFullText()).toMatchSnapshot();
         });
 
+        it("writes error class with unknown body type", () => {
+            const errorClass = createErrorClass({
+                type: FernIr.TypeReference.unknown()
+            });
+            const context = createMockFileContext();
+            errorClass.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
         it("writes error class with custom status code", () => {
             const errorClass = createErrorClass({
                 statusCode: 404,

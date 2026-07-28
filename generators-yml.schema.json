@@ -2449,6 +2449,17 @@
             }
           ],
           "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
+        },
+        "ignore-tags": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3099,6 +3110,17 @@
           ],
           "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
         },
+        "ignore-tags": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, ignore operation-level tags when determining the SDK structure.\nEndpoints fall back to the root package (or their namespace) and method\nnames are derived from each operation's operationId.\nDefaults to false."
+        },
         "respect-nullable-schemas": {
           "oneOf": [
             {
@@ -3272,6 +3294,24 @@
             }
           ],
           "description": "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
+        },
+        "auto-generate-idempotency-key": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enable idempotency-key auto-generation for every generator in this API, so it\ndoes not have to be set on each generator's `config`. When enabled, generators\nauto-generate an idempotency key header on retry-unsafe (POST/PUT) requests\nunless the caller supplies one.\n\nAccepts either a boolean shorthand or an object with an optional custom\nheader name and eligible-method list:\n```yaml\napi:\n  settings:\n    auto-generate-idempotency-key: true\n    # or\n    auto-generate-idempotency-key:\n      header-name: \"Idempotency-Key\"\n      methods: [\"POST\", \"PUT\"]\n```\nA generator's own `config.auto-generate-idempotency-key` overrides this\nvalue for that generator."
         }
       },
       "additionalProperties": false,
@@ -4611,6 +4651,17 @@
           ],
           "description": "Feature flag used to enable better IR naming."
         },
+        "smart-casing-digit-word-boundary": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
+        },
         "api": {
           "oneOf": [
             {
@@ -4796,6 +4847,17 @@
             }
           ],
           "description": "Feature flag used to enable better IR naming."
+        },
+        "smart-casing-digit-word-boundary": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When smart casing is enabled, preserves the word boundary after a digit run in\nsnake_case names (e.g., ConversationsV2Configuration → conversations_v2_configuration).\nDefaults to false, which keeps the digit run fused to the following word."
         },
         "api": {
           "oneOf": [

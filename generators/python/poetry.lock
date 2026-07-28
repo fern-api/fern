@@ -299,13 +299,13 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-ir-v67"
-version = "0.0.12"
+version = "67.15.0"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_ir_v67-0.0.12-py3-none-any.whl", hash = "sha256:86112be96f838b1cb45ceee4164da337a1463dbfbee65c2eafde43baaa094ff2"},
-    {file = "fern_fern_ir_v67-0.0.12.tar.gz", hash = "sha256:db5e5914ed8088d147988914225a38ff722177a6581c09f1820acce72b285267"},
+    {file = "fern_fern_ir_v67-67.15.0-py3-none-any.whl", hash = "sha256:4b8ea71e8353bc266c65a9fc16e159672b67c5171aa341f405efce67c7217ad2"},
+    {file = "fern_fern_ir_v67-67.15.0.tar.gz", hash = "sha256:54959b3d0129d52192fd47445ce8b1925658999fafeb3403b01c6d4871666bd3"},
 ]
 
 [package.dependencies]
@@ -1311,4 +1311,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9205399808621ca64f72a26b1a41b6ed099ef6cb8b1d1a95954b908bfa40c9c8"
+content-hash = "c6482b60f46b0fcfb0fa95d09c5b74bc96df9cd5d14dcd4ef67dd35755a13a38"

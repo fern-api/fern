@@ -1,4 +1,61 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.44.0
+  changelogEntry:
+    - summary: |
+        Add support for per-endpoint auth routing. When the API-level auth requirement is
+        `ENDPOINT_SECURITY`, each endpoint now applies only the auth scheme(s) it declares in
+        its IR `security` field (OR across the list of requirements, AND within a requirement,
+        and no auth when `security` is empty), instead of applying every configured credential
+        to every request. Behavior for the `ALL` and `ANY` auth requirements (the common cases)
+        is unchanged.
+        Inferred auth is not supported by the Rust SDK, so an endpoint whose only satisfiable
+        requirement is inferred auth returns a configuration error.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 66
+- version: 0.43.1
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords in generated enum variant names. An enum
+        value that PascalCases onto a keyword (e.g. `self` -> `Self`) is now
+        emitted as `Self_` with the wire value preserved, instead of the
+        unparseable `pub enum Foo { Self, ... }`. Generated code examples
+        (README, reference docs, snippets, and doc-test comments) now reference
+        the same keyword-safe variant name so they compile too.
+      type: fix
+  createdAt: "2026-07-22"
+  irVersion: 66
+- version: 0.43.0
+  changelogEntry:
+    - summary: |
+        Endpoint methods now include a usage example in their rustdoc comments (under a
+        `# Examples` section), so IDEs surface a ready-to-use code snippet on hover. The
+        examples are the same dynamic snippets used for the README and reference.md, and
+        are fenced with ```no_run so `cargo test` doctests compile but do not execute them.
+      type: feat
+  createdAt: "2026-07-20"
+  irVersion: 66
+- version: 0.42.2
+  changelogEntry:
+    - summary: |
+        Endpoints now send API-, service- and endpoint-level headers whose types are literals
+        (e.g. `Accept-Encoding: literal<"gzip">`). Previously these headers were silently
+        dropped. Caller-supplied values via `RequestOptions::additional_header` still take
+        precedence over the literal defaults.
+      type: fix
+  createdAt: "2026-07-15"
+  irVersion: 66
+- version: 0.42.1
+  changelogEntry:
+    - summary: |
+        Enable the `gzip` feature on the generated SDK's `reqwest` dependency so that
+        gzip-encoded response bodies are decompressed automatically. Previously,
+        `reqwest` was configured with `default-features = false` and no compression
+        features, so responses to requests with a spec-defined `Accept-Encoding: gzip`
+        header were returned as raw gzip bytes.
+      type: fix
+  createdAt: "2026-07-10"
+  irVersion: 66
 - version: 0.42.0
   changelogEntry:
     - summary: |

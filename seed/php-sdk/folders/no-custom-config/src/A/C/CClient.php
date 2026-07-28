@@ -47,6 +47,11 @@ class CClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->foo();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

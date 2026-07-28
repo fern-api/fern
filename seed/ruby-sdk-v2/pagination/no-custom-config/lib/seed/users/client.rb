@@ -22,6 +22,14 @@ module Seed
       # @option params [Seed::Users::Types::Order, nil] :order
       # @option params [String, nil] :starting_after
       #
+      # @example
+      #   client.users.list_with_cursor_pagination(
+      #     page: 1,
+      #     per_page: 1,
+      #     order: "asc",
+      #     starting_after: "starting_after"
+      #   )
+      #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -69,6 +77,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String, nil] :cursor
       #
+      # @example
+      #   client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
+      #
       # @return [Seed::Users::Types::ListUsersMixedTypePaginationResponse]
       def list_with_mixed_type_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -111,6 +122,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.users.list_with_mixed_type_cursor_pagination
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_cursor_pagination(request_options: {}, **params)
@@ -156,6 +170,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.users.list_with_top_level_body_cursor_pagination(
+      #     cursor: "initial_cursor",
+      #     filter: "active"
+      #   )
+      #
       # @return [Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse]
       def list_with_top_level_body_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -199,6 +219,14 @@ module Seed
       # @option params [Integer, nil] :per_page
       # @option params [Seed::Users::Types::Order, nil] :order
       # @option params [String, nil] :starting_after
+      #
+      # @example
+      #   client.users.list_with_cursor_pagination(
+      #     page: 1,
+      #     per_page: 1,
+      #     order: "asc",
+      #     starting_after: "starting_after"
+      #   )
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination(request_options: {}, **params)
@@ -251,6 +279,14 @@ module Seed
       # @option params [Seed::Users::Types::Order, nil] :order
       # @option params [String, nil] :starting_after
       #
+      # @example
+      #   client.users.list_with_cursor_pagination(
+      #     page: 1.1,
+      #     per_page: 1.1,
+      #     order: "asc",
+      #     starting_after: "starting_after"
+      #   )
+      #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_double_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -298,6 +334,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.users.list_with_mixed_type_cursor_pagination
+      #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_body_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -341,6 +380,12 @@ module Seed
       # @option params [Integer, nil] :page
       # @option params [Integer, nil] :limit
       # @option params [Seed::Users::Types::Order, nil] :order
+      #
+      # @example
+      #   client.users.list_with_cursor_pagination(
+      #     page: 1,
+      #     order: "asc"
+      #   )
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_step_pagination(request_options: {}, **params)
@@ -391,6 +436,12 @@ module Seed
       # @option params [Integer, nil] :limit
       # @option params [Seed::Users::Types::Order, nil] :order
       #
+      # @example
+      #   client.users.list_with_cursor_pagination(
+      #     page: 1,
+      #     order: "asc"
+      #   )
+      #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination_has_next_page(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -438,6 +489,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String, nil] :cursor
       #
+      # @example
+      #   client.users.list_with_cursor_pagination
+      #
       # @return [Seed::Users::Types::ListUsersExtendedResponse]
       def list_with_extended_results(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -481,6 +535,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String, nil] :cursor
+      #
+      # @example
+      #   client.users.list_with_cursor_pagination
       #
       # @return [Seed::Users::Types::ListUsersExtendedOptionalListResponse]
       def list_with_extended_results_and_optional_data(request_options: {}, **params)
@@ -526,6 +583,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String, nil] :starting_after
       #
+      # @example
+      #   client.users.list_with_cursor_pagination(starting_after: "starting_after")
+      #
       # @return [Seed::Types::UsernameCursor]
       def list_usernames(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -570,6 +630,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String, nil] :starting_after
       #
+      # @example
+      #   client.users.list_with_cursor_pagination(starting_after: "starting_after")
+      #
       # @return [Seed::Types::UsernameCursor, nil]
       def list_usernames_with_optional_response(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
@@ -612,6 +675,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :offset
+      #
+      # @example
+      #   client.users.list_with_cursor_pagination
       #
       # @return [Seed::Users::Types::UsernameContainer]
       def list_with_global_config(request_options: {}, **params)
@@ -657,6 +723,9 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page
+      #
+      # @example
+      #   client.users.list_with_optional_data(page: 1)
       #
       # @return [Seed::Users::Types::ListUsersOptionalDataPaginationResponse]
       def list_with_optional_data(request_options: {}, **params)
@@ -704,6 +773,13 @@ module Seed
       # @option params [Integer, nil] :page
       # @option params [Integer, nil] :per_page
       # @option params [String, nil] :starting_after
+      #
+      # @example
+      #   client.users.list_with_aliased_data(
+      #     page: 1,
+      #     per_page: 1,
+      #     starting_after: "starting_after"
+      #   )
       #
       # @return [Seed::Users::Types::ListUsersAliasedDataPaginationResponse]
       def list_with_aliased_data(request_options: {}, **params)

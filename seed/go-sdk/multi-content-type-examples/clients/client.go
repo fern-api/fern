@@ -34,6 +34,18 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &fern.ClientRequest{
+//	    Client: &fern.Client{
+//	        Name: "Acme Corp",
+//	        Email: "contact@acme.com",
+//	    },
+//	}
+//	client.Clients.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.ClientRequest,

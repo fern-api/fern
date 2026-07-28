@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -140,8 +140,17 @@ fixtures:
       license:
         custom: LICENSE
       outputFolder: custom-license
+  idempotency-headers:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   java-idempotency-headers-file-upload:
     - outputFolder: default
+    - outputFolder: auto-generate-idempotency-key
+      customConfig:
+        auto-generate-idempotency-key: true
   java-inline-types:
     - customConfig:
         enable-inline-types: true
@@ -171,6 +180,9 @@ fixtures:
         omit-fern-headers: true
         maxRetries: 5
       outputFolder: omit-fern-headers
+    - customConfig:
+        includePlatformHeaders: true
+      outputFolder: include-platform-headers
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
@@ -194,6 +206,9 @@ fixtures:
         enable-wire-tests: true
         offset-semantics: "item-index"
       outputFolder: item-index-semantics
+  java-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   pagination-custom:
     - customConfig:
         custom-pager-name: "FernCustomPaginator"
@@ -305,6 +320,9 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  java-oauth-token-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
   header-auth:
     - customConfig:
         enable-wire-tests: true
@@ -390,3 +408,6 @@ scripts:
 allowedFailures:
   # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
+  # CLI-specific OAuth fixture: declares scheme-level scopes, which the Java
+  # generator explicitly rejects ("Scopes not supported"). Exercised by the CLI generator.
+  - cli-oauth

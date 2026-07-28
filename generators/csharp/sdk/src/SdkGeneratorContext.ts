@@ -149,6 +149,14 @@ export class SdkGeneratorContext extends GeneratorContext {
         );
     }
 
+    public hasWebhookSignatureVerification(): boolean {
+        return Object.values(this.ir.webhookGroups).some((webhookGroup) =>
+            webhookGroup.some(
+                (webhook) => webhook.signatureVerification != null && webhook.signatureVerification.type === "hmac"
+            )
+        );
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.Constants, AsIsFiles.Extensions, AsIsFiles.ValueConvert];
         // JSON stuff
@@ -188,6 +196,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.MultipartFormRequest,
                 // AsIsFiles.NdJsonContent,
                 // AsIsFiles.NdJsonRequest,
+                AsIsFiles.DefaultHttpClientFactory,
                 AsIsFiles.QueryStringBuilder,
                 AsIsFiles.QueryStringConverter,
                 AsIsFiles.RawClient,
@@ -199,6 +208,13 @@ export class SdkGeneratorContext extends GeneratorContext {
 
         if (this.hasFormUrlEncodedEndpoints()) {
             files.push(AsIsFiles.FormRequest);
+        }
+        if (this.isIdempotencyKeyAutoGenerationEnabled()) {
+            files.push(AsIsFiles.IdempotencyHeaderExtensions);
+        }
+
+        if (this.hasWebhookSignatureVerification()) {
+            files.push(AsIsFiles.WebhookSignature);
         }
 
         if (this.settings.includeExceptionHandler) {
@@ -240,6 +256,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.QueryStringBuilderTests,
             AsIsFiles.Test.QueryStringConverterTests,
             AsIsFiles.Test.WithRawResponseTests,
+            AsIsFiles.Test.RawClientTests.GzipResponseTests,
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
@@ -250,6 +267,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
+        }
+        if (this.hasWebhookSignatureVerification()) {
+            files.push(AsIsFiles.Test.WebhookSignatureTests);
         }
         if (this.hasWebSocketEndpoints) {
             Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));
@@ -346,12 +366,13 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getOauth(): FernIr.OAuthScheme | undefined {
-        if (
-            this.ir.auth.schemes[0] != null &&
-            this.ir.auth.schemes[0].type === "oauth" &&
-            this.config.generateOauthClients
-        ) {
-            return this.ir.auth.schemes[0];
+        if (!this.config.generateOauthClients) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return scheme;
+            }
         }
         return undefined;
     }

@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isPlainObject } from "@fern-api/core-utils";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import {
     isRawTextType,
     parseRawBytesType,
@@ -21,7 +21,11 @@ import {
     JsonResponse,
     StreamingResponse,
     Webhook,
+    WebhookBodyHashAlgorithm,
+    WebhookBodyHashBinding,
+    WebhookBodyHashLocation,
     WebhookGroup,
+    WebhookNotificationUrlNormalization,
     WebhookPayload,
     WebhookPayloadBodySort,
     WebhookPayloadComponent,
@@ -422,8 +426,59 @@ function convertHmacSignature({
         encoding: convertSignatureEncoding(hmac.encoding),
         signaturePrefix: hmac["signature-prefix"],
         payloadFormat: convertPayloadFormat(hmac["payload-format"]),
-        timestamp: convertTimestampConfig({ timestamp: hmac.timestamp, file })
+        timestamp: convertTimestampConfig({ timestamp: hmac.timestamp, file }),
+        bodyHashBinding: convertBodyHashBinding(hmac["body-hash-binding"]),
+        notificationUrlNormalization: convertUrlNormalization(hmac["url-normalization"])
     };
+}
+
+function convertUrlNormalization(
+    normalization: RawSchemas.WebhookUrlNormalizationSchema | undefined
+): WebhookNotificationUrlNormalization | undefined {
+    if (normalization == null) {
+        return undefined;
+    }
+    return {
+        portVariants: normalization["port-variants"] ?? false,
+        legacyQueryEncoding: normalization["legacy-query-encoding"] ?? false
+    };
+}
+
+function convertBodyHashBinding(
+    binding: RawSchemas.WebhookBodyHashBindingSchema | undefined
+): WebhookBodyHashBinding | undefined {
+    if (binding == null) {
+        return undefined;
+    }
+    return {
+        algorithm: convertBodyHashAlgorithm(binding.algorithm),
+        encoding: convertSignatureEncoding(binding.encoding),
+        location: convertBodyHashLocation(binding.location)
+    };
+}
+
+function convertBodyHashAlgorithm(algorithm: RawSchemas.WebhookBodyHashAlgorithmSchema): WebhookBodyHashAlgorithm {
+    switch (algorithm) {
+        case "sha1":
+            return WebhookBodyHashAlgorithm.Sha1;
+        case "sha384":
+            return WebhookBodyHashAlgorithm.Sha384;
+        case "sha512":
+            return WebhookBodyHashAlgorithm.Sha512;
+        case "sha256":
+            return WebhookBodyHashAlgorithm.Sha256;
+        default:
+            assertNever(algorithm);
+    }
+}
+
+function convertBodyHashLocation(location: RawSchemas.WebhookBodyHashLocationSchema): WebhookBodyHashLocation {
+    switch (location.type) {
+        case "query-parameter":
+            return WebhookBodyHashLocation.queryParameter({ name: location.name });
+        default:
+            assertNever(location.type);
+    }
 }
 
 function convertAsymmetricSignature({

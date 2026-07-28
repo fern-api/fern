@@ -57,7 +57,8 @@ function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: bool
                     properties: [],
                     extends: [],
                     extraProperties: false,
-                    extendedProperties: undefined
+                    extendedProperties: undefined,
+                    deferredUnionBaseProperties: undefined
                 })
             }),
             getReferenceToType: (typeRef: FernIr.TypeReference) => {
@@ -323,6 +324,7 @@ function createMockSdkClientClass(): any {
     return {
         hasAuthProvider: () => false,
         getGenerateEndpointMetadata: () => false,
+        getAutoGenerateIdempotencyKey: () => false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata"),
         getEnvironment: () => undefined

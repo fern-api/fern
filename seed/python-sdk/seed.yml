@@ -98,6 +98,9 @@ fixtures:
         omit_fern_headers: true
       outputFolder: omit-fern-headers
     - customConfig:
+        include_platform_headers: true
+      outputFolder: include-platform-headers
+    - customConfig:
         additional_init_exports:
           - from: types.types
             imports:
@@ -162,6 +165,10 @@ fixtures:
         pydantic_config:
           enum_type: "python_enums"
       outputFolder: real-enum
+  endpoint-security-auth:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
@@ -327,8 +334,21 @@ fixtures:
         custom_transport: true
       outputFolder: custom-transport
     - customConfig:
+        tcp_keepalive:
+          enabled: true
+      outputFolder: tcp-keepalive
+    - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
+  idempotency-headers:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        auto-generate-idempotency-key: true
+      outputFolder: auto-generate-idempotency-key
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -354,6 +374,9 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use_typeddict_requests
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
   literal-user-agent:
     - customConfig: null
       outputFolder: no-custom-config
@@ -409,6 +432,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  python-multi-env-url-templating:
+    - customConfig: null
+      outputFolder: no-custom-config
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
@@ -452,6 +478,13 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  python-oauth-token-optional:
+    - customConfig: null
+      outputFolder: no-custom-config
+  oauth-pkce:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: wire-tests
   python-mypy-exclude:
     - customConfig: null
       outputFolder: no-custom-config

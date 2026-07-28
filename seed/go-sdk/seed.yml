@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -144,6 +144,9 @@ fixtures:
       customConfig:
         omitFernHeaders: true
         maxRetries: 5
+    - outputFolder: include-platform-headers
+      customConfig:
+        includePlatformHeaders: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -174,6 +177,12 @@ fixtures:
         packageName: unions
         module:
           path: github.com/fern-api/unions-go
+  go-union-base-properties:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: dedupe-union-base-properties
+      customConfig:
+        dedupeUnionBaseProperties: true
   file-upload:
     - outputFolder: no-custom-config
       customConfig: null
@@ -240,6 +249,21 @@ fixtures:
         packageName: sseresumable
         module:
           path: github.com/fern-api/sse-resumable-go
+  go-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+  server-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
+  server-url-templating-single-url:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        serverUrlVariables: false
   openapi-request-body-ref:
     - outputFolder: no-custom-config
       customConfig: null
@@ -251,6 +275,14 @@ fixtures:
         module:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
+    - outputFolder: auto-generate-idempotency-key
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: fern
+        module:
+          path: github.com/idempotency-headers/fern
+        includeLegacyClientOptions: true
+        auto-generate-idempotency-key: true
   literals-unions:
     - outputFolder: no-custom-config
       customConfig: null
@@ -270,6 +302,16 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - outputFolder: no-custom-config
       customConfig: null
+  go-oauth-token-nullable:
+    - outputFolder: no-custom-config
+      customConfig: null
+  go-oauth-token-optional:
+    - outputFolder: no-custom-config
+      customConfig: null
+  oauth-pkce:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   pagination-custom:
     - outputFolder: .
       customConfig:
@@ -304,6 +346,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  endpoint-security-auth:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   inferred-auth-implicit-api-key:
     - outputFolder: .
       customConfig: null
@@ -327,6 +373,16 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  literal:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  x-fern-default:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: apply-query-defaults-on-nil-request
+      customConfig:
+        applyQueryDefaultsOnNilRequest: true
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:

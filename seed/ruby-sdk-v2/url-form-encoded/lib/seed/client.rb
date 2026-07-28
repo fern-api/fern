@@ -10,10 +10,16 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.submit_form_data(
+    #     username: "johndoe",
+    #     email: "john@example.com"
+    #   )
+    #
     # @return [Seed::Types::PostSubmitResponse]
     def submit_form_data(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      request = Seed::Internal::UrlEncoded::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "submit",
@@ -42,10 +48,16 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
     #
+    # @example
+    #   client.get_token(
+    #     client_id: "client_id",
+    #     client_secret: "client_secret"
+    #   )
+    #
     # @return [Seed::Types::TokenResponse]
     def get_token(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      request = Seed::Internal::JSON::Request.new(
+      request = Seed::Internal::UrlEncoded::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
         path: "token",

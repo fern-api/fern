@@ -47,6 +47,14 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->nop(
+     *     'id-a2ijs82',
+     *     'id-219xca8',
+     * );
+     * ```
+     *
      * @param string $id
      * @param string $nestedId
      * @param ?array{

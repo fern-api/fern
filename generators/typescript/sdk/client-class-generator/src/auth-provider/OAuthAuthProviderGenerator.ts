@@ -33,6 +33,8 @@ const EXPIRES_AT_FIELD_NAME = "expiresAt";
 const REFRESH_PROMISE_FIELD_NAME = "refreshPromise";
 const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
 const DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
+const GRANT_TYPE_WIRE_VALUE = "grant_type";
+const CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -253,7 +255,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const clientIdProperty = this.getName(requestProperties.clientId.property.name, context);
         const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name, context);
-        const endpointName = this.getName(endpoint.name, context);
+        // Client method names are always camelCase (see GeneratedSdkClientClassImpl),
+        // regardless of the serde layer.
+        const endpointName = context.case.camelUnsafe(endpoint.name);
 
         const customPropertyAssignments = this.getCustomPropertyAssignments(requestProperties, endpoint, context);
         const additionalPropertyAssignments = this.getAdditionalRequestPropertyAssignments(requestProperties, context);
@@ -262,6 +266,18 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             property: responseProperties.accessToken,
             variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
         });
+
+        const accessTokenIsOptional = context.type.isOptional(responseProperties.accessToken.property.valueType);
+        const accessTokenGuard = accessTokenIsOptional
+            ? `
+                if (accessToken == null) {
+                    throw new ${getTextOfTsNode(
+                        context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+                    )}({
+                        message: "OAuth token response is missing the access token",
+                    });
+                }`
+            : "";
 
         const hasExpiration = responseProperties.expiresIn != null;
         const expiresInPropertyRaw =
@@ -363,9 +379,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ${clientSecretProperty}: clientSecret,${customPropertyAssignments}${additionalPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
-                this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
+                const accessToken = ${accessTokenProperty};${accessTokenGuard}
+                this.${ACCESS_TOKEN_FIELD_NAME} = accessToken;
                 this.${EXPIRES_AT_FIELD_NAME} = this.getExpiresAt(${expiresInProperty}, BUFFER_IN_MINUTES);
-                return this.${ACCESS_TOKEN_FIELD_NAME};
+                return accessToken;
             } finally {
                 this.${REFRESH_PROMISE_FIELD_NAME} = undefined;
             }
@@ -382,8 +399,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ${clientSecretProperty}: clientSecret,${customPropertyAssignments}${additionalPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
-                this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
-                return this.${ACCESS_TOKEN_FIELD_NAME};
+                const accessToken = ${accessTokenProperty};${accessTokenGuard}
+                this.${ACCESS_TOKEN_FIELD_NAME} = accessToken;
+                return accessToken;
             } finally {
                 this.${REFRESH_PROMISE_FIELD_NAME} = undefined;
             }
@@ -885,13 +903,19 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         // cause TypeScript excess-property errors because the generated request
         // type excludes those literals. We only need to emit them when the
         // request type keeps them as required fields (i.e. non-inlined bodies).
-        if (endpoint.requestBody?.type === "inlinedRequestBody") {
-            return "";
-        }
+        //
+        // A non-literal grant_type property is always emitted with the
+        // "client_credentials" value: the client credentials flow requires
+        // grant_type=client_credentials (RFC 6749 §4.4.2), and nothing else
+        // supplies it when the spec models it as a plain string.
+        const isInlinedRequestBody = endpoint.requestBody?.type === "inlinedRequestBody";
         const assignments: string[] = [];
         for (const customProperty of requestProperties.customProperties ?? []) {
             const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
             if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                if (isInlinedRequestBody) {
+                    continue;
+                }
                 const propertyName = this.getName(customProperty.property.name, context);
                 const literalValue = resolvedType.container.literal._visit<string>({
                     string: (val: string) => JSON.stringify(val),
@@ -901,6 +925,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     }
                 });
                 assignments.push(`\n                    ${propertyName}: ${literalValue},`);
+            } else if (this.isGrantTypeProperty(customProperty)) {
+                const propertyName = this.getName(customProperty.property.name, context);
+                assignments.push(
+                    `\n                    ${getPropertyKey(propertyName)}: ${JSON.stringify(CLIENT_CREDENTIALS_GRANT_TYPE)},`
+                );
             }
         }
         return assignments.join("");
@@ -929,7 +958,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             additionalProperties.push(requestProperties.scopes);
         }
         for (const customProperty of requestProperties.customProperties ?? []) {
-            if (isRequiredNonLiteral(customProperty)) {
+            // grant_type is synthesized as "client_credentials" in the token
+            // request, so it is never surfaced as a user-supplied option.
+            if (isRequiredNonLiteral(customProperty) && !this.isGrantTypeProperty(customProperty)) {
                 additionalProperties.push(customProperty);
             }
         }
@@ -950,6 +981,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     `\n                    ${getPropertyKey(property.name)}: this.${OPTIONS_FIELD_NAME}${wrapperAccess}[${JSON.stringify(property.name)}],`
             )
             .join("");
+    }
+
+    private isGrantTypeProperty(requestProperty: FernIr.RequestProperty): boolean {
+        return getOriginalName(requestProperty.property.name) === GRANT_TYPE_WIRE_VALUE;
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue | string, context: FileContext): string {

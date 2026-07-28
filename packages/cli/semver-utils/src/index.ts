@@ -1,3 +1,4 @@
+export { isValidVersion } from "./isValidVersion.js";
 export { isVersionAhead } from "./isVersionAhead.js";
 export {
     type BaseVersion,

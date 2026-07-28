@@ -13,16 +13,15 @@
 
 ```go
 request := &fern.GetFooRequest{
-        RequiredBaz: "required_baz",
-        RequiredNullableBaz: fern.String(
-            "required_nullable_baz",
-        ),
-    }
-client.GetFoo(
-        context.TODO(),
-        request,
-    )
+    RequiredBaz: "required_baz",
+    RequiredNullableBaz: fern.String(
+        "required_nullable_baz",
+    ),
 }
+client.GetFoo(
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>
@@ -87,23 +86,22 @@ client.GetFoo(
 
 ```go
 request := &fern.UpdateFooRequest{
-        XIdempotencyKey: "X-Idempotency-Key",
-        NullableText: fern.String(
-            "nullable_text",
-        ),
-        NullableNumber: fern.Float64(
-            1.1,
-        ),
-        NonNullableText: fern.String(
-            "non_nullable_text",
-        ),
-    }
-client.UpdateFoo(
-        context.TODO(),
-        "id",
-        request,
-    )
+    XIdempotencyKey: "X-Idempotency-Key",
+    NullableText: fern.String(
+        "nullable_text",
+    ),
+    NullableNumber: fern.Float64(
+        1.1,
+    ),
+    NonNullableText: fern.String(
+        "non_nullable_text",
+    ),
 }
+client.UpdateFoo(
+    context.TODO(),
+    "id",
+    request,
+)
 ```
 </dd>
 </dl>

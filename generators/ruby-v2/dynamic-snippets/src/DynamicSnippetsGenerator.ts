@@ -41,7 +41,7 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
 
     public async generateSnippetAst(
         request: FernIr.dynamic.EndpointSnippetRequest,
-        options?: { skipClientInstantiation?: boolean }
+        options?: Pick<Options, "skipClientInstantiation" | "endpointId">
     ): Promise<AbstractAstNode> {
         return super.generateSnippetAst(request, options);
     }

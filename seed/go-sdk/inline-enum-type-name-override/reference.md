@@ -15,10 +15,9 @@
 ```go
 request := &fern.LoadRequest{}
 client.Reporting.Load(
-        context.TODO(),
-        request,
-    )
-}
+    context.TODO(),
+    request,
+)
 ```
 </dd>
 </dl>

@@ -1,0 +1,7 @@
+- summary: |
+    Add automatic idempotency-key generation, driven by the centralized
+    `idempotencyKeyGeneration` config in the IR. When enabled, the generated SDK attaches a
+    UUIDv4 idempotency-key header (default `Idempotency-Key`) to requests whose HTTP method is
+    listed in the IR (default `POST`/`PUT`). A caller-supplied key in request options still takes
+    precedence.
+  type: feat

@@ -3,6 +3,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
+import { resolveTimeoutInMilliseconds } from "@fern-api/typescript-ast";
 import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
@@ -54,7 +55,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
-            defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
+            defaultTimeout: resolveTimeoutInMilliseconds(parsed),
             skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
             extraDependencies: parsed?.extraDependencies ?? {},
             extraDevDependencies: parsed?.extraDevDependencies ?? {},
@@ -87,6 +88,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fetchSupport: parsed?.fetchSupport ?? "native",
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
+            includePlatformHeaders: parsed?.includePlatformHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
             packageManager: parsed?.packageManager ?? "pnpm",
             generateReadWriteOnlyTypes: parsed?.experimentalGenerateReadWriteOnlyTypes ?? false,
@@ -222,7 +224,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 enableForwardCompatibleEnums: customConfig.enableForwardCompatibleEnums,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
-                defaultTimeoutInSeconds: customConfig.defaultTimeoutInSeconds,
+                defaultTimeout: customConfig.defaultTimeout,
                 skipResponseValidation: customConfig.skipResponseValidation,
                 extraDevDependencies: customConfig.extraDevDependencies,
                 extraDependencies: customConfig.extraDependencies,
@@ -253,6 +255,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 fetchSupport: customConfig.fetchSupport ?? "native",
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
+                includePlatformHeaders: customConfig.includePlatformHeaders ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
                 packageManager: customConfig.packageManager,
                 generateReadWriteOnlyTypes: customConfig.generateReadWriteOnlyTypes,

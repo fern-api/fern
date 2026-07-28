@@ -51,6 +51,15 @@ class CompletionsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->completions->stream(
+     *     new StreamCompletionRequest([
+     *         'query' => 'foo',
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamCompletionRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -92,6 +101,15 @@ class CompletionsClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->completions->streamWithoutTerminator(
+     *     new StreamCompletionRequestWithoutTerminator([
+     *         'query' => 'query',
+     *     ]),
+     * );
+     * ```
+     *
      * @param StreamCompletionRequestWithoutTerminator $request
      * @param ?array{
      *   baseUrl?: string,

@@ -36,7 +36,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedExhaustiveClient } from "./src/Client";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedExhaustiveClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
 ```
 
@@ -125,7 +125,7 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 ```typescript
 import { SeedExhaustiveClient } from "./src/Client";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedExhaustiveClient({ baseUrl: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const pageableResponse = await client.endpoints.pagination.listItems({
     cursor: "cursor",
     limit: 1
