@@ -1,4 +1,67 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.4
+  changelogEntry:
+    - summary: |
+        Global headers now honor their `env` and `client-default` values. The
+        builder initializes the header from the environment variable when set,
+        otherwise the client default, and an explicitly provided value still takes
+        precedence. Previously a global header was only sent when the caller set it
+        explicitly.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.3
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` thrown at runtime on every OAuth (or inferred-auth) authenticated
+        request under `auth: endpoint-security`. To fetch a token, the OAuth auth provider builds an
+        internal client for the (unauthenticated) token endpoint whose `ClientOptions` has no auth
+        provider; `ClientOptions.getAuthHeaders(...)` then dereferenced the null provider and threw. It
+        now returns no auth headers when no auth provider is configured, so token fetching (and therefore
+        all OAuth-authenticated calls) works.
+      type: fix
+    - summary: |
+        Fix generated code failing to compile under `auth: endpoint-security` when the OAuth token
+        endpoint declares custom request properties (scopes, custom body properties, or headers). The
+        generated `OAuthTokenSupplier` constructor takes an extra parameter for each such property, but
+        the `OAuthAuthProvider` always called it with a fixed three arguments
+        (`clientId, clientSecret, authClient`), producing a "constructor cannot be applied to given
+        types" error. `OAuthAuthProvider` now passes a matching argument for every extra property
+        (`Optional.empty()` for optional properties), sharing the property computation with the token
+        supplier generator so the two cannot drift.
+      type: fix
+    - summary: |
+        Fix generated OAuth code snippets and README failing to compile under `auth: endpoint-security`.
+        The snippet/README examples instantiate the client with `Client.withCredentials(clientId,
+        clientSecret)`, but under endpoint-security the client builder is not staged, so that factory was
+        never generated — producing "cannot find symbol: method withCredentials" errors across the
+        generated example files. The client now generates a `withCredentials(clientId, clientSecret)`
+        convenience factory under endpoint-security that returns the standard builder pre-configured with
+        the OAuth credentials.
+      type: fix
+    - summary: |
+        Fix generated wire tests asserting OAuth authentication on endpoints that do not require it under
+        `auth: endpoint-security`. The wire-test generator applied the OAuth token flow (enqueue a token
+        response and assert `Authorization: Bearer ...`) to every test method based on an API-level check,
+        so a test for an `auth: []` (no-auth) endpoint enqueued a token and asserted a bearer header the
+        SDK correctly never sends — failing at runtime. Under endpoint-security the OAuth flow is now
+        applied per endpoint (only to endpoints that require auth); global-auth behavior is unchanged.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 4.15.2
+  changelogEntry:
+    - summary: |
+        Fix a `NullPointerException` when generating an SDK with `auth: endpoint-security` whose
+        OAuth (or inferred-auth) token endpoint is grouped under a subpackage not named `auth`.
+        The `RoutingAuthProvider` setup previously located the auth client by scanning for a
+        subpackage literally named `auth`, yielding `null` (and an NPE) when the token endpoint
+        lived in a differently-named group (e.g. `token`). It now resolves the client from the
+        token endpoint's actual subpackage, falling back to the core `AuthClient` when the token
+        endpoint sits at the API root.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
 - version: 4.15.1
   changelogEntry:
     - summary: |

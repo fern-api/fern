@@ -2,7 +2,7 @@ from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
-from ..type_utilities import is_type_primitive_for_multipart
+from ..type_utilities import is_type_list_of_primitives_for_multipart, is_type_primitive_for_multipart
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
@@ -145,6 +145,17 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         prop_wire = get_wire_value(property_as_union.name)
                         if self._is_primitive_type(property_as_union.value_type):
                             writer.write_line(f'"{prop_wire}": {prop_name},')
+                        elif self._is_list_of_primitives_type(property_as_union.value_type):
+                            type_hint = self._get_property_type(property)
+                            encoded_expr = AST.Expression(
+                                self._context.core_utilities.jsonable_encoder(AST.Expression(prop_name))
+                            )
+                            writer.write(f'"{prop_wire}": ')
+                            writer.write_node(encoded_expr)
+                            if type_hint.is_optional:
+                                writer.write_line(f" if {prop_name} is not OMIT else OMIT,")
+                            else:
+                                writer.write_line(",")
                         else:
                             type_hint = self._get_property_type(property)
                             json_dumps_expr = AST.Expression(
@@ -172,6 +183,16 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         See `type_utilities.is_type_primitive_for_multipart` for full documentation.
         """
         return is_type_primitive_for_multipart(
+            type_reference,
+            get_type_declaration=self._context.pydantic_generator_context.get_declaration_for_type_id,
+        )
+
+    def _is_list_of_primitives_type(self, type_reference: ir_types.TypeReference) -> bool:
+        """Check if a type is a list/set of primitives that should be sent as repeated form fields.
+
+        See `type_utilities.is_type_list_of_primitives_for_multipart` for full documentation.
+        """
+        return is_type_list_of_primitives_for_multipart(
             type_reference,
             get_type_declaration=self._context.pydantic_generator_context.get_declaration_for_type_id,
         )

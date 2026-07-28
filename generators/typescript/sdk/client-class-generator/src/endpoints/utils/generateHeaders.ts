@@ -384,6 +384,23 @@ function getOverridableRootHeaders({
                         ts.factory.createIdentifier(getOptionKeyForHeader(header, context))
                     );
 
+                    // If the header declares an env var, chain it before the client default:
+                    // requestOptions?.header ?? this._options?.header ?? process.env?.["ENV"] ?? "clientDefault"
+                    if (header.env != null) {
+                        fallbackExpr = ts.factory.createBinaryExpression(
+                            fallbackExpr,
+                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                            ts.factory.createElementAccessChain(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("process"),
+                                    ts.factory.createIdentifier("env")
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                ts.factory.createStringLiteral(header.env)
+                            )
+                        );
+                    }
+
                     // If clientDefault is set, chain it as final fallback:
                     // requestOptions?.header ?? this._options?.header ?? "clientDefault"
                     // Skip when the type is nullable — explicit null means "don't send the header".

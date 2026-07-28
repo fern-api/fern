@@ -28,6 +28,7 @@ import { camelCase, upperFirst } from "../utils/text.js";
 
 import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common.js";
 import { Extern } from "./extern.js";
+import { getFilesystemNugetPublishTarget } from "./filesystem-nuget-publish-target.js";
 import { ModelNavigator } from "./model-navigator.js";
 import { NameRegistry } from "./name-registry.js";
 
@@ -450,8 +451,9 @@ export class Generation {
             /** The prefix used for client-related classes, customizable via config or defaults to clientName. */
             clientPrefix: () =>
                 this.settings.exportedClientClassName || this.settings.clientClassName || this.names.project.client,
-            /** The NuGet package identifier for the generated SDK, defaults to root namespace if not specified. */
-            packageId: () => this.settings.packageId || this.namespaces.root
+            /** The NuGet package identifier for the generated SDK. Falls back to the nuget filesystem publish target (local-file-system output), then the root namespace. */
+            packageId: () =>
+                this.settings.packageId || getFilesystemNugetPublishTarget(this.ir)?.packageName || this.namespaces.root
         }),
         files: lazy({
             /* the name of the project */

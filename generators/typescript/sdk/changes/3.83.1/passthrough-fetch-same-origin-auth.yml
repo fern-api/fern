@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Scope the passthrough `client.fetch()` auth headers to the configured base URL.
+    Auth headers are now only attached when the resolved request URL has the same
+    origin as the configured base URL (or environment), so passing an absolute
+    cross-origin URL into the passthrough fetch escape hatch no longer leaks the
+    SDK's credentials to an unrelated host. Relative paths and same-origin absolute
+    URLs are unaffected. Passthrough debug logs now redact credentials in the
+    request URL, matching the main fetcher.
+  type: fix

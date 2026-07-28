@@ -5,6 +5,8 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedErrors from "../../../index.js";
 
 export class FooTooMuch extends errors.SeedErrorsError {
+    public declare readonly body: SeedErrors.ErrorBody;
+
     constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "FooTooMuch",

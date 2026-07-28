@@ -408,7 +408,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             });
             platformHeaderEntries.push({
                 key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                value: this.csharp.codeblock(`"${this.namespaces.root}"`)
+                // Use the package identity (NuGet package id or nuget filesystem
+                // publish target) so the SDK-name header matches the `User-Agent`;
+                // falls back to the root namespace when neither is configured.
+                value: this.csharp.codeblock(`"${this.generation.names.project.packageId}"`)
             });
             platformHeaderEntries.push({
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
@@ -478,6 +481,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
 
                     for (const param of optionalParameters) {
+                        const clientDefaultLiteral =
+                            param.isGlobalHeader && param.clientDefault != null
+                                ? this.getHeaderFallback(param)
+                                : undefined;
                         if (param.environmentVariable != null) {
                             const target = paramAccess(param);
                             if (anyAuthMultiScheme || endpointSecurity || (param.isGlobalHeader && param.isOptional)) {
@@ -485,7 +492,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 // missing — the caller may be authenticating with another scheme.
                                 innerWriter.write(`${target} ??= Environment.GetEnvironmentVariable(`);
                                 innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
-                                innerWriter.writeTextStatement(")");
+                                if (clientDefaultLiteral != null) {
+                                    innerWriter.writeTextStatement(`) ?? ${clientDefaultLiteral}`);
+                                } else {
+                                    innerWriter.writeTextStatement(")");
+                                }
                             } else {
                                 innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
                                 innerWriter.indent();
@@ -497,6 +508,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 innerWriter.dedent();
                                 innerWriter.writeLine(");");
                             }
+                        } else if (clientDefaultLiteral != null && (anyAuthMultiScheme || endpointSecurity)) {
+                            // Header dictionary entries apply the client default inline elsewhere,
+                            // but the `any`-composed multi-scheme and endpoint-security paths write
+                            // headers conditionally, so the default must be applied here.
+                            innerWriter.writeTextStatement(`${paramAccess(param)} ??= ${clientDefaultLiteral}`);
                         }
                     }
 

@@ -11,3 +11,4 @@ headers:
     name: version
     type: optional<string>
     env: MY_API_VERSION
+    client-default: "2024-01-01"

@@ -1,0 +1,8 @@
+- summary: |
+    Client-level global header options (e.g. `option.WithVersion(...)` passed
+    to the root client constructor) are no longer clobbered by env-var or
+    `client-default` resolution on every request. Env and client-default
+    fallbacks are now resolved once at client construction, and per-request
+    options only override the header when explicitly set. Precedence is:
+    request-level option > client-level option > env var > client default.
+  type: fix

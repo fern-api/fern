@@ -108,6 +108,14 @@ Generators are processes that take your API Definition as input and output artif
 | `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)                                    |
 | `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)                                     |
 
+### CLI Generators
+
+Fern's CLI generator produces a standalone command-line interface for your API.
+
+| Generator ID                   | Latest Version                                                                             | Changelog                                              |
+| ------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `fernapi/fern-cli-generator`   | ![CLI Generator Version](https://img.shields.io/docker/v/fernapi/fern-cli-generator)      | [versions.yml](./generators/cli/versions.yml)          |
+
 ### Spec Generators
 
 Fern's spec generators can output an OpenAPI spec.

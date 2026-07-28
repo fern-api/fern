@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v67.16.0] - 2026-07-23
+## [v67.17.0] - 2026-07-28
 
 - Add `OAuthConfiguration.authorizationCode` (`OAuthAuthorizationCode`), an additive union variant
   modeling the OAuth 2.0 Authorization Code grant with required PKCE (RFC 7636) for public clients
@@ -27,6 +27,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     optional `refreshUrl` (defaults to `tokenUrl`), optional `scopes`, optional public
     `deviceAuthorizationParameters`/`tokenParameters`/`refreshParameters` maps, and optional
     `tokenHeader`/`tokenPrefix` for bearer application. PKCE does not apply to this grant.
+
+## [v67.16.0] - 2026-07-27
+
+- Add `nuget` variant to `PublishTarget` (`NugetPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the C# SDK's package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way npm/pypi/maven/
+  crates/go targets already do, so the C# generator can stamp the SDK name/version into the
+  generated `Version.cs` and the structured `User-Agent` header.
 
 ## [v67.15.0] - 2026-07-21
 

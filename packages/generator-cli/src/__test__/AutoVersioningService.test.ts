@@ -404,6 +404,111 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain("request_option.go");
     });
 
+    // Regression coverage for the Go SDK being flagged as a spurious breaking change when a new
+    // field is inserted into a struct. The Go SDK assigns each struct property a single-bit
+    // `explicitFields` constant at its positional index; inserting a field earlier shifts every
+    // following constant's bit index by one, producing a deletion/addition pair per field that
+    // differs only by the integer. That churn is a purely mechanical artifact (the bit is set and
+    // read within the same generated version; the wire format is name-based JSON), but the AI
+    // analyzer read the shifted positions as a serialization break and returned MAJOR. The whole
+    // reindexing block must be stripped before analysis.
+    it("testCleanDiffForAI_stripsGoExplicitFieldBitConstantReindexing", () => {
+        const diff =
+            "diff --git a/entity.go b/entity.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/entity.go\n" +
+            "+++ b/entity.go\n" +
+            "@@ -10,8 +10,9 @@ var (\n" +
+            " var (\n" +
+            "-\tentityFieldGeoShape = big.NewInt(1 << 3)\n" +
+            "-\tentityFieldGeoDetails = big.NewInt(1 << 4)\n" +
+            "-\tentityFieldOverrides = big.NewInt(1 << 5)\n" +
+            "+\tentityFieldKinematics = big.NewInt(1 << 3)\n" +
+            "+\tentityFieldGeoShape = big.NewInt(1 << 4)\n" +
+            "+\tentityFieldGeoDetails = big.NewInt(1 << 5)\n" +
+            "+\tentityFieldOverrides = big.NewInt(1 << 6)\n" +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // The reindexed GeoShape/GeoDetails/Overrides constants (deletion + addition per field)
+        // are dropped as noise...
+        expect(cleaned).not.toContain("entityFieldGeoShape");
+        expect(cleaned).not.toContain("entityFieldGeoDetails");
+        expect(cleaned).not.toContain("entityFieldOverrides");
+        // ...but the genuinely new field's bit constant (a pure addition, no matching deletion)
+        // survives so the analyzer still sees the additive change.
+        expect(cleaned).toContain("+\tentityFieldKinematics = big.NewInt(1 << 3)");
+    });
+
+    // The >= 63 bit constant uses the `big.NewInt(0).Lsh(big.NewInt(1), N)` form; reindexing churn
+    // in that form must also be stripped.
+    it("testCleanDiffForAI_stripsGoExplicitFieldBitConstantReindexing_lshForm", () => {
+        const diff =
+            "diff --git a/entity.go b/entity.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/entity.go\n" +
+            "+++ b/entity.go\n" +
+            "@@ -70,2 +70,2 @@ var (\n" +
+            "-\tentityFieldTrailing = big.NewInt(0).Lsh(big.NewInt(1), 63)\n" +
+            "+\tentityFieldTrailing = big.NewInt(0).Lsh(big.NewInt(1), 64)\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        expect(cleaned).not.toContain("entityFieldTrailing");
+        expect(cleaned).not.toContain("entity.go");
+    });
+
+    // A removed field is a genuine breaking change: its bit constant deletion has no matching
+    // addition and must NOT be filtered, so the analyzer still sees the removal.
+    it("testCleanDiffForAI_keepsGoExplicitFieldBitConstantDeletionForRemovedField", () => {
+        const diff =
+            "diff --git a/entity.go b/entity.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/entity.go\n" +
+            "+++ b/entity.go\n" +
+            "@@ -10,4 +10,3 @@ var (\n" +
+            " var (\n" +
+            "\tentityFieldGeoShape = big.NewInt(1 << 3)\n" +
+            "-\tentityFieldGeoDetails = big.NewInt(1 << 4)\n" +
+            " )\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        // The removed field's constant deletion survives (no matching addition to pair with).
+        expect(cleaned).toContain("-\tentityFieldGeoDetails = big.NewInt(1 << 4)");
+    });
+
+    // A plain integer assignment that merely changes value (e.g. a real default like a retry
+    // count) must never be mistaken for bit-constant reindexing churn.
+    it("testCleanDiffForAI_doesNotStripOrdinaryIntegerAssignmentChanges", () => {
+        const diff =
+            "diff --git a/config.go b/config.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/config.go\n" +
+            "+++ b/config.go\n" +
+            "@@ -1,2 +1,2 @@\n" +
+            "-\tmaxRetries = big.NewInt(3)\n" +
+            "+\tmaxRetries = big.NewInt(5)\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+            diff,
+            "v0.0.0-fern-placeholder"
+        );
+
+        expect(cleaned).toContain("-\tmaxRetries = big.NewInt(3)");
+        expect(cleaned).toContain("+\tmaxRetries = big.NewInt(5)");
+    });
+
     it("testExtractPreviousVersion_invalidVersionFormat_returnsUndefined", () => {
         const diff =
             "diff --git a/config.txt b/config.txt\n" +

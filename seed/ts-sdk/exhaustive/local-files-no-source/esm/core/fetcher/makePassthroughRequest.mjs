@@ -12,6 +12,7 @@ import { join } from "../url/join.mjs";
 import { EndpointSupplier } from "./EndpointSupplier.mjs";
 import { getFetchFn } from "./getFetchFn.mjs";
 import { makeRequest } from "./makeRequest.mjs";
+import { redactUrl } from "./redactUrl.mjs";
 import { requestWithRetries } from "./requestWithRetries.mjs";
 import { Supplier } from "./Supplier.mjs";
 /**
@@ -76,8 +77,10 @@ export function makePassthroughRequest(input, init, clientOptions, requestOption
                 }
             }
         }
-        // Apply auth headers
-        if (clientOptions.getAuthHeaders != null) {
+        // Apply auth headers, but only when the resolved URL targets the configured base URL.
+        // This prevents the SDK's credentials from leaking to an unrelated host when a caller
+        // passes an absolute cross-origin URL into the passthrough fetch escape hatch.
+        if (clientOptions.getAuthHeaders != null && targetsBaseUrl(fullUrl, baseUrl)) {
             const authHeaders = yield clientOptions.getAuthHeaders();
             for (const [key, value] of Object.entries(authHeaders)) {
                 mergedHeaders[key.toLowerCase()] = value;
@@ -112,7 +115,7 @@ export function makePassthroughRequest(input, init, clientOptions, requestOption
         if (logger.isDebug()) {
             logger.debug("Making passthrough HTTP request", {
                 method,
-                url: fullUrl,
+                url: redactUrl(fullUrl),
                 hasBody: body != null,
             });
         }
@@ -123,10 +126,29 @@ export function makePassthroughRequest(input, init, clientOptions, requestOption
         if (logger.isDebug()) {
             logger.debug("Passthrough HTTP request completed", {
                 method,
-                url: fullUrl,
+                url: redactUrl(fullUrl),
                 statusCode: response.status,
             });
         }
         return response;
     });
+}
+/**
+ * Returns true when the resolved request URL points at the same origin as the
+ * configured base URL. Relative paths are always joined onto the base URL, so
+ * they resolve to the base origin and return true. Absolute URLs only match when
+ * their origin equals the base origin. When there is no base URL to compare
+ * against, or either value is not a parseable absolute URL, this returns false so
+ * auth headers are not attached.
+ */
+function targetsBaseUrl(fullUrl, baseUrl) {
+    if (baseUrl == null) {
+        return false;
+    }
+    try {
+        return new URL(fullUrl).origin === new URL(baseUrl).origin;
+    }
+    catch (_a) {
+        return false;
+    }
 }

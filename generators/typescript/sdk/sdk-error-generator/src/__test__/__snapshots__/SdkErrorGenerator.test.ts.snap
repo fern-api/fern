@@ -10,6 +10,8 @@ exports[`GeneratedSdkErrorClassImpl > build > builds new expression without body
 
 exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with body type 1`] = `
 "export class BadRequestError extends ApiError {
+    declare public readonly body: string;
+
     constructor(body: string, rawResponse?: RawResponse) {
         super({
             message: "BadRequest",
@@ -49,6 +51,8 @@ exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with cust
 
 exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with named body type 1`] = `
 "export class BadRequestError extends ApiError {
+    declare public readonly body: string;
+
     constructor(body: string, rawResponse?: RawResponse) {
         super({
             message: "BadRequest",
@@ -69,7 +73,29 @@ exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with name
 
 exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with optional body type 1`] = `
 "export class BadRequestError extends ApiError {
+    declare public readonly body?: string;
+
     constructor(body?: string, rawResponse?: RawResponse) {
+        super({
+            message: "BadRequest",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse
+        });
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = "BadRequestError";
+    }
+}
+"
+`;
+
+exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with unknown body type 1`] = `
+"export class BadRequestError extends ApiError {
+    constructor(body: string, rawResponse?: RawResponse) {
         super({
             message: "BadRequest",
             statusCode: 400,
