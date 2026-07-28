@@ -1,4 +1,4 @@
-module github.com/x-fern-default/fern
+module github.com/idempotency-headers/fern
 
 go 1.21
 
