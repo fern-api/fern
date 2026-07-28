@@ -796,6 +796,11 @@ class ClientWrapperGenerator:
             omit_fern_headers = self._context.custom_config.omit_fern_headers
             include_platform_headers = self._context.custom_config.include_platform_headers
             user_agent_header = self._context.ir.sdk_config.platform_headers.user_agent
+            # When runtime_version is enabled we resolve the SDK version at runtime via
+            # importlib.metadata (see the `_sdk_version` block emitted below) instead of
+            # baking the generation-time literal, so the reported version tracks the
+            # actually-installed package version. Requires a known distribution name.
+            runtime_version_active = self._context.custom_config.runtime_version and project._project_config is not None
 
             # When include_platform_headers is enabled we emit a single structured
             # `User-Agent` (`{sdkName}/{version} ({os}; {arch}) Python/{version}`)
@@ -815,8 +820,25 @@ class ClientWrapperGenerator:
             if not omit_fern_headers:
                 writer.write_line("import platform")
                 writer.write_line("")
+                if runtime_version_active and project._project_config is not None:
+                    # Resolve the installed distribution version at runtime; fall back to
+                    # the generation-time version when the package is not installed
+                    # (e.g. running from source).
+                    writer.write_line("from importlib import metadata as _fern_importlib_metadata")
+                    writer.write_line("try:")
+                    with writer.indent():
+                        writer.write_line(
+                            f'_sdk_version = _fern_importlib_metadata.version("{project._project_config.package_name}")'
+                        )
+                    writer.write_line("except _fern_importlib_metadata.PackageNotFoundError:")
+                    with writer.indent():
+                        writer.write_line(f'_sdk_version = "{project._project_config.package_version}"')
+                    writer.write_line("")
                 if emit_structured_user_agent:
-                    writer.write_line(f'_user_agent = "{user_agent_prefix}"')
+                    if runtime_version_active and project._project_config is not None:
+                        writer.write_line(f'_user_agent = "{project._project_config.package_name}/" + _sdk_version')
+                    else:
+                        writer.write_line(f'_user_agent = "{user_agent_prefix}"')
                     writer.write_line("_os = platform.system().lower()")
                     # Collapse the 64-bit x86 aliases (x64, amd64, x86_64) to the canonical x86_64.
                     writer.write_line("_arch = platform.machine()")
@@ -838,7 +860,12 @@ class ClientWrapperGenerator:
                 if emit_structured_user_agent:
                     writer.write_line('"User-Agent": _user_agent,')
                 elif user_agent_header is not None:
-                    writer.write_line(f'"{user_agent_header.header}": "{user_agent_header.value}",')
+                    if runtime_version_active and project._project_config is not None:
+                        writer.write_line(
+                            f'"{user_agent_header.header}": "{project._project_config.package_name}/" + _sdk_version,'
+                        )
+                    else:
+                        writer.write_line(f'"{user_agent_header.header}": "{user_agent_header.value}",')
                 writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
                 if not emit_structured_user_agent:
                     writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
@@ -847,9 +874,14 @@ class ClientWrapperGenerator:
                     writer.write_line(
                         f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
                     )
-                    writer.write_line(
-                        f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
-                    )
+                    if runtime_version_active:
+                        writer.write_line(
+                            f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": _sdk_version,'
+                        )
+                    else:
+                        writer.write_line(
+                            f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
+                        )
             writer.write_line("**(self.get_custom_headers() or {}),")
             writer.write_line("}")
             writer.write_newline_if_last_line_not()
