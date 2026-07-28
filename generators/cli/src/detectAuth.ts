@@ -363,8 +363,8 @@ function authorizationCodeBinding(args: {
     if (scopes.length > 0) {
         rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
     }
-    // When `redirectUri` pins a loopback port, honor it; otherwise the flow uses the SDK's
-    // default loopback port. Host/path are fixed to 127.0.0.1 + /callback by the runtime.
+    // When `redirectUri` pins a loopback port, honor it; otherwise the flow binds an ephemeral
+    // (OS-assigned) port per RFC 8252. Host/path are fixed to 127.0.0.1 + /callback by the runtime.
     const redirectPort = loopbackRedirectPort(authorizationCode.redirectUri);
     if (redirectPort != null) {
         rustCall += `.redirect_port(${redirectPort})`;

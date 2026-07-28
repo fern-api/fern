@@ -404,7 +404,6 @@ use sha2::Digest;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpListener;
 
-const DEFAULT_REDIRECT_PORT: u16 = 4711;
 const CODE_VERIFIER_LEN: usize = 64;
 
 /// Generate a `code_verifier` per RFC 7636 §4.1 — 43-128 chars from the
@@ -432,7 +431,9 @@ pub struct PkceLoginFlow {
     authorization_url: String,
     token_url: String,
     scopes: Vec<String>,
-    redirect_port: u16,
+    /// The loopback callback port. `None` = ephemeral (OS-assigned) port per RFC 8252 §7.3;
+    /// `Some(port)` pins an exact port the authorization server must have pre-registered.
+    redirect_port: Option<u16>,
     token_paste_url: Option<String>,
     authorization_params: ExtraParams,
     token_params: ExtraParams,
@@ -447,7 +448,7 @@ impl PkceLoginFlow {
             authorization_url: String::new(),
             token_url: String::new(),
             scopes: Vec::new(),
-            redirect_port: DEFAULT_REDIRECT_PORT,
+            redirect_port: None,
             token_paste_url: None,
             authorization_params: Vec::new(),
             token_params: Vec::new(),
@@ -475,8 +476,9 @@ impl PkceLoginFlow {
         self.scopes = scopes.into_iter().map(Into::into).collect();
         self
     }
+    /// Pin an exact loopback callback port. Omit this to use an ephemeral (OS-assigned) port.
     pub fn redirect_port(mut self, port: u16) -> Self {
-        self.redirect_port = port;
+        self.redirect_port = Some(port);
         self
     }
     pub fn token_paste_url(mut self, v: impl Into<String>) -> Self {
@@ -536,8 +538,12 @@ impl PkceLoginFlow {
         Ok(())
     }
 
+    /// The loopback callback URI. At login time `run_pkce` resolves `redirect_port` to the actual
+    /// bound port (ephemeral or pinned) before this is read, so the authorize request and the token
+    /// exchange always use the same port. The `unwrap_or(0)` is only reached by direct unit tests
+    /// that never bind a listener.
     fn redirect_uri(&self) -> String {
-        format!("http://127.0.0.1:{}/callback", self.redirect_port)
+        format!("http://127.0.0.1:{}/callback", self.redirect_port.unwrap_or(0))
     }
 
     fn build_authorize_url(&self, state: &str, challenge: &str) -> String {
@@ -606,23 +612,31 @@ impl LoginFlow for PkceLoginFlow {
     }
 }
 
-async fn run_pkce(flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliError> {
+async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliError> {
     use std::io::Write;
 
     let verifier = generate_code_verifier();
     let challenge = code_challenge_s256(&verifier);
     let state = generate_code_verifier(); // reuse generator; just needs entropy
 
-    // Bind the loopback listener first — if the port is busy we fail
-    // before the browser opens (ADR-0007 § fixed port; no fallback).
-    let listener = TcpListener::bind(("127.0.0.1", flow.redirect_port))
+    // Bind the loopback listener first. `redirect_port = None` → bind port 0 so the OS assigns a
+    // free ephemeral port (RFC 8252 §7.3); `Some(port)` pins an exact pre-registered port and
+    // fails hard on collision (no fallback — the authorization server only accepts that URI).
+    let requested_port = flow.redirect_port.unwrap_or(0);
+    let listener = TcpListener::bind(("127.0.0.1", requested_port))
         .await
         .map_err(|e| {
             CliError::Auth(format!(
-                "Could not bind 127.0.0.1:{} — is another instance running, or did you forget to register that redirect URI? ({e})",
-                flow.redirect_port
+                "Could not bind 127.0.0.1:{requested_port} — is another instance running, or did you forget to register that redirect URI? ({e})"
             ))
         })?;
+    // Resolve the actually-bound port (the ephemeral one the OS chose, or the pinned one) and use
+    // it everywhere so the authorize request and token exchange carry the same redirect_uri.
+    let actual_port = listener
+        .local_addr()
+        .map_err(|e| CliError::Auth(format!("could not resolve loopback callback port: {e}")))?
+        .port();
+    flow.redirect_port = Some(actual_port);
 
     let url = flow.build_authorize_url(&state, &challenge);
     // Take the stderr lock, write, drop — before any .await — to keep
@@ -631,11 +645,7 @@ async fn run_pkce(flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliError
         let mut err = std::io::stderr().lock();
         let _ = writeln!(err, "Opening browser to authenticate…");
         let _ = writeln!(err, "  URL: {url}");
-        let _ = writeln!(
-            err,
-            "  Listening on http://127.0.0.1:{}/callback",
-            flow.redirect_port
-        );
+        let _ = writeln!(err, "  Listening on http://127.0.0.1:{actual_port}/callback");
         let _ = err.flush();
     }
     if !ctx.no_browser {
@@ -1485,6 +1495,42 @@ mod tests {
         assert!(url.contains("code_challenge=challenge-xyz"));
         assert!(url.contains("code_challenge_method=S256"));
         assert!(url.contains("scope=read+write"));
+    }
+
+    #[test]
+    fn pkce_pinned_redirect_port_is_honored() {
+        let flow = PkceLoginFlow::new("OAuth2")
+            .client_id("id")
+            .authorization_url("https://auth.example.com/authorize")
+            .token_url("https://auth.example.com/token")
+            .redirect_port(8484);
+        assert_eq!(flow.redirect_port, Some(8484));
+        assert_eq!(flow.redirect_uri(), "http://127.0.0.1:8484/callback");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn pkce_ephemeral_port_binds_nonzero_and_flows_into_redirect_uri() {
+        // No redirect_port pinned → ephemeral. Mirrors run_pkce's bind + resolve logic and asserts
+        // the OS-assigned port flows consistently into both redirect_uri and the authorize URL.
+        let mut flow = PkceLoginFlow::new("OAuth2")
+            .client_id("id")
+            .authorization_url("https://auth.example.com/authorize")
+            .token_url("https://auth.example.com/token");
+        assert!(flow.redirect_port.is_none(), "default must be ephemeral");
+
+        let listener = TcpListener::bind(("127.0.0.1", flow.redirect_port.unwrap_or(0)))
+            .await
+            .unwrap();
+        let port = listener.local_addr().unwrap().port();
+        assert_ne!(port, 0, "OS should assign a nonzero ephemeral port");
+        flow.redirect_port = Some(port);
+
+        assert_eq!(flow.redirect_uri(), format!("http://127.0.0.1:{port}/callback"));
+        let url = flow.build_authorize_url("s", "c");
+        assert!(
+            url.contains(&format!("127.0.0.1%3A{port}%2Fcallback")),
+            "authorize URL must carry the bound ephemeral port: {url}"
+        );
     }
 
     #[test]

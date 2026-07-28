@@ -7,7 +7,7 @@
         registered via `CliApp::login_flow(...)` so `<bin> auth login` runs the browser / device
         flow, tokens are stored in the OS keyring, and requests get `Authorization: Bearer <token>`
         with refresh-on-expiry. A configured loopback `redirectUri` pins the callback port;
-        omitting it uses the SDK's loopback default. Extra literal parameter maps
+        omitting it binds an ephemeral (OS-assigned) port per RFC 8252 §7.3. Extra literal parameter maps
         (`authorizationParameters` / `tokenParameters` / `refreshParameters` /
         `deviceAuthorizationParameters` — e.g. an Auth0 `audience`) are appended to the respective
         requests, with protocol-reserved keys skipped. Environment-variable client IDs and the IR's
