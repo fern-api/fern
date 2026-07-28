@@ -17,6 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GithubPublishInfo;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
@@ -160,39 +161,21 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             PlatformHeaders platformHeaders, GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         Map<String, String> entries = new HashMap<>();
 
-        // Try generatorConfig.publish first (remote generation)
-        if (generatorConfig.getPublish().isPresent()) {
-            entries.put(
-                    platformHeaders.getSdkName(),
-                    generatorConfig
-                            .getPublish()
-                            .get()
-                            .getRegistriesV2()
-                            .getMaven()
-                            .getCoordinate());
-            entries.put(
-                    platformHeaders.getSdkVersion(),
-                    generatorConfig.getPublish().get().getVersion());
-        }
-        // Fallback to IR publishConfig (local generation with explicit maven config)
-        else if (ir.getPublishConfig().isPresent()) {
-            Optional<MavenPublishTarget> mavenTarget =
-                    extractMavenTarget(ir.getPublishConfig().get());
-            if (mavenTarget.isPresent()) {
-                mavenTarget.get().getCoordinate().ifPresent(coord -> entries.put(platformHeaders.getSdkName(), coord));
-                mavenTarget
-                        .get()
-                        .getVersion()
-                        .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
-            }
-        }
-        // Final fallback: generate default coordinate matching Fiddle's RegistryConfigFactory behavior
-        // This ensures local generation matches remote generation for GitHub output mode without explicit maven config
-        else {
-            String fallbackCoordinate = String.format(
-                    "com.%s.fern:%s-sdk", generatorConfig.getOrganization(), generatorConfig.getWorkspaceName());
-            entries.put(platformHeaders.getSdkName(), fallbackCoordinate);
-        }
+        // Resolve the SDK coordinate from the highest-priority source that carries it, then emit the name (with a
+        // synthesized fallback) and the version (when known). Sources are flattened so that a source which supplies a
+        // coordinate but no version still yields an X-Fern-SDK-Name header.
+        Optional<SdkCoordinate> resolvedCoordinate = resolveFromGithubOutputMode(generatorConfig)
+                .or(() -> resolveFromGeneratorPublish(generatorConfig))
+                .or(() -> resolveFromIrPublishConfig(ir));
+
+        String sdkName = resolvedCoordinate
+                .map(coordinate -> coordinate.name)
+                .orElseGet(() -> String.format(
+                        "com.%s.fern:%s-sdk", generatorConfig.getOrganization(), generatorConfig.getWorkspaceName()));
+        entries.put(platformHeaders.getSdkName(), sdkName);
+        resolvedCoordinate
+                .flatMap(coordinate -> coordinate.version)
+                .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
 
         if (platformHeaders.getUserAgent().isPresent()) {
             entries.put(
@@ -201,6 +184,54 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         }
         entries.put(platformHeaders.getLanguage(), "JAVA");
         return entries;
+    }
+
+    /**
+     * Resolves the SDK coordinate from the GitHub output mode's publish info
+     * ({@code output.mode.github.publishInfo.maven}). This is the user-configured Maven coordinate and is populated for
+     * both remote (Fiddle) and {@code --local} GitHub-mode generation. It must be checked before
+     * {@link GeneratorConfig#getPublish()} because Fiddle also sets a synthesized (and incorrect) publish coordinate in
+     * GitHub output mode, which would otherwise take precedence and leak into {@code X-Fern-SDK-Name}.
+     */
+    private static Optional<SdkCoordinate> resolveFromGithubOutputMode(GeneratorConfig generatorConfig) {
+        return generatorConfig.getOutput().getMode().getGithub().flatMap(githubOutputMode -> githubOutputMode
+                .getPublishInfo()
+                .flatMap(GithubPublishInfo::getMaven)
+                .map(maven -> new SdkCoordinate(maven.getCoordinate(), Optional.of(githubOutputMode.getVersion()))));
+    }
+
+    /**
+     * Resolves the SDK coordinate from {@code generatorConfig.publish.registriesV2.maven} (remote publish/registry
+     * mode).
+     */
+    private static Optional<SdkCoordinate> resolveFromGeneratorPublish(GeneratorConfig generatorConfig) {
+        return generatorConfig
+                .getPublish()
+                .map(publish -> new SdkCoordinate(
+                        publish.getRegistriesV2().getMaven().getCoordinate(), Optional.of(publish.getVersion())));
+    }
+
+    /**
+     * Resolves the SDK coordinate from the IR's {@code publishConfig} Maven target (local generation with an explicit
+     * maven target).
+     */
+    private static Optional<SdkCoordinate> resolveFromIrPublishConfig(IntermediateRepresentation ir) {
+        return ir.getPublishConfig()
+                .flatMap(ClientOptionsGenerator::extractMavenTarget)
+                .flatMap(mavenTarget -> mavenTarget
+                        .getCoordinate()
+                        .map(coordinate -> new SdkCoordinate(coordinate, mavenTarget.getVersion())));
+    }
+
+    /** A resolved {@code X-Fern-SDK-Name} coordinate together with an optional {@code X-Fern-SDK-Version}. */
+    private static final class SdkCoordinate {
+        private final String name;
+        private final Optional<String> version;
+
+        private SdkCoordinate(String name, Optional<String> version) {
+            this.name = name;
+            this.version = version;
+        }
     }
 
     private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
