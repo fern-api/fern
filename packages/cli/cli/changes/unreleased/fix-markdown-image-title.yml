@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix markdown images that specify a title (e.g. `![alt](./image.png "Title")`) failing to render.
+    The title was treated as part of the image path, so the image was never swapped for its uploaded
+    file reference.
+  type: fix
