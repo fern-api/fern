@@ -231,6 +231,47 @@ describe("valid-oauth", () => {
         expect(violations.some((violation) => violation.message.includes("must use host 127.0.0.1"))).toBe(true);
     });
 
+    it("valid-device-code", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("device-code")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("invalid-device-code-redirect-uri", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("device-code-redirect-uri")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations.some((violation) => violation.message.includes("no browser callback"))).toBe(true);
+    });
+
+    it("invalid-device-code-pkce", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("device-code-pkce")
+            )
+        });
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations.some((violation) => violation.message.includes("does not use PKCE"))).toBe(true);
+    });
+
     it("invalid-client-id-env", async () => {
         const violations = await getViolationsForRule({
             rule: ValidOauthRule,

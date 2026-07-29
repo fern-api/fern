@@ -128,32 +128,51 @@ function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViol
         requireUrl("device-authorization-url");
     }
 
-    const pkceMethod = oauth.pkce?.method;
-    if (pkceMethod != null && pkceMethod !== "S256") {
-        violations.push({
-            severity: "fatal",
-            message: `OAuth PKCE method '${pkceMethod}' is not supported; only 'S256' is allowed.`
-        });
-    }
-
-    const redirectUri = oauth["redirect-uri"];
-    if (redirectUri != null) {
-        // `redirect-uri` is either a bare URI string or `{ url, ports }`. Validate the primary URI
-        // for both forms; for the object form also validate each backup port.
-        const url = typeof redirectUri === "string" ? redirectUri : redirectUri.url;
-        const urlError = validateRedirectUri(url);
-        if (urlError != null) {
-            violations.push({ severity: "fatal", message: urlError });
+    if (oauth.type === "authorization-code") {
+        const pkceMethod = oauth.pkce?.method;
+        if (pkceMethod != null && pkceMethod !== "S256") {
+            violations.push({
+                severity: "fatal",
+                message: `OAuth PKCE method '${pkceMethod}' is not supported; only 'S256' is allowed.`
+            });
         }
-        if (typeof redirectUri !== "string") {
-            for (const port of redirectUri.ports ?? []) {
-                if (!Number.isInteger(port) || port < 1 || port > 65535) {
-                    violations.push({
-                        severity: "fatal",
-                        message: `OAuth redirect-uri backup port '${port}' is invalid; ports must be integers in 1–65535.`
-                    });
+
+        const redirectUri = oauth["redirect-uri"];
+        if (redirectUri != null) {
+            // `redirect-uri` is either a bare URI string or `{ url, ports }`. Validate the primary
+            // URI for both forms; for the object form also validate each backup port.
+            const url = typeof redirectUri === "string" ? redirectUri : redirectUri.url;
+            const urlError = validateRedirectUri(url);
+            if (urlError != null) {
+                violations.push({ severity: "fatal", message: urlError });
+            }
+            if (typeof redirectUri !== "string") {
+                for (const port of redirectUri.ports ?? []) {
+                    if (!Number.isInteger(port) || port < 1 || port > 65535) {
+                        violations.push({
+                            severity: "fatal",
+                            message: `OAuth redirect-uri backup port '${port}' is invalid; ports must be integers in 1–65535.`
+                        });
+                    }
                 }
             }
+        }
+    } else {
+        // device-code: it has no browser callback and does not use PKCE, so `redirect-uri` and
+        // `pkce` are authorization-code-only. Reject them loudly rather than silently ignoring.
+        if (oauth["redirect-uri"] != null) {
+            violations.push({
+                severity: "fatal",
+                message:
+                    "OAuth device-code flow has no browser callback; remove `redirect-uri` (it applies only to the authorization-code flow)."
+            });
+        }
+        if (oauth.pkce != null) {
+            violations.push({
+                severity: "fatal",
+                message:
+                    "OAuth device-code flow does not use PKCE; remove `pkce` (it applies only to the authorization-code flow)."
+            });
         }
     }
 
