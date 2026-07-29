@@ -242,9 +242,7 @@ describe("valid-oauth", () => {
             )
         });
         expect(violations.length).toBeGreaterThan(0);
-        expect(
-            violations.some((violation) => violation.message.includes("environment-variable client ID"))
-        ).toBe(true);
+        expect(violations.some((violation) => violation.message.includes("environment-variable client ID"))).toBe(true);
     });
 });
 
