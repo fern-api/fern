@@ -706,6 +706,7 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
         }
     };
     let redirect_host = flow.redirect_host_str().to_string();
+    let redirect_path = flow.redirect_path_str().to_string();
     let listener = bind_loopback_listener(&redirect_host, &candidate_ports).await?;
     // Resolve the actually-bound port (the ephemeral one the OS chose, or the pinned one) and use
     // it everywhere so the authorize request and token exchange carry the same redirect_uri.
@@ -731,7 +732,7 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
     }
 
     // Wait for the browser to hit /callback with code+state.
-    let (code, received_state) = match accept_callback(&listener).await {
+    let (code, received_state) = match accept_callback(&listener, &redirect_path).await {
         Ok(v) => v,
         Err(e) => return Err(e),
     };
@@ -814,15 +815,16 @@ const CALLBACK_RESPONSE_BODY: &str = "\
 /// surfacing a clear timeout beats hanging silently.
 const PKCE_CALLBACK_TIMEOUT: Duration = Duration::from_secs(300);
 
-async fn accept_callback(listener: &TcpListener) -> Result<(String, String), CliError> {
-    accept_callback_with_timeout(listener, PKCE_CALLBACK_TIMEOUT).await
+async fn accept_callback(listener: &TcpListener, expected_path: &str) -> Result<(String, String), CliError> {
+    accept_callback_with_timeout(listener, expected_path, PKCE_CALLBACK_TIMEOUT).await
 }
 
 async fn accept_callback_with_timeout(
     listener: &TcpListener,
+    expected_path: &str,
     timeout: Duration,
 ) -> Result<(String, String), CliError> {
-    match tokio::time::timeout(timeout, accept_callback_inner(listener)).await {
+    match tokio::time::timeout(timeout, accept_callback_inner(listener, expected_path)).await {
         Ok(r) => r,
         Err(_) => Err(CliError::Auth(format!(
             "Timed out waiting for the OAuth callback after {}s. \
@@ -833,7 +835,7 @@ async fn accept_callback_with_timeout(
     }
 }
 
-async fn accept_callback_inner(listener: &TcpListener) -> Result<(String, String), CliError> {
+async fn accept_callback_inner(listener: &TcpListener, expected_path: &str) -> Result<(String, String), CliError> {
     // Single-shot accept. If the browser hits us with a noisy preflight
     // (favicon, etc.) we skip and accept the next; cap at 8 attempts.
     for _ in 0..8 {
@@ -855,8 +857,12 @@ async fn accept_callback_inner(listener: &TcpListener) -> Result<(String, String
             Some(p) => p,
             None => continue,
         };
-        if !path.starts_with("/callback") {
-            // Skip favicon.ico, /.well-known, etc.
+        // Match the configured callback path exactly (query string stripped). The listener must
+        // serve whatever path the redirect URI advertised — defaulting to `/callback`, but honoring
+        // a custom registered path — otherwise the browser callback 404s and login hangs. Anything
+        // else (favicon.ico, /.well-known, stray probes) is skipped.
+        let path_only = path.split('?').next().unwrap_or(path);
+        if path_only != expected_path {
             let _ = write_response(&mut socket, 404, "not found").await;
             continue;
         }
@@ -1719,7 +1725,7 @@ mod tests {
         // of waiting the production 5-minute deadline.
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let err = accept_callback_with_timeout(&listener, Duration::from_millis(100))
+        let err = accept_callback_with_timeout(&listener, "/callback", Duration::from_millis(100))
             .await
             .expect_err("expected timeout when no browser callback arrives");
         let msg = format!("{err}");
@@ -1735,7 +1741,7 @@ mod tests {
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
 
         // Spawn the accept task.
-        let acceptor = tokio::spawn(async move { accept_callback(&listener).await });
+        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback").await });
 
         // Act as the browser.
         tokio::time::sleep(Duration::from_millis(50)).await;
@@ -1756,7 +1762,7 @@ mod tests {
     async fn pkce_loopback_handshake_rejects_missing_code() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener).await });
+        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback").await });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let _ = reqwest::Client::new()
@@ -1774,7 +1780,7 @@ mod tests {
     async fn pkce_loopback_handshake_surfaces_authorization_error_param() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener).await });
+        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback").await });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let _ = reqwest::Client::new()
@@ -1794,7 +1800,7 @@ mod tests {
     async fn pkce_loopback_ignores_favicon_and_accepts_callback() {
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener).await });
+        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback").await });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let client = reqwest::Client::new();
@@ -1818,6 +1824,37 @@ mod tests {
     }
 
     #[tokio::test(flavor = "multi_thread")]
+    async fn pkce_loopback_honors_custom_callback_path() {
+        // A custom registered redirect path (e.g. `/oauth/callback`) must be served by the
+        // listener — not just advertised in the authorize URL — or the browser callback 404s and
+        // login hangs. The listener accepts the configured path and ignores the default one.
+        let port = pick_free_port();
+        let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
+        let acceptor =
+            tokio::spawn(async move { accept_callback(&listener, "/oauth/callback").await });
+
+        tokio::time::sleep(Duration::from_millis(50)).await;
+        let client = reqwest::Client::new();
+        // The old default path must now be ignored (404), not treated as the callback.
+        let _ = client
+            .get(format!("http://127.0.0.1:{port}/callback?code=wrong&state=wrong"))
+            .send()
+            .await
+            .unwrap();
+        let _ = client
+            .get(format!(
+                "http://127.0.0.1:{port}/oauth/callback?code=c2&state=s2"
+            ))
+            .send()
+            .await
+            .unwrap();
+
+        let (code, state) = acceptor.await.unwrap().unwrap();
+        assert_eq!(code, "c2");
+        assert_eq!(state, "s2");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
     #[serial]
     async fn pkce_state_mismatch_aborts() {
         // Bind a port; spawn the full flow with a mocked browser that
@@ -1829,7 +1866,7 @@ mod tests {
         // path inside run_pkce.
         let port = pick_free_port();
         let listener = TcpListener::bind(("127.0.0.1", port)).await.unwrap();
-        let acceptor = tokio::spawn(async move { accept_callback(&listener).await });
+        let acceptor = tokio::spawn(async move { accept_callback(&listener, "/callback").await });
 
         tokio::time::sleep(Duration::from_millis(50)).await;
         let _ = reqwest::Client::new()
