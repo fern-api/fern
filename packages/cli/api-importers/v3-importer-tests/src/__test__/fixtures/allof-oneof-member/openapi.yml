@@ -36,6 +36,18 @@ paths:
       responses:
         "204":
           description: Accepted
+  /plants/export/inline:
+    post:
+      operationId: exportPlantInline
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InlineExportRequest"
+      responses:
+        "204":
+          description: Accepted
   /plants/export/tagged:
     post:
       operationId: exportPlantTagged
@@ -98,6 +110,27 @@ components:
           oneOf:
             - $ref: "#/components/schemas/ExportLeaf"
             - $ref: "#/components/schemas/ExportBranch"
+        - type: object
+          properties:
+            timeout:
+              type: integer
+    InlineExportRequest:
+      allOf:
+        - oneOf:
+            - title: Export a leaf
+              type: object
+              properties:
+                leafId:
+                  type: string
+              required:
+                - leafId
+            - title: Export a branch
+              type: object
+              properties:
+                branchId:
+                  type: string
+              required:
+                - branchId
         - type: object
           properties:
             timeout:

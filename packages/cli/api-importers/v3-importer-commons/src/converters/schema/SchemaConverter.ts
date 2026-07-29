@@ -411,7 +411,12 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             breadcrumbs: this.breadcrumbs,
             schema: {
                 ...siblings,
-                oneOf: firstUnion.variants.map((variant) => ({ allOf: [variant, ...sharedElements] }))
+                oneOf: firstUnion.variants.map((variant) => {
+                    // The wrapper takes the variant's place in the union, so it has to carry the
+                    // variant's title for the variant to stay named in docs and generated SDKs.
+                    const title = this.getVariantTitle(variant);
+                    return { ...(title != null ? { title } : {}), allOf: [variant, ...sharedElements] };
+                })
             },
             id: this.id,
             inlined: this.inlined,
@@ -419,6 +424,17 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             visitedRefs: this.visitedRefs
         });
         return distributedConverter.convert();
+    }
+
+    private getVariantTitle(variant: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject): string | undefined {
+        if (!this.context.isReferenceObject(variant)) {
+            return variant.title;
+        }
+        const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: variant,
+            breadcrumbs: this.breadcrumbs
+        });
+        return resolved?.title ?? variant.$ref.split("/").pop();
     }
 
     /**

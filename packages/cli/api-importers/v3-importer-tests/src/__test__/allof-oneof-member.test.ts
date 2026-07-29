@@ -16,7 +16,7 @@ interface IRType {
     shape: {
         _type: string;
         properties?: { name: string; valueType: { _type: string } }[];
-        members?: { type: { _type: string; name?: string; typeId?: string } }[];
+        members?: { type: { _type: string; name?: string; typeId?: string; displayName?: string } }[];
     };
 }
 
@@ -117,6 +117,23 @@ describe("oneOf as an allOf member", () => {
         const firstVariant = firstVariantName != null ? findType(ir, firstVariantName) : undefined;
         const tag = (firstVariant?.shape.properties ?? []).find((property) => property.name === "tag");
         expect(tag?.valueType._type).toBe("primitive");
+    }, 60_000);
+
+    it("names each distributed variant after the union member's title", async () => {
+        const ir = await loadIr("allof-oneof-member");
+
+        const inlineExportRequest = findType(ir, "InlineExportRequest");
+        expect((inlineExportRequest?.shape.members ?? []).map((member) => member.type.displayName)).toEqual([
+            "Export a leaf",
+            "Export a branch"
+        ]);
+
+        const exportRequest = findType(ir, "ExportRequest");
+        expect((exportRequest?.shape.members ?? []).map((member) => member.type.displayName)).toEqual([
+            "Export leaf",
+            "Export branch",
+            "Export tree"
+        ]);
     }, 60_000);
 
     it("keeps converting a oneOf in field position to a union", async () => {
