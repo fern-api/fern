@@ -192,7 +192,14 @@ async function runPackCommands({
             continue;
         }
         if (mode === "host") {
-            await loggingExeca(context.logger, executable, args, { cwd: outputPath });
+            // Hide any enclosing git repository from the packaging toolchain. Output directories
+            // commonly live inside (and are gitignored by) a fern config repo, and VCS-aware
+            // build backends (e.g. poetry-core) exclude gitignored files — silently producing
+            // empty artifacts. Docker mode is immune because only the output dir is mounted.
+            await loggingExeca(context.logger, executable, args, {
+                cwd: outputPath,
+                env: { ...process.env, GIT_DIR: join(outputPath, RelativeFilePath.of(".git")) }
+            });
             continue;
         }
         const image = PACK_DOCKER_IMAGES[language];

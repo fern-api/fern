@@ -5,5 +5,7 @@
     shared internally without publishing to a registry. Use `--pack-mode docker` to run the
     packaging toolchains inside official Docker images instead of requiring them on the host.
     `--pack` also generates full, packageable projects (pyproject.toml, README.md, etc.) for
-    local-file-system outputs so the packaging toolchains have the metadata they need.
+    local-file-system outputs so the packaging toolchains have the metadata they need, and
+    host-mode packaging hides any enclosing git repository so VCS-aware build backends
+    (e.g. poetry-core) don't silently exclude gitignored output files from the artifact.
   type: feat

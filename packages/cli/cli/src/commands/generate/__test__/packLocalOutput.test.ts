@@ -64,9 +64,12 @@ describe("packLocalOutputForGroup", () => {
         await packLocalOutputForGroup({ group, context: createMockTaskContext() });
 
         expect(loggingExecaMock).toHaveBeenCalledTimes(1);
-        const [, command, args] = loggingExecaMock.mock.calls[0] ?? [];
+        const [, command, args, options] = loggingExecaMock.mock.calls[0] ?? [];
         expect(command).toBe("python3");
         expect(args).toContain("wheel");
+        // Host-mode packaging must hide any enclosing git repo, otherwise VCS-aware build
+        // backends (e.g. poetry-core) exclude gitignored output files and produce empty artifacts.
+        expect(options?.env?.GIT_DIR).toBe(path.join(outputDir, ".git"));
     });
 
     it("runs npm install and npm pack for typescript generators, including build when a build script exists", async () => {
