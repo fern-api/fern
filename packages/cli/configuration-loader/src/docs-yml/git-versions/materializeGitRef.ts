@@ -97,8 +97,9 @@ async function tryResolveSha({
     // `<ref>^{commit}` forces resolution to a commit object, so annotated tags
     // resolve to the commit they point at rather than the tag object.
     const result = await runGit({
-        // `--` terminates option parsing so a ref beginning with `-` cannot be read as a git flag.
-        args: ["rev-parse", "--verify", "--quiet", "--", `${ref}^{commit}`],
+        // `--end-of-options` terminates option parsing so a ref beginning with `-` cannot be read as
+        // a git flag. (Unlike `--`, it does not make git treat the following argument as a pathspec.)
+        args: ["rev-parse", "--verify", "--quiet", "--end-of-options", `${ref}^{commit}`],
         cwd: repoRoot,
         context
     });
@@ -131,9 +132,9 @@ async function attemptFetch({
     const isShallow = isShallowResult.stdout === "true";
 
     // Fetch the specific ref (works for both branches and tags) and its tags.
-    // `--` terminates option parsing so a ref beginning with `-` cannot be read as a git flag.
+    // `--end-of-options` terminates option parsing so a ref beginning with `-` cannot be read as a git flag.
     await runGit({
-        args: ["fetch", ...(isShallow ? ["--unshallow"] : []), "--tags", remote, "--", ref],
+        args: ["fetch", ...(isShallow ? ["--unshallow"] : []), "--tags", remote, "--end-of-options", ref],
         cwd: repoRoot,
         context
     });
