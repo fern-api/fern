@@ -46,6 +46,9 @@ export declare namespace SchemaConverter {
 }
 
 export class SchemaConverter extends AbstractConverter<AbstractConverterContext<object>, SchemaConverter.Output> {
+    /** Upper bound on the variants produced by distributing an allOf over its unions. */
+    private static readonly MAX_DISTRIBUTED_VARIANTS = 64;
+
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly id: string;
     private readonly inlined: boolean;
@@ -355,6 +358,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
      * Distributes an allOf whose members include a union over that union, so that
      * `allOf: [oneOf: [A, B], S]` is converted as `oneOf: [allOf: [A, S], allOf: [B, S]]`.
      * Otherwise the union member is flattened into the parent object and its variants are lost.
+     *
+     * Only the first union is distributed here; the remaining allOf members are re-injected into
+     * every variant, so any further unions are distributed by the recursive conversion below.
      */
     private tryDistributeAllOfOverOneOf(): SchemaConverter.Output | undefined {
         if (!this.context.settings.preserveOneOfInAllOf) {
@@ -364,39 +370,30 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         if (!Array.isArray(allOf) || allOf.length === 0) {
             return undefined;
         }
-
-        let unionIndex: number | undefined;
-        let variants: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] | undefined;
-        for (const [index, element] of allOf.entries()) {
-            const resolved = this.context.isReferenceObject(element)
-                ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                      schemaOrReference: element,
-                      breadcrumbs: this.breadcrumbs
-                  })
-                : element;
-            if (resolved == null || resolved.type != null || resolved.properties != null) {
-                continue;
-            }
-            // Discriminated unions retain their discriminator only when left intact.
-            if (resolved.discriminator != null) {
-                continue;
-            }
-            const maybeVariants = resolved.oneOf ?? resolved.anyOf;
-            if (maybeVariants == null || maybeVariants.length === 0) {
-                continue;
-            }
-            unionIndex = index;
-            variants = maybeVariants;
-            break;
+        // A union declared alongside the allOf intersects with it; distributing would drop it.
+        if (this.schema.oneOf != null || this.schema.anyOf != null) {
+            return undefined;
         }
-        if (unionIndex == null || variants == null) {
+
+        const unions = this.getDistributableUnions(allOf);
+        const firstUnion = unions[0];
+        if (firstUnion == null) {
+            return undefined;
+        }
+        // Every union multiplies the variant count, since the others are redistributed per variant.
+        const variantCount = unions.reduce((count, union) => count * union.variants.length, 1);
+        if (variantCount > SchemaConverter.MAX_DISTRIBUTED_VARIANTS) {
+            this.context.logger.warn(
+                `Not distributing allOf over its ${unions.length} unions at ${this.breadcrumbs.join(".")}: ` +
+                    `it would produce ${variantCount} variants (max ${SchemaConverter.MAX_DISTRIBUTED_VARIANTS}).`
+            );
             return undefined;
         }
 
         const sharedElements: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] = allOf.filter(
-            (_, index) => index !== unionIndex
+            (_, index) => index !== firstUnion.index
         );
-        if (this.schema.properties != null) {
+        if (this.schema.properties != null || this.schema.required != null) {
             sharedElements.push({
                 type: "object",
                 properties: this.schema.properties,
@@ -406,8 +403,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         const siblings: OpenAPIV3_1.SchemaObject = { ...this.schema };
         delete siblings.allOf;
-        delete siblings.oneOf;
-        delete siblings.anyOf;
         delete siblings.properties;
         delete siblings.required;
 
@@ -416,7 +411,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             breadcrumbs: this.breadcrumbs,
             schema: {
                 ...siblings,
-                oneOf: variants.map((variant) => ({ allOf: [variant, ...sharedElements] }))
+                oneOf: firstUnion.variants.map((variant) => ({ allOf: [variant, ...sharedElements] }))
             },
             id: this.id,
             inlined: this.inlined,
@@ -424,6 +419,41 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             visitedRefs: this.visitedRefs
         });
         return distributedConverter.convert();
+    }
+
+    /**
+     * The allOf members that are plain unions of the parent's shape, in declaration order.
+     */
+    private getDistributableUnions(
+        allOf: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[]
+    ): { index: number; variants: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] }[] {
+        const unions: { index: number; variants: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] }[] = [];
+        for (const [index, element] of allOf.entries()) {
+            const resolved = this.context.isReferenceObject(element)
+                ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: element,
+                      breadcrumbs: this.breadcrumbs
+                  })
+                : element;
+            if (resolved == null || resolved.properties != null) {
+                continue;
+            }
+            // Anything but a plain object wrapper (e.g. a nullable union) carries extra semantics
+            // that the distributed variants would not preserve.
+            if (resolved.type != null && resolved.type !== "object") {
+                continue;
+            }
+            // Discriminated unions retain their discriminator only when left intact.
+            if (resolved.discriminator != null) {
+                continue;
+            }
+            const variants = resolved.oneOf ?? resolved.anyOf;
+            if (variants == null || variants.length === 0) {
+                continue;
+            }
+            unions.push({ index, variants });
+        }
+        return unions;
     }
 
     private tryConvertPrimitiveSchema(): SchemaConverter.Output | undefined {

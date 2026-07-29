@@ -24,6 +24,30 @@ paths:
                 properties:
                   taskId:
                     type: string
+  /plants/export/typed:
+    post:
+      operationId: exportPlantTyped
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TypedExportRequest"
+      responses:
+        "204":
+          description: Accepted
+  /plants/export/tagged:
+    post:
+      operationId: exportPlantTagged
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaggedExportRequest"
+      responses:
+        "204":
+          description: Accepted
 components:
   schemas:
     ExportLeaf:
@@ -68,6 +92,27 @@ components:
           properties:
             layout:
               type: string
+    TypedExportRequest:
+      allOf:
+        - type: object
+          oneOf:
+            - $ref: "#/components/schemas/ExportLeaf"
+            - $ref: "#/components/schemas/ExportBranch"
+        - type: object
+          properties:
+            timeout:
+              type: integer
+    TaggedExportRequest:
+      allOf:
+        - oneOf:
+            - $ref: "#/components/schemas/ExportLeaf"
+            - $ref: "#/components/schemas/ExportBranch"
+        - type: object
+          properties:
+            tag:
+              type: string
+      required:
+        - tag
     ExportRequest:
       allOf:
         - oneOf:

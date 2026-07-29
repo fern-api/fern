@@ -15,7 +15,7 @@ interface IRType {
     name: { name: string };
     shape: {
         _type: string;
-        properties?: { name: string }[];
+        properties?: { name: string; valueType: { _type: string } }[];
         members?: { type: { _type: string; name?: string; typeId?: string } }[];
     };
 }
@@ -97,6 +97,26 @@ describe("oneOf as an allOf member", () => {
             "timeout",
             "tag"
         ]);
+    }, 60_000);
+
+    it("is distributed when the union member also declares type: object", async () => {
+        const ir = await loadIr("allof-oneof-member");
+
+        const typedExportRequest = findType(ir, "TypedExportRequest");
+        expect(typedExportRequest?.shape._type).toBe("undiscriminatedUnion");
+        expect(typedExportRequest?.shape.members).toHaveLength(2);
+    }, 60_000);
+
+    it("keeps a required declared on the parent of the allOf", async () => {
+        const ir = await loadIr("allof-oneof-member");
+
+        const taggedExportRequest = findType(ir, "TaggedExportRequest");
+        expect(taggedExportRequest?.shape._type).toBe("undiscriminatedUnion");
+
+        const firstVariantName = taggedExportRequest?.shape.members?.[0]?.type.name;
+        const firstVariant = firstVariantName != null ? findType(ir, firstVariantName) : undefined;
+        const tag = (firstVariant?.shape.properties ?? []).find((property) => property.name === "tag");
+        expect(tag?.valueType._type).toBe("primitive");
     }, 60_000);
 
     it("keeps converting a oneOf in field position to a union", async () => {
