@@ -173,18 +173,24 @@ function upsertField(section: string, field: string, line: string): string {
  * YAML block scalar would otherwise make the manifest unparseable.
  */
 function toTomlString(value: string): string {
-    return `"${value
-        .replace(/\\/g, "\\\\")
-        .replace(/"/g, '\\"')
-        .replace(/\n/g, "\\n")
-        .replace(/\r/g, "\\r")
-        .replace(/\t/g, "\\t")
-        // eslint-disable-next-line no-control-regex
-        .replace(
-            /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,
-            (char) => `\\u${char.charCodeAt(0).toString(16).padStart(4, "0")}`
-        )}"`;
+    const escaped = Array.from(value, (char) => {
+        const code = char.charCodeAt(0);
+        if (code > 0x1f && code !== 0x7f) {
+            return char === "\\" || char === '"' ? `\\${char}` : char;
+        }
+        const shorthand = TOML_CONTROL_SHORTHANDS[char];
+        return shorthand ?? `\\u${code.toString(16).padStart(4, "0")}`;
+    }).join("");
+    return `"${escaped}"`;
 }
+
+const TOML_CONTROL_SHORTHANDS: Record<string, string | undefined> = {
+    "\n": "\\n",
+    "\r": "\\r",
+    "\t": "\\t",
+    "\b": "\\b",
+    "\f": "\\f"
+};
 
 /**
  * Rename the template's own `[[package]]` entry in Cargo.lock. Cargo

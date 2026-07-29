@@ -161,7 +161,7 @@ describe("applyPackageIdentityPatch", () => {
 
     it("escapes newlines and control characters that TOML forbids in a basic string", () => {
         const patched = applyPackageIdentityPatch('[package]\nname = "fern-cli-sdk"\n', {
-            description: "Multi\nline\tvalue\u0007"
+            description: `Multi\nline\tvalue${String.fromCharCode(7)}`
         });
         expect(patched).toContain('description = "Multi\\nline\\tvalue\\u0007"');
         expect(patched.split("\n").filter((line) => line.startsWith("description"))).toHaveLength(1);
