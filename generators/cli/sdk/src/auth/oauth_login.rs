@@ -438,6 +438,13 @@ pub struct PkceLoginFlow {
     /// Ordered fallback ports, tried after `redirect_port` when it's busy. Each must also be
     /// pre-registered with the authorization server. Empty unless set via `redirect_ports`.
     redirect_backup_ports: Vec<u16>,
+    /// Loopback host the callback listener binds and the redirect URI is built with. `None`
+    /// defaults to `127.0.0.1` (RFC 8252 §7.3). Set to `localhost` when the authorization server
+    /// registered a `localhost` redirect (must match exactly). Only loopback hosts are valid.
+    redirect_host: Option<String>,
+    /// Callback path served by the listener and used in the redirect URI. `None` defaults to
+    /// `/callback`. Set to match a non-`/callback` registered redirect path.
+    redirect_path: Option<String>,
     token_paste_url: Option<String>,
     authorization_params: ExtraParams,
     token_params: ExtraParams,
@@ -454,6 +461,8 @@ impl PkceLoginFlow {
             scopes: Vec::new(),
             redirect_port: None,
             redirect_backup_ports: Vec::new(),
+            redirect_host: None,
+            redirect_path: None,
             token_paste_url: None,
             authorization_params: Vec::new(),
             token_params: Vec::new(),
@@ -499,6 +508,24 @@ impl PkceLoginFlow {
             self.redirect_backup_ports = ports.collect();
         }
         self
+    }
+    /// Set the loopback host (`127.0.0.1` or `localhost`) — must match the registered redirect.
+    pub fn redirect_host(mut self, host: impl Into<String>) -> Self {
+        self.redirect_host = Some(host.into());
+        self
+    }
+    /// Set the callback path (defaults to `/callback`) — must match the registered redirect.
+    pub fn redirect_path(mut self, path: impl Into<String>) -> Self {
+        self.redirect_path = Some(path.into());
+        self
+    }
+    /// The loopback host the listener binds and the redirect URI uses. Defaults to `127.0.0.1`.
+    fn redirect_host_str(&self) -> &str {
+        self.redirect_host.as_deref().unwrap_or("127.0.0.1")
+    }
+    /// The callback path. Defaults to `/callback`.
+    fn redirect_path_str(&self) -> &str {
+        self.redirect_path.as_deref().unwrap_or("/callback")
     }
     pub fn token_paste_url(mut self, v: impl Into<String>) -> Self {
         self.token_paste_url = Some(v.into());
@@ -562,7 +589,12 @@ impl PkceLoginFlow {
     /// exchange always use the same port. The `unwrap_or(0)` is only reached by direct unit tests
     /// that never bind a listener.
     fn redirect_uri(&self) -> String {
-        format!("http://127.0.0.1:{}/callback", self.redirect_port.unwrap_or(0))
+        format!(
+            "http://{}:{}{}",
+            self.redirect_host_str(),
+            self.redirect_port.unwrap_or(0),
+            self.redirect_path_str()
+        )
     }
 
     fn build_authorize_url(&self, state: &str, challenge: &str) -> String {
@@ -634,10 +666,10 @@ impl LoginFlow for PkceLoginFlow {
 /// Bind a loopback TCP listener on the first available port in `candidate_ports` (tried in order).
 /// Pass `[0]` for an ephemeral (OS-assigned) port. Returns the bound listener, or an error naming
 /// every candidate when all are taken.
-async fn bind_loopback_listener(candidate_ports: &[u16]) -> Result<TcpListener, CliError> {
+async fn bind_loopback_listener(host: &str, candidate_ports: &[u16]) -> Result<TcpListener, CliError> {
     let mut last_err: Option<String> = None;
     for &port in candidate_ports {
-        match TcpListener::bind(("127.0.0.1", port)).await {
+        match TcpListener::bind((host, port)).await {
             Ok(listener) => return Ok(listener),
             Err(e) => last_err = Some(e.to_string()),
         }
@@ -648,7 +680,7 @@ async fn bind_loopback_listener(candidate_ports: &[u16]) -> Result<TcpListener, 
         .collect::<Vec<_>>()
         .join(", ");
     Err(CliError::Auth(format!(
-        "Could not bind any loopback callback port [{ports}] — is another instance running, or did you forget to register these redirect URIs? ({})",
+        "Could not bind any {host} callback port [{ports}] — is another instance running, or did you forget to register these redirect URIs? ({})",
         last_err.unwrap_or_default()
     )))
 }
@@ -673,7 +705,8 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
             ports
         }
     };
-    let listener = bind_loopback_listener(&candidate_ports).await?;
+    let redirect_host = flow.redirect_host_str().to_string();
+    let listener = bind_loopback_listener(&redirect_host, &candidate_ports).await?;
     // Resolve the actually-bound port (the ephemeral one the OS chose, or the pinned one) and use
     // it everywhere so the authorize request and token exchange carry the same redirect_uri.
     let actual_port = listener
@@ -683,13 +716,14 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
     flow.redirect_port = Some(actual_port);
 
     let url = flow.build_authorize_url(&state, &challenge);
+    let listening_uri = flow.redirect_uri();
     // Take the stderr lock, write, drop — before any .await — to keep
     // the future Send across awaits.
     {
         let mut err = std::io::stderr().lock();
         let _ = writeln!(err, "Opening browser to authenticate…");
         let _ = writeln!(err, "  URL: {url}");
-        let _ = writeln!(err, "  Listening on http://127.0.0.1:{actual_port}/callback");
+        let _ = writeln!(err, "  Listening on {listening_uri}");
         let _ = err.flush();
     }
     if !ctx.no_browser {
@@ -1562,7 +1596,7 @@ mod tests {
             l.local_addr().unwrap().port() // freed when `l` drops at end of block
         };
 
-        let listener = bind_loopback_listener(&[taken, free]).await.unwrap();
+        let listener = bind_loopback_listener("127.0.0.1", &[taken, free]).await.unwrap();
         assert_eq!(
             listener.local_addr().unwrap().port(),
             free,
@@ -1578,9 +1612,33 @@ mod tests {
         let pa = a.local_addr().unwrap().port();
         let pb = b.local_addr().unwrap().port();
 
-        let err = bind_loopback_listener(&[pa, pb]).await.unwrap_err();
+        let err = bind_loopback_listener("127.0.0.1", &[pa, pb]).await.unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains(&pa.to_string()) && msg.contains(&pb.to_string()), "error should name all ports: {msg}");
+    }
+
+    #[test]
+    fn pkce_redirect_uri_honors_configured_host_and_path() {
+        // localhost + custom path must flow verbatim into the redirect URI (exact-match with the
+        // authorization server's registration); default is 127.0.0.1 + /callback.
+        let localhost = PkceLoginFlow::new("OAuth2")
+            .client_id("id")
+            .authorization_url("https://a")
+            .token_url("https://t")
+            .redirect_host("localhost")
+            .redirect_path("/oauth/callback")
+            .redirect_port(8484);
+        assert_eq!(localhost.redirect_uri(), "http://localhost:8484/oauth/callback");
+
+        let default = PkceLoginFlow::new("OAuth2").redirect_port(8484);
+        assert_eq!(default.redirect_uri(), "http://127.0.0.1:8484/callback");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn bind_loopback_listener_binds_localhost() {
+        // localhost must be a bindable loopback host (resolves to 127.0.0.1 or ::1 on the same box).
+        let listener = bind_loopback_listener("localhost", &[0]).await.unwrap();
+        assert_ne!(listener.local_addr().unwrap().port(), 0);
     }
 
     #[test]

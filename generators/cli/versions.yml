@@ -6,9 +6,11 @@
         scheme now generates a `PkceLoginFlow` and a `device-code` scheme a `DeviceCodeLoginFlow`,
         registered via `CliApp::login_flow(...)` so `<bin> auth login` runs the browser / device
         flow, tokens are stored in the OS keyring, and requests get `Authorization: Bearer <token>`
-        with refresh-on-expiry. A configured loopback `redirect-uri` pins the callback port;
-        the object form (`{ url, ports }`) adds backup ports tried in order when the primary is
-        busy, and omitting it binds an ephemeral (OS-assigned) port per RFC 8252 §7.3. Extra literal parameter maps
+        with refresh-on-expiry. A configured loopback `redirect-uri` pins the callback host, path,
+        and port exactly (both `127.0.0.1` and `localhost` are honored, along with a custom path)
+        so it matches the authorization server's registered redirect; the object form
+        (`{ url, ports }`) adds backup ports tried in order when the primary is busy, and omitting
+        it binds an ephemeral (OS-assigned) port per RFC 8252 §7.3. Extra literal parameter maps
         (`authorizationParameters` / `tokenParameters` / `refreshParameters` /
         `deviceAuthorizationParameters` — e.g. an Auth0 `audience`) are appended to the respective
         requests, with protocol-reserved keys skipped. Environment-variable client IDs and the IR's

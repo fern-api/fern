@@ -191,13 +191,14 @@ function validateRedirectUri(redirectUri: string): string | undefined {
     try {
         parsed = new URL(redirectUri);
     } catch {
-        return `OAuth redirect-uri '${redirectUri}' is not a valid URL. Use http://127.0.0.1:<port>/callback, or omit it for an ephemeral port.`;
+        return `OAuth redirect-uri '${redirectUri}' is not a valid URL. Use http://127.0.0.1:<port>/callback (or http://localhost:<port>/...), or omit it for an ephemeral port.`;
     }
-    if (parsed.protocol !== "http:" || parsed.hostname !== "127.0.0.1") {
-        return `OAuth redirect-uri '${redirectUri}' must use host 127.0.0.1 over http — the generated CLI binds 127.0.0.1 and sends that exact host, so 'localhost' or any other host is not honored. Use e.g. http://127.0.0.1:8484/callback.`;
-    }
-    if (parsed.pathname !== "/callback") {
-        return `OAuth redirect-uri '${redirectUri}' must use the path /callback — the generated CLI serves the callback at /callback. Use e.g. http://127.0.0.1:8484/callback.`;
+    // Must be a loopback host over http — the callback is served on the local machine. Both
+    // 127.0.0.1 (recommended, RFC 8252 §7.3) and localhost are honored; the CLI binds and sends
+    // exactly this host, so it must match the authorization server's registered redirect. Any
+    // path is allowed (the CLI serves the exact path configured).
+    if (parsed.protocol !== "http:" || (parsed.hostname !== "127.0.0.1" && parsed.hostname !== "localhost")) {
+        return `OAuth redirect-uri '${redirectUri}' must use a loopback host over http (127.0.0.1 or localhost) — it must match the redirect URI registered with the authorization server. Use e.g. http://127.0.0.1:8484/callback.`;
     }
     if (parsed.port === "") {
         return `OAuth redirect-uri '${redirectUri}' must include a port to pin (e.g. http://127.0.0.1:8484/callback), or omit redirect-uri entirely to use an ephemeral port.`;

@@ -27,7 +27,7 @@ export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     "token-url"?: string;
     /** The token refresh endpoint URL. Defaults to `token-url` when omitted. */
     "refresh-url"?: string;
-    /** The loopback redirect (callback) URI for the authorization-code flow. The generated CLI always binds `127.0.0.1` and serves `/callback`, so a configured URI must be exactly `http://127.0.0.1:<port>/callback`. Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port per RFC 8252 §7.3. */
+    /** The loopback redirect (callback) URI for the authorization-code flow. Must be a loopback host over http — `127.0.0.1` (recommended, RFC 8252 §7.3) or `localhost` — with any path; the generated CLI binds and sends this URI exactly, so it must match the redirect registered with the authorization server (e.g. `http://127.0.0.1:8484/callback` or `http://localhost:8484/callback`). Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port. */
     "redirect-uri"?: FernDefinition.RedirectUriSchema;
     /** PKCE configuration for the authorization-code flow. PKCE is always applied for that flow. */
     pkce?: FernDefinition.OAuthPkceSchema;

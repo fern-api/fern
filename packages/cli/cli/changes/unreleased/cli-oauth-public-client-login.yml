@@ -6,6 +6,8 @@
     the new `OAuthConfiguration.authorizationCode` / `deviceCode` IR variants for public clients
     (no client secret), carrying the public client id, authorization/device/token URLs, scopes, an
     optional loopback `redirect-uri`, and PKCE. The `valid-oauth` rule enforces the per-flow
-    required fields and that a set `redirect-uri` is a loopback address. Existing
+    required fields and that a set `redirect-uri` is a loopback address — either `127.0.0.1`
+    (recommended) or `localhost`, with any path — that the generated CLI then binds and sends
+    verbatim so it matches the redirect registered with the authorization server. Existing
     `client-credentials` OAuth configurations are unchanged.
   type: feat

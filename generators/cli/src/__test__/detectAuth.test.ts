@@ -472,6 +472,30 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         expect(binding?.rustCall).not.toContain(".redirect_port(");
     });
 
+    it("emits redirect_host and redirect_path when a non-default loopback host/path is configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    redirectUri: "http://localhost:8484/oauth/callback",
+                    redirectUriBackupPorts: [8483]
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain('.redirect_host("localhost")');
+        expect(binding?.rustCall).toContain('.redirect_path("/oauth/callback")');
+        expect(binding?.rustCall).toContain(".redirect_ports([8484, 8483])");
+    });
+
+    it("omits redirect_host and redirect_path for the default 127.0.0.1/callback loopback", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(authorizationCode({ redirectUri: "http://127.0.0.1:8484/callback" })),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).not.toContain(".redirect_host(");
+        expect(binding?.rustCall).not.toContain(".redirect_path(");
+    });
+
     it("emits no param setters when no extra params are configured (byte-identical output)", () => {
         const [binding] = detectAuthBindings({
             auth: auth(authorizationCode({ scopes: ["openid"] })),

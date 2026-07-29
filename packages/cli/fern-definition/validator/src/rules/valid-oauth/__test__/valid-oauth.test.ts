@@ -228,7 +228,20 @@ describe("valid-oauth", () => {
             )
         });
         expect(violations.length).toBeGreaterThan(0);
-        expect(violations.some((violation) => violation.message.includes("must use host 127.0.0.1"))).toBe(true);
+        expect(violations.some((violation) => violation.message.includes("must use a loopback host"))).toBe(true);
+    });
+
+    it("valid-redirect-uri-localhost", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("redirect-uri-localhost")
+            )
+        });
+        expect(violations).toEqual([]);
     });
 
     it("valid-device-code", async () => {

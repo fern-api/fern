@@ -341,7 +341,7 @@ function clientCredentialsBinding(args: {
  * authenticated requests send `Authorization: Bearer <token>` with refresh-on-expiry.
  *
  * The SDK builder currently consumes `client_id`, `authorization_url`, `token_url`, `scopes`,
- * and a fixed `redirect_port`. The IR's `refreshUrl`, extra parameter maps, and
+ * and the loopback redirect (host, path, and one or more ports). The IR's `refreshUrl` and
  * `tokenHeader`/`tokenPrefix` are not yet consumable by the builder and are intentionally not
  * emitted; an environment-variable client ID is likewise unsupported for now (skip).
  */
@@ -363,17 +363,24 @@ function authorizationCodeBinding(args: {
     if (scopes.length > 0) {
         rustCall += `.scopes([${scopes.map(rustString).join(", ")}])`;
     }
-    // When `redirectUri` pins a loopback port, honor it; otherwise the flow binds an ephemeral
-    // (OS-assigned) port per RFC 8252. Host/path are fixed to 127.0.0.1 + /callback by the runtime.
-    // Backup ports (`redirectUriBackupPorts`) are tried, in order, if the primary is busy; when
-    // present we emit `.redirect_ports([primary, ...backups])`, else the single `.redirect_port`.
-    const redirectPort = loopbackRedirectPort(authorizationCode.redirectUri);
-    if (redirectPort != null) {
+    // When `redirectUri` is set, honor its host/port/path exactly (they must match the server's
+    // registration). Otherwise the flow binds an ephemeral (OS-assigned) 127.0.0.1 port per RFC
+    // 8252. Backup ports (`redirectUriBackupPorts`) are tried, in order, if the primary is busy.
+    // Host/path setters are emitted only when they differ from the runtime defaults (127.0.0.1,
+    // /callback), so a conventional config produces byte-identical output.
+    const redirect = parseLoopbackRedirect(authorizationCode.redirectUri);
+    if (redirect != null) {
+        if (redirect.host !== "127.0.0.1") {
+            rustCall += `.redirect_host(${rustString(redirect.host)})`;
+        }
+        if (redirect.path !== "/callback") {
+            rustCall += `.redirect_path(${rustString(redirect.path)})`;
+        }
         const backupPorts = authorizationCode.redirectUriBackupPorts ?? [];
         if (backupPorts.length > 0) {
-            rustCall += `.redirect_ports([${[redirectPort, ...backupPorts].join(", ")}])`;
+            rustCall += `.redirect_ports([${[redirect.port, ...backupPorts].join(", ")}])`;
         } else {
-            rustCall += `.redirect_port(${redirectPort})`;
+            rustCall += `.redirect_port(${redirect.port})`;
         }
     }
     // Extra literal params (e.g. Auth0 `audience`). Optional — emitted only when present, so a
@@ -462,7 +469,9 @@ function renderParams(setter: string, params: Record<string, string> | undefined
  * Extracts the port from a loopback redirect URI (e.g. `http://127.0.0.1:8484/callback` → 8484).
  * Returns undefined when the URI is absent, unparseable, or omits a port (ephemeral).
  */
-function loopbackRedirectPort(redirectUri: string | undefined): number | undefined {
+function parseLoopbackRedirect(
+    redirectUri: string | undefined
+): { host: string; path: string; port: number } | undefined {
     if (redirectUri == null) {
         return undefined;
     }
@@ -472,7 +481,10 @@ function loopbackRedirectPort(redirectUri: string | undefined): number | undefin
             return undefined;
         }
         const port = Number(parsed.port);
-        return Number.isInteger(port) && port > 0 && port < 65536 ? port : undefined;
+        if (!Number.isInteger(port) || port <= 0 || port >= 65536) {
+            return undefined;
+        }
+        return { host: parsed.hostname, path: parsed.pathname, port };
     } catch {
         return undefined;
     }
