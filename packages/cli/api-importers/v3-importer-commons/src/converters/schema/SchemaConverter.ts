@@ -86,6 +86,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedEnumSchema;
         }
 
+        const maybeDistributedAllOfOverOneOf = this.tryDistributeAllOfOverOneOf();
+        if (maybeDistributedAllOfOverOneOf != null) {
+            return maybeDistributedAllOfOverOneOf;
+        }
+
         const maybeConvertedSingularAllOfSchema = this.tryConvertSingularAllOfSchema();
         if (maybeConvertedSingularAllOfSchema != null) {
             return maybeConvertedSingularAllOfSchema;
@@ -344,6 +349,81 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         }
 
         return undefined;
+    }
+
+    /**
+     * Distributes an allOf whose members include a union over that union, so that
+     * `allOf: [oneOf: [A, B], S]` is converted as `oneOf: [allOf: [A, S], allOf: [B, S]]`.
+     * Otherwise the union member is flattened into the parent object and its variants are lost.
+     */
+    private tryDistributeAllOfOverOneOf(): SchemaConverter.Output | undefined {
+        if (!this.context.settings.preserveOneOfInAllOf) {
+            return undefined;
+        }
+        const allOf = this.schema.allOf;
+        if (!Array.isArray(allOf) || allOf.length === 0) {
+            return undefined;
+        }
+
+        let unionIndex: number | undefined;
+        let variants: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] | undefined;
+        for (const [index, element] of allOf.entries()) {
+            const resolved = this.context.isReferenceObject(element)
+                ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: element,
+                      breadcrumbs: this.breadcrumbs
+                  })
+                : element;
+            if (resolved == null || resolved.type != null || resolved.properties != null) {
+                continue;
+            }
+            // Discriminated unions retain their discriminator only when left intact.
+            if (resolved.discriminator != null) {
+                continue;
+            }
+            const maybeVariants = resolved.oneOf ?? resolved.anyOf;
+            if (maybeVariants == null || maybeVariants.length === 0) {
+                continue;
+            }
+            unionIndex = index;
+            variants = maybeVariants;
+            break;
+        }
+        if (unionIndex == null || variants == null) {
+            return undefined;
+        }
+
+        const sharedElements: (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[] = allOf.filter(
+            (_, index) => index !== unionIndex
+        );
+        if (this.schema.properties != null) {
+            sharedElements.push({
+                type: "object",
+                properties: this.schema.properties,
+                required: this.schema.required
+            });
+        }
+
+        const siblings: OpenAPIV3_1.SchemaObject = { ...this.schema };
+        delete siblings.allOf;
+        delete siblings.oneOf;
+        delete siblings.anyOf;
+        delete siblings.properties;
+        delete siblings.required;
+
+        const distributedConverter = new SchemaConverter({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: {
+                ...siblings,
+                oneOf: variants.map((variant) => ({ allOf: [variant, ...sharedElements] }))
+            },
+            id: this.id,
+            inlined: this.inlined,
+            nameOverride: this.nameOverride,
+            visitedRefs: this.visitedRefs
+        });
+        return distributedConverter.convert();
     }
 
     private tryConvertPrimitiveSchema(): SchemaConverter.Output | undefined {

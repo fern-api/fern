@@ -1,0 +1,7 @@
+- summary: |
+    Add the `preserve-one-of-in-all-of` OpenAPI setting. When enabled, an `allOf` whose members
+    include a `oneOf`/`anyOf` is distributed into a union — each variant is the union member merged
+    with the remaining `allOf` members — instead of flattening every variant's properties into a
+    single object. This makes the variants available to SDKs and renders a variant selector in the
+    API reference. Defaults to false.
+  type: feat

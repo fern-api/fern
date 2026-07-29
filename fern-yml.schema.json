@@ -3980,6 +3980,9 @@
                       "preserveSingleSchemaOneof": {
                         "type": "boolean"
                       },
+                      "preserveOneOfInAllOf": {
+                        "type": "boolean"
+                      },
                       "inlineAllOfSchemas": {
                         "type": "boolean"
                       },
@@ -4558,6 +4561,9 @@
                           "type": "boolean"
                         },
                         "preserveSingleSchemaOneof": {
+                          "type": "boolean"
+                        },
+                        "preserveOneOfInAllOf": {
                           "type": "boolean"
                         },
                         "inlineAllOfSchemas": {
