@@ -12,6 +12,7 @@ import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
+import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
@@ -51,7 +52,8 @@ export async function generateAPIWorkspaces({
     skipIfNoDiff,
     generateTests,
     automation,
-    pack
+    pack,
+    packMode
 }: {
     project: Project;
     cliContext: CliContext;
@@ -88,6 +90,8 @@ export async function generateAPIWorkspaces({
     automation?: AutomationRunOptions;
     /** Build distributable package artifacts for local-file-system outputs after generation. */
     pack?: boolean;
+    /** Where --pack runs the packaging toolchain: on the host or inside Docker toolchain images. */
+    packMode?: PackMode;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -190,7 +194,8 @@ export async function generateAPIWorkspaces({
                     skipIfNoDiff,
                     generateTests,
                     automation,
-                    pack
+                    pack,
+                    packMode
                 });
             });
         })

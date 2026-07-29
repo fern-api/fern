@@ -2,5 +2,6 @@
     Add a `--pack` flag to `fern generate`. When generating to the local file system, the CLI now
     builds distributable package artifacts (npm tarball, Python wheel, JAR, NuGet package, gem,
     Composer zip, crate) into a `fern-dist/` folder inside each output directory, so SDKs can be
-    shared internally without publishing to a registry.
+    shared internally without publishing to a registry. Use `--pack-mode docker` to run the
+    packaging toolchains inside official Docker images instead of requiring them on the host.
   type: feat

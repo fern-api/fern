@@ -128,6 +128,41 @@ describe("packLocalOutputForGroup", () => {
         expect(args?.[1]).not.toContain("Acme.Test");
     });
 
+    it("runs commands inside a docker toolchain image when mode is docker", async () => {
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-python-sdk", language: "python", outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), mode: "docker" });
+
+        expect(loggingExecaMock).toHaveBeenCalledTimes(1);
+        const [, command, args] = loggingExecaMock.mock.calls[0] ?? [];
+        expect(command).toBe("docker");
+        expect(args?.[0]).toBe("run");
+        expect(args).toContain("python:3.12");
+        expect(args).toContain(`${outputDir}:/workspace`);
+        expect(args).toContain("wheel");
+    });
+
+    it("uses the provided container runner in docker mode", async () => {
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({ name: "fernapi/fern-python-sdk", language: "python", outputPath: outputDir })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), mode: "docker", runner: "podman" });
+
+        const [, command] = loggingExecaMock.mock.calls[0] ?? [];
+        expect(command).toBe("podman");
+    });
+
     it("fails when packaging a generator errors", async () => {
         loggingExecaMock.mockRejectedValueOnce(new Error("python3 not found"));
         const group = {
