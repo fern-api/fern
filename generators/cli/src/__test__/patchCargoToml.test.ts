@@ -159,6 +159,14 @@ describe("applyPackageIdentityPatch", () => {
         expect(patched).toContain('description = "a \\"quoted\\" \\\\ value"');
     });
 
+    it("escapes newlines and control characters that TOML forbids in a basic string", () => {
+        const patched = applyPackageIdentityPatch('[package]\nname = "fern-cli-sdk"\n', {
+            description: "Multi\nline\tvalue\u0007"
+        });
+        expect(patched).toContain('description = "Multi\\nline\\tvalue\\u0007"');
+        expect(patched.split("\n").filter((line) => line.startsWith("description"))).toHaveLength(1);
+    });
+
     it("throws when the [package] section is missing", () => {
         expect(() => applyPackageIdentityPatch('[lib]\nname = "x"\n', { name: "acme" })).toThrow(
             /could not find the \[package\] section/

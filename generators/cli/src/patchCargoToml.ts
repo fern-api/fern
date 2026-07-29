@@ -167,9 +167,23 @@ function upsertField(section: string, field: string, line: string): string {
     return `${section.trimEnd()}\n${line}\n`;
 }
 
-/** TOML basic string, escaping backslashes and double quotes. */
+/**
+ * TOML basic string. Escapes backslashes, double quotes, and the control
+ * characters TOML forbids inside a basic string — a raw newline from a
+ * YAML block scalar would otherwise make the manifest unparseable.
+ */
 function toTomlString(value: string): string {
-    return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+    return `"${value
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r")
+        .replace(/\t/g, "\\t")
+        // eslint-disable-next-line no-control-regex
+        .replace(
+            /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,
+            (char) => `\\u${char.charCodeAt(0).toString(16).padStart(4, "0")}`
+        )}"`;
 }
 
 /**
