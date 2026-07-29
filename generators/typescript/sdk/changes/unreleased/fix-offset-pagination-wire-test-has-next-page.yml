@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed the generated wire tests for endpoints that use offset pagination. The tests
+    asserted `page.hasNextPage()` was `true` for every example, but the generated client
+    reports no next page when the response returns fewer items than the requested page
+    size (the pagination `step`), or when the response's `has-next-page` property is
+    `false`. The wire test now evaluates the same condition against the mocked response,
+    and only asserts `hasNextPage()`/`getNextPage()` when a next page is actually expected.
+  type: fix
