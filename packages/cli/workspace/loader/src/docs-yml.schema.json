@@ -5229,7 +5229,8 @@
       "type": "string",
       "enum": [
         "warn",
-        "error"
+        "error",
+        "off"
       ]
     },
     "docs.CheckRulesConfig": {
@@ -5341,7 +5342,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Configure the severity of validation rules run by `fern check`.\nEach rule can be set to `warn` (non-blocking) or `error` (blocking)."
+      "description": "Configure the severity of validation rules run by `fern check`.\nEach rule can be set to `warn` (non-blocking), `error` (blocking), or `off` (rule is not run)."
     },
     "docs.LogoConfiguration": {
       "type": "object",

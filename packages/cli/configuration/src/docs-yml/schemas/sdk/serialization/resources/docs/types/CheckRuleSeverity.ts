@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const CheckRuleSeverity: core.serialization.Schema<
     serializers.CheckRuleSeverity.Raw,
     FernDocsConfig.CheckRuleSeverity
-> = core.serialization.enum_(["warn", "error"]);
+> = core.serialization.enum_(["warn", "error", "off"]);
 
 export declare namespace CheckRuleSeverity {
-    export type Raw = "warn" | "error";
+    export type Raw = "warn" | "error" | "off";
 }

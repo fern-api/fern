@@ -4,7 +4,7 @@ import type * as FernDocsConfig from "../../../index.js";
 
 /**
  * Configure the severity of validation rules run by `fern check`.
- * Each rule can be set to `warn` (non-blocking) or `error` (blocking).
+ * Each rule can be set to `warn` (non-blocking), `error` (blocking), or `off` (rule is not run).
  */
 export interface CheckConfig {
     rules?: FernDocsConfig.CheckRulesConfig;

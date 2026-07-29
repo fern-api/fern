@@ -1,0 +1,11 @@
+- summary: |
+    `check.rules` in docs.yml now accepts `off` in addition to `warn` and `error`. A rule set to
+    `off` is never initialized or run, so `fern check` and `fern docs dev` skip both its violations
+    and its setup cost.
+
+    ```yaml
+    check:
+      rules:
+        missing-redirects: off
+    ```
+  type: feat
