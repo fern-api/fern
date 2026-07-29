@@ -456,6 +456,12 @@
               "path": {
                 "type": "string"
               },
+              "tag": {
+                "type": "string"
+              },
+              "branch": {
+                "type": "string"
+              },
               "slug": {
                 "type": "string"
               },
@@ -498,8 +504,7 @@
               }
             },
             "required": [
-              "display-name",
-              "path"
+              "display-name"
             ],
             "additionalProperties": false
           }
@@ -642,6 +647,12 @@
                         "path": {
                           "type": "string"
                         },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "branch": {
+                          "type": "string"
+                        },
                         "slug": {
                           "type": "string"
                         },
@@ -684,8 +695,7 @@
                         }
                       },
                       "required": [
-                        "display-name",
-                        "path"
+                        "display-name"
                       ],
                       "additionalProperties": false
                     }
@@ -862,6 +872,12 @@
                         "path": {
                           "type": "string"
                         },
+                        "tag": {
+                          "type": "string"
+                        },
+                        "branch": {
+                          "type": "string"
+                        },
                         "slug": {
                           "type": "string"
                         },
@@ -904,8 +920,7 @@
                         }
                       },
                       "required": [
-                        "display-name",
-                        "path"
+                        "display-name"
                       ],
                       "additionalProperties": false
                     }
