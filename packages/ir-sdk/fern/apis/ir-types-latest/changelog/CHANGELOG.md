@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.19.0] - 2026-07-29
+
+- Add `rubygems` variant to `PublishTarget` (`RubyGemsPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the Ruby SDK's gem identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way
+  npm/pypi/maven/crates/go/nuget targets already do, so the Ruby generator can stamp the gem
+  name/version into the generated `version.rb` and gemspec instead of defaulting to `0.0.0`.
+
 ## [v67.18.0] - 2026-07-29
 
 - Add `OAuthAuthorizationCode.redirectUriBackupPorts` (`optional<list<integer>>`): additional

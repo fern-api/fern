@@ -184,6 +184,7 @@ export async function generateWorkspace({
                         autoMerge,
                         skipIfNoDiff,
                         generateTests,
+                        generateFullProject: pack,
                         verify,
                         disableTelemetry: isTelemetryDisabled()
                     });
@@ -233,7 +234,8 @@ export async function generateWorkspace({
                         noReplay,
                         verify,
                         disableTelemetry: isTelemetryDisabled(),
-                        getSpecsTarGzBuffer: getSpecsTarGz
+                        getSpecsTarGzBuffer: getSpecsTarGz,
+                        generateFullProject: pack
                     });
                 }
                 if (pack) {
