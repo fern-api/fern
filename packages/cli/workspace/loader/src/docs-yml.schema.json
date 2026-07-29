@@ -1158,8 +1158,37 @@
           "type": "string"
         },
         "path": {
-          "type": "string",
-          "description": "The relative path to the version's docs.yml file."
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The relative path to the version's docs.yml file. Optional when `tag` or `branch`\nis set; in that case it names the nav/content file to read at that ref."
+        },
+        "tag": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A frozen git tag whose committed content is built for this version."
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A patchable git branch whose committed content is built for this version."
         },
         "slug": {
           "oneOf": [
@@ -1216,8 +1245,7 @@
         }
       },
       "required": [
-        "display-name",
-        "path"
+        "display-name"
       ],
       "additionalProperties": false
     },

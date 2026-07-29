@@ -705,8 +705,16 @@ types:
     properties:
       display-name: string
       path:
-        type: string
-        docs: The relative path to the version's docs.yml file.
+        type: optional<string>
+        docs: |
+          The relative path to the version's docs.yml file. Optional when `tag` or `branch`
+          is set; in that case it names the nav/content file to read at that ref.
+      tag:
+        type: optional<string>
+        docs: A frozen git tag whose committed content is built for this version.
+      branch:
+        type: optional<string>
+        docs: A patchable git branch whose committed content is built for this version.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
