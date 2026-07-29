@@ -669,6 +669,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newPointerTestFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
+		if g.config.ApplyQueryDefaultsOnNilRequest {
+			files = append(files, newQueryDefaultsOnNilFile(g.coordinator))
+		}
 		if needsFileUploadHelpers(ir) {
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
@@ -1505,6 +1508,14 @@ func newQueryFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"internal/query.go",
 		[]byte(queryFile),
+	)
+}
+
+func newQueryDefaultsOnNilFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/query_defaults_on_nil.go",
+		[]byte(queryDefaultsOnNilFile),
 	)
 }
 

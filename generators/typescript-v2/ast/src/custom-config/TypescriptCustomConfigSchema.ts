@@ -92,6 +92,15 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
     alwaysSendAuth: z.optional(z.boolean()),
+    // When true, makes client auth parameters optional even when the spec
+    // mandates auth on all endpoints (isAuthMandatory=true), and sends requests
+    // unauthenticated instead of throwing when no credentials are supplied.
+    // Useful for hand-maintained wrapper clients that authenticate via external
+    // means. Orthogonal to `alwaysSendAuth`, which decides which endpoints get
+    // auth headers: with both enabled, endpoints that don't require auth still
+    // get auth headers when credentials are supplied, and no endpoint gets them
+    // when credentials are absent.
+    "optional-auth": z.optional(z.boolean()),
     generateReactQueryHooks: z.optional(z.boolean()),
 
     // beta (not in docs)

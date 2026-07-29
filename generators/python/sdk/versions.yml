@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.24.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `optional-auth` config flag. When enabled, client auth
+        parameters (bearer token, basic auth username/password, header auth) are
+        made optional even when the API spec mandates auth on all endpoints
+        (`isAuthMandatory=true`). Auth headers are only sent when credentials are
+        provided. Useful for hand-maintained wrapper clients that authenticate via
+        external means (e.g. cloud provider credentials). Defaults to `false`, so
+        existing behavior is unchanged.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.23.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `runtime_version` config flag. When enabled, the SDK version
+        reported in the telemetry headers (`X-Fern-SDK-Version` and the version segment
+        of `User-Agent`) is resolved at runtime via `importlib.metadata.version(<dist>)`
+        instead of being baked in as a literal at generation time. This lets the reported
+        version track the actually-installed package version — for example when an
+        external tool such as release-please sets the published version after generation —
+        rather than a version the SDK may never publish. Falls back to the generation-time
+        version when the distribution is not installed (e.g. running from source). Disabled
+        by default, so existing generated output is unchanged, and subject to
+        `omit_fern_headers`.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
 - version: 5.22.2
   changelogEntry:
     - summary: |

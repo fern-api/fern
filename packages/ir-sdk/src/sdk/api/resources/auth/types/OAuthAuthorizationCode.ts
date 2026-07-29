@@ -28,8 +28,20 @@ export interface OAuthAuthorizationCode {
      * When omitted, the CLI uses a loopback redirect on an ephemeral (OS-assigned) port with
      * the path `/callback` (i.e. http://127.0.0.1:<random-port>/callback), per RFC 8252 §7.3.
      * This requires the authorization server to allow arbitrary loopback ports for the client.
+     *
+     * Backup ports for when this port is busy can be listed in `redirectUriBackupPorts`.
      */
     redirectUri: string | undefined;
+    /**
+     * Additional loopback ports for the authorization-code (PKCE) callback, tried in order when
+     * the port in `redirectUri` is already in use. Each backup reuses the same host and path as
+     * `redirectUri` (i.e. only the port differs), and every resulting callback URI must be
+     * pre-registered with the authorization server. Ignored when `redirectUri` is unset (an
+     * ephemeral port is used instead). Enables a fixed-port fallback set (e.g. redirectUri on
+     * 8484 with backups [8483, 8482]) for identity providers that bind each client to specific
+     * callback ports.
+     */
+    redirectUriBackupPorts: number[] | undefined;
     /** The scopes requested during authorization. */
     scopes: string[] | undefined;
     /** The PKCE configuration. PKCE is required for this flow. */
