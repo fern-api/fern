@@ -72,7 +72,8 @@ function buildRuleConfig(checkConfig: docsYml.RawSchemas.CheckConfig | undefined
         const severityOverride = toSeverityOverride(severity);
         if (severityOverride == null) {
             disabledRules.add(ruleName);
-        } else {
+            severityOverrides.delete(ruleName);
+        } else if (!disabledRules.has(ruleName)) {
             severityOverrides.set(ruleName, severityOverride);
         }
     }

@@ -6,6 +6,6 @@
     ```yaml
     check:
       rules:
-        missing-redirects: off
+        missing-redirects: "off"
     ```
   type: feat
