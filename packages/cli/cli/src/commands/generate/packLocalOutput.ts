@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { copyFile, mkdir, readdir, readFile, rename } from "fs/promises";
+import { copyFile, mkdir, readdir, readFile, rename, rmdir } from "fs/promises";
 
 /** Directory (inside each generator's local output) where packaged artifacts are written. */
 export const PACK_OUTPUT_DIRECTORY = "fern-dist";
@@ -42,6 +42,7 @@ export async function packLocalOutputForGroup({
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             context.logger.error(`Failed to package ${generator.name} output at ${outputPath}: ${message}`);
+            await removeDistDirIfEmpty(outputPath);
             failures.push(generator.name);
         }
     }
@@ -148,6 +149,17 @@ async function packOutputForLanguage({
             return;
         default:
             assertNever(language);
+    }
+}
+
+async function removeDistDirIfEmpty(outputPath: AbsoluteFilePath): Promise<void> {
+    const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
+    try {
+        if ((await readdir(distDir)).length === 0) {
+            await rmdir(distDir);
+        }
+    } catch {
+        // dist dir was never created (or was removed concurrently) — nothing to clean up
     }
 }
 
