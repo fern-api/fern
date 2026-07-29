@@ -94,7 +94,24 @@ export interface WireTestManifest {
      * the endpoint under test. Null for non-OAuth CLIs.
      */
     authMock: AuthMock | null;
+    /**
+     * For public-client login flows (authorization-code / device-code), there is no per-request
+     * token exchange to stub — the CLI reads a token from the keyring that `auth login` populated.
+     * The harness can't drive the interactive browser/device login headlessly, so instead it seeds
+     * a token via the universal `auth login --with-token` paste (which the request-time provider
+     * reads identically), then asserts business requests carry `Authorization: Bearer <token>`.
+     * Null for client-credentials / non-login-flow CLIs.
+     */
+    loginTokenSetup: LoginTokenSetup | null;
     cases: WireTestCase[];
+}
+
+/** Instructs the harness to seed a keyring token before driving business requests. */
+export interface LoginTokenSetup {
+    /** The auth scheme key to log into (passed as `--scheme` when the CLI has multiple schemes). */
+    schemeName: string;
+    /** The literal token to paste via `auth login --with-token`; also the expected bearer value. */
+    token: string;
 }
 
 /**
@@ -156,6 +173,11 @@ export function buildWireTestManifest(
          * server so token exchanges succeed.
          */
         oauthTokenEndpoint?: OAuthTokenEndpoint | null;
+        /**
+         * Scheme keys of public-client login flows (authorization-code / device-code). When present,
+         * the harness seeds a token via `auth login --with-token` and asserts bearer injection.
+         */
+        loginFlowSchemes?: string[];
     }
 ): WireTestManifest {
     const stub = convertToWireMock(ir);
@@ -200,8 +222,22 @@ export function buildWireTestManifest(
         specs: options.specs,
         authEnvVars: options.authEnvVars,
         authMock: buildAuthMock(options.oauthTokenEndpoint ?? null),
+        loginTokenSetup: buildLoginTokenSetup(options.loginFlowSchemes ?? []),
         cases
     };
+}
+
+/**
+ * Seed setup for a public-client login flow. The CLI supports one login-flow scheme at a time; we
+ * take the first and pair it with a fixed literal token the harness both pastes and asserts as the
+ * injected bearer. Null when there is no login-flow scheme.
+ */
+function buildLoginTokenSetup(loginFlowSchemes: string[]): LoginTokenSetup | null {
+    const schemeName = loginFlowSchemes[0];
+    if (schemeName == null) {
+        return null;
+    }
+    return { schemeName, token: "wire-test-token" };
 }
 
 /**
