@@ -171,7 +171,10 @@ export async function getPreviewDocsDefinition({
     context,
     previousDocsDefinition,
     editedAbsoluteFilepaths,
-    previousPreviewResult
+    previousPreviewResult,
+    buildRefVersions = false,
+    cliVersion,
+    cliName
 }: {
     domain: string;
     project: Project;
@@ -183,6 +186,14 @@ export async function getPreviewDocsDefinition({
      * This is used to preserve translation data during incremental page updates.
      */
     previousPreviewResult?: PreviewDocsResult;
+    /**
+     * When true, git-ref-backed versions are materialized and built. `fern docs dev`
+     * defaults to false (working-tree version only); `--versions all` opts in.
+     */
+    buildRefVersions?: boolean;
+    /** CLI version/name, used to load API workspaces for git-ref-backed versions. */
+    cliVersion?: string;
+    cliName?: string;
 }): Promise<PreviewDocsResult> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
@@ -370,7 +381,10 @@ export async function getPreviewDocsDefinition({
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
         targetAudiences: undefined,
-        buildTranslatedApiDefinitions: true
+        buildTranslatedApiDefinitions: true,
+        buildRefVersions,
+        cliVersion,
+        cliName
     });
 
     const writeDocsDefinition = await resolver.resolve();

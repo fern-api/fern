@@ -14,7 +14,8 @@ export async function previewDocsWorkspace({
     brokenLinks,
     legacyPreview,
     backendPort,
-    forceDownload
+    forceDownload,
+    buildRefVersions = false
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -24,6 +25,8 @@ export async function previewDocsWorkspace({
     legacyPreview?: boolean;
     backendPort: number;
     forceDownload?: boolean;
+    /** When true (via `--versions all`), git-ref-backed versions are built too. */
+    buildRefVersions?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -80,7 +83,10 @@ export async function previewDocsWorkspace({
                 },
                 context,
                 port,
-                bundlePath
+                bundlePath,
+                buildRefVersions,
+                cliVersion: cliContext.environment.packageVersion,
+                cliName: cliContext.environment.cliName
             });
         });
     }
@@ -130,7 +136,10 @@ export async function previewDocsWorkspace({
             port,
             bundlePath,
             backendPort,
-            forceDownload
+            forceDownload,
+            buildRefVersions,
+            cliVersion: cliContext.environment.packageVersion,
+            cliName: cliContext.environment.cliName
         });
     });
 

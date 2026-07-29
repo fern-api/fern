@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add git-ref-based docs versioning. A version entry in `docs.yml` can now name a
+    git `tag:` or `branch:` (optionally alongside `path:`) instead of pointing only at
+    the working tree. On publish, the CLI resolves the ref to a commit, materializes
+    the repository at that commit, and builds that version's pages, navigation, assets,
+    API definitions, and committed library output from the ref, composed with the
+    current branch's theme, shell, and `versions:` metadata. `fern docs dev` builds only
+    the working-tree version by default; pass `--versions all` to include ref-backed
+    versions.
+  type: feat
+- summary: |
+    Library (`library:`) documentation sections now hard-fail (like `api:` sections)
+    when the library is not configured, its `_navigation.yml` is missing, or a
+    referenced generated MDX page is missing, instead of silently omitting the section.
+    Errors name the library and, for git-ref-backed versions, the version and ref. This
+    surfaces previously silent failures for single-version users as well.
+  type: feat

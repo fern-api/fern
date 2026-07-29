@@ -4,8 +4,15 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
     displayName: string;
-    /** The relative path to the version's docs.yml file. */
-    path: string;
+    /**
+     * The relative path to the version's docs.yml file. Optional when `tag` or `branch`
+     * is set; in that case it names the nav/content file to read at that ref.
+     */
+    path?: string;
+    /** A frozen git tag whose committed content is built for this version. */
+    tag?: string;
+    /** A patchable git branch whose committed content is built for this version. */
+    branch?: string;
     /** The "slug" is this version's basePath. If not set, the slug will be generated from the display-name. */
     slug?: string;
     /** If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site. */

@@ -9,6 +9,9 @@ import path from "path";
 
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
+import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
+import { materializeGitRef } from "./git-versions/materializeGitRef.js";
+import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 
@@ -42,12 +45,18 @@ export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absolutePathToFernFolder,
     absoluteFilepathToDocsConfig,
-    context
+    context,
+    buildRefVersions = true
 }: {
     rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
+    /**
+     * When false, git-ref-backed versions are skipped rather than materialized.
+     * Used by `fern docs dev`, which builds only the working-tree version by default.
+     */
+    buildRefVersions?: boolean;
 }): Promise<WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>> {
     const {
         instances,
@@ -102,7 +111,8 @@ export async function parseDocsConfiguration({
         absolutePathToFernFolder,
         absolutePathToConfig: absoluteFilepathToDocsConfig,
         context,
-        folderTitleSource
+        folderTitleSource,
+        buildRefVersions
     });
 
     const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
@@ -700,64 +710,151 @@ function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.co
     return undefined;
 }
 
+async function loadWorkingTreeVersion({
+    version,
+    absolutePathToFernFolder,
+    context,
+    folderTitleSource
+}: {
+    version: docsYml.RawSchemas.VersionConfig;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
+}): Promise<docsYml.VersionInfo> {
+    if (version.path == null) {
+        throw new CliError({
+            message: `Version '${version.displayName}' must specify a 'path', 'tag', or 'branch'.`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(version.path));
+    let versionContent: unknown;
+    try {
+        versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+    } catch (error) {
+        if (error instanceof yaml.YAMLException) {
+            throw new CliError({
+                message: `Failed to parse version file ${version.path}: ${error.message}`,
+                code: CliError.Code.ParseError
+            });
+        }
+        throw error;
+    }
+
+    // Sanitize null/undefined values before parsing
+    const removedPaths: string[][] = [];
+    const sanitizedVersionContent = sanitizeNullValues(versionContent, [], removedPaths);
+    if (removedPaths.length > 0) {
+        context.logger.warn(
+            `Version file ${version.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+        );
+    }
+
+    const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
+    const versionNavigation = await convertNavigationConfiguration({
+        tabs: versionResult.tabs,
+        rawNavigationConfig: versionResult.navigation,
+        absolutePathToFernFolder,
+        absolutePathToConfig: absoluteFilepathToVersionFile,
+        context,
+        folderTitleSource
+    });
+    return {
+        landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
+        version: version.displayName,
+        navigation: versionNavigation,
+        availability: version.availability,
+        slug: version.slug,
+        hidden: version.hidden,
+        viewers: parseRoles(version.viewers),
+        orphaned: version.orphaned,
+        featureFlags: convertFeatureFlag(version.featureFlag),
+        announcement: version.announcement,
+        contentSource: undefined
+    };
+}
+
+async function loadRefVersion({
+    version,
+    ref,
+    absolutePathToFernFolder,
+    context,
+    folderTitleSource
+}: {
+    version: docsYml.RawSchemas.VersionConfig;
+    ref: string;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
+}): Promise<docsYml.VersionInfo> {
+    const materialized = await materializeGitRef({ ref, absolutePathToFernFolder, context });
+    const contentRoot = await resolveRefContentRoot({ materialized, explicitPath: version.path, context });
+
+    const versionNavigation = await convertNavigationConfiguration({
+        tabs: contentRoot.tabs,
+        rawNavigationConfig: contentRoot.navigation,
+        absolutePathToFernFolder: materialized.absolutePathToFernFolder,
+        absolutePathToConfig: contentRoot.absoluteFilepathToConfig,
+        context,
+        folderTitleSource
+    });
+
+    return {
+        landingPage: parsePageConfig(contentRoot.landingPage, contentRoot.absoluteFilepathToConfig),
+        version: version.displayName,
+        navigation: versionNavigation,
+        availability: version.availability,
+        slug: version.slug,
+        hidden: version.hidden,
+        viewers: parseRoles(version.viewers),
+        orphaned: version.orphaned,
+        featureFlags: convertFeatureFlag(version.featureFlag),
+        announcement: version.announcement,
+        contentSource: {
+            displayVersion: version.displayName,
+            ref: materialized.ref,
+            sha: materialized.sha,
+            absolutePathToFernFolder: materialized.absolutePathToFernFolder,
+            libraries: parseLibrariesConfiguration(contentRoot.rawLibraries)
+        }
+    };
+}
+
 async function getVersionedNavigationConfiguration({
     versions,
     absolutePathToFernFolder,
     context,
-    folderTitleSource
+    folderTitleSource,
+    buildRefVersions = true
 }: {
     versions: docsYml.RawSchemas.VersionConfig[];
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     parentSlug?: string;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    buildRefVersions?: boolean;
 }): Promise<docsYml.VersionedDocsNavigation> {
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
-        const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
-        let versionContent: unknown;
-        try {
-            versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-        } catch (error) {
-            if (error instanceof yaml.YAMLException) {
-                throw new CliError({
-                    message: `Failed to parse version file ${version.path}: ${error.message}`,
-                    code: CliError.Code.ParseError
-                });
-            }
-            throw error;
-        }
-
-        // Sanitize null/undefined values before parsing
-        const removedPaths: string[][] = [];
-        const sanitizedVersionContent = sanitizeNullValues(versionContent, [], removedPaths);
-        if (removedPaths.length > 0) {
-            context.logger.warn(
-                `Version file ${version.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+        const ref = getVersionContentRef(version);
+        if (ref == null) {
+            versionedNavbars.push(
+                await loadWorkingTreeVersion({ version, absolutePathToFernFolder, context, folderTitleSource })
             );
+            continue;
         }
 
-        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
-        const versionNavigation = await convertNavigationConfiguration({
-            tabs: versionResult.tabs,
-            rawNavigationConfig: versionResult.navigation,
-            absolutePathToFernFolder,
-            absolutePathToConfig: absoluteFilepathToVersionFile,
-            context,
-            folderTitleSource
-        });
-        versionedNavbars.push({
-            landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
-            version: version.displayName,
-            navigation: versionNavigation,
-            availability: version.availability,
-            slug: version.slug,
-            hidden: version.hidden,
-            viewers: parseRoles(version.viewers),
-            orphaned: version.orphaned,
-            featureFlags: convertFeatureFlag(version.featureFlag),
-            announcement: version.announcement
-        });
+        if (!buildRefVersions) {
+            context.logger.debug(
+                `Skipping git-ref-backed version '${version.displayName}' (ref '${ref}'); ` +
+                    "pass --versions all to include it."
+            );
+            continue;
+        }
+
+        versionedNavbars.push(
+            await loadRefVersion({ version, ref, absolutePathToFernFolder, context, folderTitleSource })
+        );
     }
     return {
         type: "versioned",
@@ -773,7 +870,8 @@ async function getNavigationConfiguration({
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
-    folderTitleSource
+    folderTitleSource,
+    buildRefVersions = true
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     products?: docsYml.RawSchemas.ProductConfig[];
@@ -783,6 +881,7 @@ async function getNavigationConfiguration({
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
+    buildRefVersions?: boolean;
 }): Promise<docsYml.DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
@@ -833,7 +932,8 @@ async function getNavigationConfiguration({
                         versions: product.versions,
                         absolutePathToFernFolder,
                         context,
-                        folderTitleSource
+                        folderTitleSource,
+                        buildRefVersions
                     });
                 } else {
                     // Process as a regular navigation if no versions
@@ -891,7 +991,8 @@ async function getNavigationConfiguration({
             versions,
             absolutePathToFernFolder,
             context,
-            folderTitleSource
+            folderTitleSource,
+            buildRefVersions
         });
     }
     throw new CliError({

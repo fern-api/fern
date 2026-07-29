@@ -76,7 +76,10 @@ export async function runPreviewServer({
     context,
     port,
     bundlePath,
-    cacheDir
+    cacheDir,
+    buildRefVersions = false,
+    cliVersion,
+    cliName
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -85,6 +88,9 @@ export async function runPreviewServer({
     port: number;
     bundlePath?: string;
     cacheDir?: AbsoluteFilePath;
+    buildRefVersions?: boolean;
+    cliVersion?: string;
+    cliName?: string;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
@@ -325,7 +331,10 @@ export async function runPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                buildRefVersions,
+                cliVersion,
+                cliName
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newPreviewResult;

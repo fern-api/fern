@@ -542,6 +542,7 @@ export async function publishDocs({
             ossWorkspaces,
             apiWorkspaces,
             taskContext: context,
+            cliVersion,
             editThisPage,
             uploadFiles: async (files) => {
                 // Pre-compute sanitized paths and attach to file objects

@@ -891,7 +891,9 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
 export const VersionConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
-        path: z.string(),
+        path: z.string().optional(),
+        tag: z.string().optional(),
+        branch: z.string().optional(),
         slug: z.string().optional(),
         availability: VersionAvailability.optional(),
         audiences: Audience.optional(),

@@ -253,6 +253,32 @@ export interface VersionInfo
     slug: string | undefined;
     hidden: boolean | undefined;
     announcement: AnnouncementConfig | undefined;
+    /**
+     * Present when this version's content is built from a git ref rather than the
+     * working tree. API sections and libraries for this version resolve against
+     * {@link VersionContentSource.absolutePathToFernFolder} instead of the current
+     * branch's fern folder.
+     */
+    contentSource: VersionContentSource | undefined;
+}
+
+/**
+ * Describes where a git-ref-backed version's content is materialized. The version
+ * metadata (slug, availability, ordering) still comes from the current branch's
+ * docs.yml; only the content (pages, navigation, api definitions, libraries) is
+ * read from the ref.
+ */
+export interface VersionContentSource {
+    /** The version's display name, used for actionable error messages. */
+    displayVersion: string;
+    /** The ref as declared in docs.yml (a git tag, branch, or commit SHA). */
+    ref: string;
+    /** The commit SHA that `ref` resolved to. */
+    sha: string;
+    /** Absolute path to the fern folder within the materialized checkout at `sha`. */
+    absolutePathToFernFolder: AbsoluteFilePath;
+    /** Libraries declared in the ref's docs.yml, used to resolve library sections at the ref. */
+    libraries: Record<string, ParsedLibraryConfiguration> | undefined;
 }
 
 export type ProductInfo = InternalProduct | ExternalProduct;

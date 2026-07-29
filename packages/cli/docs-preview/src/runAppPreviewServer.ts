@@ -568,7 +568,10 @@ export async function runAppPreviewServer({
     backendPort,
     forceDownload,
     cacheDir,
-    logsDir
+    logsDir,
+    buildRefVersions = false,
+    cliVersion,
+    cliName
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -580,6 +583,9 @@ export async function runAppPreviewServer({
     forceDownload?: boolean;
     cacheDir?: AbsoluteFilePath;
     logsDir?: AbsoluteFilePath;
+    buildRefVersions?: boolean;
+    cliVersion?: string;
+    cliName?: string;
 }): Promise<void> {
     if (forceDownload) {
         const appPreviewFolder = getPathToPreviewFolder({ app: true, cacheDir });
@@ -1083,7 +1089,10 @@ export async function runAppPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                buildRefVersions,
+                cliVersion,
+                cliName
             });
             const docsGenTime = Date.now() - docsGenStartTime;
 

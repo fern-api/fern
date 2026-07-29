@@ -2209,6 +2209,13 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     boolean: true,
                     default: false,
                     description: "Force re-download of the docs preview bundle by deleting the cached bundle"
+                })
+                .option("versions", {
+                    choices: ["current", "all"] as const,
+                    default: "current" as const,
+                    description:
+                        "Which versions to build. Defaults to 'current' (the working-tree version only); " +
+                        "'all' also materializes and builds git-ref-backed versions."
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -2254,7 +2261,8 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
                 backendPort,
-                forceDownload: argv.forceDownload
+                forceDownload: argv.forceDownload,
+                buildRefVersions: argv.versions === "all"
             });
         }
     );
