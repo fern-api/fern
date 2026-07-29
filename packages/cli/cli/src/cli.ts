@@ -874,6 +874,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Generate test files even when generating to a local file system (tests are normally only generated for GitHub output modes)"
+                })
+                .option("pack", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "After generating to the local file system, build distributable package artifacts (npm tarball, wheel, JAR, NuGet package, gem, etc.) into a fern-dist/ folder inside the output directory. Requires the language toolchain to be installed."
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -949,6 +955,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv.pack && argv.preview) {
+                return cliContext.failWithoutThrowing("The --pack flag cannot be used with --preview.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+            if (argv.pack && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --pack flag can only be used for API generation, not docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "The --output flag is not supported for docs generation.",
@@ -988,7 +1006,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"],
-                    generateTests: argv["generate-tests"]
+                    generateTests: argv["generate-tests"],
+                    pack: argv.pack
                 });
             }
             if (argv.docs != null) {
@@ -1051,7 +1070,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"],
-                generateTests: argv["generate-tests"]
+                generateTests: argv["generate-tests"],
+                pack: argv.pack
             });
         }
     );

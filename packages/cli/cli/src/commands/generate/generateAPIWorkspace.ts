@@ -22,6 +22,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
+import { packLocalOutputForGroup } from "./packLocalOutput.js";
 import { buildAutomationTargeting, selectGeneratorsForAutomation } from "./selectGeneratorsForAutomation.js";
 import { shouldSkipMissingGenerator } from "./shouldSkipMissingGenerator.js";
 
@@ -54,7 +55,8 @@ export async function generateWorkspace({
     autoMerge,
     skipIfNoDiff,
     generateTests,
-    automation
+    automation,
+    pack
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -94,6 +96,8 @@ export async function generateWorkspace({
      * outcomes through the recorder so siblings keep running when one fails.
      */
     automation?: AutomationRunOptions;
+    /** Build distributable package artifacts for local-file-system outputs after generation. */
+    pack?: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -228,6 +232,9 @@ export async function generateWorkspace({
                         disableTelemetry: isTelemetryDisabled(),
                         getSpecsTarGzBuffer: getSpecsTarGz
                     });
+                }
+                if (pack) {
+                    await packLocalOutputForGroup({ group, context: groupContext });
                 }
             })
         )

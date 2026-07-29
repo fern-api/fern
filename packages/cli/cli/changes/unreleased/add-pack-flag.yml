@@ -1,0 +1,6 @@
+- summary: |
+    Add a `--pack` flag to `fern generate`. When generating to the local file system, the CLI now
+    builds distributable package artifacts (npm tarball, Python wheel, JAR, NuGet package, gem,
+    Composer zip, crate) into a `fern-dist/` folder inside each output directory, so SDKs can be
+    shared internally without publishing to a registry.
+  type: feat

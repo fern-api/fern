@@ -50,7 +50,8 @@ export async function generateAPIWorkspaces({
     autoMerge,
     skipIfNoDiff,
     generateTests,
-    automation
+    automation,
+    pack
 }: {
     project: Project;
     cliContext: CliContext;
@@ -85,6 +86,8 @@ export async function generateAPIWorkspaces({
      * When provided, this call runs in fan-out automation mode (see {@link AutomationRunOptions}).
      */
     automation?: AutomationRunOptions;
+    /** Build distributable package artifacts for local-file-system outputs after generation. */
+    pack?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -186,7 +189,8 @@ export async function generateAPIWorkspaces({
                     autoMerge,
                     skipIfNoDiff,
                     generateTests,
-                    automation
+                    automation,
+                    pack
                 });
             });
         })
