@@ -56,6 +56,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
     includePlatformHeaders: z.optional(z.boolean()),
+    allowUserAgentAppInfo: z.optional(z.boolean()),
     useDefaultRequestParameterValues: z.optional(z.boolean()),
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     flattenRequestParameters: z.optional(z.boolean()),

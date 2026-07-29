@@ -440,6 +440,10 @@ fixtures:
     - outputFolder: include-platform-headers
       customConfig:
         includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle

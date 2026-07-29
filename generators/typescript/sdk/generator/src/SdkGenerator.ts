@@ -159,6 +159,7 @@ export declare namespace SdkGenerator {
         packagePath: string | undefined;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
+        allowUserAgentAppInfo: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
         generateReadWriteOnlyTypes: boolean;
@@ -440,7 +441,8 @@ export class SdkGenerator {
             parameterNaming: config.parameterNaming,
             baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
             caseConverter,
-            optionalAuth: this.config.optionalAuth
+            optionalAuth: this.config.optionalAuth,
+            allowUserAgentAppInfo: config.allowUserAgentAppInfo
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -559,6 +561,7 @@ export class SdkGenerator {
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
             includePlatformHeaders: config.includePlatformHeaders,
+            allowUserAgentAppInfo: config.allowUserAgentAppInfo,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             caseConverter: this.case
