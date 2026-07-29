@@ -17,7 +17,7 @@ export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     /** The token endpoint for the client-credentials flow. Required for that flow. */
     "get-token"?: FernDefinition.OAuthGetTokenEndpointSchema;
     "refresh-token"?: FernDefinition.OAuthRefreshTokenEndpointSchema;
-    /** The public client ID (literal). Public clients do not use a client secret. As an alternative, set `client-id-env` to read the client ID from an environment variable. */
+    /** The public client ID (literal). Public clients do not use a client secret. Required for the authorization-code and device-code flows (an environment-variable client ID via `client-id-env` is not yet supported for these flows). */
     "client-id"?: string;
     /** The authorization (consent) endpoint URL. Required for the authorization-code flow. */
     "authorization-url"?: string;
@@ -27,8 +27,8 @@ export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     "token-url"?: string;
     /** The token refresh endpoint URL. Defaults to `token-url` when omitted. */
     "refresh-url"?: string;
-    /** The loopback redirect (callback) URI for the authorization-code flow. When omitted, an ephemeral loopback port is used with the `/callback` path (RFC 8252 §7.3). Must be a loopback address (http://127.0.0.1 or http://localhost) when set. */
-    "redirect-uri"?: string;
+    /** The loopback redirect (callback) URI for the authorization-code flow. The generated CLI always binds `127.0.0.1` and serves `/callback`, so a configured URI must be exactly `http://127.0.0.1:<port>/callback`. Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port per RFC 8252 §7.3. */
+    "redirect-uri"?: FernDefinition.RedirectUriSchema;
     /** PKCE configuration for the authorization-code flow. PKCE is always applied for that flow. */
     pkce?: FernDefinition.OAuthPkceSchema;
     /** Additional literal parameters appended to the authorization request (e.g. `audience`). */

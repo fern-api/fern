@@ -280,7 +280,8 @@ function generateOAuth({
                     authorizationUrl: requireOAuthField(rawScheme, "authorization-url"),
                     tokenUrl: requireOAuthField(rawScheme, "token-url"),
                     refreshUrl: rawScheme["refresh-url"],
-                    redirectUri: rawScheme["redirect-uri"],
+                    redirectUri: getRedirectUri(rawScheme["redirect-uri"]),
+                    redirectUriBackupPorts: getRedirectUriBackupPorts(rawScheme["redirect-uri"]),
                     scopes: rawScheme.scopes,
                     pkce: { method: OAuthPkceMethod.S256 },
                     authorizationParameters: rawScheme["authorization-parameters"],
@@ -327,6 +328,29 @@ function getPublicClientId(rawScheme: RawSchemas.OAuthSchemeSchema): FernIr.OAut
         return OAuthPublicClientId.environmentVariable(clientIdEnvVar);
     }
     return OAuthPublicClientId.literal(rawScheme["client-id"] ?? "");
+}
+
+/**
+ * The raw `redirect-uri` is either a bare URI string or an object `{ url, ports }`. Flatten it into
+ * the IR's single `redirectUri` (the primary callback URI) — the port fallbacks go to
+ * {@link getRedirectUriBackupPorts}.
+ */
+function getRedirectUri(redirectUri: RawSchemas.OAuthSchemeSchema["redirect-uri"]): string | undefined {
+    if (redirectUri == null) {
+        return undefined;
+    }
+    return typeof redirectUri === "string" ? redirectUri : redirectUri.url;
+}
+
+/**
+ * The `ports` list from the object form of `redirect-uri` (backup loopback ports tried when the
+ * primary is busy). Undefined for the bare-string form or when omitted.
+ */
+function getRedirectUriBackupPorts(redirectUri: RawSchemas.OAuthSchemeSchema["redirect-uri"]): number[] | undefined {
+    if (redirectUri == null || typeof redirectUri === "string") {
+        return undefined;
+    }
+    return redirectUri.ports;
 }
 
 function requireOAuthField(rawScheme: RawSchemas.OAuthSchemeSchema, field: keyof RawSchemas.OAuthSchemeSchema): string {

@@ -826,8 +826,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/cli/task-context
       '@fern-fern/ir-sdk':
-        specifier: 67.17.0
-        version: 67.17.0
+        specifier: 67.18.0
+        version: 67.18.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -9611,8 +9611,8 @@ packages:
     resolution: {integrity: sha512-Y/qMjaW+5ayybyGe6kUTPOo1rLhD7o3gbGnm7wi55dhzW808jLyj1rkFx9DJlIXghgMVSA/cKYyuAb0engG0Cw==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@67.17.0':
-    resolution: {integrity: sha512-5ugEaEhcqXMHDCrVy5O4JZe4wrI/oFRD3cMV4+G0OP1n5KPGb3xLq+PaIay/bg4MKXsky7paDI1wUDVhV9FmNg==}
+  '@fern-fern/ir-sdk@67.18.0':
+    resolution: {integrity: sha512-j/6HVuCkHgYZoXnqCT24EZfgdirdY/JgrMYh8ub1qF6gUdf68b8QVH8X6D8HTfcXceoMb7BF01uKTK8xf6n1uQ==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-v53-sdk@1.0.1':
@@ -16649,7 +16649,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@67.15.0': {}
 
-  '@fern-fern/ir-sdk@67.17.0': {}
+  '@fern-fern/ir-sdk@67.18.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 

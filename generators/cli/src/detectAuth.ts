@@ -365,9 +365,16 @@ function authorizationCodeBinding(args: {
     }
     // When `redirectUri` pins a loopback port, honor it; otherwise the flow binds an ephemeral
     // (OS-assigned) port per RFC 8252. Host/path are fixed to 127.0.0.1 + /callback by the runtime.
+    // Backup ports (`redirectUriBackupPorts`) are tried, in order, if the primary is busy; when
+    // present we emit `.redirect_ports([primary, ...backups])`, else the single `.redirect_port`.
     const redirectPort = loopbackRedirectPort(authorizationCode.redirectUri);
     if (redirectPort != null) {
-        rustCall += `.redirect_port(${redirectPort})`;
+        const backupPorts = authorizationCode.redirectUriBackupPorts ?? [];
+        if (backupPorts.length > 0) {
+            rustCall += `.redirect_ports([${[redirectPort, ...backupPorts].join(", ")}])`;
+        } else {
+            rustCall += `.redirect_port(${redirectPort})`;
+        }
     }
     // Extra literal params (e.g. Auth0 `audience`). Optional — emitted only when present, so a
     // config without them produces byte-identical output.

@@ -383,6 +383,7 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
     const authorizationCode = (overrides: {
         clientId?: FernIr.OAuthPublicClientId;
         redirectUri?: string;
+        redirectUriBackupPorts?: number[];
         scopes?: string[];
         authorizationParameters?: Record<string, string>;
         tokenParameters?: Record<string, string>;
@@ -396,6 +397,7 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
                 tokenUrl: "https://auth.example.com/token",
                 refreshUrl: undefined,
                 redirectUri: overrides.redirectUri,
+                redirectUriBackupPorts: overrides.redirectUriBackupPorts,
                 scopes: overrides.scopes,
                 pkce: { method: FernIr.OAuthPkceMethod.S256 },
                 authorizationParameters: overrides.authorizationParameters,
@@ -453,6 +455,21 @@ describe("detectAuthBindings — public-client OAuth login flows", () => {
         const [binding] = detectAuthBindings({ auth: auth(authorizationCode({})), binaryName: "acme" });
         expect(binding?.rustCall).not.toContain("redirect_port");
         expect(binding?.rustCall).toContain('PkceLoginFlow::new("MyOAuth")');
+    });
+
+    it("emits redirect_ports (primary + backups) when backup ports are configured", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(
+                authorizationCode({
+                    redirectUri: "http://127.0.0.1:8484/callback",
+                    redirectUriBackupPorts: [8483, 8482]
+                })
+            ),
+            binaryName: "acme"
+        });
+        expect(binding?.rustCall).toContain(".redirect_ports([8484, 8483, 8482])");
+        // The single-port setter must not also be emitted.
+        expect(binding?.rustCall).not.toContain(".redirect_port(");
     });
 
     it("emits no param setters when no extra params are configured (byte-identical output)", () => {

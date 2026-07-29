@@ -9,6 +9,7 @@ import { OAuthFlowTypeSchema } from "./OAuthFlowTypeSchema.js";
 import { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema.js";
 import { OAuthPkceSchema } from "./OAuthPkceSchema.js";
 import { OAuthRefreshTokenEndpointSchema } from "./OAuthRefreshTokenEndpointSchema.js";
+import { RedirectUriSchema } from "./RedirectUriSchema.js";
 
 export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.OAuthSchemeSchema.Raw,
@@ -29,7 +30,7 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "device-authorization-url": core.serialization.string().optional(),
         "token-url": core.serialization.string().optional(),
         "refresh-url": core.serialization.string().optional(),
-        "redirect-uri": core.serialization.string().optional(),
+        "redirect-uri": RedirectUriSchema.optional(),
         pkce: OAuthPkceSchema.optional(),
         "authorization-parameters": core.serialization
             .record(core.serialization.string(), core.serialization.string())
@@ -62,7 +63,7 @@ export declare namespace OAuthSchemeSchema {
         "device-authorization-url"?: string | null;
         "token-url"?: string | null;
         "refresh-url"?: string | null;
-        "redirect-uri"?: string | null;
+        "redirect-uri"?: RedirectUriSchema.Raw | null;
         pkce?: OAuthPkceSchema.Raw | null;
         "authorization-parameters"?: Record<string, string> | null;
         "device-authorization-parameters"?: Record<string, string> | null;

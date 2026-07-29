@@ -138,9 +138,22 @@ function validatePublicClientFlow(oauth: RawSchemas.OAuthSchemeSchema): RuleViol
 
     const redirectUri = oauth["redirect-uri"];
     if (redirectUri != null) {
-        const redirectUriError = validateRedirectUri(redirectUri);
-        if (redirectUriError != null) {
-            violations.push({ severity: "fatal", message: redirectUriError });
+        // `redirect-uri` is either a bare URI string or `{ url, ports }`. Validate the primary URI
+        // for both forms; for the object form also validate each backup port.
+        const url = typeof redirectUri === "string" ? redirectUri : redirectUri.url;
+        const urlError = validateRedirectUri(url);
+        if (urlError != null) {
+            violations.push({ severity: "fatal", message: urlError });
+        }
+        if (typeof redirectUri !== "string") {
+            for (const port of redirectUri.ports ?? []) {
+                if (!Number.isInteger(port) || port < 1 || port > 65535) {
+                    violations.push({
+                        severity: "fatal",
+                        message: `OAuth redirect-uri backup port '${port}' is invalid; ports must be integers in 1–65535.`
+                    });
+                }
+            }
         }
     }
 

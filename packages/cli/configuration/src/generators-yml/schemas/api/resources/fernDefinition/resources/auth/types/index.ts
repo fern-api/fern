@@ -23,5 +23,7 @@ export * from "./OAuthRefreshTokenEndpointSchema.js";
 export * from "./OAuthRefreshTokenRequestPropertiesSchema.js";
 export * from "./OAuthRefreshTokenResponsePropertiesSchema.js";
 export * from "./OAuthSchemeSchema.js";
+export * from "./RedirectUriSchema.js";
+export * from "./RedirectUriWithBackupPortsSchema.js";
 export * from "./TokenBearerAuthSchema.js";
 export * from "./WithEnvironmentVariable.js";

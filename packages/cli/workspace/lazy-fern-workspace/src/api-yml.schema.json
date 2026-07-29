@@ -753,6 +753,44 @@
       ],
       "additionalProperties": false
     },
+    "auth.RedirectUriWithBackupPortsSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The primary loopback callback URI, e.g. `http://127.0.0.1:8484/callback`."
+        },
+        "ports": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Backup loopback ports, tried in order when the port in `url` is busy. Each reuses the host and path of `url` (only the port differs) and must be pre-registered with the authorization server."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "description": "A loopback callback URI with additional backup ports for the authorization-code flow."
+    },
+    "auth.RedirectUriSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.RedirectUriWithBackupPortsSchema"
+        }
+      ]
+    },
     "auth.OAuthPkceSchema": {
       "type": "object",
       "properties": {
@@ -926,13 +964,13 @@
         "redirect-uri": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/auth.RedirectUriSchema"
             },
             {
               "type": "null"
             }
           ],
-          "description": "The loopback redirect (callback) URI for the authorization-code flow. Only the port is honored — the generated CLI always binds `127.0.0.1` and serves `/callback` — so when set this must be exactly `http://127.0.0.1:<port>/callback`. Omit it to use an ephemeral (OS-assigned) port per RFC 8252 §7.3."
+          "description": "The loopback redirect (callback) URI for the authorization-code flow. The generated CLI always binds `127.0.0.1` and serves `/callback`, so a configured URI must be exactly `http://127.0.0.1:<port>/callback`. Provide a bare string to pin a single port, or an object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit it entirely to use an ephemeral (OS-assigned) port per RFC 8252 §7.3."
         },
         "pkce": {
           "oneOf": [

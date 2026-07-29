@@ -209,12 +209,13 @@ types:
         type: optional<string>
         docs: The token refresh endpoint URL. Defaults to `token-url` when omitted.
       redirect-uri:
-        type: optional<string>
+        type: optional<RedirectUriSchema>
         docs: >-
-          The loopback redirect (callback) URI for the authorization-code flow. Only the port is
-          honored — the generated CLI always binds `127.0.0.1` and serves `/callback` — so when set
-          this must be exactly `http://127.0.0.1:<port>/callback`. Omit it to use an ephemeral
-          (OS-assigned) port per RFC 8252 §7.3.
+          The loopback redirect (callback) URI for the authorization-code flow. The generated CLI
+          always binds `127.0.0.1` and serves `/callback`, so a configured URI must be exactly
+          `http://127.0.0.1:<port>/callback`. Provide a bare string to pin a single port, or an
+          object with `url` plus `ports` to add backup ports tried when the primary is busy. Omit
+          it entirely to use an ephemeral (OS-assigned) port per RFC 8252 §7.3.
       pkce:
         type: optional<OAuthPkceSchema>
         docs: PKCE configuration for the authorization-code flow. PKCE is always applied for that flow.
@@ -230,6 +231,25 @@ types:
       refresh-parameters:
         type: optional<map<string, string>>
         docs: Additional literal parameters included in the refresh request.
+
+  RedirectUriSchema:
+    discriminated: false
+    union:
+      - string
+      - RedirectUriWithBackupPortsSchema
+
+  RedirectUriWithBackupPortsSchema:
+    docs: A loopback callback URI with additional backup ports for the authorization-code flow.
+    properties:
+      url:
+        type: string
+        docs: The primary loopback callback URI, e.g. `http://127.0.0.1:8484/callback`.
+      ports:
+        type: optional<list<integer>>
+        docs: >-
+          Backup loopback ports, tried in order when the port in `url` is busy. Each reuses the
+          host and path of `url` (only the port differs) and must be pre-registered with the
+          authorization server.
 
   OAuthGetTokenEndpointSchema:
     properties:
