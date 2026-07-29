@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.79.3
+  changelogEntry:
+    - summary: |
+        Only reference `README.md` in the generated `.csproj` when the file actually exists. The
+        `<PackageReadmeFile>` property and the packed `<None Include>` item are now guarded with an
+        MSBuild `Exists` condition, so `dotnet pack` no longer fails with NU5019 for outputs that do
+        not include a README (e.g. local-file-system output).
+      type: fix
+  createdAt: "2026-07-29"
+  irVersion: 67
 - version: 2.79.2
   changelogEntry:
     - summary: |
