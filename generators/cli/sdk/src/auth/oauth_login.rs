@@ -431,9 +431,13 @@ pub struct PkceLoginFlow {
     authorization_url: String,
     token_url: String,
     scopes: Vec<String>,
-    /// The loopback callback port. `None` = ephemeral (OS-assigned) port per RFC 8252 §7.3;
-    /// `Some(port)` pins an exact port the authorization server must have pre-registered.
+    /// The primary loopback callback port. `None` = ephemeral (OS-assigned) port per RFC 8252
+    /// §7.3; `Some(port)` pins an exact port the authorization server must have pre-registered.
+    /// At login time `run_pkce` resolves this to the actually-bound port.
     redirect_port: Option<u16>,
+    /// Ordered fallback ports, tried after `redirect_port` when it's busy. Each must also be
+    /// pre-registered with the authorization server. Empty unless set via `redirect_ports`.
+    redirect_backup_ports: Vec<u16>,
     token_paste_url: Option<String>,
     authorization_params: ExtraParams,
     token_params: ExtraParams,
@@ -449,6 +453,7 @@ impl PkceLoginFlow {
             token_url: String::new(),
             scopes: Vec::new(),
             redirect_port: None,
+            redirect_backup_ports: Vec::new(),
             token_paste_url: None,
             authorization_params: Vec::new(),
             token_params: Vec::new(),
@@ -479,6 +484,20 @@ impl PkceLoginFlow {
     /// Pin an exact loopback callback port. Omit this to use an ephemeral (OS-assigned) port.
     pub fn redirect_port(mut self, port: u16) -> Self {
         self.redirect_port = Some(port);
+        self
+    }
+    /// Pin an ordered set of loopback callback ports: the first is preferred, the rest are
+    /// fallbacks tried (in order) when an earlier one is busy. All must be pre-registered with the
+    /// authorization server. An empty list is a no-op (leaves the flow on an ephemeral port).
+    pub fn redirect_ports<I>(mut self, ports: I) -> Self
+    where
+        I: IntoIterator<Item = u16>,
+    {
+        let mut ports = ports.into_iter();
+        if let Some(primary) = ports.next() {
+            self.redirect_port = Some(primary);
+            self.redirect_backup_ports = ports.collect();
+        }
         self
     }
     pub fn token_paste_url(mut self, v: impl Into<String>) -> Self {
@@ -612,6 +631,28 @@ impl LoginFlow for PkceLoginFlow {
     }
 }
 
+/// Bind a loopback TCP listener on the first available port in `candidate_ports` (tried in order).
+/// Pass `[0]` for an ephemeral (OS-assigned) port. Returns the bound listener, or an error naming
+/// every candidate when all are taken.
+async fn bind_loopback_listener(candidate_ports: &[u16]) -> Result<TcpListener, CliError> {
+    let mut last_err: Option<String> = None;
+    for &port in candidate_ports {
+        match TcpListener::bind(("127.0.0.1", port)).await {
+            Ok(listener) => return Ok(listener),
+            Err(e) => last_err = Some(e.to_string()),
+        }
+    }
+    let ports = candidate_ports
+        .iter()
+        .map(u16::to_string)
+        .collect::<Vec<_>>()
+        .join(", ");
+    Err(CliError::Auth(format!(
+        "Could not bind any loopback callback port [{ports}] — is another instance running, or did you forget to register these redirect URIs? ({})",
+        last_err.unwrap_or_default()
+    )))
+}
+
 async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliError> {
     use std::io::Write;
 
@@ -620,16 +661,19 @@ async fn run_pkce(mut flow: PkceLoginFlow, ctx: LoginContext) -> Result<(), CliE
     let state = generate_code_verifier(); // reuse generator; just needs entropy
 
     // Bind the loopback listener first. `redirect_port = None` → bind port 0 so the OS assigns a
-    // free ephemeral port (RFC 8252 §7.3); `Some(port)` pins an exact pre-registered port and
-    // fails hard on collision (no fallback — the authorization server only accepts that URI).
-    let requested_port = flow.redirect_port.unwrap_or(0);
-    let listener = TcpListener::bind(("127.0.0.1", requested_port))
-        .await
-        .map_err(|e| {
-            CliError::Auth(format!(
-                "Could not bind 127.0.0.1:{requested_port} — is another instance running, or did you forget to register that redirect URI? ({e})"
-            ))
-        })?;
+    // free ephemeral port (RFC 8252 §7.3). A pinned `redirect_port` (with optional backups) is
+    // tried in order and the first free one wins; all are pre-registered with the authorization
+    // server, so whichever binds still matches. Fails only if every candidate is taken.
+    let candidate_ports: Vec<u16> = match flow.redirect_port {
+        None => vec![0],
+        Some(primary) => {
+            let mut ports = Vec::with_capacity(1 + flow.redirect_backup_ports.len());
+            ports.push(primary);
+            ports.extend(flow.redirect_backup_ports.iter().copied());
+            ports
+        }
+    };
+    let listener = bind_loopback_listener(&candidate_ports).await?;
     // Resolve the actually-bound port (the ephemeral one the OS chose, or the pinned one) and use
     // it everywhere so the authorize request and token exchange carry the same redirect_uri.
     let actual_port = listener
@@ -1506,6 +1550,48 @@ mod tests {
             .redirect_port(8484);
         assert_eq!(flow.redirect_port, Some(8484));
         assert_eq!(flow.redirect_uri(), "http://127.0.0.1:8484/callback");
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn bind_loopback_listener_uses_first_free_port() {
+        // Occupy the first candidate; the loop must fall through to the next free one.
+        let occupied = TcpListener::bind(("127.0.0.1", 0)).await.unwrap();
+        let taken = occupied.local_addr().unwrap().port();
+        let free = {
+            let l = TcpListener::bind(("127.0.0.1", 0)).await.unwrap();
+            l.local_addr().unwrap().port() // freed when `l` drops at end of block
+        };
+
+        let listener = bind_loopback_listener(&[taken, free]).await.unwrap();
+        assert_eq!(
+            listener.local_addr().unwrap().port(),
+            free,
+            "should skip the occupied port and bind the next free one"
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn bind_loopback_listener_errors_when_all_taken() {
+        // Hold both candidate ports for the duration of the call.
+        let a = TcpListener::bind(("127.0.0.1", 0)).await.unwrap();
+        let b = TcpListener::bind(("127.0.0.1", 0)).await.unwrap();
+        let pa = a.local_addr().unwrap().port();
+        let pb = b.local_addr().unwrap().port();
+
+        let err = bind_loopback_listener(&[pa, pb]).await.unwrap_err();
+        let msg = format!("{err}");
+        assert!(msg.contains(&pa.to_string()) && msg.contains(&pb.to_string()), "error should name all ports: {msg}");
+    }
+
+    #[test]
+    fn pkce_redirect_ports_sets_primary_and_backups() {
+        let flow = PkceLoginFlow::new("OAuth2")
+            .client_id("id")
+            .authorization_url("https://auth.example.com/authorize")
+            .token_url("https://auth.example.com/token")
+            .redirect_ports([8484, 8483, 8482]);
+        assert_eq!(flow.redirect_port, Some(8484));
+        assert_eq!(flow.redirect_backup_ports, vec![8483, 8482]);
     }
 
     #[tokio::test(flavor = "multi_thread")]
