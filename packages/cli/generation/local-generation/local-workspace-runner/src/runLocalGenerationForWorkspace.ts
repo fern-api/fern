@@ -73,6 +73,7 @@ export async function runLocalGenerationForWorkspace({
     autoMerge,
     skipIfNoDiff,
     generateTests,
+    generateFullProject,
     verify,
     disableTelemetry
 }: {
@@ -100,6 +101,12 @@ export async function runLocalGenerationForWorkspace({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     generateTests?: boolean;
+    /**
+     * When true, filesystem (local-file-system) outputs are generated as full, packageable
+     * projects (pyproject.toml, README.md, etc.) instead of source-only output. Set by
+     * `fern generate --pack` so the emitted SDK can be built into a package artifact.
+     */
+    generateFullProject?: boolean;
     disableTelemetry?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
@@ -267,7 +274,8 @@ export async function runLocalGenerationForWorkspace({
                     userProvidedVersion,
                     packageName,
                     context: interactiveTaskContext,
-                    generateTests
+                    generateTests,
+                    generateFullProject
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -616,7 +624,8 @@ export function getPublishConfig({
     userProvidedVersion,
     packageName,
     context,
-    generateTests
+    generateTests,
+    generateFullProject
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
@@ -625,6 +634,7 @@ export function getPublishConfig({
     packageName?: string;
     context: TaskContext;
     generateTests?: boolean;
+    generateFullProject?: boolean;
 }): FernIr.PublishingConfig | undefined {
     // When version is AUTO, substitute the language-mapped magic placeholder
     // ("0.0.0-fern-placeholder") so the version stamped into the generated SDK's
@@ -669,7 +679,7 @@ export function getPublishConfig({
         });
 
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: generateTests || org?.selfHostedSdKs || false,
+            generateFullProject: generateTests || generateFullProject || org?.selfHostedSdKs || false,
             publishTarget
         });
     }
@@ -677,7 +687,7 @@ export function getPublishConfig({
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => {
             return FernIr.PublishingConfig.filesystem({
-                generateFullProject: generateTests || org?.selfHostedSdKs || false,
+                generateFullProject: generateTests || generateFullProject || org?.selfHostedSdKs || false,
                 publishTarget: undefined
             });
         },

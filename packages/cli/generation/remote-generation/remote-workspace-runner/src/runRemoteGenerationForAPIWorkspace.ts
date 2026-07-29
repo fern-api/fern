@@ -55,7 +55,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     automation,
     occurrenceTracker,
     loginCommand,
-    getSpecsTarGzBuffer
+    getSpecsTarGzBuffer,
+    generateFullProject
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -119,6 +120,12 @@ export async function runRemoteGenerationForAPIWorkspace({
      */
     loginCommand?: string;
     getSpecsTarGzBuffer?: (generatorName: string) => Promise<Buffer | undefined>;
+    /**
+     * When true, filesystem (local-file-system / download) outputs are generated as full,
+     * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
+     * Set by `fern generate --pack` so the emitted SDK can be built into a package artifact.
+     */
+    generateFullProject?: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -176,6 +183,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     occurrenceTracker: effectiveOccurrenceTracker,
                     loginCommand,
                     getSpecsTarGzBuffer,
+                    generateFullProject,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
@@ -234,6 +242,7 @@ async function generateOne({
     occurrenceTracker,
     loginCommand,
     getSpecsTarGzBuffer,
+    generateFullProject,
     onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -270,6 +279,7 @@ async function generateOne({
     occurrenceTracker: GeneratorOccurrenceTracker;
     loginCommand: string | undefined;
     getSpecsTarGzBuffer: ((generatorName: string) => Promise<Buffer | undefined>) | undefined;
+    generateFullProject: boolean | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
@@ -354,7 +364,8 @@ async function generateOne({
             noReplay,
             disableTelemetry,
             loginCommand,
-            specsTarGzBuffer: await getSpecsTarGzBuffer?.(generatorInvocation.name)
+            specsTarGzBuffer: await getSpecsTarGzBuffer?.(generatorInvocation.name),
+            generateFullProject
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {

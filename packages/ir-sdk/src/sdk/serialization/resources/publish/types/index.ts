@@ -10,3 +10,4 @@ export * from "./PostmanPublishTarget.js";
 export * from "./PublishingConfig.js";
 export * from "./PublishTarget.js";
 export * from "./PypiPublishTarget.js";
+export * from "./RubyGemsPublishTarget.js";
