@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.18.0] - 2026-07-29
+
+- Add `OAuthAuthorizationCode.redirectUriBackupPorts` (`optional<list<integer>>`): additional
+  loopback callback ports for the authorization-code (PKCE) flow, tried in order when the
+  `redirectUri` port is unavailable. Each reuses `redirectUri`'s host and path (only the port
+  differs) and must be pre-registered with the authorization server. Lets a generated CLI bind a
+  fixed-port fallback set (e.g. 8484 → 8483 → 8482) for identity providers that bind each client to
+  specific callback ports. Ignored when `redirectUri` is unset.
+
 ## [v67.17.0] - 2026-07-28
 
 - Add `OAuthConfiguration.authorizationCode` (`OAuthAuthorizationCode`), an additive union variant

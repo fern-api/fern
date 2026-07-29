@@ -25,6 +25,7 @@ const AUTHORIZATION_CODE_CONFIG = Ir.auth.OAuthConfiguration.authorizationCode({
     tokenUrl: "https://auth.example.com/token",
     refreshUrl: undefined,
     redirectUri: undefined,
+    redirectUriBackupPorts: undefined,
     scopes: undefined,
     pkce: { method: Ir.auth.OAuthPkceMethod.S256 },
     authorizationParameters: undefined,
