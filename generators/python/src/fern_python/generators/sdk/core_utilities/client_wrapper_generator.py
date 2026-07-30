@@ -58,7 +58,7 @@ def _get_user_agent_coordinate_prefix(user_agent_value: str) -> typing.Optional[
 #
 # The `app_info` argument is a mapping with a required `name` and optional `version` /
 # `comment` string entries, e.g. `{"name": "partner-app", "version": "3.1.0"}`.
-APPEND_APP_INFO_HELPER_SOURCE = '''
+APPEND_APP_INFO_HELPER_SOURCE = """
 def _append_app_info_to_user_agent(
     user_agent: str, app_info: typing.Optional[typing.Dict[str, str]]
 ) -> str:
@@ -95,7 +95,7 @@ def _append_app_info_to_user_agent(
     if comment:
         product_token += f" ({comment})"
     return f"{user_agent} {product_token}"
-'''
+"""
 
 
 @dataclass
@@ -979,9 +979,7 @@ class ClientWrapperGenerator:
                     # caller's product token has a base to append to. Only emitted when the
                     # flag is on, keeping default output byte-identical.
                     if runtime_version_active:
-                        default_user_agent_expr = (
-                            f'"{project._project_config.package_name}/" + _sdk_version'
-                        )
+                        default_user_agent_expr = f'"{project._project_config.package_name}/" + _sdk_version'
                     else:
                         default_user_agent_expr = (
                             f'"{project._project_config.package_name}/{project._project_config.package_version}"'
