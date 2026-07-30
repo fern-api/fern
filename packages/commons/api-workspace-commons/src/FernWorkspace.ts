@@ -14,7 +14,7 @@ export declare namespace FernWorkspace {
 }
 
 export class FernWorkspace extends AbstractAPIWorkspace<void> {
-    public definition: FernDefinition;
+    public readonly definition: FernDefinition;
     public sources: IdentifiableSource[];
 
     public type: string = "fern";

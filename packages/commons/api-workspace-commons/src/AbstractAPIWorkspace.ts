@@ -8,13 +8,13 @@ import { ParsedFernFile } from "./FernFile.js";
 import { FernWorkspace } from "./FernWorkspace.js";
 
 export interface FernDefinition {
-    absoluteFilePath: AbsoluteFilePath;
-    rootApiFile: ParsedFernFile<RootApiFileSchema>;
-    namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
-    packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
-    importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
+    readonly absoluteFilePath: AbsoluteFilePath;
+    readonly rootApiFile: ParsedFernFile<RootApiFileSchema>;
+    readonly namedDefinitionFiles: Readonly<Record<RelativeFilePath, OnDiskNamedDefinitionFile>>;
+    readonly packageMarkers: Readonly<Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>>;
+    readonly importedDefinitions: Readonly<Record<RelativeFilePath, ImportedDefinition>>;
     /** The document version from OpenAPI `info.version`, preserved as-is. */
-    specVersion?: string;
+    readonly specVersion?: string;
 }
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
@@ -22,8 +22,8 @@ export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFile
 }
 
 export interface ImportedDefinition {
-    url: string | undefined;
-    definition: FernDefinition;
+    readonly url: string | undefined;
+    readonly definition: FernDefinition;
 }
 
 export declare namespace AbstractAPIWorkspace {
