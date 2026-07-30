@@ -257,6 +257,7 @@ async function zipDirectory({
     await addEntries(sourceDir, "");
     zip.end();
     await new Promise<void>((resolve, reject) => {
+        zip.outputStream.on("error", reject);
         zip.outputStream.pipe(createWriteStream(zipPath)).on("close", resolve).on("error", reject);
     });
 }
