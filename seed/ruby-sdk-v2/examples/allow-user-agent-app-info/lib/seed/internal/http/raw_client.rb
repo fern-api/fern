@@ -1,14 +1,12 @@
 # frozen_string_literal: true
-<% if (includePlatformHeaders) { %>
-require "rbconfig"
-<% } %>
-module <%= gem_namespace %>
+
+module Seed
   module Internal
     module Http
       # @api private
       class RawClient
         # Default HTTP status codes that trigger a retry
-        RETRYABLE_STATUSES = {{RETRY_STATUS_CODES_ARRAY}}
+        RETRYABLE_STATUSES = [408, 429, 500, 502, 503, 504, 521, 522, 524].freeze
         # Initial delay between retries in seconds
         INITIAL_RETRY_DELAY = 0.5
         # Maximum delay between retries in seconds
@@ -20,80 +18,24 @@ module <%= gem_namespace %>
         attr_reader :base_url
 
         # @param base_url [String] The base url for the request.
-        # @param max_retries [Integer] The number of times to retry a failed request, defaults to <%= defaultMaxRetries %>.
+        # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
         # @param auth_provider [Object, nil] An optional auth provider responding to
         #   `auth_headers`. When present its headers are resolved on every request so
         #   token-based schemes (e.g. OAuth) can refresh an expired token mid-session.
-        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, auth_provider: nil)
+        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, auth_provider: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
           @auth_provider = auth_provider
-          @default_headers = <% if (!omitFernHeaders) { %>{
+          @default_headers = {
             "X-Fern-Language": "Ruby",
-            "X-Fern-SDK-Name": "<%= sdkName %>",
+            "X-Fern-SDK-Name": "seed",
             "X-Fern-SDK-Version": "0.0.1"
-          }.merge(headers)<% } else { %>headers<% } %>
-        end
-<% if (includePlatformHeaders) { %>
-        # Builds a structured User-Agent header value of the form
-        # "{sdk_name}/{sdk_version} ({os}; {arch}) Ruby/{version}", resolving the
-        # operating system, architecture, and Ruby version at runtime. Unknown
-        # components are omitted rather than emitted as placeholder values.
-        # @param prefix [String] The "{sdk_name}/{sdk_version}" portion.
-        # @return [String] The User-Agent header value.
-        def self.user_agent(prefix)
-          os = normalize_os(RbConfig::CONFIG["host_os"])
-          arch = normalize_arch(RbConfig::CONFIG["host_cpu"])
-          version = normalize_value(RUBY_VERSION)
-
-          result = prefix.to_s
-          platform = [os, arch].compact
-          result += " (#{platform.join("; ")})" unless platform.empty?
-          result += version.nil? ? " Ruby" : " Ruby/#{version}"
-          result
+          }.merge(headers)
         end
 
-        # @param value [String, nil] The raw value to normalize.
-        # @return [String, nil] The stripped value, or nil when blank.
-        def self.normalize_value(value)
-          return nil if value.nil?
-
-          stripped = value.to_s.strip
-          stripped.empty? ? nil : stripped
-        end
-
-        # Collapses the 64-bit x86 architecture aliases (x64, amd64, x86_64) to
-        # the single canonical token "x86_64"; other architectures are returned
-        # unchanged.
-        # @param host_cpu [String, nil] The raw RbConfig host_cpu value.
-        # @return [String, nil] A normalized architecture token, or nil when blank.
-        def self.normalize_arch(host_cpu)
-          value = normalize_value(host_cpu)
-          return nil if value.nil?
-
-          %w[x64 amd64 x86_64].include?(value.downcase) ? "x86_64" : value
-        end
-
-        # Maps RbConfig's host_os to a short, stable platform token.
-        # @param host_os [String, nil] The raw RbConfig host_os value.
-        # @return [String, nil] A normalized OS token, or nil when unknown.
-        def self.normalize_os(host_os)
-          value = normalize_value(host_os)
-          return nil if value.nil?
-
-          case value
-          when /linux/i then "linux"
-          when /darwin|mac ?os/i then "darwin"
-          when /mswin|mingw|cygwin|windows/i then "windows"
-          when /bsd/i then "bsd"
-          when /solaris/i then "solaris"
-          else value
-          end
-        end
-<% } %><% if (allowUserAgentAppInfo) { %>
         # RFC 7230 token characters (tchar). Any character outside this set in a
         # product token (name/version) is percent-encoded so caller-supplied values
         # cannot break out of the token or inject additional header content.
@@ -149,8 +91,8 @@ module <%= gem_namespace %>
         def self.percent_encode_user_agent(char)
           char.bytes.map { |byte| format("%%%02X", byte) }.join
         end
-<% } %>
-        # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
+
+        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [HTTP::Response] The HTTP response.
         def send(request)
           url = build_url(request)
@@ -244,7 +186,7 @@ module <%= gem_namespace %>
 
         LOCALHOST_HOSTS = %w[localhost 127.0.0.1 [::1]].freeze
 
-        # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
+        # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [URI::Generic] The URL.
         def build_url(request)
           encoded_query = request.encode_query
@@ -290,19 +232,7 @@ module <%= gem_namespace %>
 
           @auth_provider.auth_headers
         end
-<% if (endpointSecurity) { %>
-        # Resolves the auth headers for a single endpoint given its declared security
-        # requirements. Under endpoint-security each endpoint applies only the schemes it
-        # declares, so it delegates to the routing auth provider with its own `security`.
-        # Returns an empty hash when no auth provider is configured.
-        # @param security [Array, nil] The endpoint's security requirements.
-        # @return [Hash] The auth headers to send for this endpoint.
-        def auth_headers_for_endpoint(security:)
-          return {} if @auth_provider.nil?
 
-          @auth_provider.auth_headers_for_endpoint(security: security)
-        end
-<% } %>
         # @param url [URI::Generic] The url to the resource.
         # @param method [String] The HTTP method to use.
         # @param headers [Hash] The headers for the request.
