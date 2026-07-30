@@ -147,6 +147,9 @@ fixtures:
     - outputFolder: include-platform-headers
       customConfig:
         includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        allowUserAgentAppInfo: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
