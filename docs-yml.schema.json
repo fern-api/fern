@@ -1944,7 +1944,7 @@
               "type": "null"
             }
           ],
-          "description": "When true, optional parameters that declare a default (or x-fern-default) are\npre-filled and sent from the API Explorer playground. Defaults to false.\n"
+          "description": "When true, optional parameters that declare a default (or x-fern-default) are\npre-filled and sent from the API Explorer playground. Defaults to false."
         }
       },
       "additionalProperties": false
