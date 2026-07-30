@@ -224,7 +224,9 @@ export function incrementVersion(
  * changes fold into it by advancing the counter (1.6.0-rc.0 → 1.6.0-rc.1) — unless the new
  * bump outranks the pending core, in which case the core is re-anchored and the counter
  * resets (1.5.6-rc.1 + MINOR → 1.6.0-rc.0, 1.6.0-rc.2 + MAJOR → 2.0.0-rc.0). Switching
- * identifiers keeps the pending core (1.6.0-beta.3 + `rc` → 1.6.0-rc.0).
+ * identifiers keeps the pending core when that still moves the version forward
+ * (1.6.0-beta.3 + `rc` → 1.6.0-rc.0) and otherwise re-anchors the core
+ * (1.6.0-rc.3 + `beta` → 1.7.0-beta.0 for MINOR).
  *
  * Every transition is monotonically increasing under semver precedence.
  */
@@ -237,23 +239,27 @@ function incrementPrerelease(version: string, versionBump: VersionBump, identifi
     }
     const core = `${parsed.major}.${parsed.minor}.${parsed.patch}`;
 
-    if (parsed.prerelease.length === 0 || bumpOutranksPendingCore(parsed, versionBump)) {
-        const bumpedCore = semver.inc(core, toReleaseType(versionBump));
-        if (bumpedCore == null) {
-            throw new AutoVersioningException("Failed to increment version: " + version);
+    if (parsed.prerelease.length > 0 && !bumpOutranksPendingCore(parsed, versionBump)) {
+        if (parsed.prerelease[0] === identifier) {
+            const bumped = semver.inc(version, "prerelease", identifier);
+            if (bumped == null) {
+                throw new AutoVersioningException("Failed to increment version: " + version);
+            }
+            return bumped;
         }
-        return `${bumpedCore}-${identifier}.0`;
+        // A different identifier can sort below the pending one (rc → beta), so only keep the
+        // pending core when the switch still moves the version forward.
+        const switched = `${core}-${identifier}.0`;
+        if (semver.gt(switched, version)) {
+            return switched;
+        }
     }
 
-    if (parsed.prerelease[0] !== identifier) {
-        return `${core}-${identifier}.0`;
-    }
-
-    const bumped = semver.inc(version, "prerelease", identifier);
-    if (bumped == null) {
+    const bumpedCore = semver.inc(core, toReleaseType(versionBump));
+    if (bumpedCore == null) {
         throw new AutoVersioningException("Failed to increment version: " + version);
     }
-    return bumped;
+    return `${bumpedCore}-${identifier}.0`;
 }
 
 /**

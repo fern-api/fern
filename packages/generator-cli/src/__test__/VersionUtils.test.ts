@@ -143,6 +143,12 @@ describe("incrementVersion with a prerelease identifier", () => {
         expect(incrementVersion("1.6.0-0", VersionBump.PATCH, { prerelease: "rc" })).toBe("1.6.0-rc.0");
     });
 
+    it("re-anchors the core when a switched identifier would move the version backwards", () => {
+        expect(incrementVersion("1.6.0-rc.3", VersionBump.PATCH, { prerelease: "beta" })).toBe("1.6.1-beta.0");
+        expect(incrementVersion("1.6.0-rc.3", VersionBump.MINOR, { prerelease: "beta" })).toBe("1.7.0-beta.0");
+        expect(incrementVersion("1.6.0-rc.3", VersionBump.MAJOR, { prerelease: "beta" })).toBe("2.0.0-beta.0");
+    });
+
     it("preserves a 'v' prefix", () => {
         expect(incrementVersion("v1.5.5", VersionBump.MINOR, { prerelease: "rc" })).toBe("v1.6.0-rc.0");
         expect(incrementVersion("v1.6.0-rc.0", VersionBump.PATCH, { prerelease: "rc" })).toBe("v1.6.0-rc.1");

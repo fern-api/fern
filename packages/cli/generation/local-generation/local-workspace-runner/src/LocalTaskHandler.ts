@@ -554,7 +554,7 @@ export class LocalTaskHandler {
                     `AUTO versioning could not extract previous version: ${error.message}. ` +
                         `Falling back to initial version 0.0.1.`
                 );
-                const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const initialVersion = this.initialVersion(mappedMagicVersion);
                 const commitMessage = this.isWhitelabel
                     ? "Initial SDK generation"
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -659,7 +659,17 @@ export class LocalTaskHandler {
      */
     private incrementVersion(version: string, versionBump: VersionBump): string {
         if (this.prerelease != null) {
-            return incrementVersion(version, versionBump, { prerelease: this.prerelease });
+            // The shared utility signals an unparsable version with AutoVersioningException, which the
+            // caller treats as "new SDK repo" and falls back to 0.0.1. Surface it as a hard failure
+            // instead, matching the non-prerelease path below.
+            try {
+                return incrementVersion(version, versionBump, { prerelease: this.prerelease });
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to increment version ${version}: ${error}`,
+                    code: CliError.Code.VersionError
+                });
+            }
         }
 
         // Handle 'v' prefix - semver handles this automatically

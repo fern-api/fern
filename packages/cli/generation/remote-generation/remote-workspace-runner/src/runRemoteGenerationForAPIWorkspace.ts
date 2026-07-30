@@ -160,6 +160,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     context,
                     generatorGroup,
                     version,
+                    prerelease,
                     shouldLogS3Url,
                     token,
                     whitelabel,
