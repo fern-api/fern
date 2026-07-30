@@ -107,6 +107,7 @@
     "additionalPropertiesDefaultsTo": false,
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
+    "preserveOneOfInAllOf": false,
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,

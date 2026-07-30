@@ -4555,6 +4555,9 @@ importers:
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.35
+      '@types/yazl':
+        specifier: 'catalog:'
+        version: 3.3.1
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -4633,6 +4636,9 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
+      yazl:
+        specifier: 'catalog:'
+        version: 3.3.1
     optionalDependencies:
       '@boundaryml/baml':
         specifier: 'catalog:'

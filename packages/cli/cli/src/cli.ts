@@ -874,6 +874,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Generate test files even when generating to a local file system (tests are normally only generated for GitHub output modes)"
+                })
+                .option("pack", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "After generating to the local file system, build distributable package artifacts (npm tarball, wheel, JAR, NuGet package, gem, etc.) into a fern-dist/ folder inside the output directory."
+                })
+                .option("pack-mode", {
+                    choices: ["host", "docker"] as const,
+                    default: "host" as const,
+                    description:
+                        "Where --pack runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed."
                 }),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
@@ -949,6 +961,23 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv.pack && argv.preview) {
+                return cliContext.failWithoutThrowing("The --pack flag cannot be used with --preview.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+            if (argv.pack && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --pack flag can only be used for API generation, not docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.packMode !== "host" && !argv.pack) {
+                return cliContext.failWithoutThrowing("The --pack-mode flag can only be used with --pack.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "The --output flag is not supported for docs generation.",
@@ -988,7 +1017,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"],
-                    generateTests: argv["generate-tests"]
+                    generateTests: argv["generate-tests"],
+                    pack: argv.pack,
+                    packMode: argv.packMode
                 });
             }
             if (argv.docs != null) {
@@ -1051,7 +1082,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"],
-                generateTests: argv["generate-tests"]
+                generateTests: argv["generate-tests"],
+                pack: argv.pack,
+                packMode: argv.packMode
             });
         }
     );

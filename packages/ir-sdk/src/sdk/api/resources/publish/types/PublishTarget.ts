@@ -9,7 +9,8 @@ export type PublishTarget =
     | FernIr.PublishTarget.Pypi
     | FernIr.PublishTarget.Crates
     | FernIr.PublishTarget.Go
-    | FernIr.PublishTarget.Nuget;
+    | FernIr.PublishTarget.Nuget
+    | FernIr.PublishTarget.Rubygems;
 
 export namespace PublishTarget {
     export interface Postman extends FernIr.PostmanPublishTarget, _Utils {
@@ -40,6 +41,10 @@ export namespace PublishTarget {
         type: "nuget";
     }
 
+    export interface Rubygems extends FernIr.RubyGemsPublishTarget, _Utils {
+        type: "rubygems";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishTarget._Visitor<_Result>) => _Result;
     }
@@ -52,6 +57,7 @@ export namespace PublishTarget {
         crates: (value: FernIr.CratesPublishTarget) => _Result;
         go: (value: FernIr.GoPublishTarget) => _Result;
         nuget: (value: FernIr.NugetPublishTarget) => _Result;
+        rubygems: (value: FernIr.RubyGemsPublishTarget) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -145,6 +151,19 @@ export const PublishTarget = {
         };
     },
 
+    rubygems: (value: FernIr.RubyGemsPublishTarget): FernIr.PublishTarget.Rubygems => {
+        return {
+            ...value,
+            type: "rubygems",
+            _visit: function <_Result>(
+                this: FernIr.PublishTarget.Rubygems,
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PublishTarget, visitor: FernIr.PublishTarget._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "postman":
@@ -161,6 +180,8 @@ export const PublishTarget = {
                 return visitor.go(value);
             case "nuget":
                 return visitor.nuget(value);
+            case "rubygems":
+                return visitor.rubygems(value);
             default:
                 return visitor._other(value);
         }

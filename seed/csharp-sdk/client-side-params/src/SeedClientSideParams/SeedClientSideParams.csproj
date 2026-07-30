@@ -7,7 +7,7 @@
     <Version>0.0.1</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile Condition="Exists('..\..\README.md')">README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/client-side-params/fern</PackageProjectUrl>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
   </PropertyGroup>
@@ -47,7 +47,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None
+      Include="..\..\README.md"
+      Pack="true"
+      PackagePath=""
+      Condition="Exists('..\..\README.md')"
+    />
   </ItemGroup>
 
   <ItemGroup>

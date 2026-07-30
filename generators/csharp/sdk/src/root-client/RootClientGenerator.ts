@@ -29,7 +29,9 @@ import {
     BUILD_USER_AGENT_METHOD_NAME,
     BUILD_USER_AGENT_RETURN_SUFFIX,
     buildUserAgentLocalLines,
-    buildUserAgentReturnPrefix
+    buildUserAgentReturnPrefix,
+    buildUserAgentReturnWithoutVersion,
+    getUserAgentProduct
 } from "./buildUserAgentMethodBody.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 import {
@@ -422,7 +424,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 // name/version with the OS, architecture, and runtime, all
                 // resolved at runtime by the `BuildUserAgent` helper.
                 platformHeaderEntries.push({
-                    key: this.csharp.codeblock('"User-Agent"'),
+                    key: this.csharp.codeblock(`"${platformHeaders.userAgent?.header ?? "User-Agent"}"`),
                     value: this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`)
                 });
             } else {
@@ -1511,7 +1513,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * helper never emits an empty group and never throws.
      */
     private addBuildUserAgentMethod(cls: ast.Class) {
-        const packageName = this.generation.names.project.packageId;
+        const { productName, appendVersion } = getUserAgentProduct({
+            userAgentValue: this.context.ir.sdkConfig.platformHeaders.userAgent?.value,
+            packageName: this.generation.names.project.packageId
+        });
         cls.addMethod({
             access: ast.Access.Private,
             name: BUILD_USER_AGENT_METHOD_NAME,
@@ -1522,7 +1527,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 for (const line of buildUserAgentLocalLines()) {
                     writer.writeLine(line);
                 }
-                writer.write(buildUserAgentReturnPrefix(packageName));
+                if (!appendVersion) {
+                    writer.writeLine(buildUserAgentReturnWithoutVersion(productName));
+                    return;
+                }
+                writer.write(buildUserAgentReturnPrefix(productName));
                 // Written via `writeNode` so the generated `Version` reference
                 // registers its using directive.
                 writer.writeNode(this.context.getCurrentVersionValueAccess());

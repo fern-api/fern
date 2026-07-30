@@ -62,6 +62,14 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     preserveSingleSchemaOneof: z.boolean().optional(),
 
     /**
+     * If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members.
+     * If false, the variants' properties are flattened into a single object and marked optional.
+     * Defaults to false.
+     */
+    preserveOneOfInAllOf: z.boolean().optional(),
+
+    /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
      * extended in the code generation.
      */

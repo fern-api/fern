@@ -106,7 +106,7 @@ the path the patched Cargo.toml references).
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName`, `customCommands`, `rootGroup`, `packageIdentity`. |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` via `visitDiscriminatedUnion` and emits one auth binding per supported scheme, each tagged `placement: "root" \| "binding"`. Bearer, header, OAuth, and two-field basic go to root; only the `usernameOmit`/`passwordOmit` custom-provider variants stay binding-level. Synchronous — no disk reads. |
 | [`src/wireTests/`](src/wireTests/) | Opt-in (`customConfig.generateWireTests`) mock-driven integration suite. `manifest.ts` reuses `@fern-api/mock-utils` `convertToWireMock` to derive one naming-independent case per endpoint example (`{method, path, params, body, response}`) and emits `wiremock/wire-test-cases.json`. `harness.ts` renders the generic `tests/wire_test.rs`. `generateWireTests.ts` wires them together after `copySpecs`. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
@@ -131,6 +131,34 @@ The derived name flows through:
 - Env-var fallback prefix `<BIN>_TOKEN` / `<BIN>_API_KEY` /
   `<BIN>_USERNAME` / `<BIN>_PASSWORD` when the IR doesn't pin one
   (via `toEnvVarPrefix` + `detectAuth`)
+
+## Package identity
+
+By default the generated crate keeps the SDK template's Fern-owned
+`[package]` block (`fern-cli-sdk`, `github.com/fern-api/cli-sdk`). Set
+`customConfig.packageIdentity` to publish under the customer's own
+identity instead:
+
+```yaml
+config:
+  binaryName: agentmail
+  packageIdentity:
+    name: agentmail-cli
+    description: Command-line interface for the AgentMail API.
+    license: MIT
+    repository: https://github.com/agentmail-to/agentmail-cli-fern
+    homepage: https://agentmail.to
+    authors: ["AgentMail <support@agentmail.cc>"]
+    keywords: ["email", "agent"]
+```
+
+Only the fields you set are rewritten; the rest keep the template's
+values. `patchCargoToml` renames the matching `Cargo.lock` entry in the
+same pass — `[package] name` and the lockfile must agree or
+`cargo build --locked` fails to resolve the crate.
+
+`[lib] name = "fern_cli_sdk"` is deliberately **not** configurable: every
+`use fern_cli_sdk::...` in the vendored `src/` tree resolves through it.
 
 ## Auth detection
 

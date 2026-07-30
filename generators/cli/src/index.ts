@@ -18,7 +18,15 @@ export { type EmbeddedSdkResult, generateEmbeddedSdk } from "./generateEmbeddedS
 export { generateSdk, type RootClientInfo, resolveClientTreeFromContext, type SubClientField } from "./generateSdk.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
 export { type IrSummary, readIr } from "./ir.js";
-export { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "./patchCargoToml.js";
+export {
+    applyCargoTomlPatch,
+    applyPackageIdentityPatch,
+    type CargoPackageIdentity,
+    patchCargoLockVersion,
+    patchCargoToml,
+    renameCargoLockPackage,
+    TEMPLATE_PACKAGE_NAME
+} from "./patchCargoToml.js";
 export {
     addWorkspaceMember,
     applyDistWorkspacePatch,

@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.86.0
+  changelogEntry:
+    - summary: |
+        Add the `preserve-one-of-in-all-of` OpenAPI setting. When enabled, an `allOf` whose members
+        include a `oneOf`/`anyOf` is distributed into a union — each variant is the union member merged
+        with the remaining `allOf` members — instead of flattening every variant's properties into a
+        single object. This makes the variants available to SDKs and renders a variant selector in the
+        API reference. Defaults to false.
+      type: feat
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.85.0
+  changelogEntry:
+    - summary: |
+        `fern generate --pack` now produces a source zip artifact for Go SDKs in `fern-dist/`
+        (`<output-dir>-source.zip`). Go modules have no binary package format, so the zip contains the
+        module source (excluding `fern-dist/` and `.git/`) and can be shared internally and referenced
+        with a `replace` directive in `go.mod`. The zip is built in-process, so it works identically in
+        host and docker pack modes without any toolchain.
+      type: feat
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.84.0
+  changelogEntry:
+    - summary: |
+        Add a `--pack` flag to `fern generate`. When generating to the local file system, the CLI now
+        builds distributable package artifacts (npm tarball, Python wheel, JAR, NuGet package, gem,
+        Composer zip, crate) into a `fern-dist/` folder inside each output directory, so SDKs can be
+        shared internally without publishing to a registry. Use `--pack-mode docker` to run the
+        packaging toolchains inside official Docker images instead of requiring them on the host.
+        `--pack` also generates full, packageable projects (pyproject.toml, README.md, etc.) for
+        local-file-system outputs so the packaging toolchains have the metadata they need, and
+        host-mode packaging hides any enclosing git repository so VCS-aware build backends
+        (e.g. poetry-core) don't silently exclude gitignored output files from the artifact.
+      type: feat
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 5.83.1
+  changelogEntry:
+    - summary: |
+        Fix user-specified OpenRPC examples to use the method's computed endpoint path instead of
+        appending a hardcoded `/{apiKey}` path.
+      type: fix
+  createdAt: "2026-07-29"
+  irVersion: 67
 - version: 5.83.0
   changelogEntry:
     - summary: |
