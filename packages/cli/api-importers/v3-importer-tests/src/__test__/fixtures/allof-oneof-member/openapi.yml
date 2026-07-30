@@ -1,0 +1,160 @@
+openapi: 3.1.0
+info:
+  title: allOf with a oneOf member
+  version: 1.0.0
+servers:
+  - url: https://api.plantstore.com
+paths:
+  /plants/export:
+    post:
+      operationId: exportPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExportRequest"
+      responses:
+        "200":
+          description: The export task
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taskId:
+                    type: string
+  /plants/export/typed:
+    post:
+      operationId: exportPlantTyped
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TypedExportRequest"
+      responses:
+        "204":
+          description: Accepted
+  /plants/export/inline:
+    post:
+      operationId: exportPlantInline
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InlineExportRequest"
+      responses:
+        "204":
+          description: Accepted
+  /plants/export/tagged:
+    post:
+      operationId: exportPlantTagged
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaggedExportRequest"
+      responses:
+        "204":
+          description: Accepted
+components:
+  schemas:
+    ExportLeaf:
+      title: Export leaf
+      type: object
+      properties:
+        leafId:
+          type: string
+        format:
+          $ref: "#/components/schemas/Format"
+      required:
+        - leafId
+        - format
+    ExportBranch:
+      title: Export branch
+      type: object
+      properties:
+        branchId:
+          type: string
+        format:
+          $ref: "#/components/schemas/Format"
+      required:
+        - branchId
+        - format
+    ExportTree:
+      title: Export tree
+      type: object
+      properties:
+        format:
+          $ref: "#/components/schemas/Format"
+      required:
+        - format
+    Format:
+      oneOf:
+        - title: Csv format
+          type: object
+          properties:
+            delimiter:
+              type: string
+        - title: Pdf format
+          type: object
+          properties:
+            layout:
+              type: string
+    TypedExportRequest:
+      allOf:
+        - type: object
+          oneOf:
+            - $ref: "#/components/schemas/ExportLeaf"
+            - $ref: "#/components/schemas/ExportBranch"
+        - type: object
+          properties:
+            timeout:
+              type: integer
+    InlineExportRequest:
+      allOf:
+        - oneOf:
+            - title: Export a leaf
+              type: object
+              properties:
+                leafId:
+                  type: string
+              required:
+                - leafId
+            - title: Export a branch
+              type: object
+              properties:
+                branchId:
+                  type: string
+              required:
+                - branchId
+        - type: object
+          properties:
+            timeout:
+              type: integer
+    TaggedExportRequest:
+      allOf:
+        - oneOf:
+            - $ref: "#/components/schemas/ExportLeaf"
+            - $ref: "#/components/schemas/ExportBranch"
+        - type: object
+          properties:
+            tag:
+              type: string
+      required:
+        - tag
+    ExportRequest:
+      allOf:
+        - oneOf:
+            - $ref: "#/components/schemas/ExportLeaf"
+            - $ref: "#/components/schemas/ExportBranch"
+            - $ref: "#/components/schemas/ExportTree"
+        - type: object
+          properties:
+            timeout:
+              type: integer
+            tag:
+              type: string
