@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.77.0
+  changelogEntry:
+    - summary: |
+        Add the `send-optional-defaults` playground setting to `docs.yml` (settable globally or
+        per-endpoint). When enabled, optional API Explorer parameters that declare a default
+        (or `x-fern-default`) are pre-filled and sent from the playground. Defaults to off.
+      type: feat
+  createdAt: "2026-07-30"
+  irVersion: 67
 - version: 5.76.0
   changelogEntry:
     - summary: |

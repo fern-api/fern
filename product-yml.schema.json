@@ -731,6 +731,17 @@
             }
           ],
           "description": "The maximum number of websocket messages per connection in the playground."
+        },
+        "send-optional-defaults": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, optional parameters that declare a default (or x-fern-default) are\npre-filled and sent from the API Explorer playground. Defaults to false.\n"
         }
       },
       "additionalProperties": false
