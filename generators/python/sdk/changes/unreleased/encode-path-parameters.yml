@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Percent-encode path parameter values. `encode_path_param` previously only stringified the value,
+    so a value containing `/` or `..` could change which endpoint the request resolved to. It now
+    applies `urllib.parse.quote(..., safe="")`, matching the TypeScript, Go, Java, and C# generators.
+  type: fix
