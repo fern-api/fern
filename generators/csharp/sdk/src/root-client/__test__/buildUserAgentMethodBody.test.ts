@@ -3,7 +3,8 @@ import {
     BUILD_USER_AGENT_RETURN_SUFFIX,
     buildUserAgentLocalLines,
     buildUserAgentReturnPrefix,
-    getUserAgentProductName
+    buildUserAgentReturnWithoutVersion,
+    getUserAgentProduct
 } from "../buildUserAgentMethodBody.js";
 
 describe("buildUserAgentMethodBody", () => {
@@ -55,23 +56,42 @@ describe("buildUserAgentMethodBody", () => {
         expect(returnStatement).toBe('return $"Plantstore/{Version.Current}{platform}{runtime}";');
     });
 
-    describe("getUserAgentProductName", () => {
+    describe("getUserAgentProduct", () => {
         it("prefers the configured user-agent product name over the package id", () => {
             expect(
-                getUserAgentProductName({ userAgentValue: "plantstore-internal/1.2.0", packageName: "Plantstore" })
-            ).toBe("plantstore-internal");
+                getUserAgentProduct({ userAgentValue: "plantstore-internal/1.2.0", packageName: "Plantstore" })
+            ).toEqual({ productName: "plantstore-internal", appendVersion: true });
         });
 
-        it("treats a value without a version separator as the product name", () => {
-            expect(getUserAgentProductName({ userAgentValue: "plantstore-internal", packageName: "Plantstore" })).toBe(
-                "plantstore-internal"
-            );
+        it("keeps the whole value and appends no version when it does not end in a version", () => {
+            expect(getUserAgentProduct({ userAgentValue: "acme/sdk-python", packageName: "Plantstore" })).toEqual({
+                productName: "acme/sdk-python",
+                appendVersion: false
+            });
+            expect(getUserAgentProduct({ userAgentValue: "plantstore-internal", packageName: "Plantstore" })).toEqual({
+                productName: "plantstore-internal",
+                appendVersion: false
+            });
+        });
+
+        it("splits a v-prefixed version", () => {
+            expect(getUserAgentProduct({ userAgentValue: "@acme/sdk/v1.2.0", packageName: "Plantstore" })).toEqual({
+                productName: "@acme/sdk",
+                appendVersion: true
+            });
         });
 
         it("falls back to the package id when the IR has no user agent", () => {
-            expect(getUserAgentProductName({ userAgentValue: undefined, packageName: "Plantstore" })).toBe(
-                "Plantstore"
-            );
+            expect(getUserAgentProduct({ userAgentValue: undefined, packageName: "Plantstore" })).toEqual({
+                productName: "Plantstore",
+                appendVersion: true
+            });
         });
+    });
+
+    it("synthesizes no version for a configured value that carries none", () => {
+        expect(buildUserAgentReturnWithoutVersion("acme/sdk-python")).toBe(
+            'return $"acme/sdk-python{platform}{runtime}";'
+        );
     });
 });

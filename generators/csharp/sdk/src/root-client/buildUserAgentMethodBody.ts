@@ -53,23 +53,35 @@ export function buildUserAgentReturnPrefix(packageName: string): string {
 }
 
 /**
- * Returns the product name to use in the structured `User-Agent`. The IR value already
- * reflects the resolved `user-agent` template when one is configured, so its product name
- * (everything before the version separator) takes precedence over the package id. A value
- * without a separator is treated as the product name.
+ * Returns the product coordinate to use in the structured `User-Agent`. The IR value already
+ * reflects the resolved `user-agent` template when one is configured, so it takes precedence
+ * over the package id. `appendVersion` is false when the configured value does not end in a
+ * version, since the product name itself may contain a separator (e.g. `@acme/sdk`).
  */
-export function getUserAgentProductName({
+export function getUserAgentProduct({
     userAgentValue,
     packageName
 }: {
     userAgentValue: string | undefined;
     packageName: string;
-}): string {
+}): { productName: string; appendVersion: boolean } {
     if (userAgentValue == null) {
-        return packageName;
+        return { productName: packageName, appendVersion: true };
     }
     const separatorIndex = userAgentValue.lastIndexOf("/");
-    return separatorIndex < 0 ? userAgentValue : userAgentValue.slice(0, separatorIndex);
+    const version = separatorIndex < 0 ? undefined : userAgentValue.slice(separatorIndex + 1);
+    if (version == null || !/^v?\d/.test(version)) {
+        return { productName: userAgentValue, appendVersion: false };
+    }
+    return { productName: userAgentValue.slice(0, separatorIndex), appendVersion: true };
+}
+
+/**
+ * The full `return` statement for a configured `User-Agent` value that carries no version
+ * segment, so no version is synthesized.
+ */
+export function buildUserAgentReturnWithoutVersion(productName: string): string {
+    return `return $"${productName}{platform}{runtime}";`;
 }
 
 export const BUILD_USER_AGENT_RETURN_SUFFIX = '}{platform}{runtime}";';

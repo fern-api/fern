@@ -817,6 +817,23 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).toContain('"acme-sdk-internal"');
         });
 
+        it("does not treat a trailing name segment as a version", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme/sdk-python"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme/sdk-python"');
+        });
+
         it("omits all fern headers when omitFernHeaders is true even if includePlatformHeaders is true", () => {
             const gen = createGenerator({ omitFernHeaders: true, includePlatformHeaders: true });
             const context = createMockContext();

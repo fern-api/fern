@@ -1,3 +1,4 @@
+import re
 import typing
 from dataclasses import dataclass
 from enum import Enum
@@ -23,15 +24,19 @@ from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_
 import fern.ir.resources as ir_types
 
 
-def _get_user_agent_coordinate_prefix(user_agent_value: str) -> str:
-    """Returns the User-Agent product token up to and including the version separator.
+def _get_user_agent_coordinate_prefix(user_agent_value: str) -> typing.Optional[str]:
+    """Returns the User-Agent value up to and including the separator preceding its version.
 
     The version segment is dropped so a runtime-resolved version can be appended in its
-    place. A value without a separator is treated as the product name.
+    place. Returns None when the value does not end in a version, since the product name
+    itself may contain a separator (e.g. `@acme/sdk`).
     """
     separator_index = user_agent_value.rfind("/")
     if separator_index < 0:
-        return f"{user_agent_value}/"
+        return None
+    version = user_agent_value[separator_index + 1 :]
+    if re.match(r"^v?\d", version) is None:
+        return None
     return user_agent_value[: separator_index + 1]
 
 

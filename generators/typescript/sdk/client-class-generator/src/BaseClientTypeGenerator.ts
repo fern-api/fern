@@ -29,10 +29,13 @@ const OPTIONS_PARAMETER_NAME = "options";
  */
 function splitUserAgentCoordinate(value: string): { name: string; version: string } {
     const separatorIndex = value.lastIndexOf("/");
-    if (separatorIndex < 0) {
+    const version = separatorIndex < 0 ? "" : value.slice(separatorIndex + 1);
+    // The product name may itself contain a separator (e.g. `@acme/sdk`), so only split off a
+    // trailing segment that looks like a version.
+    if (!/^v?\d/.test(version)) {
         return { name: value, version: "" };
     }
-    return { name: value.slice(0, separatorIndex), version: value.slice(separatorIndex + 1) };
+    return { name: value.slice(0, separatorIndex), version };
 }
 
 export class BaseClientTypeGenerator {

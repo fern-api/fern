@@ -30,7 +30,8 @@ import {
     BUILD_USER_AGENT_RETURN_SUFFIX,
     buildUserAgentLocalLines,
     buildUserAgentReturnPrefix,
-    getUserAgentProductName
+    buildUserAgentReturnWithoutVersion,
+    getUserAgentProduct
 } from "./buildUserAgentMethodBody.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 import {
@@ -1512,7 +1513,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * helper never emits an empty group and never throws.
      */
     private addBuildUserAgentMethod(cls: ast.Class) {
-        const packageName = getUserAgentProductName({
+        const { productName, appendVersion } = getUserAgentProduct({
             userAgentValue: this.context.ir.sdkConfig.platformHeaders.userAgent?.value,
             packageName: this.generation.names.project.packageId
         });
@@ -1526,7 +1527,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 for (const line of buildUserAgentLocalLines()) {
                     writer.writeLine(line);
                 }
-                writer.write(buildUserAgentReturnPrefix(packageName));
+                if (!appendVersion) {
+                    writer.writeLine(buildUserAgentReturnWithoutVersion(productName));
+                    return;
+                }
+                writer.write(buildUserAgentReturnPrefix(productName));
                 // Written via `writeNode` so the generated `Version` reference
                 // registers its using directive.
                 writer.writeNode(this.context.getCurrentVersionValueAccess());
