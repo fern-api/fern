@@ -135,4 +135,45 @@ describe("validateCustomConfig", () => {
             userAgentSuffixFlag: "user-agent-suffix"
         });
     });
+
+    it("accepts generateWireTests true/false", () => {
+        expect(validateCustomConfig({ generateWireTests: true })).toEqual({ generateWireTests: true });
+        expect(validateCustomConfig({ generateWireTests: false })).toEqual({ generateWireTests: false });
+    });
+
+    it("ignores generateWireTests explicitly set to undefined", () => {
+        expect(validateCustomConfig({ generateWireTests: undefined })).toEqual({});
+    });
+
+    it("throws on non-boolean generateWireTests", () => {
+        expect(() => validateCustomConfig({ generateWireTests: "yes" })).toThrow(/expected a boolean, got string/);
+    });
+
+    it("accepts a packageIdentity block", () => {
+        const packageIdentity = {
+            name: "agentmail-cli",
+            repository: "https://github.com/agentmail-to/agentmail-cli-fern",
+            authors: ["AgentMail <support@agentmail.cc>"],
+            keywords: ["email", "agent"]
+        };
+        expect(validateCustomConfig({ packageIdentity })).toEqual({ packageIdentity });
+    });
+
+    it("throws on a packageIdentity name that cargo would reject", () => {
+        expect(() => validateCustomConfig({ packageIdentity: { name: "agent mail!" } })).toThrow(
+            /not a valid cargo crate name/
+        );
+    });
+
+    it("throws on non-string packageIdentity fields", () => {
+        expect(() => validateCustomConfig({ packageIdentity: { repository: 42 } })).toThrow(
+            /packageIdentity.repository: expected a string, got number/
+        );
+        expect(() => validateCustomConfig({ packageIdentity: { authors: "me" } })).toThrow(
+            /packageIdentity.authors: expected an array of strings/
+        );
+        expect(() => validateCustomConfig({ packageIdentity: [] })).toThrow(
+            /packageIdentity: expected an object, got array/
+        );
+    });
 });

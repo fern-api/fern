@@ -10,14 +10,20 @@ public partial class SeedApiClient : ISeedApiClient
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
         clientOptions ??= new ClientOptions();
-        if (
-            (clientOptions.Region != null || clientOptions.ServerUrlEnvironment != null)
-            && !clientOptions.IsBaseUrlExplicitlySet
-        )
+        if (clientOptions.Region != null || clientOptions.ServerUrlEnvironment != null)
         {
             var _region = clientOptions.Region ?? "us-east-1";
             var _serverUrlEnvironment = clientOptions.ServerUrlEnvironment ?? "prod";
-            clientOptions.BaseUrl = $"https://api.{_region}.{_serverUrlEnvironment}.example.com/v1";
+            if (!clientOptions.IsBaseUrlExplicitlySet)
+            {
+                clientOptions.BaseUrl =
+                    $"https://api.{_region}.{_serverUrlEnvironment}.example.com/v1";
+            }
+            else if (clientOptions.BaseUrl == SeedApiEnvironment.RegionalApiServer)
+            {
+                clientOptions.BaseUrl =
+                    $"https://api.{_region}.{_serverUrlEnvironment}.example.com/v1";
+            }
         }
         var platformHeaders = new Headers(
             new Dictionary<string, string>()

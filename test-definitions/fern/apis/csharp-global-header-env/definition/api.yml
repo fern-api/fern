@@ -4,3 +4,21 @@ headers:
     name: version
     type: optional<string>
     env: MY_API_VERSION
+    client-default: "2024-01-01"
+auth:
+  any:
+    - Basic
+    - Bearer
+auth-schemes:
+  Basic:
+    scheme: basic
+    username:
+      name: username
+      env: MY_USERNAME
+    password:
+      name: password
+      env: MY_PASSWORD
+  Bearer:
+    scheme: bearer
+    token:
+      env: MY_TOKEN

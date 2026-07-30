@@ -102,7 +102,7 @@ class RawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                "optional_list_of_strings": jsonable_encoder(optional_list_of_strings)
                 if optional_list_of_strings is not OMIT
                 else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
@@ -470,7 +470,7 @@ class RawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                "optional_list_of_strings": jsonable_encoder(optional_list_of_strings)
                 if optional_list_of_strings is not OMIT
                 else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
@@ -893,7 +893,7 @@ class AsyncRawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                "optional_list_of_strings": jsonable_encoder(optional_list_of_strings)
                 if optional_list_of_strings is not OMIT
                 else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),
@@ -1261,7 +1261,7 @@ class AsyncRawServiceClient:
                 "maybe_string": maybe_string,
                 "integer": integer,
                 "maybe_integer": maybe_integer,
-                "optional_list_of_strings": json.dumps(jsonable_encoder(optional_list_of_strings))
+                "optional_list_of_strings": jsonable_encoder(optional_list_of_strings)
                 if optional_list_of_strings is not OMIT
                 else OMIT,
                 "list_of_objects": json.dumps(jsonable_encoder(list_of_objects)),

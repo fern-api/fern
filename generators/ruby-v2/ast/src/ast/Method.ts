@@ -48,6 +48,8 @@ export declare namespace Method {
         splatOptionDocs?: string[];
         /* Usage example rendered as a YARD @example tag. */
         codeExample?: string;
+        /* Trailing comment appended to the method signature line (e.g. a `rubocop:disable` directive). */
+        inlineComment?: string;
     }
 }
 
@@ -65,6 +67,7 @@ export class Method extends AstNode {
     public readonly returnType: Type;
     private readonly splatOptionDocs: string[];
     private readonly codeExample: string | undefined;
+    private readonly inlineComment: string | undefined;
 
     constructor({
         name,
@@ -75,7 +78,8 @@ export class Method extends AstNode {
         returnType,
         statements,
         splatOptionDocs,
-        codeExample
+        codeExample,
+        inlineComment
     }: Method.Args) {
         super();
 
@@ -92,6 +96,7 @@ export class Method extends AstNode {
         this.statements = statements ?? [];
         this.splatOptionDocs = splatOptionDocs ?? [];
         this.codeExample = codeExample;
+        this.inlineComment = inlineComment;
     }
 
     public addStatement(statement: AstNode): void {
@@ -202,6 +207,10 @@ export class Method extends AstNode {
             });
 
             writer.write(")");
+        }
+
+        if (this.inlineComment != null) {
+            writer.write(` # ${this.inlineComment}`);
         }
 
         if (this.statements.length) {

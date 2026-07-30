@@ -28,6 +28,7 @@ import { camelCase, upperFirst } from "../utils/text.js";
 
 import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common.js";
 import { Extern } from "./extern.js";
+import { getFilesystemNugetPublishTarget } from "./filesystem-nuget-publish-target.js";
 import { ModelNavigator } from "./model-navigator.js";
 import { NameRegistry } from "./name-registry.js";
 
@@ -243,6 +244,8 @@ export class Generation {
         userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
         unifiedClientOptions: () => this.customConfig["unified-client-options"] ?? false,
+        /** When true, exposes server URL variables as ClientOptions properties and interpolates them into the environment URL template(s) at construction time. When false, suppresses those options and the interpolation, falling back to the pre-feature base-URL behavior. Default: true. */
+        serverUrlVariables: () => this.customConfig["server-url-variables"] ?? true,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
@@ -448,8 +451,9 @@ export class Generation {
             /** The prefix used for client-related classes, customizable via config or defaults to clientName. */
             clientPrefix: () =>
                 this.settings.exportedClientClassName || this.settings.clientClassName || this.names.project.client,
-            /** The NuGet package identifier for the generated SDK, defaults to root namespace if not specified. */
-            packageId: () => this.settings.packageId || this.namespaces.root
+            /** The NuGet package identifier for the generated SDK. Falls back to the nuget filesystem publish target (local-file-system output), then the root namespace. */
+            packageId: () =>
+                this.settings.packageId || getFilesystemNugetPublishTarget(this.ir)?.packageName || this.namespaces.root
         }),
         files: lazy({
             /* the name of the project */

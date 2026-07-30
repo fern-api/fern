@@ -1,4 +1,5 @@
 import { GeneratorConfig } from "@fern-api/base-generator";
+import type { CargoPackageIdentity } from "./patchCargoToml.js";
 
 /**
  * User-supplied configuration the CLI generator reads from
@@ -56,6 +57,33 @@ export interface FernCliCustomConfig {
      * hyphens converted to underscores).
      */
     userAgentSuffixFlag?: string;
+
+    /**
+     * When true, the generator emits an automated wire-test suite alongside
+     * the CLI: `wiremock/wire-test-cases.json` (one case per endpoint
+     * example) and `tests/wire_test.rs` (a generic harness that stands up an
+     * in-process mock server, drives the compiled binary, and asserts the
+     * request/response). `seed`'s `cargo test --all-features` runs these
+     * automatically — no docker, no network.
+     *
+     * Defaults to `false` so existing generations are unaffected until a
+     * consumer opts in.
+     */
+    generateWireTests?: boolean;
+
+    /**
+     * Overrides the generated crate's `[package]` identity — the metadata
+     * cargo (and cargo-dist's installers) publish under.
+     *
+     * When omitted, the crate keeps the SDK template's Fern-owned
+     * identity (`fern-cli-sdk`, `github.com/fern-api/cli-sdk`), which is
+     * what every existing generation ships today.
+     *
+     * The `[lib]` name (`fern_cli_sdk`) is deliberately not configurable:
+     * every `use fern_cli_sdk::...` in the vendored `src/` tree depends
+     * on it. Only `[package]` metadata is templated.
+     */
+    packageIdentity?: CargoPackageIdentity;
 }
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
@@ -165,5 +193,67 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         }
         result.userAgentSuffixFlag = obj.userAgentSuffixFlag;
     }
+    if ("generateWireTests" in obj && obj.generateWireTests !== undefined) {
+        if (typeof obj.generateWireTests !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.generateWireTests: expected a boolean, got ${typeof obj.generateWireTests}.`
+            );
+        }
+        result.generateWireTests = obj.generateWireTests;
+    }
+    if ("packageIdentity" in obj && obj.packageIdentity !== undefined) {
+        result.packageIdentity = validatePackageIdentity(obj.packageIdentity);
+    }
+    return result;
+}
+
+/**
+ * A cargo crate name: lowercase-ish alphanumerics plus `-`/`_`, starting
+ * with a letter. Rejecting here keeps a malformed name from reaching
+ * `cargo build`, where it surfaces as an opaque manifest-parse error.
+ */
+const CRATE_NAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9_-]*$/;
+
+const PACKAGE_IDENTITY_STRING_FIELDS = ["name", "description", "license", "repository", "homepage"] as const;
+const PACKAGE_IDENTITY_ARRAY_FIELDS = ["authors", "keywords"] as const;
+
+function validatePackageIdentity(raw: unknown): CargoPackageIdentity {
+    if (typeof raw !== "object" || raw == null || Array.isArray(raw)) {
+        throw new Error(
+            `Invalid customConfig.packageIdentity: expected an object, got ${Array.isArray(raw) ? "array" : typeof raw}.`
+        );
+    }
+    const obj = raw as Record<string, unknown>;
+    const result: CargoPackageIdentity = {};
+
+    for (const field of PACKAGE_IDENTITY_STRING_FIELDS) {
+        const value = obj[field];
+        if (value === undefined) {
+            continue;
+        }
+        if (typeof value !== "string") {
+            throw new Error(`Invalid customConfig.packageIdentity.${field}: expected a string, got ${typeof value}.`);
+        }
+        result[field] = value;
+    }
+
+    for (const field of PACKAGE_IDENTITY_ARRAY_FIELDS) {
+        const value = obj[field];
+        if (value === undefined) {
+            continue;
+        }
+        if (!Array.isArray(value) || value.some((entry) => typeof entry !== "string")) {
+            throw new Error(`Invalid customConfig.packageIdentity.${field}: expected an array of strings.`);
+        }
+        result[field] = value as string[];
+    }
+
+    if (result.name != null && !CRATE_NAME_PATTERN.test(result.name)) {
+        throw new Error(
+            `Invalid customConfig.packageIdentity.name: "${result.name}" is not a valid cargo crate name. ` +
+                "It must start with a letter and contain only [A-Za-z0-9_-]."
+        );
+    }
+
     return result;
 }

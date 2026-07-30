@@ -38,6 +38,10 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enable-wire-tests: true
+  endpoint-security-auth:
+    - outputFolder: .
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null
@@ -180,6 +184,9 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+  php-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null

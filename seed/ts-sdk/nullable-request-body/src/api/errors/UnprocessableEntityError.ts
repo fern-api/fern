@@ -5,6 +5,8 @@ import * as errors from "../../errors/index.js";
 import type * as SeedApi from "../index.js";
 
 export class UnprocessableEntityError extends errors.SeedApiError {
+    public declare readonly body: SeedApi.PlainObject;
+
     constructor(body: SeedApi.PlainObject, rawResponse?: core.RawResponse) {
         super({
             message: "UnprocessableEntityError",

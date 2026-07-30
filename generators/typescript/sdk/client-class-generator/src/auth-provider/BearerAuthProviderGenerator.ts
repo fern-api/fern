@@ -20,6 +20,7 @@ export declare namespace BearerAuthProviderGenerator {
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
         shouldUseWrapper: boolean;
+        optionalAuth?: boolean;
     }
 }
 
@@ -35,6 +36,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
+    private readonly optionalAuth: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: BearerAuthProviderGenerator.Init) {
@@ -43,6 +45,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
+        this.optionalAuth = init.optionalAuth ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -269,8 +272,8 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                 ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_TOKEN]`
                 : supplierGetCode;
 
-        if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if token is missing
+        if (this.neverThrowErrors || this.optionalAuth) {
+            // Return empty headers if the token is missing, so requests are sent unauthenticated
             return `
         const ${tokenVar} = ${envFallback};
         if (${tokenVar} == null) {

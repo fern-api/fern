@@ -130,6 +130,21 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, the SDK version reported in the telemetry headers ({@code X-Fern-SDK-Version} and the version segment of
+     * {@code User-Agent}) is resolved at runtime from the jar manifest's {@code Implementation-Version} attribute
+     * instead of being baked in as a literal at generation time. This lets the reported version track the
+     * actually-published artifact version (e.g. when an external tool such as release-please sets the published version
+     * after generation) rather than a version the SDK may never publish. Falls back to the generation-time version when
+     * the manifest attribute is absent (e.g. running from unpackaged classes). Opt-in and disabled by default so
+     * existing generated output is unchanged. When enabled, the header is still subject to {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("runtime-version")
+    default Boolean runtimeVersion() {
+        return false;
+    }
+
     @Value.Default
     @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {

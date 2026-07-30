@@ -20,6 +20,7 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest.js";
+import { writeEndpointAuthHeaderAdd } from "./endpointAuthHeaders.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -204,6 +205,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // Add client-level headers (from root client constructor)
                 writer.writeLine();
                 writer.write(".Add(_client.Options.Headers)");
+
+                // In endpoint-security mode, route this endpoint's declared auth scheme(s) here.
+                writeEndpointAuthHeaderAdd({ writer, context: this.context, endpoint: this.endpoint });
 
                 // Add client-level additional headers
                 writer.writeLine();

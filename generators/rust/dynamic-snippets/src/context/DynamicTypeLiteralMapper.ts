@@ -693,8 +693,9 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.raw(`todo!("Unknown enum variant: ${value}")`);
         }
 
-        const rawVariantName = enumVariant.name.pascalCase.unsafeName;
-        const variantName = this.context.escapeRustReservedType(rawVariantName);
+        // Use the keyword-safe name so the reference matches the generated variant
+        // declaration (e.g. a wire value of `self` becomes `Self_`, not the reserved `Self`).
+        const variantName = enumVariant.name.pascalCase.safeName;
         return rust.Expression.reference(`${enumName}::${variantName}`);
     }
 

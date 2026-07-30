@@ -165,10 +165,17 @@ fixtures:
         pydantic_config:
           enum_type: "python_enums"
       outputFolder: real-enum
+  endpoint-security-auth:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
       outputFolder: no-custom-config
+    - customConfig:
+        runtime_version: true
+      outputFolder: runtime-version
     - customConfig:
         enable_wire_tests: true
         client:
@@ -401,6 +408,10 @@ fixtures:
   query-parameters-openapi-as-objects:
     - customConfig: null
       outputFolder: no-custom-config
+  simple-api:
+    - customConfig:
+        optional-auth: true
+      outputFolder: optional-auth
   simple-fhir:
     - customConfig:
         use_inheritance_for_extended_models: false

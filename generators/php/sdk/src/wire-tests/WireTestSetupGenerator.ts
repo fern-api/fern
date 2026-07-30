@@ -135,6 +135,10 @@ export class WireTestSetupGenerator {
     private buildWireMockTestCaseContent(): string {
         const namespace = this.context.getTestsNamespace();
         const coreNamespace = this.context.getCoreNamespace();
+        // Under endpoint-security auth is routed per-endpoint, so wire tests additionally assert
+        // the exact set of auth headers routed for each endpoint. Only emit the helper in that
+        // mode so every other fixture's WireMockTestCase.php stays byte-for-byte unchanged.
+        const verifyAuthHeadersMethod = this.context.isEndpointSecurity() ? this.buildVerifyAuthHeadersMethod() : "";
         return `<?php
 
 namespace ${namespace}\\Wire;
@@ -221,9 +225,85 @@ abstract class WireMockTestCase extends TestCase
             $requests,
             sprintf('Expected %d requests, found %d', $expected, count($requests))
         );
-    }
+    }${verifyAuthHeadersMethod}
 }
 `;
+    }
+
+    /**
+     * Builds the `verifyAuthHeaders` helper appended to WireMockTestCase.php under
+     * endpoint-security. It queries WireMock's requests/find endpoint (scoped by the
+     * per-test X-Test-Id header) with a set of per-header matchers and asserts exactly one
+     * matching request was recorded. Each entry in `$headerMatchers` is a WireMock header
+     * matcher: `['matches' => 'Bearer .*']` for a header that must be present (optionally
+     * pinned to its scheme's value prefix) or `['absent' => true]` for one that must not be
+     * sent.
+     */
+    private buildVerifyAuthHeadersMethod(): string {
+        return `
+
+    /**
+     * Verifies that exactly one request scoped to the given test ID was recorded with the
+     * expected set of auth headers. Used under endpoint-security auth routing to assert that
+     * only the endpoint's declared scheme's header is applied and all other schemes' headers
+     * are absent.
+     *
+     * @param string $testId The test ID used to filter requests
+     * @param string $method The HTTP method (GET, POST, etc.)
+     * @param string $urlPath The URL path to match
+     * @param array<string, array<string, mixed>> $headerMatchers WireMock header matchers keyed by header name
+     */
+    protected function verifyAuthHeaders(
+        string $testId,
+        string $method,
+        string $urlPath,
+        array $headerMatchers
+    ): void {
+        $client = Psr18ClientDiscovery::find();
+        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+
+        $headers = [
+            'X-Test-Id' => ['equalTo' => $testId],
+        ];
+        foreach ($headerMatchers as $name => $matcher) {
+            $headers[$name] = $matcher;
+        }
+
+        $body = [
+            'method' => $method,
+            'urlPath' => $urlPath,
+            'headers' => $headers,
+        ];
+
+        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
+        $request = $requestFactory->createRequest('POST', $wiremockUrl . '/__admin/requests/find')
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($streamFactory->createStream(JsonEncoder::encode($body)));
+        $response = $client->sendRequest($request);
+
+        $this->assertSame(200, $response->getStatusCode(), 'Failed to query WireMock requests');
+
+        $json = json_decode((string) $response->getBody(), true);
+
+        // Ensure we have an array; otherwise, fail the test.
+        if (!is_array($json)) {
+            $this->fail('Expected WireMock to return a JSON object.');
+        }
+
+        /** @var array<string, mixed> $json */
+        $requests = [];
+        if (isset($json['requests']) && is_array($json['requests'])) {
+            $requests = $json['requests'];
+        }
+
+        /** @var array<int, mixed> $requests */
+        $this->assertCount(
+            1,
+            $requests,
+            sprintf('Expected exactly one request with the routed auth headers for %s, found %d', $testId, count($requests))
+        );
+    }`;
     }
 
     /**

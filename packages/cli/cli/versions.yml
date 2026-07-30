@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 5.77.0
+- version: 5.87.0
   changelogEntry:
     - summary: |
         Add the `send-optional-defaults` playground setting to `docs.yml` (settable globally or
@@ -7,6 +7,190 @@
         (or `x-fern-default`) are pre-filled and sent from the playground. Defaults to off.
       type: feat
   createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.86.0
+  changelogEntry:
+    - summary: |
+        Add the `preserve-one-of-in-all-of` OpenAPI setting. When enabled, an `allOf` whose members
+        include a `oneOf`/`anyOf` is distributed into a union — each variant is the union member merged
+        with the remaining `allOf` members — instead of flattening every variant's properties into a
+        single object. This makes the variants available to SDKs and renders a variant selector in the
+        API reference. Defaults to false.
+      type: feat
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.85.0
+  changelogEntry:
+    - summary: |
+        `fern generate --pack` now produces a source zip artifact for Go SDKs in `fern-dist/`
+        (`<output-dir>-source.zip`). Go modules have no binary package format, so the zip contains the
+        module source (excluding `fern-dist/` and `.git/`) and can be shared internally and referenced
+        with a `replace` directive in `go.mod`. The zip is built in-process, so it works identically in
+        host and docker pack modes without any toolchain.
+      type: feat
+  createdAt: "2026-07-30"
+  irVersion: 67
+- version: 5.84.0
+  changelogEntry:
+    - summary: |
+        Add a `--pack` flag to `fern generate`. When generating to the local file system, the CLI now
+        builds distributable package artifacts (npm tarball, Python wheel, JAR, NuGet package, gem,
+        Composer zip, crate) into a `fern-dist/` folder inside each output directory, so SDKs can be
+        shared internally without publishing to a registry. Use `--pack-mode docker` to run the
+        packaging toolchains inside official Docker images instead of requiring them on the host.
+        `--pack` also generates full, packageable projects (pyproject.toml, README.md, etc.) for
+        local-file-system outputs so the packaging toolchains have the metadata they need, and
+        host-mode packaging hides any enclosing git repository so VCS-aware build backends
+        (e.g. poetry-core) don't silently exclude gitignored output files from the artifact.
+      type: feat
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 5.83.1
+  changelogEntry:
+    - summary: |
+        Fix user-specified OpenRPC examples to use the method's computed endpoint path instead of
+        appending a hardcoded `/{apiKey}` path.
+      type: fix
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 5.83.0
+  changelogEntry:
+    - summary: |
+        Add the additive `OAuthAuthorizationCode.redirectUriBackupPorts` IR field (fallback loopback
+        callback ports for the authorization-code/PKCE flow). No behavior change for existing configs.
+      type: internal
+  createdAt: "2026-07-29"
+  irVersion: 67
+- version: 5.82.0
+  changelogEntry:
+    - summary: |
+        Add `fern org set/get/unset cli-version` to pin the Fern CLI to a version
+        or a min/max range for your whole organization, keeping every project on a
+        consistent CLI version.
+      type: feat
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.81.0
+  changelogEntry:
+    - summary: |
+        Add the additive `OAuthConfiguration.authorizationCode` and `OAuthConfiguration.deviceCode` IR
+        variants modeling the OAuth 2.0 authorization code grant with required PKCE (browser login) and
+        the device authorization grant (RFC 8628) for public clients. IR consumers now narrow the OAuth
+        configuration union before reading client-credentials-only fields. No behavior change for
+        existing client-credentials configurations.
+      type: internal
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.80.5
+  changelogEntry:
+    - summary: |
+        Fix markdown images that specify a title (e.g. `![alt](./image.png "Title")`) failing to render.
+        The title was treated as part of the image path, so the image was never swapped for its uploaded
+        file reference.
+      type: fix
+  createdAt: "2026-07-28"
+  irVersion: 67
+- version: 5.80.4
+  changelogEntry:
+    - summary: |
+        `fern generate` (cloud generation) with `local-file-system` output now threads the
+        package name and version into the IR the same way `fern generate --local` does. This
+        fixes generated SDKs missing the `User-Agent` and `X-Fern-SDK-Name`/`X-Fern-SDK-Version`
+        headers when generating to the local filesystem without the `--local` flag. Package
+        names configured via generator `config` (e.g. `package_name`, `packageJson.name`) are
+        now also resolved on the cloud generation path.
+      type: fix
+    - summary: |
+        `local-file-system` output now threads the C# SDK's package identity (from the generator's
+        `package-id` config) and the user-provided `--version` into the IR via a new `nuget`
+        filesystem publish target, matching the existing npm/pypi/maven/crates/go behavior. This
+        enables the C# generator to stamp the SDK name/version into `Version.cs` and the structured
+        `User-Agent` header.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 5.80.3
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.53. Under `--version AUTO`, a purely additive Go
+        change (inserting a new field into a struct) is no longer misclassified as a breaking
+        MAJOR bump. The generated `explicitFields` bit-constant reindexing that a field
+        insertion produces is now stripped before AI diff analysis, so real additions stay
+        MINOR and real removals stay MAJOR.
+      type: fix
+  createdAt: "2026-07-27"
+  irVersion: 67
+- version: 5.80.2
+  changelogEntry:
+    - summary: |
+        Support `client-default` on `api.headers` entries in generators.yml. The
+        generators.yml schema previously dropped this field, so global headers with a
+        `client-default` produced no client-side default in the generated SDKs. The
+        field now flows through to the IR (`clientDefault`), so SDKs send the value by
+        default when the caller and environment variable do not provide one.
+      type: fix
+  createdAt: "2026-07-24"
+  irVersion: 67
+- version: 5.80.1
+  changelogEntry:
+    - summary: |
+        Preserve the base schema description on nested fields composed with `allOf`.
+        When a property merged a `$ref` (carrying a description) with an inline schema
+        adding constraints (e.g. `pattern`), the merged validation was kept but the
+        inherited description was dropped from the generated docs/SDKs.
+      type: fix
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.80.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.show-nav-availability-badges` docs.yml setting. When set to true,
+        availability badges (Beta, Deprecated, etc.) render inline next to navigation items
+        in the sidebar. Defaults to false; the page-header availability badge is unaffected.
+      type: feat
+  createdAt: "2026-07-23"
+  irVersion: 67
+- version: 5.79.0
+  changelogEntry:
+    - summary: |
+        Add an experimental `external-sitemaps` option to the `experimental` block in
+        docs.yml. It accepts a list of absolute sitemap URLs whose pages are indexed in
+        search alongside your documentation (tagged to the same domain) but flagged as
+        third-party so they rank below all first-party docs.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.78.0
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now automatically deconflicts path parameters whose names collide
+        with other request properties (query parameters, headers, or request body properties).
+        The colliding path parameter's SDK-facing name gets a `PathParam` suffix (e.g. an
+        `{idType}` path parameter colliding with an `idType` body property becomes
+        `idTypePathParam`), so such OpenAPI-compliant specs generate without requiring an
+        `x-fern-parameter-name` override. The wire format is unchanged, since path parameter
+        names never appear on the wire. Explicit `x-fern-parameter-name` overrides still take
+        precedence.
+      type: feat
+  createdAt: "2026-07-22"
+  irVersion: 67
+- version: 5.77.0
+  changelogEntry:
+    - summary: |
+        Add an `ignore-tags` OpenAPI setting to `generators.yml`. When enabled,
+        operation-level tags are ignored when determining the SDK structure:
+        endpoints fall back to the root package (or their namespace) and method
+        names are derived from each operation's `operationId`.
+
+        ```yaml
+        api:
+          specs:
+            - openapi: ./openapi.yml
+              settings:
+                ignore-tags: true
+        ```
+      type: feat
+  createdAt: "2026-07-22"
   irVersion: 67
 - version: 5.76.0
   changelogEntry:

@@ -1,0 +1,7 @@
+- summary: |
+    Fix a thread-safety bug in the generated `OAuthTokenProvider`. The token
+    cache is now guarded by a `SemaphoreSlim` with double-checked locking (the
+    same pattern already used by `InferredAuthTokenProvider`), so only one
+    caller refreshes the token under concurrent load and cached values are
+    published safely. The cache-hit path stays lock-free.
+  type: fix

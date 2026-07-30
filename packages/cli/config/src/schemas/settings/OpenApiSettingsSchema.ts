@@ -62,6 +62,14 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     preserveSingleSchemaOneof: z.boolean().optional(),
 
     /**
+     * If true, an allOf containing a oneOf/anyOf member is distributed into a union, where each
+     * variant is the union member merged with the remaining allOf members.
+     * If false, the variants' properties are flattened into a single object and marked optional.
+     * Defaults to false.
+     */
+    preserveOneOfInAllOf: z.boolean().optional(),
+
+    /**
      * Whether to inline allOf schemas. If false, allOf schemas will be
      * extended in the code generation.
      */
@@ -100,7 +108,15 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * If false, keep the original "Request" suffix regardless of collisions.
      * Defaults to true.
      */
-    "disambiguate-request-names": z.boolean().optional()
+    "disambiguate-request-names": z.boolean().optional(),
+
+    /**
+     * If true, ignore operation-level tags when determining the SDK structure.
+     * Endpoints fall back to the root package (or their namespace) and method
+     * names are derived from each operation's operationId.
+     * Defaults to false.
+     */
+    "ignore-tags": z.boolean().optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

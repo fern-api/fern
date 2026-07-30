@@ -1,0 +1,29 @@
+{
+  "binaryName": "reserved-keyword-cli",
+  "rootGroup": null,
+  "specs": [
+    {
+      "file": "cli/reserved-keyword-cli/openapi0.json",
+      "namespace": null
+    }
+  ],
+  "authEnvVars": [],
+  "authMock": null,
+  "cases": [
+    {
+      "id": "get",
+      "method": "GET",
+      "path": "/models/{model_id}",
+      "params": {
+        "model_id": "model_id"
+      },
+      "body": null,
+      "queryMatchers": [],
+      "headerMatchers": [],
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"created_by\": \"self\"\n}"
+      }
+    }
+  ]
+}

@@ -226,12 +226,21 @@ fixtures:
     - customConfig:
         environment-class-name: CustomEnvironment
       outputFolder: environment-class-name
+  csharp-multi-env-url-templating:
+    - outputFolder: no-custom-config
+      customConfig: null
   server-url-templating:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        server-url-variables: false
   server-url-templating-single-url:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: disable-server-url-variables
+      customConfig:
+        server-url-variables: false
   exhaustive:
     - customConfig:
         explicit-namespaces: true

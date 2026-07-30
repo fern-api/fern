@@ -27,7 +27,7 @@ export class VersionGenerator extends FileGenerator<CSharpFile> {
             access: ast.Access.Public,
             const_: true,
             initializer: this.csharp.codeblock(
-                this.csharp.string_({ string: this.context.version ?? this.constants.defaults.version })
+                this.csharp.string_({ string: this.context.sdkVersion ?? this.constants.defaults.version })
             )
         });
 

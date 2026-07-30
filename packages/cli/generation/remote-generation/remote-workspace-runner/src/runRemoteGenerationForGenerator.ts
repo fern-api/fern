@@ -3,9 +3,11 @@ import {
     computeSemanticVersion,
     detectCiProvider,
     detectInvocationSource,
+    getFilesystemPublishTarget,
     getIdempotencyKeyGenerationFromGeneratorConfig,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
+    getPackageNameFromGeneratorConfig,
     getUserAgentTemplateFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
@@ -15,7 +17,12 @@ import { createFdrService, createVenusService } from "@fern-api/core";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { isAutoVersion, MAGIC_VERSION } from "@fern-api/generator-cli/autoversion";
+import {
+    extractLanguageFromGeneratorName,
+    isAutoVersion,
+    MAGIC_VERSION,
+    mapMagicVersionForLanguage
+} from "@fern-api/generator-cli/autoversion";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
@@ -60,7 +67,8 @@ export async function runRemoteGenerationForGenerator({
     noReplay,
     disableTelemetry,
     loginCommand,
-    specsTarGzBuffer
+    specsTarGzBuffer,
+    generateFullProject
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -110,13 +118,28 @@ export async function runRemoteGenerationForGenerator({
      */
     loginCommand?: string;
     specsTarGzBuffer?: Buffer;
+    /**
+     * When true, filesystem (local-file-system / download) outputs are generated as full,
+     * packageable projects (pyproject.toml, README.md, etc.) instead of source-only output.
+     * Set by `fern generate --pack` so the emitted SDK can be built into a package artifact.
+     */
+    generateFullProject?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
 
-    const packageName = generatorsYml.getPackageName({ generatorInvocation });
+    // For local-file-system output, `generatorsYml.getPackageName` always returns
+    // undefined, so fall back to the generator `config` (e.g. `package_name`,
+    // `packageJson.name`) — the same resolution `--local` generation uses. The
+    // fallback is scoped to downloadFiles so publish/github flows keep their
+    // server-driven version resolution.
+    const packageName =
+        generatorsYml.getPackageName({ generatorInvocation }) ??
+        (generatorInvocation.outputMode.type === "downloadFiles"
+            ? getPackageNameFromGeneratorConfig(generatorInvocation)
+            : undefined);
 
     /** Sugar to substitute templated env vars in a standard way */
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
@@ -341,7 +364,15 @@ export async function runRemoteGenerationForGenerator({
         intermediateRepresentation: {
             ...ir,
             fdrApiDefinitionId,
-            publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
+            publishConfig: getPublishConfig({
+                generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+                version: resolvedVersion,
+                userProvidedVersion: version,
+                packageName,
+                selfHosted: ir.selfHosted ?? false,
+                generateFullProject,
+                context: interactiveTaskContext
+            })
         },
         shouldLogS3Url,
         token,
@@ -443,13 +474,45 @@ export async function runRemoteGenerationForGenerator({
     return result;
 }
 
-function getPublishConfig({
-    generatorInvocation
+export function getPublishConfig({
+    generatorInvocation,
+    version,
+    userProvidedVersion,
+    packageName,
+    selfHosted,
+    generateFullProject,
+    context
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    version: string | undefined;
+    userProvidedVersion: string | undefined;
+    packageName: string | undefined;
+    selfHosted: boolean;
+    generateFullProject?: boolean;
+    context: InteractiveTaskContext;
 }): FernIr.PublishingConfig | undefined {
-    return generatorInvocation.outputMode._visit({
-        downloadFiles: () => undefined,
+    // When version is AUTO, substitute the language-mapped magic placeholder so the
+    // version stamped into the generated SDK's publish target (and therefore
+    // package.json, the User-Agent header, and X-Fern-SDK-Version) is a safe
+    // placeholder that the post-generation step can cleanly replace.
+    const publishLanguage = generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
+    const substituteAutoVersion = (candidate: string | undefined): string | undefined =>
+        candidate != null && isAutoVersion(candidate)
+            ? mapMagicVersionForLanguage(MAGIC_VERSION, publishLanguage)
+            : candidate;
+
+    return generatorInvocation.outputMode._visit<FernIr.PublishingConfig | undefined>({
+        downloadFiles: () =>
+            FernIr.PublishingConfig.filesystem({
+                generateFullProject: selfHosted || (generateFullProject ?? false),
+                publishTarget: getFilesystemPublishTarget({
+                    generatorInvocation,
+                    version: substituteAutoVersion(version),
+                    userProvidedVersion: substituteAutoVersion(userProvidedVersion),
+                    packageName,
+                    context
+                })
+            }),
         github: () => undefined,
         githubV2: () => undefined,
         publish: () => undefined,

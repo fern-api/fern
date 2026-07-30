@@ -1001,8 +1001,10 @@ export class SubClientGenerator {
 
     /**
      * Builds a prelude that merges service- and endpoint-level literal headers
-     * (e.g. `Accept-Encoding: literal<"gzip">`) into the request options.
-     * Caller-supplied values in `additional_headers` take precedence.
+     * (e.g. `Accept-Encoding: literal<"gzip">`) into the request options, and — in
+     * endpoint-security mode — the auth headers routed for this endpoint's declared
+     * `security` requirements. Caller-supplied literal headers take precedence over the
+     * literal defaults; routed auth headers are authoritative.
      */
     private buildLiteralHeadersPrelude(endpoint: FernIr.HttpEndpoint): string {
         const literalHeaders: { wireValue: string; value: string }[] = [];
@@ -1012,22 +1014,58 @@ export class SubClientGenerator {
                 literalHeaders.push({ wireValue: getWireValue(header.name), value });
             }
         }
-        if (literalHeaders.length === 0) {
+        const authRequirements = this.getEndpointSecurityRequirements(endpoint);
+        const needsAuthRouting = authRequirements != null && authRequirements.length > 0;
+        if (literalHeaders.length === 0 && !needsAuthRouting) {
             return "";
         }
-        const inserts = literalHeaders
+        const literalInserts = literalHeaders
             .map(
                 ({ wireValue, value }) =>
                     `            o.additional_headers.entry(${JSON.stringify(wireValue)}.to_string()).or_insert_with(|| ${JSON.stringify(value)}.to_string());\n`
             )
             .join("");
-        return (
-            `let options = {\n` +
-            `            let mut o = options.unwrap_or_default();\n` +
-            inserts +
-            `            Some(o)\n` +
-            `        };\n        `
-        );
+        let prelude = "";
+        if (needsAuthRouting) {
+            const requirementsLiteral =
+                "&[" +
+                authRequirements
+                    .map(
+                        (group) =>
+                            "&[" + group.map((schemeKey) => JSON.stringify(schemeKey)).join(", ") + "] as &[&str]"
+                    )
+                    .join(", ") +
+                "]";
+            prelude +=
+                `let endpoint_auth_headers = self\n` +
+                `            .http_client\n` +
+                `            .resolve_endpoint_auth_headers(&options, ${requirementsLiteral})\n` +
+                `            .await?;\n        `;
+        }
+        prelude += `let options = {\n` + `            let mut o = options.unwrap_or_default();\n` + literalInserts;
+        if (needsAuthRouting) {
+            prelude +=
+                `            for (header_key, header_value) in endpoint_auth_headers {\n` +
+                `                o.additional_headers.insert(header_key, header_value);\n` +
+                `            }\n`;
+        }
+        prelude += `            Some(o)\n` + `        };\n        `;
+        return prelude;
+    }
+
+    /**
+     * Returns this endpoint's auth requirements as an OR-list of AND-groups of auth scheme
+     * keys, or undefined when per-endpoint auth routing does not apply (not endpoint-security
+     * mode, or the endpoint declares no security → no auth).
+     */
+    private getEndpointSecurityRequirements(endpoint: FernIr.HttpEndpoint): string[][] | undefined {
+        if (!this.context.isEndpointSecurity()) {
+            return undefined;
+        }
+        if (endpoint.security == null) {
+            return undefined;
+        }
+        return endpoint.security.map((requirement) => Object.keys(requirement));
     }
 
     private getLiteralHeaderValue(typeReference: FernIr.TypeReference): string | undefined {

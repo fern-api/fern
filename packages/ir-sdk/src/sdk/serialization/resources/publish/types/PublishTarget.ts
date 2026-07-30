@@ -7,8 +7,10 @@ import { CratesPublishTarget } from "./CratesPublishTarget.js";
 import { GoPublishTarget } from "./GoPublishTarget.js";
 import { MavenPublishTarget } from "./MavenPublishTarget.js";
 import { NpmPublishTarget } from "./NpmPublishTarget.js";
+import { NugetPublishTarget } from "./NugetPublishTarget.js";
 import { PostmanPublishTarget } from "./PostmanPublishTarget.js";
 import { PypiPublishTarget } from "./PypiPublishTarget.js";
+import { RubyGemsPublishTarget } from "./RubyGemsPublishTarget.js";
 
 export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.Raw, FernIr.PublishTarget> =
     core.serialization
@@ -19,6 +21,8 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
             pypi: PypiPublishTarget,
             crates: CratesPublishTarget,
             go: GoPublishTarget,
+            nuget: NugetPublishTarget,
+            rubygems: RubyGemsPublishTarget,
         })
         .transform<FernIr.PublishTarget>({
             transform: (value) => {
@@ -35,6 +39,10 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
                         return FernIr.PublishTarget.crates(value);
                     case "go":
                         return FernIr.PublishTarget.go(value);
+                    case "nuget":
+                        return FernIr.PublishTarget.nuget(value);
+                    case "rubygems":
+                        return FernIr.PublishTarget.rubygems(value);
                     default:
                         return value as FernIr.PublishTarget;
                 }
@@ -49,7 +57,9 @@ export declare namespace PublishTarget {
         | PublishTarget.Maven
         | PublishTarget.Pypi
         | PublishTarget.Crates
-        | PublishTarget.Go;
+        | PublishTarget.Go
+        | PublishTarget.Nuget
+        | PublishTarget.Rubygems;
 
     export interface Postman extends PostmanPublishTarget.Raw {
         type: "postman";
@@ -73,5 +83,13 @@ export declare namespace PublishTarget {
 
     export interface Go extends GoPublishTarget.Raw {
         type: "go";
+    }
+
+    export interface Nuget extends NugetPublishTarget.Raw {
+        type: "nuget";
+    }
+
+    export interface Rubygems extends RubyGemsPublishTarget.Raw {
+        type: "rubygems";
     }
 }

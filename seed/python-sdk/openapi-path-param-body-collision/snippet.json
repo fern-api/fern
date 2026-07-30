@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/Profiles/{profileId}/Identifiers/{idTypePathParam}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_.updateProfileIdentifier"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.update_profile_identifier(\n    profile_id=\"profile_123\",\n    id_type_path_param=\"email\",\n    id_type=\"phone\",\n    old_value=\"+13175556789\",\n    new_value=\"+13175556798\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.update_profile_identifier(\n        profile_id=\"profile_123\",\n        id_type_path_param=\"email\",\n        id_type=\"phone\",\n        old_value=\"+13175556789\",\n        new_value=\"+13175556798\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -57,6 +57,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     additionalPropertiesDefaultsTo: undefined,
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
+    preserveOneOfInAllOf: undefined,
     inlineAllOfSchemas: undefined,
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
@@ -72,7 +73,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     inferForwardCompatible: undefined,
     coerceConstsTo: undefined,
     shouldInferDiscriminatedUnionBaseProperties: undefined,
-    disambiguateRequestNames: undefined
+    disambiguateRequestNames: undefined,
+    ignoreTags: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -173,6 +175,7 @@ function parseOpenApiDefinitionSettingsSchema(
         additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
+        preserveOneOfInAllOf: settings?.["preserve-one-of-in-all-of"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
@@ -181,7 +184,8 @@ function parseOpenApiDefinitionSettingsSchema(
         defaultIntegerFormat: settings?.["default-integer-format"],
         pathParameterOrder: settings?.["path-parameter-order"],
         shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"],
-        disambiguateRequestNames: settings?.["disambiguate-request-names"]
+        disambiguateRequestNames: settings?.["disambiguate-request-names"],
+        ignoreTags: settings?.["ignore-tags"]
     };
 }
 

@@ -18,18 +18,22 @@ package com.fern.java.client.generators.auth;
 
 import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
@@ -204,6 +208,25 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildRefreshMethod(ClassName oauthTokenSupplierClassName) {
+        // The generated OAuthTokenSupplier constructor takes an extra parameter for each non-literal
+        // custom token-request property (scopes, custom body properties, headers), inserted between
+        // clientSecret and authClient. This provider only has clientId/clientSecret, so it passes a
+        // default for each extra property: Optional.empty() for optional properties, null otherwise.
+        CodeBlock.Builder tokenSupplierArgs = CodeBlock.builder().add("clientId, clientSecret");
+        for (OAuthTokenSupplierGenerator.OAuthTokenSupplierProperty property :
+                OAuthTokenSupplierGenerator.computeCustomProperties(clientGeneratorContext, clientCredentials)) {
+            if (property.isHardcoded()) {
+                continue;
+            }
+            tokenSupplierArgs.add(", ");
+            if (isOptionalType(property.getType())) {
+                tokenSupplierArgs.add("$T.empty()", Optional.class);
+            } else {
+                tokenSupplierArgs.add("null");
+            }
+        }
+        tokenSupplierArgs.add(", this.authClient");
+
         // Get the token response type - we'll use the OAuthTokenSupplier pattern
         // The refresh method calls the token endpoint and updates cached values
         return MethodSpec.methodBuilder("refresh")
@@ -216,9 +239,10 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .addComment("Create a temporary token supplier to fetch the token")
                 .addStatement(
-                        "$T tokenSupplier = new $T(clientId, clientSecret, this.authClient)",
+                        "$T tokenSupplier = new $T($L)",
                         oauthTokenSupplierClassName,
-                        oauthTokenSupplierClassName)
+                        oauthTokenSupplierClassName,
+                        tokenSupplierArgs.build())
                 .addComment("The token supplier's get() method handles fetching and returns the full auth header value")
                 .addStatement("String authHeader = tokenSupplier.get()")
                 .addComment("Extract just the token part (remove 'Bearer ' prefix)")
@@ -232,6 +256,11 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .addStatement("this.expiresAt = getExpiresAt(3600)")
                 .addStatement("return this.accessToken")
                 .build();
+    }
+
+    private static boolean isOptionalType(TypeName type) {
+        return type instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) type).rawType.equals(ClassName.get("java.util", "Optional"));
     }
 
     private MethodSpec buildGetExpiresAtMethod() {

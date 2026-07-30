@@ -1745,6 +1745,12 @@
             },
             "basepath-aware": {
               "type": "boolean"
+            },
+            "external-sitemaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           "additionalProperties": false
@@ -2881,6 +2887,9 @@
                 "timeline",
                 "classic"
               ]
+            },
+            "show-nav-availability-badges": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -3971,6 +3980,9 @@
                       "preserveSingleSchemaOneof": {
                         "type": "boolean"
                       },
+                      "preserveOneOfInAllOf": {
+                        "type": "boolean"
+                      },
                       "inlineAllOfSchemas": {
                         "type": "boolean"
                       },
@@ -4009,6 +4021,9 @@
                         "type": "boolean"
                       },
                       "disambiguate-request-names": {
+                        "type": "boolean"
+                      },
+                      "ignore-tags": {
                         "type": "boolean"
                       }
                     },
@@ -4548,6 +4563,9 @@
                         "preserveSingleSchemaOneof": {
                           "type": "boolean"
                         },
+                        "preserveOneOfInAllOf": {
+                          "type": "boolean"
+                        },
                         "inlineAllOfSchemas": {
                           "type": "boolean"
                         },
@@ -4586,6 +4604,9 @@
                           "type": "boolean"
                         },
                         "disambiguate-request-names": {
+                          "type": "boolean"
+                        },
+                        "ignore-tags": {
                           "type": "boolean"
                         }
                       },

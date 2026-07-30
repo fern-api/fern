@@ -22,16 +22,16 @@ export class PaymentNotificationWebhooksHelper {
         timestampHeader: string,
     ): Promise<boolean> {
         if (requestBody == null || signatureHeader == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
+            return false;
         }
 
         if (timestampHeader == null || timestampHeader === "") {
-            throw new Error("Missing timestamp header 'x-payment-timestamp' for webhook signature verification");
+            return false;
         }
 
         const timestampMs = new Date(timestampHeader).getTime();
         if (Number.isNaN(timestampMs)) {
-            throw new Error("Invalid timestamp format: expected ISO 8601 date string");
+            return false;
         }
 
         if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {

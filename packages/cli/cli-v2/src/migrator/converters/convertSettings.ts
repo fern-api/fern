@@ -35,6 +35,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "additional-properties-defaults-to": "additionalPropertiesDefaultsTo",
     "type-dates-as-strings": "typeDatesAsStrings",
     "preserve-single-schema-oneof": "preserveSingleSchemaOneof",
+    "preserve-one-of-in-all-of": "preserveOneOfInAllOf",
     "inline-all-of-schemas": "inlineAllOfSchemas",
     "resolve-aliases": "resolveAliases",
     "group-multi-api-environments": "groupMultiApiEnvironments",

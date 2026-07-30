@@ -225,6 +225,17 @@ class SDKCustomConfig(pydantic.BaseModel):
     # unchanged. Subject to `omit_fern_headers`.
     include_platform_headers: bool = False
 
+    # If true, the SDK version reported in the telemetry headers (X-Fern-SDK-Version
+    # and the version segment of User-Agent) is resolved at runtime via
+    # `importlib.metadata.version(<dist>)` instead of being baked in as a literal at
+    # generation time. This lets the reported version track the actually-installed
+    # package version (e.g. when an external tool such as release-please sets the
+    # published version after generation), rather than a version the SDK may never
+    # publish. Falls back to the generation-time version when the distribution is not
+    # installed (e.g. running from source). Disabled by default so existing output is
+    # unchanged. Subject to `omit_fern_headers`.
+    runtime_version: bool = False
+
     # The default number of retries for failed requests in the generated SDK.
     # Set to 0 to disable retries by default (useful for non-idempotent APIs).
     # SDK users can still override this per-request via request_options.
@@ -242,6 +253,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     #   "all": defaults on query params, headers, request body params, and pydantic model fields
     use_request_defaults: Optional[Literal["none", "parameters", "all"]] = None
 
+    # When true, makes client auth parameters optional even when the spec
+    # mandates auth on all endpoints (isAuthMandatory=true). Useful for
+    # hand-maintained wrapper clients that authenticate via external means.
+    optional_auth: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -255,10 +271,18 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["offset_semantics"] = obj.pop("offsetSemantics")
             if "omitFernHeaders" in obj and "omit_fern_headers" not in obj:
                 obj["omit_fern_headers"] = obj.pop("omitFernHeaders")
+            if "runtime-version" in obj and "runtime_version" not in obj:
+                obj["runtime_version"] = obj.pop("runtime-version")
+            if "runtimeVersion" in obj and "runtime_version" not in obj:
+                obj["runtime_version"] = obj.pop("runtimeVersion")
             if "maxRetries" in obj and "default_max_retries" not in obj:
                 obj["default_max_retries"] = obj.pop("maxRetries")
             if "retryStatusCodes" in obj and "retry_status_codes" not in obj:
                 obj["retry_status_codes"] = obj.pop("retryStatusCodes")
+            if "optional-auth" in obj and "optional_auth" not in obj:
+                obj["optional_auth"] = obj.pop("optional-auth")
+            if "optionalAuth" in obj and "optional_auth" not in obj:
+                obj["optional_auth"] = obj.pop("optionalAuth")
 
         obj = super().parse_obj(obj)
 

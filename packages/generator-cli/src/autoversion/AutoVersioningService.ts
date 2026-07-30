@@ -616,6 +616,8 @@ export class AutoVersioningService {
 
         let processedContent = this.removeGoModulePathSuffixPairs(contentLines);
 
+        processedContent = this.removeGoExplicitFieldBitConstantPairs(processedContent);
+
         processedContent = this.removeVersionChangePairs(processedContent, mappedMagicVersion);
 
         processedContent = this.removeRemainingMagicVersionLines(processedContent, mappedMagicVersion);
@@ -862,6 +864,97 @@ export class AutoVersioningService {
             strippedContent: content.replace(suffixPattern, ""),
             hasSuffix: suffixPattern.test(content)
         };
+    }
+
+    /**
+     * Removes Go `explicitFields` bit-constant reindexing churn from a diff section.
+     *
+     * The Go SDK tracks which optional fields were explicitly set via a per-struct `big.Int`
+     * bitmask. For each struct property it generates a private constant whose value is a single
+     * bit at the property's positional index, e.g.
+     *
+     *     var (
+     *         entityFieldGeoShape   = big.NewInt(1 << 3)
+     *         entityFieldGeoDetails = big.NewInt(1 << 4)
+     *     )
+     *
+     * Inserting a new field earlier in the struct shifts every following constant's bit index by
+     * one, producing a deletion/addition pair per field that differs only by the integer:
+     *
+     *     -    entityFieldGeoShape = big.NewInt(1 << 3)
+     *     +    entityFieldGeoShape = big.NewInt(1 << 4)
+     *
+     * This is a purely mechanical artifact of the field addition: the bit is assigned and read
+     * within the same generated version (the wire format is name-based JSON, not bit position),
+     * so shifting it is not observable to consumers. Left in the diff, the AI analyzer reads the
+     * shifted bit positions as a serialization-compatibility break and misclassifies an additive
+     * change as a spurious MAJOR bump. The genuinely new field, its own new bit constant, and its
+     * setter are all pure additions with no matching deletion, so they survive this pass and the
+     * AI still sees (and correctly classifies) the field addition as MINOR.
+     */
+    private removeGoExplicitFieldBitConstantPairs(lines: string[]): string[] {
+        const additions: { index: number; normalized: string }[] = [];
+        for (let index = 0; index < lines.length; index++) {
+            const line = lines[index];
+            if (line == null || !this.isAdditionLine(line)) {
+                continue;
+            }
+            const info = this.analyzeGoBitConstantLine(line);
+            if (info != null) {
+                additions.push({ index, normalized: info.normalized });
+            }
+        }
+
+        const removed = new Set<number>();
+        const usedAdditions = new Set<number>();
+        for (let index = 0; index < lines.length; index++) {
+            const line = lines[index];
+            if (line == null || !this.isDeletionLine(line)) {
+                continue;
+            }
+            const info = this.analyzeGoBitConstantLine(line);
+            if (info == null) {
+                continue;
+            }
+            const match = additions.find(
+                (addition) => !usedAdditions.has(addition.index) && addition.normalized === info.normalized
+            );
+            if (match != null) {
+                usedAdditions.add(match.index);
+                removed.add(index);
+                removed.add(match.index);
+            }
+        }
+
+        if (removed.size === 0) {
+            return lines;
+        }
+        return lines.filter((_, index) => !removed.has(index));
+    }
+
+    /**
+     * If a diff line (with its leading +/- stripped) is a generated Go `explicitFields`
+     * bit constant — `<name> = big.NewInt(1 << N)` or the >=63 form
+     * `<name> = big.NewInt(0).Lsh(big.NewInt(1), N)` — returns a normalized key with the bit
+     * index removed so a deletion and its reindexed addition compare equal. Requiring the exact
+     * `big.NewInt` bit-shift shape keeps this from matching ordinary integer assignments.
+     */
+    private analyzeGoBitConstantLine(line: string): { normalized: string } | undefined {
+        const content = line.substring(1);
+
+        const shiftMatch = content.match(/^(\s*)([A-Za-z_][A-Za-z0-9_]*)\s*=\s*big\.NewInt\(1\s*<<\s*\d+\)\s*$/);
+        if (shiftMatch?.[2] != null) {
+            return { normalized: `${shiftMatch[2]}=big.NewInt(1<<#)` };
+        }
+
+        const lshMatch = content.match(
+            /^(\s*)([A-Za-z_][A-Za-z0-9_]*)\s*=\s*big\.NewInt\(0\)\.Lsh\(big\.NewInt\(1\),\s*\d+\)\s*$/
+        );
+        if (lshMatch?.[2] != null) {
+            return { normalized: `${lshMatch[2]}=big.NewInt(0).Lsh(big.NewInt(1),#)` };
+        }
+
+        return undefined;
     }
 
     /**

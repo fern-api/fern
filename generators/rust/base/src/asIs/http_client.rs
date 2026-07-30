@@ -386,53 +386,9 @@ impl HttpClient {
         request: &mut Request,
         options: &Option<RequestOptions>,
     ) -> Result<(), ApiError> {
-        let headers = request.headers_mut();
-
-        // Apply API key (request options override config)
-        let api_key = options
-            .as_ref()
-            .and_then(|opts| opts.api_key.as_ref())
-            .or(self.config.api_key.as_ref());
-
-        if let Some(key) = api_key {
-            let header_value = {{API_KEY_VALUE_EXPR}};
-            headers.insert("{{API_KEY_HEADER}}", header_value.parse().map_err(|_| ApiError::InvalidHeader)?);
-        }
-
-        // Apply bearer token - priority: request options > OAuth > config
-        let token = if let Some(opts) = options.as_ref() {
-            if opts.token.is_some() {
-                opts.token.clone()
-            } else {
-                None
-            }
-        } else {
-            None
-        };
-
-        let token = match token {
-            Some(t) => Some(t),
-            None => {
-                // Try OAuth token provider if configured
-                if let Some(oauth_config) = &self.oauth_config {
-                    Some(self.get_oauth_token(oauth_config).await?)
-                } else {
-                    // Fall back to static token from config
-                    self.config.token.clone()
-                }
-            }
-        };
-
-        if let Some(token) = token {
-            let auth_value = format!("Bearer {}", token);
-            headers.insert(
-                "Authorization",
-                auth_value.parse().map_err(|_| ApiError::InvalidHeader)?,
-            );
-        }
-
-        Ok(())
+{{APPLY_AUTH_HEADERS_BODY}}
     }
+{{ENDPOINT_AUTH_ROUTING_METHOD}}
 
     /// Fetches an OAuth token, using the cached token if valid or fetching a new one.
     async fn get_oauth_token(&self, oauth_config: &OAuthConfig) -> Result<String, ApiError> {

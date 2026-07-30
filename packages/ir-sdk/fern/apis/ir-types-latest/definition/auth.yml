@@ -100,6 +100,143 @@ types:
   OAuthConfiguration:
     union:
       clientCredentials: OAuthClientCredentials
+      authorizationCode: OAuthAuthorizationCode
+      deviceCode: OAuthDeviceCode
+
+  OAuthAuthorizationCode:
+    docs: |
+      The OAuth 2.0 Authorization Code grant with PKCE (RFC 7636) for public clients such as
+      CLIs and native apps. The client opens the user's browser to the authorization endpoint,
+      receives the authorization code on a configured loopback redirect (callback), and exchanges
+      it for tokens at the token endpoint without a client secret.
+    properties:
+      clientId:
+        type: OAuthPublicClientId
+        docs: The public client ID for the CLI/native app. Public clients do not use a client secret.
+      authorizationUrl:
+        type: string
+        docs: The absolute URL of the authorization (consent) endpoint opened in the user's browser.
+      tokenUrl:
+        type: string
+        docs: The absolute URL of the token endpoint used to exchange the authorization code for tokens.
+      refreshUrl:
+        type: optional<string>
+        docs: The absolute URL used to refresh tokens. Defaults to `tokenUrl` when omitted.
+      redirectUri:
+        type: optional<string>
+        docs: |
+          The loopback redirect (callback) URI for the authorization-code callback.
+
+          When set, the CLI binds this exact host, port, and path, and sends this exact URI in
+          both the authorization request and the token exchange. Use this when the authorization
+          server requires an exact pre-registered redirect URI (including port). Must be a loopback
+          address (e.g. http://127.0.0.1:8484/callback or http://localhost:8484/callback).
+
+          When omitted, the CLI uses a loopback redirect on an ephemeral (OS-assigned) port with
+          the path `/callback` (i.e. http://127.0.0.1:<random-port>/callback), per RFC 8252 §7.3.
+          This requires the authorization server to allow arbitrary loopback ports for the client.
+
+          Backup ports for when this port is busy can be listed in `redirectUriBackupPorts`.
+      redirectUriBackupPorts:
+        type: optional<list<integer>>
+        docs: |
+          Additional loopback ports for the authorization-code (PKCE) callback, tried in order when
+          the port in `redirectUri` is already in use. Each backup reuses the same host and path as
+          `redirectUri` (i.e. only the port differs), and every resulting callback URI must be
+          pre-registered with the authorization server. Ignored when `redirectUri` is unset (an
+          ephemeral port is used instead). Enables a fixed-port fallback set (e.g. redirectUri on
+          8484 with backups [8483, 8482]) for identity providers that bind each client to specific
+          callback ports.
+      scopes:
+        type: optional<list<string>>
+        docs: The scopes requested during authorization.
+      pkce:
+        type: OAuthPkceConfiguration
+        docs: The PKCE configuration. PKCE is required for this flow.
+      authorizationParameters:
+        type: optional<map<string, string>>
+        docs: |
+          Additional public, literal parameters appended to the authorization request
+          (e.g. `audience`, `resource`). These must not override protocol-reserved parameters.
+      tokenParameters:
+        type: optional<map<string, string>>
+        docs: Additional public, literal parameters included in the authorization-code token exchange request.
+      refreshParameters:
+        type: optional<map<string, string>>
+        docs: Additional public, literal parameters included in the refresh token request.
+      tokenHeader:
+        type: optional<string>
+        docs: The header the token is applied to. Defaults to `Authorization`.
+      tokenPrefix:
+        type: optional<string>
+        docs: |
+          The prefix for the token header value. Defaults to `Bearer`.
+          An empty prefix means the raw token is sent.
+
+  OAuthDeviceCode:
+    docs: |
+      The OAuth 2.0 Device Authorization Grant (RFC 8628) for public clients such as CLIs and
+      native apps on input-constrained or browserless devices. The client requests a device code
+      and user code from the device authorization endpoint, instructs the user to approve at the
+      verification URI in a browser, and polls the token endpoint until the user approves and
+      tokens are issued, without a client secret.
+    properties:
+      clientId:
+        type: OAuthPublicClientId
+        docs: The public client ID for the CLI/native app. Public clients do not use a client secret.
+      deviceAuthorizationUrl:
+        type: string
+        docs: |
+          The absolute URL of the device authorization endpoint that issues the device code,
+          user code, and verification URI.
+      tokenUrl:
+        type: string
+        docs: |
+          The absolute URL of the token endpoint polled to exchange the device code for tokens
+          once the user has approved.
+      refreshUrl:
+        type: optional<string>
+        docs: The absolute URL used to refresh tokens. Defaults to `tokenUrl` when omitted.
+      scopes:
+        type: optional<list<string>>
+        docs: The scopes requested during device authorization.
+      deviceAuthorizationParameters:
+        type: optional<map<string, string>>
+        docs: |
+          Additional public, literal parameters included in the device authorization request
+          (e.g. `audience`, `resource`). These must not override protocol-reserved parameters.
+      tokenParameters:
+        type: optional<map<string, string>>
+        docs: Additional public, literal parameters included in the device-code token exchange (polling) request.
+      refreshParameters:
+        type: optional<map<string, string>>
+        docs: Additional public, literal parameters included in the refresh token request.
+      tokenHeader:
+        type: optional<string>
+        docs: The header the token is applied to. Defaults to `Authorization`.
+      tokenPrefix:
+        type: optional<string>
+        docs: |
+          The prefix for the token header value. Defaults to `Bearer`.
+          An empty prefix means the raw token is sent.
+
+  OAuthPublicClientId:
+    docs: The source of the public client ID for a public-client OAuth flow.
+    union:
+      literal: string
+      environmentVariable: EnvironmentVariable
+
+  OAuthPkceConfiguration:
+    docs: PKCE (RFC 7636) parameters for the authorization code exchange.
+    properties:
+      method:
+        type: OAuthPkceMethod
+        docs: The PKCE code challenge method. Only S256 is supported.
+
+  OAuthPkceMethod:
+    docs: The PKCE code challenge method. Only the secure S256 method is supported.
+    enum:
+      - S256
 
   OAuthClientCredentials:
     properties:

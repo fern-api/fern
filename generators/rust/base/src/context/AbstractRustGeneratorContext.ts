@@ -137,8 +137,9 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
         }
 
-        // Conditionally include base64 only when base64 types are used
-        if (this.usesBase64()) {
+        // Conditionally include base64 when base64 types are used, or when per-endpoint
+        // auth routing needs it to encode basic auth credentials.
+        if (this.usesBase64() || (this.isEndpointSecurity() && this.hasBasicAuthScheme())) {
             this.dependencyManager.add("base64", "0.22");
         }
 
@@ -1350,6 +1351,69 @@ export abstract class AbstractRustGeneratorContext<
         // Fallback to old behavior if not found (shouldn't happen in normal flow)
         const pathParts = subpackage.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
         return pathParts.join("") + "Client";
+    }
+
+    /**
+     * Whether the API applies auth per-endpoint: each endpoint declares its own
+     * subset of auth schemes (via `HttpEndpoint.security`) instead of applying all
+     * configured credentials to every request.
+     */
+    public isEndpointSecurity(): boolean {
+        return this.ir.auth?.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity;
+    }
+
+    /**
+     * Whether the API configures a basic auth scheme.
+     */
+    public hasBasicAuthScheme(): boolean {
+        return (this.ir.auth?.schemes ?? []).some((scheme) => scheme.type === "basic");
+    }
+
+    /**
+     * Categorizes the API's auth schemes by how they produce request headers, keyed by
+     * each scheme's `key` (the identifier used in an endpoint's `security` requirements).
+     * Used to generate per-endpoint auth routing in endpoint-security mode.
+     *
+     * - `tokenSchemeKeys`: bearer + oauth schemes, all rendered as `Authorization: Bearer <token>`
+     * - `apiKeySchemes`: header auth schemes, each with its wire header name and optional prefix
+     * - `basicSchemeKeys`: basic auth schemes, rendered as `Authorization: Basic <base64>`
+     * - `inferredSchemeKeys`: inferred auth schemes (unsupported by the Rust SDK today)
+     */
+    public getEndpointAuthRoutingSchemes(): {
+        tokenSchemeKeys: string[];
+        apiKeySchemes: { key: string; headerName: string; prefix: string | undefined }[];
+        basicSchemeKeys: string[];
+        inferredSchemeKeys: string[];
+    } {
+        const tokenSchemeKeys: string[] = [];
+        const apiKeySchemes: { key: string; headerName: string; prefix: string | undefined }[] = [];
+        const basicSchemeKeys: string[] = [];
+        const inferredSchemeKeys: string[] = [];
+        for (const scheme of this.ir.auth?.schemes ?? []) {
+            FernIr.AuthScheme._visit<void>(scheme, {
+                bearer: (bearer) => {
+                    tokenSchemeKeys.push(bearer.key);
+                },
+                oauth: (oauth) => {
+                    tokenSchemeKeys.push(oauth.key);
+                },
+                header: (header) => {
+                    apiKeySchemes.push({
+                        key: header.key,
+                        headerName: getWireValue(header.name),
+                        prefix: header.prefix ?? undefined
+                    });
+                },
+                basic: (basic) => {
+                    basicSchemeKeys.push(basic.key);
+                },
+                inferred: (inferred) => {
+                    inferredSchemeKeys.push(inferred.key);
+                },
+                _other: () => undefined
+            });
+        }
+        return { tokenSchemeKeys, apiKeySchemes, basicSchemeKeys, inferredSchemeKeys };
     }
 
     /**

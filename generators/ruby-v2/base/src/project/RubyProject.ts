@@ -210,7 +210,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
-                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes
+                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
+                    endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY"
                 })
             );
         }
@@ -224,7 +225,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders,
         includePlatformHeaders,
         maxRetries,
-        retryStatusCodes
+        retryStatusCodes,
+        endpointSecurity
     }: {
         filename: string;
         gemNamespace: string;
@@ -234,6 +236,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         includePlatformHeaders?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
+        endpointSecurity?: boolean;
     }): Promise<File> {
         let rendered = replaceTemplate({
             contents: (await readFile(getAsIsFilepath(filename))).toString(),
@@ -243,7 +246,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 customPagerClassName,
                 omitFernHeaders,
                 includePlatformHeaders,
-                maxRetries
+                maxRetries,
+                endpointSecurity
             })
         });
 
@@ -304,7 +308,8 @@ function getTemplateVariables({
     customPagerClassName,
     omitFernHeaders,
     includePlatformHeaders,
-    maxRetries
+    maxRetries,
+    endpointSecurity
 }: {
     gemNamespace: string;
     rootFolderName: string;
@@ -312,6 +317,7 @@ function getTemplateVariables({
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     maxRetries?: number;
+    endpointSecurity?: boolean;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -322,7 +328,10 @@ function getTemplateVariables({
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
         omitFernHeaders: omitFernHeaders ?? false,
         includePlatformHeaders: includePlatformHeaders ?? false,
-        defaultMaxRetries: maxRetries ?? 2
+        defaultMaxRetries: maxRetries ?? 2,
+        // Emits the RawClient#auth_headers_for_endpoint delegator only for
+        // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
+        endpointSecurity: endpointSecurity ?? false
     };
 }
 
@@ -378,12 +387,25 @@ class GemspecFile {
 
               # Specify which files should be added to the gem when it is released.
               # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
+              # When the gem is built outside a git checkout (e.g. generated output), fall back to
+              # globbing the filesystem.
               gemspec = File.basename(__FILE__)
-              spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
-                ls.readlines("\x0", chomp: true).reject do |f|
-                  (f == gemspec) ||
-                    f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
+              tracked_files = begin
+                IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
+                  ls.readlines("\x0", chomp: true)
                 end
+              rescue SystemCallError
+                []
+              end || []
+              if tracked_files.empty?
+                tracked_files = Dir.chdir(__dir__) do
+                  Dir.glob("{lib,exe,sig}/**/*", File::FNM_DOTMATCH).select { |f| File.file?(f) } +
+                    Dir.glob("*").select { |f| File.file?(f) }
+                end
+              end
+              spec.files = tracked_files.reject do |f|
+                (f == gemspec) ||
+                  f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
               end
               spec.bindir = "exe"
               spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }

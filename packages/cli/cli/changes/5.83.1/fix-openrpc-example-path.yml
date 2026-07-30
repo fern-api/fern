@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix user-specified OpenRPC examples to use the method's computed endpoint path instead of
+    appending a hardcoded `/{apiKey}` path.
+  type: fix

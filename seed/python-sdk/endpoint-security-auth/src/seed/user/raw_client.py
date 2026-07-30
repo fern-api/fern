@@ -30,9 +30,13 @@ class RawUserClient:
         -------
         HttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(security=[{"Bearer": []}])
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -67,9 +71,13 @@ class RawUserClient:
         -------
         HttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(security=[{"ApiKey": []}])
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -104,9 +112,13 @@ class RawUserClient:
         -------
         HttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(security=[{"OAuth": ["read-only"]}])
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -141,9 +153,13 @@ class RawUserClient:
         -------
         HttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(security=[{"Basic": []}])
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -178,9 +194,13 @@ class RawUserClient:
         -------
         HttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(security=[{"InferredAuth": []}])
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -215,9 +235,15 @@ class RawUserClient:
         -------
         HttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(
+            security=[{"Bearer": []}, {"ApiKey": []}, {"OAuth": ["read-only"]}, {"Basic": []}, {"InferredAuth": []}]
+        )
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -252,9 +278,15 @@ class RawUserClient:
         -------
         HttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = self._client_wrapper.get_auth_headers_for_endpoint(
+            security=[{"Bearer": [], "ApiKey": [], "OAuth": ["read-only"], "Basic": [], "InferredAuth": []}]
+        )
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -294,9 +326,15 @@ class AsyncRawUserClient:
         -------
         AsyncHttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(
+            security=[{"Bearer": []}]
+        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -331,9 +369,15 @@ class AsyncRawUserClient:
         -------
         AsyncHttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(
+            security=[{"ApiKey": []}]
+        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -368,9 +412,15 @@ class AsyncRawUserClient:
         -------
         AsyncHttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(
+            security=[{"OAuth": ["read-only"]}]
+        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -405,9 +455,15 @@ class AsyncRawUserClient:
         -------
         AsyncHttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(
+            security=[{"Basic": []}]
+        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -442,9 +498,15 @@ class AsyncRawUserClient:
         -------
         AsyncHttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(
+            security=[{"InferredAuth": []}]
+        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -479,9 +541,15 @@ class AsyncRawUserClient:
         -------
         AsyncHttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(
+            security=[{"Bearer": []}, {"ApiKey": []}, {"OAuth": ["read-only"]}, {"Basic": []}, {"InferredAuth": []}]
+        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:
@@ -516,9 +584,15 @@ class AsyncRawUserClient:
         -------
         AsyncHttpResponse[typing.List[User]]
         """
+        _endpoint_auth_headers = await self._client_wrapper.async_get_auth_headers_for_endpoint(
+            security=[{"Bearer": [], "ApiKey": [], "OAuth": ["read-only"], "Basic": [], "InferredAuth": []}]
+        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
+            headers={
+                **_endpoint_auth_headers,
+            },
             request_options=request_options,
         )
         try:

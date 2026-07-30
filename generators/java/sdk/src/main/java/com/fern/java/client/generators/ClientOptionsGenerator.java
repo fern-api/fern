@@ -17,6 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.generator.exec.model.config.GithubPublishInfo;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
@@ -160,39 +161,21 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             PlatformHeaders platformHeaders, GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         Map<String, String> entries = new HashMap<>();
 
-        // Try generatorConfig.publish first (remote generation)
-        if (generatorConfig.getPublish().isPresent()) {
-            entries.put(
-                    platformHeaders.getSdkName(),
-                    generatorConfig
-                            .getPublish()
-                            .get()
-                            .getRegistriesV2()
-                            .getMaven()
-                            .getCoordinate());
-            entries.put(
-                    platformHeaders.getSdkVersion(),
-                    generatorConfig.getPublish().get().getVersion());
-        }
-        // Fallback to IR publishConfig (local generation with explicit maven config)
-        else if (ir.getPublishConfig().isPresent()) {
-            Optional<MavenPublishTarget> mavenTarget =
-                    extractMavenTarget(ir.getPublishConfig().get());
-            if (mavenTarget.isPresent()) {
-                mavenTarget.get().getCoordinate().ifPresent(coord -> entries.put(platformHeaders.getSdkName(), coord));
-                mavenTarget
-                        .get()
-                        .getVersion()
-                        .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
-            }
-        }
-        // Final fallback: generate default coordinate matching Fiddle's RegistryConfigFactory behavior
-        // This ensures local generation matches remote generation for GitHub output mode without explicit maven config
-        else {
-            String fallbackCoordinate = String.format(
-                    "com.%s.fern:%s-sdk", generatorConfig.getOrganization(), generatorConfig.getWorkspaceName());
-            entries.put(platformHeaders.getSdkName(), fallbackCoordinate);
-        }
+        // Resolve the SDK coordinate from the highest-priority source that carries it, then emit the name (with a
+        // synthesized fallback) and the version (when known). Sources are flattened so that a source which supplies a
+        // coordinate but no version still yields an X-Fern-SDK-Name header.
+        Optional<SdkCoordinate> resolvedCoordinate = resolveFromGithubOutputMode(generatorConfig)
+                .or(() -> resolveFromGeneratorPublish(generatorConfig))
+                .or(() -> resolveFromIrPublishConfig(ir));
+
+        String sdkName = resolvedCoordinate
+                .map(coordinate -> coordinate.name)
+                .orElseGet(() -> String.format(
+                        "com.%s.fern:%s-sdk", generatorConfig.getOrganization(), generatorConfig.getWorkspaceName()));
+        entries.put(platformHeaders.getSdkName(), sdkName);
+        resolvedCoordinate
+                .flatMap(coordinate -> coordinate.version)
+                .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
 
         if (platformHeaders.getUserAgent().isPresent()) {
             entries.put(
@@ -203,7 +186,82 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return entries;
     }
 
+    /**
+     * Resolves the SDK coordinate from the GitHub output mode's publish info
+     * ({@code output.mode.github.publishInfo.maven}). This is the user-configured Maven coordinate and is populated for
+     * both remote (Fiddle) and {@code --local} GitHub-mode generation. It must be checked before
+     * {@link GeneratorConfig#getPublish()} because Fiddle also sets a synthesized (and incorrect) publish coordinate in
+     * GitHub output mode, which would otherwise take precedence and leak into {@code X-Fern-SDK-Name}.
+     */
+    private static Optional<SdkCoordinate> resolveFromGithubOutputMode(GeneratorConfig generatorConfig) {
+        return generatorConfig.getOutput().getMode().getGithub().flatMap(githubOutputMode -> githubOutputMode
+                .getPublishInfo()
+                .flatMap(GithubPublishInfo::getMaven)
+                .map(maven -> new SdkCoordinate(maven.getCoordinate(), Optional.of(githubOutputMode.getVersion()))));
+    }
+
+    /**
+     * Resolves the SDK coordinate from {@code generatorConfig.publish.registriesV2.maven} (remote publish/registry
+     * mode).
+     */
+    private static Optional<SdkCoordinate> resolveFromGeneratorPublish(GeneratorConfig generatorConfig) {
+        return generatorConfig
+                .getPublish()
+                .map(publish -> new SdkCoordinate(
+                        publish.getRegistriesV2().getMaven().getCoordinate(), Optional.of(publish.getVersion())));
+    }
+
+    /**
+     * Resolves the SDK coordinate from the IR's {@code publishConfig} Maven target (local generation with an explicit
+     * maven target).
+     */
+    private static Optional<SdkCoordinate> resolveFromIrPublishConfig(IntermediateRepresentation ir) {
+        return ir.getPublishConfig()
+                .flatMap(ClientOptionsGenerator::extractMavenTarget)
+                .flatMap(mavenTarget -> mavenTarget
+                        .getCoordinate()
+                        .map(coordinate -> new SdkCoordinate(coordinate, mavenTarget.getVersion())));
+    }
+
+    /** A resolved {@code X-Fern-SDK-Name} coordinate together with an optional {@code X-Fern-SDK-Version}. */
+    private static final class SdkCoordinate {
+        private final String name;
+        private final Optional<String> version;
+
+        private SdkCoordinate(String name, Optional<String> version) {
+            this.name = name;
+            this.version = version;
+        }
+    }
+
     private static final String USER_AGENT_METHOD_NAME = "getUserAgent";
+
+    private static final String SDK_VERSION_METHOD_NAME = "getSdkVersion";
+
+    /**
+     * Returns the {@code {coordinate}/} prefix of an (already RFC-compliant) User-Agent value, i.e. everything up to
+     * and including the {@code /} that precedes the version segment. Used to reconstruct the User-Agent at runtime as
+     * {@code {coordinate}/ + getSdkVersion()} when runtime version resolution is enabled.
+     */
+    private static String userAgentCoordinatePrefix(String rfcCompliantUserAgent) {
+        int lastSlash = rfcCompliantUserAgent.lastIndexOf('/');
+        return lastSlash >= 0 ? rfcCompliantUserAgent.substring(0, lastSlash + 1) : rfcCompliantUserAgent + "/";
+    }
+
+    /**
+     * Builds a static helper that resolves the SDK version from the jar manifest's {@code Implementation-Version}
+     * attribute at runtime, falling back to the generation-time version when the attribute is absent (e.g. the classes
+     * are not loaded from a packaged jar). Emitted only when {@code runtime-version} is enabled and a version header is
+     * actually written.
+     */
+    private MethodSpec buildSdkVersionMethod(String fallbackVersion) {
+        return MethodSpec.methodBuilder(SDK_VERSION_METHOD_NAME)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addStatement("$T version = $T.class.getPackage().getImplementationVersion()", String.class, className)
+                .addStatement("return version != null ? version : $S", fallbackVersion)
+                .build();
+    }
 
     /**
      * Normalizes a {@code User-Agent} product token so it stays within the RFC 7230 token grammar. The Maven coordinate
@@ -219,14 +277,26 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
      * {@code {sdkName}/{sdkVersion} ({os}; {arch}) {runtime}/{runtimeVersion}}. The os, arch, and runtime-version
      * segments are resolved at runtime via {@link System#getProperty(String)} rather than baked in at generation time;
      * each is omitted (never emitted as a literal {@code null}) when it cannot be determined.
+     *
+     * <p>When {@code runtimeVersion} is true the {@code {sdkName}/{sdkVersion}} prefix is assembled as
+     * {@code {sdkName}/ + getSdkVersion()} so the version segment is resolved from the jar manifest at runtime rather
+     * than baked in.
      */
-    private static MethodSpec buildUserAgentMethod(String baseUserAgent) {
+    private static MethodSpec buildUserAgentMethod(String baseUserAgent, boolean runtimeVersion) {
         String rfcCompliantUserAgent = toRfcCompliantUserAgent(baseUserAgent);
-        return MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(USER_AGENT_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-                .returns(String.class)
-                .addStatement("$T userAgent = $S", String.class, rfcCompliantUserAgent)
-                .addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
+                .returns(String.class);
+        if (runtimeVersion) {
+            builder.addStatement(
+                    "$T userAgent = $S + $L()",
+                    String.class,
+                    userAgentCoordinatePrefix(rfcCompliantUserAgent),
+                    SDK_VERSION_METHOD_NAME);
+        } else {
+            builder.addStatement("$T userAgent = $S", String.class, rfcCompliantUserAgent);
+        }
+        return builder.addStatement("$T os = $T.getProperty($S)", String.class, System.class, "os.name")
                 .addStatement("$T arch = $T.getProperty($S)", String.class, System.class, "os.arch")
                 .beginControlFlow(
                         "if (arch != null && (arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S) || arch.equalsIgnoreCase($S)))",
@@ -337,6 +407,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         String platformHeadersPutString = "";
         Optional<MethodSpec> userAgentMethod = Optional.empty();
+        Optional<MethodSpec> sdkVersionMethod = Optional.empty();
         if (!clientGeneratorContext.getCustomConfig().omitFernHeaders()) {
             Map<String, String> platformHeaderEntries = getPlatformHeadersEntries(
                     generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
@@ -344,28 +415,66 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     generatorContext.getIr());
             boolean includePlatformHeaders =
                     clientGeneratorContext.getCustomConfig().includePlatformHeaders();
+            boolean runtimeVersion = clientGeneratorContext.getCustomConfig().runtimeVersion();
             Optional<String> userAgentHeaderName = generatorContext
                     .getIr()
                     .getSdkConfig()
                     .getPlatformHeaders()
                     .getUserAgent()
                     .map(userAgent -> userAgent.getHeader());
+            String sdkVersionHeaderName =
+                    generatorContext.getIr().getSdkConfig().getPlatformHeaders().getSdkVersion();
+            // When runtime-version is on, the SDK version is read from the jar manifest at runtime
+            // via getSdkVersion(); this literal is only its fallback (used when the manifest attribute
+            // is absent, e.g. running from unpackaged classes). Prefer the discrete SDK-version header
+            // value, else the version segment of the User-Agent value.
+            String fallbackVersion = platformHeaderEntries.get(sdkVersionHeaderName);
+            if (fallbackVersion == null && userAgentHeaderName.isPresent()) {
+                String userAgentValue = platformHeaderEntries.get(userAgentHeaderName.get());
+                if (userAgentValue != null) {
+                    int lastSlash = userAgentValue.lastIndexOf('/');
+                    fallbackVersion = lastSlash >= 0 ? userAgentValue.substring(lastSlash + 1) : userAgentValue;
+                }
+            }
             StringBuilder putStatements = new StringBuilder();
+            boolean referencesRuntimeVersion = false;
             for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
                 boolean isUserAgentHeader = userAgentHeaderName.isPresent()
                         && userAgentHeaderName.get().equals(entry.getKey());
+                boolean isSdkVersionHeader = runtimeVersion && entry.getKey().equals(sdkVersionHeaderName);
                 if (isUserAgentHeader && includePlatformHeaders) {
-                    userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue()));
+                    userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue(), runtimeVersion));
+                    if (runtimeVersion) {
+                        referencesRuntimeVersion = true;
+                    }
                     putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), USER_AGENT_METHOD_NAME)
                             .toString());
                 } else if (isUserAgentHeader) {
-                    putStatements.append(
-                            CodeBlock.of("put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
-                                    .toString());
+                    if (runtimeVersion) {
+                        String coordinatePrefix = userAgentCoordinatePrefix(toRfcCompliantUserAgent(entry.getValue()));
+                        referencesRuntimeVersion = true;
+                        putStatements.append(CodeBlock.of(
+                                        "put($S, $S + $L());",
+                                        entry.getKey(),
+                                        coordinatePrefix,
+                                        SDK_VERSION_METHOD_NAME)
+                                .toString());
+                    } else {
+                        putStatements.append(
+                                CodeBlock.of("put($S, $S);", entry.getKey(), toRfcCompliantUserAgent(entry.getValue()))
+                                        .toString());
+                    }
+                } else if (isSdkVersionHeader) {
+                    referencesRuntimeVersion = true;
+                    putStatements.append(CodeBlock.of("put($S, $L());", entry.getKey(), SDK_VERSION_METHOD_NAME)
+                            .toString());
                 } else {
                     putStatements.append(CodeBlock.of("put($S, $S);", entry.getKey(), entry.getValue())
                             .toString());
                 }
+            }
+            if (referencesRuntimeVersion) {
+                sdkVersionMethod = Optional.of(buildSdkVersionMethod(fallbackVersion == null ? "" : fallbackVersion));
             }
             platformHeadersPutString = putStatements.toString();
         }
@@ -500,6 +609,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             clientOptionsBuilder.addMethod(userAgentMethod.get());
         }
 
+        if (sdkVersionMethod.isPresent()) {
+            clientOptionsBuilder.addMethod(sdkVersionMethod.get());
+        }
+
         addApiVersionField(clientOptionsBuilder);
 
         MethodSpec timeoutGetter = MethodSpec.methodBuilder(TIMEOUT_FIELD.name)
@@ -596,6 +709,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(endpointMetadataClassName, "endpointMetadata")
                     .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
+                    // A client may be constructed without an auth provider — e.g. the internal client
+                    // the OAuth/inferred auth provider uses to fetch a token from the (unauthenticated)
+                    // token endpoint. Return no auth headers in that case instead of throwing an NPE.
+                    .beginControlFlow("if (this.$L == null)", authProviderField.name)
+                    .addStatement("return new $T<>()", ClassName.get("java.util", "HashMap"))
+                    .endControlFlow()
                     .addStatement("return this.$L.getAuthHeaders(endpointMetadata)", authProviderField.name)
                     .build();
             clientOptionsBuilder.addMethod(getAuthHeadersMethod);

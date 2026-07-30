@@ -148,6 +148,14 @@ function createMockContext(opts?: {
                 properties: [{ name: "idempotencyKey", type: "string", hasQuestionToken: true }]
             })
         },
+        environments: {
+            getReferenceToEnvironmentsEnum: () => ({
+                getExpression: () => ts.factory.createIdentifier("environments.TestEnvironment")
+            }),
+            getReferenceToEnvironmentUrls: () => ({
+                getTypeNode: () => ts.factory.createTypeReferenceNode("environments.TestEnvironmentUrls")
+            })
+        },
         coreUtilities: {
             runtime: {
                 type: {
@@ -771,6 +779,59 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).toContain("core.getUserAgent");
             expect(normalizeFunc).not.toContain('"@test/sdk/1.0.0"');
             expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("uses the configured user-agent template over the package name when includePlatformHeaders is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal/1.0.0"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+            expect(normalizeFunc).toContain('"1.0.0"');
+            expect(normalizeFunc).not.toContain('core.getUserAgent("@test/sdk"');
+        });
+
+        it("falls back to the plain user-agent value when it has no version segment", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+        });
+
+        it("does not treat a trailing name segment as a version", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme/sdk-python"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme/sdk-python"');
         });
 
         it("omits all fern headers when omitFernHeaders is true even if includePlatformHeaders is true", () => {
@@ -1540,13 +1601,24 @@ describe("BaseClientTypeGenerator", () => {
                 "base: `https://api.${_region}.${_serverUrlEnvironment}.example.com/v1`"
             );
             expect(normalizeFunction).toContain("auth: `https://auth.${_region}.example.com`");
+            // The selected environment's templates are used; custom environments are untouched
+            expect(normalizeFunction).toContain("environments.TestEnvironment.RegionalApiServer");
+            expect(normalizeFunction).toContain("environment = _environmentUrls.get(environment) ?? environment;");
+            expect(normalizeFunction).toContain("if (environment == null) {");
         });
 
         it("interpolates server variables into a single base URL", () => {
             const normalizeFunction = getNormalizeFunction(createSingleBaseUrlIR());
             expect(normalizeFunction).toContain("options?.region != null");
             expect(normalizeFunction).toContain('const _region = options?.region ?? "us-east-1"');
-            expect(normalizeFunction).toContain("baseUrl = `https://api.${_region}.example.com`");
+            // The selected environment's template is used; an explicit baseUrl is not overridden
+            expect(normalizeFunction).toContain("if (baseUrl == null) {");
+            expect(normalizeFunction).toContain(
+                "[environments.TestEnvironment.Default, `https://api.${_region}.example.com`]"
+            );
+            expect(normalizeFunction).toContain(
+                "baseUrl = _environmentUrls.get(options?.environment) ?? `https://api.${_region}.example.com`;"
+            );
         });
     });
 });

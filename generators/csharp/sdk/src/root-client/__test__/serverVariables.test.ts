@@ -155,6 +155,33 @@ describe("getServerVariableOptions", () => {
         const config = multipleBaseUrls({ base: [serverVariable("region", "region", "us-east-1")] });
         expect(getServerVariableOptions(config, caseConverter).map((option) => option.variable.id)).toEqual(["region"]);
     });
+
+    it("exposes options by default when the enabled flag is omitted", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([serverVariable("region", "region", "us-east-1")]),
+            caseConverter
+        );
+        expect(options).toHaveLength(1);
+    });
+
+    it("exposes options when explicitly enabled", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([serverVariable("region", "region", "us-east-1")]),
+            caseConverter,
+            true
+        );
+        expect(options).toHaveLength(1);
+        expect(options[0]?.optionName).toBe("Region");
+    });
+
+    it("suppresses all options when disabled, falling back to base-URL behavior", () => {
+        const options = getServerVariableOptions(
+            singleBaseUrl([serverVariable("region", "region", "us-east-1")]),
+            caseConverter,
+            false
+        );
+        expect(options).toEqual([]);
+    });
 });
 
 describe("urlTemplateToInterpolatedString", () => {

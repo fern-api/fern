@@ -5,6 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.19.0] - 2026-07-29
+
+- Add `rubygems` variant to `PublishTarget` (`RubyGemsPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the Ruby SDK's gem identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way
+  npm/pypi/maven/crates/go/nuget targets already do, so the Ruby generator can stamp the gem
+  name/version into the generated `version.rb` and gemspec instead of defaulting to `0.0.0`.
+
+## [v67.18.0] - 2026-07-29
+
+- Add `OAuthAuthorizationCode.redirectUriBackupPorts` (`optional<list<integer>>`): additional
+  loopback callback ports for the authorization-code (PKCE) flow, tried in order when the
+  `redirectUri` port is unavailable. Each reuses `redirectUri`'s host and path (only the port
+  differs) and must be pre-registered with the authorization server. Lets a generated CLI bind a
+  fixed-port fallback set (e.g. 8484 → 8483 → 8482) for identity providers that bind each client to
+  specific callback ports. Ignored when `redirectUri` is unset.
+
+## [v67.17.0] - 2026-07-28
+
+- Add `OAuthConfiguration.authorizationCode` (`OAuthAuthorizationCode`), an additive union variant
+  modeling the OAuth 2.0 Authorization Code grant with required PKCE (RFC 7636) for public clients
+  such as generated CLIs and native apps. No client secret is used.
+  - `OAuthAuthorizationCode` carries the public `clientId` (`OAuthPublicClientId`: either a `literal`
+    value or an `environmentVariable` source), `authorizationUrl`, `tokenUrl`, optional `refreshUrl`
+    (defaults to `tokenUrl`), an optional loopback `redirectUri`, optional `scopes`, a required
+    `pkce` configuration, optional public `authorizationParameters`/`tokenParameters`/`refreshParameters`
+    maps, and optional `tokenHeader`/`tokenPrefix` for bearer application.
+  - `redirectUri` is optional: when set, the CLI binds and sends that exact loopback host/port/path;
+    when omitted, the CLI uses a loopback redirect on an ephemeral (OS-assigned) port with the
+    `/callback` path (RFC 8252 §7.3).
+  - `OAuthPkceConfiguration.method` is an `OAuthPkceMethod` enum that currently only permits `S256`.
+- Add `OAuthConfiguration.deviceCode` (`OAuthDeviceCode`), an additive union variant modeling the
+  OAuth 2.0 Device Authorization Grant (RFC 8628) for public clients such as generated CLIs and
+  native apps on input-constrained or browserless devices. No client secret is used.
+  - `OAuthDeviceCode` carries the public `clientId` (`OAuthPublicClientId`), the
+    `deviceAuthorizationUrl` (device authorization endpoint), `tokenUrl` (polled for tokens),
+    optional `refreshUrl` (defaults to `tokenUrl`), optional `scopes`, optional public
+    `deviceAuthorizationParameters`/`tokenParameters`/`refreshParameters` maps, and optional
+    `tokenHeader`/`tokenPrefix` for bearer application. PKCE does not apply to this grant.
+
+## [v67.16.0] - 2026-07-27
+
+- Add `nuget` variant to `PublishTarget` (`NugetPublishTarget` with optional `version` and
+  `packageName`). This lets the CLI thread the C# SDK's package identity into
+  `PublishingConfig.filesystem` for `local-file-system` output, the same way npm/pypi/maven/
+  crates/go targets already do, so the C# generator can stamp the SDK name/version into the
+  generated `Version.cs` and the structured `User-Agent` header.
+
 ## [v67.15.0] - 2026-07-21
 
 - Add `HmacSignatureVerification.notificationUrlNormalization` (optional
