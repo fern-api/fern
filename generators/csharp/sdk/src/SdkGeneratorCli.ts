@@ -24,6 +24,7 @@ import { ErrorGenerator } from "./error/ErrorGenerator.js";
 import { generateSdkTests } from "./generateSdkTests.js";
 import { InferredAuthTokenProviderGenerator } from "./inferred-auth/InferredAuthTokenProviderGenerator.js";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
+import { AppInfoGenerator } from "./options/AppInfoGenerator.js";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator.js";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator.js";
 import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator.js";
@@ -292,6 +293,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
         const clientOptions = new ClientOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(clientOptions.generate());
+
+        // Emit the public `AppInfo` record only when the opt-in
+        // `allow-user-agent-app-info` config is enabled, so default-off output is
+        // byte-identical.
+        if (context.settings.allowUserAgentAppInfo) {
+            const appInfo = new AppInfoGenerator(context);
+            context.project.addSourceFiles(appInfo.generate());
+        }
 
         const requestOptionsInterace = new RequestOptionsInterfaceGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(requestOptionsInterace.generate());
