@@ -112,9 +112,19 @@ def encode_path_param(obj: Any) -> str:
 
     Ensures proper string conversion for all types, including
     booleans which need lowercase 'true'/'false' rather than
-    Python's 'True'/'False'. The result is percent-encoded so that a
-    value containing "/" or ".." cannot change which endpoint the
-    request resolves to.
+    Python's 'True'/'False'.
+    """
+    if isinstance(obj, bool):
+        return "true" if obj else "false"
+    return str(jsonable_encoder(obj))
+
+
+def quote_path_param(obj: Any) -> str:
+    """Encode a value for use in a URL path segment, percent-encoding it.
+
+    Same as encode_path_param, except the result is percent-encoded so
+    that a value containing "/" or ".." cannot change which endpoint
+    the request resolves to.
     """
     if isinstance(obj, bool):
         return "true" if obj else "false"
