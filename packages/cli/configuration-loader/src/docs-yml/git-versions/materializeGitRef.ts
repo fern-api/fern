@@ -110,39 +110,81 @@ async function tryResolveSha({
 }
 
 /**
- * Attempts to fetch the history/tags needed to resolve `ref`. CI checkouts are
- * frequently shallow and tagless (`actions/checkout` defaults to depth 1 with
- * no tags), so we try to backfill what is missing before giving up.
+ * The candidate rev expressions to try when resolving a declared ref to a
+ * commit, in priority order. A declared ref like `release/2.3` may exist only
+ * as a remote-tracking branch (`origin/release/2.3`) after a normal clone —
+ * git's bare-name resolution does not fall through to `refs/remotes/<remote>/*`,
+ * so we try the remote-qualified form explicitly.
+ */
+function resolutionCandidates({ ref, remote }: { ref: string; remote: string | undefined }): string[] {
+    return remote != null ? [ref, `${remote}/${ref}`] : [ref];
+}
+
+async function tryResolveCandidates({
+    repoRoot,
+    candidates,
+    context
+}: {
+    repoRoot: string;
+    candidates: string[];
+    context: TaskContext;
+}): Promise<string | undefined> {
+    for (const candidate of candidates) {
+        const sha = await tryResolveSha({ repoRoot, ref: candidate, context });
+        if (sha != null) {
+            return sha;
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Attempts to fetch the history/tags needed to resolve `ref` and returns the
+ * resolved commit SHA if successful. CI checkouts are frequently shallow and
+ * tagless (`actions/checkout` defaults to depth 1 with no tags), and refs are
+ * often absent entirely, so we backfill what is missing before giving up.
  */
 async function attemptFetch({
     repoRoot,
     ref,
+    remote,
     context
 }: {
     repoRoot: string;
     ref: string;
+    remote: string | undefined;
     context: TaskContext;
-}): Promise<void> {
-    const remote = await getDefaultRemote({ repoRoot, context });
+}): Promise<string | undefined> {
     if (remote == null) {
-        return;
+        return undefined;
     }
 
     const isShallowResult = await runGit({ args: ["rev-parse", "--is-shallow-repository"], cwd: repoRoot, context });
     const isShallow = isShallowResult.stdout === "true";
 
-    // Fetch the specific ref (works for both branches and tags) and its tags.
+    // Targeted fetch of the specific ref (works for branches and tags). A
+    // refspec-less fetch of an explicit ref updates FETCH_HEAD only (not
+    // `refs/remotes/*`), so we resolve FETCH_HEAD directly rather than relying
+    // on the bare ref name becoming resolvable. `--tags` is intentionally NOT
+    // passed here so FETCH_HEAD holds a single, unambiguous entry.
     // `--end-of-options` terminates option parsing so a ref beginning with `-` cannot be read as a git flag.
-    await runGit({
-        args: ["fetch", ...(isShallow ? ["--unshallow"] : []), "--tags", remote, "--end-of-options", ref],
+    const targeted = await runGit({
+        args: ["fetch", ...(isShallow ? ["--unshallow"] : []), remote, "--end-of-options", ref],
         cwd: repoRoot,
         context
     });
-    // If fetching the ref by name failed (e.g. it is a bare SHA), a plain
-    // tag-inclusive fetch may still surface it.
-    if ((await tryResolveSha({ repoRoot, ref, context })) == null) {
-        await runGit({ args: ["fetch", "--tags", remote], cwd: repoRoot, context });
+    if (targeted.exitCode === 0) {
+        const sha = await tryResolveSha({ repoRoot, ref: "FETCH_HEAD", context });
+        if (sha != null) {
+            return sha;
+        }
     }
+
+    // The ref may be a bare SHA (which servers often refuse to fetch by name) or
+    // a tag not yet present. A tag-inclusive fetch that uses the remote's
+    // configured refspec surfaces tags and remote-tracking branches.
+    await runGit({ args: ["fetch", "--tags", remote], cwd: repoRoot, context });
+    return await tryResolveCandidates({ repoRoot, candidates: resolutionCandidates({ ref, remote }), context });
 }
 
 async function resolveRefToSha({
@@ -154,14 +196,20 @@ async function resolveRefToSha({
     ref: string;
     context: TaskContext;
 }): Promise<string> {
-    const existing = await tryResolveSha({ repoRoot, ref, context });
+    const remote = await getDefaultRemote({ repoRoot, context });
+
+    // Resolve against everything already present locally: a local branch/tag/SHA
+    // (`ref`) or an already-fetched remote-tracking branch (`<remote>/<ref>`).
+    const existing = await tryResolveCandidates({
+        repoRoot,
+        candidates: resolutionCandidates({ ref, remote }),
+        context
+    });
     if (existing != null) {
         return existing;
     }
 
-    await attemptFetch({ repoRoot, ref, context });
-
-    const afterFetch = await tryResolveSha({ repoRoot, ref, context });
+    const afterFetch = await attemptFetch({ repoRoot, ref, remote, context });
     if (afterFetch != null) {
         return afterFetch;
     }
