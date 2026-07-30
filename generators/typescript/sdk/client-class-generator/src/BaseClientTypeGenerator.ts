@@ -35,9 +35,10 @@ const APPEND_APP_INFO_HELPER_NAME = "appendAppInfoToUserAgent";
  * non-RFC-7230 `tchar` is percent-encoded, including spaces, control characters and
  * CR/LF) and `comment` has its delimiters (`(`, `)`, `\`) and control characters
  * (incl. CR/LF) escaped, so the untrusted values cannot inject additional header
- * content. Formats the appended product token as `{name}/{version} ({comment})`,
- * dropping `/version` and ` (comment)` when blank, and returns the User-Agent
- * unchanged when `appInfo`/`name` is absent.
+ * content. Each value is trimmed before encoding so blank values are treated as
+ * absent rather than encoded into whitespace tokens. Formats the appended product
+ * token as `{name}/{version} ({comment})`, dropping `/version` and ` (comment)` when
+ * blank, and returns the User-Agent unchanged when `appInfo`/`name` is absent.
  */
 const APPEND_APP_INFO_HELPER_SOURCE = `
 function ${APPEND_APP_INFO_HELPER_NAME}(
@@ -65,16 +66,16 @@ function ${APPEND_APP_INFO_HELPER_NAME}(
         // eslint-disable-next-line no-control-regex
         value.replace(/[()\\\\\\u0000-\\u001f\\u007f]/g, percentEncodeChar);
 
-    const name = encodeToken(appInfo.name ?? "");
+    const name = encodeToken((appInfo.name ?? "").trim());
     if (name.length === 0) {
         return userAgent;
     }
     let productToken = name;
-    const version = appInfo.version != null ? encodeToken(appInfo.version) : "";
+    const version = encodeToken((appInfo.version ?? "").trim());
     if (version.length > 0) {
         productToken += \`/\${version}\`;
     }
-    const comment = appInfo.comment != null ? encodeComment(appInfo.comment).trim() : "";
+    const comment = encodeComment((appInfo.comment ?? "").trim());
     if (comment.length > 0) {
         productToken += \` (\${comment})\`;
     }

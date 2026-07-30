@@ -104,16 +104,16 @@ function appendAppInfoToUserAgent(
         // eslint-disable-next-line no-control-regex
         value.replace(/[()\\\u0000-\u001f\u007f]/g, percentEncodeChar);
 
-    const name = encodeToken(appInfo.name ?? "");
+    const name = encodeToken((appInfo.name ?? "").trim());
     if (name.length === 0) {
         return userAgent;
     }
     let productToken = name;
-    const version = appInfo.version != null ? encodeToken(appInfo.version) : "";
+    const version = encodeToken((appInfo.version ?? "").trim());
     if (version.length > 0) {
         productToken += `/${version}`;
     }
-    const comment = appInfo.comment != null ? encodeComment(appInfo.comment).trim() : "";
+    const comment = encodeComment((appInfo.comment ?? "").trim());
     if (comment.length > 0) {
         productToken += ` (${comment})`;
     }

@@ -141,10 +141,9 @@ describe("emitted appendAppInfoToUserAgent (runtime behavior)", () => {
         expect(append(BASE, { name: "" })).toBe(BASE);
     });
 
-    it("returns the User-Agent unchanged when name is whitespace-only (encoded away to nothing)", () => {
-        // "   " token-encodes to "%20%20%20" which is non-empty, so it IS appended;
-        // the meaningful blank case is the empty string above. Assert the encoding here.
-        expect(append(BASE, { name: "   " })).toBe(`${BASE} %20%20%20`);
+    it("returns the User-Agent unchanged when name is whitespace-only", () => {
+        expect(append(BASE, { name: "   " })).toBe(BASE);
+        expect(append(BASE, { name: "\t\n " })).toBe(BASE);
     });
 
     it("appends name only when version and comment are absent", () => {
@@ -161,8 +160,15 @@ describe("emitted appendAppInfoToUserAgent (runtime behavior)", () => {
         );
     });
 
-    it("omits the version segment when version is blank", () => {
+    it("omits the version segment when version is blank / whitespace-only", () => {
         expect(append(BASE, { name: "partner-app", version: "" })).toBe(`${BASE} partner-app`);
+        expect(append(BASE, { name: "partner-app", version: "   " })).toBe(`${BASE} partner-app`);
+    });
+
+    it("trims surrounding whitespace rather than encoding it into the product token", () => {
+        expect(append(BASE, { name: " partner-app ", version: " 3.1.0 ", comment: " a comment " })).toBe(
+            `${BASE} partner-app/3.1.0 (a comment)`
+        );
     });
 
     it("omits the comment group when comment is blank / whitespace-only", () => {
