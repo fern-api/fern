@@ -92,7 +92,7 @@ class NullableOptionalClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/{$userId}",
+                    path: "/api/users/" . RawClient::encodePathParam($userId),
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -231,7 +231,7 @@ class NullableOptionalClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/{$userId}",
+                    path: "/api/users/" . RawClient::encodePathParam($userId),
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
@@ -586,7 +586,7 @@ class NullableOptionalClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/profiles/complex/{$profileId}",
+                    path: "/api/profiles/complex/" . RawClient::encodePathParam($profileId),
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -672,7 +672,7 @@ class NullableOptionalClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/profiles/complex/{$profileId}",
+                    path: "/api/profiles/complex/" . RawClient::encodePathParam($profileId),
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
@@ -903,7 +903,7 @@ class NullableOptionalClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/{$userId}/notifications",
+                    path: "/api/users/" . RawClient::encodePathParam($userId) . "/notifications",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -973,7 +973,7 @@ class NullableOptionalClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/{$userId}/tags",
+                    path: "/api/users/" . RawClient::encodePathParam($userId) . "/tags",
                     method: HttpMethod::PUT,
                     body: $request,
                 ),

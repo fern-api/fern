@@ -82,7 +82,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/{$userId}",
+                    path: "users/" . RawClient::encodePathParam($userId),
                     method: HttpMethod::GET,
                 ),
                 $options,

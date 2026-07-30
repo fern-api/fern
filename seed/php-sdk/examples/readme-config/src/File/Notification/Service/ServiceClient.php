@@ -76,7 +76,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/file/notification/{$notificationId}",
+                    path: "/file/notification/" . RawClient::encodePathParam($notificationId),
                     method: HttpMethod::GET,
                 ),
                 $options,

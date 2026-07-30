@@ -166,7 +166,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "foo/{$id}",
+                    path: "foo/" . RawClient::encodePathParam($id),
                     method: HttpMethod::PATCH,
                     headers: $headers,
                     body: $request,

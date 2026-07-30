@@ -79,7 +79,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/resource/{$resourceId}",
+                    path: "/resource/" . RawClient::encodePathParam($resourceId),
                     method: HttpMethod::GET,
                 ),
                 $options,

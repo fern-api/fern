@@ -85,7 +85,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$request->tenantId}/user/{$request->userId}",
+                    path: "/" . RawClient::encodePathParam($request->tenantId) . "/user/" . RawClient::encodePathParam($request->userId),
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -146,7 +146,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$tenantId}/user/",
+                    path: "/" . RawClient::encodePathParam($tenantId) . "/user/",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -210,7 +210,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$request->tenantId}/user/{$request->userId}",
+                    path: "/" . RawClient::encodePathParam($request->tenantId) . "/user/" . RawClient::encodePathParam($request->userId),
                     method: HttpMethod::PATCH,
                     body: $request->body,
                 ),
@@ -272,7 +272,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$request->tenantId}/user/{$request->userId}/search",
+                    path: "/" . RawClient::encodePathParam($request->tenantId) . "/user/" . RawClient::encodePathParam($request->userId) . "/search",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -332,7 +332,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$request->tenantId}/user/{$request->userId}/metadata/v{$request->version}",
+                    path: "/" . RawClient::encodePathParam($request->tenantId) . "/user/" . RawClient::encodePathParam($request->userId) . "/metadata/v" . RawClient::encodePathParam($request->version),
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -392,7 +392,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$request->tenantId}/user/{$request->userId}/specifics/{$request->version}/{$request->thought}",
+                    path: "/" . RawClient::encodePathParam($request->tenantId) . "/user/" . RawClient::encodePathParam($request->userId) . "/specifics/" . RawClient::encodePathParam($request->version) . "/" . RawClient::encodePathParam($request->thought),
                     method: HttpMethod::GET,
                 ),
                 $options,

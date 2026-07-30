@@ -110,7 +110,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "download-content/{$id}",
+                    path: "download-content/" . RawClient::encodePathParam($id),
                     method: HttpMethod::GET,
                 ),
                 $options,

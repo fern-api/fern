@@ -101,7 +101,7 @@ class PlaylistClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/v2/playlist/{$serviceParam}/create",
+                    path: "/v2/playlist/" . RawClient::encodePathParam($serviceParam) . "/create",
                     method: HttpMethod::POST,
                     query: $query,
                     body: $request->body,
@@ -180,7 +180,7 @@ class PlaylistClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/v2/playlist/{$serviceParam}/all",
+                    path: "/v2/playlist/" . RawClient::encodePathParam($serviceParam) . "/all",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -238,7 +238,7 @@ class PlaylistClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/v2/playlist/{$serviceParam}/{$playlistId}",
+                    path: "/v2/playlist/" . RawClient::encodePathParam($serviceParam) . "/" . RawClient::encodePathParam($playlistId),
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -303,7 +303,7 @@ class PlaylistClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/v2/playlist/{$serviceParam}/{$playlistId}",
+                    path: "/v2/playlist/" . RawClient::encodePathParam($serviceParam) . "/" . RawClient::encodePathParam($playlistId),
                     method: HttpMethod::PUT,
                     body: $request,
                 ),
@@ -360,7 +360,7 @@ class PlaylistClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/v2/playlist/{$serviceParam}/{$playlistId}",
+                    path: "/v2/playlist/" . RawClient::encodePathParam($serviceParam) . "/" . RawClient::encodePathParam($playlistId),
                     method: HttpMethod::DELETE,
                 ),
                 $options,

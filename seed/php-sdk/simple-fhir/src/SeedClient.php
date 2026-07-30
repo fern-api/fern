@@ -89,7 +89,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "account/{$accountId}",
+                    path: "account/" . RawClient::encodePathParam($accountId),
                     method: HttpMethod::GET,
                 ),
                 $options,

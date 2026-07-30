@@ -203,7 +203,7 @@ class OptionalClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "deploy/{$actionId}/versions/{$id}",
+                    path: "deploy/" . RawClient::encodePathParam($actionId) . "/versions/" . RawClient::encodePathParam($id),
                     method: HttpMethod::POST,
                     body: $request,
                 ),

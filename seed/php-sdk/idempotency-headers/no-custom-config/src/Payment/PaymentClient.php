@@ -133,7 +133,7 @@ class PaymentClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/payment/{$paymentId}",
+                    path: "/payment/" . RawClient::encodePathParam($paymentId),
                     method: HttpMethod::DELETE,
                 ),
                 $options,

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Percent-encode path parameter values in generated clients. Values are now passed through
+    `RawClient::encodePathParam()` at the point they are substituted into the path template, so a
+    value containing `/` or `..` can no longer change which endpoint the request resolves to. This
+    matches the TypeScript, Go, Java, and C# generators.
+  type: fix

@@ -98,7 +98,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "Profiles/{$profileId}/Identifiers/{$idTypePathParam}",
+                    path: "Profiles/" . RawClient::encodePathParam($profileId) . "/Identifiers/" . RawClient::encodePathParam($idTypePathParam),
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),

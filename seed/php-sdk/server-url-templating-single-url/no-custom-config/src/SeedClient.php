@@ -153,7 +153,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::RegionalApiServer->value,
-                    path: "users/{$userId}",
+                    path: "users/" . RawClient::encodePathParam($userId),
                     method: HttpMethod::GET,
                 ),
                 $options,
