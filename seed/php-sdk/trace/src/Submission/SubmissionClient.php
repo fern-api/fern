@@ -81,7 +81,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/create-session/" . RawClient::encodePathParam($language),
+                    path: "/sessions/create-session/{$language}",
                     method: HttpMethod::POST,
                 ),
                 $options,
@@ -136,7 +136,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/" . RawClient::encodePathParam($sessionId),
+                    path: "/sessions/{$sessionId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -190,7 +190,7 @@ class SubmissionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sessions/stop/" . RawClient::encodePathParam($sessionId),
+                    path: "/sessions/stop/{$sessionId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,

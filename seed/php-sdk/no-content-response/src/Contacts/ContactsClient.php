@@ -137,7 +137,7 @@ class ContactsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "contacts/" . RawClient::encodePathParam($id),
+                    path: "contacts/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,

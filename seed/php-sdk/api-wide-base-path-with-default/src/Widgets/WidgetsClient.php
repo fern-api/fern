@@ -80,7 +80,7 @@ class WidgetsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/" . RawClient::encodePathParam($apiVersion) . "/widgets",
+                    path: "/{$apiVersion}/widgets",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

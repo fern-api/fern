@@ -80,7 +80,7 @@ class PathParamClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "path/" . RawClient::encodePathParam($operand) . "/" . RawClient::encodePathParam($operandOrColor),
+                    path: "path/{$operand}/{$operandOrColor}",
                     method: HttpMethod::POST,
                 ),
                 $options,

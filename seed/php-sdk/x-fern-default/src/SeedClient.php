@@ -100,7 +100,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "test/" . RawClient::encodePathParam($region) . "/resource",
+                    path: "test/{$region}/resource",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

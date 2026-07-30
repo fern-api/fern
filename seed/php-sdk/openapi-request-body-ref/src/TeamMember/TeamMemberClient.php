@@ -79,7 +79,7 @@ class TeamMemberClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "team-members/" . RawClient::encodePathParam($teamMemberId),
+                    path: "team-members/{$teamMemberId}",
                     method: HttpMethod::PUT,
                     body: $request,
                 ),

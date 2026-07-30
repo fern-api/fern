@@ -142,7 +142,7 @@ class CatalogClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "catalog/images/" . RawClient::encodePathParam($imageId),
+                    path: "catalog/images/{$imageId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

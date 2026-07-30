@@ -121,7 +121,7 @@ class ComplexClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: RawClient::encodePathParam($index) . "/conversations/search",
+                    path: "{$index}/conversations/search",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

@@ -81,7 +81,7 @@ class OrganizationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/" . RawClient::encodePathParam($tenantId) . "/organizations/" . RawClient::encodePathParam($organizationId) . "/",
+                    path: "/{$tenantId}/organizations/{$organizationId}/",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -138,7 +138,7 @@ class OrganizationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/" . RawClient::encodePathParam($tenantId) . "/organizations/" . RawClient::encodePathParam($organizationId) . "/users/" . RawClient::encodePathParam($userId),
+                    path: "/{$tenantId}/organizations/{$organizationId}/users/{$userId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -201,7 +201,7 @@ class OrganizationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/" . RawClient::encodePathParam($tenantId) . "/organizations/" . RawClient::encodePathParam($organizationId) . "/search",
+                    path: "/{$tenantId}/organizations/{$organizationId}/search",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

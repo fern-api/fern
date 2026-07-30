@@ -85,7 +85,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/file/" . RawClient::encodePathParam($filename),
+                    path: "/file/{$filename}",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),

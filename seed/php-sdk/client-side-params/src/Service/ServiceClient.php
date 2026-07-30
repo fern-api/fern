@@ -180,7 +180,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/resources/" . RawClient::encodePathParam($resourceId),
+                    path: "/api/resources/{$resourceId}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -407,7 +407,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/" . RawClient::encodePathParam($userId),
+                    path: "/api/users/{$userId}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -557,7 +557,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/" . RawClient::encodePathParam($userId),
+                    path: "/api/users/{$userId}",
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
@@ -612,7 +612,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/" . RawClient::encodePathParam($userId),
+                    path: "/api/users/{$userId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
@@ -739,7 +739,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/connections/" . RawClient::encodePathParam($connectionId),
+                    path: "/api/connections/{$connectionId}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -900,7 +900,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/clients/" . RawClient::encodePathParam($clientId),
+                    path: "/api/clients/{$clientId}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

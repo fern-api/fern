@@ -78,7 +78,7 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/bigunion/" . RawClient::encodePathParam($id),
+                    path: "/bigunion/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,

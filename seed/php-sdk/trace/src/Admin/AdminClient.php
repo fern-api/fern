@@ -84,7 +84,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-submission-status/" . RawClient::encodePathParam($submissionId),
+                    path: "/admin/store-test-submission-status/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -136,7 +136,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-submission-status-v2/" . RawClient::encodePathParam($submissionId),
+                    path: "/admin/store-test-submission-status-v2/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -185,7 +185,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-submission-status/" . RawClient::encodePathParam($submissionId),
+                    path: "/admin/store-workspace-submission-status/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -237,7 +237,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-submission-status-v2/" . RawClient::encodePathParam($submissionId),
+                    path: "/admin/store-workspace-submission-status-v2/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -357,7 +357,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-trace/submission/" . RawClient::encodePathParam($submissionId) . "/testCase/" . RawClient::encodePathParam($testCaseId),
+                    path: "/admin/store-test-trace/submission/{$submissionId}/testCase/{$testCaseId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -475,7 +475,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-test-trace-v2/submission/" . RawClient::encodePathParam($submissionId) . "/testCase/" . RawClient::encodePathParam($testCaseId),
+                    path: "/admin/store-test-trace-v2/submission/{$submissionId}/testCase/{$testCaseId}",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [TraceResponseV2::class]),
                 ),
@@ -598,7 +598,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-trace/submission/" . RawClient::encodePathParam($submissionId),
+                    path: "/admin/store-workspace-trace/submission/{$submissionId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -714,7 +714,7 @@ class AdminClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/admin/store-workspace-trace-v2/submission/" . RawClient::encodePathParam($submissionId),
+                    path: "/admin/store-workspace-trace-v2/submission/{$submissionId}",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [TraceResponseV2::class]),
                 ),

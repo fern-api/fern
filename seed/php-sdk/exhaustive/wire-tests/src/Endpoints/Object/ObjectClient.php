@@ -382,7 +382,7 @@ class ObjectClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-nested-with-required-field/" . RawClient::encodePathParam($string),
+                    path: "/object/get-and-return-nested-with-required-field/{$string}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

@@ -90,7 +90,7 @@ class TestGroupClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "optional-request-body/" . RawClient::encodePathParam($pathParam),
+                    path: "optional-request-body/{$pathParam}",
                     method: HttpMethod::POST,
                     query: $query,
                     body: $request->body,

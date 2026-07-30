@@ -137,7 +137,7 @@ class ImdbClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movies/" . RawClient::encodePathParam($movieId),
+                    path: "movies/{$movieId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

@@ -185,7 +185,7 @@ class ProblemClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problems-v2/problem-info/" . RawClient::encodePathParam($problemId),
+                    path: "/problems-v2/problem-info/{$problemId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -242,7 +242,7 @@ class ProblemClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problems-v2/problem-info/" . RawClient::encodePathParam($problemId) . "/version/" . RawClient::encodePathParam($problemVersion),
+                    path: "/problems-v2/problem-info/{$problemId}/version/{$problemVersion}",
                     method: HttpMethod::GET,
                 ),
                 $options,

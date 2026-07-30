@@ -84,7 +84,7 @@ class VendorClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "vendors/" . RawClient::encodePathParam($vendorId),
+                    path: "vendors/{$vendorId}",
                     method: HttpMethod::PUT,
                     body: $request->body,
                 ),

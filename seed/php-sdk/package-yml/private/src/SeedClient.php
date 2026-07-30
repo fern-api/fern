@@ -103,7 +103,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/" . RawClient::encodePathParam($id) . "/",
+                    path: "/{$id}/",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

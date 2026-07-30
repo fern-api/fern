@@ -80,7 +80,7 @@ class ProductsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/products/" . RawClient::encodePathParam($regionId) . "/search",
+                    path: "v1/products/{$regionId}/search",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -136,7 +136,7 @@ class ProductsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/products/" . RawClient::encodePathParam($regionId) . "/" . RawClient::encodePathParam($productId),
+                    path: "v1/products/{$regionId}/{$productId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

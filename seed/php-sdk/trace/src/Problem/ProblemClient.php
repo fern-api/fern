@@ -261,7 +261,7 @@ class ProblemClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/update/" . RawClient::encodePathParam($problemId),
+                    path: "/problem-crud/update/{$problemId}",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -316,7 +316,7 @@ class ProblemClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/delete/" . RawClient::encodePathParam($problemId),
+                    path: "/problem-crud/delete/{$problemId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
