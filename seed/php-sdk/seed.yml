@@ -115,6 +115,9 @@ fixtures:
     - outputFolder: include-platform-headers
       customConfig:
         includePlatformHeaders: true
+    - outputFolder: allow-user-agent-app-info
+      customConfig:
+        allowUserAgentAppInfo: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
