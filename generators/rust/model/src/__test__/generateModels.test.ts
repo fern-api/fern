@@ -107,6 +107,23 @@ describe("generateModels type-specific tests", () => {
         expect(hasTaggedUnion).toBeTruthy();
     });
 
+    it("should keep the flattened wrapper for union variants that inherit properties", async () => {
+        const context = await createSampleGeneratorContext("union-types");
+        const files = generateModels({ context });
+
+        // SproutedEvent has no properties of its own and WateredEvent has one, but both
+        // inherit `occurred_at` from PlantEventBase. Inlining copies own properties only,
+        // so these variants must keep the `#[serde(flatten)]` wrapper or the inherited
+        // fields would be silently dropped from the wire payload.
+        const plantEvent = files.find((file) => file.fileContents.includes("pub enum PlantEvent"));
+        expect(plantEvent?.fileContents).toContain("data: SproutedEvent,");
+        expect(plantEvent?.fileContents).toContain("data: WateredEvent,");
+
+        // The wrapper structs must still be generated, with their inherited fields.
+        const sproutedEvent = files.find((file) => file.fileContents.includes("pub struct SproutedEvent"));
+        expect(sproutedEvent?.fileContents).toContain("plant_event_base_fields: PlantEventBase");
+    });
+
     it("should generate unions for union types (all are discriminated in Fern)", async () => {
         const context = await createSampleGeneratorContext("undiscriminated-union-types");
         const files = generateModels({ context });
