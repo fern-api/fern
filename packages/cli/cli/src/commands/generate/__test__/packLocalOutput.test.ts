@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { mkdir, mkdtemp, writeFile } from "fs/promises";
+import { mkdir, mkdtemp, readdir, stat, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -94,7 +94,10 @@ describe("packLocalOutputForGroup", () => {
         expect(commands[2]).toContain("npm pack");
     });
 
-    it("does not run any command for go generators", async () => {
+    it("zips the module source for go generators without running any toolchain command", async () => {
+        await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
+        await mkdir(path.join(outputDir, "client"), { recursive: true });
+        await writeFile(path.join(outputDir, "client", "client.go"), "package client\n");
         const group = {
             groupName: "test",
             audiences: { type: "all" },
@@ -103,6 +106,10 @@ describe("packLocalOutputForGroup", () => {
 
         await packLocalOutputForGroup({ group, context: createMockTaskContext() });
         expect(loggingExecaMock).not.toHaveBeenCalled();
+        const distFiles = await readdir(path.join(outputDir, "fern-dist"));
+        expect(distFiles).toEqual([`${path.basename(outputDir)}-source.zip`]);
+        const zipStat = await stat(path.join(outputDir, "fern-dist", `${path.basename(outputDir)}-source.zip`));
+        expect(zipStat.size).toBeGreaterThan(0);
     });
 
     it("packs the non-test csproj for csharp generators", async () => {
