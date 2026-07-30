@@ -1,0 +1,5 @@
+- summary: |
+    Respect the `user-agent` config template when `includePlatformHeaders` is enabled. The
+    structured User-Agent previously always used the npm package name and version, ignoring
+    the configured template.
+  type: fix

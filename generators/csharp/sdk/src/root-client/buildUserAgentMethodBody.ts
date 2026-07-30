@@ -52,4 +52,24 @@ export function buildUserAgentReturnPrefix(packageName: string): string {
     return `return $"${packageName}/{`;
 }
 
+/**
+ * Returns the product name to use in the structured `User-Agent`. The IR value already
+ * reflects the resolved `user-agent` template when one is configured, so its product name
+ * (everything before the version separator) takes precedence over the package id. A value
+ * without a separator is treated as the product name.
+ */
+export function getUserAgentProductName({
+    userAgentValue,
+    packageName
+}: {
+    userAgentValue: string | undefined;
+    packageName: string;
+}): string {
+    if (userAgentValue == null) {
+        return packageName;
+    }
+    const separatorIndex = userAgentValue.lastIndexOf("/");
+    return separatorIndex < 0 ? userAgentValue : userAgentValue.slice(0, separatorIndex);
+}
+
 export const BUILD_USER_AGENT_RETURN_SUFFIX = '}{platform}{runtime}";';

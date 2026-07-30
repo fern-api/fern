@@ -781,6 +781,42 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).not.toContain("X-Fern-Runtime");
         });
 
+        it("uses the configured user-agent template over the package name when includePlatformHeaders is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal/1.0.0"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+            expect(normalizeFunc).toContain('"1.0.0"');
+            expect(normalizeFunc).not.toContain('core.getUserAgent("@test/sdk"');
+        });
+
+        it("falls back to the plain user-agent value when it has no version segment", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.userAgent = {
+                header: "User-Agent",
+                value: "acme-sdk-internal"
+            };
+            const gen = createGenerator({ omitFernHeaders: false, includePlatformHeaders: true, ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("core.getUserAgent");
+            expect(normalizeFunc).toContain('"acme-sdk-internal"');
+        });
+
         it("omits all fern headers when omitFernHeaders is true even if includePlatformHeaders is true", () => {
             const gen = createGenerator({ omitFernHeaders: true, includePlatformHeaders: true });
             const context = createMockContext();

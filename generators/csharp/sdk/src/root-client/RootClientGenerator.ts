@@ -29,7 +29,8 @@ import {
     BUILD_USER_AGENT_METHOD_NAME,
     BUILD_USER_AGENT_RETURN_SUFFIX,
     buildUserAgentLocalLines,
-    buildUserAgentReturnPrefix
+    buildUserAgentReturnPrefix,
+    getUserAgentProductName
 } from "./buildUserAgentMethodBody.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 import {
@@ -422,7 +423,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 // name/version with the OS, architecture, and runtime, all
                 // resolved at runtime by the `BuildUserAgent` helper.
                 platformHeaderEntries.push({
-                    key: this.csharp.codeblock('"User-Agent"'),
+                    key: this.csharp.codeblock(`"${platformHeaders.userAgent?.header ?? "User-Agent"}"`),
                     value: this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`)
                 });
             } else {
@@ -1511,7 +1512,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * helper never emits an empty group and never throws.
      */
     private addBuildUserAgentMethod(cls: ast.Class) {
-        const packageName = this.generation.names.project.packageId;
+        const packageName = getUserAgentProductName({
+            userAgentValue: this.context.ir.sdkConfig.platformHeaders.userAgent?.value,
+            packageName: this.generation.names.project.packageId
+        });
         cls.addMethod({
             access: ast.Access.Private,
             name: BUILD_USER_AGENT_METHOD_NAME,

@@ -2,7 +2,8 @@ import {
     BUILD_USER_AGENT_METHOD_NAME,
     BUILD_USER_AGENT_RETURN_SUFFIX,
     buildUserAgentLocalLines,
-    buildUserAgentReturnPrefix
+    buildUserAgentReturnPrefix,
+    getUserAgentProductName
 } from "../buildUserAgentMethodBody.js";
 
 describe("buildUserAgentMethodBody", () => {
@@ -52,5 +53,25 @@ describe("buildUserAgentMethodBody", () => {
         const returnStatement =
             buildUserAgentReturnPrefix("Plantstore") + versionExpression + BUILD_USER_AGENT_RETURN_SUFFIX;
         expect(returnStatement).toBe('return $"Plantstore/{Version.Current}{platform}{runtime}";');
+    });
+
+    describe("getUserAgentProductName", () => {
+        it("prefers the configured user-agent product name over the package id", () => {
+            expect(
+                getUserAgentProductName({ userAgentValue: "plantstore-internal/1.2.0", packageName: "Plantstore" })
+            ).toBe("plantstore-internal");
+        });
+
+        it("treats a value without a version separator as the product name", () => {
+            expect(getUserAgentProductName({ userAgentValue: "plantstore-internal", packageName: "Plantstore" })).toBe(
+                "plantstore-internal"
+            );
+        });
+
+        it("falls back to the package id when the IR has no user agent", () => {
+            expect(getUserAgentProductName({ userAgentValue: undefined, packageName: "Plantstore" })).toBe(
+                "Plantstore"
+            );
+        });
     });
 });
