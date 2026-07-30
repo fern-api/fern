@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.79.4
+  changelogEntry:
+    - summary: |
+        Respect the `user-agent` config template when `include-platform-headers` is enabled. The
+        structured User-Agent previously always used the NuGet package id, ignoring the
+        configured template.
+      type: fix
+  createdAt: "2026-07-30"
+  irVersion: 67
 - version: 2.79.3
   changelogEntry:
     - summary: |
