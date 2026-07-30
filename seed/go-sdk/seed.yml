@@ -150,6 +150,10 @@ fixtures:
     - outputFolder: allow-user-agent-app-info
       customConfig:
         allowUserAgentAppInfo: true
+    - outputFolder: include-platform-headers-app-info
+      customConfig:
+        includePlatformHeaders: true
+        allowUserAgentAppInfo: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
