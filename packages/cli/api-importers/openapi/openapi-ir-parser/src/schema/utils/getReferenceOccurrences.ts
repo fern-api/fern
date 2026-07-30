@@ -6,19 +6,17 @@ import { isReferenceObject } from "./isReferenceObject.js";
 export function getReferenceOccurrences(document: OpenAPIV3.Document): Record<string, number> {
     const contentConflictsRemovedDocument = removeApplicationJsonAndMultipartConflictsFromDocument(document);
     const occurrences: Record<string, number> = {};
-    getReferenceOccurrencesHelper({ obj: contentConflictsRemovedDocument, occurrences, breadcrumbs: [] });
+    getReferenceOccurrencesHelper({ obj: contentConflictsRemovedDocument, occurrences });
     return occurrences;
 }
 
 function getReferenceOccurrencesHelper({
     obj,
-    occurrences,
-    breadcrumbs
+    occurrences
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     obj: any;
     occurrences: Record<string, number>;
-    breadcrumbs: string[];
 }): void {
     if (obj == null) {
         return;
@@ -28,8 +26,7 @@ function getReferenceOccurrencesHelper({
         for (const element of obj) {
             getReferenceOccurrencesHelper({
                 obj: element,
-                occurrences,
-                breadcrumbs
+                occurrences
             });
         }
         return;
@@ -51,8 +48,7 @@ function getReferenceOccurrencesHelper({
     for (const key in obj) {
         getReferenceOccurrencesHelper({
             obj: obj[key],
-            occurrences,
-            breadcrumbs: [...breadcrumbs, key]
+            occurrences
         });
     }
 }

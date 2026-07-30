@@ -3,11 +3,11 @@ import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
 import { ParseOpenAPIOptions } from "../../options.js";
-import { SchemaParserContext } from "../../schema/SchemaParserContext.js";
 import {
     AbstractOpenAPIV3ParserContext,
     DiscriminatedUnionMetadata,
-    DiscriminatedUnionReference
+    DiscriminatedUnionReference,
+    OpenAPIV3DocumentMetadata
 } from "./AbstractOpenAPIV3ParserContext.js";
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
@@ -16,13 +16,15 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         taskContext,
         options,
         source,
-        namespace
+        namespace,
+        documentMetadata
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         options: ParseOpenAPIOptions;
         source: Source;
         namespace: string | undefined;
+        documentMetadata?: OpenAPIV3DocumentMetadata;
     }) {
         super({
             document,
@@ -30,11 +32,12 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
             authHeaders: new Set(),
             options,
             source,
-            namespace
+            namespace,
+            documentMetadata
         });
     }
 
-    public getDummy(): SchemaParserContext {
+    public getDummy(): AbstractOpenAPIV3ParserContext {
         return this;
     }
 
